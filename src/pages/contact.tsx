@@ -9,7 +9,7 @@ import { complements } from '@/data/app-data';
 
 const Contact: NextPage = (): JSX.Element => {
   const [messageStatus, setMessageStatus] = useState(
-    'You will receive our reply to your email as soon as possible.'
+    'Receberá a resposta para o seu e-mail assim que possível.'
   );
 
   const [formData, setFormData] = useState({
@@ -45,35 +45,36 @@ const Contact: NextPage = (): JSX.Element => {
       .then(
         (result) => {
           console.log(result.text);
-          setMessageStatus('Message sent successfully!');
+          setMessageStatus('Mensagem enviada com sucesso!');
         },
         (error) => {
           console.log(error.text);
           setMessageStatus(
-            'Oops! Looks like something went wrong. Please try again.'
+            'Oops! Houve um erro ao enviar a sua mensagem. Por favor, tente novamente.'
           );
         }
       );
   };
 
   return (
-    <Layout metadata={{ title: 'Contact Us' }}>
+    <Layout metadata={{ title: 'Contacte-nos' }}>
       <Container>
         <article className='container'>
           <section className='intro'>
-            <h1>Stay in touch</h1>
-            <h2>How can we help you?</h2>
+            <h1>Fique sempre ligado</h1>
+            <h2>Como podemos ajudar?</h2>
             <p>
-              Please use one of the contact forms below by clicking on the
-              e-mail <em>link</em> or use the
-              <strong> contact form</strong> if you have questions about our
-              services.
+              Por favor, utilize uma das formas de contacto abaixo clicando no
+              endereço de e-mail
+              <em>link</em> ou o <strong>formulário de contacto</strong> para
+              que possamos esclarecer quaisquer questões sobre os nossos
+              produtos e serviços.
             </p>
           </section>
           <div className='contacts'>
             <h3>
               <BiEnvelope />
-              <span>Our e-mail adress</span>
+              <span>Nosso endereço de e-mail:</span>
             </h3>
             <span>
               <a
@@ -87,31 +88,31 @@ const Contact: NextPage = (): JSX.Element => {
           <form onSubmit={emailSender}>
             <section className='form-control'>
               <div className='form-item'>
-                <label htmlFor='assunto'>Subject</label>
+                <label htmlFor='assunto'>Assunto</label>
                 <input
                   type='text'
                   id='assunto'
                   name='subject'
                   maxLength={120}
                   required
-                  placeholder='Message subject'
+                  placeholder='Assunto da mensagem'
                   onChange={(e) => formDataPicker(e)}
                 />
               </div>
               <div className='form-item'>
-                <label htmlFor='email'>E-mail adress</label>
+                <label htmlFor='email'>E-mail</label>
                 <input
                   type='email'
                   id='email'
                   name='from_email'
                   required
-                  placeholder='Your e-mail adress'
+                  placeholder='Escreva os seu endereço de e-mail'
                   maxLength={30}
                   onChange={(e) => formDataPicker(e)}
                 />
               </div>
             </section>
-            <label htmlFor='message'>Message</label>
+            <label htmlFor='message'>Mensagem</label>
             <textarea
               id='message'
               name='message'
@@ -119,7 +120,7 @@ const Contact: NextPage = (): JSX.Element => {
               rows={10}
               maxLength={2500}
               required
-              placeholder='Write your message here'
+              placeholder='Escreva a sua mensagem aqui'
               onChange={(e) => formDataPicker(e)}
             />
             <span className='errorMessage'>{messageStatus}</span>
@@ -128,7 +129,7 @@ const Contact: NextPage = (): JSX.Element => {
               whileHover={{ scale: 1.05 }}
               type='submit'>
               <BiMailSend />
-              <span>Send message</span>
+              <span>Enviar mensagem</span>
             </motion.button>
           </form>
         </article>
