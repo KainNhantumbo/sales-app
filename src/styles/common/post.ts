@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { BaseButton, BaseButton_Alter } from '../defaults';
+import { BaseButton } from '../defaults';
 
 const ShareLinksStyles = css`
   display: flex;
@@ -235,49 +235,6 @@ export const PostContainer = styled.div`
       }
     }
 
-    .fund-support {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      align-items: center;
-      text-align: center;
-
-      h2,
-      p {
-        line-height: 1.4rem;
-      }
-
-      h2 {
-        font-weight: 600;
-        font-size: 1.4rem;
-      }
-      p {
-        font-size: 1.1rem;
-        max-width: 320px;
-      }
-
-      .dots {
-        width: 30px;
-        height: 30px;
-      }
-
-      .svg-smile {
-        width: 40px;
-        height: 40px;
-        color: rgb(${({ theme }) => theme.secondary});
-      }
-
-      a {
-        padding: 10px;
-        border-radius: 3px;
-        background: rgb(${({ theme }) => theme.primary});
-        color: #fff;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-    }
-
     .author-container {
       display: flex;
       flex-direction: row;
@@ -292,7 +249,6 @@ export const PostContainer = styled.div`
         width: 80px;
         height: 80px;
         border-radius: 50%;
-        
       }
       h3 {
         font-weight: 500;

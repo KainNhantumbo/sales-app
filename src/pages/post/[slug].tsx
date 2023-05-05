@@ -14,10 +14,7 @@ import { motion } from 'framer-motion';
 import { author } from '@/data/app-data';
 import { formatDate } from '@/lib/time-fns';
 import { useState, useEffect } from 'react';
-import { FaGrinHearts } from 'react-icons/fa';
-import { GiCoffeeMug } from 'react-icons/gi';
 import { IoOpenOutline } from 'react-icons/io5';
-import { HiDotsHorizontal } from 'react-icons/hi';
 import { readingTime } from 'reading-time-estimator';
 import { useAppContext } from '@/context/AppContext';
 import { getPaths, getPost, getPosts } from '@/lib/queries';
@@ -179,25 +176,7 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
                   ))}
                 </div>
               </section>
-              <section className='fund-support'>
-                <HiDotsHorizontal className='dots' />
-                <h2>Has this been helpful to you?</h2>
-                <p>
-                  You can support my work by sharing this article with others,
-                  or perhaps buy me a cup of coffee
-                </p>
-                <FaGrinHearts className='svg-smile' />
-                <motion.a
-                  href='https://www.buymeacoffee.com/nhantumbokU'
-                  target={'_blank'}
-                  rel={'noreferrer noopener'}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.8 }}>
-                  <GiCoffeeMug />
-                  <span>Buy me a coffee</span>
-                </motion.a>
-                <HiDotsHorizontal className='dots' />
-              </section>
+
 
               <section className='author-container'>
                 <Image src={author.picture} alt='article author photo' />
@@ -248,7 +227,7 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
                           <button
                             onClick={() => router.push(`/post/${post.slug}`)}>
                             <IoOpenOutline />
-                            <span>Read more</span>
+                            <span>Continuar a ler...</span>
                           </button>
                         </div>
                       </>

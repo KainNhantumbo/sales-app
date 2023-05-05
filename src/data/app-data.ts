@@ -1,4 +1,4 @@
-import { IoLogoPinterest, IoLogoTiktok } from 'react-icons/io5';
+import { IoLogoFacebook, IoLogoPinterest, IoLogoTiktok } from 'react-icons/io5';
 import type { Author } from '../../@types/index';
 import authorPicture from '../../public/assets/author.jpg';
 
@@ -20,20 +20,20 @@ export const complements = {
 
 export const urls: Array<{ name: string; url: string }> = [
   {
-    name: 'All',
+    name: 'Início',
     url: '/',
   },
   {
-    name: 'Brands',
+    name: 'Blog',
     url: '/categories/brands',
   },
   {
-    name: 'Destinations',
-    url: '/categories/destinations',
+    name: 'Lojas',
+    url: '/users/stores',
   },
   {
-    name: 'News',
-    url: '/categories/news',
+    name: 'Feed',
+    url: '/users/feed',
   },
   {
     name: 'Success Stories',
@@ -50,9 +50,9 @@ export const footerProps = {
   copyrightSentence: '2023 TravelSketchpad | All rights reserved.',
   socialMedia: [
     {
-      name: 'Find Us on TikTok',
-      url: 'https://www.tiktok.com/@travel_sketchpad',
-      icon: IoLogoTiktok,
+      name: 'Encontre-nos no Facebook',
+      url: 'https://www.fb.com/@travel_sketchpad',
+      icon: IoLogoFacebook,
     },
     {
       name: 'Find Us on Pinterest',

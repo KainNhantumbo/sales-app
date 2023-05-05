@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { BaseButton } from '../defaults';
 
 export const FooterContainer = styled.footer`
   width: 100%;
@@ -55,13 +54,6 @@ export const FooterContainer = styled.footer`
             cursor: pointer;
             color: rgb(${({ theme }) => theme.secondary});
           }
-        }
-      }
-
-      .fund-url {
-        ${BaseButton}
-        :hover {
-          color: rgb(${({ theme }) => theme.secondary});
         }
       }
     }
