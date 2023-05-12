@@ -9,21 +9,28 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.11.0",
     "@types/node": "20.0.0",
     "@types/react": "18.2.5",
     "@types/react-dom": "18.2.3",
     "axios": "^1.4.0",
+    "blurhash": "^2.0.5",
+    "compressorjs": "^1.2.1",
     "framer-motion": "^10.12.7",
     "moment": "^2.29.4",
     "next": "13.4.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
+    "react-lazy-load-image-component": "^1.5.6",
+    "reading-time-estimator": "^1.8.1",
+    "socket.io-client": "^4.6.1",
     "styled-components": "^5.3.10",
     "typescript": "5.0.4",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/react-lazy-load-image-component": "^1.5.3",
     "@types/styled-components": "^5.1.26",
     "@types/uuid": "^9.0.1"
   }

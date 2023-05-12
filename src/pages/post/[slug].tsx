@@ -32,7 +32,7 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
   const readingProps = readingTime(
     post.content.concat(post.excerpt),
     undefined,
-    'en'
+    'pt-br'
   );
   const shareMedia = shareUrls({
     title: post.title,
