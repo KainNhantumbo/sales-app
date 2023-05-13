@@ -1,6 +1,3 @@
-import { colors } from '@/styles/colors';
-import { GlobalStyles } from '@/styles/global';
-import { ThemeProvider } from 'styled-components';
 import {
   useState,
   useContext,
@@ -9,10 +6,11 @@ import {
   SetStateAction,
   useEffect,
 } from 'react';
-import type { AppContext, Theme } from '../../@types/index';
+import type { AppContext } from '../../@types/index';
+import ThemeContext from './ThemeContext';
+import reducer from '@/lib/reducer';
 
 interface IContext {
-  colors: Theme;
   searchValue: string;
   setSearchValue: Dispatch<SetStateAction<string>>;
   pageProps: {
@@ -28,7 +26,6 @@ interface IContext {
 }
 
 const context = createContext<IContext>({
-  colors,
   pageProps: {
     offset: 10,
     limit: 10,
@@ -46,11 +43,9 @@ export default function AppContext(props: AppContext): JSX.Element {
   const [searchValue, setSearchValue] = useState<string>('');
 
   return (
-    <ThemeProvider theme={colors}>
-      <GlobalStyles />
+    <ThemeContext>
       <context.Provider
         value={{
-          colors,
           pageProps,
           setPageProps,
           searchValue,
@@ -58,7 +53,7 @@ export default function AppContext(props: AppContext): JSX.Element {
         }}>
         {props.children}
       </context.Provider>
-    </ThemeProvider>
+    </ThemeContext>
   );
 }
 

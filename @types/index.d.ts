@@ -3,8 +3,8 @@ import type { IconType } from 'react-icons';
 import type { ReactNode, ChangeEvent, FormEvent } from 'react';
 import { StaticImageData } from 'next/image';
 
-// ============================================= //
-// -------------static types----------------------
+// ========================================== //
+// -------------static types-------------------
 
 export type InputEvents =
   | ChangeEvent<HTMLInputElement>
@@ -23,8 +23,12 @@ export type Theme = {
   primary: string;
   secondary: string;
   font: string;
+  accent: string;
+  neutral: string;
   background: string;
+  background_variant: string;
   foreground: string;
+  foreground_variant: string;
 };
 
 export type HeadProps =
@@ -220,7 +224,6 @@ export type UserType = {
   cover_image?: { id: string; url: string; blurhash: string };
   profile_image: { id: string; url: string; blurhash: string };
   favorite_products_list: string[];
-  favorite_stores_list: string[];
   favorite_jobs_list: string[];
   professional_skills: string[];
   spoken_languages: { language: string; level: string }[];

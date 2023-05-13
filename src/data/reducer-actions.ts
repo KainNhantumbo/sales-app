@@ -1,0 +1,5 @@
+export const actions = {
+  PROMPT_BOX_CONTROL: 'PROMPT_BOX_CONTROL',
+  USER_AUTH: 'USER_AUTH',
+  IS_CONNECTED: 'IS_CONNECTED',
+};

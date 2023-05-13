@@ -1,4 +1,4 @@
-import { IoLogoFacebook, IoLogoPinterest, IoLogoTiktok } from 'react-icons/io5';
+import { IoLogoFacebook, IoLogoPinterest } from 'react-icons/io5';
 import type { Author } from '../../@types/index';
 import authorPicture from '../../public/assets/author.jpg';
 
