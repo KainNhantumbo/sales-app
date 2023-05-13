@@ -137,30 +137,6 @@ export const PostContainer = styled.div`
         margin: 0 auto;
       }
 
-      .tags-container {
-        display: flex;
-        justify-content: flex-start;
-        gap: 12px;
-        align-items: center;
-        margin: 12px 0;
-        .title {
-          font-weight: 600;
-        }
-        .tags {
-          display: flex;
-          justify-content: flex-start;
-          gap: 8px;
-          flex-flow: row wrap;
-          max-width: 70%;
-
-          span {
-            padding: 10px;
-            border-radius: 5px;
-            background: rgba(${({ theme }) => theme.secondary}, 0.1);
-          }
-        }
-      }
-
       h4 {
         line-height: 1.6rem;
         margin: 0 auto;

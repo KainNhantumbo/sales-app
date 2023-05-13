@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Layout from '@/components/Layout';
 import Loader from '@/components/Loader';
-import { PostList } from '../../@types';
+import { IBlogPosts } from '../../@types/index';
 import { getPosts } from '@/lib/queries';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -11,11 +11,12 @@ import { IoOpenOutline } from 'react-icons/io5';
 import SearchComponent from '@/components/Search';
 import { HomeContainer as Container } from '@/styles/common/home';
 import { IoIosAlbums, IoIosPlanet, IoMdCalendar } from 'react-icons/io';
+import { useTheme } from 'styled-components';
 
 export default function SearchPosts() {
   const router = useRouter();
-  const [posts, setPosts] = useState<PostList[]>([]);
-  const { colors } = useAppContext();
+  const [posts, setPosts] = useState<IBlogPosts[]>([]);
+  const  colors  = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -81,18 +82,12 @@ export default function SearchPosts() {
                   href={`/post/${post.slug}`}>
                   <>
                     <img
-                      src={post.cover_image}
+                      src={post.cover_image.url}
                       alt={`Image of ${post.title} article.`}
                     />
 
                     <div className='content-container'>
                       <div className='details'>
-                        <div>
-                          <IoIosAlbums />
-                          <span style={{ color: `rgb(${colors.secondary})` }}>
-                            {post.category}
-                          </span>
-                        </div>
                         <div>
                           <IoMdCalendar />
                           <span>{formatDate(post.updatedAt)}</span>

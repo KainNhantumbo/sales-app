@@ -21,7 +21,10 @@ export type ShareUrls = {
 
 export type Theme = {
   primary: string;
+  primary_variant: string;
   secondary: string;
+  secondary_variant: string;
+  alert: string
   font: string;
   accent: string;
   neutral: string;
@@ -101,7 +104,7 @@ export interface IComment extends INewComment {
   updatedAt: string;
 }
 
-export interface IBlogPost {
+export interface IBlogPosts {
   _id: string;
   title: string;
   slug: string;
@@ -111,7 +114,7 @@ export interface IBlogPost {
   createdAt: string;
   updatedAt: string;
 }
-export interface IBlogPost extends IBlogPost {
+export interface IBlogPost extends IBlogPosts {
   content: string;
   favorites: { _id: string; first_name: string; last_name: string }[] | never[];
   allow_comments: boolean;

@@ -18,17 +18,18 @@ import { IoOpenOutline } from 'react-icons/io5';
 import { readingTime } from 'reading-time-estimator';
 import { useAppContext } from '@/context/AppContext';
 import { getPaths, getPost, getPosts } from '@/lib/queries';
-import type { Post, PostList } from '@/../../@types/index';
+import type { IBlogPost, IBlogPosts } from '@/../../@types/index';
 import { PostContainer as Container } from '@/styles/common/post';
+import { useTheme } from 'styled-components';
 
 interface IPost {
-  post: Post;
-  latestPosts: PostList[];
+  post: IBlogPost;
+  latestPosts: IBlogPosts[];
 }
 
 export default function Post({ post, latestPosts }: IPost): JSX.Element {
   const router = useRouter();
-  const { colors } = useAppContext();
+  const colors = useTheme();
   const readingProps = readingTime(
     post.content.concat(post.excerpt),
     undefined,
@@ -41,43 +42,14 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
     siteName: '',
   });
 
-  // read percentage bar funtionns
-  const [screenPosition, setScreenPosition] = useState(0);
-  function computePageInnerWidth() {
-    const wrapper = document.querySelector('.main-container');
-    const calc = (window.pageYOffset * 100) / wrapper?.scrollHeight!;
-    setScreenPosition(calc);
-  }
-
-  useEffect(() => {
-    window.addEventListener('wheel', computePageInnerWidth);
-    return () => {
-      window.removeEventListener('wheel', computePageInnerWidth);
-    };
-  }, []);
-
   return (
     <Layout
       metadata={{
         title: post.title,
         updatedAt: post.updatedAt,
         createdAt: post.createdAt,
-        tags: post.tags.toString(),
       }}>
-      <Container className='.wrapper'>
-        <div
-          style={{
-            height: '4px',
-            width: `${screenPosition.toString()}%`,
-            backgroundColor: `rgba(${colors.secondary}, .8)`,
-            position: 'fixed',
-            top: '0px',
-            left: '0px',
-            zIndex: '999999',
-            transition: '200ms',
-          }}
-        />
-
+      <Container className='wrapper'>
         <div className='main-container'>
           <article>
             <section className={'article-header-container'}>
@@ -117,7 +89,7 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
                 <div>
                   <IoIosAlbums />
                   <span style={{ color: `rgb(${colors.secondary})` }}>
-                    {post.category}
+                    {author.name}
                   </span>
                 </div>
                 <div>
@@ -136,21 +108,9 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
               <h4>{post.excerpt}</h4>
               <img
                 className='article-image'
-                src={post.cover_image}
+                src={post.cover_image.url}
                 alt={post.title}
               />
-              <section className='tags-container'>
-                {post.tags.length > 0 && (
-                  <>
-                    <span className='title'>Tags:</span>
-                    <div className='tags'>
-                      {post.tags.map((tag, index) => (
-                        <span key={index.toString()}>{tag}</span>
-                      ))}
-                    </div>
-                  </>
-                )}
-              </section>
             </section>
 
             <section
@@ -177,7 +137,6 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
                 </div>
               </section>
 
-
               <section className='author-container'>
                 <Image src={author.picture} alt='article author photo' />
                 <div>
@@ -201,18 +160,12 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
                       href={`/post/${post.slug}`}>
                       <>
                         <img
-                          src={post.cover_image}
+                          src={post.cover_image.url}
                           alt={`Image of ${post.title} article.`}
                         />
                         <div className='content-container'>
                           <div className='details'>
-                            <div>
-                              <IoIosAlbums />
-                              <span
-                                style={{ color: `rgb(${colors.secondary})` }}>
-                                {post.category}
-                              </span>
-                            </div>
+                            
                             <div>
                               <IoMdCalendar />
                               <span>{formatDate(post.updatedAt)}</span>
@@ -251,7 +204,7 @@ export async function getStaticPaths(): Promise<any> {
 }
 
 export async function getStaticProps({ params: { slug } }: any) {
-  const data = await (
+  const data = (
     await Promise.all([getPost(slug), getPosts({ limit: 3, offset: 0 })])
   ).map((res) => res.data);
   return {
