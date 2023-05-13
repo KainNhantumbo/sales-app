@@ -4,7 +4,7 @@ import type { State, Action } from '../../@types/reducer';
 export const initialState: State = {
   isPromptActive: false,
   isConnected: false,
-  userAuth: { userId: '', token: '', invalidated: false },
+  userAuth: { id: '', token: '', invalidated: false },
 };
 
 export default function reducer(state: State, action: Action) {
