@@ -36,7 +36,7 @@ export const BaseButton = css`
   width: fit-content;
   cursor: pointer;
   background: rgb(${({ theme }) => theme.primary});
-  color: rgb(${({ theme }) => theme.accent});
+  color: rgb(${({ theme }) => theme.font});
   border: 1px solid transparent;
   :hover {
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.08);
@@ -164,7 +164,7 @@ export const StyledInputs = css`
     border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
 
     :focus {
-      border: 1px solid rgba(${({ theme }) => theme.secondary}, 0.5);
+      border: 1px solid rgba(${({ theme }) => theme.accent}, 0.5);
     }
     ::placeholder {
       color: rgba(${({ theme }) => theme.font}, 0.8);

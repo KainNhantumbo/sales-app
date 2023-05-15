@@ -74,9 +74,9 @@ export const ContactContainer = styled.div`
     flex-direction: column;
     gap: 10px;
     padding: 20px;
-    border-radius: 5px;
-    border: 1px solid rgba(${({ theme }) => theme.primary}, 0.1);
+    border-radius: 20px;
     background: rgb(${({ theme }) => theme.foreground});
+    box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.05);
 
     .form-control {
       display: flex;

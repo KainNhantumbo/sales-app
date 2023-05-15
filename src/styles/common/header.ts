@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BaseButton_Alter, Button_Mono_B } from '../defaults';
+import { BaseButton, Button_Mono_B } from '../defaults';
 
 export const HeaderContainer = styled.header`
   width: 100%;
@@ -8,7 +8,7 @@ export const HeaderContainer = styled.header`
   top: 0;
   left: 0;
   backdrop-filter: blur(5px);
-  background: rgba(${({ theme }) => theme.foreground}, 0.8);
+  background: rgba(${({ theme }) => theme.foreground}, 0.6);
   box-shadow: 0 0 20px rgba(${({ theme }) => theme.primary}, 0.1);
   padding: 20px 8px;
   font-weight: 500;
@@ -70,32 +70,6 @@ export const HeaderContainer = styled.header`
         gap: 10px;
       }
 
-      .active {
-        color: rgb(0, 133, 255);
-        position: relative;
-        :hover {
-          ::after {
-            background: rgb(${({ theme }) => theme.secondary});
-          }
-        }
-        ::after {
-          content: '';
-          width: 100%;
-          height: 5px;
-          background: rgb(0, 133, 255);
-          position: absolute;
-          bottom: -21px;
-          left: 0;
-          border-radius: 5px 5px 0 0;
-        }
-
-        @media screen and (max-width: 770px) {
-          ::after {
-            display: none;
-          }
-        }
-      }
-
       span {
         padding: 5px;
         :hover {
@@ -141,7 +115,7 @@ export const HeaderContainer = styled.header`
           }
         }
         button {
-          ${BaseButton_Alter}
+          ${BaseButton}
           background: rgb(${({ theme }) => theme.primary});
         }
       }

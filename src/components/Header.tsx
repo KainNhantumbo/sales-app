@@ -4,11 +4,9 @@ import { HiViewList, HiX } from 'react-icons/hi';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HeaderContainer as Container } from '../styles/common/header';
-import { useRouter } from 'next/router';
 
 export default function Header(): JSX.Element {
   const [isMenu, setIsMenu] = useState<boolean>(false);
-  const { asPath } = useRouter();
 
   const toggleMenu = (): void => {
     setIsMenu(!isMenu);
@@ -34,9 +32,7 @@ export default function Header(): JSX.Element {
     <Container>
       <div className='logo'>
         <Link href={'/'}>
-          <span>
-            {complements.defaultTitle}
-          </span>
+          <span>{complements.defaultTitle}</span>
         </Link>
       </div>
       <AnimatePresence>
@@ -54,9 +50,7 @@ export default function Header(): JSX.Element {
             <section>
               {urls.map((item, index) => (
                 <Link key={index.toString()} href={item.url}>
-                  <motion.span
-                    whileHover={{ scale: 1.1 }}
-                    className={item.url === asPath ? 'active' : 'inactive'}>
+                  <motion.span whileHover={{ scale: 1.1 }}>
                     {item.name}
                   </motion.span>
                 </Link>

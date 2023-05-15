@@ -40,6 +40,6 @@ export const GlobalStyles = createGlobalStyle`
 
   ::-webkit-scrollbar-thumb {
     border-radius: 15px;
-    background: rgba(${({ theme }) => theme.primary}, .5);
+    background: rgba(${({ theme }) => theme.accent}, .5);
   }
 `;
