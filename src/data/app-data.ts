@@ -53,7 +53,7 @@ export const urls: Array<{ name: string; url: string }> = [
   },
   {
     name: 'Blog',
-    url: '/categories/brands',
+    url: '/blog',
   },
   {
     name: 'Lojas',
@@ -64,12 +64,8 @@ export const urls: Array<{ name: string; url: string }> = [
     url: '/users/feed',
   },
   {
-    name: 'Success Stories',
-    url: '/categories/success-stories',
-  },
-  {
-    name: 'Tips',
-    url: '/categories/tips',
+    name: 'Produtos',
+    url: '/users/stores/produts',
   },
 ];
 
@@ -95,7 +91,7 @@ export const store_features = [
   {
     title: 'Estratégias de marketing digital',
     description:
-      'Aumente suas vendas com campanhas de performance via Google e redes sociais',
+      'Aumente suas vendas com campanhas de performance via Google e redes sociais.',
     icon: IoRocketOutline,
   },
   {
@@ -114,7 +110,7 @@ export const store_features = [
 
 export const pricing_data = [
   {
-    title: 'Gratuito',
+    title: 'Gratuito (beta)',
     type: 'Começo',
     url: '/auth/sign-in',
     label: 'Criar loja grátis',

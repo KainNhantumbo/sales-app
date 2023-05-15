@@ -4,6 +4,7 @@ import { HiViewList, HiX } from 'react-icons/hi';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HeaderContainer as Container } from '../styles/common/header';
+import { IoLogInOutline, IoStorefrontOutline } from 'react-icons/io5';
 
 export default function Header(): JSX.Element {
   const [isMenu, setIsMenu] = useState<boolean>(false);
@@ -56,9 +57,20 @@ export default function Header(): JSX.Element {
                 </Link>
               ))}
             </section>
+            <div className='auth-btns'>
+              <Link href={'/auth/sign-in'} className='login-btn'>
+                <IoLogInOutline />
+                <span>Acessar</span>
+              </Link>
+              <Link href={'/auth/sign-in'} className='sign-in-btn'>
+                <IoStorefrontOutline />
+                <span>Cadastrar-se</span>
+              </Link>
+            </div>
           </motion.nav>
         )}
       </AnimatePresence>
+
       <motion.button
         whileTap={{ scale: 0.8 }}
         title='Toggle menu panel'

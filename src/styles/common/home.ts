@@ -20,7 +20,7 @@ export const HomeContainer = styled.div`
     width: 100%;
     margin-top: 90px;
 
-    .introduction {
+    .introduction, .presentation {
       width: 100%;
       max-width: 1280px;
       margin: 0 auto;
@@ -125,7 +125,7 @@ export const HomeContainer = styled.div`
 
     .pricing {
       width: 100%;
-      background: rgb(${({ theme }) => theme.foreground});
+      background: rgb(${({ theme }) => theme.background});
 
       .wrapper {
         max-width: 1280px;
@@ -202,6 +202,13 @@ export const HomeContainer = styled.div`
             padding: 12px;
           }
         }
+      }
+    }
+
+    .presentation {
+      padding: 30px 0;
+      span {
+        line-height: 1.6rem;
       }
     }
   }

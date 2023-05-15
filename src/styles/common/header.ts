@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BaseButton, Button_Mono_B } from '../defaults';
+import { BaseButton, BaseButtonOutline, Button_Mono_B } from '../defaults';
 
 export const HeaderContainer = styled.header`
   width: 100%;
@@ -14,6 +14,14 @@ export const HeaderContainer = styled.header`
   font-weight: 500;
   font-size: 1.1rem;
   z-index: 10000;
+
+  
+  
+  @media screen and (min-width: 1200px) {
+    max-width: 1200px;
+    left: calc(50% - 600px);
+
+  }
 
   .logo {
     position: absolute;
@@ -50,11 +58,13 @@ export const HeaderContainer = styled.header`
 
   nav {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     height: 100%;
     position: relative;
-    left: 220px;
+    left: 180px;
+    width: 100%;
+    gap: 20px;
 
     section {
       display: flex;
@@ -76,6 +86,37 @@ export const HeaderContainer = styled.header`
       }
     }
 
+    @media screen and (max-width: 990px) {
+      display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    position: relative;
+    left: 180px;
+    width: 100%;
+    gap: 20px;
+
+    section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 0.96rem;
+
+      @media screen and (max-width: 600px) {
+        gap: 10px;
+      }
+
+      span {
+        padding: 5px;
+        :hover {
+          cursor: pointer;
+          color: rgb(${({ theme }) => theme.primary_variant});
+        }
+      }
+    } 
+    }
+
     @media screen and (max-width: 770px) {
       position: absolute;
       top: 20px;
@@ -87,7 +128,7 @@ export const HeaderContainer = styled.header`
       flex-direction: column;
       margin-top: 50px;
       background: rgba(${({ theme }) => theme.foreground}, 0.95);
-      border-bottom: 5px solid rgba(${({ theme }) => theme.secondary}, 0.6);
+      border-bottom: 5px solid rgba(${({ theme }) => theme.primary}, 0.6);
       backdrop-filter: blur(30px);
       padding: 20px;
 
@@ -116,6 +157,27 @@ export const HeaderContainer = styled.header`
           background: rgb(${({ theme }) => theme.primary});
         }
       }
+    }
+  }
+
+  .auth-btns {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-size: 0.9rem;
+    justify-self: flex-end;
+    position: relative;
+    left: -190px;
+
+    .login-btn {
+      ${BaseButtonOutline}
+    }
+    .sign-in-btn {
+      ${BaseButton}
+    }
+
+    @media screen and (max-width: 770px) {
+      left: 0;
     }
   }
 

@@ -4,14 +4,11 @@ import {
   createContext,
   Dispatch,
   SetStateAction,
-  useEffect,
   useReducer,
-  useCallback,
 } from 'react';
 import ThemeContext from './ThemeContext';
-import { io, Socket } from 'socket.io-client';
 import { actions } from '@/data/reducer-actions';
-import fetch, { BASE_URL } from '../config/client';
+import fetch from '../config/client';
 import { NextRouter, useRouter } from 'next/router';
 import { Action, State } from '../../@types/reducer';
 import type { AppContext } from '../../@types/index';
@@ -32,7 +29,6 @@ interface IContext {
     }>
   >;
   state: State;
-  socket: Socket;
   dispatch: Dispatch<Action>;
   logoutUser: () => Promise<void>;
   fetchAPI: (config: AxiosRequestConfig) => AxiosPromise<any>;
@@ -50,10 +46,7 @@ const context = createContext<IContext>({
   dispatch: () => {},
   logoutUser: async () => {},
   fetchAPI: (): any => {},
-  socket: io(),
 });
-
-export const socket: Socket = io(BASE_URL);
 
 export default function AppContext(props: AppContext): JSX.Element {
   const router: NextRouter = useRouter();
@@ -63,7 +56,6 @@ export default function AppContext(props: AppContext): JSX.Element {
     limit: 10,
   });
   const [searchValue, setSearchValue] = useState<string>('');
-
 
   // --------------------------socket---------------------------
 
@@ -198,7 +190,6 @@ export default function AppContext(props: AppContext): JSX.Element {
           dispatch,
           logoutUser,
           fetchAPI,
-          socket,
         }}>
         {props.children}
       </context.Provider>

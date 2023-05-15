@@ -4,9 +4,14 @@ import { useRouter } from 'next/router';
 import { HomeContainer as Container } from '@/styles/common/home';
 import NewsLetter from '@/components/Newsletter';
 import flying_paper from '../../public/assets/flying paper.png';
+import africa_culture from '../../public/assets/africa-culture.png';
 import { store_features, pricing_data } from '@/data/app-data';
 import Image from 'next/image';
-import { IoBalloonOutline, IoStorefrontOutline } from 'react-icons/io5';
+import {
+  IoBalloonOutline,
+  IoHeartOutline,
+  IoStorefrontOutline,
+} from 'react-icons/io5';
 import { motion } from 'framer-motion';
 import { useTheme } from 'styled-components';
 
@@ -35,6 +40,7 @@ export default function Home(): JSX.Element {
               src={flying_paper}
               width={800}
               height={800}
+              priority={true}
               alt='flying paper image by freepick'
             />
           </section>
@@ -61,6 +67,30 @@ export default function Home(): JSX.Element {
                 ))}
               </div>
             </div>
+          </section>
+
+          <section className='presentation'>
+            <div>
+              <h2>Relaxe e sinta-se em casa</h2>
+              <p>
+                Plataforma feita de jovens moçambicanos para todos moçambicanos
+                ajudando a desenvolver e nutrir o espírito de empreendedorismo a
+                nível nacional.
+              </p>
+              <span>
+                Precisa de ajuda nos primeiros passos? Pode contar com a gente, veja secção de contacto no rodapé ou acesse o nosso blog para aprender mais sobre o e-commerce e vendas em lojas virtuais.
+              </span>
+              <Link href={'/about-us'}>
+                <IoHeartOutline />
+                <span>Saiba mais sobre nós</span>
+              </Link>
+            </div>
+            <Image
+              src={africa_culture}
+              width={600}
+              height={600}
+              alt='africa culture image'
+            />
           </section>
 
           <section className='pricing'>
