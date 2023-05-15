@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import { HomeContainer as Container } from '@/styles/common/home';
 import NewsLetter from '@/components/Newsletter';
 import flying_paper from '../../public/assets/flying paper.png';
-import { store_features } from '@/data/app-data';
+import { store_features, pricing_data } from '@/data/app-data';
 import Image from 'next/image';
-import { IoStorefrontOutline } from 'react-icons/io5';
+import { IoBalloonOutline, IoStorefrontOutline } from 'react-icons/io5';
 import { motion } from 'framer-motion';
 import { useTheme } from 'styled-components';
 
@@ -59,6 +59,46 @@ export default function Home(): JSX.Element {
                     <p>{card.description}</p>
                   </motion.div>
                 ))}
+              </div>
+            </div>
+          </section>
+
+          <section className='pricing'>
+            <div className='wrapper'>
+              <div className='pricing-container'>
+                <h2>
+                  <span>
+                    Encontre ferramentas ideais para a jornada do seu negócio
+                  </span>
+                </h2>
+
+                <h3>
+                  Adira ao programa beta e crie a sua loja, não se preocupando
+                  com limites de vendas, produtos ou visitas:{' '}
+                </h3>
+
+                <div className='plans-container'>
+                  {pricing_data.map((plan, index) => (
+                    <motion.div
+                      key={index.toString()}
+                      whileHover={{
+                        boxShadow: `0 0 25px rgba(${theme.accent}, 0.09)`,
+                        border: '1px solid transparent',
+                      }}>
+                      <h4>{plan.type}</h4>
+                      <h3>{plan.title}</h3>
+                      <ul>
+                        {plan.description.map((phrase, index) => (
+                          <li key={index.toString()}>• {phrase};</li>
+                        ))}
+                      </ul>
+                      <Link href={plan.url}>
+                        <IoBalloonOutline />
+                        <span>{plan.label}</span>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </div>
           </section>

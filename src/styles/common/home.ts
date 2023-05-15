@@ -122,5 +122,87 @@ export const HomeContainer = styled.div`
         }
       }
     }
+
+    .pricing {
+      width: 100%;
+      background: rgb(${({ theme }) => theme.foreground});
+
+      .wrapper {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 30px 20px;
+      }
+
+      h2 {
+        max-width: 1280px;
+        font-size: 1.8rem;
+        font-weight: 500;
+        line-height: 2.6rem;
+        margin-bottom: 10px;
+
+        i {
+          color: rgb(${({ theme }) => theme.primary});
+          display: block;
+          padding-left: 30px;
+        }
+      }
+
+      h3 {
+        font-size: 1.1rem;
+        font-weight: 500;
+        line-height: 1.6rem;
+      }
+
+      .plans-container {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 25px;
+        align-items: center;
+        justify-items: center;
+        margin-top: 20px;
+
+        div {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          gap: 15px;
+          width: 280px;
+          height: 100%;
+          border-radius: 10px;
+          padding: 20px;
+          background: rgb(${({ theme }) => theme.foreground});
+          border: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
+
+          h3 {
+            font-size: 1.4rem;
+            line-height: 1.8rem;
+            font-weight: 500;
+          }
+
+          h4 {
+            font-weight: 500;
+            color: rgb(${({ theme }) => theme.primary});
+          }
+
+          ul {
+            li {
+              font-size: 0.96rem;
+              line-height: 1.4rem;
+              margin-bottom: 5px;
+            }
+          }
+
+          a {
+            ${BaseButton}
+            padding: 12px;
+          }
+        }
+      }
+    }
   }
 `;
