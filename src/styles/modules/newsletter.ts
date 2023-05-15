@@ -6,7 +6,6 @@ export const NewsletterContainer = styled.section`
   flex-direction: column;
   gap: 10px;
   width: fit-content;
-  margin: 0 auto;
   background: rgb(${({ theme }) => theme.foreground});
   padding: 20px;
   border-radius: 10px;
@@ -14,6 +13,7 @@ export const NewsletterContainer = styled.section`
   position: relative;
   width: 100%;
   max-width: 800px;
+  margin: 40px auto;
 
   h3 {
     text-align: center;

@@ -54,7 +54,7 @@ export const FooterContainer = styled.footer`
               line-height: 1.2rem;
               :hover {
                 cursor: pointer;
-                color: rgb(${({ theme }) => theme.accent});
+                color: rgb(${({ theme }) => theme.primary_variant});
               }
             }
           }

@@ -1,8 +1,8 @@
 import { IoAt, IoMailOpen } from 'react-icons/io5';
 import { useState } from 'react';
 import { NewsletterContainer as Container } from '../styles/modules/newsletter';
-import { ClipLoader, PulseLoader } from 'react-spinners';
-import newsletter_image from '../../public/assets/newsletter.jpg';
+import { PulseLoader } from 'react-spinners';
+import newsletter_image from '../../public/assets/newsletter.png';
 import Image from 'next/image';
 import { useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
@@ -23,7 +23,7 @@ export default function NewsLetter(): JSX.Element {
       <section>
         <IoMailOpen />
         <Image
-          width={1200}
+          width={800}
           height={800}
           src={newsletter_image}
           alt='newsletter image by freepick'

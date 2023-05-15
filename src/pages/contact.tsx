@@ -64,14 +64,13 @@ const Contact: NextPage = (): JSX.Element => {
             <h1>Fique sempre ligado</h1>
             <h2>Como podemos ajudar?</h2>
             <p>
-              Por favor, utilize uma das formas de contacto abaixo clicando no
-              endereço de e-mail
-              <em>link</em> ou o <strong>formulário de contacto</strong> para
-              que possamos esclarecer quaisquer questões sobre os nossos
-              produtos e serviços.
+              Por favor, utilize uma das formas de contacto abaixo, clicando no
+              endereço de e-mail ou utilizando o{' '}
+              <strong>formulário de contacto</strong> para que possamos
+              esclarecer quaisquer questões sobre os nossos produtos e serviços.
             </p>
           </section>
-          <div className='contacts'>
+          <div>
             <h3>
               <BiEnvelope />
               <span>Nosso endereço de e-mail:</span>
@@ -106,7 +105,7 @@ const Contact: NextPage = (): JSX.Element => {
                   id='email'
                   name='from_email'
                   required
-                  placeholder='Escreva os seu endereço de e-mail'
+                  placeholder='Escreva o seu endereço de e-mail'
                   maxLength={30}
                   onChange={(e) => formDataPicker(e)}
                 />
@@ -120,7 +119,7 @@ const Contact: NextPage = (): JSX.Element => {
               rows={10}
               maxLength={2500}
               required
-              placeholder='Escreva a sua mensagem aqui'
+              placeholder='Escreva a sua mensagem'
               onChange={(e) => formDataPicker(e)}
             />
             <span className='errorMessage'>{messageStatus}</span>

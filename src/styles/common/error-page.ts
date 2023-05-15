@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BaseButton_Alter } from '../defaults';
+import { BaseButtonOutline } from '../defaults';
 
 export const errorPage = styled.article`
   margin-top: 70px;
@@ -22,7 +22,7 @@ export const errorPage = styled.article`
 
     button {
       margin-top: 20px;
-      ${BaseButton_Alter}
+      ${BaseButtonOutline}
       color: rgb(${({ theme }) => theme.font});
     }
   }

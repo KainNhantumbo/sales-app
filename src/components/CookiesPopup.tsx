@@ -35,14 +35,14 @@ const CookiesPopup = (): JSX.Element => {
       {privacyAdvisor && (
         <section className='advisor'>
           <div>
-            <FaCookieBite className='cookie-icon' />
             <p>
               Nosso site utiliza cookies para te proporcionar uma melhor
               experiência. Ao acessar o site da {complements.defaultTitle}, você
-              concorda com a nossa
-              <Link href='/politica-de-privacidade'>
+              concorda com a nossa{'  '}
+              <Link href='/legal/privacy-policy'>
                 <strong>Política de Privacidade e Cookies</strong>
               </Link>
+              .
             </p>
             <button onClick={advisorController}>
               <IoCheckmark />

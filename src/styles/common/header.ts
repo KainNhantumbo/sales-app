@@ -61,10 +61,7 @@ export const HeaderContainer = styled.header`
       align-items: center;
       justify-content: center;
       gap: 10px;
-      text-transform: uppercase;
-      font-family: 'Roboto';
-      font-size: 0.91rem;
-      letter-spacing: 0.2px;
+      font-size: 0.96rem;
 
       @media screen and (max-width: 600px) {
         gap: 10px;
@@ -74,7 +71,7 @@ export const HeaderContainer = styled.header`
         padding: 5px;
         :hover {
           cursor: pointer;
-          color: rgb(${({ theme }) => theme.secondary});
+          color: rgb(${({ theme }) => theme.primary_variant});
         }
       }
     }

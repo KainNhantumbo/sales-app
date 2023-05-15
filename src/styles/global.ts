@@ -16,7 +16,7 @@ export const GlobalStyles = createGlobalStyle`
     font-family: Inter, 'Open Sans', Roboto, Poppins, 'PT Sans', sans-serif;
     color: rgb(${({ theme }) => theme.font});
     width: 100%;
-    background: rgb(${({ theme }) => theme.background});
+    background: rgb(${({ theme }) => theme.foreground});
     position: relative;
   }
 
@@ -33,13 +33,13 @@ export const GlobalStyles = createGlobalStyle`
 
   ::-webkit-scrollbar {
     scroll-behavior: smooth;
-    width: 5px;
+    width: 8px;
     background: none;
     background: rgba(${({ theme }) => theme.background}, .3);
   }
 
   ::-webkit-scrollbar-thumb {
     border-radius: 15px;
-    background: rgba(${({ theme }) => theme.accent}, .5);
+    background: rgba(${({ theme }) => theme.font}, 1);
   }
 `;

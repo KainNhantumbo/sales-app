@@ -18,18 +18,13 @@ export const CookiesPopupContainer = styled.div`
     align-items: center;
     gap: 10px;
     line-height: 1.4rem;
-
-    .cookie-icon {
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      left: calc(50% - 25px);
-      top: -35px;
-      color: rgb(${({ theme }) => theme.secondary});
+    font-size: 0.9rem;
+    
+    @media screen and (max-width: 435px ) {
+      flex-direction: column;
     }
-
     strong {
-      color: rgb(${({ theme }) => theme.secondary});
+      color: rgb(${({ theme }) => theme.secondary_variant});
       cursor: pointer;
     }
 
