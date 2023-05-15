@@ -1,4 +1,4 @@
-import { IoLogoFacebook } from 'react-icons/io5';
+import { IoCard, IoCartOutline, IoChatbubbleEllipsesOutline, IoInfiniteOutline, IoLogoFacebook, IoMegaphoneOutline, IoPlanetOutline, IoRocketOutline, IoShareSocialOutline } from 'react-icons/io5';
 import type { Author } from '../../@types/index';
 import authorPicture from '../../public/assets/author.jpg';
 import { FaInstagram, FaLinkedinIn } from 'react-icons/fa';
@@ -61,4 +61,39 @@ export const urls: Array<{ name: string; url: string }> = [
     name: 'Tips',
     url: '/categories/tips',
   },
+];
+
+export const store_features = [
+  {
+    title: 'Integração com meios de pagamento',
+    description:
+      'Os melhores e mais confiáveis meios de pagamento já integrados na sua loja.',
+      icon: IoCard 
+  },
+  {
+    title: 'Venda em diversos canais',
+    description: 'Integre a sua loja virtual com redes sociais, canais de marketplace ou dropshipping em poucos cliques.',
+    icon:IoMegaphoneOutline
+  },
+  {
+    title: 'Sem limite de produtos ou de visitas',
+    description: 'Adicione quantos produtos quiser e não tenha limite de vendas ou de visitas na sua loja virtual.',
+    icon:IoInfiniteOutline
+  },
+  {
+    title: 'Estratégias de marketing digital',
+    description: 'Aumente suas vendas com campanhas de performance via Google e redes sociais',
+    icon:IoRocketOutline
+  },
+  {
+    title: 'Checkout transparente',
+    description: 'Ofereça a melhor Experiência no seu e-commerce e diminua sua taxa de abandono de carrinho.',
+    icon: IoCartOutline
+  },
+  {
+    title: 'Diferentes canais de suporte',
+    description: 'Conte com os diferentes canais de suporte que oferecemos e tenha sempre a ajuda que você precisa na hora certa.',
+    icon: IoChatbubbleEllipsesOutline
+  },
+ 
 ];
