@@ -10,12 +10,12 @@ export const author: Author = {
 };
 
 export const complements = {
-  defaultTitle: 'TravelSketchpad',
+  defaultTitle: 'Rubymart',
   email: 'connectadevelops@gmail.com',
-  websiteName: 'TravelSketchpad Blog - Travel Content Blog',
-  websiteUrl: 'https://travel-sketchpad.vercel.app/',
+  websiteName: 'Rubymart - Sales Store of Mozambique',
+  websiteUrl: 'https://rubymart.vercel.app/',
   description:
-    'Discover useful advice, tips & case studies around travel affiliate programs and earning money on travel blogs and travel destinations',
+    `De moda a decoração de interiores, artigos artesanais, beleza e cosméticos, roupa, sapatos e mais, os produtos que vocêe irá amar estão apenas a um toque. Você poderá sempre contar conosco para encontrar os produtos perfeitos para avida que deseja.`,
 };
 
 export const urls: Array<{ name: string; url: string }> = [

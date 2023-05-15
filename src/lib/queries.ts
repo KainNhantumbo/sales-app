@@ -11,7 +11,7 @@ export async function getPost(slug: string) {
 export async function getPaths() {
   return await fetch({
     method: 'get',
-    url: '/travel-sketchpad/posts?fields=slug',
+    url: '/api/v1/blog/posts?fields=slug',
   }).then((res) =>
     res.data.map((item: any) => ({ params: { slug: item.slug } }))
   );

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { FaCookieBite } from 'react-icons/fa';
 import { IoCheckmark } from 'react-icons/io5';
 import { CookiesPopupContainer as Container } from '../styles/common/cookies-popup';
+import { complements } from '@/data/app-data';
 
 const CookiesPopup = (): JSX.Element => {
   const [privacyAdvisor, setprivacyAdvisor] = useState<boolean>();
@@ -36,15 +37,16 @@ const CookiesPopup = (): JSX.Element => {
           <div>
             <FaCookieBite className='cookie-icon' />
             <p>
-              We use cookies (e.g. personalisation, ads, analytics, social
-              media).{' '}
-              <Link href='/privacy-policy'>
-                <strong>Find out more</strong>
+              Nosso site utiliza cookies para te proporcionar uma melhor
+              experiência. Ao acessar o site da {complements.defaultTitle}, você
+              concorda com a nossa
+              <Link href='/politica-de-privacidade'>
+                <strong>Política de Privacidade e Cookies</strong>
               </Link>
             </p>
             <button onClick={advisorController}>
               <IoCheckmark />
-              <span>Agree</span>
+              <span>Entendi</span>
             </button>
           </div>
         </section>

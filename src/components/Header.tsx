@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { urls } from '@/data/app-data';
+import { complements, urls } from '@/data/app-data';
 import { HiViewList, HiX } from 'react-icons/hi';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -35,7 +35,7 @@ export default function Header(): JSX.Element {
       <div className='logo'>
         <Link href={'/'}>
           <span>
-            Travel<i>Sketchpad</i>
+            {complements.defaultTitle}
           </span>
         </Link>
       </div>

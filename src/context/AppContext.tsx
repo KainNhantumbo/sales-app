@@ -67,21 +67,21 @@ export default function AppContext(props: AppContext): JSX.Element {
 
   // --------------------------socket---------------------------
 
-  useEffect(() => {
-    socket.on(
-      'disconnect',
-      useCallback(() => {
-        dispatch({
-          type: actions.IS_CONNECTED,
-          payload: { ...state, isConnected: false },
-        });
-      }, [])
-    );
+  // useEffect(() => {
+  //   socket.on(
+  //     'disconnect',
+  //     useCallback(() => {
+  //       dispatch({
+  //         type: actions.IS_CONNECTED,
+  //         payload: { ...state, isConnected: false },
+  //       });
+  //     }, [])
+  //   );
 
-    return () => {
-      socket.off('disconnect');
-    };
-  }, []);
+  //   return () => {
+  //     socket.off('disconnect');
+  //   };
+  // }, []);
 
   // ----------------user authentication--------------------------
   const fetchAPI = (config: AxiosRequestConfig): AxiosPromise<any> => {
@@ -151,40 +151,40 @@ export default function AppContext(props: AppContext): JSX.Element {
     }
   }
 
-  useEffect(() => {
-    authenticateUser();
-  }, []);
+  // useEffect(() => {
+  //   authenticateUser();
+  // }, []);
 
-  useEffect(() => {
-    const revalidateUserAuth = setTimeout(() => {
-      (async (): Promise<void> => {
-        try {
-          const { data } = await fetch({
-            method: 'get',
-            url: '/api/v1/auth/refresh',
-            withCredentials: true,
-          });
-          dispatch({
-            type: actions.USER_AUTH,
-            payload: {
-              ...state,
-              userAuth: {
-                token: data?.token,
-                id: data?.id,
-                invalidated: data?.invalidated,
-              },
-            },
-          });
-        } catch (err: any) {
-          if (err.response?.status === 401) {
-            router.push('/auth/sign-in');
-          }
-          console.error(err);
-        }
-      })();
-    }, 1000 * 60 * 9);
-    return () => clearTimeout(revalidateUserAuth);
-  }, [state.userAuth]);
+  // useEffect(() => {
+  //   const revalidateUserAuth = setTimeout(() => {
+  //     (async (): Promise<void> => {
+  //       try {
+  //         const { data } = await fetch({
+  //           method: 'get',
+  //           url: '/api/v1/auth/refresh',
+  //           withCredentials: true,
+  //         });
+  //         dispatch({
+  //           type: actions.USER_AUTH,
+  //           payload: {
+  //             ...state,
+  //             userAuth: {
+  //               token: data?.token,
+  //               id: data?.id,
+  //               invalidated: data?.invalidated,
+  //             },
+  //           },
+  //         });
+  //       } catch (err: any) {
+  //         if (err.response?.status === 401) {
+  //           router.push('/auth/sign-in');
+  //         }
+  //         console.error(err);
+  //       }
+  //     })();
+  //   }, 1000 * 60 * 9);
+  //   return () => clearTimeout(revalidateUserAuth);
+  // }, [state.userAuth]);
 
   return (
     <ThemeContext>
