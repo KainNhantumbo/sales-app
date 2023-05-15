@@ -20,7 +20,8 @@ export const HomeContainer = styled.div`
     width: 100%;
     margin-top: 90px;
 
-    .introduction, .presentation {
+    .introduction,
+    .presentation {
       width: 100%;
       max-width: 1280px;
       margin: 0 auto;
@@ -29,10 +30,20 @@ export const HomeContainer = styled.div`
       align-items: center;
       gap: 20px;
       background: rgb(${({ theme }) => theme.foreground});
+      padding: 0 20px;
 
       img {
         max-width: 500px;
         max-height: 500px;
+      }
+
+      @media screen and (max-width: 780px) {
+        flex-direction: column;
+
+        img {
+          max-width: 300px;
+          max-height: 300px;
+        }
       }
 
       div {
@@ -52,6 +63,23 @@ export const HomeContainer = styled.div`
         a {
           ${BaseButton}
           padding: 12px;
+        }
+
+        @media screen and (max-width: 900px) {
+          h2 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            line-height: 2.2rem;
+          }
+
+          span {
+            font-size: 0.9rem;
+            line-height: 1.2rem;
+          }
+
+          a {
+            font-size: 1rem;
+          }
         }
       }
     }
@@ -91,6 +119,13 @@ export const HomeContainer = styled.div`
         grid-gap: 25px;
         align-items: center;
         justify-items: center;
+
+        @media screen and (max-width: 850px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        @media screen and (max-width: 570px) {
+          grid-template-columns: 1fr;
+        }
 
         div {
           display: flex;
@@ -206,7 +241,7 @@ export const HomeContainer = styled.div`
     }
 
     .presentation {
-      padding: 30px 0;
+      padding: 30px 20px;
       span {
         line-height: 1.6rem;
       }

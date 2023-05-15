@@ -31,53 +31,55 @@ export default function Header(): JSX.Element {
 
   return (
     <Container>
-      <div className='logo'>
-        <Link href={'/'}>
-          <span>{complements.defaultTitle}</span>
-        </Link>
-      </div>
-      <AnimatePresence>
-        {isMenu && (
-          <motion.nav
-            initial={{ translateY: -70 }}
-            animate={{ translateY: 0 }}
-            transition={{ duration: 0.25 }}
-            exit={{
-              opacity: 0,
-              translateY: -70,
-              transition: { duration: 0.25 },
-            }}
-            style={{ display: isMenu ? 'flex' : 'none' }}>
-            <section>
-              {urls.map((item, index) => (
-                <Link key={index.toString()} href={item.url}>
-                  <motion.span whileHover={{ scale: 1.1 }}>
-                    {item.name}
-                  </motion.span>
+      <div className='wrapper'>
+        <div className='logo'>
+          <Link href={'/'}>
+            <span>{complements.defaultTitle}</span>
+          </Link>
+        </div>
+        <AnimatePresence>
+          {isMenu && (
+            <motion.nav
+              initial={{ translateY: -70 }}
+              animate={{ translateY: 0 }}
+              transition={{ duration: 0.25 }}
+              exit={{
+                opacity: 0,
+                translateY: -70,
+                transition: { duration: 0.25 },
+              }}
+              style={{ display: isMenu ? 'flex' : 'none' }}>
+              <section>
+                {urls.map((item, index) => (
+                  <Link key={index.toString()} href={item.url}>
+                    <motion.span whileHover={{ scale: 1.1 }}>
+                      {item.name}
+                    </motion.span>
+                  </Link>
+                ))}
+              </section>
+              <div className='auth-btns'>
+                <Link href={'/auth/sign-in'} className='login-btn'>
+                  <IoLogInOutline />
+                  <span>Acessar</span>
                 </Link>
-              ))}
-            </section>
-            <div className='auth-btns'>
-              <Link href={'/auth/sign-in'} className='login-btn'>
-                <IoLogInOutline />
-                <span>Acessar</span>
-              </Link>
-              <Link href={'/auth/sign-in'} className='sign-in-btn'>
-                <IoStorefrontOutline />
-                <span>Cadastrar-se</span>
-              </Link>
-            </div>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+                <Link href={'/auth/sign-in'} className='sign-in-btn'>
+                  <IoStorefrontOutline />
+                  <span>Cadastrar-se</span>
+                </Link>
+              </div>
+            </motion.nav>
+          )}
+        </AnimatePresence>
 
-      <motion.button
-        whileTap={{ scale: 0.8 }}
-        title='Toggle menu panel'
-        className='toggle-btn'
-        onClick={toggleMenu}>
-        {!isMenu ? <HiViewList /> : <HiX />}
-      </motion.button>
+        <motion.button
+          whileTap={{ scale: 0.8 }}
+          title='Toggle menu panel'
+          className='toggle-btn'
+          onClick={toggleMenu}>
+          {!isMenu ? <HiViewList /> : <HiX />}
+        </motion.button>
+      </div>
     </Container>
   );
 }

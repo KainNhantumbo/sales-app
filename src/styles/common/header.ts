@@ -9,18 +9,21 @@ export const HeaderContainer = styled.header`
   left: 0;
   backdrop-filter: blur(5px);
   background: rgba(${({ theme }) => theme.foreground}, 0.6);
-  box-shadow: 0 0 20px rgba(${({ theme }) => theme.primary}, 0.1);
   padding: 20px 8px;
   font-weight: 500;
   font-size: 1.1rem;
   z-index: 10000;
 
-  
-  
-  @media screen and (min-width: 1200px) {
-    max-width: 1200px;
-    left: calc(50% - 600px);
+  .wrapper {
+    margin: 0 auto;
+    @media screen and (min-width: 1200px) {
+      max-width: 1200px;
+      left: calc(50% - 600px);
 
+      .logo {
+        left: calc(50% - 600px);
+      }
+    }
   }
 
   .logo {
@@ -88,33 +91,33 @@ export const HeaderContainer = styled.header`
 
     @media screen and (max-width: 990px) {
       display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    position: relative;
-    left: 180px;
-    width: 100%;
-    gap: 20px;
-
-    section {
-      display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-size: 0.96rem;
+      height: 100%;
+      position: relative;
+      left: 180px;
+      width: 100%;
+      gap: 20px;
 
-      @media screen and (max-width: 600px) {
+      section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         gap: 10px;
-      }
+        font-size: 0.96rem;
 
-      span {
-        padding: 5px;
-        :hover {
-          cursor: pointer;
-          color: rgb(${({ theme }) => theme.primary_variant});
+        @media screen and (max-width: 600px) {
+          gap: 10px;
+        }
+
+        span {
+          padding: 5px;
+          :hover {
+            cursor: pointer;
+            color: rgb(${({ theme }) => theme.primary_variant});
+          }
         }
       }
-    } 
     }
 
     @media screen and (max-width: 770px) {

@@ -117,9 +117,14 @@ export const FooterContainer = styled.footer`
     flex-direction: column;
     font-size: 0.9rem;
     align-items: center;
-    line-height: 1.2rem;
+    line-height: 1.4rem;
     color: rgb(${({ theme }) => theme.neutral});
     background: rgba(${({ theme }) => theme.accent}, 0.9);
     padding: 10px 0;
+
+    @media screen and (max-width: 350px) {
+      text-align: center;
+      padding: 10px;
+    }
   }
 `;
