@@ -87,4 +87,4 @@ export default function ThemeContext({ children }: IProps): JSX.Element {
   );
 }
 
-export const useAppContext = (): IContext => useContext(context);
+export const useThemeContext = (): IContext => useContext(context);

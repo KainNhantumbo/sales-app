@@ -83,7 +83,7 @@ export const Button_Mono_A = css`
 
 export const Button_Mono_B = css`
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   background: none;
   color: rgb(${({ theme }) => theme.font});
   border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
@@ -95,7 +95,7 @@ export const Button_Mono_B = css`
   place-content: center;
 
   :hover {
-    color: rgb(${({ theme }) => theme.secondary});
+    color: rgb(${({ theme }) => theme.primary_variant});
   }
 
   svg {

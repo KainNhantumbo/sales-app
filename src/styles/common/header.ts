@@ -187,7 +187,6 @@ export const HeaderContainer = styled.header`
 
   .toggle-btn {
     ${Button_Mono_B}
-    border-radius: 3px;
     position: fixed;
     top: 18px;
     right: 20px;

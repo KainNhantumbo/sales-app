@@ -1,18 +1,24 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { HiDotsHorizontal } from 'react-icons/hi';
 import { complements, urls } from '@/data/app-data';
 import { FooterContainer as Container } from '../styles/common/footer';
-import { IoLockOpenOutline, IoNewspaperOutline, IoPaperPlaneOutline } from 'react-icons/io5';
+import {
+  IoLockOpenOutline,
+  IoNewspaperOutline,
+  IoPaperPlaneOutline,
+} from 'react-icons/io5';
+import { useThemeContext } from '@/context/ThemeContext';
+import { BiMoon, BiSun } from 'react-icons/bi';
 
 export default function Footer(): JSX.Element {
+  const { darkmode, themeSwitcher } = useThemeContext();
   return (
     <Container>
       <section className='navigation'>
         <nav>
           <section>
             <h3>
-              <IoPaperPlaneOutline/>
+              <IoPaperPlaneOutline />
               <span>Navegação</span>
             </h3>
             <div className='elements'>
@@ -25,7 +31,7 @@ export default function Footer(): JSX.Element {
           </section>
           <section>
             <h3>
-              <IoNewspaperOutline/>
+              <IoNewspaperOutline />
               <span>Legal e Contacto</span>
             </h3>
             <div className='elements'>
@@ -42,7 +48,7 @@ export default function Footer(): JSX.Element {
           </section>
           <section>
             <h3>
-              <IoLockOpenOutline/>
+              <IoLockOpenOutline />
               <span>Acesso a Contas</span>
             </h3>
             <div className='elements'>
@@ -78,6 +84,15 @@ export default function Footer(): JSX.Element {
             </motion.a>
           ))}
         </div>
+        <motion.button
+          whileTap={{ scale: 0.7 }}
+          transition={{ type: 'spring', duration: 0.5 }}
+          title='Change Theme'
+          aria-label='Toogle theme'
+          className='theme-switcher'
+          onClick={themeSwitcher}>
+          {darkmode ? <BiSun /> : <BiMoon />}
+        </motion.button>
       </div>
 
       <section>

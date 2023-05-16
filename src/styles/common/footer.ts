@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button_Mono_A } from '../defaults';
 
 export const FooterContainer = styled.footer`
   width: 100%;
@@ -70,6 +71,7 @@ export const FooterContainer = styled.footer`
     align-items: center;
     align-self: center;
     width: 90%;
+    position: relative;
     border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.5);
 
     .logo {
@@ -106,6 +108,26 @@ export const FooterContainer = styled.footer`
           width: 20px;
           height: 20px;
         }
+      }
+    }
+
+    .theme-switcher {
+      position: absolute;
+      top: calc(50% - 15px);
+      right: 20px;
+      padding: 10px;
+      background: rgba(${({ theme }) => theme.primary}, 0.5);
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      color: rgb(${({ theme }) => theme.font});
+      :hover {
+        color: rgb(${({ theme }) => theme.primary_variant});
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
       }
     }
   }
