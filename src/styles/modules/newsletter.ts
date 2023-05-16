@@ -21,6 +21,14 @@ export const NewsletterContainer = styled.section`
     margin: 40px 0;
   }
 
+  .error-message {
+    color: rgb(${({ theme }) => theme.alert});
+    font-weight: 500;
+    font-size: 0.96rem;
+    max-width: 320px;
+    line-height: 1.4rem;
+  }
+
   h3 {
     text-align: center;
     margin-top: 30px;

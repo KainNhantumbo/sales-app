@@ -1,19 +1,44 @@
-import { IoAt, IoMailOpen } from 'react-icons/io5';
-import { useState } from 'react';
-import { NewsletterContainer as Container } from '../styles/modules/newsletter';
-import { PulseLoader } from 'react-spinners';
-import newsletter_image from '../../public/assets/newsletter.png';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import fetch from '../config/client';
+import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
+import { actions } from '@/data/reducer-actions';
+import { IoAt, IoMailOpen } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
+import newsletter_image from '../../public/assets/newsletter.png';
+import { NewsletterContainer as Container } from '../styles/modules/newsletter';
 
 export default function NewsLetter(): JSX.Element {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const { fetchAPI } = useAppContext();
   const theme = useTheme();
+  const { state, dispatch } = useAppContext();
+  const [error, setError] = useState({ status: false, message: '' });
 
-  async function handleEmailSubmition() {}
+  async function handleEmailSubmition(): Promise<void> {
+    try {
+      setLoading(true);
+      await fetch({
+        method: 'post',
+        url: '/api/v1/users/newsletter',
+        data: state.newSubscriptorValue,
+      });
+    } catch (error: any) {
+      console.error(error);
+      setError({ status: true, message: error?.response?.data?.message });
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    const desc = setTimeout(() => {
+      setError({ status: false, message: '' });
+    }, 5000);
+    return () => {
+      clearTimeout(desc);
+    };
+  }, [error.status]);
 
   return (
     <Container>
@@ -36,7 +61,7 @@ export default function NewsLetter(): JSX.Element {
           </p>
 
           <form onSubmit={(e) => e.preventDefault()}>
-            {!loading && (
+            {!loading && !error.status && (
               <>
                 <input
                   type='email'
@@ -44,6 +69,16 @@ export default function NewsLetter(): JSX.Element {
                   placeholder='Escreva o seu e-mail'
                   autoComplete='true'
                   required={true}
+                  value={state.newSubscriptorValue.subscriptor}
+                  onChange={(e) =>
+                    dispatch({
+                      type: actions.NEW_SUBSCRIPTOR_VALUE,
+                      payload: {
+                        ...state,
+                        newSubscriptorValue: { subscriptor: e.target.value },
+                      },
+                    })
+                  }
                 />
                 <button type='submit' onClick={handleEmailSubmition}>
                   <IoAt />
@@ -51,7 +86,11 @@ export default function NewsLetter(): JSX.Element {
                 </button>
               </>
             )}
-            {loading && (
+
+            {error.status && (
+              <span className='error-message'>{error.message}</span>
+            )}
+            {loading && !error.status && (
               <>
                 <PulseLoader
                   color={`rgb(${theme.primary})`}

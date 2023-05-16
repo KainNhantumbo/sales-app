@@ -5,6 +5,7 @@ export const initialState: State = {
   isPromptActive: false,
   isConnected: false,
   userAuth: { id: '', token: '', invalidated: false },
+  newSubscriptorValue: { subscriptor: '' },
 };
 
 export default function reducer(state: State, action: Action) {
@@ -20,6 +21,11 @@ export default function reducer(state: State, action: Action) {
       return {
         ...state,
         isConnected: action.payload?.isConnected!,
+      };
+    case actions.NEW_SUBSCRIPTOR_VALUE:
+      return {
+        ...state,
+        newSubscriptorValue: action.payload?.newSubscriptorValue!,
       };
     default:
       return { ...state };
