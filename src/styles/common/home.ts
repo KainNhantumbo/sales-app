@@ -12,7 +12,7 @@ export const HomeContainer = styled.div`
   * {
     ::selection {
       background: rgb(${({ theme }) => theme.background_variant});
-      color: rgb(${({ theme }) => theme.secondary});
+      color: rgb(${({ theme }) => theme.primary_variant});
     }
   }
 
@@ -107,7 +107,7 @@ export const HomeContainer = styled.div`
         align-self: flex-start;
 
         i {
-          color: rgb(${({ theme }) => theme.primary});
+          color: rgb(${({ theme }) => theme.primary_variant});
           display: block;
           padding-left: 30px;
         }
@@ -235,6 +235,7 @@ export const HomeContainer = styled.div`
           a {
             ${BaseButton}
             padding: 12px;
+            align-self: center;
           }
         }
       }

@@ -21,7 +21,7 @@ export const CookiesPopupContainer = styled.div`
     font-size: 0.9rem;
     
     @media screen and (max-width: 435px ) {
-      flex-direction: column;
+      flex-direction: column; 
     }
     strong {
       color: rgb(${({ theme }) => theme.secondary_variant});

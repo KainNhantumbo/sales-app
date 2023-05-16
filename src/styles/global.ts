@@ -13,7 +13,7 @@ export const GlobalStyles = createGlobalStyle`
   }
   
   body {
-    font-family: Inter, 'Open Sans', Roboto, Poppins, 'PT Sans', sans-serif;
+    font-family: CentraNube, Inter, 'Open Sans', Roboto, Poppins, 'PT Sans', sans-serif;
     color: rgb(${({ theme }) => theme.font});
     width: 100%;
     background: rgb(${({ theme }) => theme.foreground});

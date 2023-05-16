@@ -3,7 +3,7 @@ import { css } from 'styled-components';
 export const BaseButtonOutline  = css`
   border: none;
   background: none;
-  border-radius: 20px;
+  border-radius: 10px;
   position: relative;
   padding: 10px;
   color: rgb(${({ theme }) => theme.font});
@@ -11,7 +11,7 @@ export const BaseButtonOutline  = css`
   width: fit-content;
   cursor: pointer;
   :hover {
-    color: rgb(${({ theme }) => theme.accent});
+    color: rgb(${({ theme }) => theme.primary_variant});
   }
   svg {
     width: 20px;
@@ -30,7 +30,7 @@ export const BaseButtonOutline  = css`
 
 export const BaseButton = css`
   border: none;
-  border-radius: 20px;
+  border-radius: 10px;
   position: relative;
   padding: 10px;
   width: fit-content;
@@ -39,7 +39,7 @@ export const BaseButton = css`
   color: rgb(${({ theme }) => theme.font});
   border: 1px solid transparent;
   :hover {
-    box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.08);
+    box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.09);
   }
 
   svg {
@@ -130,17 +130,16 @@ export const StyledCornerButton = css`
 
 export const StyledLabels = css`
   font-weight: 500;
-  display: inline;
   position: relative;
   line-height: 1.4rem;
 
   svg {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     position: absolute;
     top: 2px;
     left: 0;
-    color: rgb(${({ theme }) => theme.secondary});
+    color: rgb(${({ theme }) => theme.font});
   }
   span {
     padding-left: 25px;
@@ -159,7 +158,7 @@ export const StyledInputs = css`
     line-height: 1.2rem;
     font-weight: 400;
     outline: none;
-    border-radius: 20px;
+    border-radius: 10px;
     background: rgb(${({ theme }) => theme.background});
     border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
 

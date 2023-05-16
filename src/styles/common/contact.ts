@@ -7,6 +7,7 @@ export const ContactContainer = styled.div`
   align-items: center;
   justify-items: center;
   line-height: 1.6rem;
+  background: rgb(${({ theme }) => theme.background});
 
   h2,
   h3 {

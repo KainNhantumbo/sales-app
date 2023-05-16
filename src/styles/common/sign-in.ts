@@ -1,13 +1,19 @@
 import styled from 'styled-components';
-import { BaseButton, BaseButtonOutline, StyledInputs } from '../defaults';
+import {
+  BaseButton,
+  BaseButtonOutline,
+  StyledInputs,
+  StyledLabels,
+} from '../defaults';
 
 export const SignInContainer = styled.div`
   position: relative;
+  padding: 60px 0;
   width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
-  background: rgb(${({ theme }) => theme.foreground});
+  background: rgb(${({ theme }) => theme.background_variant});
 
   * {
     ::selection {
@@ -21,20 +27,21 @@ export const SignInContainer = styled.div`
     display: grid;
     place-content: center;
     place-items: center;
-    padding: 25px;
+    padding: 5px;
 
     .form-container {
       width: 100%;
       height: auto;
-      max-width: 500px;
+      max-width: 430px;
       display: flex;
-      gap: 20px;
+      gap: 16px;
       justify-content: flex-start;
       flex-direction: column;
-      border-radius: 10px;
-      padding: 35px 20px;
+      border-radius: 20px;
+      padding: 30px 25px;
       margin: 25px;
-      border: 1px solid rgba(${({ theme }) => theme.accent}, 0.1);
+      background: rgb(${({ theme }) => theme.foreground});
+      box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.09);
 
       @media screen and (min-width: 440px) {
         min-width: 400px;
@@ -42,9 +49,16 @@ export const SignInContainer = styled.div`
 
       h2 {
         text-align: center;
-        font-weight: 600;
-        line-height: 2rem;
+        font-weight: 500;
+        line-height: 1.8rem;
         font-size: 1.4rem;
+      }
+
+      p {
+        font-size: 0.92rem;
+        font-weight: 500;
+        line-height: 1.4rem;
+        text-align: center;
       }
 
       form {
@@ -53,40 +67,80 @@ export const SignInContainer = styled.div`
         flex-direction: column;
         gap: 20px;
 
-        ${StyledInputs}
+        .input-field {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          label {
+            ${StyledLabels};
+          }
+          ${StyledInputs}
+        }
 
         .error-message {
-          color: rgb(${({ theme }) => theme.secondary});
+          color: rgb(${({ theme }) => theme.alert});
           font-weight: 500;
-          font-size: 0.8rem;
+          font-size: 0.96rem;
           max-width: 320px;
           line-height: 1.4rem;
         }
 
-        .actions {
+        button {
+          ${BaseButton}
+          width: 100%;
+          padding-left: 0;
+        }
+      }
+
+      .password-reset {
+        a {
+          color: rgb(${({ theme }) => theme.primary_variant});
+          font-size: 0.9rem;
+          font-weight: 500;
+          line-height: 1.2rem;
+          cursor: pointer;
+
+          :hover {
+            color: rgb(${({ theme }) => theme.accent});
+            transition: all 200ms ease;
+          }
+        }
+      }
+
+      .sign-in-options {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        .login-btns {
           display: flex;
           flex-flow: row wrap;
-          justify-content: flex-start;
+          align-items: center;
           gap: 10px;
 
-          .login {
-            ${BaseButton}
-          }
-          .register {
+          a {
             ${BaseButtonOutline}
           }
         }
       }
-      .links {
-        color: rgb(${({ theme }) => theme.secondary});
-        font-size: 0.9rem;
-        font-weight: 500;
-        line-height: 1.2rem;
-        cursor: pointer;
 
-        :hover {
-          color: rgb(${({ theme }) => theme.background_variant});
-          transition: all 200ms ease;
+      .signup-request {
+        text-align: center;
+        font-size: 0.92rem;
+        font-weight: 500;
+        line-height: 1.4rem;
+
+        a {
+          color: rgb(${({ theme }) => theme.primary_variant});
+          cursor: pointer;
+          :hover {
+            color: rgb(${({ theme }) => theme.accent});
+          }
+
+          span {
+            pointer-events: none;
+          }
         }
       }
     }

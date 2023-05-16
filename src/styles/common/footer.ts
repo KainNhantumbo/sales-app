@@ -32,7 +32,7 @@ export const FooterContainer = styled.footer`
         h3 {
           display: flex;
           align-items: center;
-          font-weight: 600;
+          font-weight: 500;
           font-size: 1.1rem;
           svg {
             width: 20px;
@@ -96,10 +96,10 @@ export const FooterContainer = styled.footer`
       a {
         padding: 10px;
         background: rgba(${({ theme }) => theme.primary}, 0.5);
-        border-radius: 5px;
+        border-radius: 10px;
 
         :hover {
-          color: rgb(${({ theme }) => theme.accent});
+          color: rgb(${({ theme }) => theme.primary_variant});
         }
 
         svg {

@@ -32,7 +32,7 @@ export const errorPage = styled.article`
       font-size: 2.6rem;
       font-weight: 600;
       color: rgb(${({ theme }) => theme.font});
-      font-family: 'Grand Hotel', 'Roboto Mono';
+      font-family: 'Roboto', 'Helvetica Neue', 'Inter';
     }
   }
 `;

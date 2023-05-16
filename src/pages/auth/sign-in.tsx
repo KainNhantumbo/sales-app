@@ -1,9 +1,4 @@
-import {
-  IoLockClosedOutline,
-  IoLockOpenOutline,
-  IoLogInOutline,
-  IoMailOutline,
-} from 'react-icons/io5';
+import { IoLockClosedOutline, IoLogoFacebook, IoLogoGoogle, IoMailOutline } from 'react-icons/io5';
 import fetchClient from '../../config/client';
 import { actions } from '../../data/reducer-actions';
 import { useState } from 'react';
@@ -13,6 +8,8 @@ import { NextRouter, useRouter } from 'next/router';
 import { InputEvents, SubmitEvent } from '../../../@types';
 import { SignInContainer as Container } from '../../styles/common/sign-in';
 import { complements } from '@/data/app-data';
+import Layout from '@/components/Layout';
+import Link from 'next/link';
 
 export default function Signin(): JSX.Element {
   const { state, dispatch } = useAppContext();
@@ -67,55 +64,91 @@ export default function Signin(): JSX.Element {
   };
 
   return (
-    <Container>
-      <main>
-        <article>
-          <div className='form-container'>
-            <h2>Normies CMS</h2>
-            <form onSubmit={handleSubmit}>
-              <section className='input-field'>
-                <IoMailOutline />
-                <input
-                  type='email'
-                  name='email'
-                  placeholder='Escreva o seu e-mail'
-                  aria-label='Escreva o seu e-mail'
-                  required
-                  onChange={(e): void => handleChange(e)}
-                />
-              </section>
+    <Layout>
+      <Container>
+        <main>
+          <article>
+            <div className='form-container'>
+              <h2>Acesso de Usuário</h2>
+              <p>
+                Olá, preencha o formuário abaixo para acessar a sua conta de
+                usuário.
+              </p>
+              <form onSubmit={handleSubmit}>
+                <section className='input-field'>
+                  <label htmlFor='email'>
+                    <IoMailOutline />
+                    <span>E-mail</span>
+                  </label>
+                  <input
+                    type='email'
+                    id='email'
+                    name='email'
+                    placeholder='Escreva o seu e-mail'
+                    aria-label='Escreva o seu e-mail'
+                    required
+                    onChange={(e): void => handleChange(e)}
+                  />
+                </section>
 
-              <section className='input-field'>
-                <IoLockClosedOutline />
-                <input
-                  type='password'
-                  name='password'
-                  placeholder='Escreva a sua senha'
-                  aria-label='Escreva a sua senha'
-                  onChange={(e): void => handleChange(e)}
-                />
-              </section>
+                <section className='input-field'>
+                  <label htmlFor='password'>
+                    <IoLockClosedOutline />
+                    <span>Senha</span>
+                  </label>
+                  <input
+                    type='password'
+                    id='password'
+                    name='password'
+                    aria-hidden='true'
+                    placeholder='Escreva a sua senha'
+                    aria-label='Escreva a sua senha'
+                    onChange={(e): void => handleChange(e)}
+                  />
+                </section>
+                <div className='password-reset'>
+                  <Link href={'/auth/reset-password'}>
+                    <span>Esqueceu a senha? Recuperar conta.</span>
+                  </Link>
+                </div>
+                <span className='error-message'>{errorMessage}</span>
 
-              <span className='error-message'>{errorMessage}</span>
-              <section className='actions'>
                 <button className='login' type='submit'>
-                  <IoLockOpenOutline />
-                  <span>Login</span>
+                  <span>Acessar conta</span>
                 </button>
-                <button
-                  className='register'
-                  onClick={(): Promise<boolean> =>
-                    router.push('/auth/sign-up')
-                  }>
-                  <IoLogInOutline />
-                  <span>Signup</span>
-                </button>
-              </section>
-            </form>
-          </div>
-        </article>
-      </main>
-      <footer>&copy; {complements.copyrightSentence}</footer>
-    </Container>
+              </form>
+
+              <div className='sign-in-options'>
+                <h3>
+                  <span> ━━━━ Ou acesse com ━━━━ </span>
+                </h3>
+                <div className='login-btns'>
+                  <Link href={''}>
+                   <IoLogoGoogle/>
+                    <span>Google</span>{' '}
+                  </Link>
+                  <Link href={''}>
+                    <IoLogoFacebook/>
+                    <span>Facebook</span>{' '}
+                  </Link>
+                </div>
+                <div className='signup-request'>
+                  Ainda não tem uma conta?
+                  <Link href={'/auth/reset-password'}>
+                    <span> Criar conta.</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </article>
+        </main>
+        <footer>
+          &copy; {complements.defaultTitle} |{' '}
+          <Link href={'/legal/privacy-policy'}>
+            <span>Política de Privacidade</span>
+          </Link>
+        </footer>
+      </Container>
+    </Layout>
   );
 }

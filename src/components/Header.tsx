@@ -63,7 +63,7 @@ export default function Header(): JSX.Element {
                   <IoLogInOutline />
                   <span>Acessar</span>
                 </Link>
-                <Link href={'/auth/sign-in'} className='sign-in-btn'>
+                <Link href={'/auth/sign-up'} className='sign-in-btn'>
                   <IoStorefrontOutline />
                   <span>Cadastrar-se</span>
                 </Link>

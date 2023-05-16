@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { HiDotsHorizontal } from 'react-icons/hi';
 import { complements, urls } from '@/data/app-data';
 import { FooterContainer as Container } from '../styles/common/footer';
-import { IoNewspaperOutline, IoPaperPlaneOutline } from 'react-icons/io5';
+import { IoLockOpenOutline, IoNewspaperOutline, IoPaperPlaneOutline } from 'react-icons/io5';
 
 export default function Footer(): JSX.Element {
   return (
@@ -37,6 +37,23 @@ export default function Footer(): JSX.Element {
               </Link>
               <Link href={'/contact'}>
                 <span>Contacto</span>
+              </Link>
+            </div>
+          </section>
+          <section>
+            <h3>
+              <IoLockOpenOutline/>
+              <span>Acesso a Contas</span>
+            </h3>
+            <div className='elements'>
+              <Link href={'/auth/sign-in'}>
+                <span>Acessar conta</span>
+              </Link>
+              <Link href={'/auth/sign-up'}>
+                <span>Cadastrar-se</span>
+              </Link>
+              <Link href={'/auth/reset-password'}>
+                <span>Recuperar conta</span>
               </Link>
             </div>
           </section>

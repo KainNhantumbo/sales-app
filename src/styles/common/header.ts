@@ -174,6 +174,7 @@ export const HeaderContainer = styled.header`
 
     .login-btn {
       ${BaseButtonOutline}
+      border: none;
     }
     .sign-in-btn {
       ${BaseButton}
