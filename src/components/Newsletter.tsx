@@ -4,15 +4,15 @@ import fetch from '../config/client';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import { actions } from '@/data/reducer-actions';
-import { IoAt, IoMailOpen } from 'react-icons/io5';
+import { IoAt, IoMailOpen, IoPaperPlaneOutline } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
 import newsletter_image from '../../public/assets/newsletter.png';
 import { NewsletterContainer as Container } from '../styles/modules/newsletter';
 
 export default function NewsLetter(): JSX.Element {
-  const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ status: false, message: '' });
 
   async function handleEmailSubmition(): Promise<void> {
@@ -23,6 +23,14 @@ export default function NewsLetter(): JSX.Element {
         url: '/api/v1/users/newsletter',
         data: state.newSubscriptorValue,
       });
+      dispatch({
+        type: actions.NEW_SUBSCRIPTOR_VALUE,
+        payload: {
+          ...state,
+          newSubscriptorValue: { subscriptor: '' },
+        },
+      });
+      setError({ status: true, message: 'Inscreveu-se a newsletter com sucesso.' });
     } catch (error: any) {
       console.error(error);
       setError({ status: true, message: error?.response?.data?.message });
@@ -81,8 +89,8 @@ export default function NewsLetter(): JSX.Element {
                   }
                 />
                 <button type='submit' onClick={handleEmailSubmition}>
-                  <IoAt />
-                  <span>Enviar</span>
+                  <IoPaperPlaneOutline />
+                  <span>Inscrever-se</span>
                 </button>
               </>
             )}

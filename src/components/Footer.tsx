@@ -52,7 +52,7 @@ export default function Footer(): JSX.Element {
               <span>Acesso a Contas</span>
             </h3>
             <div className='elements'>
-              <Link href={'/auth/sign-in'}>
+              <Link href={'/auth/si0gn-in'}>
                 <span>Acessar conta</span>
               </Link>
               <Link href={'/auth/sign-up'}>

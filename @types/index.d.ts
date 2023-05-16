@@ -83,6 +83,14 @@ export interface ISignInData {
   password: string;
 }
 
+export interface ISignUp {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  confirm_password: string;
+}
+
 // --------------server data--------------------------
 export type ChatType = Array<{
   _id: string;

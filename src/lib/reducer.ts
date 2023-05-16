@@ -6,6 +6,13 @@ export const initialState: State = {
   isConnected: false,
   userAuth: { id: '', token: '', invalidated: false },
   newSubscriptorValue: { subscriptor: '' },
+  signupData: {
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+    confirm_password: '',
+  },
 };
 
 export default function reducer(state: State, action: Action) {
@@ -26,6 +33,11 @@ export default function reducer(state: State, action: Action) {
       return {
         ...state,
         newSubscriptorValue: action.payload?.newSubscriptorValue!,
+      };
+    case actions.SIGNUP_DATA:
+      return {
+        ...state,
+        signupData: action.payload?.signupData!,
       };
     default:
       return { ...state };
