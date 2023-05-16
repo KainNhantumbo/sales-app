@@ -49,7 +49,7 @@ export default function Signin(): JSX.Element {
           },
         },
       });
-      router.push(`/`);
+      router.push(`/users/feed`);
     } catch (err: any) {
       console.log(err);
       handleError(err.response?.data?.message);
@@ -134,7 +134,7 @@ export default function Signin(): JSX.Element {
                 </div>
                 <div className='signup-request'>
                   Ainda não tem uma conta?
-                  <Link href={'/auth/reset-password'}>
+                  <Link href={'/auth/sign-up'}>
                     <span> Criar conta.</span>
                   </Link>
                 </div>

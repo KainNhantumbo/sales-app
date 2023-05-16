@@ -18,6 +18,8 @@ import { SignUpContainer as Container } from '../../styles/common/sign-up';
 import Layout from '@/components/Layout';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
+import Link from 'next/link';
+import { complements } from '@/data/app-data';
 
 export default function Signup(): JSX.Element {
   const router: NextRouter = useRouter();
@@ -80,7 +82,10 @@ export default function Signup(): JSX.Element {
         <main>
           <article>
             <div className='form-container'>
-              <h2>Bem vindo a nossa comunidade</h2>
+              <h2>Bem vindo à {complements.defaultTitle}</h2>
+              <p>
+                Preencha o formuário abaixo para criar uma conta de usuário.
+              </p>
               <form onSubmit={handleSubmit}>
                 <section className='form-section'>
                   <div className='form-element'>
@@ -133,7 +138,7 @@ export default function Signup(): JSX.Element {
                   </div>
                   <div className='form-element'>
                     <label htmlFor='password'>
-                      <IoLockClosedOutline />
+                      <IoLockOpenOutline />
                       <span>Senha</span>
                     </label>
                     <input
@@ -151,7 +156,7 @@ export default function Signup(): JSX.Element {
                 <section className='form-section'>
                   <div className='form-element'>
                     <label htmlFor='confirm_password'>
-                      <IoLockOpenOutline />
+                      <IoLockClosedOutline />
                       <span>Confirme a senha</span>
                     </label>
                     <input
@@ -184,29 +189,26 @@ export default function Signup(): JSX.Element {
                   </>
                 )}
 
-                <section className='actions'>
-                  <button className='next' type='submit'>
-                    <IoLogInOutline />
-                    <span>Get started</span>
-                  </button>
-                  <button
-                    className='login'
-                    onClick={(): Promise<boolean> =>
-                      router.push('/auth/sign-in')
-                    }>
-                    <IoLockOpenOutline />
-                    <span>Login</span>
-                  </button>
-                </section>
+                <button className='next' type='submit'>
+                  <span>Cadastre-se</span>
+                </button>
               </form>
+              <div className='sign-in-options'>
+                <div className='signup-request'>
+                  Já tem uma conta?
+                  <Link href={'/auth/sign-in'}>
+                    <span> Acesse a sua conta.</span>
+                  </Link>
+                </div>
+              </div>
             </div>
           </article>
         </main>
         <footer>
-          <div>
-            Copyright &copy; 2022 <i>Normies Team</i>
-          </div>
-          <div>All Rights Reserved.</div>
+          &copy; {complements.defaultTitle} |{' '}
+          <Link href={'/legal/privacy-policy'}>
+            <span>Política de Privacidade</span>
+          </Link>
         </footer>
       </Container>
     </Layout>

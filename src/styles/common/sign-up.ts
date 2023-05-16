@@ -9,11 +9,19 @@ import {
 export const SignUpContainer = styled.div`
   width: 100%;
   min-height: 100vh;
+  padding: 60px 0;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: flex-start;
-  background: rgb(${({ theme }) => theme.background});
+  background: rgb(${({ theme }) => theme.background_variant});
+
+  * {
+    ::selection {
+      background: rgb(${({ theme }) => theme.background_variant});
+      color: rgb(${({ theme }) => theme.primary_variant});
+    }
+  }
 
   article {
     width: 100%;
@@ -30,19 +38,28 @@ export const SignUpContainer = styled.div`
       gap: 20px;
       justify-content: flex-start;
       flex-direction: column;
-      border-radius: 10px;
-      padding: 35px 20px;
+      border-radius: 20px;
+      padding: 30px 25px;
       margin: 25px;
-      border: 1px solid rgba(${({ theme }) => theme.accent}, 0.1);
+      background: rgb(${({ theme }) => theme.foreground});
+      box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.09);
+
       @media screen and (min-width: 440px) {
         min-width: 400px;
       }
 
       h2 {
         text-align: center;
-        font-weight: 600;
-        line-height: 2rem;
+        font-weight: 500;
+        line-height: 1.8rem;
         font-size: 1.4rem;
+      }
+
+      p {
+        font-size: 0.92rem;
+        font-weight: 500;
+        line-height: 1.4rem;
+        text-align: center;
       }
 
       form {
@@ -64,6 +81,7 @@ export const SignUpContainer = styled.div`
             display: flex;
             flex-direction: column;
             gap: 10px;
+            width: 100%;
             label {
               ${StyledLabels};
             }
@@ -79,17 +97,28 @@ export const SignUpContainer = styled.div`
           line-height: 1.4rem;
         }
 
-        .actions {
-          display: flex;
-          flex-flow: row wrap;
-          justify-content: flex-start;
-          gap: 10px;
+        button {
+          ${BaseButton}
+          align-self: center;
+          width: 100%;
+        }
+      }
 
-          .login {
-            ${BaseButton}
+      .signup-request {
+        text-align: center;
+        font-size: 0.92rem;
+        font-weight: 500;
+        line-height: 1.4rem;
+
+        a {
+          color: rgb(${({ theme }) => theme.primary_variant});
+          cursor: pointer;
+          :hover {
+            color: rgb(${({ theme }) => theme.accent});
           }
-          .next {
-            ${BaseButtonOutline}
+
+          span {
+            pointer-events: none;
           }
         }
       }
@@ -98,18 +127,9 @@ export const SignUpContainer = styled.div`
 
   footer {
     justify-self: flex-end;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    margin: 0 auto;
     font-size: 0.92rem;
     font-weight: 500;
-    margin: 0 10px;
-    margin-bottom: 10px;
     line-height: 1.4rem;
-
-    i {
-      color: rgb(${({ theme }) => theme.primary});
-    }
   }
 `;

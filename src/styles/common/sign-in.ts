@@ -10,6 +10,7 @@ export const SignInContainer = styled.div`
   position: relative;
   padding: 60px 0;
   width: 100%;
+  min-height: 100vh;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -18,7 +19,7 @@ export const SignInContainer = styled.div`
   * {
     ::selection {
       background: rgb(${({ theme }) => theme.background_variant});
-      color: rgb(${({ theme }) => theme.secondary});
+      color: rgb(${({ theme }) => theme.primary_variant});
     }
   }
 
