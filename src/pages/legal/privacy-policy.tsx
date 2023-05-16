@@ -4,18 +4,18 @@ import { LegalContainer as Container } from '../../styles/common/legal';
 import { complements } from '@/data/app-data';
 
 const PrivacyPolicy: NextPage = (): JSX.Element => (
-  <Layout metadata={{ title: 'TravelSketchpad Privacy Policy' }}>
+  <Layout metadata={{ title: complements.defaultTitle }}>
     <Container>
       <article>
         <section>
           <h1>Política de Privacidade</h1>
         </section>
         <p>
-          Rubymart, pessoa jurídica de direito privado leva a sua privacidade a
-          sério e zela pela segurança e proteção de dados de todos os seus
-          clientes, parceiros, fornecedores e usuários do site domínio{' '}
-          <a href={complements.websiteUrl}>{complements.websiteUrl}</a>, e
-          qualquer outro site, loja ou aplicativo operado pela plataforma.
+          {complements.defaultTitle}, pessoa jurídica de direito privado leva a
+          sua privacidade a sério e zela pela segurança e proteção de dados de
+          todos os seus clientes, parceiros, fornecedores e usuários do site
+          domínio <a href={complements.websiteUrl}>{complements.websiteUrl}</a>,
+          e qualquer outro site, loja ou aplicativo operado pela plataforma.
         </p>
         <p>
           Esta Política de Privacidade aplica-se somente a informações coletadas
@@ -320,22 +320,6 @@ const PrivacyPolicy: NextPage = (): JSX.Element => (
           na nossa loja virtual.
         </p>
         <h3>Seção 9 - Direitos do Usuário</h3>
-        <p></p>
-        <h3></h3>
-        <p></p>
-        <h3></h3>
-        <p></p>
-        <h2>{complements.defaultTitle} Cookie Policy</h2>
-        <h3>What are cookies?</h3>
-        <p>
-          As is common practice on almost all professional websites, this
-          website uses cookies, which are small files downloaded to your
-          computer to improve your experience. This page describes what
-          information they collect, how we use it and why sometimes we need to
-          store these cookies. We will also share how you can prevent these
-          cookies from being stored, however, this can downgrade or 'break'
-          certain elements of the website functionality.
-        </p>
         <p>
           Você pode, a qualquer momento, requerer: (i) confirmação de que seus
           Dados Pessoais estão sendo tratados; (ii) acesso aos seus Dados

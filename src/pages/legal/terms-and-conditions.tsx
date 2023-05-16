@@ -4,115 +4,162 @@ import { LegalContainer as Container } from '@/styles/common/legal';
 import { complements } from '@/data/app-data';
 
 const TermsPage: NextPage = (): JSX.Element => (
-  <Layout metadata={{ title: 'Terms and Conditions' }}>
+  <Layout metadata={{ title: complements.defaultTitle }}>
     <Container>
       <article>
         <section>
-          <h1>Terms and Conditions</h1>
+          <h1>Termos de Uso</h1>
         </section>
+        <p>Esta política de Termos de Uso é válida a partir de Maio, 2023.</p>
         <p>
-          When accessing the website{' '}
-          <a href='/'>
-            <strong>{complements.defaultTitle}</strong>
-          </a>
-          , you agree to abide by these terms of service, all laws and
-          applicable regulations and agree that you are responsible for
-          compliance with all applicable local laws. If you do not agree to any
-          of these terms, you are prohibited from using or accessing this site.
-          The materials contained on this site are protected by the applicable
-          copyright and trademark laws.
-        </p>
-        <h2>2. License Usage</h2>
-        <p>
-          Permission is granted to temporarily download a copy of the materials
-          (information or software) from our website for transient viewing only
-          personal and non-commercial. This is the granting of a license, not a
-          transfer of title and under this license you may not:{' '}
-        </p>
-        <ol>
-          <li>modify or copy the materials;</li>
-          <li>
-            use the materials for any commercial purpose or to public viewing
-            (commercial or non-commercial);
-          </li>
-          <li>
-            attempt to decompile or reverse engineer any software contained on
-            our website;
-          </li>
-          <li>
-            remove any copyright or other notations from property of materials;
-            or transfer the materials to another person or 'mirror' the
-            materials on any other server.
-          </li>
-        </ol>
-        <p>
-          This license will automatically terminate if you violate any of these
-          restrictions and may be terminated by{' '}
-          <strong>{complements.defaultTitle}</strong> anytime. When closing the
-          viewing these materials or upon termination of this license, you must
-          delete all downloaded materials in your possession, whether in
-          electronic or printed format.
-        </p>
-
-        <h2>3. Disclaimer</h2>
-        <p>
-          The materials on our website are provided 'as is'. No we make
-          warranties, express or implied, and hereby disclaims and disclaims all
-          other warranties, including, without limitation, implied warranties or
-          conditions of merchantability, fitness for a specific purpose or
-          non-infringement of intellectual property or other rights violation.
+          <strong>{complements.defaultTitle}</strong>, pessoa jurídica de
+          direito privado descreve, através deste documento, as regras de uso do
+          site <strong>{complements.websiteUrl}</strong> e qualquer outro site,
+          loja ou aplicativo operado pelo proprietário.
         </p>
         <p>
-          In addition, we do not warrant or make any representations concerning
-          the accuracy, likely results, or reliability of the use of the
-          materials on your website or otherwise related to these materials or
-          on sites linked to this site.
+          Ao navegar neste website, consideramos que você está de acordo com os
+          Termos de Uso abaixo.
         </p>
-
-        <h2>4. Limitations</h2>
         <p>
-          In no event will we or our suppliers be responsible for any damages
-          (including, without limitation, damages for loss of data or profit or
-          due to business interruption) arising from the use or the inability to
-          use the materials on our website, even if the{' '}
-          <strong>{complements.defaultTitle}</strong> or an authorized
-          representative has been notified orally or in writing of the
-          possibility of such damage. As some jurisdictions do not allow
-          limitations on warranties implied, or limitations of liability for
-          consequential damages or incidentally, these limitations may not apply
-          to you.
+          Caso você não esteja de acordo com as condições deste contrato,
+          pedimos que não faça mais uso deste website, muito menos cadastre-se
+          ou envie os seus dados pessoais.
         </p>
-        <h2>5. Precision of materials</h2>
         <p>
-          Materials displayed on the <strong>{complements.defaultTitle}</strong>{' '}
-          website may include technical, typographical or photographic errors.{' '}
-          <strong>{complements.defaultTitle}</strong> does not warrant that any
-          material on its website is accurate, complete or current.{' '}
-          {complements.defaultTitle} can do changes to the materials contained
-          on its website at any time, Without previous warning. However,{' '}
-          <strong>{complements.defaultTitle}</strong> does not undertakes to
-          update the materials.
+          Se modificarmos nossos Termos de Uso, publicaremos o novo texto neste
+          website, com a data de revisão atualizada. Podemos alterar este
+          documento a qualquer momento. Caso haja alteração significativa nos
+          termos deste contrato, podemos informá-lo por meio das informações de
+          contato que tivermos em nosso banco de dados ou por meio de
+          notificações.
         </p>
-        <h2>6. Links</h2>
         <p>
-          <strong>{complements.defaultTitle}</strong> has not analyzed all
-          linked sites to its website and is not responsible for the content of
-          any website linked. The inclusion of any link does not imply
-          endorsement by <strong>{complements.defaultTitle}</strong> of the
-          site. Use of any website linked is at the user's own risk.
+          A utilização deste website após as alterações significa que você
+          aceitou os Termos de Uso revisados. Caso, após a leitura da versão
+          revisada, você não esteja de acordo com seus termos, favor encerrar o
+          seu acesso.
         </p>
-        <h3>Modifications</h3>
+        <h3>Seção 1 - Usuário</h3>
         <p>
-          We may revise these terms of service website at any time without
-          notice. When using this website, you agree to be bound by the current
-          version of these terms of service.
+          A utilização deste website atribui de forma automática a condição de
+          Usuário e implica a plena aceitação de todas as diretrizes e condições
+          incluídas nestes Termos.
         </p>
-        <h3>Applicable law</h3>
+        <h3>Seção 2 - Adesão em conjunto com a Política de Privacidade</h3>
         <p>
-          These terms and conditions are governed by and construed in accordance
-          with the laws of the <strong>Republic of Mozambique</strong> and you
-          irrevocably submits to the exclusive jurisdiction of our courts state
-          and locality.
+          A utilização deste website acarreta a adesão aos presentes Termos de
+          Uso e a versão mais atualizada da Política de Privacidade de Rubymart.
+        </p>
+        <h3>Seção 3 - Condições de acesso</h3>
+        <p>
+          Em geral, o acesso ao website da Rubymart possui caráter gratuito e
+          não exige prévia inscrição ou registro.
+        </p>
+        <p>
+          Contudo, para usufruir de algumas funcionalidades, o usuário poderá
+          precisar efetuar um cadastro, criando uma conta de usuário com login e
+          senha próprios para acesso.
+        </p>
+        <p>
+          É de total responsabilidade do usuário fornecer apenas informações
+          corretas, autênticas, válidas, completas e atualizadas, bem como não
+          divulgar o seu login e senha para terceiros.
+        </p>
+        <p>
+          Partes deste website oferecem ao usuário a opção de publicar
+          comentários em determinadas áreas. Rubymart não consente com a
+          publicação de conteúdos que tenham natureza discriminatória, ofensiva
+          ou ilícita, ou ainda infrinjam direitos de autor ou quaisquer outros
+          direitos de terceiros.
+        </p>
+        <p>
+          A publicação de quaisquer conteúdos pelo usuário deste website,
+          incluindo mensagens e comentários, implica em licença não-exclusiva,
+          irrevogável e irretratável, para sua utilização, reprodução e
+          publicação pela Rubymart no seu website, plataformas e aplicações de
+          internet, ou ainda em outras plataformas, sem qualquer restrição ou
+          limitação.
+        </p>
+        <h3>Seção 4 - Cookies</h3>
+        <p>
+          Informações sobre o seu uso neste website podem ser coletadas a partir
+          de cookies. Cookies são informações armazenadas diretamente no
+          computador que você está utilizando. Os cookies permitem a coleta de
+          informações tais como o tipo de navegador, o tempo despendido no
+          website, as páginas visitadas, as preferências de idioma, e outros
+          dados de tráfego anônimos. Nós e nossos prestadores de serviços
+          utilizamos informações para proteção de segurança, para facilitar a
+          navegação, exibir informações de modo mais eficiente, e personalizar
+          sua experiência ao utilizar este website, assim como para rastreamento
+          online. Também coletamos informações estatísticas sobre o uso do
+          website para aprimoramento contínuo do nosso design e funcionalidade,
+          para entender como o website é utilizado e para auxiliá-lo a
+          solucionar questões relevantes.
+        </p>
+        <p>
+          Caso não deseje que suas informações sejam coletadas por meio de
+          cookies, há um procedimento simples na maior parte dos navegadores que
+          permite que os cookies sejam automaticamente rejeitados, ou oferece a
+          opção de aceitar ou rejeitar a transferência de um cookie (ou cookies)
+          específico(s) de um site determinado para o seu computador.
+          Entretanto, isso pode gerar inconvenientes no uso do website.
+        </p>
+        <p>
+          As definições que escolher podem afetar a sua experiência de navegação
+          e o funcionamento que exige a utilização de cookies. Neste sentido,
+          rejeitamos qualquer responsabilidade pelas consequências resultantes
+          do funcionamento limitado deste website provocado pela desativação de
+          cookies no seu dispositivo (incapacidade de definir ou ler um cookie).
+        </p>
+        <h3>Seção 5 - Propriedade Intelectual</h3>
+        <p>
+          Todos os elementos de Rubymart são de propriedade intelectual da mesma
+          ou de seus licenciados. Estes Termos ou a utilização do website não
+          concede a você qualquer licença ou direito de uso dos direitos de
+          propriedade intelectual da Rubymart ou de terceiros.
+        </p>
+        <h3>Seção 6 - Links para sites de terceiros</h3>
+        <p>
+          Este website poderá, de tempos a tempos, conter links de hipertexto
+          que redirecionará você para sites das redes dos nossos parceiros,
+          anunciantes, fornecedores etc. Se você clicar em um desses links para
+          qualquer um desses sites, lembre-se que cada site possui as suas
+          próprias práticas de privacidade e que não somos responsáveis por
+          essas políticas. Consulte as referidas políticas antes de enviar
+          quaisquer Dados Pessoais para esses sites.
+        </p>
+        <p>
+          Não nos responsabilizamos pelas políticas e práticas de coleta, uso e
+          divulgação (incluindo práticas de proteção de dados) de outras
+          organizações, tais como Facebook, Apple, Google, Microsoft, ou de
+          qualquer outro desenvolvedor de software ou provedor de aplicativo,
+          loja de mídia social, sistema operacional, prestador de serviços de
+          internet sem fio ou fabricante de dispositivos, incluindo todos os
+          Dados Pessoais que divulgar para outras organizações por meio dos
+          aplicativos, relacionadas a tais aplicativos, ou publicadas em nossas
+          páginas em mídias sociais. Nós recomendamos que você se informe sobre
+          a política de privacidade e termos de uso de cada site visitado ou de
+          cada prestador de serviço utilizado.
+        </p>
+        <h3>Seção 7 - Prazos e alterações</h3>
+        <p>
+          O funcionamento deste website se dá por prazo indeterminado. O website
+          no todo ou em cada uma das suas seções, pode ser encerrado, suspenso
+          ou interrompido unilateralmente por Rubymart, a qualquer momento e sem
+          necessidade de prévio aviso.
+        </p>
+        <h3>Seção 8 - Dados pessoais</h3>
+        <p>
+          Durante a utilização deste website, certos dados pessoais serão
+          coletados e tratados por Rubymart e/ou pelos Parceiros. As regras
+          relacionadas ao tratamento de dados pessoais de Rubymart estão
+          estipuladas na Política de Privacidade.
+        </p>
+        <h3>Seção 9 - Contato</h3>
+        <p>
+          Caso você tenha qualquer dúvida sobre os Termos de Uso, por favor,
+          entre em contato pelo e-mail <strong>{complements.email}</strong>.
         </p>
       </article>
     </Container>
