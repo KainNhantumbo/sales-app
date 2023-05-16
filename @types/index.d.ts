@@ -78,6 +78,11 @@ export interface INewComment {
   parent_id?: string;
 }
 
+export interface ISignInData {
+  email: string;
+  password: string;
+}
+
 // --------------server data--------------------------
 export type ChatType = Array<{
   _id: string;
