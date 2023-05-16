@@ -74,15 +74,17 @@ export default function Home(): JSX.Element {
               <h2>Relaxe e sinta-se em casa</h2>
               <p>
                 Plataforma feita de jovens moçambicanos para todos moçambicanos
-                ajudando a desenvolver e nutrir o espírito de empreendedorismo a
-                nível nacional.
+                com o objectivo de desenvolver e nutrir o espírito de
+                empreendedorismo a nível nacional.
               </p>
               <span>
-                Precisa de ajuda nos primeiros passos? Pode contar com a gente, veja secção de contacto no rodapé ou acesse o nosso blog para aprender mais sobre o e-commerce e vendas em lojas virtuais.
+                Precisa de ajuda nos primeiros passos? Pode contar  conosco,
+                veja a secção de contacto no rodapé ou acesse o nosso blog para
+                aprender mais sobre o e-commerce e vendas em lojas virtuais.
               </span>
               <Link href={'/about-us'}>
                 <IoHeartOutline />
-                <span>Saiba mais sobre nós</span>
+                <span>Saiba mais</span>
               </Link>
             </div>
             <Image

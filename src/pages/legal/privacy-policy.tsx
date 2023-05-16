@@ -8,55 +8,323 @@ const PrivacyPolicy: NextPage = (): JSX.Element => (
     <Container>
       <article>
         <section>
-          <h1>Privacy Policy</h1>
+          <h1>Política de Privacidade</h1>
         </section>
         <p>
-          Your privacy is important to us. It is {complements.defaultTitle}{' '}
-          policy respect your privacy in relation to any information about you
-          that we can collect on the site{' '}
-          <a href={complements.websiteUrl}>{complements.defaultTitle}</a>, and
-          others websites we own and operate.
+          Rubymart, pessoa jurídica de direito privado leva a sua privacidade a
+          sério e zela pela segurança e proteção de dados de todos os seus
+          clientes, parceiros, fornecedores e usuários do site domínio{' '}
+          <a href={complements.websiteUrl}>{complements.websiteUrl}</a>, e
+          qualquer outro site, loja ou aplicativo operado pela plataforma.
         </p>
         <p>
-          We only ask for personal information when we really need it them to
-          provide you with a service. We do it by fair means and law, with your
-          knowledge and consent. We also inform why we are collecting it and how
-          it will be used.
+          Esta Política de Privacidade aplica-se somente a informações coletadas
+          por meio da plataforma.
         </p>
         <p>
-          We only retain collected information for as long as necessary to
-          provide the requested service. When we store data, we protect within
-          commercially acceptable means to avoid loss and theft, as well as
-          access, disclosure, copying, use or modification not authorized.
+          AO ACESSAR A PLATAFORMA, ENVIAR COMUNICAÇÕES OU FORNECER QUALQUER TIPO
+          DE DADO PESSOAL, VOCÊ DECLARA ESTAR CIENTE COM RELAÇÃO AOS TERMOS AQUI
+          PREVISTOS E DE ACORDO COM A POLÍTICA DE PRIVACIDADE, A QUAL DESCREVE
+          AS FINALIDADES E FORMAS DE TRATAMENTO DE SEUS DADOS PESSOAIS QUE VOCÊ
+          DISPONIBILIZAR NA PLATAFORMA.
         </p>
         <p>
-          We do not share personally identifiable information publicly. or with
-          third parties, except as required by law.
+          Esta Política de Privacidade fornece uma visão geral de nossas
+          práticas de privacidade e das escolhas que você pode fazer, bem como
+          direitos que você pode exercer em relação aos Dados Pessoais tratados
+          por nós. Se você tiver alguma dúvida sobre o uso de Dados Pessoais,
+          entre em contato conosco.
         </p>
         <p>
-          Our site may have <em>links</em> to external sites that are not
-          operated by us. Please be aware that we have no control over the
-          content and practices of these sites and we cannot accept
-          responsibility for their respective{' '}
-          <a
-            href='https://politicaprivacidade.com'
-            target='_BLANK'
-            rel='noreferrer'>
-            privacy policies
-          </a>
-          .
+          Além disso, a Política de Privacidade não se aplica a quaisquer
+          aplicativos, produtos, serviços, site ou recursos de mídia social de
+          terceiros que possam ser oferecidos ou acessados por meio da loja. O
+          acesso a esses links fará com que você deixe o nosso site e poderá
+          resultar na coleta ou compartilhamento de informações sobre você por
+          terceiros. Nós não controlamos, endossamos ou fazemos quaisquer
+          representações sobre sites de terceiros ou suas práticas de
+          privacidade, que podem ser diferentes das nossas. Recomendamos que
+          você revise a política de privacidade de qualquer site com o qual você
+          interaja antes de permitir a coleta e o uso de seus Dados Pessoais.
         </p>
         <p>
-          You are free to refuse our request for information. personal
-          information, with the understanding that we may not be able to provide
-          some of the desired services.
+          Caso você nos envie Dados Pessoais referentes a outras pessoas
+          físicas, você declara ter a competência para fazê-lo e declara ter
+          obtido o consentimento necessário para autorizar o uso de tais
+          informações nos termos desta Política de Privacidade.
+        </p>
+
+        <h3>Seção 1 - Definições</h3>
+        <ul>
+          <li>
+            "Dados Pessoais": significa qualquer informação que, direta ou
+            indiretamente, identifique ou possa identificar uma pessoa natural,
+            como por exemplo, nome, CPF, data de nascimento, endereço IP, dentre
+            outros;
+          </li>
+          <li>
+            "Dados Pessoais Sensíveis": significa qualquer informação que
+            revele, em relação a uma pessoa natural, origem racial ou étnica,
+            convicção religiosa, opinião política, filiação a sindicato ou a
+            organização de caráter religioso, filosófico ou político, dado
+            referente à saúde ou à vida sexual, dado genético ou biométrico;
+          </li>
+          <li>
+            "Tratamento de Dados Pessoais": significa qualquer operação efetuada
+            no âmbito dos Dados Pessoais, por meio de meios automáticos ou não,
+            tal como a recolha, gravação, organização, estruturação,
+            armazenamento, adaptação ou alteração, recuperação, consulta,
+            utilização, divulgação por transmissão, disseminação ou,
+            alternativamente, disponibilização, harmonização ou associação,
+            restrição, eliminação ou destruição. Também é considerado Tratamento
+            de Dados Pessoais qualquer outra operação prevista nos termos da
+            legislação aplicável;
+          </li>
+          <li>
+            "Leis de Proteção de Dados": significa todas as disposições legais
+            que regulam o Tratamento de Dados Pessoais, incluindo, porém sem se
+            limitar, a Lei Geral de Proteção de Dados Pessoais ("LGPD").
+          </li>
+        </ul>
+        <h3>Seção 2 - Uso de Dados Pessoais</h3>
+        <p>
+          Coletamos e usamos Dados Pessoais para gerenciar seu relacionamento
+          conosco e melhor atendê-lo quando você estiver adquirindo produtos
+          e/ou serviços na loja, personalizando e melhorando sua experiência.
+          Exemplos de como usamos os dados incluem:
+        </p>
+        <ul>
+          <li>Viabilizar que você adquira produtos e/ou serviços na loja;</li>
+          <li>
+            Para confirmar ou corrigir as informações que temos sobre você;
+          </li>
+          <li>Para enviar informações que acreditamos ser do seu interesse;</li>
+          <li>Para personalizar sua experiência de uso da loja;</li>
+          <li>
+            Para entrarmos em contato por um número de telefone e/ou endereço de
+            e-mail fornecido. Podemos entrar em contato com você pessoalmente,
+            por mensagem de voz, através de equipamentos de discagem automática,
+            por mensagens de texto (SMS), por e-mail, ou por qualquer outro meio
+            de comunicação que seu dispositivo seja capaz de receber, nos termos
+            da lei e para fins comerciais razoáveis.
+          </li>
+        </ul>
+        <p>
+          Além disso, os Dados Pessoais fornecidos também podem ser utilizados
+          na forma que julgarmos necessária ou adequada:
+        </p>
+
+        <p>
+          (a) nos termos das Leis de Proteção de Dados; (b) para atender
+          exigências de processo judicial;(c) para cumprir decisão judicial,
+          decisão regulatória ou decisão de autoridades competentes, incluindo
+          autoridades fora do país de residência; (d) para aplicar nossos Termos
+          e Condições de Uso; (e) para proteger nossas operações; (f) para
+          proteger direitos, privacidade, segurança nossos, seus ou de
+          terceiros; (g) para detectar e prevenir fraude; (h) permitir-nos usar
+          as ações disponíveis ou limitar danos que venhamos a sofrer; e (i) de
+          outros modos permitidos por lei.
+        </p>
+        <h3>Seção 3 - Não fornecimento de Dados Pessoais</h3>
+        <p>
+          Não há obrigatoriedade em compartilhar os Dados Pessoais que
+          solicitamos. No entanto, se você optar por não os compartilhar, em
+          alguns casos, não poderemos fornecer a você acesso completo à loja,
+          alguns recursos especializados ou ser capaz de prestar a assistência
+          necessária ou, ainda, viabilizar a entrega do produto ou prestar o
+          serviço contratado por você.
+        </p>
+        <h3>Seção 4 - Dados coletados</h3>
+        <p>
+          O público em geral poderá navegar na loja sem necessidade de qualquer
+          cadastro e envio de Dados Pessoais. No entanto, algumas das
+          funcionalidades da loja poderão depender de cadastro e envio de Dados
+          Pessoais como concluir a compra/contratação do serviço e/ou a
+          viabilizar a entrega do produto/prestação do serviço por nós.
+        </p>
+        <p>No contato a loja, nós podemos coletar:</p>
+        <p>
+          Dados de contato: nome, sobrenome, número de telefone, endereço,
+          cidade, estado e endereço de e-mail;
         </p>
         <p>
-          Your continued use of our website will be considered acceptance of our
-          practices around privacy and personal information. if you have any
-          questions about how we handle user data and personal information,
-          please contact us.
+          Informações enviadas: informações que você envia via formulário
+          (dúvidas, reclamações, sugestões, críticas, elogios etc.).
         </p>
+        <p>Na navegação geral na plataforma, nós poderemos coletar:</p>
+        <p>
+          Dados de localização: dados de geolocalização quando você acessa a
+          loja;
+        </p>
+        <p>
+          Preferências: informações sobre suas preferências e interesses em
+          relação aos produtos/serviços (quando você nos diz o que eles são ou
+          quando os deduzimos do que sabemos sobre você);
+        </p>
+        <p>
+          Dados de navegação na loja: informações sobre suas visitas e
+          atividades, incluindo o conteúdo (e quaisquer anúncios) com os quais
+          você visualiza e interage, informações sobre o navegador e o
+          dispositivo que você está usando, seu endereço IP, sua localização, o
+          endereço do site a partir do qual você chegou. Algumas dessas
+          informações são coletadas usando nossas Ferramentas de Coleta
+          Automática de Dados, que incluem cookies, web beacons e links da web
+          incorporados. Para saber mais, leia como nós usamos Ferramentas de
+          Coleta Automática de Dados na seção 7 abaixo;
+        </p>
+        <p>
+          Dados anônimos ou agregados: respostas anônimas para pesquisas ou
+          informações anônimas e agregadas sobre como a plataforma é usufruída.
+          Durante nossas operações, em certos casos, aplicamos um processo de
+          desidentificação ou pseudonimização aos seus dados para que seja
+          razoavelmente improvável que você identifique você através do uso
+          desses dados com a tecnologia disponível;
+        </p>
+        <p>
+          Outras informações que podemos coletar: informações que não revelem
+          especificamente a sua identidade ou que não são diretamente
+          relacionadas a um indivíduo, tais como informações sobre navegador e
+          dispositivo; dados de uso da plataforma; e informações coletadas por
+          meio de cookies, pixel tags e outras tecnologias. Nós não coletamos
+          Dados Pessoais Sensíveis.
+        </p>
+        <h3>Seção 5 - Compartilhamento de Dados Pessoais com terceiros</h3>
+        <p>Nós poderemos compartilhar seus Dados Pessoais:</p>
+        <p>
+          Com a(s) empresa(s) parceira(s) que você selecionar ou optar em enviar
+          os seus dados, dúvidas, perguntas etc., bem como com provedores de
+          serviços ou parceiros para gerenciar ou suportar certos aspectos de
+          nossas operações comerciais em nosso nome. Esses provedores de
+          serviços ou parceiros podem estar localizados nos Estados Unidos, na
+          Argentina, no Brasil ou em outros locais globais, incluindo servidores
+          para homologação e produção, e prestadores de serviços de hospedagem e
+          armazenamento de dados, gerenciamento de fraudes, suporte ao cliente,
+          vendas em nosso nome, atendimento de pedidos, personalização de
+          conteúdo, atividades de publicidade e marketing (incluindo publicidade
+          digital e personalizada) e serviços de TI, por exemplo;
+        </p>
+        <p>
+          Com terceiros, com o objetivo de nos ajudar a gerenciar a loja; Com
+          terceiros, caso ocorra qualquer reorganização, fusão, venda, joint
+          venture, cessão, transmissão ou transferência de toda ou parte da
+          nossa empresa, ativo ou capital (incluindo os relativos à falência ou
+          processos semelhantes).
+        </p>
+        <h3>Seção 6 - Transferências internacionais de dados</h3>
+        <p>
+          Dados Pessoais e informações de outras naturezas coletadas por nós
+          podem ser transferidos ou acessados por entidades pertencentes ao
+          grupo corporativo das empresas parceiras em todo o mundo de acordo com
+          esta Política de Privacidade.
+        </p>
+        <h3>Seção 7 - Coleta automática de Dados Pessoais</h3>
+        <p>
+          Quando você visita a plataforma, ela pode armazenar ou recuperar
+          informações em seu navegador, principalmente na forma de cookies, que
+          são arquivos de texto contendo pequenas quantidades de informação.
+          Essas informações podem ser sobre você, suas preferências ou seu
+          dispositivo e são usadas principalmente para que a plataforma funcione
+          como você espera. As informações geralmente não o identificam
+          diretamente, mas podem oferecer uma experiência na internet mais
+          personalizada.
+        </p>
+        <p>
+          De acordo com esta Política de Privacidade, nós e nossos prestadores
+          de serviços terceirizados, mediante seu consentimento, podemos coletar
+          seus Dados Pessoais de diversas formas, incluindo, entre outros:
+        </p>
+        <p>
+          Por meio do navegador ou do dispositivo: algumas informações são
+          coletadas pela maior parte dos navegadores ou automaticamente por meio
+          de dispositivos de acesso à internet, como o tipo de computador,
+          resolução da tela, nome e versão do sistema operacional, modelo e
+          fabricante do dispositivo, idioma, tipo e versão do navegador de
+          Internet que está utilizando. Podemos utilizar essas informações para
+          assegurar que a plataforma funcione adequadamente.
+        </p>
+        <p>
+          Uso de cookies: informações sobre o seu uso da plataforma podem ser
+          coletadas por terceiros a partir de cookies. Cookies são informações
+          armazenadas diretamente no computador que você está utilizando. Os
+          cookies permitem a coleta de informações tais como o tipo de
+          navegador, o tempo despendido na plataforma, as páginas visitadas, as
+          preferências de idioma, e outros dados de tráfego anônimos. Nós e
+          nossos prestadores de serviços utilizamos informações para proteção de
+          segurança, para facilitar a navegação, exibir informações de modo mais
+          eficiente, e personalizar sua experiência ao utilizar a plataforma,
+          assim como para rastreamento online. Também coletamos informações
+          estatísticas sobre o uso da plataforma para aprimoramento contínuo do
+          nosso design e funcionalidade, para entender como a plataforma é
+          utilizada e para auxiliá-lo a solucionar questões relativas à
+          plataforma.
+        </p>
+        <p>
+          Caso não deseje que suas informações sejam coletadas por meio de
+          cookies, há um procedimento simples na maior parte dos navegadores que
+          permite que os cookies sejam automaticamente rejeitados, ou oferece a
+          opção de aceitar ou rejeitar a transferência de um cookie (ou cookies)
+          específico(s) de um site determinado para o seu computador.
+          Entretanto, isso pode gerar inconvenientes no uso da plataforma.
+        </p>
+        <p>
+          As definições que escolher podem afetar a sua experiência de navegação
+          e o funcionamento que exige a utilização de cookies. Neste sentido,
+          rejeitamos qualquer responsabilidade pelas consequências resultantes
+          do funcionamento limitado da plataforma provocado pela desativação de
+          cookies no seu dispositivo (incapacidade de definir ou ler um cookie).
+        </p>
+        <p>
+          Uso de pixel tags e outras tecnologias similares: pixel tags (também
+          conhecidos como Web beacons e GIFs invisíveis) podem ser utilizados
+          para rastrear ações de usuários da plataforma (incluindo destinatários
+          de e-mails), medir o sucesso das nossas campanhas de marketing e
+          coletar dados estatísticos sobre o uso da plataforma e taxas de
+          resposta, e ainda para outros fins não especificados. Podemos
+          contratar empresas de publicidade comportamental, para obter
+          relatórios sobre os anúncios da plataforma em toda a internet. Para
+          isso, essas empresas utilizam cookies, pixel tags e outras tecnologias
+          para coletar informações sobre a sua utilização, ou sobre a utilização
+          de outros usuários, da nossa plataforma e de site de terceiros. Nós
+          não somos responsáveis por pixel tags, cookies e outras tecnologias
+          similares utilizadas por terceiros.
+        </p>
+        <h3>Seção 8 - Categorias de cookies</h3>
+        <p>
+          Os cookies utilizados na nossa plataforma estão de acordo com os
+          requisitos legais e são enquadrados nas seguintes categorias:
+        </p>
+        <p>
+          Estritamente necessários: estes cookies permitem que você navegue pelo
+          site e desfrute de recursos essenciais com segurança. Um exemplo são
+          os cookies de segurança, que autenticam os usuários, protegem os seus
+          dados e evitam a criação de logins fraudulentos.
+        </p>
+        <p>
+          Desempenho: os cookies desta categoria coletam informações de forma
+          codificada e anônima relacionadas à nossa loja virtual, como, por
+          exemplo, o número de visitantes de uma página específica, origem das
+          visitas ao site e quais as páginas acessadas pelo usuário. Todos os
+          dados coletados são utilizados apenas para eventuais melhorias no site
+          e para medir a eficácia da nossa comunicação.
+        </p>
+        <p>
+          Funcionalidade: estes cookies são utilizados para lembrar definições
+          de preferências do usuário com o objetivo de melhorar a sua visita no
+          nosso site, como, por exemplo, configurações aplicadas no layout do
+          site ou suas respostas para pop-ups de promoções e cadastros -; dessa
+          forma, não será necessário perguntar inúmeras vezes.
+        </p>
+        <p>
+          Publicidade: utilizamos cookies com o objetivo de criar campanhas
+          segmentadas e entregar anúncios de acordo com o seu perfil de consumo
+          na nossa loja virtual.
+        </p>
+        <h3>Seção 9 - Direitos do Usuário</h3>
+        <p></p>
+        <h3></h3>
+        <p></p>
+        <h3></h3>
+        <p></p>
         <h2>{complements.defaultTitle} Cookie Policy</h2>
         <h3>What are cookies?</h3>
         <p>
@@ -68,160 +336,94 @@ const PrivacyPolicy: NextPage = (): JSX.Element => (
           cookies from being stored, however, this can downgrade or 'break'
           certain elements of the website functionality.
         </p>
-        <h3>How do we use cookies?</h3>
         <p>
-          We use cookies for a variety of reasons, detailed below.
-          Unfortunately, in most cases, there are no default options for the
-          sector to disable cookies without completely disabling the
-          functionality and features they add to this site. IT IS recommended
-          that you leave all cookies if you are not sure whether whether or not
-          you need them if they are used to provide a service that you use.
-        </p>
-        <h3>Disable cookies</h3>
-        <p>
-          You can prevent cookies from being set by adjusting the your browser
-          settings (see browser Help for know how to do it). Please be aware
-          that disabling cookies will affect the functionality of this and many
-          other websites that you visit. Disabling cookies will generally result
-          in deactivation of certain functionality and features of this website.
-          Therefore, it is recommended that you do not disable cookies.
-        </p>
-        <h3>Cookies we set:</h3>
-        <ul>
-          <li>
-            <strong>Account-related cookies</strong>
-            <br></br> If you create an account with us, we will use cookies to
-            management of the application process and general administration.
-            These cookies will generally be deleted when you leave the system,
-            however, in some cases, they may remain later to remember your site
-            preferences when you exit.
-            <br></br>
-          </li>
-          <li>
-            <strong>Login related cookies</strong>
-            <br></br> We use cookies when you are logged in, so that we can
-            remember this action. This saves you from having to do login
-            whenever you visit a new page. These cookies are normally removed or
-            cleared when you log out to ensure that you can only access
-            resources and areas restricted when logging in.
-            <br></br>
-          </li>
-          <li>
-            <strong>Email newsletter related cookies</strong>
-            <br></br> This site offers newsletter subscription services
-            newsletter or email and cookies may be used to remember if you are
-            already registered and whether to show certain notifications only
-            valid for subscribed / non-subscribed users registered.<br></br>
-          </li>
-          <li>
-            <strong>Orders processing related cookies</strong>
-            <br></br> This site offers e-commerce facilities or payment and some
-            cookies are essential to ensure that your order is remembered
-            between pages so that we can process it properly.<br></br>
-          </li>
-          <li>
-            <strong>Search-related cookies</strong>
-            <br></br> Periodically, we offer surveys and questionnaires to
-            provide interesting information, useful tools or to understand our
-            user base more accurately. These surveys may use cookies to remember
-            who has already participated in a survey or to provide accurate
-            results after changing pages.
-            <br></br>
-          </li>
-          <li>
-            <strong>Form-related cookies</strong>
-            <br></br> When you submit data through a form like those found on
-            the contact pages or in the registration forms comments, cookies can
-            be set to remember the User details for future correspondence.
-            <br></br>
-          </li>
-          <li>
-            <strong>Site Preference Cookies</strong>
-            <br></br> To provide you with a great experience on this site, we
-            provide the functionality to set your preferences for how that
-            website runs when you use it. To remember your preferences, we need
-            to set cookies so that these information can be called up whenever
-            you interact with a page is affected by your preferences.
-            <br></br>
-          </li>
-        </ul>
-        <h3>Third Party Cookies</h3>
-        <p>
-          In some special cases, we also use cookies provided by trusted third
-          parties. The following section details which cookies from third
-          parties you can find through this website.
-        </p>
-        <ul>
-          <li>
-            This website uses Google Analytics, which is one of the most
-            widespread and trusted analytics on the Web to help us understand
-            how you use the site and how we can improve your experience. These
-            cookies can track things like how long you spend on the site and the
-            pages you visit, so that we can keep producing compelling content.
-          </li>
-        </ul>
-        <p>
-          For more information about Google Analytics cookies, see the official
-          Google Analytics page.
-        </p>
-        <ul>
-          <li>
-            Third-party analytics are used to track and measure usage of this
-            site, so that we can continue to produce content attractive. These
-            cookies can track things like the time you passes on the website or
-            the pages visited, which helps us to understand how we can improve
-            the site for you.
-          </li>
-          <li>
-            We periodically test new features and make changes subtle in the way
-            the site presents itself. when we are still testing new features,
-            these cookies may be used to ensure you receive a consistent
-            experience while is on the site, while we understand what
-            optimizations our users appreciate most.
-          </li>
-          <li>
-            As we sell products, it is important that we understand the
-            statistics on how many visitors to our site actually buy and so this
-            is the type of data these cookies will track. This is important to
-            you as it means that we can make accurate business predictions that
-            allow us to analyze our advertising and product costs to ensure the
-            best possible price.
-          </li>
-        </ul>
-        <h3>User Commitment</h3>
-        <p>
-          The user undertakes to make proper use of the contents and information
-          that <strong>{complements.defaultTitle}</strong> offers on the site
-          and with enunciative character, but not limiting:
-        </p>
-        <ul>
-          <li>
-            A) Not to engage in activities that are illegal or contrary to the
-            good faith and public order;
-          </li>
-          <li>
-            B) Not to disseminate ads or content of a racist nature, xenophobic,{' '}
-            <a href='https://ondeapostar.pt/onde-da-a-bola/'>Onde dá a Bola</a>{' '}
-            or bad luck, any kind of illegal pornography, in support of
-            terrorism or against human rights;
-          </li>
-          <li>
-            C) Do not cause damage to physical (hardware) and logical systems
-            (software) from <strong>{complements.defaultTitle}</strong>, its
-            suppliers or third parties, to introduce or disseminate computer
-            viruses or any other hardware or software systems that are capable
-            of causing the aforementioned damage.
-          </li>
-        </ul>
-        <h3>More information</h3>
-        <p>
-          Let's hope it's clarified and, as mentioned earlier, if there's
-          something you're not sure you need or not, it is generally safer to
-          leave cookies enabled in case you interact with one of the features
-          you use on our website.
+          Você pode, a qualquer momento, requerer: (i) confirmação de que seus
+          Dados Pessoais estão sendo tratados; (ii) acesso aos seus Dados
+          Pessoais; (iii) correções a dados incompletos, inexatos ou
+          desatualizados; (iv) anonimização, bloqueio ou eliminação de dados
+          desnecessários, excessivos ou tratados em desconformidade com o
+          disposto em lei; (v) portabilidade de Dados Pessoais a outro prestador
+          de serviços, contanto que isso não afete nossos segredos industriais e
+          comerciais; (vi) eliminação de Dados Pessoais tratados com seu
+          consentimento, na medida do permitido em lei; (vii) informações sobre
+          as entidades às quais seus Dados Pessoais tenham sido compartilhados;
+          (viii) informações sobre a possibilidade de não fornecer o
+          consentimento e sobre as consequências da negativa; e (ix) revogação
+          do consentimento. Os seus pedidos serão tratados com especial cuidado
+          de forma a que possamos assegurar a eficácia dos seus direitos. Poderá
+          lhe ser pedido que faça prova da sua identidade de modo a assegurar
+          que a partilha dos Dados Pessoais é apenas feita com o seu titular.
         </p>
         <p>
-          This policy is effective as of <strong>April 2023</strong>.
+          Você deverá ter em mente que, em certos casos (por exemplo, devido a
+          requisitos legais), o seu pedido poderá não ser imediatamente
+          satisfeito, além de que nós poderemos não conseguir atendê-lo por
+          conta de cumprimento de obrigações legais.
+        </p>
+        <h3>Seção 10 - Segurança dos Dados Pessoais</h3>
+        <p>
+          Buscamos adotar as medidas técnicas e organizacionais previstas pelas
+          Leis de Proteção de Dados adequadas para proteção dos Dados Pessoais
+          na nossa organização. Infelizmente, nenhuma transmissão ou sistema de
+          armazenamento de dados tem a garantia de serem 100% seguros. Caso
+          tenha motivos para acreditar que sua interação conosco tenha deixado
+          de ser segura (por exemplo, caso acredite que a segurança de qualquer
+          uma de suas contas foi comprometida), favor nos notificar
+          imediatamente.
+        </p>
+        <h3>
+          Seção 11 - Links de hipertexto para outros sites e redes sociais
+        </h3>
+        <p>
+          A plataforma poderá, de tempos a tempos, conter links de hipertexto
+          que redirecionará você para sites das redes dos nossos parceiros,
+          anunciantes, fornecedores etc. Se você clicar em um desses links para
+          qualquer um desses sites, lembre-se que cada site possui as suas
+          próprias práticas de privacidade e que não somos responsáveis por
+          essas políticas. Consulte as referidas políticas antes de enviar
+          quaisquer Dados Pessoais para esses sites.
+        </p>
+        <p>
+          Não nos responsabilizamos pelas políticas e práticas de coleta, uso e
+          divulgação (incluindo práticas de proteção de dados) de outras
+          organizações, tais como Facebook, Apple, Google, Microsoft, ou de
+          qualquer outro desenvolvedor de software ou provedor de aplicativo,
+          loja de mídia social, sistema operacional, prestador de serviços de
+          internet sem fio ou fabricante de dispositivos, incluindo todos os
+          Dados Pessoais que divulgar para outras organizações por meio dos
+          aplicativos, relacionadas a tais aplicativos, ou publicadas em nossas
+          páginas em mídias sociais. Nós recomendamos que você se informe sobre
+          a política de privacidade de cada site visitado ou de cada prestador
+          de serviço utilizado.
+        </p>
+        <h3>Seção 12 - Atualizações desta Política de Privacidade</h3>
+        <p>
+          Se modificarmos nossa Política de Privacidade, publicaremos o novo
+          texto na plataforma, com a data de revisão atualizada. Podemos alterar
+          esta Política de Privacidade a qualquer momento. Caso haja alteração
+          significativa nos termos desta Política de Privacidade, podemos
+          informá-lo por meio das informações de contato que tivermos em nosso
+          banco de dados ou por meio de notificação em nossa plataforma.
+        </p>
+        <p>
+          Recordamos que nós temos como compromisso não tratar os seus Dados
+          Pessoais de forma incompatível com os objetivos descritos acima,
+          exceto se de outra forma requerido por lei ou ordem judicial.
+        </p>
+
+        <p>
+          Sua utilização da plataforma após as alterações significa que aceitou
+          as Políticas de Privacidade revisadas. Caso, após a leitura da versão
+          revisada, você não esteja de acordo com seus termos, favor encerrar o
+          acesso à plataforma.
+        </p>
+        <h3>Seção 13 - Encarregado do tratamento dos Dados Pessoais</h3>
+        <p>
+          Caso pretenda exercer qualquer um dos direitos previstos, inclusive
+          retirar o seu consentimento, nesta Política de Privacidade e/ou nas
+          Leis de Proteção de Dados, ou resolver quaisquer dúvidas relacionadas
+          ao Tratamento de seus Dados Pessoais, favor contatar-nos em{' '}
+          {complements.email}.
         </p>
       </article>
     </Container>

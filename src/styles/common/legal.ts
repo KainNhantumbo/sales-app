@@ -7,10 +7,10 @@ export const LegalContainer = styled.div`
 	justify-items: center;
 	line-height: 1.6rem;
 
+	background: rgb(${({ theme }) => theme.background});
 	article {
 		line-height: 1.6rem;
 		text-align: justify;
-		background: rgb(${({ theme }) => theme.background});
 		display: flex;
 		justify-content: flex-start;
 		flex-direction: column;
