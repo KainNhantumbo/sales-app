@@ -1,10 +1,5 @@
 import styled from 'styled-components';
-import {
-  BaseButton,
-  BaseButtonOutline,
-  StyledInputs,
-  StyledLabels,
-} from '../defaults';
+import { BaseButton, StyledInputs, StyledLabels } from '../defaults';
 
 export const SignUpContainer = styled.div`
   width: 100%;
@@ -14,7 +9,7 @@ export const SignUpContainer = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: flex-start;
-  background: rgb(${({ theme }) => theme.background_variant});
+  background: rgba(${({ theme }) => theme.background_variant}, 0.3);
 
   * {
     ::selection {
@@ -23,7 +18,18 @@ export const SignUpContainer = styled.div`
     }
   }
 
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+    filter: blur(3px);
+  }
   article {
+    z-index: 100;
     width: 100%;
     display: grid;
     place-content: center;

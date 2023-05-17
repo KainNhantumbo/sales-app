@@ -1,8 +1,12 @@
-import { IoLockClosedOutline, IoLogoFacebook, IoLogoGoogle, IoMailOutline } from 'react-icons/io5';
-import fetchClient from '../../config/client';
+import {
+  IoLockClosedOutline,
+  IoLogoFacebook,
+  IoLogoGoogle,
+  IoMailOutline,
+} from 'react-icons/io5';
+import fetch from '../../config/client';
 import { actions } from '../../data/reducer-actions';
-import { useState } from 'react';
-import { ISignInData } from '../../../@types/index';
+import { useState, useEffect } from 'react';
 import { useAppContext } from '../../context/AppContext';
 import { NextRouter, useRouter } from 'next/router';
 import { InputEvents, SubmitEvent } from '../../../@types';
@@ -10,32 +14,43 @@ import { SignInContainer as Container } from '../../styles/common/sign-in';
 import { complements } from '@/data/app-data';
 import Layout from '@/components/Layout';
 import Link from 'next/link';
+import Image from 'next/image';
+import backgroundImage from '../../../public/assets/background1.png'
 
 export default function Signin(): JSX.Element {
   const { state, dispatch } = useAppContext();
-  const [formData, setFormData] = useState<ISignInData>({
-    email: '',
-    password: '',
-  });
-  const [errorMessage, setErrorMessage] = useState<string>('');
   const router: NextRouter = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({ status: false, message: '' });
 
   const handleChange = (e: InputEvents): void => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [e.target.name]: e.target.value,
-    }));
+    dispatch({
+      type: actions.SIGNIN_DATA,
+      payload: {
+        ...state,
+        signInData: {
+          ...state.signInData,
+          [e.target.name]: e.target.value,
+        },
+      },
+    });
   };
 
   const handleSubmit = async (e: SubmitEvent): Promise<void> => {
     e.preventDefault();
-    if (formData.password.length < 6)
-      return handleError('Password must have at least 6 characters');
+    if (state.signInData.password.length < 8) {
+      setError({
+        status: true,
+        message: 'A senha deve conter pelo menos 8 carácteres',
+      });
+      return;
+    }
     try {
-      const { data } = await fetchClient({
+      setLoading(true);
+      const { data } = await fetch({
         method: 'post',
-        url: '/auth/login',
-        data: formData,
+        url: '/api/v1/users/auth/login',
+        data: state.signInData,
         withCredentials: true,
       });
       dispatch({
@@ -50,22 +65,27 @@ export default function Signin(): JSX.Element {
         },
       });
       router.push(`/users/feed`);
-    } catch (err: any) {
-      console.log(err);
-      handleError(err.response?.data?.message);
+    } catch (error: any) {
+      console.error(error);
+      setError({ status: true, message: error?.response?.data?.message });
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleError = (message: string): void => {
-    setErrorMessage(message);
-    setTimeout(() => {
-      setErrorMessage('');
-    }, 3000);
-  };
+  useEffect(() => {
+    const desc = setTimeout(() => {
+      setError({ status: false, message: '' });
+    }, 5000);
+    return () => {
+      clearTimeout(desc);
+    };
+  }, [error.status]);
 
   return (
     <Layout>
       <Container>
+        <Image src={backgroundImage} alt='background image' />
         <main>
           <article>
             <div className='form-container'>
@@ -111,7 +131,9 @@ export default function Signin(): JSX.Element {
                     <span>Esqueceu a senha? Recuperar conta.</span>
                   </Link>
                 </div>
-                <span className='error-message'>{errorMessage}</span>
+                {error.status && (
+                  <span className='error-message'>{error.message}</span>
+                )}
 
                 <button className='login' type='submit'>
                   <span>Acessar conta</span>
@@ -124,11 +146,11 @@ export default function Signin(): JSX.Element {
                 </h3>
                 <div className='login-btns'>
                   <Link href={''}>
-                   <IoLogoGoogle/>
+                    <IoLogoGoogle />
                     <span>Google</span>{' '}
                   </Link>
                   <Link href={''}>
-                    <IoLogoFacebook/>
+                    <IoLogoFacebook />
                     <span>Facebook</span>{' '}
                   </Link>
                 </div>

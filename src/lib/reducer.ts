@@ -13,6 +13,10 @@ export const initialState: State = {
     password: '',
     confirm_password: '',
   },
+  signInData: {
+    email: '',
+    password: '',
+  },
 };
 
 export default function reducer(state: State, action: Action) {
@@ -39,6 +43,8 @@ export default function reducer(state: State, action: Action) {
         ...state,
         signupData: action.payload?.signupData!,
       };
+    case actions.SIGNIN_DATA:
+      return { ...state, signInData: action.payload?.signInData! };
     default:
       return { ...state };
   }

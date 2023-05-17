@@ -1,12 +1,8 @@
 import {
-  IoAnalytics,
   IoEllipsisHorizontal,
-  IoLockClosed,
   IoLockClosedOutline,
   IoLockOpenOutline,
-  IoLogInOutline,
   IoMailOutline,
-  IoPerson,
 } from 'react-icons/io5';
 import fetch from '../../config/client';
 import { useAppContext } from '@/context/AppContext';
@@ -20,6 +16,8 @@ import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import Link from 'next/link';
 import { complements } from '@/data/app-data';
+import Image from 'next/image';
+import backgroundImage from '../../../public/assets/background1.png';
 
 export default function Signup(): JSX.Element {
   const router: NextRouter = useRouter();
@@ -43,7 +41,11 @@ export default function Signup(): JSX.Element {
 
   const handleSubmit = async (e: SubmitEvent): Promise<void> => {
     e.preventDefault();
-    if (state.signupData.password !== state.signupData.confirm_password) {
+    if (
+      state.signupData.password !== state.signupData.confirm_password ||
+      state.signupData.password.length < 8
+    ) {
+      //
     }
 
     try {
@@ -79,6 +81,7 @@ export default function Signup(): JSX.Element {
   return (
     <Layout>
       <Container>
+      <Image src={backgroundImage} alt='background image' />
         <main>
           <article>
             <div className='form-container'>
@@ -145,6 +148,7 @@ export default function Signup(): JSX.Element {
                       type='password'
                       id='password'
                       name='password'
+                      minLength={8}
                       aria-hidden='true'
                       placeholder='Escreva a sua senha'
                       aria-label='Escreva a sua senha'
@@ -164,6 +168,7 @@ export default function Signup(): JSX.Element {
                       id='confirm_password'
                       name='confirm_password'
                       aria-hidden='true'
+                      minLength={8}
                       placeholder='Confirme a sua senha'
                       aria-label='Confirme a sua senha'
                       onChange={(e): void => handleChange(e)}

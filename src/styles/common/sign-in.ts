@@ -14,7 +14,7 @@ export const SignInContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  background: rgb(${({ theme }) => theme.background_variant});
+  background: rgba(${({ theme }) => theme.background_variant}, .3);
 
   * {
     ::selection {
@@ -23,7 +23,19 @@ export const SignInContainer = styled.div`
     }
   }
 
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+    filter: blur(3px);
+  }
+
   article {
+    z-index: 100;
     width: 100%;
     display: grid;
     place-content: center;

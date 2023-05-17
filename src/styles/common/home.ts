@@ -87,6 +87,7 @@ export const HomeContainer = styled.div`
     .features {
       width: 100%;
       background: rgb(${({ theme }) => theme.background_variant});
+      user-select: none;
 
       .wrapper {
         max-width: 1280px;
