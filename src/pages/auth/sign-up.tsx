@@ -41,13 +41,15 @@ export default function Signup(): JSX.Element {
 
   async function handleSubmit(e: SubmitEvent): Promise<void> {
     e.preventDefault();
-    if (
-      state.signupData.password !== state.signupData.confirm_password ||
-      state.signupData.password.length < 8
-    )
+    if (state.signupData.password !== state.signupData.confirm_password)
       return setError({
         status: true,
-        message: 'A as senhas devem ser iguais e maiores que 8 carácteres.',
+        message: 'As senhas devem ser iguais.',
+      });
+    if (state.signupData.password.length < 8)
+      return setError({
+        status: true,
+        message: 'As senhas devem ter pelo menos 8 carácteres.',
       });
 
     try {
@@ -178,23 +180,21 @@ export default function Signup(): JSX.Element {
                   </div>
                 </section>
 
-                {error.status && (
-                  <span className='error-message'>{error.message}</span>
-                )}
+                <span className='error-message'>
+                  {error.status && !loading ? error.message : `  `}
+                </span>
 
-                {loading && !error.status && (
-                  <>
-                    <PulseLoader
-                      color={`rgb(${theme.primary})`}
-                      loading={loading}
-                      aria-placeholder='Processando...'
-                      cssOverride={{
-                        display: 'block',
-                        margin: '0 auto',
-                      }}
-                    />
-                  </>
-                )}
+                {
+                  <PulseLoader
+                    color={`rgb(${theme.primary})`}
+                    loading={loading && !error.status && true}
+                    aria-placeholder='Processando...'
+                    cssOverride={{
+                      display: 'block',
+                      margin: '0 auto',
+                    }}
+                  />
+                }
 
                 <button
                   className='next'

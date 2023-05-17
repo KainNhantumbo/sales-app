@@ -94,7 +94,6 @@ export const SignInContainer = styled.div`
           color: rgb(${({ theme }) => theme.alert});
           font-weight: 500;
           font-size: 0.96rem;
-          max-width: 320px;
           line-height: 1.4rem;
         }
 

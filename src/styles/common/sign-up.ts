@@ -96,10 +96,9 @@ export const SignUpContainer = styled.div`
         }
 
         .error-message {
-          color: rgb(${({ theme }) => theme.secondary});
+          color: rgb(${({ theme }) => theme.alert});
           font-weight: 500;
           font-size: 0.8rem;
-          max-width: 320px;
           line-height: 1.4rem;
         }
 

@@ -49,7 +49,7 @@ export default function Signin(): JSX.Element {
       setLoading(true);
       const { data } = await fetch({
         method: 'post',
-        url: '/api/v1/users/auth/login',
+        url: '/api/v1/auth/default/login',
         data: state.signInData,
         withCredentials: true,
       });
@@ -64,6 +64,7 @@ export default function Signin(): JSX.Element {
           },
         },
       });
+      console.log(data)
       router.push(`/users/feed`);
     } catch (error: any) {
       console.error(error);
