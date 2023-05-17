@@ -41,6 +41,13 @@ export const BaseButton = css`
   :hover {
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.09);
   }
+  :disabled{
+    box-shadow: none;
+    background: rgba(${({ theme }) => theme.primary}, .4);
+    span {
+      color: rgb(${({ theme }) => theme.foreground});
+    }
+  }
 
   svg {
     color: inherit;

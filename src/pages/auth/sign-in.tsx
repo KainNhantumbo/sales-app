@@ -15,7 +15,7 @@ import { complements } from '@/data/app-data';
 import Layout from '@/components/Layout';
 import Link from 'next/link';
 import Image from 'next/image';
-import backgroundImage from '../../../public/assets/background1.png'
+import backgroundImage from '../../../public/assets/background1.png';
 
 export default function Signin(): JSX.Element {
   const { state, dispatch } = useAppContext();
@@ -135,7 +135,10 @@ export default function Signin(): JSX.Element {
                   <span className='error-message'>{error.message}</span>
                 )}
 
-                <button className='login' type='submit'>
+                <button
+                  className='login'
+                  type='submit'
+                  disabled={loading || error.status? true : false}>
                   <span>Acessar conta</span>
                 </button>
               </form>

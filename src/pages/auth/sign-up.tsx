@@ -81,7 +81,7 @@ export default function Signup(): JSX.Element {
   return (
     <Layout>
       <Container>
-      <Image src={backgroundImage} alt='background image' />
+        <Image src={backgroundImage} alt='background image' />
         <main>
           <article>
             <div className='form-container'>
@@ -194,7 +194,10 @@ export default function Signup(): JSX.Element {
                   </>
                 )}
 
-                <button className='next' type='submit'>
+                <button
+                  className='next'
+                  type='submit'
+                  disabled={loading || error.status? true : false}>
                   <span>Cadastre-se</span>
                 </button>
               </form>
