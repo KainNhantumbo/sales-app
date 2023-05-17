@@ -1,17 +1,19 @@
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { complements, urls } from '@/data/app-data';
-import { FooterContainer as Container } from '../styles/common/footer';
 import {
   IoLockOpenOutline,
   IoNewspaperOutline,
   IoPaperPlaneOutline,
 } from 'react-icons/io5';
-import { useThemeContext } from '@/context/ThemeContext';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { BiMoon, BiSun } from 'react-icons/bi';
+import { complements, urls } from '@/data/app-data';
+import { useAppContext } from '@/context/AppContext';
+import { useThemeContext } from '@/context/ThemeContext';
+import { FooterContainer as Container } from '../styles/common/footer';
 
 export default function Footer(): JSX.Element {
   const { darkmode, themeSwitcher } = useThemeContext();
+  const { state } = useAppContext();
   return (
     <Container>
       <section className='navigation'>
@@ -52,6 +54,12 @@ export default function Footer(): JSX.Element {
               <span>Acesso a Contas</span>
             </h3>
             <div className='elements'>
+              {state.userAuth.id && (
+                <Link
+                  href={`/users/dashboard?user=${state.userAuth.id}&invalidated=${state.userAuth.invalidated}`}>
+                  <span>Minha conta</span>
+                </Link>
+              )}
               <Link href={'/auth/sign-in'}>
                 <span>Acessar conta</span>
               </Link>
