@@ -39,20 +39,22 @@ export default function Signup(): JSX.Element {
     });
   };
 
-  const handleSubmit = async (e: SubmitEvent): Promise<void> => {
+  async function handleSubmit(e: SubmitEvent): Promise<void> {
     e.preventDefault();
     if (
       state.signupData.password !== state.signupData.confirm_password ||
       state.signupData.password.length < 8
-    ) {
-      //
-    }
+    )
+      return setError({
+        status: true,
+        message: 'A as senhas devem ser iguais e maiores que 8 carácteres.',
+      });
 
     try {
       setLoading(true);
       await fetch({
         method: 'post',
-        url: '/api/v1/users/auth',
+        url: '/api/v1/users/account',
         data: {
           email: state.signupData.email,
           password: state.signupData.password,
@@ -67,7 +69,7 @@ export default function Signup(): JSX.Element {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   useEffect(() => {
     const desc = setTimeout(() => {
@@ -197,7 +199,7 @@ export default function Signup(): JSX.Element {
                 <button
                   className='next'
                   type='submit'
-                  disabled={loading || error.status? true : false}>
+                  disabled={loading || error.status ? true : false}>
                   <span>Cadastre-se</span>
                 </button>
               </form>

@@ -1,7 +1,11 @@
-import { IoMailOutline } from 'react-icons/io5';
+import {
+  IoLockClosedOutline,
+  IoLockOpenOutline,
+  IoMailOutline,
+} from 'react-icons/io5';
 import fetch from '../../config/client';
 import { useState, useEffect } from 'react';
-import { SubmitEvent } from '../../../@types';
+import { InputEvents, SubmitEvent } from '../../../@types';
 import { PasswordReseterContainer as Container } from '../../styles/common/pasword-reseter';
 import { complements } from '@/data/app-data';
 import Layout from '@/components/Layout';
@@ -9,26 +13,37 @@ import Link from 'next/link';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
-export default function ResetPassword(): JSX.Element {
+export default function UpdatePassword(): JSX.Element {
+  const theme = useTheme();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ status: false, message: '' });
-  const [email, setEmail] = useState<string>('');
-  const theme = useTheme();
+  const [passwords, setPasswords] = useState({
+    password: '',
+    confirm_password: '',
+  });
+
+  const handleChange = (e: InputEvents): void => {
+    setPasswords((state) => ({
+      ...state,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   async function handleSubmit(e: SubmitEvent): Promise<void> {
     e.preventDefault();
+    if (passwords.password !== passwords.confirm_password)
+      return setError({
+        status: true,
+        message: 'A as senhas devem ser iguais e maiores que 8 carácteres.',
+      });
 
     try {
       setLoading(true);
       await fetch({
         method: 'post',
         url: '/api/v1/users/auth/request-new-password',
-        data: email,
+        data: passwords.password,
         withCredentials: true,
-      });
-      setError({
-        status: true,
-        message: 'Confirmado. Veja a sua caixa de e-mails.',
       });
     } catch (error: any) {
       console.error(error);
@@ -53,26 +68,42 @@ export default function ResetPassword(): JSX.Element {
         <main>
           <article>
             <div className='form-container'>
-              <h2>Redifinir a sua senha</h2>
+              <h2>Criar uma nova senha</h2>
               <p>
-                Coloque o e-mail associado com a sua conta de usuário e
-                enviaremos um e-mail para você com as instruções de redifinição
-                de senha.
+                A sua nova senha deve ser diferente das senhas utilizadas
+                anteriormente.
               </p>
               <form onSubmit={handleSubmit}>
                 <section className='input-field'>
-                  <label htmlFor='email'>
-                    <IoMailOutline />
-                    <span>E-mail</span>
+                  <label htmlFor='password'>
+                    <IoLockOpenOutline />
+                    <span>Nova senha</span>
                   </label>
                   <input
-                    type='email'
-                    id='email'
-                    name='email'
-                    placeholder='Escreva o seu e-mail'
-                    aria-label='Escreva o seu e-mail'
-                    required={true}
-                    onChange={(e): void => setEmail(e.target.value)}
+                    type='password'
+                    id='password'
+                    name='password'
+                    minLength={8}
+                    aria-hidden='true'
+                    placeholder='Escreva a sua nova senha'
+                    aria-label='Escreva a sua nova senha'
+                    onChange={(e): void => handleChange(e)}
+                  />
+                </section>
+                <section className='input-field'>
+                  <label htmlFor='confirm_password'>
+                    <IoLockClosedOutline />
+                    <span>Confirme a senha</span>
+                  </label>
+                  <input
+                    type='password'
+                    id='confirm_password'
+                    name='confirm_password'
+                    aria-hidden='true'
+                    minLength={8}
+                    placeholder='Confirme a sua senha'
+                    aria-label='Confirme a sua senha'
+                    onChange={(e): void => handleChange(e)}
                   />
                 </section>
 
@@ -97,18 +128,9 @@ export default function ResetPassword(): JSX.Element {
                   className='login'
                   type='submit'
                   disabled={loading || error.status ? true : false}>
-                  <span>Confirmar</span>
+                  <span>Recuperar conta</span>
                 </button>
               </form>
-
-              <div className='sign-in-options'>
-                <div className='signup-request'>
-                  Ainda não tem uma conta?
-                  <Link href={'/auth/sign-up'}>
-                    <span> Criar conta.</span>
-                  </Link>
-                </div>
-              </div>
             </div>
           </article>
         </main>
