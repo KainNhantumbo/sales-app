@@ -8,12 +8,14 @@ import Layout from '@/components/Layout';
 import Link from 'next/link';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
+import { NextRouter, useRouter } from 'next/router';
 
 export default function ResetPassword(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ status: false, message: '' });
   const [email, setEmail] = useState<string>('');
   const theme = useTheme();
+  const router: NextRouter = useRouter();
 
   async function handleSubmit(e: SubmitEvent): Promise<void> {
     e.preventDefault();
@@ -26,10 +28,7 @@ export default function ResetPassword(): JSX.Element {
         data: email,
         withCredentials: true,
       });
-      setError({
-        status: true,
-        message: 'Confirmado. Veja a sua caixa de e-mails.',
-      });
+      router.push('/auth/reset-password-confirmation');
     } catch (error: any) {
       console.error(error);
       setError({ status: true, message: error?.response?.data?.message });

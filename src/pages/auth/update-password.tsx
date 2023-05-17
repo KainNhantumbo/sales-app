@@ -41,7 +41,7 @@ export default function UpdatePassword(): JSX.Element {
       setLoading(true);
       await fetch({
         method: 'post',
-        url: '/api/v1/users/auth/request-new-password',
+        url: '/api/v1/users/auth/update-password',
         data: passwords.password,
         withCredentials: true,
       });
