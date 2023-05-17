@@ -45,28 +45,17 @@ export const HeaderContainer = styled.header`
         color: rgb(${({ theme }) => theme.secondary});
       }
     }
-
-    .theme-switcher-btn {
-      ${Button_Mono_B}
-      padding: 1px;
-      border: 2px solid rgb(${({ theme }) => theme.secondary});
-      border-radius: 50%;
-      position: absolute;
-      top: calc(50% - 14px);
-      right: -35px;
-      cursor: pointer;
-      z-index: 2000;
-    }
   }
 
   nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
     height: 100%;
     position: relative;
+    top: -4px;
     left: 180px;
-    width: 100%;
     gap: 20px;
 
     section {
@@ -151,8 +140,8 @@ export const HeaderContainer = styled.header`
 
           :hover {
             cursor: pointer;
-            background-color: rgb(${({ theme }) => theme.secondary});
-            color: #fff;
+            background-color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.neutral});
           }
         }
         button {
@@ -176,7 +165,12 @@ export const HeaderContainer = styled.header`
       ${BaseButtonOutline}
       border: none;
     }
+
     .sign-in-btn {
+      ${BaseButton}
+    }
+
+    button {
       ${BaseButton}
     }
 

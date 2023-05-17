@@ -3,12 +3,14 @@ import { complements, urls } from '@/data/app-data';
 import { HiViewList, HiX } from 'react-icons/hi';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HeaderContainer as Container } from '../styles/common/header';
+import { useAppContext } from '@/context/AppContext';
+import { BiUser } from 'react-icons/bi';
 import { IoLogInOutline, IoStorefrontOutline } from 'react-icons/io5';
+import { HeaderContainer as Container } from '../styles/common/header';
 
 export default function Header(): JSX.Element {
   const [isMenu, setIsMenu] = useState<boolean>(false);
-
+  const { state } = useAppContext();
   const toggleMenu = (): void => {
     setIsMenu(!isMenu);
   };
@@ -59,14 +61,30 @@ export default function Header(): JSX.Element {
                 ))}
               </section>
               <div className='auth-btns'>
-                <Link href={'/auth/sign-in'} className='login-btn'>
-                  <IoLogInOutline />
-                  <span>Acessar</span>
-                </Link>
-                <Link href={'/auth/sign-up'} className='sign-in-btn'>
-                  <IoStorefrontOutline />
-                  <span>Cadastrar-se</span>
-                </Link>
+                {!state.userAuth.id || !state.userAuth.token ? (
+                  <>
+                    <Link href={'/auth/sign-in'} className='login-btn'>
+                      <IoLogInOutline />
+                      <span>Acessar</span>
+                    </Link>
+                    <Link href={'/auth/sign-up'} className='sign-in-btn'>
+                      <IoStorefrontOutline />
+                      <span>Cadastrar-se</span>
+                    </Link>
+                  </>
+                ) : (
+                  <button title='Minha conta' onClick={() => {}}>
+                    {state.userAuth.profile_image ? (
+                      <img
+                        src={state.userAuth.profile_image}
+                        alt='user profile image'
+                      />
+                    ) : (
+                      <BiUser />
+                    )}
+                    <span>Minha conta</span>
+                  </button>
+                )}
               </div>
             </motion.nav>
           )}

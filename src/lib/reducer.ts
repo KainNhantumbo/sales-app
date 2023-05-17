@@ -4,7 +4,14 @@ import type { State, Action } from '../../@types/reducer';
 export const initialState: State = {
   isPromptActive: false,
   isConnected: false,
-  userAuth: { id: '', token: '', invalidated: false },
+  userAuth: {
+    id: '',
+    name: '',
+    token: '',
+    email: '',
+    profile_image: '',
+    invalidated: false,
+  },
   newSubscriptorValue: { subscriptor: '' },
   signupData: {
     first_name: '',

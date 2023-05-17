@@ -58,14 +58,16 @@ export default function Signin(): JSX.Element {
         payload: {
           ...state,
           userAuth: {
-            token: data?.token,
             id: data?.id,
+            token: data?.token,
             invalidated: data?.invalidated,
+            email: data?.email,
+            name: data?.name,
+            profile_image: data?.profile_image,
           },
         },
       });
-      console.log(data)
-      router.push(`/users/feed`);
+      // router.push(`/users/feed`);
     } catch (error: any) {
       console.error(error);
       setError({ status: true, message: error?.response?.data?.message });
@@ -139,7 +141,7 @@ export default function Signin(): JSX.Element {
                 <button
                   className='login'
                   type='submit'
-                  disabled={loading || error.status? true : false}>
+                  disabled={loading || error.status ? true : false}>
                   <span>Acessar conta</span>
                 </button>
               </form>
