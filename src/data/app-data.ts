@@ -3,7 +3,9 @@ import {
   IoCartOutline,
   IoChatbubbleEllipsesOutline,
   IoInfiniteOutline,
+  IoLayers,
   IoLogoFacebook,
+  IoMail,
   IoMegaphoneOutline,
   IoRocketOutline,
 } from 'react-icons/io5';
@@ -40,6 +42,26 @@ export const complements = {
       name: 'Encontre-nos no LinkedIn',
       url: 'https://www.pinterest.com/travel_sketchpad',
       icon: FaLinkedinIn,
+    },
+  ],
+};
+
+export const app_metadata = {
+  appName: complements.defaultTitle,
+  developer: 'Kain Nhantumbo',
+  version: '0.2.0',
+  copyright: '2022 Kain Nhantumbo',
+  license: 'Licensed under Apache 2.0 License',
+  contacts: [
+    {
+      name: 'Portfolio',
+      icon: IoLayers,
+      url: 'https://portifolio-dev-mu.vercel.app',
+    },
+    {
+      name: 'E-mail',
+      icon: IoMail,
+      url: 'nhantumbok@gmail.com',
     },
   ],
 };

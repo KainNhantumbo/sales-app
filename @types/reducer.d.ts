@@ -1,4 +1,4 @@
-import { ISignInData, ISignUp } from './index';
+import { ISignInData, ISignUp, UserType } from './index';
 
 export type State = {
   isPromptActive: boolean;
@@ -14,6 +14,7 @@ export type State = {
   newSubscriptorValue: { subscriptor: string };
   signupData: ISignUp;
   signInData: ISignInData;
+  user: UserType
 };
 
 export type Action = { type: string; payload?: State };

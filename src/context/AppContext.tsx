@@ -1,5 +1,4 @@
 import {
-  useState,
   useContext,
   useEffect,
   createContext,
@@ -124,15 +123,29 @@ export default function AppContext(props: AppContext): JSX.Element {
               ...state,
               userAuth: {
                 id: data?.id,
-            token: data?.token,
-            invalidated: data?.invalidated,
-            email: data?.email,
-            name: data?.name,
-            profile_image: data?.profile_image,
+                token: data?.token,
+                invalidated: data?.invalidated,
+                email: data?.email,
+                name: data?.name,
+                profile_image: data?.profile_image,
               },
             },
           });
         } catch (err: any) {
+          dispatch({
+            type: actions.USER_AUTH,
+            payload: {
+              ...state,
+              userAuth: {
+                id: '',
+                name: '',
+                token: '',
+                email: '',
+                profile_image: '',
+                invalidated: false,
+              },
+            },
+          });
           console.error(err);
         }
       })();

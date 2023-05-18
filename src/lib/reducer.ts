@@ -24,6 +24,62 @@ export const initialState: State = {
     email: '',
     password: '',
   },
+  user: {
+    _id: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    main_phone_number: undefined,
+    alternative_phone_number: undefined,
+    gender: '',
+    birth_date: '',
+    bio: '',
+    cover_image: { id: '', url: '', blurhash: '' },
+    profile_image: { id: '', url: '', blurhash: '' },
+    favorite_products_list: [],
+    favorite_jobs_list: [],
+    professional_skills: [],
+    spoken_languages: [{ language: '', level: '' }],
+    working_experience: [
+      {
+        id: '',
+        carrer: '',
+        end_date: '',
+        start_date: '',
+        description: '',
+        portfolio_url: '',
+        company_name: '',
+        completed: false,
+        public: false,
+      },
+    ],
+    educational_experience: [
+      {
+        id: '',
+        education_level: '',
+        education_entity_name: '',
+        end_date: '',
+        start_date: '',
+        description: '',
+        completed: false,
+        public: false,
+      },
+    ],
+    location: {
+      country: '',
+      state: '',
+      adress: '',
+    },
+    social_network: {
+      website: '',
+      whatsapp: '',
+      instagram: '',
+      facebook: '',
+      linkedin: '',
+    },
+    createdAt: '',
+    updatedAt: '',
+  },
 };
 
 export default function reducer(state: State, action: Action) {
@@ -52,6 +108,11 @@ export default function reducer(state: State, action: Action) {
       };
     case actions.SIGNIN_DATA:
       return { ...state, signInData: action.payload?.signInData! };
+    case actions.USER_DATA:
+      return {
+        ...state,
+        user: action.payload?.user!,
+      };
     default:
       return { ...state };
   }

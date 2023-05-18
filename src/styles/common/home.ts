@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BaseButton, StyledInputs } from '../defaults';
+import { BaseButton } from '../defaults';
 
 export const HomeContainer = styled.div`
   position: relative;

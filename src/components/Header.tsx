@@ -7,9 +7,11 @@ import { useAppContext } from '@/context/AppContext';
 import { BiUser } from 'react-icons/bi';
 import { IoLogInOutline, IoStorefrontOutline } from 'react-icons/io5';
 import { HeaderContainer as Container } from '../styles/common/header';
+import { NextRouter, useRouter } from 'next/router';
 
 export default function Header(): JSX.Element {
   const [isMenu, setIsMenu] = useState<boolean>(false);
+  const router: NextRouter = useRouter();
   const { state } = useAppContext();
   const toggleMenu = (): void => {
     setIsMenu(!isMenu);
@@ -73,7 +75,7 @@ export default function Header(): JSX.Element {
                     </Link>
                   </>
                 ) : (
-                  <button title='Minha conta' onClick={() => {}}>
+                  <button title='Minha conta' onClick={() => router.push(`/users/dashboard/${state.userAuth.id}`)}>
                     {state.userAuth.profile_image ? (
                       <img
                         src={state.userAuth.profile_image}

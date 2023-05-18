@@ -67,7 +67,7 @@ export default function Signin(): JSX.Element {
           },
         },
       });
-      // router.push(`/users/feed`);
+      router.push(`/users/dashboard/${data?.id}`);
     } catch (error: any) {
       console.error(error);
       setError({ status: true, message: error?.response?.data?.message });

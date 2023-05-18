@@ -55,8 +55,7 @@ export default function Footer(): JSX.Element {
             </h3>
             <div className='elements'>
               {state.userAuth.id && (
-                <Link
-                  href={`/users/dashboard?user=${state.userAuth.id}&invalidated=${state.userAuth.invalidated}`}>
+                <Link href={`/users/dashboard/${state.userAuth.id}`}>
                   <span>Minha conta</span>
                 </Link>
               )}
