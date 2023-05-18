@@ -170,8 +170,9 @@ export const HeaderContainer = styled.header`
       ${BaseButton}
     }
 
-    button {
-      ${BaseButton}
+    .user-account, .user-logout{
+      ${BaseButtonOutline}
+      border: none;
     }
 
     @media screen and (max-width: 770px) {

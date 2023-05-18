@@ -1,9 +1,10 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useLayoutEffect } from 'react';
 import { HeadProps } from '../../@types/index';
 import Metadata from './Head';
 import Header from './Header';
 import Footer from './Footer';
 import { useAppContext } from '@/context/AppContext';
+import LogoutPrompt from './modals/LogoutPrompt';
 import { NextRouter, useRouter } from 'next/router';
 interface IProps {
   children: ReactNode;
@@ -14,9 +15,9 @@ export default function Layout({ children, metadata }: IProps) {
   const router: NextRouter = useRouter();
   const { state } = useAppContext();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const isUserAuthenticated = setTimeout(() => {
-      if (router.asPath.includes('dashboard') && !state.userAuth.id) {
+      if (router.asPath.includes('users') && !state.userAuth.id) {
         router.push('/auth/sign-in');
       }
     }, 100);
@@ -27,7 +28,10 @@ export default function Layout({ children, metadata }: IProps) {
     <>
       <Metadata {...metadata} />
       <Header />
-      <main>{children}</main>
+      <main>
+        <LogoutPrompt />
+        {children}
+      </main>
       <Footer />
     </>
   );

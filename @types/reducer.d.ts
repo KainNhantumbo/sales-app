@@ -1,7 +1,7 @@
 import { ISignInData, ISignUp, UserType } from './index';
 
 export type State = {
-  isPromptActive: boolean;
+  isLogoutPrompt: boolean
   isConnected: boolean;
   userAuth: {
     id: string;

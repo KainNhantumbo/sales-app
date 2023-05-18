@@ -5,14 +5,18 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '@/context/AppContext';
 import { BiUser } from 'react-icons/bi';
-import { IoLogInOutline, IoStorefrontOutline } from 'react-icons/io5';
+import {
+  IoLogInOutline,
+  IoLogOutOutline,
+  IoStorefrontOutline,
+} from 'react-icons/io5';
 import { HeaderContainer as Container } from '../styles/common/header';
 import { NextRouter, useRouter } from 'next/router';
 
 export default function Header(): JSX.Element {
   const [isMenu, setIsMenu] = useState<boolean>(false);
   const router: NextRouter = useRouter();
-  const { state } = useAppContext();
+  const { state, logoutPromptController } = useAppContext();
   const toggleMenu = (): void => {
     setIsMenu(!isMenu);
   };
@@ -74,8 +78,13 @@ export default function Header(): JSX.Element {
                       <span>Cadastrar-se</span>
                     </Link>
                   </>
-                ) : (
-                  <button title='Minha conta' onClick={() => router.push(`/users/dashboard/${state.userAuth.id}`)}>
+                ) : !router.asPath.includes('dashboard') ? (
+                  <button
+                    title='Minha conta'
+                    className='user-account'
+                    onClick={() =>
+                      router.push(`/users/dashboard/${state.userAuth.id}`)
+                    }>
                     {state.userAuth.profile_image ? (
                       <img
                         src={state.userAuth.profile_image}
@@ -85,6 +94,14 @@ export default function Header(): JSX.Element {
                       <BiUser />
                     )}
                     <span>Minha conta</span>
+                  </button>
+                ) : (
+                  <button
+                    title='Sair'
+                    className='user-logout'
+                    onClick={logoutPromptController}>
+                    <IoLogOutOutline />
+                    <span>Terminar sessão</span>
                   </button>
                 )}
               </div>

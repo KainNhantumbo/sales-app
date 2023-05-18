@@ -4,8 +4,14 @@ import { NextRouter, useRouter } from 'next/router';
 import { useTheme } from 'styled-components';
 import { motion } from 'framer-motion';
 import { useAppContext } from '@/context/AppContext';
-import { BiBriefcaseAlt2, BiStoreAlt, BiUserCheck } from 'react-icons/bi';
-import { IoAlbumsOutline } from 'react-icons/io5';
+import {
+  BiBriefcaseAlt2,
+  BiStoreAlt,
+  BiUser,
+  BiUserCheck,
+} from 'react-icons/bi';
+import { IoAlbumsOutline, IoApps } from 'react-icons/io5';
+import LogoutPrompt from '@/components/modals/LogoutPrompt';
 
 export default function Dashboard(): JSX.Element {
   const theme = useTheme();
@@ -38,7 +44,30 @@ export default function Dashboard(): JSX.Element {
   return (
     <Layout>
       <Container>
+       
         <article>
+          <section className='header'>
+            <h2>
+              <IoApps />
+              <span>Painel de Controle</span>
+            </h2>
+            <section className='user-container'>
+              <div className='avatar-container'>
+                {state.userAuth.profile_image ? (
+                  <img
+                    src={state.userAuth.profile_image}
+                    alt={`${state.userAuth.name} + profile picture`}
+                  />
+                ) : (
+                  <BiUser />
+                )}
+              </div>
+              <div className='status-container'>
+                <h3>{state.userAuth.name}</h3>
+                <p>{state.userAuth.email}</p>
+              </div>
+            </section>
+          </section>
           <section className='actions'>
             <div className='wrapper'>
               <div className='cards-container'>
@@ -48,11 +77,11 @@ export default function Dashboard(): JSX.Element {
                     onClick={() => router.push(card.url)}
                     initial={{
                       scale: 1,
-                      boxShadow: `0px 0px 20px rgba(${theme.accent}, 0.05)`,
+                      boxShadow: `0px 0px 30px rgba(${theme.accent}, 0.09)`,
                     }}
                     whileTap={{ scale: 0.9 }}
                     whileHover={{
-                      boxShadow: `0px 0px 25px rgba(${theme.accent}, 0.09)`,
+                      boxShadow: `0px 0px 25px rgba(${theme.accent}, 0.1)`,
                       scale: 1.05,
                     }}>
                     <card.icon />

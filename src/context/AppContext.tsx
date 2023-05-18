@@ -17,6 +17,7 @@ import { AxiosError, AxiosPromise, AxiosRequestConfig } from 'axios';
 interface IContext {
   state: State;
   dispatch: Dispatch<Action>;
+  logoutPromptController: () => void;
   logoutUser: () => Promise<void>;
   fetchAPI: (config: AxiosRequestConfig) => AxiosPromise<any>;
 }
@@ -26,11 +27,19 @@ const context = createContext<IContext>({
   dispatch: () => {},
   logoutUser: async () => {},
   fetchAPI: (): any => {},
+  logoutPromptController: () => {},
 });
 
 export default function AppContext(props: AppContext): JSX.Element {
   const router: NextRouter = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // ============= modal controllers =================== //
+  const logoutPromptController = (): void => {
+    dispatch({
+      type: actions.LOGOUT_PROMPT,
+    });
+  };
 
   // ----------------user authentication--------------------------
   function fetchAPI(config: AxiosRequestConfig): AxiosPromise<any> {
@@ -72,6 +81,7 @@ export default function AppContext(props: AppContext): JSX.Element {
           },
         },
       });
+      logoutPromptController();
       router.push('/auth/sign-in');
     } catch (err: any) {
       console.error(err);
@@ -161,6 +171,7 @@ export default function AppContext(props: AppContext): JSX.Element {
           dispatch,
           logoutUser,
           fetchAPI,
+          logoutPromptController,
         }}>
         {props.children}
       </context.Provider>

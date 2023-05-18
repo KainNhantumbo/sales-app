@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 
-export const BaseButtonOutline  = css`
+export const BaseButtonOutline = css`
   border: none;
   background: none;
   border-radius: 10px;
@@ -10,6 +10,9 @@ export const BaseButtonOutline  = css`
   border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
   width: fit-content;
   cursor: pointer;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   :hover {
     color: rgb(${({ theme }) => theme.primary_variant});
   }
@@ -38,12 +41,15 @@ export const BaseButton = css`
   background: rgb(${({ theme }) => theme.primary});
   color: rgb(${({ theme }) => theme.font});
   border: 1px solid transparent;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   :hover {
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.09);
   }
-  :disabled{
+  :disabled {
     box-shadow: none;
-    background: rgba(${({ theme }) => theme.primary}, .4);
+    background: rgba(${({ theme }) => theme.primary}, 0.4);
     span {
       color: rgb(${({ theme }) => theme.foreground});
     }

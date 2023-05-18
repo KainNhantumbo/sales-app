@@ -70,6 +70,7 @@ export const NewsletterContainer = styled.section`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
 
     p {
       line-height: 1.8rem;
@@ -81,8 +82,15 @@ export const NewsletterContainer = styled.section`
       align-items: center;
       width: fit-content;
       ${StyledInputs}
+      width: 100%;
+
+      @media screen and (max-width: 390px) {
+        flex-direction: column;
+      }
 
       button {
+        width: 100%;
+        min-width: 140px;
         ${BaseButton}
       }
     }
