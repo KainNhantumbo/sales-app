@@ -2,6 +2,7 @@ import {
   IoAdd,
   IoBookmarkOutline,
   IoCalendarNumberOutline,
+  IoClipboardOutline,
   IoCloseCircle,
   IoConstructOutline,
   IoCreateOutline,
@@ -10,6 +11,10 @@ import {
   IoHeartHalfOutline,
   IoHomeOutline,
   IoImageOutline,
+  IoLogoFacebook,
+  IoLogoInstagram,
+  IoLogoWhatsapp,
+  IoPencil,
   IoPencilOutline,
   IoPhonePortraitOutline,
   IoPlanetOutline,
@@ -32,6 +37,7 @@ import Compressor from 'compressorjs';
 import countries from '../../../../data/countries.json';
 import user_skills from '../../../../data/professional-skills.json';
 import user_languages from '../../../../data/languages.json';
+import { FaBlog, FaLinkedinIn } from 'react-icons/fa';
 
 export default function ProfileEditor() {
   const theme = useTheme();
@@ -269,11 +275,8 @@ export default function ProfileEditor() {
           professional_skills: state.user.professional_skills,
           spoken_languages: state.user.spoken_languages,
           location: state.user.location,
-
           social_network: state.user.social_network,
-
           working_experience: state.user.working_experience,
-          educational_experience: state.user.educational_experience,
         },
       });
       dispatch({
@@ -347,11 +350,31 @@ export default function ProfileEditor() {
         },
       },
     });
-
+    setWorkingExperienceData({
+      id: '',
+      carrer: '',
+      end_date: '',
+      start_date: '',
+      description: '',
+      portfolio_url: '',
+      company_name: '',
+    });
     userWorkingDataController();
   }
 
   function updateWorkingData(id: string): void {
+    dispatch({
+      type: actions.USER_DATA,
+      payload: {
+        ...state,
+        user: {
+          ...state.user,
+          working_experience: state.user?.working_experience.map((item) =>
+            item.id === id ? { ...item, ...workingExperienceData } : item
+          ),
+        },
+      },
+    });
     userWorkingDataController();
     setWorkingExperienceData({
       id: '',
@@ -361,6 +384,30 @@ export default function ProfileEditor() {
       description: '',
       portfolio_url: '',
       company_name: '',
+    });
+  }
+
+  function editWorkingData(id: string) {
+    setWorkingExperienceData(() => {
+      return state.user.working_experience.filter((item) => {
+        if (item.id === id) return item;
+      })[0];
+    });
+    userWorkingDataController();
+  }
+
+  function removeWorkingData(id: string) {
+    dispatch({
+      type: actions.USER_DATA,
+      payload: {
+        ...state,
+        user: {
+          ...state.user,
+          working_experience: state.user?.working_experience.filter(
+            (item) => item.id !== id
+          ),
+        },
+      },
     });
   }
 
@@ -576,15 +623,8 @@ export default function ProfileEditor() {
                     <input
                       type='date'
                       id='birth_date'
-                      onChange={(e) =>
-                        dispatch({
-                          type: actions.USER_DATA,
-                          payload: {
-                            ...state,
-                            user: { ...state.user, birth_date: e.target.value },
-                          },
-                        })
-                      }
+                      name='birth_date'
+                      onChange={(e): void => handleChange(e)}
                     />
                   </div>
                 </section>
@@ -756,7 +796,6 @@ export default function ProfileEditor() {
                         countries.forEach((obj) => {
                           if (obj.country === e.target.value) {
                             setCountryStates([...obj.states]);
-                            console.log(obj);
                           }
                         });
                         dispatch({
@@ -829,6 +868,7 @@ export default function ProfileEditor() {
                       id='adress'
                       placeholder='Endereço'
                       aria-label='Endereço'
+                      maxLength={128}
                       value={state.user.location?.adress}
                       onChange={(e): void => {
                         dispatch({
@@ -856,6 +896,7 @@ export default function ProfileEditor() {
                       type='text'
                       id='zip_code'
                       name='zip_code'
+                      maxLength={5}
                       placeholder='Escreva o seu código postal'
                       aria-label='Escreva o seu código postal'
                       value={state.user.location?.zip_code}
@@ -876,6 +917,245 @@ export default function ProfileEditor() {
                       }}
                     />
                   </div>
+                </section>
+
+                <section className='form-section'>
+                  <div className='form-element'>
+                    <label htmlFor='whatsapp'>
+                      <IoLogoWhatsapp />
+                      <span>Whatsapp</span>
+                    </label>
+                    <input
+                      type='text'
+                      id='whatsapp'
+                      placeholder='Contacto do Whatsapp'
+                      aria-label='Whatsapp'
+                      value={state.user.social_network?.whatsapp}
+                      onChange={(e): void => {
+                        dispatch({
+                          type: actions.USER_DATA,
+                          payload: {
+                            ...state,
+                            user: {
+                              ...state.user,
+                              social_network: {
+                                ...state.user.social_network,
+                                whatsapp: e.target.value,
+                              },
+                            },
+                          },
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className='form-element'>
+                    <label htmlFor='facebook'>
+                      <IoLogoFacebook />
+                      <span>Facebook</span>
+                    </label>
+                    <input
+                      type='text'
+                      id='facebook'
+                      placeholder='Link do perfil de facebook'
+                      aria-label='facebook'
+                      value={state.user.social_network?.facebook}
+                      onChange={(e): void => {
+                        dispatch({
+                          type: actions.USER_DATA,
+                          payload: {
+                            ...state,
+                            user: {
+                              ...state.user,
+                              social_network: {
+                                ...state.user.social_network,
+                                facebook: e.target.value,
+                              },
+                            },
+                          },
+                        });
+                      }}
+                    />
+                  </div>
+                </section>
+
+                <section className='form-section'>
+                  <div className='form-element'>
+                    <label htmlFor='website'>
+                      <FaBlog />
+                      <span>Website</span>
+                    </label>
+                    <input
+                      type='text'
+                      id='website'
+                      placeholder='Link do website ou blog'
+                      aria-label='website'
+                      value={state.user.social_network?.website}
+                      onChange={(e): void => {
+                        dispatch({
+                          type: actions.USER_DATA,
+                          payload: {
+                            ...state,
+                            user: {
+                              ...state.user,
+                              social_network: {
+                                ...state.user.social_network,
+                                website: e.target.value,
+                              },
+                            },
+                          },
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className='form-element'>
+                    <label htmlFor='instagram'>
+                      <IoLogoInstagram />
+                      <span>Instagram</span>
+                    </label>
+                    <input
+                      type='text'
+                      id='instagram'
+                      placeholder='Link do perfil do instagram'
+                      aria-label='instagram'
+                      value={state.user.social_network?.instagram}
+                      onChange={(e): void => {
+                        dispatch({
+                          type: actions.USER_DATA,
+                          payload: {
+                            ...state,
+                            user: {
+                              ...state.user,
+                              social_network: {
+                                ...state.user.social_network,
+                                instagram: e.target.value,
+                              },
+                            },
+                          },
+                        });
+                      }}
+                    />
+                  </div>
+                </section>
+
+                <section className='form-section'>
+                  <div className='form-element'>
+                    <label htmlFor='linkedin'>
+                      <FaLinkedinIn />
+                      <span>Linkedin</span>
+                    </label>
+                    <input
+                      type='text'
+                      id='linkedin'
+                      placeholder='Link do perfil do linkedin'
+                      aria-label='linkedin'
+                      value={state.user.social_network?.linkedin}
+                      onChange={(e): void => {
+                        dispatch({
+                          type: actions.USER_DATA,
+                          payload: {
+                            ...state,
+                            user: {
+                              ...state.user,
+                              social_network: {
+                                ...state.user.social_network,
+                                linkedin: e.target.value,
+                              },
+                            },
+                          },
+                        });
+                      }}
+                    />
+                  </div>
+                </section>
+
+                <section className={'working-data-container'}>
+                  <h2>
+                    <span>Experiência Profissional</span>
+                  </h2>
+                  <section className='cards-container'>
+                    {state.user.working_experience.length > 0 ? (
+                      state.user.working_experience.map((item) => (
+                        <div className='card' key={item?.id}>
+                          <div className='info'>
+                            {item.carrer && (
+                              <div className='item'>
+                                <h3>
+                                  <span>Carreira Profissional</span>
+                                </h3>
+                                <p>{item.carrer}</p>
+                              </div>
+                            )}
+                            {item.company_name && (
+                              <div className='item'>
+                                <h3>
+                                  <span>Empresa ou Entidade Empregadora</span>
+                                </h3>
+                                <p>{item.company_name}</p>
+                              </div>
+                            )}
+                            {item.start_date && (
+                              <div className='item dates'>
+                                <h3>
+                                  <span>Período de Trabalho</span>
+                                </h3>
+                                <span>
+                                  De {item.start_date} à {item.start_date}
+                                </span>
+                              </div>
+                            )}
+                            {item.portfolio_url && (
+                              <div className='item'>
+                                <h3>
+                                  <span>Endereço do Portifólio</span>
+                                </h3>
+                                <p>{item.portfolio_url}</p>
+                              </div>
+                            )}
+                            {item.description && (
+                              <div className='item'>
+                                <h3>
+                                  <span>Anotações</span>
+                                </h3>
+                                <p>{item.description}</p>
+                              </div>
+                            )}
+                          </div>
+                          <div className='actions'>
+                            <button
+                              onClick={(e): void => {
+                                e.preventDefault();
+                                editWorkingData(item.id);
+                              }}>
+                              <IoPencil />
+                              <span>Editar</span>
+                            </button>
+                            <button
+                              className='delete-btn'
+                              onClick={(): void => removeWorkingData(item.id)}>
+                              <IoCloseCircle />
+                              <span>Eliminar</span>
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className='no-data-container'>
+                        <IoClipboardOutline />
+                        <h3>
+                          <span>Sem experiência profissional</span>
+                        </h3>
+                      </div>
+                    )}
+                  </section>
+                  <button
+                    className='add-url'
+                    onClick={(e) => {
+                      e.preventDefault();
+                      userWorkingDataController();
+                    }}>
+                    <IoAdd />
+                    <span>Adicionar Experiência Profissional</span>
+                  </button>
                 </section>
               </section>
             </section>

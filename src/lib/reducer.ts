@@ -52,18 +52,6 @@ export const initialState: State = {
         company_name: '',
       },
     ],
-    educational_experience: [
-      {
-        id: '',
-        education_level: '',
-        education_entity_name: '',
-        end_date: '',
-        start_date: '',
-        description: '',
-        completed: false,
-        public: false,
-      },
-    ],
     location: {
       country: '',
       state: '',

@@ -252,16 +252,6 @@ export type UserType = {
     portfolio_url: string;
     company_name: string;
   }[];
-  educational_experience: {
-    id: string;
-    education_level: string;
-    education_entity_name: string;
-    end_date: string;
-    start_date: string;
-    description: string;
-    completed: boolean;
-    public: boolean;
-  }[];
   location: {
     country: string;
     state: string;

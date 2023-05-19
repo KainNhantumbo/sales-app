@@ -10,8 +10,6 @@ import { Dispatch, SetStateAction } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CapturerContainer as Container } from '../../styles/modules/user-working-data';
 import { useAppContext } from '@/context/AppContext';
-import { UserType } from '../../../@types';
-import { actions } from '@/data/reducer-actions';
 
 interface IProps {
   setStateFn: Dispatch<
@@ -69,18 +67,12 @@ export default function UrlCapturerBox(props: IProps): JSX.Element {
                   <span className='prompt-title'>Experiência Profissional</span>
                   <p className='prompt-message'>
                     Coloque informações relevantes da sua experiência
-                    profissional para os recrutadores
+                    profissional para os recrutadores.
                   </p>
                 </div>
 
                 <section className='form-container'>
-                  <form
-                    onSubmit={(e): void => {
-                      e.preventDefault();
-                      if (props.initialData.id)
-                        props.updateFn(props.initialData.id);
-                      else props.saveFn();
-                    }}>
+                  <section className='form' spellCheck={'true'}>
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='carrer'>
@@ -105,12 +97,12 @@ export default function UrlCapturerBox(props: IProps): JSX.Element {
                       <div className='form-element'>
                         <label htmlFor='company_name'>
                           <IoEllipsisHorizontal />
-                          <span>Empresa (ou entidade empregadora)</span>
+                          <span>Empresa (ou empregador)</span>
                         </label>
                         <input
                           type='text'
                           id='company_name'
-                          placeholder='Empresa (ou entidade empregadora)'
+                          placeholder='Entidade empregadora'
                           aria-label='Empresa (ou entidade empregadora)'
                           value={props.initialData.company_name}
                           required={true}
@@ -191,6 +183,7 @@ export default function UrlCapturerBox(props: IProps): JSX.Element {
                           id='description'
                           placeholder='Anotações relevantes a carreira'
                           aria-label='Anotações relevantes a carreira'
+                          rows={3}
                           maxLength={256}
                           onChange={(e): void =>
                             props.setStateFn(({ description, ...data }) => ({
@@ -206,23 +199,41 @@ export default function UrlCapturerBox(props: IProps): JSX.Element {
                     <div className='prompt-actions'>
                       <button
                         className='prompt-cancel'
-                        onClick={userWorkingDataController}>
+                        type='reset'
+                        onClick={() => {
+                          userWorkingDataController();
+                          props.setStateFn(() => {
+                            return {
+                              id: '',
+                              carrer: '',
+                              end_date: '',
+                              start_date: '',
+                              description: '',
+                              portfolio_url: '',
+                              company_name: '',
+                            };
+                          });
+                        }}>
                         <IoClose />
                         <span>Cancelar</span>
                       </button>
                       {props.initialData.id ? (
-                        <button type='submit' className='prompt-accept'>
+                        <button
+                          onClick={() => props.updateFn(props.initialData.id)}
+                          className='prompt-accept'>
                           <IoPushOutline />
                           <span>Atualizar</span>
                         </button>
                       ) : (
-                        <button className='prompt-accept' type='submit'>
+                        <button
+                          className='prompt-accept'
+                          onClick={() => props.saveFn()}>
                           <IoCheckmark />
                           <span>Adicionar experiência</span>
                         </button>
                       )}
                     </div>
-                  </form>
+                  </section>
                 </section>
               </div>
             </div>

@@ -27,7 +27,7 @@ export const CapturerContainer = styled.section`
     flex-direction: column;
     gap: 20px;
     padding: 20px;
-    border-radius: 3px;
+    border-radius: 10px;
     background: rgb(${({ theme }) => theme.foreground});
     max-width: 500px;
     margin: 25px;
@@ -46,7 +46,7 @@ export const CapturerContainer = styled.section`
         gap: 10px;
         span {
           font-weight: 500;
-          color: rgb(${({ theme }) => theme.primary});
+          color: rgb(${({ theme }) => theme.primary_variant});
         }
         p {
           line-height: 1.6rem;
@@ -54,7 +54,7 @@ export const CapturerContainer = styled.section`
         }
       }
 
-      form {
+      .form {
         width: 100%;
         max-width: 760px;
         display: flex;

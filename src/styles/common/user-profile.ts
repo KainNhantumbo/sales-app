@@ -112,6 +112,108 @@ export const UserProfileContainer = styled.div`
           flex-direction: column;
           gap: 18px;
 
+          .working-data-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            h2 {
+              text-align: center;
+              font-size: 1.1rem;
+              font-weight: 500;
+              color: rgb(${({ theme }) => theme.primary_variant});
+            }
+
+            .add-url {
+              ${BaseButton}
+              align-self: center;
+            }
+
+            .no-data-container {
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              gap: 35px;
+              padding: 20px;
+              border-radius: 10px;
+              border: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
+
+              span {
+                display: grid;
+                place-items: center;
+                place-content: center;
+              }
+
+              h3 {
+                line-height: 2rem;
+                font-size: 0.92rem;
+                font-weight: 500;
+                text-align: center;
+                text-transform: uppercase;
+              }
+              svg {
+                width: 60px;
+                height: 60px;
+              }
+            }
+
+            .cards-container {
+              display: flex;
+              justify-content: flex-start;
+              flex-direction: column;
+              gap: 8px;
+
+              .card {
+                display: flex;
+                justify-content: flex-start;
+                gap: 5px;
+                flex-direction: column;
+                padding: 10px;
+                border-radius: 10px;
+                background: rgb(${({ theme }) => theme.foreground});
+                border: 1px solid rgba(${({ theme }) => theme.primary}, 0.2);
+
+                :hover {
+                  border: 1px solid transparent;
+                  box-shadow: 0 0 25px
+                    rgba(${({ theme }) => theme.accent}, 0.09);
+                  transition: all 300ms ease-in-out;
+                }
+
+                span {
+                  line-height: 1.6rem;
+                  i {
+                    font-weight: 500;
+                    color: rgb(${({ theme }) => theme.primary});
+                  }
+                }
+
+                .actions {
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: flex-end;
+                  gap: 10px;
+                  button {
+                    ${BaseButtonOutline}
+                    padding: 0;
+                    border: none;
+                    box-shadow: none;
+                    span {
+                      padding-left: 30px;
+                    }
+                  }
+                  .delete-btn {
+                    :hover {
+                      color: rgb(${({ theme }) => theme.alert});
+                    }
+                  }
+                }
+              }
+            }
+          }
+
           .form-section {
             display: flex;
             flex-direction: row;
