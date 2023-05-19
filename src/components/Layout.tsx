@@ -1,11 +1,11 @@
-import { ReactNode, useLayoutEffect } from 'react';
-import { HeadProps } from '../../@types/index';
 import Metadata from './Head';
 import Header from './Header';
 import Footer from './Footer';
-import { useAppContext } from '@/context/AppContext';
+import { HeadProps } from '../../@types/index';
 import LogoutPrompt from './modals/LogoutPrompt';
+import { ReactNode, useLayoutEffect } from 'react';
 import { NextRouter, useRouter } from 'next/router';
+import { useAppContext } from '@/context/AppContext';
 interface IProps {
   children: ReactNode;
   metadata?: HeadProps;

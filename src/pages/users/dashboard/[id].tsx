@@ -11,7 +11,6 @@ import {
   BiUserCheck,
 } from 'react-icons/bi';
 import { IoAlbumsOutline, IoApps } from 'react-icons/io5';
-import LogoutPrompt from '@/components/modals/LogoutPrompt';
 
 export default function Dashboard(): JSX.Element {
   const theme = useTheme();
@@ -44,7 +43,6 @@ export default function Dashboard(): JSX.Element {
   return (
     <Layout>
       <Container>
-       
         <article>
           <section className='header'>
             <h2>

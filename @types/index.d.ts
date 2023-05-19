@@ -232,18 +232,18 @@ export type UserType = {
   first_name: string;
   last_name: string;
   email: string;
-  main_phone_number?: number;
-  alternative_phone_number?: number;
+  main_phone_number?: string;
+  alternative_phone_number?: string;
   gender?: string;
   birth_date?: string;
   bio?: string;
   cover_image?: { id: string; url: string; blurhash: string };
   profile_image?: { id: string; url: string; blurhash: string };
-  favorite_products_list?: string[];
-  favorite_jobs_list?: string[];
-  professional_skills?: string[];
-  spoken_languages?: { language: string; level: string }[];
-  working_experience?: {
+  favorite_products_list: string[];
+  favorite_jobs_list: string[];
+  professional_skills: string[];
+  spoken_languages: { language: string; level: string }[];
+  working_experience: {
     id: string;
     carrer: string;
     end_date: string;
@@ -254,7 +254,7 @@ export type UserType = {
     completed: boolean;
     public: boolean;
   }[];
-  educational_experience?: {
+  educational_experience: {
     id: string;
     education_level: string;
     education_entity_name: string;

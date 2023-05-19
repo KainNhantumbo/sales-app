@@ -75,22 +75,22 @@ export const BaseButton = css`
 export const Button_Mono_A = css`
   border: none;
   border-radius: 8px;
-  background: rgba(${({ theme }) => theme.primary});
-  color: rgb(255, 255, 255);
-  position: relative;
-  padding: 7px 10px;
+  background: rgb(${({ theme }) => theme.primary});
+  color: rgb(${({ theme }) => theme.neutral});
+  padding: 10px;
   width: fit-content;
   cursor: pointer;
-  display: grid;
-  place-content: center;
 
   :hover {
     background: rgb(${({ theme }) => theme.secondary});
   }
   svg {
     pointer-events: none;
-    min-width: 20px;
-    min-height: 20px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: calc(50% - 10px);
+    left: calc(50% - 10px);
   }
 `;
 
@@ -172,11 +172,12 @@ export const StyledInputs = css`
     font-weight: 400;
     outline: none;
     border-radius: 10px;
-    background: rgb(${({ theme }) => theme.background});
-    border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
+    background: rgba(${({ theme }) => theme.background}, 0.7);
+    border: 1px solid rgba(${({ theme }) => theme.accent}, 0.05);
 
     :focus {
-      border: 1px solid rgba(${({ theme }) => theme.accent}, 0.5);
+      border: 1px solid rgba(${({ theme }) => theme.accent}, 0.15);
+      box-shadow: 0 0 20px rgba(${({ theme }) => theme.accent}, 0.06);
     }
     ::placeholder {
       color: rgba(${({ theme }) => theme.font}, 0.8);
