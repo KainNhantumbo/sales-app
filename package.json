@@ -17,24 +17,24 @@
     "blurhash": "^2.0.5",
     "compressorjs": "^1.2.1",
     "framer-motion": "^10.12.7",
+    "keen-slider-extended": "^6.8.8",
     "moment": "^2.29.4",
     "next": "13.4.0",
     "react": "18.2.0",
-    "react-date-picker": "^10.1.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
+    "react-image-gallery": "^1.2.11",
     "react-lazy-load-image-component": "^1.5.6",
     "react-responsive-carousel": "^3.2.23",
     "react-spinners": "^0.13.8",
     "reading-time-estimator": "^1.8.1",
     "socket.io-client": "^4.6.1",
     "styled-components": "^5.3.10",
-    "typescript": "5.0.4",
-    "uuid": "^9.0.0"
+    "typescript": "5.0.4"
   },
   "devDependencies": {
+    "@types/react-image-gallery": "^1.2.0",
     "@types/react-lazy-load-image-component": "^1.5.3",
-    "@types/styled-components": "^5.1.26",
-    "@types/uuid": "^9.0.1"
+    "@types/styled-components": "^5.1.26"
   }
 }

@@ -24,6 +24,7 @@ import countries from '../../../../data/countries.json';
 import user_skills from '../../../../data/professional-skills.json';
 import user_languages from '../../../../data/languages.json';
 
+
 export default function ProfileEditor() {
   const theme = useTheme();
   const router: NextRouter = useRouter();
@@ -127,7 +128,7 @@ export default function ProfileEditor() {
   function deleteProfileImage() {
     fetchAPI({
       method: 'delete',
-      url: `/api/v1/users/account/assets/${state.user.profile_image?.id}`,
+      url: `/api/v1/users/account/assets`,
       data: { image: state.user.profile_image?.id },
     })
       .then(() => {
@@ -159,7 +160,7 @@ export default function ProfileEditor() {
   function deleteCoverImage() {
     fetchAPI({
       method: 'delete',
-      url: `/api/v1/users/account/assets/${state.user.cover_image?.id}`,
+      url: `/api/v1/users/account/assets`,
       data: { image: state.user.cover_image?.id },
     })
       .then(() => {
@@ -277,7 +278,7 @@ export default function ProfileEditor() {
   useEffect(() => {
     const fetch_data = setTimeout(() => {
       getUserData();
-    }, 0);
+    }, 10);
     return () => clearTimeout(fetch_data);
   }, []);
 

@@ -183,12 +183,12 @@ export const UserProfileContainer = styled.div`
               .clear-image {
                 ${Button_Mono_A}
                 position: absolute;
-                bottom: 50px;
-                right: calc(50% - 120px);
-                width: 40px;
-                height: 40px;
+                top: 3px;
+                right:3px;
+                width: 30px;
+                height: 30px;
                 border-radius: 50%;
-                background: rgb(${({ theme }) => theme.font});
+                background: rgba(${({ theme }) => theme.primary}, 0.8);
                 :hover {
                   background: rgb(${({ theme }) => theme.alert});
                 }
