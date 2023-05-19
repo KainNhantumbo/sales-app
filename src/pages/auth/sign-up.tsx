@@ -64,7 +64,7 @@ export default function Signup(): JSX.Element {
           last_name: state.signupData.last_name,
         },
       });
-      router.push('/auth/sign-in');
+      router.push('/auth/sign-up-confirm');
     } catch (error: any) {
       console.error(error);
       setError({ status: true, message: error?.response?.data?.message });
