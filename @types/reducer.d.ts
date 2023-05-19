@@ -1,7 +1,8 @@
 import { ISignInData, ISignUp, UserType } from './index';
 
 export type State = {
-  isLogoutPrompt: boolean
+  isLogoutPrompt: boolean;
+  isUserWorkingDataModal: boolean;
   isConnected: boolean;
   userAuth: {
     id: string;
@@ -14,7 +15,7 @@ export type State = {
   newSubscriptorValue: { subscriptor: string };
   signupData: ISignUp;
   signInData: ISignInData;
-  user: UserType
+  user: UserType;
 };
 
 export type Action = { type: string; payload?: State };

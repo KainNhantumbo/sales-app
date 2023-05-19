@@ -101,7 +101,6 @@ export const Button_Mono_B = css`
   color: rgb(${({ theme }) => theme.font});
   border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
   position: relative;
-  padding: 7px 10px;
   width: fit-content;
   cursor: pointer;
   display: grid;
@@ -113,8 +112,11 @@ export const Button_Mono_B = css`
 
   svg {
     pointer-events: none;
-    min-width: 20px;
-    min-height: 20px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: calc(50% - 10px);
+    left: calc(50% - 10px);
   }
 `;
 

@@ -104,7 +104,7 @@ export const UserProfileContainer = styled.div`
         padding: 20px;
         border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
 
-        form {
+        .form {
           width: 100%;
           max-width: 640px;
           display: flex;
@@ -184,7 +184,7 @@ export const UserProfileContainer = styled.div`
                 ${Button_Mono_A}
                 position: absolute;
                 top: 3px;
-                right:3px;
+                right: 3px;
                 width: 30px;
                 height: 30px;
                 border-radius: 50%;
@@ -228,6 +228,36 @@ export const UserProfileContainer = styled.div`
                 background: rgb(${({ theme }) => theme.font});
                 :hover {
                   background: rgb(${({ theme }) => theme.alert});
+                }
+              }
+            }
+          }
+
+          #genres-section {
+            flex-direction: column-reverse;
+            .genres-container {
+              display: flex;
+              justify-content: flex-start;
+
+              flex-flow: row wrap;
+              gap: 10px;
+
+              .genre {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px;
+                border-radius: 3px;
+                gap: 10px;
+                background: rgb(${({ theme }) => theme.foreground});
+                box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);
+
+                button {
+                  ${Button_Mono_B}
+                  border: none;
+                  :hover {
+                    color: rgb(${({ theme }) => theme.alert});
+                  }
                 }
               }
             }

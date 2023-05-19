@@ -3,6 +3,7 @@ import type { State, Action } from '../../@types/reducer';
 
 export const initialState: State = {
   isLogoutPrompt: false,
+  isUserWorkingDataModal: false,
   isConnected: false,
   userAuth: {
     id: '',
@@ -39,7 +40,7 @@ export const initialState: State = {
     favorite_products_list: [],
     favorite_jobs_list: [],
     professional_skills: [],
-    spoken_languages: [{ language: '', level: '' }],
+    spoken_languages: [],
     working_experience: [
       {
         id: '',
@@ -49,8 +50,6 @@ export const initialState: State = {
         description: '',
         portfolio_url: '',
         company_name: '',
-        completed: false,
-        public: false,
       },
     ],
     educational_experience: [
@@ -69,6 +68,7 @@ export const initialState: State = {
       country: '',
       state: '',
       adress: '',
+      zip_code: '',
     },
     social_network: {
       website: '',
@@ -86,6 +86,11 @@ export default function reducer(state: State, action: Action) {
   switch (action.type) {
     case actions.LOGOUT_PROMPT:
       return { ...state, isLogoutPrompt: !state.isLogoutPrompt };
+    case actions.USER_WORKING_DATA_MODAL:
+      return {
+        ...state,
+        isUserWorkingDataModal: !state.isUserWorkingDataModal,
+      };
     case actions.USER_AUTH:
       return {
         ...state,

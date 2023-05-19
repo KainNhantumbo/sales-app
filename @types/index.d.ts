@@ -24,7 +24,7 @@ export type Theme = {
   primary_variant: string;
   secondary: string;
   secondary_variant: string;
-  alert: string
+  alert: string;
   font: string;
   accent: string;
   neutral: string;
@@ -232,17 +232,17 @@ export type UserType = {
   first_name: string;
   last_name: string;
   email: string;
-  main_phone_number?: string;
-  alternative_phone_number?: string;
-  gender?: string;
-  birth_date?: string;
+  main_phone_number: string;
+  alternative_phone_number: string;
+  gender: string;
+  birth_date: string;
   bio?: string;
-  cover_image?: { id: string; url: string; blurhash: string };
-  profile_image?: { id: string; url: string; blurhash: string };
+  cover_image: { id: string; url: string; blurhash: string };
+  profile_image: { id: string; url: string; blurhash: string };
   favorite_products_list: string[];
   favorite_jobs_list: string[];
   professional_skills: string[];
-  spoken_languages: { language: string; level: string }[];
+  spoken_languages: string[];
   working_experience: {
     id: string;
     carrer: string;
@@ -251,8 +251,6 @@ export type UserType = {
     description: string;
     portfolio_url: string;
     company_name: string;
-    completed: boolean;
-    public: boolean;
   }[];
   educational_experience: {
     id: string;
@@ -264,12 +262,13 @@ export type UserType = {
     completed: boolean;
     public: boolean;
   }[];
-  location?: {
+  location: {
     country: string;
     state: string;
     adress: string;
+    zip_code: string;
   };
-  social_network?: {
+  social_network: {
     website?: string;
     whatsapp?: string;
     instagram?: string;
