@@ -168,12 +168,42 @@ export const UserProfileContainer = styled.div`
               .card {
                 display: flex;
                 justify-content: flex-start;
-                gap: 5px;
+                gap: 05px;
                 flex-direction: column;
                 padding: 10px;
                 border-radius: 10px;
                 background: rgb(${({ theme }) => theme.foreground});
                 border: 1px solid rgba(${({ theme }) => theme.primary}, 0.2);
+
+                .info {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 10px;
+
+                  .item {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 3px;
+
+                    h3 {
+                      display: flex;
+                      flex-direction: row;
+                      align-items: center;
+                      font-size: 1rem;
+                      font-weight: 500;
+                      color: rgb(${({ theme }) => theme.font});
+                      span {
+                        padding-left: 10px;
+                      }
+                    }
+
+                    span,
+                    p {
+                      padding-left: 25px;
+                      line-height: 1.2rem;
+                    }
+                  }
+                }
 
                 :hover {
                   border: 1px solid transparent;

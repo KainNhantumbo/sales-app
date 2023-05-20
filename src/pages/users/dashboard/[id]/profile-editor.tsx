@@ -9,9 +9,13 @@ import {
   IoCreateOutline,
   IoEarthOutline,
   IoEllipsisHorizontal,
+  IoEllipsisHorizontalCircleSharp,
+  IoExtensionPuzzleOutline,
+  IoFlowerOutline,
   IoHeartHalfOutline,
   IoHomeOutline,
   IoImageOutline,
+  IoLinkOutline,
   IoLockClosedOutline,
   IoLockOpenOutline,
   IoLogoFacebook,
@@ -25,6 +29,7 @@ import {
   IoStar,
   IoSyncOutline,
   IoTrashOutline,
+  IoWatchOutline,
 } from 'react-icons/io5';
 import Layout from '@/components/Layout';
 import { useAppContext } from '@/context/AppContext';
@@ -41,6 +46,7 @@ import countries from '../../../../data/countries.json';
 import user_skills from '../../../../data/professional-skills.json';
 import user_languages from '../../../../data/languages.json';
 import { FaBlog, FaLinkedinIn } from 'react-icons/fa';
+import moment from 'moment';
 
 export default function ProfileEditor() {
   const theme = useTheme();
@@ -1121,6 +1127,7 @@ export default function ProfileEditor() {
                             {item.carrer && (
                               <div className='item'>
                                 <h3>
+                                  <IoConstructOutline />
                                   <span>Carreira Profissional</span>
                                 </h3>
                                 <p>{item.carrer}</p>
@@ -1129,6 +1136,7 @@ export default function ProfileEditor() {
                             {item.company_name && (
                               <div className='item'>
                                 <h3>
+                                  <IoExtensionPuzzleOutline />
                                   <span>Empresa ou Entidade Empregadora</span>
                                 </h3>
                                 <p>{item.company_name}</p>
@@ -1137,16 +1145,19 @@ export default function ProfileEditor() {
                             {item.start_date && (
                               <div className='item dates'>
                                 <h3>
+                                  <IoWatchOutline />
                                   <span>Período de Trabalho</span>
                                 </h3>
                                 <span>
-                                  De {item.start_date} à {item.start_date}
+                                  De {moment(item.start_date).format('LL')} à{' '}
+                                  {moment(item.end_date).format('LL')}
                                 </span>
                               </div>
                             )}
                             {item.portfolio_url && (
                               <div className='item'>
                                 <h3>
+                                  <IoLinkOutline />
                                   <span>Endereço do Portifólio</span>
                                 </h3>
                                 <p>{item.portfolio_url}</p>
@@ -1155,6 +1166,7 @@ export default function ProfileEditor() {
                             {item.description && (
                               <div className='item'>
                                 <h3>
+                                  <IoFlowerOutline />
                                   <span>Anotações</span>
                                 </h3>
                                 <p>{item.description}</p>
