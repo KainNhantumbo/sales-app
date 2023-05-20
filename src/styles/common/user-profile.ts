@@ -365,17 +365,60 @@ export const UserProfileContainer = styled.div`
             }
           }
 
-          .error-message {
-            color: rgb(${({ theme }) => theme.alert});
-            font-weight: 500;
-            font-size: 0.8rem;
-            line-height: 1.4rem;
-          }
-
           button {
             ${BaseButton}
             align-self: center;
             width: 100%;
+          }
+        }
+      }
+
+      .actions-container {
+        width: 100%;
+        max-width: 1280px;
+        padding: 20px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
+        line-height: 1.4rem;
+
+        .error-message {
+          color: rgb(${({ theme }) => theme.alert});
+          font-weight: 500;
+          font-size: 1.1rem;
+          line-height: 1.4rem;
+          align-self: flex-end;
+        }
+
+        .loading {
+          width: 100%;
+          height: 100%;
+          align-self: flex-end;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          font-weight: 500;
+          font-size: 1.1rem;
+          gap: 10px;
+          padding: 20px;
+          color: rgb(${({ theme }) => theme.primary_variant});
+        }
+
+        .btns-container {
+          display: flex;
+          flex-flow: row wrap;
+          gap: 20px;
+          align-self: flex-end;
+
+          .back {
+            ${BaseButtonOutline}
+            border: none;
+          }
+
+          .save {
+            ${BaseButton}
           }
         }
       }

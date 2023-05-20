@@ -1,5 +1,6 @@
 import {
   IoAdd,
+  IoArrowUndoOutline,
   IoBookmarkOutline,
   IoCalendarNumberOutline,
   IoClipboardOutline,
@@ -11,6 +12,8 @@ import {
   IoHeartHalfOutline,
   IoHomeOutline,
   IoImageOutline,
+  IoLockClosedOutline,
+  IoLockOpenOutline,
   IoLogoFacebook,
   IoLogoInstagram,
   IoLogoWhatsapp,
@@ -20,6 +23,7 @@ import {
   IoPlanetOutline,
   IoReload,
   IoStar,
+  IoSyncOutline,
   IoTrashOutline,
 } from 'react-icons/io5';
 import Layout from '@/components/Layout';
@@ -28,10 +32,9 @@ import { actions } from '@/data/reducer-actions';
 import { UserProfileContainer as Container } from '@/styles/common/user-profile';
 import { NextRouter, useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { DotLoader } from 'react-spinners';
+import { DotLoader, PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
-import { InputEvents, SubmitEvent } from '../../../../../@types';
-import Notification from '../../../../components/PushNotification';
+import { InputEvents } from '../../../../../@types';
 import UserWorkingData from '../../../../components/modals/UserWorkingData';
 import Compressor from 'compressorjs';
 import countries from '../../../../data/countries.json';
@@ -91,9 +94,15 @@ export default function ProfileEditor() {
     });
   };
 
+  const handlePasswordsChange = (e: InputEvents): void => {
+    setPasswords((state) => ({
+      ...state,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   function handleCoverImageFile(): void {
     const imageData: File | null | undefined = coverImageFile?.item(0);
-
     if (imageData) {
       new Compressor(imageData, {
         quality: 0.8,
@@ -118,7 +127,6 @@ export default function ProfileEditor() {
 
   function handleProfileImageFile(): void {
     const imageData: File | null | undefined = profileImageFile?.item(0);
-
     if (imageData) {
       new Compressor(imageData, {
         quality: 0.8,
@@ -233,21 +241,7 @@ export default function ProfileEditor() {
       });
   }
 
-  // function handleNotifications(message: string): void {
-  //   setFeedBackMessage(() => {
-  //     if (message.includes('. '))
-  //       return message.split('.').join('.\n');
-  //     return message;
-  //   });
-  //   setIsPushNotifierActive(true);
-  //   setTimeout(() => {
-  //     setIsPushNotifierActive(false);
-  //     setFeedBackMessage('');
-  //   }, 1000 * 60 * 5);
-  // }
-
-  async function handleSubmit(e: SubmitEvent): Promise<void> {
-    e.preventDefault();
+  async function handleSubmitUpdate(): Promise<void> {
     if (passwords.confirm_password !== '') {
       if (passwords.password !== passwords.confirm_password)
         return setError({
@@ -277,6 +271,8 @@ export default function ProfileEditor() {
           location: state.user.location,
           social_network: state.user.social_network,
           working_experience: state.user.working_experience,
+          coverImageData,
+          profileImageData,
         },
       });
       dispatch({
@@ -301,7 +297,7 @@ export default function ProfileEditor() {
     }
   }
 
-  useEffect((): void => {
+  useEffect((): (() => void) => {
     handleCoverImageFile();
     return () => {
       setCoverImageData({ id: '', data: '', blurhash: '' });
@@ -309,7 +305,7 @@ export default function ProfileEditor() {
     };
   }, [coverImageFile]);
 
-  useEffect((): void => {
+  useEffect((): (() => void) => {
     handleProfileImageFile();
     return () => {
       setProfileImageData({ id: '', data: '', blurhash: '' });
@@ -317,12 +313,23 @@ export default function ProfileEditor() {
     };
   }, [profileImageFile]);
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     const fetch_data = setTimeout(() => {
       getUserData();
     }, 10);
     return () => clearTimeout(fetch_data);
   }, []);
+
+  useEffect(() => {
+    const desc = setTimeout(() => {
+      if (error.status && error.key === 'user-update') {
+        setError({ status: false, msg: '', key: 'user-data' });
+      }
+    }, 5000);
+    return () => {
+      clearTimeout(desc);
+    };
+  }, [error.status]);
 
   // -------------working experience functions----------------
   const [workingExperienceData, setWorkingExperienceData] = useState({
@@ -411,8 +418,6 @@ export default function ProfileEditor() {
     });
   }
 
-  // -----------educational experience functions-----------------
-
   return (
     <Layout>
       <Container>
@@ -457,7 +462,7 @@ export default function ProfileEditor() {
 
           <section className='data-container'>
             <section className='wrapper'>
-              <section className='form' onSubmit={handleSubmit}>
+              <section className='form'>
                 <section className='form-section'>
                   <div className='image-container cover-image'>
                     {coverImageData.data ? (
@@ -823,14 +828,15 @@ export default function ProfileEditor() {
                   </div>
 
                   <div className='form-element'>
-                    <label htmlFor='main_phone_number'>
+                    <label htmlFor='state'>
                       <IoStar />
                       <span>Provícia / Estado</span>
                     </label>
                     <select
-                      name='country'
-                      id='country'
+                      name='state'
+                      id='state'
                       value={state.user.location?.state}
+                      defaultValue={state.user.location?.state}
                       onChange={(e): void => {
                         dispatch({
                           type: actions.USER_DATA,
@@ -1068,6 +1074,41 @@ export default function ProfileEditor() {
                   </div>
                 </section>
 
+                <section className='form-section'>
+                  <div className='form-element'>
+                    <label htmlFor='password'>
+                      <IoLockOpenOutline />
+                      <span>Nova senha</span>
+                    </label>
+                    <input
+                      type='password'
+                      id='password'
+                      name='password'
+                      minLength={8}
+                      aria-hidden='true'
+                      placeholder='Escreva a sua nova senha'
+                      aria-label='Escreva a sua nova senha'
+                      onChange={(e): void => handlePasswordsChange(e)}
+                    />
+                  </div>
+                  <div className='form-element'>
+                    <label htmlFor='confirm_password'>
+                      <IoLockClosedOutline />
+                      <span>Confirme a senha</span>
+                    </label>
+                    <input
+                      type='password'
+                      id='confirm_password'
+                      name='confirm_password'
+                      aria-hidden='true'
+                      minLength={8}
+                      placeholder='Confirme a sua senha'
+                      aria-label='Confirme a sua senha'
+                      onChange={(e): void => handlePasswordsChange(e)}
+                    />
+                  </div>
+                </section>
+
                 <section className={'working-data-container'}>
                   <h2>
                     <span>Experiência Profissional</span>
@@ -1158,6 +1199,60 @@ export default function ProfileEditor() {
                   </button>
                 </section>
               </section>
+            </section>
+
+            <section className='actions-container'>
+              <div>
+                {!loading.status && !error.status && (
+                  <>
+                    <h3>
+                      Confirme se as informações introduzidas estão correctas
+                      antes de salvar alterações. Caso não tenha alterado nada,
+                      não será atualizado, clique em "Descartar e voltar".
+                    </h3>
+                  </>
+                )}
+
+                {error.status &&
+                  error.key === 'user-update' &&
+                  !loading.status && (
+                    <h3 className='error-message'>{error.msg}</h3>
+                  )}
+
+                {loading.status &&
+                  loading.key === 'user-update' &&
+                  !error.status && (
+                    <div className='loading'>
+                      <PulseLoader
+                        color={`rgb(${theme.primary})`}
+                        aria-placeholder='Processando...'
+                        cssOverride={{
+                          display: 'block',
+                        }}
+                      />
+                      <span>Processando...</span>
+                    </div>
+                  )}
+              </div>
+
+              <div className='btns-container'>
+                {!loading.status && !error.status && (
+                  <>
+                    <button
+                      className='back'
+                      onClick={(e): void => router.back()}>
+                      <IoArrowUndoOutline />
+                      <span>Descartar e voltar</span>
+                    </button>
+                    <button
+                      className='save'
+                      onClick={(): Promise<void> => handleSubmitUpdate()}>
+                      <IoSyncOutline />
+                      <span>Salvar alterações</span>
+                    </button>
+                  </>
+                )}
+              </div>
             </section>
           </section>
         </article>

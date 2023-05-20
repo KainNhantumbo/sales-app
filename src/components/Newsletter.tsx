@@ -4,7 +4,7 @@ import fetch from '../config/client';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import { actions } from '@/data/reducer-actions';
-import { IoAt, IoMailOpen, IoPaperPlaneOutline } from 'react-icons/io5';
+import { IoMailOpen, IoPaperPlaneOutline } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
 import newsletter_image from '../../public/assets/newsletter.png';
 import { NewsletterContainer as Container } from '../styles/modules/newsletter';
@@ -30,7 +30,10 @@ export default function NewsLetter(): JSX.Element {
           newSubscriptorValue: { subscriptor: '' },
         },
       });
-      setError({ status: true, message: 'Inscreveu-se a newsletter com sucesso.' });
+      setError({
+        status: true,
+        message: 'Inscreveu-se a newsletter com sucesso.',
+      });
     } catch (error: any) {
       console.error(error);
       setError({ status: true, message: error?.response?.data?.message });
