@@ -145,7 +145,7 @@ export const PostContainer = styled.div`
         object-fit: cover;
         border-radius: 10px;
         margin: 10px auto;
-        box-shadow: 0 12px 35px rgba(${({ theme }) => theme.accent}, 0.2);
+        box-shadow: 0 12px 35px rgba(${({ theme }) => theme.accent}, 0.3);
       }
 
       h4 {
@@ -203,7 +203,7 @@ export const PostContainer = styled.div`
         object-fit: cover;
         border-radius: 5px;
         margin: 10px auto;
-        box-shadow: 0 12px 35px rgba(${({ theme }) => theme.accent}, 0.2);
+        box-shadow: 0 12px 35px rgba(${({ theme }) => theme.accent}, 0.3);
       }
     }
   }

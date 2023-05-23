@@ -7,7 +7,6 @@ export const BaseButtonOutline = css`
   position: relative;
   padding: 10px;
   color: rgb(${({ theme }) => theme.font});
-  border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
   width: fit-content;
   cursor: pointer;
   white-space: nowrap;
@@ -39,7 +38,7 @@ export const BaseButton = css`
   width: fit-content;
   cursor: pointer;
   background: rgb(${({ theme }) => theme.primary});
-  color: rgb(${({ theme }) => theme.font});
+  color: rgb(${({ theme }) => theme.text});
   border: 1px solid transparent;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -76,7 +75,7 @@ export const Button_Mono_A = css`
   border: none;
   border-radius: 8px;
   background: rgb(${({ theme }) => theme.primary});
-  color: rgb(${({ theme }) => theme.neutral});
+  color: rgb(${({ theme }) => theme.text});
   padding: 10px;
   width: fit-content;
   cursor: pointer;
@@ -99,7 +98,7 @@ export const Button_Mono_B = css`
   border-radius: 8px;
   background: none;
   color: rgb(${({ theme }) => theme.font});
-  border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
+  border: 1px solid rgba(${({ theme }) => theme.accent}, 0.07);
   position: relative;
   width: fit-content;
   cursor: pointer;

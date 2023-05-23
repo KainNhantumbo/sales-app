@@ -103,7 +103,7 @@ export default function BlogSearch() {
                 <Link
                   key={post._id}
                   className={'post'}
-                  href={`/post/${post.slug}`}>
+                  href={`/blog/post/${post.slug}`}>
                   <>
                     <img
                       src={post.cover_image.url}
@@ -119,7 +119,8 @@ export default function BlogSearch() {
                       </div>
                       <h3>{post.title}</h3>
                       <p>{post.excerpt}</p>
-                      <button onClick={() => router.push(`/post/${post.slug}`)}>
+                      <button
+                        onClick={() => router.push(`/blog/post/${post.slug}`)}>
                         <IoOpenOutline />
                         <span>Continuar leitura</span>
                       </button>

@@ -10,7 +10,7 @@ import {
 import Package from '../../package.json';
 import type { Author } from '../../@types/index';
 import authorPicture from '../../public/assets/author.jpg';
-import { FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import { FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
 
 export const author: Author = {
   name: Package.author,
@@ -41,6 +41,11 @@ export const complements = {
       name: 'Encontre-nos no LinkedIn',
       url: 'https://www.pinterest.com/travel_sketchpad',
       icon: FaLinkedinIn,
+    },
+    {
+      name: 'Encontre-nos no Twitter',
+      url: 'https://www.twitter.com/travel_sketchpad',
+      icon: FaTwitter,
     },
   ],
 };

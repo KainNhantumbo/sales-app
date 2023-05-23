@@ -26,6 +26,7 @@ export type Theme = {
   secondary_variant: string;
   alert: string;
   font: string;
+  text: string;
   accent: string;
   neutral: string;
   background: string;

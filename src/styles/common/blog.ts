@@ -49,8 +49,8 @@ export const BlogContainer = styled.div`
 
       button {
         ${Button_Mono_B}
-        width: 42px;
-        height: 42px;
+        width: 41px;
+        height: 41px;
       }
     }
   }
