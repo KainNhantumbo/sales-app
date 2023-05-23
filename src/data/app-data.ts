@@ -52,7 +52,6 @@ export const complements = {
 
 export const app_metadata = {
   appName: Package.name,
-  developer: Package.author,
   version: Package.version,
   notice: Package.notice,
   copyright: `© ${new Date().getFullYear()} ${Package.author}`,

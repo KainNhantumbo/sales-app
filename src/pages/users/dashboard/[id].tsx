@@ -93,8 +93,9 @@ export default function Dashboard(): JSX.Element {
         </article>
 
         <section className='app-meta'>
-          <p>{app_metadata.appName} | versão {app_metadata.version} </p>
-          <p>Developer: {app_metadata.developer}</p>
+          <p>
+            {app_metadata.appName} | versão {app_metadata.version}{' '}
+          </p>
           <p>Copyright {app_metadata.copyright}</p>
           <h3>{app_metadata.notice}</h3>
         </section>

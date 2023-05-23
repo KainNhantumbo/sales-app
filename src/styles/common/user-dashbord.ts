@@ -4,10 +4,12 @@ import { BaseButtonOutline } from '../defaults';
 export const UserDashboardContainer = styled.div`
   position: relative;
   width: 100%;
+  height: 100%;
   min-height: 90vh;
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   background: rgb(${({ theme }) => theme.foreground});
 
   * {
@@ -181,5 +183,19 @@ export const UserDashboardContainer = styled.div`
         }
       }
     }
+  }
+
+  .app-meta {
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    line-height: 1rem;
+    padding-bottom: 10px;
   }
 `;
