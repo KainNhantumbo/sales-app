@@ -4,7 +4,7 @@ import fetch from '../config/client';
 export async function getPost(slug: string) {
   return await fetch({
     method: 'get',
-    url: `travel-sketchpad/posts/public/${slug}`,
+    url: `/api/v1/blog/posts/public/${slug}`,
   });
 }
 
@@ -20,7 +20,7 @@ export async function getPaths() {
 export async function getPosts(props: PostListProps) {
   return await fetch({
     method: 'get',
-    url: `/travel-sketchpad/posts?fields=title,excerpt,slug,cover_image,category,updatedAt&sort=updatedAt${
+    url: `/api/v1/blog/posts?fields=title,excerpt,slug,cover_image,category,updatedAt&sort=updatedAt${
       props.category ? `&category=${props.category}` : ''
     }${props.search ? `&search=${props.search}` : ''}${
       props.offset ? `&offset=${props.offset.toString()}` : ''

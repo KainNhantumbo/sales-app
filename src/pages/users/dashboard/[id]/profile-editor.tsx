@@ -9,7 +9,6 @@ import {
   IoCreateOutline,
   IoEarthOutline,
   IoEllipsisHorizontal,
-  IoEllipsisHorizontalCircleSharp,
   IoExtensionPuzzleOutline,
   IoFlowerOutline,
   IoHeartHalfOutline,
@@ -31,24 +30,24 @@ import {
   IoTrashOutline,
   IoWatchOutline,
 } from 'react-icons/io5';
-import Layout from '@/components/Layout';
-import { useAppContext } from '@/context/AppContext';
-import { actions } from '@/data/reducer-actions';
-import { UserProfileContainer as Container } from '@/styles/common/user-profile';
-import { NextRouter, useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
-import { DotLoader, PulseLoader } from 'react-spinners';
-import { useTheme } from 'styled-components';
-import { InputEvents } from '../../../../../@types';
-import UserWorkingData from '../../../../components/modals/UserWorkingData';
-import Compressor from 'compressorjs';
-import countries from '../../../../data/countries.json';
-import user_skills from '../../../../data/professional-skills.json';
-import user_languages from '../../../../data/languages.json';
-import { FaBlog, FaLinkedinIn } from 'react-icons/fa';
 import moment from 'moment';
+import Compressor from 'compressorjs';
+import Layout from '@/components/Layout';
+import { useState, useEffect } from 'react';
+import { useTheme } from 'styled-components';
+import { actions } from '@/data/reducer-actions';
+import { InputEvents } from '../../../../../@types';
+import { NextRouter, useRouter } from 'next/router';
+import { useAppContext } from '@/context/AppContext';
+import { FaBlog, FaLinkedinIn } from 'react-icons/fa';
+import { DotLoader, PulseLoader } from 'react-spinners';
+import countries from '../../../../data/countries.json';
+import user_languages from '../../../../data/languages.json';
+import UserWorkingData from '../../../../components/modals/UserWorkingData';
+import { UserProfileContainer as Container } from '@/styles/common/user-profile';
+import user_skills from '../../../../data/professional-skills.json';
 
-export default function ProfileEditor() {
+export default function ProfileEditor(): JSX.Element {
   const theme = useTheme();
   const router: NextRouter = useRouter();
   const { state, fetchAPI, dispatch, userWorkingDataController } =
@@ -87,7 +86,7 @@ export default function ProfileEditor() {
   });
 
   // --------------------functions------------------
-  const handleChange = (e: InputEvents): void => {
+  function handleChange(e: InputEvents): void {
     dispatch({
       type: actions.USER_DATA,
       payload: {
@@ -98,14 +97,14 @@ export default function ProfileEditor() {
         },
       },
     });
-  };
+  }
 
-  const handlePasswordsChange = (e: InputEvents): void => {
+  function handlePasswordsChange(e: InputEvents): void {
     setPasswords((state) => ({
       ...state,
       [e.target.name]: e.target.value,
     }));
-  };
+  }
 
   function handleCoverImageFile(): void {
     const imageData: File | null | undefined = coverImageFile?.item(0);
@@ -155,7 +154,7 @@ export default function ProfileEditor() {
     }
   }
 
-  function deleteProfileImage() {
+  function deleteProfileImage(): void {
     fetchAPI({
       method: 'delete',
       url: `/api/v1/users/account/assets`,
@@ -187,7 +186,7 @@ export default function ProfileEditor() {
       });
   }
 
-  function deleteCoverImage() {
+  function deleteCoverImage(): void {
     fetchAPI({
       method: 'delete',
       url: `/api/v1/users/account/assets`,
@@ -326,7 +325,7 @@ export default function ProfileEditor() {
     return () => clearTimeout(fetch_data);
   }, []);
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     const desc = setTimeout(() => {
       if (error.status && error.key === 'user-update') {
         setError({ status: false, msg: '', key: 'user-data' });
@@ -400,7 +399,7 @@ export default function ProfileEditor() {
     });
   }
 
-  function editWorkingData(id: string) {
+  function editWorkingData(id: string): void {
     setWorkingExperienceData(() => {
       return state.user.working_experience.filter((item) => {
         if (item.id === id) return item;
@@ -461,7 +460,6 @@ export default function ProfileEditor() {
             <h2>
               <IoPencilOutline />
               <span>Detalhes pessoais</span>
-              <p>Preencha as informações</p>
             </h2>
             <span>Edite e salve as alterações</span>
           </section>
@@ -1222,6 +1220,13 @@ export default function ProfileEditor() {
                       antes de salvar alterações. Caso não tenha alterado nada,
                       não será atualizado, clique em "Descartar e voltar".
                     </h3>
+                    <p>
+                      Todas as informações que introduzir nesta página são, por
+                      padrão, públicas, exceto as suas senhas, dados de
+                      localização e algumas informações pessoais como gênero,
+                      data de nascimento e seu endereço exato (utilizado apenas
+                      para entregas).
+                    </p>
                   </>
                 )}
 

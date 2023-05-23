@@ -13,7 +13,7 @@ interface IProps {
   excerpt: string;
 }
 
-export default function shareUrls(props: IProps): ShareUrls[] {
+export function shareUrls(props: IProps): ShareUrls[] {
   return [
     {
       name: 'Share on LinkedIn',

@@ -422,6 +422,10 @@ export const UserProfileContainer = styled.div`
           align-self: flex-end;
         }
 
+        p {
+          margin-top: 10px;
+        }
+
         .loading {
           width: 100%;
           height: 100%;

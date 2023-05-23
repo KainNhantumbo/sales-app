@@ -122,8 +122,8 @@ export interface IBlogPosts {
   title: string;
   slug: string;
   excerpt: string;
-  created_by: string;
-  cover_image: { id: string; url: string; blurhash: string };
+  category: string;
+  cover_image: { id: string; url: string; };
   createdAt: string;
   updatedAt: string;
 }

@@ -62,6 +62,7 @@ export default function Signup(): JSX.Element {
           password: state.signupData.password,
           first_name: state.signupData.first_name,
           last_name: state.signupData.last_name,
+          user_type: 'user',
         },
       });
       router.push('/auth/sign-up-confirm');

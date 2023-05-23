@@ -1,7 +1,13 @@
 {
-  "name": "app",
-  "version": "0.1.0",
+  "name": "Rubymart",
+  "version": "0.0.18 (alpha)",
   "private": true,
+  "author": "Kain Nhantumbo",
+  "url": "https://rubymart.vercel.app",
+  "websiteName": "Rubymart - Sales Store of Mozambique",
+  "email": "connectadevelops@gmail.com",
+  "copyrightSentence": "2023 Rubymart | Todos os Direitos Reservados.",
+  "notice": "Notice: This product, logos, design and trademarks is protected by the laws of Republic of Mozambique. Any kind of unauthorized copy of this product or its parts, will be considered infringement and its perpetrators will be persecuted until the last maximum penalty alowed by law.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

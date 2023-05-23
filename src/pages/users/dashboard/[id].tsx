@@ -1,16 +1,17 @@
-import Layout from '@/components/Layout';
-import { UserDashboardContainer as Container } from '@/styles/common/user-dashbord';
-import { NextRouter, useRouter } from 'next/router';
-import { useTheme } from 'styled-components';
-import { motion } from 'framer-motion';
-import { useAppContext } from '@/context/AppContext';
 import {
   BiBriefcaseAlt2,
   BiStoreAlt,
   BiUser,
   BiUserCheck,
 } from 'react-icons/bi';
+import { motion } from 'framer-motion';
+import Layout from '@/components/Layout';
+import { useTheme } from 'styled-components';
+import { app_metadata } from '@/data/app-data';
+import { NextRouter, useRouter } from 'next/router';
+import { useAppContext } from '@/context/AppContext';
 import { IoAlbumsOutline, IoApps } from 'react-icons/io5';
+import { UserDashboardContainer as Container } from '@/styles/common/user-dashbord';
 
 export default function Dashboard(): JSX.Element {
   const theme = useTheme();
@@ -90,6 +91,13 @@ export default function Dashboard(): JSX.Element {
             </div>
           </section>
         </article>
+
+        <section className='app-meta'>
+          <p>{app_metadata.appName} | versão {app_metadata.version} </p>
+          <p>Developer: {app_metadata.developer}</p>
+          <p>Copyright {app_metadata.copyright}</p>
+          <h3>{app_metadata.notice}</h3>
+        </section>
       </Container>
     </Layout>
   );

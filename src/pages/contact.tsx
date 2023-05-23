@@ -1,13 +1,13 @@
 import Layout from '../components/Layout';
 import emailjs from '@emailjs/browser';
-import { ContactContainer as Container } from '@/styles/common/contact';
-import { BiEnvelope, BiMailSend } from 'react-icons/bi';
 import { motion } from 'framer-motion';
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { NextPage } from 'next';
+import { InputEvents, SubmitEvent } from '../../@types';
 import { complements } from '@/data/app-data';
+import { BiEnvelope, BiMailSend } from 'react-icons/bi';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { ContactContainer as Container } from '@/styles/common/contact';
 
-const Contact: NextPage = (): JSX.Element => {
+export default function Contact(): JSX.Element {
   const [messageStatus, setMessageStatus] = useState(
     'Receberá a resposta para o seu e-mail assim que possível.'
   );
@@ -21,20 +21,16 @@ const Contact: NextPage = (): JSX.Element => {
   });
 
   // picks form data
-  const formDataPicker = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
-  ) => {
+  function formDataPicker(e: InputEvents): void {
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
     }));
-  };
+  }
 
   // sends email
-  const emailSender = (e: FormEvent<HTMLFormElement>) => {
+  function emailSender(e: SubmitEvent): void {
     e.preventDefault();
-
-    // email sender transport
     emailjs
       .send(
         'service_sjw9i8b',
@@ -48,13 +44,13 @@ const Contact: NextPage = (): JSX.Element => {
           setMessageStatus('Mensagem enviada com sucesso!');
         },
         (error) => {
-          console.log(error.text);
+          console.error(error.text);
           setMessageStatus(
             'Oops! Houve um erro ao enviar a sua mensagem. Por favor, tente novamente.'
           );
         }
       );
-  };
+  }
 
   return (
     <Layout metadata={{ title: 'Contacte-nos' }}>
@@ -135,6 +131,4 @@ const Contact: NextPage = (): JSX.Element => {
       </Container>
     </Layout>
   );
-};
-
-export default Contact;
+}

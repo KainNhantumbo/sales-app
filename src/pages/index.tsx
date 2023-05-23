@@ -1,22 +1,22 @@
-import Link from 'next/link';
-import Layout from '@/components/Layout';
-import { useRouter } from 'next/router';
-import { HomeContainer as Container } from '@/styles/common/home';
-import NewsLetter from '@/components/Newsletter';
-import flying_paper from '../../public/assets/flying paper.png';
-import africa_culture from '../../public/assets/africa-culture.png';
-import { store_features, pricing_data } from '@/data/app-data';
-import Image from 'next/image';
 import {
   IoBalloonOutline,
   IoHeartOutline,
   IoStorefrontOutline,
 } from 'react-icons/io5';
+import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { NextRouter, useRouter } from 'next/router';
+import Layout from '@/components/Layout';
 import { useTheme } from 'styled-components';
+import NewsLetter from '@/components/Newsletter';
+import { store_features, pricing_data } from '@/data/app-data';
+import { HomeContainer as Container } from '@/styles/common/home';
+import flying_paper from '../../public/assets/flying paper.png';
+import africa_culture from '../../public/assets/africa-culture.png';
 
 export default function Home(): JSX.Element {
-  const router = useRouter();
+  const router: NextRouter = useRouter();
   const theme = useTheme();
 
   return (
@@ -78,8 +78,8 @@ export default function Home(): JSX.Element {
                 empreendedorismo a nível nacional.
               </p>
               <span>
-                Precisa de ajuda nos primeiros passos? Pode contar  conosco,
-                veja a secção de contacto no rodapé ou acesse o nosso blog para
+                Precisa de ajuda nos primeiros passos? Pode contar conosco, veja
+                a secção de contacto no rodapé ou acesse o nosso blog para
                 aprender mais sobre o e-commerce e vendas em lojas virtuais.
               </span>
               <Link href={'/about-us'}>
