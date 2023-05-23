@@ -101,7 +101,6 @@ export const BlogContainer = styled.div`
         display: flex;
         flex-flow: row nowrap;
         border-radius: 10px;
-
         background: rgb(${({ theme }) => theme.foreground});
         font-size: 0.95rem;
         line-height: 1.2rem;
@@ -163,7 +162,7 @@ export const BlogContainer = styled.div`
             background: none;
             border-radius: 10px;
             position: relative;
-            padding: 10px;
+            padding: 10px 10px 10px 0;
             color: rgb(${({ theme }) => theme.font});
             width: fit-content;
             cursor: pointer;

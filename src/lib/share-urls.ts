@@ -16,22 +16,22 @@ interface IProps {
 export function shareUrls(props: IProps): ShareUrls[] {
   return [
     {
-      name: 'Share on LinkedIn',
+      name: 'Compartilhe no LinkedIn',
       url: `https://www.linkedin.com/shareArticle?mini=true&url=${props.hostname}/blog/post/${props.slug}&title=${props.title}&summary=${props.excerpt}`,
       icon: FaLinkedinIn,
     },
     {
-      name: 'Share on Facebook',
+      name: 'Compartilhe no Facebook',
       url: `https://www.facebook.com/sharer/sharer.php?u=${props.hostname}/blog/post/${props.slug}`,
       icon: FaFacebook,
     },
     {
-      name: 'Share on Twitter',
+      name: 'Compartilhe no Twitter',
       url: `https://twitter.com/intent/tweet?text=${props.hostname}/blog/post/${props.slug}`,
       icon: FaTwitter,
     },
     {
-      name: 'Share on Pinterest',
+      name: 'Compartilhe no Pinterest',
       url: `https://pinterest.com/pin/create/button/?url=${props.hostname}/blog/post/${props.slug}&media=${props.hostname}/blog/post/${props.slug}&description=${props.excerpt}`,
       icon: FaPinterest,
     },

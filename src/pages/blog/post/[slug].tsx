@@ -65,7 +65,7 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
                   <span>{author.name}</span>
                 </div>
                 <div className='share-options'>
-                  <div className='title'>Share this article:</div>
+                  <div className='title'>Compartilhe:</div>
                   <div className='options'>
                     {shareMedia.map((option) => (
                       <motion.a
@@ -86,7 +86,7 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
                 <div>
                   <IoIosAlbums />
                   <span style={{ color: `rgb(${colors.primary_variant})` }}>
-                    {author.name}
+                    {post.category || 'Miscelânia'}
                   </span>
                 </div>
                 <div>
@@ -99,7 +99,7 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
                 </div>
                 <div>
                   <IoIosBookmark />
-                  <span>{readingProps.words} words</span>
+                  <span>{readingProps.words} Palavras</span>
                 </div>
               </section>
               <h4>{post.excerpt}</h4>
@@ -117,7 +117,7 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
 
             <section className='base-container'>
               <section className='share-options'>
-                <div className='title'>Share this article:</div>
+                <div className='title'>Compartilhe esta postagem</div>
                 <div className='options'>
                   {shareMedia.map((option) => (
                     <motion.a
@@ -145,7 +145,7 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
 
             <section className='featured-posts-container'>
               <h2>
-                <strong>Latest Articles</strong>
+                <strong>Últimas postagens</strong>
               </h2>
               <div className='posts-container'>
                 {latestPosts

@@ -7,7 +7,7 @@ export const light_default: Theme = {
   neutral: '255, 255, 255',
   primary: '253, 200, 134',
   secondary: '32, 193, 77',
-  background: '250, 251, 252',
+  background: '250, 250, 250',
   foreground: '255, 255, 255',
   primary_variant: '228, 113, 49',
   secondary_variant: '157, 145, 255',

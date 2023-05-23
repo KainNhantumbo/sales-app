@@ -1,10 +1,9 @@
 import styled, { css } from 'styled-components';
-import { BaseButton } from '../defaults';
 
 const ShareLinksStyles = css`
   display: flex;
   justify-content: flex-end;
-  gap: 20px;
+  gap: 10px;
   align-items: center;
 
   .title {
@@ -33,13 +32,14 @@ const ShareLinksStyles = css`
 `;
 
 export const PostContainer = styled.div`
-  margin-top: 90px;
   position: relative;
-
+  background: rgb(${({ theme }) => theme.background});
+  width: 100%;
+  height: 100%;
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.secondary}, 0.2);
-      color: rgb(${({ theme }) => theme.primary});
+      color: rgb(${({ theme }) => theme.primary_variant});
     }
   }
 
@@ -51,6 +51,7 @@ export const PostContainer = styled.div`
     max-width: 980px;
     align-self: center;
     margin: 0 auto;
+    padding-top: 90px;
   }
 
   article {
@@ -68,16 +69,27 @@ export const PostContainer = styled.div`
       .reading-props {
         display: flex;
         justify-content: flex-start;
+        align-items: center;
+        flex-flow: row wrap;
         gap: 12px;
         font-size: 0.9rem;
         font-weight: 500;
         align-items: center;
 
         div {
-          display: flex;
-          align-items: center;
-          gap: 5px;
           text-transform: uppercase;
+          position: relative;
+          svg {
+            position: absolute;
+            top: calc(50% - 10px);
+            left: 0;
+            width: 18px;
+            height: 18px;
+          }
+
+          span {
+            padding-left: 23px;
+          }
         }
       }
 
@@ -149,9 +161,10 @@ export const PostContainer = styled.div`
       margin: 0 auto;
       font-size: 1rem;
       line-height: 1.8rem;
+      padding-top: 30px;
 
       a {
-        color: rgb(0, 133, 255);
+        color: rgb(${({ theme }) => theme.secondary});
         text-decoration: underline;
         text-underline-offset: 2px;
       }
@@ -170,7 +183,7 @@ export const PostContainer = styled.div`
       h2 {
         font-size: 1.5rem;
         line-height: 2.2rem;
-        color: rgb(${({ theme }) => theme.primary});
+        color: rgb(${({ theme }) => theme.primary_variant});
       }
 
       ul,
@@ -245,11 +258,8 @@ export const PostContainer = styled.div`
 
     h2 {
       font-size: 1rem;
-      text-decoration: underline;
-      text-underline-offset: 2px;
       text-align: center;
       text-transform: uppercase;
-      color: rgb(${({ theme }) => theme.secondary});
     }
 
     .posts-container {
@@ -266,14 +276,14 @@ export const PostContainer = styled.div`
         width: fit-content;
         display: flex;
         flex-direction: column;
-        border-radius: 3px;
-        border: 1px solid rgba(${({ theme }) => theme.primary}, 0.1);
+        border-radius: 10px;
+        background: rgb(${({ theme }) => theme.foreground});
         font-size: 0.95rem;
         line-height: 1.2rem;
 
         :hover {
           cursor: pointer;
-          box-shadow: 0 0 20px rgba(${({ theme }) => theme.primary}, 0.1);
+          box-shadow: 0 0 20px rgba(${({ theme }) => theme.accent}, 0.09);
           transition: all 200ms ease-in-out;
         }
 
@@ -282,7 +292,7 @@ export const PostContainer = styled.div`
           height: 100%;
           height: 210px;
           object-fit: cover;
-          border-radius: 3px 3px 0 0;
+          border-radius: 10px 10px 0 0;
         }
 
         .content-container {
@@ -310,16 +320,37 @@ export const PostContainer = styled.div`
             font-weight: 500;
             font-size: 1rem;
             line-height: 1.4rem;
-            color: rgb(${({ theme }) => theme.primary});
+            color: rgb(${({ theme }) => theme.primary_variant});
           }
 
           button {
-            ${BaseButton}
-            font-size: 0.9rem;
-            padding-left: 0;
             border: none;
-            color: rgb(${({ theme }) => theme.secondary});
-            text-transform: uppercase;
+            background: none;
+            border-radius: 10px;
+            position: relative;
+            padding: 10px 10px 10px 0;
+            color: rgb(${({ theme }) => theme.font});
+            width: fit-content;
+            cursor: pointer;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            :hover {
+              color: rgb(${({ theme }) => theme.primary_variant});
+            }
+            svg {
+              width: 20px;
+              height: 20px;
+              position: absolute;
+              top: calc(50% - 10px);
+              right: 7px;
+              pointer-events: none;
+            }
+            span {
+              padding-right: 20px;
+              font-weight: 500;
+              pointer-events: none;
+            }
           }
         }
       }
