@@ -1,10 +1,10 @@
 import { IoSearch } from 'react-icons/io5';
 import { useRouter } from 'next/router';
-import { HiDotsHorizontal } from 'react-icons/hi';
 import { useAppContext } from '@/context/AppContext';
+import { actions } from '@/data/reducer-actions';
 
 export default function SearchComponent(): JSX.Element {
-  const { setSearchValue, searchValue } = useAppContext();
+  const { state, dispatch } = useAppContext();
   const router = useRouter();
   return (
     <form
@@ -14,18 +14,24 @@ export default function SearchComponent(): JSX.Element {
       <div className='form-element' title='Search'>
         <input
           type='text'
-          placeholder='Procure qualquer coisa...'
-          value={searchValue}
+          placeholder='Procurar postagens...'
+          value={state.search}
           onChange={(e): void => {
-            setSearchValue(e.target.value);
+            dispatch({
+              type: actions.SEARCH,
+              payload: {
+                ...state,
+                search: e.target.value,
+              },
+            });
           }}
         />
       </div>
 
       <button
         onClick={(): void => {
-          if (searchValue.length < 1) return;
-          router.push(`/search?q=${searchValue}`);
+          if (state.search.length < 1) return;
+          router.push(`/blog/search?q=${state.search}`);
         }}>
         <IoSearch />
       </button>

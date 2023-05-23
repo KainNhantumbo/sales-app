@@ -1,21 +1,21 @@
-import Link from 'next/link';
-import { complements, urls } from '@/data/app-data';
-import { HiViewList, HiX } from 'react-icons/hi';
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useAppContext } from '@/context/AppContext';
-import { BiUser } from 'react-icons/bi';
 import {
   IoLogInOutline,
   IoLogOutOutline,
   IoStorefrontOutline,
 } from 'react-icons/io5';
-import { HeaderContainer as Container } from '../styles/common/header';
+import Link from 'next/link';
+import { BiUser } from 'react-icons/bi';
+import { useState, useEffect } from 'react';
+import { HiViewList, HiX } from 'react-icons/hi';
 import { NextRouter, useRouter } from 'next/router';
+import { complements, urls } from '@/data/app-data';
+import { useAppContext } from '@/context/AppContext';
+import { motion, AnimatePresence } from 'framer-motion';
+import { HeaderContainer as Container } from '../styles/common/header';
 
 export default function Header(): JSX.Element {
   const [isMenu, setIsMenu] = useState<boolean>(false);
-  const router: NextRouter = useRouter();
+  const { asPath, push }: NextRouter = useRouter();
   const { state, logoutPromptController } = useAppContext();
   const toggleMenu = (): void => {
     setIsMenu(!isMenu);
@@ -59,7 +59,10 @@ export default function Header(): JSX.Element {
               style={{ display: isMenu ? 'flex' : 'none' }}>
               <section>
                 {urls.map((item, index) => (
-                  <Link key={index.toString()} href={item.url}>
+                  <Link
+                    key={index.toString()}
+                    href={item.url}
+                    className={asPath.includes(item.alias) ? 'active' : ''}>
                     <motion.span whileHover={{ scale: 1.1 }}>
                       {item.name}
                     </motion.span>
@@ -78,12 +81,12 @@ export default function Header(): JSX.Element {
                       <span>Cadastrar-se</span>
                     </Link>
                   </>
-                ) : !router.asPath.includes('dashboard') ? (
+                ) : !asPath.includes('dashboard') ? (
                   <button
                     title='Minha conta'
                     className='user-account'
                     onClick={() =>
-                      router.push(`/users/dashboard/${state.userAuth.id}`)
+                      push(`/users/dashboard/${state.userAuth.id}`)
                     }>
                     {state.userAuth.profile_image ? (
                       <img

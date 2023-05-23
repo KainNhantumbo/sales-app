@@ -53,12 +53,12 @@ export const app_metadata = {
   copyright: `© ${new Date().getFullYear()} ${Package.author}`,
 };
 
-export const urls: { name: string; url: string }[] = [
-  { name: 'Início', url: '/' },
-  { name: 'Blog', url: '/blog' },
-  { name: 'Lojas', url: '/users/stores' },
-  { name: 'Feed', url: '/users/feed' },
-  { name: 'Produtos', url: '/users/stores/produts' },
+export const urls = [
+  { name: 'Início', url: '/', alias: '+' },
+  { name: 'Blog', url: '/blog', alias: 'blog' },
+  { name: 'Lojas', url: '/stores', alias: 'stores' },
+  { name: 'Feed', url: '/feed', alias: 'feed' },
+  { name: 'Produtos', url: '/products', alias: 'products' },
 ];
 
 export const store_features = [

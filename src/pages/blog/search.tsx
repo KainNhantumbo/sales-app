@@ -6,35 +6,47 @@ import { IBlogPosts } from '../../../@types/index';
 import { getPosts } from '@/lib/queries';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { IoOpenOutline } from 'react-icons/io5';
+import { IoLibraryOutline, IoOpenOutline } from 'react-icons/io5';
 import SearchComponent from '@/components/Search';
-import { HomeContainer as Container } from '@/styles/common/home';
+import { BlogContainer as Container } from '@/styles/common/blog';
 import { IoIosPlanet, IoMdCalendar } from 'react-icons/io';
+import { DotLoader } from 'react-spinners';
+import { useTheme } from 'styled-components';
 
 export default function BlogSearch() {
   const router = useRouter();
+  const theme = useTheme();
   const [posts, setPosts] = useState<IBlogPosts[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState<{ status: boolean }>({
+    status: false,
+  });
+  const [error, setError] = useState<{ status: boolean; msg: string }>({
+    status: false,
+    msg: '',
+  });
 
   async function fetchPosts(): Promise<void> {
+    setError({ status: false, msg: '' });
+    setLoading({ status: true });
     try {
-      setIsLoading(true);
-      setErrorMessage('');
       const { data } = await getPosts({
         search: router.query?.q as string,
       });
       setPosts(data);
-      setIsLoading(false);
       if (data?.length === 0) {
-        setErrorMessage('Não há resultados para a sua pesquisa.');
+        setError({
+          status: true,
+          msg: 'Não há resultados para a sua pesquisa',
+        });
       }
     } catch (e: any) {
       console.error(e);
-      setIsLoading(false);
-      setErrorMessage(
-        `Um erro ocorreu durante o processamento da sua requisição. Por favor, tente mais tarde.`
-      );
+      setError({
+        status: true,
+        msg: 'Um erro ocorreu durante o processamento da sua requisição. Por favor, tente mais tarde',
+      });
+    } finally {
+      setLoading({ status: false });
     }
   }
 
@@ -46,31 +58,46 @@ export default function BlogSearch() {
     }, 500);
   }, [router.query]);
 
+  useEffect(() => {
+    return () => {
+      setLoading({ status: false });
+    };
+  }, []);
+
   return (
     <Layout>
       <Container>
-        <section className='search-container'>
-          <SearchComponent />
-        </section>
-
-        <article>
-          <section
-            style={{
-              fontWeight: '400',
-              fontSize: '1.4rem',
-              lineHeight: '1.8rem',
-            }}>
-            Searched for: {router.query?.q}
+        <div className='main-container'>
+          <section className='search-container'>
+            <SearchComponent />
           </section>
 
-          {isLoading ? (
-            <Loader message='Loading...' />
-          ) : errorMessage ? (
-            <section className='error-message'>
-              <IoIosPlanet />
-              <p>{errorMessage}</p>
+          {loading.status && !error.status && (
+            <section className='fetching-state'>
+              <div className='center'>
+                <DotLoader size={60} color={`rgb(${theme.primary})`} />
+                <span>Pesquisando...</span>
+              </div>
             </section>
-          ) : (
+          )}
+
+          <article>
+            <section
+              style={{
+                fontWeight: '400',
+                fontSize: '1.4rem',
+                lineHeight: '1.8rem',
+              }}>
+              Pesquisou por: {router.query?.q}
+            </section>
+
+            {!loading.status && error.status && (
+              <section className='error-message'>
+                <IoLibraryOutline />
+                <p>{error.msg}</p>
+              </section>
+            )}
+
             <section className='posts-container'>
               {posts.map((post) => (
                 <Link
@@ -94,15 +121,15 @@ export default function BlogSearch() {
                       <p>{post.excerpt}</p>
                       <button onClick={() => router.push(`/post/${post.slug}`)}>
                         <IoOpenOutline />
-                        <span>Read more</span>
+                        <span>Continuar leitura</span>
                       </button>
                     </div>
                   </>
                 </Link>
               ))}
             </section>
-          )}
-        </article>
+          </article>
+        </div>
       </Container>
     </Layout>
   );

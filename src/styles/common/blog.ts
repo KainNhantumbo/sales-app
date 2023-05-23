@@ -1,16 +1,10 @@
 import styled from 'styled-components';
-import {
-  BaseButton,
-  BaseButtonOutline,
-  Button_Mono_A,
-  Button_Mono_B,
-  StyledInputs,
-} from '../defaults';
+import { BaseButton, Button_Mono_B, StyledInputs } from '../defaults';
 
 export const BlogContainer = styled.div`
   position: relative;
   width: 100%;
-  min-height: 90vh;
+  min-height: 50vh;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -52,8 +46,33 @@ export const BlogContainer = styled.div`
           color: rgba(${({ theme }) => theme.font}, 0.5);
         }
       }
+
       button {
-        ${Button_Mono_A}
+        ${Button_Mono_B}
+        width: 42px;
+        height: 42px;
+      }
+    }
+  }
+
+  .main-container {
+    .fetching-state {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 5000;
+      background: rgba(${({ theme }) => theme.foreground}, 0.5);
+      backdrop-filter: blur(10px);
+      width: 100%;
+      height: 100%;
+      .center {
+        position: relative;
+        top: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        font-size: 1.2rem;
       }
     }
   }
@@ -125,7 +144,7 @@ export const BlogContainer = styled.div`
             height: 100%;
             max-width: none;
             height: 280px;
-            border-radius: 3px 3px 0 0;
+            border-radius: 10px 10px 0 0;
           }
         }
 
@@ -147,6 +166,18 @@ export const BlogContainer = styled.div`
               align-items: center;
               gap: 5px;
               text-transform: uppercase;
+              position: relative;
+              svg {
+                position: absolute;
+                top: calc(50% - 11px);
+                left: 0;
+                width: 20px;
+                height: 20px;
+              }
+
+              span {
+                padding-left: 23px;
+              }
             }
           }
 

@@ -58,6 +58,10 @@ export const HeaderContainer = styled.header`
     left: 180px;
     gap: 20px;
 
+    .active {
+      color:  rgb(${({ theme }) => theme.primary_variant});
+    }
+
     section {
       display: flex;
       align-items: center;

@@ -176,7 +176,7 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
                           <button
                             onClick={() => router.push(`/post/${post.slug}`)}>
                             <IoOpenOutline />
-                            <span>Continuar a ler...</span>
+                            <span>Continuar a leitura</span>
                           </button>
                         </div>
                       </>

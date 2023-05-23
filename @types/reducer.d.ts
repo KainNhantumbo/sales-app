@@ -12,6 +12,7 @@ export type State = {
     name: string;
     email: string;
   };
+  search: string;
   newSubscriptorValue: { subscriptor: string };
   signupData: ISignUp;
   signInData: ISignInData;

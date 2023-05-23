@@ -13,6 +13,7 @@ export const initialState: State = {
     profile_image: '',
     invalidated: false,
   },
+  search: '',
   newSubscriptorValue: { subscriptor: '' },
   signupData: {
     first_name: '',
@@ -105,6 +106,11 @@ export default function reducer(state: State, action: Action) {
       return {
         ...state,
         user: action.payload?.user!,
+      };
+    case actions.SEARCH:
+      return {
+        ...state,
+        search: action.payload?.search!,
       };
     default:
       return { ...state };
