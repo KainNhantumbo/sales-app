@@ -8,7 +8,7 @@ const ShareLinksStyles = css`
   align-items: center;
 
   .title {
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .options {
@@ -18,12 +18,15 @@ const ShareLinksStyles = css`
     gap: 10px;
 
     a {
-      padding: 10px;
-      background: rgba(${({ theme }) => theme.secondary}, 0.1);
-      border-radius: 3px;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      background: rgba(${({ theme }) => theme.primary}, 0.2);
+      border-radius: 10px;
 
       :hover {
-        color: rgb(${({ theme }) => theme.secondary});
+        color: rgb(${({ theme }) => theme.primary_variant});
       }
     }
   }
@@ -97,15 +100,10 @@ export const PostContainer = styled.div`
             border-radius: 50%;
           }
 
-          div {
-            display: flex;
-            justify-content: flex-start;
-            flex-flow: row wrap;
+          span {
             font-size: 0.98rem;
             line-height: 1.4rem;
-            .description {
-              font-weight: 500;
-            }
+            font-weight: 500;
           }
         }
 
@@ -119,7 +117,7 @@ export const PostContainer = styled.div`
         font-size: 2rem;
         margin: 0;
         strong {
-          font-weight: 600;
+          font-weight: 500;
         }
         @media screen and (max-width: 420px) {
           font-size: 1.8rem;
@@ -133,8 +131,9 @@ export const PostContainer = styled.div`
         max-width: 900px;
         max-height: 480px;
         object-fit: cover;
-        border-radius: 5px;
-        margin: 0 auto;
+        border-radius: 10px;
+        margin: 10px auto;
+        box-shadow: 0 12px 35px rgba(${({ theme }) => theme.accent}, 0.2);
       }
 
       h4 {
@@ -190,8 +189,8 @@ export const PostContainer = styled.div`
         max-height: 480px;
         object-fit: cover;
         border-radius: 5px;
-        margin: 0 auto;
-        margin-top: 10px;
+        margin: 10px auto;
+        box-shadow: 0 12px 35px rgba(${({ theme }) => theme.accent}, 0.2);
       }
     }
   }

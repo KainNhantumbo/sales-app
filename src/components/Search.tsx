@@ -12,10 +12,9 @@ export default function SearchComponent(): JSX.Element {
         e.preventDefault();
       }}>
       <div className='form-element' title='Search'>
-        <HiDotsHorizontal />
         <input
           type='text'
-          placeholder='Type something...'
+          placeholder='Procure qualquer coisa...'
           value={searchValue}
           onChange={(e): void => {
             setSearchValue(e.target.value);
@@ -29,7 +28,6 @@ export default function SearchComponent(): JSX.Element {
           router.push(`/search?q=${searchValue}`);
         }}>
         <IoSearch />
-        <span>Search</span>
       </button>
     </form>
   );

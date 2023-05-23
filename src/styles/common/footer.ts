@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Button_Mono_A } from '../defaults';
 
 export const FooterContainer = styled.footer`
   width: 100%;
@@ -96,8 +95,11 @@ export const FooterContainer = styled.footer`
       padding-top: 10px;
 
       a {
-        padding: 10px;
-        background: rgba(${({ theme }) => theme.primary}, 0.5);
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        background: rgba(${({ theme }) => theme.primary}, 0.2);
         border-radius: 10px;
 
         :hover {
@@ -116,11 +118,16 @@ export const FooterContainer = styled.footer`
       top: calc(50% - 15px);
       right: 20px;
       padding: 10px;
-      background: rgba(${({ theme }) => theme.primary}, 0.5);
-      border-radius: 10px;
       border: none;
       cursor: pointer;
       color: rgb(${({ theme }) => theme.font});
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      background: rgba(${({ theme }) => theme.primary}, 0.2);
+      border-radius: 10px;
+
       :hover {
         color: rgb(${({ theme }) => theme.primary_variant});
       }

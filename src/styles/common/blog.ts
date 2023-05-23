@@ -1,5 +1,11 @@
 import styled from 'styled-components';
-import { BaseButton } from '../defaults';
+import {
+  BaseButton,
+  BaseButtonOutline,
+  Button_Mono_A,
+  Button_Mono_B,
+  StyledInputs,
+} from '../defaults';
 
 export const BlogContainer = styled.div`
   position: relative;
@@ -8,7 +14,7 @@ export const BlogContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  background: rgb(${({ theme }) => theme.foreground});
+  background: rgb(${({ theme }) => theme.background});
 
   * {
     ::selection {
@@ -16,6 +22,7 @@ export const BlogContainer = styled.div`
       color: rgb(${({ theme }) => theme.primary_variant});
     }
   }
+
   .search-container {
     width: 100%;
     margin: 0 auto;
@@ -34,28 +41,7 @@ export const BlogContainer = styled.div`
       .form-element {
         position: relative;
         width: 100%;
-        input {
-          width: 100%;
-          height: fit-content;
-          border: none;
-          padding: 10px;
-          padding-left: 40px;
-          line-height: 1.2rem;
-          font-weight: 400;
-          outline: none;
-          border-radius: 3px;
-          background: rgb(${({ theme }) => theme.background});
-          border: 1px solid transparent;
-
-          :focus {
-            transition: all 300ms ease;
-            border: 1px solid rgba(${({ theme }) => theme.primary}, 0.1);
-          }
-          ::placeholder {
-            color: rgba(${({ theme }) => theme.font}, 0.8);
-            font-size: 0.9rem;
-          }
-        }
+        ${StyledInputs}
 
         svg {
           position: absolute;
@@ -67,14 +53,7 @@ export const BlogContainer = styled.div`
         }
       }
       button {
-        ${BaseButton}
-        background: rgb(${({ theme }) => theme.background});
-        color: rgb(${({ theme }) => theme.font});
-        border: none;
-
-        :hover {
-          color: rgb(${({ theme }) => theme.secondary});
-        }
+        ${Button_Mono_A}
       }
     }
   }
@@ -110,114 +89,6 @@ export const BlogContainer = styled.div`
       }
     }
 
-    /* ============Home page============= */
-    .featured-posts-container {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-
-      .header {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        flex-direction: row;
-        gap: 15px;
-        font-size: 0.92rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        color: rgb(${({ theme }) => theme.secondary});
-        border-bottom: 1px solid rgba(${({ theme }) => theme.primary}, 0.1);
-        padding-bottom: 3px;
-        margin-top: 20px;
-        h2,
-        a {
-          display: flex;
-          flex-flow: row nowrap;
-          gap: 8px;
-          align-items: center;
-        }
-      }
-
-      .category-posts-container {
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        @media screen and (max-width: 810px) {
-          grid-template-columns: repeat(2, 1fr);
-        }
-        @media screen and (max-width: 545px) {
-          grid-template-columns: repeat(1, 1fr);
-        }
-
-        .post {
-          width: 100%;
-          display: flex;
-          justify-content: flex-start;
-          flex-direction: column;
-          border-radius: 3px;
-          border: 1px solid rgba(${({ theme }) => theme.primary}, 0.1);
-          font-size: 0.95rem;
-          line-height: 1.2rem;
-
-          :hover {
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(${({ theme }) => theme.primary}, 0.1);
-            transition: all 200ms ease-in-out;
-          }
-
-          img {
-            width: 100%;
-            height: 100%;
-            height: 210px;
-            object-fit: cover;
-            border-radius: 3px 3px 0 0;
-          }
-
-          .content-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding: 20px;
-            .details {
-              display: flex;
-              justify-content: flex-start;
-              gap: 12px;
-              font-size: 0.9rem;
-              font-weight: 400;
-              align-items: center;
-
-              div {
-                display: flex;
-                align-items: center;
-                gap: 5px;
-                text-transform: uppercase;
-              }
-            }
-
-            h3 {
-              font-weight: 500;
-              font-size: 1rem;
-              line-height: 1.4rem;
-              color: rgb(${({ theme }) => theme.primary});
-            }
-
-            button {
-              ${BaseButton}
-              font-size: 0.9rem;
-              padding-left: 0;
-              border: none;
-              color: rgb(${({ theme }) => theme.secondary});
-              text-transform: uppercase;
-              justify-self: flex-end;
-            }
-          }
-        }
-      }
-    }
-
-    /* ================other pages != Home================ */
     .posts-container {
       display: flex;
       min-height: 50vh;
@@ -229,14 +100,15 @@ export const BlogContainer = styled.div`
         width: 100%;
         display: flex;
         flex-flow: row nowrap;
-        border-radius: 3px;
-        border: 1px solid rgba(${({ theme }) => theme.primary}, 0.1);
+        border-radius: 10px;
+
+        background: rgb(${({ theme }) => theme.foreground});
         font-size: 0.95rem;
         line-height: 1.2rem;
 
         :hover {
           cursor: pointer;
-          box-shadow: 0 0 20px rgba(${({ theme }) => theme.primary}, 0.1);
+          box-shadow: 0 0 20px rgba(${({ theme }) => theme.accent}, 0.09);
           transition: all 200ms ease-in-out;
         }
 
@@ -248,7 +120,7 @@ export const BlogContainer = styled.div`
           width: 100%;
           max-width: 280px;
           object-fit: cover;
-          border-radius: 3px 0 0 3px;
+          border-radius: 10px 0 0 10px;
           @media screen and (max-width: 635px) {
             width: 100%;
             height: 100%;
@@ -283,16 +155,37 @@ export const BlogContainer = styled.div`
             font-weight: 500;
             font-size: 1rem;
             line-height: 1.4rem;
-            color: rgb(${({ theme }) => theme.primary});
+            color: rgb(${({ theme }) => theme.primary_variant});
           }
 
           button {
-            ${BaseButton}
-            font-size: 0.9rem;
-            padding-left: 0;
             border: none;
-            color: rgb(${({ theme }) => theme.secondary});
-            text-transform: uppercase;
+            background: none;
+            border-radius: 10px;
+            position: relative;
+            padding: 10px;
+            color: rgb(${({ theme }) => theme.font});
+            width: fit-content;
+            cursor: pointer;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            :hover {
+              color: rgb(${({ theme }) => theme.primary_variant});
+            }
+            svg {
+              width: 20px;
+              height: 20px;
+              position: absolute;
+              top: calc(50% - 10px);
+              right: 7px;
+              pointer-events: none;
+            }
+            span {
+              padding-right: 20px;
+              font-weight: 500;
+              pointer-events: none;
+            }
           }
         }
       }

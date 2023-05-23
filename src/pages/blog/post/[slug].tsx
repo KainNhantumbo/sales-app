@@ -9,14 +9,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Layout from '@/components/Layout';
-import shareUrls from '@/lib/share-urls';
+import { shareUrls } from '@/lib/share-urls';
 import { motion } from 'framer-motion';
-import { author } from '@/data/app-data';
+import { author, complements } from '@/data/app-data';
 import { formatDate } from '@/lib/time-fns';
-import { useState, useEffect } from 'react';
 import { IoOpenOutline } from 'react-icons/io5';
 import { readingTime } from 'reading-time-estimator';
-import { useAppContext } from '@/context/AppContext';
 import { getPaths, getPost, getPosts } from '@/lib/queries';
 import type { IBlogPost, IBlogPosts } from '@/../../@types/index';
 import { PostContainer as Container } from '@/styles/common/post';
@@ -39,7 +37,7 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
     title: post.title,
     slug: post.slug,
     excerpt: post.excerpt,
-    siteName: '',
+    hostname: complements.websiteUrl,
   });
 
   return (
@@ -63,9 +61,8 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
                     src={author.picture as any}
                     alt='article author photo'
                   />
-                  <div>
-                    <span>{author.name}</span>
-                  </div>
+
+                  <span>{author.name}</span>
                 </div>
                 <div className='share-options'>
                   <div className='title'>Share this article:</div>
@@ -88,7 +85,7 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
               <section className='reading-props'>
                 <div>
                   <IoIosAlbums />
-                  <span style={{ color: `rgb(${colors.secondary})` }}>
+                  <span style={{ color: `rgb(${colors.primary_variant})` }}>
                     {author.name}
                   </span>
                 </div>
@@ -165,7 +162,6 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
                         />
                         <div className='content-container'>
                           <div className='details'>
-                            
                             <div>
                               <IoMdCalendar />
                               <span>{formatDate(post.updatedAt)}</span>

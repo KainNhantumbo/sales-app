@@ -7,11 +7,13 @@ import { useTheme } from 'styled-components';
 import { IBlogPosts } from '../../../@types';
 import { useAppContext } from '@/context/AppContext';
 import { IoMdCalendar } from 'react-icons/io';
-import { IoOpenOutline } from 'react-icons/io5';
+import { IoArrowForwardOutline } from 'react-icons/io5';
 import { BlogContainer as Container } from '@/styles/common/blog';
 import SearchComponent from '@/components/Search';
 
-export default function Blog(props: { posts: IBlogPosts[] }): JSX.Element {
+type Props = { posts: IBlogPosts[] };
+
+export default function Blog(props: Props): JSX.Element {
   const { posts } = props;
   const theme = useTheme();
   const router = useRouter();
@@ -30,7 +32,7 @@ export default function Blog(props: { posts: IBlogPosts[] }): JSX.Element {
               <Link
                 key={post._id}
                 className={'post'}
-                href={`/post/${post.slug}`}>
+                href={`/blog/post/${post.slug}`}>
                 <>
                   <img
                     src={post.cover_image.url}
@@ -46,9 +48,12 @@ export default function Blog(props: { posts: IBlogPosts[] }): JSX.Element {
                     </div>
                     <h3>{post.title}</h3>
                     <p>{post.excerpt}</p>
-                    <button onClick={() => router.push(`/post/${post.slug}`)}>
-                      <IoOpenOutline />
-                      <span>Read more</span>
+                    <button
+                      onClick={() => router.push(`/blog/post/${post.slug}`)}>
+                      <div>
+                        <IoArrowForwardOutline />
+                        <span>Continuar leitura</span>
+                      </div>
                     </button>
                   </div>
                 </>
