@@ -1,13 +1,16 @@
+import { useTheme } from 'styled-components';
+import { complements } from '@/data/app-data';
+import { NextRouter, useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAppContext } from '@/context/AppContext';
 import { IoArrowBackOutline, IoExitOutline } from 'react-icons/io5';
 import { PromptContainer as Container } from '../../styles/modules/logout-prompt';
-import { useAppContext } from '@/context/AppContext';
-import { NextRouter, useRouter } from 'next/router';
-import { complements } from '@/data/app-data';
 
 export default function LogoutPrompt(): JSX.Element {
   const { state, loginPromptController } = useAppContext();
+  const theme = useTheme();
   const router: NextRouter = useRouter();
+
   return (
     <AnimatePresence>
       {state.isLoginPrompt && (
@@ -48,7 +51,11 @@ export default function LogoutPrompt(): JSX.Element {
                 </button>
                 <button
                   className='prompt-accept'
-                  onClick={() => router.push('/auth/sign-in')}>
+                  style={{ background: `rgb(${theme.primary_variant})` }}
+                  onClick={() => {
+                    loginPromptController();
+                    router.push('/auth/sign-in');
+                  }}>
                   <IoExitOutline />
                   <span>Iniciar sessão</span>
                 </button>

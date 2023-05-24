@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { BaseButton, StyledInputs } from '../defaults';
+import { BaseButton, BaseButtonOutline, StyledInputs } from '../defaults';
 
 const ShareLinksStyles = css`
   display: flex;
@@ -250,87 +250,6 @@ export const PostContainer = styled.div`
     }
   }
 
-  .comments-section {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin: 50px 0;
-    width: 100%;
-    height: fit-content;
-
-    .title {
-      h2 {
-        font-size: 1.2rem;
-        font-weight: 500;
-        line-height: 1.6rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 8px;
-
-        svg {
-          width: 25px;
-          height: 25px;
-        }
-      }
-    }
-
-    .comments-wrapper {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      gap: 20px;
-
-      .current-comment {
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-        background: rgb(${({ theme }) => theme.foreground});
-        border-radius: 15px;
-        padding: 20px;
-
-        @media screen and (max-width: 480px) {
-          flex-wrap: wrap;
-        }
-
-        .comment-swapper {
-          display: flex;
-          flex-flow: row nowrap;
-          gap: 20px;
-          width: 100%;
-        }
-
-        image,
-        svg {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-        }
-
-        img {
-          object-fit: cover;
-        }
-
-        svg {
-          padding: 5px;
-        }
-
-        ${StyledInputs}
-
-        button {
-          ${BaseButton}
-          height: fit-content;
-          width: 80px;
-          span {
-            padding: 0;
-          }
-          @media screen and (max-width: 480px) {
-            width: 100%;
-          }
-        }
-      }
-    }
-  }
 
   .featured-posts-container {
     width: 100%;

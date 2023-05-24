@@ -76,15 +76,15 @@ export type PostListProps = {
 export interface IComment {
   _id: string;
   source_id: string;
-  created_by: string;
-  content: string;
-  parent_id: string;
-  favorites: {
+  created_by: {
     _id: string;
     first_name: string;
     last_name: string;
-    cover_image: { id: string; url: string };
-  }[];
+    profile_image: { id: string; url: string };
+  };
+  content: string;
+  parent_id: string;
+  favorites: string[];
   invalidated: boolean;
   updatedAt: string;
 }

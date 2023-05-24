@@ -4,7 +4,7 @@ import {
   IoMdCalendar,
   IoMdTime,
 } from 'react-icons/io';
-import { IoChatbubbleEllipsesOutline, IoOpenOutline } from 'react-icons/io5';
+import { IoOpenOutline } from 'react-icons/io5';
 import moment from 'moment';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -19,11 +19,7 @@ import { getPaths, getPost, getPosts } from '@/lib/queries';
 import type { IBlogPost, IBlogPosts } from '@/../../@types/index';
 import { PostContainer as Container } from '@/styles/common/post';
 import { useTheme } from 'styled-components';
-import { useAppContext } from '@/context/AppContext';
-import { BiUser } from 'react-icons/bi';
-import { actions } from '@/data/reducer-actions';
-import { useState, useEffect } from 'react';
-import { BounceLoader, MoonLoader, PulseLoader } from 'react-spinners';
+import Comments from '@/components/Comments';
 
 interface IPost {
   post: IBlogPost;
@@ -33,18 +29,6 @@ interface IPost {
 export default function Post({ post, latestPosts }: IPost): JSX.Element {
   const router = useRouter();
   const theme = useTheme();
-  const { state, dispatch } = useAppContext();
-
-  const [loading, setLoading] = useState<{
-    status: boolean;
-    key: 'create-comment' | 'user-update';
-  }>({ status: false, key: 'create-comment' });
-
-  const [error, setError] = useState<{
-    status: boolean;
-    msg: string;
-    key: 'create-comment' | 'user-update';
-  }>({ status: false, msg: '', key: 'create-comment' });
 
   const readingProps = readingTime(
     post.content.concat(post.excerpt),
@@ -58,35 +42,6 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
     excerpt: post.excerpt,
     hostname: complements.websiteUrl,
   });
-
-  // ---------------functions----------------
-
-  async function handleCreateComment() {
-    setLoading({ status: true, key: 'create-comment' });
-    try {
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
-      setError({
-        status: true,
-        key: 'create-comment',
-        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.',
-      });
-    } finally {
-      setLoading({ status: false, key: 'create-comment' });
-    }
-  }
-
-  async function handleUpdateComment(id: string) {}
-  async function handledeleteComment(id: string) {}
-
-  useEffect(() => {
-    const desc = setTimeout(() => {
-      setError({ status: false, msg: '', key: 'create-comment' });
-    }, 5000);
-    return () => {
-      clearTimeout(desc);
-    };
-  }, [error.status]);
 
   return (
     <Layout
@@ -109,7 +64,6 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
                     src={author.picture as any}
                     alt='article author photo'
                   />
-
                   <span>{author.name}</span>
                 </div>
                 <div className='share-options'>
@@ -191,74 +145,7 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
               </section>
             </section>
 
-            {/* comments */}
-            <section className='comments-section'>
-              <section className='title'>
-                <h2>
-                  <IoChatbubbleEllipsesOutline />
-                  <span>Comentários</span>
-                  <span>• {state.commentsList.length}</span>
-                </h2>
-              </section>
-
-              <section className='comments-wrapper'>
-                <section className='current-comment'>
-                  <div className='comment-swapper'>
-                    {state.userAuth.profile_image && (
-                      <img
-                        src={state.userAuth.profile_image}
-                        alt='current user profile picture'
-                      />
-                    )}
-                    {!state.userAuth.profile_image && <BiUser />}
-                    <textarea
-                      placeholder='Adicionar comentário...'
-                      name='current-commet'
-                      value={state.comment.content}
-                      rows={5}
-                      onChange={(e): void => {
-                        dispatch({
-                          type: actions.CREATE_COMMENT,
-                          payload: {
-                            ...state,
-                            comment: {
-                              ...state.comment,
-                              content: e.target.value,
-                            },
-                          },
-                        });
-                      }}
-                    />
-                  </div>
-
-                  {!loading.status &&
-                    error.status &&
-                    error.key === 'create-comment' && (
-                      <span className='error-message'>{error.msg}</span>
-                    )}
-                  {loading.status && !error.status && (
-                    <div className='loader'>
-                      <MoonLoader
-                      size={30}
-                        color={`rgb(${theme.primary_variant})`}
-                        cssOverride={{
-                          display: 'block',
-                          margin: '0 auto',
-                        }}
-                      />
-                    </div>
-                  )}
-                  {!loading.status && !error.status && (
-                    <button
-                      disabled={loading.status || (error.status && true)}
-                      onClick={handleCreateComment}>
-                      <span>Enviar</span>
-                    </button>
-                  )}
-                </section>
-                <section className='comments-container'></section>
-              </section>
-            </section>
+            <Comments post={post} />
 
             <section className='featured-posts-container'>
               <h2>

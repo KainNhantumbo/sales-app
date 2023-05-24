@@ -73,7 +73,12 @@ export const initialState: State = {
   comment: {
     _id: '',
     source_id: '',
-    created_by: '',
+    created_by: {
+      _id: '',
+      first_name: '',
+      last_name: '',
+      profile_image: { id: '', url: '' },
+    },
     content: '',
     parent_id: '',
     favorites: [],
