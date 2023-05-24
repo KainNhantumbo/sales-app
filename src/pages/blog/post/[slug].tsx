@@ -4,6 +4,7 @@ import {
   IoMdCalendar,
   IoMdTime,
 } from 'react-icons/io';
+import { IoChatbubbleEllipsesOutline, IoOpenOutline } from 'react-icons/io5';
 import moment from 'moment';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -13,12 +14,14 @@ import { shareUrls } from '@/lib/share-urls';
 import { motion } from 'framer-motion';
 import { author, complements } from '@/data/app-data';
 import { formatDate } from '@/lib/time-fns';
-import { IoOpenOutline } from 'react-icons/io5';
 import { readingTime } from 'reading-time-estimator';
 import { getPaths, getPost, getPosts } from '@/lib/queries';
 import type { IBlogPost, IBlogPosts } from '@/../../@types/index';
 import { PostContainer as Container } from '@/styles/common/post';
 import { useTheme } from 'styled-components';
+import { useAppContext } from '@/context/AppContext';
+import { BiUser } from 'react-icons/bi';
+import { actions } from '@/data/reducer-actions';
 
 interface IPost {
   post: IBlogPost;
@@ -27,7 +30,8 @@ interface IPost {
 
 export default function Post({ post, latestPosts }: IPost): JSX.Element {
   const router = useRouter();
-  const colors = useTheme();
+  const theme = useTheme();
+  const { state, dispatch } = useAppContext();
   const readingProps = readingTime(
     post.content.concat(post.excerpt),
     undefined,
@@ -39,6 +43,12 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
     excerpt: post.excerpt,
     hostname: complements.websiteUrl,
   });
+
+  // ---------------functions----------------
+
+  async function handleCreateComment() {}
+  async function handleUpdateComment(id: string) {}
+  async function handledeleteComment(id: string) {}
 
   return (
     <Layout
@@ -85,7 +95,7 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
               <section className='reading-props'>
                 <div>
                   <IoIosAlbums />
-                  <span style={{ color: `rgb(${colors.primary_variant})` }}>
+                  <span style={{ color: `rgb(${theme.primary_variant})` }}>
                     {post.category || 'Miscelânia'}
                   </span>
                 </div>
@@ -140,6 +150,53 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
                   <h3>{author.name}</h3>
                   <span className='description'>{author.description}</span>
                 </div>
+              </section>
+            </section>
+
+            {/* comments */}
+            <section className='comments-section'>
+              <section className='title'>
+                <h2>
+                  <IoChatbubbleEllipsesOutline />
+                  <span>Comentários</span>
+                  <span>• {state.commentsList.length}</span>
+                </h2>
+              </section>
+
+              <section className='comments-wrapper'>
+                <section className='current-comment'>
+                  <div className='comment-swapper'>
+                    {state.userAuth?.profile_image && (
+                      <img
+                        src={state.userAuth?.profile_image}
+                        alt='current user profile picture'
+                      />
+                    )}
+                    {!state.user?.profile_image && <BiUser />}
+                    <textarea
+                      placeholder='Adicionar comentário...'
+                      name='current-commet'
+                      value={state.comment.content}
+                      rows={5}
+                      onChange={(e): void => {
+                        dispatch({
+                          type: actions.CREATE_COMMENT,
+                          payload: {
+                            ...state,
+                            comment: {
+                              ...state.comment,
+                              content: e.target.value,
+                            },
+                          },
+                        });
+                      }}
+                    />
+                  </div>
+                  <button onClick={handleCreateComment}>
+                    <span>Enviar</span>
+                  </button>
+                </section>
+                <section className='comments-container'></section>
               </section>
             </section>
 

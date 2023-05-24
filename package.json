@@ -1,6 +1,6 @@
 {
   "name": "Rubymart",
-  "version": "0.1.0 (beta)",
+  "version": "0.1.1 (beta)",
   "private": true,
   "author": "Kain Nhantumbo",
   "url": "https://rubymart.vercel.app",
@@ -26,6 +26,7 @@
     "keen-slider-extended": "^6.8.8",
     "moment": "^2.29.4",
     "next": "13.4.0",
+    "rc-pagination": "^3.4.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",

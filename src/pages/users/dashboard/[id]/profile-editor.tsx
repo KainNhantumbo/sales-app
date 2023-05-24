@@ -72,12 +72,10 @@ export default function ProfileEditor(): JSX.Element {
   const [coverImageData, setCoverImageData] = useState({
     id: '',
     data: '',
-    blurhash: '',
   });
   const [profileImageData, setProfileImageData] = useState({
     id: '',
     data: '',
-    blurhash: '',
   });
 
   const [passwords, setPasswords] = useState({
@@ -122,7 +120,6 @@ export default function ProfileEditor(): JSX.Element {
             setCoverImageData({
               id: state.user.cover_image?.id || '',
               data: encodedImage,
-              blurhash: '',
             });
           };
         },
@@ -146,7 +143,6 @@ export default function ProfileEditor(): JSX.Element {
             setProfileImageData({
               id: state.user.profile_image?.id || '',
               data: encodedImage,
-              blurhash: '',
             });
           };
         },
@@ -164,7 +160,6 @@ export default function ProfileEditor(): JSX.Element {
         setProfileImageData({
           id: '',
           data: '',
-          blurhash: '',
         });
         dispatch({
           type: actions.USER_DATA,
@@ -175,7 +170,6 @@ export default function ProfileEditor(): JSX.Element {
               profile_image: {
                 id: '',
                 url: '',
-                blurhash: '',
               },
             },
           },
@@ -196,7 +190,6 @@ export default function ProfileEditor(): JSX.Element {
         setCoverImageData({
           id: '',
           data: '',
-          blurhash: '',
         });
         dispatch({
           type: actions.USER_DATA,
@@ -207,7 +200,6 @@ export default function ProfileEditor(): JSX.Element {
               cover_image: {
                 id: '',
                 url: '',
-                blurhash: '',
               },
             },
           },
@@ -305,7 +297,7 @@ export default function ProfileEditor(): JSX.Element {
   useEffect((): (() => void) => {
     handleCoverImageFile();
     return () => {
-      setCoverImageData({ id: '', data: '', blurhash: '' });
+      setCoverImageData({ id: '', data: '' });
       setCoverImageFile(null);
     };
   }, [coverImageFile]);
@@ -313,7 +305,7 @@ export default function ProfileEditor(): JSX.Element {
   useEffect((): (() => void) => {
     handleProfileImageFile();
     return () => {
-      setProfileImageData({ id: '', data: '', blurhash: '' });
+      setProfileImageData({ id: '', data: '' });
       setProfileImageFile(null);
     };
   }, [profileImageFile]);

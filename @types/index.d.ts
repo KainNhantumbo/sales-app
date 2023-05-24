@@ -73,10 +73,20 @@ export type PostListProps = {
   category?: string;
 };
 
-export interface INewComment {
+export interface IComment {
+  _id: string;
   source_id: string;
+  created_by: string;
   content: string;
-  parent_id?: string;
+  parent_id: string;
+  favorites: {
+    _id: string;
+    first_name: string;
+    last_name: string;
+    cover_image: { id: string; url: string };
+  }[];
+  invalidated: boolean;
+  updatedAt: string;
 }
 
 export interface ISignInData {
@@ -109,22 +119,13 @@ export type MessageType = {
   updatedAt: string;
 };
 
-export interface IComment extends INewComment {
-  _id: string;
-  created_by: string;
-  favorites: { _id: string; first_name: string; last_name: string }[];
-  invalidated: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface IBlogPosts {
   _id: string;
   title: string;
   slug: string;
   excerpt: string;
   category: string;
-  cover_image: { id: string; url: string; };
+  cover_image: { id: string; url: string };
   createdAt: string;
   updatedAt: string;
 }
@@ -134,7 +135,7 @@ export interface IBlogPost extends IBlogPosts {
   allow_comments: boolean;
 }
 
-export type UserPostType = {
+export type UserPost = {
   _id: string;
   title: string;
   description: string;
@@ -147,7 +148,7 @@ export type UserPostType = {
   updatedAt: string;
 };
 
-export type ProductType = {
+export type Product = {
   _id: string;
   title: string;
   category: string;
@@ -174,7 +175,7 @@ export type ProductType = {
   updatedAt: string;
 };
 
-export type StoreType = {
+export type Store = {
   _id: string;
   name: string;
   created_by: {
@@ -211,7 +212,7 @@ export type StoreType = {
   updatedAt: string;
 };
 
-export type JobType = {
+export type Job = {
   _id: string;
   title: string;
   description: string;
@@ -228,7 +229,7 @@ export type JobType = {
   updatedAt: string;
 };
 
-export type UserType = {
+export type User = {
   _id: string;
   first_name: string;
   last_name: string;
@@ -238,8 +239,8 @@ export type UserType = {
   gender: string;
   birth_date: string;
   bio?: string;
-  cover_image: { id: string; url: string; blurhash: string };
-  profile_image: { id: string; url: string; blurhash: string };
+  cover_image: { id: string; url: string };
+  profile_image: { id: string; url: string };
   favorite_products_list: string[];
   favorite_jobs_list: string[];
   professional_skills: string[];

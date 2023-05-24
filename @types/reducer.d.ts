@@ -1,4 +1,4 @@
-import { ISignInData, ISignUp, UserType } from './index';
+import { IComment, ISignInData, ISignUp, User } from './index';
 
 export type State = {
   isLogoutPrompt: boolean;
@@ -16,7 +16,9 @@ export type State = {
   newSubscriptorValue: { subscriptor: string };
   signupData: ISignUp;
   signInData: ISignInData;
-  user: UserType;
+  user: User;
+  comment: IComment;
+  commentsList: IComment[];
 };
 
 export type Action = { type: string; payload?: State };

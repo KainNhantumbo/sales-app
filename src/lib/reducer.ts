@@ -36,8 +36,8 @@ export const initialState: State = {
     gender: 'Masculino',
     birth_date: '',
     bio: '',
-    cover_image: { id: '', url: '', blurhash: '' },
-    profile_image: { id: '', url: '', blurhash: '' },
+    cover_image: { id: '', url: '' },
+    profile_image: { id: '', url: '' },
     favorite_products_list: [],
     favorite_jobs_list: [],
     professional_skills: [],
@@ -69,6 +69,17 @@ export const initialState: State = {
     createdAt: '',
     updatedAt: '',
   },
+  comment: {
+    _id: '',
+    source_id: '',
+    created_by: '',
+    content: '',
+    parent_id: '',
+    favorites: [],
+    invalidated: false,
+    updatedAt: '',
+  },
+  commentsList: [],
 };
 
 export default function reducer(state: State, action: Action) {
@@ -111,6 +122,17 @@ export default function reducer(state: State, action: Action) {
       return {
         ...state,
         search: action.payload?.search!,
+      };
+
+    case actions.CREATE_COMMENT:
+      return {
+        ...state,
+        comment: action.payload?.comment!,
+      };
+    case actions.UPDATE_COMMENTS_LIST:
+      return {
+        ...state,
+        commentsList: action.payload?.commentsList!,
       };
     default:
       return { ...state };
