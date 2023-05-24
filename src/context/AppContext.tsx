@@ -18,6 +18,7 @@ interface IContext {
   state: State;
   dispatch: Dispatch<Action>;
   logoutPromptController: () => void;
+  deleteCommentPromptController: (status: boolean, id: string) => void;
   loginPromptController: () => void;
   userWorkingDataController: () => void;
   logoutUser: () => Promise<void>;
@@ -30,6 +31,7 @@ const context = createContext<IContext>({
   logoutUser: async () => {},
   fetchAPI: (): any => {},
   logoutPromptController: () => {},
+  deleteCommentPromptController: (status: boolean, id: string) => {},
   loginPromptController: () => {},
   userWorkingDataController: () => {},
 });
@@ -48,6 +50,16 @@ export default function AppContext(props: AppContext): JSX.Element {
   function loginPromptController(): void {
     dispatch({
       type: actions.LOGIN_PROMPT,
+    });
+  }
+
+  function deleteCommentPromptController(status: boolean, id?: string): void {
+    dispatch({
+      type: actions.DELETE_COMMENT_PROMPT,
+      payload: {
+        ...state,
+        isDeleteCommentPrompt: { status, commentId: id || '' },
+      },
     });
   }
 
@@ -189,6 +201,7 @@ export default function AppContext(props: AppContext): JSX.Element {
           fetchAPI,
           loginPromptController,
           logoutPromptController,
+          deleteCommentPromptController,
           userWorkingDataController,
         }}>
         {props.children}

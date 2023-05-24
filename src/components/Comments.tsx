@@ -15,6 +15,7 @@ import { BiUser } from 'react-icons/bi';
 import moment from 'moment';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useTheme } from 'styled-components';
+import DeleteCommentPrompt from './modals/DeleteCommentPrompt';
 
 type Props = {
   post: IBlogPost;
@@ -22,7 +23,13 @@ type Props = {
 
 export default function Comments({ post }: Props): JSX.Element {
   const theme = useTheme();
-  const { state, dispatch, fetchAPI, loginPromptController } = useAppContext();
+  const {
+    state,
+    dispatch,
+    fetchAPI,
+    loginPromptController,
+    deleteCommentPromptController,
+  } = useAppContext();
 
   const [loading, setLoading] = useState<{
     status: boolean;
@@ -137,6 +144,7 @@ export default function Comments({ post }: Props): JSX.Element {
   async function handledeleteComment(id: string) {
     try {
       await fetchAPI({ method: 'delete', url: `/api/v1/users/comments/${id}` });
+      deleteCommentPromptController(false, '');
       getComments();
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
@@ -162,6 +170,8 @@ export default function Comments({ post }: Props): JSX.Element {
 
   return (
     <Container>
+      <DeleteCommentPrompt deleteFn={handledeleteComment} />
+
       <section className='comments-section'>
         <section className='title'>
           <h2>
@@ -291,7 +301,9 @@ export default function Comments({ post }: Props): JSX.Element {
                             </button>
                             <button
                               className='delete'
-                              onClick={() => handledeleteComment(comment._id)}>
+                              onClick={() =>
+                                deleteCommentPromptController(true, comment._id)
+                              }>
                               <FaTrash />
                               <span>Deletar</span>
                             </button>

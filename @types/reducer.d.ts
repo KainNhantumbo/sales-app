@@ -3,6 +3,7 @@ import { IComment, ISignInData, ISignUp, User } from './index';
 export type State = {
   isLogoutPrompt: boolean;
   isLoginPrompt: boolean;
+  isDeleteCommentPrompt: {status: boolean, commentId: string};
   isUserWorkingDataModal: boolean;
   isConnected: boolean;
   userAuth: {
