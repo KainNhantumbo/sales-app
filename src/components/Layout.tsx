@@ -3,9 +3,11 @@ import Header from './Header';
 import Footer from './Footer';
 import { HeadProps } from '../../@types/index';
 import LogoutPrompt from './modals/LogoutPrompt';
-import { ReactNode,useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
+import RequestLogin from './modals/RequestLogin';
+
 interface IProps {
   children: ReactNode;
   metadata?: HeadProps;
@@ -30,6 +32,7 @@ export default function Layout({ children, metadata }: IProps) {
       <Header />
       <main>
         <LogoutPrompt />
+        <RequestLogin />
         {children}
       </main>
       <Footer />

@@ -22,6 +22,8 @@ import { useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
 import { BiUser } from 'react-icons/bi';
 import { actions } from '@/data/reducer-actions';
+import { useState, useEffect } from 'react';
+import { BounceLoader, MoonLoader, PulseLoader } from 'react-spinners';
 
 interface IPost {
   post: IBlogPost;
@@ -32,11 +34,24 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
   const router = useRouter();
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
+
+  const [loading, setLoading] = useState<{
+    status: boolean;
+    key: 'create-comment' | 'user-update';
+  }>({ status: false, key: 'create-comment' });
+
+  const [error, setError] = useState<{
+    status: boolean;
+    msg: string;
+    key: 'create-comment' | 'user-update';
+  }>({ status: false, msg: '', key: 'create-comment' });
+
   const readingProps = readingTime(
     post.content.concat(post.excerpt),
     undefined,
     'pt-br'
   );
+
   const shareMedia = shareUrls({
     title: post.title,
     slug: post.slug,
@@ -46,9 +61,32 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
 
   // ---------------functions----------------
 
-  async function handleCreateComment() {}
+  async function handleCreateComment() {
+    setLoading({ status: true, key: 'create-comment' });
+    try {
+    } catch (err: any) {
+      console.error(err.response?.data?.message || err);
+      setError({
+        status: true,
+        key: 'create-comment',
+        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.',
+      });
+    } finally {
+      setLoading({ status: false, key: 'create-comment' });
+    }
+  }
+
   async function handleUpdateComment(id: string) {}
   async function handledeleteComment(id: string) {}
+
+  useEffect(() => {
+    const desc = setTimeout(() => {
+      setError({ status: false, msg: '', key: 'create-comment' });
+    }, 5000);
+    return () => {
+      clearTimeout(desc);
+    };
+  }, [error.status]);
 
   return (
     <Layout
@@ -166,13 +204,13 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
               <section className='comments-wrapper'>
                 <section className='current-comment'>
                   <div className='comment-swapper'>
-                    {state.userAuth?.profile_image && (
+                    {state.userAuth.profile_image && (
                       <img
-                        src={state.userAuth?.profile_image}
+                        src={state.userAuth.profile_image}
                         alt='current user profile picture'
                       />
                     )}
-                    {!state.user?.profile_image && <BiUser />}
+                    {!state.userAuth.profile_image && <BiUser />}
                     <textarea
                       placeholder='Adicionar comentário...'
                       name='current-commet'
@@ -192,9 +230,31 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
                       }}
                     />
                   </div>
-                  <button onClick={handleCreateComment}>
-                    <span>Enviar</span>
-                  </button>
+
+                  {!loading.status &&
+                    error.status &&
+                    error.key === 'create-comment' && (
+                      <span className='error-message'>{error.msg}</span>
+                    )}
+                  {loading.status && !error.status && (
+                    <div className='loader'>
+                      <MoonLoader
+                      size={30}
+                        color={`rgb(${theme.primary_variant})`}
+                        cssOverride={{
+                          display: 'block',
+                          margin: '0 auto',
+                        }}
+                      />
+                    </div>
+                  )}
+                  {!loading.status && !error.status && (
+                    <button
+                      disabled={loading.status || (error.status && true)}
+                      onClick={handleCreateComment}>
+                      <span>Enviar</span>
+                    </button>
+                  )}
                 </section>
                 <section className='comments-container'></section>
               </section>

@@ -3,6 +3,7 @@ import type { State, Action } from '../../@types/reducer';
 
 export const initialState: State = {
   isLogoutPrompt: false,
+  isLoginPrompt: false,
   isUserWorkingDataModal: false,
   isConnected: false,
   userAuth: {
@@ -86,6 +87,8 @@ export default function reducer(state: State, action: Action) {
   switch (action.type) {
     case actions.LOGOUT_PROMPT:
       return { ...state, isLogoutPrompt: !state.isLogoutPrompt };
+    case actions.LOGIN_PROMPT:
+      return { ...state, isLoginPrompt: !state.isLoginPrompt };
     case actions.USER_WORKING_DATA_MODAL:
       return {
         ...state,

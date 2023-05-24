@@ -18,6 +18,7 @@ interface IContext {
   state: State;
   dispatch: Dispatch<Action>;
   logoutPromptController: () => void;
+  loginPromptController: () => void;
   userWorkingDataController: () => void;
   logoutUser: () => Promise<void>;
   fetchAPI: (config: AxiosRequestConfig) => AxiosPromise<any>;
@@ -29,6 +30,7 @@ const context = createContext<IContext>({
   logoutUser: async () => {},
   fetchAPI: (): any => {},
   logoutPromptController: () => {},
+  loginPromptController: () => {},
   userWorkingDataController: () => {},
 });
 
@@ -37,16 +39,23 @@ export default function AppContext(props: AppContext): JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // ============= modal controllers =================== //
-  const logoutPromptController = (): void => {
+  function logoutPromptController(): void {
     dispatch({
       type: actions.LOGOUT_PROMPT,
     });
-  };
-  const userWorkingDataController = (): void => {
+  }
+
+  function loginPromptController(): void {
+    dispatch({
+      type: actions.LOGIN_PROMPT,
+    });
+  }
+
+  function userWorkingDataController(): void {
     dispatch({
       type: actions.USER_WORKING_DATA_MODAL,
     });
-  };
+  }
 
   // ----------------user authentication--------------------------
   function fetchAPI(config: AxiosRequestConfig): AxiosPromise<any> {
@@ -178,6 +187,7 @@ export default function AppContext(props: AppContext): JSX.Element {
           dispatch,
           logoutUser,
           fetchAPI,
+          loginPromptController,
           logoutPromptController,
           userWorkingDataController,
         }}>
