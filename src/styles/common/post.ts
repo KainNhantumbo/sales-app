@@ -215,6 +215,25 @@ export const PostContainer = styled.div`
     flex-direction: column;
     gap: 20px;
 
+    .favorites-wrapper {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      align-items: center;
+      margin: 0 auto;
+      margin-bottom: 10px;
+
+      h2 {
+        font-size: 1.2rem;
+        line-height: 1.6rem;
+        font-weight: 500;
+      }
+
+      button {
+        ${BaseButton}
+      }
+    }
+
     .share-options {
       ${ShareLinksStyles}
       justify-content: center;
@@ -249,7 +268,6 @@ export const PostContainer = styled.div`
       }
     }
   }
-
 
   .featured-posts-container {
     width: 100%;

@@ -85,6 +85,7 @@ export const initialState: State = {
     favorites: [],
     invalidated: false,
     updatedAt: '',
+    createdAt: '',
   },
   commentsList: [],
 };

@@ -87,6 +87,7 @@ export interface IComment {
   favorites: string[];
   invalidated: boolean;
   updatedAt: string;
+  createdAt: string;
 }
 
 export interface ISignInData {
@@ -128,11 +129,10 @@ export interface IBlogPosts {
   cover_image: { id: string; url: string };
   createdAt: string;
   updatedAt: string;
+  favorites: string[];
 }
 export interface IBlogPost extends IBlogPosts {
   content: string;
-  favorites: { _id: string; first_name: string; last_name: string }[] | never[];
-  allow_comments: boolean;
 }
 
 export type UserPost = {

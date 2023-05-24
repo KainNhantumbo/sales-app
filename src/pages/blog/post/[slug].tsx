@@ -4,7 +4,12 @@ import {
   IoMdCalendar,
   IoMdTime,
 } from 'react-icons/io';
-import { IoOpenOutline } from 'react-icons/io5';
+import {
+  IoChatbubblesOutline,
+  IoHeart,
+  IoHeartOutline,
+  IoOpenOutline,
+} from 'react-icons/io5';
 import moment from 'moment';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -20,13 +25,20 @@ import type { IBlogPost, IBlogPosts } from '@/../../@types/index';
 import { PostContainer as Container } from '@/styles/common/post';
 import { useTheme } from 'styled-components';
 import Comments from '@/components/Comments';
+import { useAppContext } from '@/context/AppContext';
+import { useState, useEffect } from 'react';
 
 interface IPost {
   post: IBlogPost;
   latestPosts: IBlogPosts[];
 }
 
-export default function Post({ post, latestPosts }: IPost): JSX.Element {
+export default function Post({
+  post: initialPost,
+  latestPosts,
+}: IPost): JSX.Element {
+  const { state, fetchAPI, loginPromptController } = useAppContext();
+  const [post, setPost] = useState(initialPost);
   const router = useRouter();
   const theme = useTheme();
 
@@ -42,6 +54,42 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
     excerpt: post.excerpt,
     hostname: complements.websiteUrl,
   });
+
+  async function handleFavoritePost() {
+    try {
+      await fetchAPI({
+        method: 'post',
+        url: `/api/v1/users/favorites/blog-posts/${post._id}`,
+      });
+      const { data } = await getPost(post.slug);
+      setPost((doc) => {
+        return {
+          ...doc,
+          favorites: data.favorites,
+        };
+      });
+    } catch (err: any) {
+      console.error(err.response?.data?.message || err);
+    }
+  }
+
+  async function handleUnFavoritePost() {
+    try {
+      await fetchAPI({
+        method: 'patch',
+        url: `/api/v1/users/favorites/blog-posts/${post._id}`,
+      });
+      const { data } = await getPost(post.slug);
+      setPost((doc) => {
+        return {
+          ...doc,
+          favorites: data.favorites,
+        };
+      });
+    } catch (err: any) {
+      console.error(err.response?.data?.message || err);
+    }
+  }
 
   return (
     <Layout
@@ -103,6 +151,14 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
                   <IoIosBookmark />
                   <span>{readingProps.words} Palavras</span>
                 </div>
+                <div>
+                  <IoChatbubblesOutline />
+                  <span>{state.commentsList.length} comentários</span>
+                </div>
+                <div>
+                  <IoHeart />
+                  <span>{post.favorites.length}</span>
+                </div>
               </section>
               <h4>{post.excerpt}</h4>
               <img
@@ -118,6 +174,30 @@ export default function Post({ post, latestPosts }: IPost): JSX.Element {
             />
 
             <section className='base-container'>
+              <section className='favorites-wrapper'>
+                <h2>
+                  <span>Gostou da postagem?</span>
+                </h2>
+                <div>
+                  <button
+                    onClick={() => {
+                      if (!state.userAuth.token) {
+                        loginPromptController();
+                      }
+                      post.favorites.includes(state.userAuth.id)
+                        ? handleUnFavoritePost()
+                        : handleFavoritePost();
+                        console.log(post.favorites)
+                    }}>
+                    {post.favorites.includes(state.userAuth.id) ? (
+                      <IoHeart />
+                    ) : (
+                      <IoHeartOutline />
+                    )}
+                    <span>{post.favorites.length} Favoritos</span>
+                  </button>
+                </div>
+              </section>
               <section className='share-options'>
                 <div className='title'>Compartilhe esta postagem</div>
                 <div className='options'>

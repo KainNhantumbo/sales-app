@@ -3,11 +3,9 @@ import { useRouter } from 'next/router';
 import { getPosts } from '@/lib/queries';
 import Layout from '@/components/Layout';
 import { formatDate } from '@/lib/time-fns';
-import { useTheme } from 'styled-components';
 import { IBlogPosts } from '../../../@types';
-import { useAppContext } from '@/context/AppContext';
-import { IoMdCalendar } from 'react-icons/io';
-import { IoArrowForwardOutline } from 'react-icons/io5';
+import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
+import { IoArrowForwardOutline, IoHeart } from 'react-icons/io5';
 import { BlogContainer as Container } from '@/styles/common/blog';
 import SearchComponent from '@/components/Search';
 
@@ -15,9 +13,7 @@ type Props = { posts: IBlogPosts[] };
 
 export default function Blog(props: Props): JSX.Element {
   const { posts } = props;
-  const theme = useTheme();
   const router = useRouter();
-  const { state } = useAppContext();
 
   return (
     <Layout>
@@ -42,8 +38,16 @@ export default function Blog(props: Props): JSX.Element {
                   <div className='content-container'>
                     <div className='details'>
                       <div>
+                        <IoIosAlbums />
+                        <span>{post.category || 'Miscelânia'}</span>
+                      </div>
+                      <div>
                         <IoMdCalendar />
                         <span>{formatDate(post.updatedAt)}</span>
+                      </div>
+                      <div>
+                        <IoHeart />
+                        <span>{post.favorites.length} favoritos</span>
                       </div>
                     </div>
                     <h3>{post.title}</h3>

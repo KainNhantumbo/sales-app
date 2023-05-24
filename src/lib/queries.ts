@@ -20,7 +20,7 @@ export async function getPaths() {
 export async function getPosts(props: PostListProps) {
   return await fetch({
     method: 'get',
-    url: `/api/v1/blog/posts?fields=title,excerpt,slug,cover_image,category,updatedAt&sort=updatedAt${
+    url: `/api/v1/blog/posts?fields=title,excerpt,slug,cover_image,category,favorites,updatedAt&sort=updatedAt${
       props.category ? `&category=${props.category}` : ''
     }${props.search ? `&search=${props.search}` : ''}${
       props.offset ? `&offset=${props.offset.toString()}` : ''

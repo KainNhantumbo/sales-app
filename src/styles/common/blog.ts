@@ -160,6 +160,7 @@ export const BlogContainer = styled.div`
             font-size: 0.9rem;
             font-weight: 500;
             align-items: center;
+            flex-flow: row wrap;
 
             div {
               display: flex;

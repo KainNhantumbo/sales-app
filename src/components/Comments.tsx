@@ -2,6 +2,7 @@ import {
   IoArrowUndo,
   IoChatbubbleEllipsesOutline,
   IoEllipse,
+  IoFlag,
   IoHeart,
   IoHeartOutline,
 } from 'react-icons/io5';
@@ -42,6 +43,7 @@ export default function Comments({ post }: Props): JSX.Element {
     key: 'create-comment' | 'update-comment' | 'delete-comment';
   }>({ status: false, msg: '', key: 'create-comment' });
 
+  const [isEditMode, setIsEditMode] = useState(false);
   // ---------------functions----------------
   const formattedComments = useMemo(() => {
     const group: { [index: string]: IComment[] } = {};
@@ -104,6 +106,7 @@ export default function Comments({ post }: Props): JSX.Element {
             favorites: [],
             invalidated: false,
             updatedAt: '',
+            createdAt: '',
           },
         },
       });
@@ -117,6 +120,40 @@ export default function Comments({ post }: Props): JSX.Element {
       });
     } finally {
       setLoading({ status: false, key: 'create-comment' });
+    }
+  }
+
+  async function handledeleteComment(id: string) {
+    try {
+      await fetchAPI({ method: 'delete', url: `/api/v1/users/comments/${id}` });
+      deleteCommentPromptController(false, '');
+      getComments();
+    } catch (err: any) {
+      console.error(err.response?.data?.message || err);
+    }
+  }
+
+  async function handleFavoriteComment(id: string) {
+    try {
+      await fetchAPI({
+        method: 'post',
+        url: `/api/v1/users/favorites/comments/${id}`,
+      });
+      getComments();
+    } catch (err: any) {
+      console.error(err.response?.data?.message || err);
+    }
+  }
+
+  async function handleUnFavoriteComment(id: string) {
+    try {
+      await fetchAPI({
+        method: 'patch',
+        url: `/api/v1/users/favorites/comments/${id}`,
+      });
+      getComments();
+    } catch (err: any) {
+      console.error(err.response?.data?.message || err);
     }
   }
 
@@ -135,21 +172,49 @@ export default function Comments({ post }: Props): JSX.Element {
     }
   }
 
-  async function handleEditComment(id: string) {}
+  function handleEditComment(id: string) {
+    setIsEditMode(true);
+    dispatch({
+      type: actions.CREATE_COMMENT,
+      payload: {
+        ...state,
+        comment: {
+          ...state.comment,
+          ...state.commentsList.filter((e) => e._id === id),
+        },
+      },
+    });
+  }
+
+  function handleCancelEditComment(id: string) {
+    setIsEditMode(false);
+    dispatch({
+      type: actions.CREATE_COMMENT,
+      payload: {
+        ...state,
+        comment: {
+          _id: '',
+          source_id: '',
+          created_by: {
+            _id: '',
+            first_name: '',
+            last_name: '',
+            profile_image: { id: '', url: '' },
+          },
+          content: '',
+          parent_id: '',
+          favorites: [],
+          invalidated: false,
+          updatedAt: '',
+          createdAt: '',
+        },
+      },
+    });
+  }
 
   async function handleDenounceComment(id: string) {}
 
   async function handleReplyComment(id: string) {}
-
-  async function handledeleteComment(id: string) {
-    try {
-      await fetchAPI({ method: 'delete', url: `/api/v1/users/comments/${id}` });
-      deleteCommentPromptController(false, '');
-      getComments();
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
-    }
-  }
 
   useEffect(() => {
     console.log(formattedComments);
@@ -193,7 +258,11 @@ export default function Comments({ post }: Props): JSX.Element {
               )}
               {!state.userAuth.profile_image && <BiUser />}
               <textarea
-                placeholder='Adicionar comentário...'
+                placeholder={
+                  state.commentsList.length < 1
+                    ? 'Seja o primeiro a adicionar um comentário...'
+                    : 'Adicionar um novo comentário...'
+                }
                 name='current-commet'
                 value={state.comment.content}
                 rows={5}
@@ -251,7 +320,7 @@ export default function Comments({ post }: Props): JSX.Element {
             {getCommentReplies('null') !== null &&
               getCommentReplies('null')?.length > 0 &&
               getCommentReplies('null')
-                .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1))
+                .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
                 .map((comment) => (
                   <div key={comment._id} className='comment'>
                     <div className='header'>
@@ -274,18 +343,21 @@ export default function Comments({ post }: Props): JSX.Element {
                         <span>
                           {' '}
                           <IoEllipse className='dot' />{' '}
-                          {moment(comment.updatedAt).fromNow()}
+                          {moment(comment.createdAt).fromNow()}
                         </span>
                       </div>
                       <div className='actions'>
                         <button
                           className='like'
-                          onClick={() => handleReplyComment(comment._id)}>
+                          disabled={state.userAuth?.id === '' && true}
+                          onClick={() => {
+                            if (!state.userAuth?.token) return;
+                            comment.favorites.includes(state.userAuth?.id)
+                              ? handleUnFavoriteComment(comment._id)
+                              : handleFavoriteComment(comment._id);
+                          }}>
                           <span>{comment.favorites.length}</span>
-
-                          {comment.favorites.includes(
-                            comment.created_by._id
-                          ) ? (
+                          {comment.favorites.includes(state.userAuth.id) ? (
                             <IoHeart />
                           ) : (
                             <IoHeartOutline />
@@ -315,7 +387,7 @@ export default function Comments({ post }: Props): JSX.Element {
                               onClick={() =>
                                 handleDenounceComment(comment._id)
                               }>
-                              <IoArrowUndo />
+                              <IoFlag />
                               <span>Denunciar</span>
                             </button>
                             <button
@@ -330,10 +402,32 @@ export default function Comments({ post }: Props): JSX.Element {
                     </div>
 
                     <div className='body'>
-                      <p>
-                        {comment.parent_id && <span>@{'Reply'}</span>}{' '}
-                        {comment.content}
-                      </p>
+                      {!isEditMode && (
+                        <p>
+                          {comment.parent_id && <span>@{'Reply'}</span>}{' '}
+                          {comment.content}
+                        </p>
+                      )}
+                      {isEditMode && (
+                        <textarea
+                          placeholder='Adicionar comentário...'
+                          name='current-commet'
+                          value={state.comment.content}
+                          rows={5}
+                          onChange={(e): void => {
+                            dispatch({
+                              type: actions.CREATE_COMMENT,
+                              payload: {
+                                ...state,
+                                comment: {
+                                  ...state.comment,
+                                  content: e.target.value,
+                                },
+                              },
+                            });
+                          }}
+                        />
+                      )}
                     </div>
                   </div>
                 ))}

@@ -33,10 +33,10 @@ export default function DeleteCommentPrompt(props: Props): JSX.Element {
             <div className='dialog-prompt'>
               <div className='prompt-info'>
                 <span className='prompt-title'>Eliminar comentário</span>
-                <p className='prompt-message'>
-                  Você realmente gostaria de eliminar este comentário?
+                <div className='prompt-message'>
+                  <p>Você realmente gostaria de eliminar este comentário?</p>
                   <p>Esta ação não pode ser desfeita.</p>
-                </p>
+                </div>
               </div>
               <div className='prompt-actions'>
                 <button
