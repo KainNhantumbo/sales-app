@@ -185,8 +185,8 @@ export const StyledInputs = css`
       font-size: 0.9rem;
     }
     :disabled {
-      background: none;
-      border: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
+      background: rgb(${({ theme }) => theme.foreground});
+      border: none;
       ::placeholder {
         color: transparent;
       }

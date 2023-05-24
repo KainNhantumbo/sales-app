@@ -129,21 +129,17 @@ export default function Comments({ post }: Props): JSX.Element {
   }
 
   async function handleEditComment(id: string) {}
+
   async function handleDenounceComment(id: string) {}
+
   async function handleReplyComment(id: string) {}
 
   async function handledeleteComment(id: string) {
-    setLoading({ status: true, key: 'create-comment' });
     try {
+      await fetchAPI({ method: 'delete', url: `/api/v1/users/comments/${id}` });
+      getComments();
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
-      setError({
-        status: true,
-        key: 'create-comment',
-        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.',
-      });
-    } finally {
-      setLoading({ status: false, key: 'create-comment' });
     }
   }
 

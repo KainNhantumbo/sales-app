@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import { BaseButton, BaseButtonOutline, StyledInputs } from "../defaults";
+import styled from 'styled-components';
+import { BaseButton, BaseButtonOutline, StyledInputs } from '../defaults';
 
 export const CommentsContainer = styled.div`
- .comments-section {
+  .comments-section {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -131,11 +131,16 @@ export const CommentsContainer = styled.div`
                 border: 1px solid rgba(${({ theme }) => theme.accent}, 0.09);
               }
 
+              h3 {
+                font-weight: 500;
+              }
+
               span {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
                 gap: 5px;
+
                 .dot {
                   width: 7px;
                   height: 7px;
@@ -156,6 +161,10 @@ export const CommentsContainer = styled.div`
                   top: calc(50% - 8px);
                 }
               }
+
+              .delete:hover {
+                color: rgb(${({ theme }) => theme.alert});
+              }
             }
           }
 
@@ -167,6 +176,4 @@ export const CommentsContainer = styled.div`
       }
     }
   }
-
-
-`
+`;

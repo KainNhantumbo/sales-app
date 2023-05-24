@@ -39,7 +39,7 @@ export const PostContainer = styled.div`
   height: 100%;
   * {
     ::selection {
-      background: rgba(${({ theme }) => theme.secondary}, 0.2);
+      background: rgba(${({ theme }) => theme.font}, 0.1);
       color: rgb(${({ theme }) => theme.primary_variant});
     }
   }
