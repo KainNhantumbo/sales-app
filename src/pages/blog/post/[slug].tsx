@@ -63,7 +63,7 @@ export default function Post({
       });
       const { data } = await getPost(post.slug);
       setPost((doc) => {
-        return  { ...doc, favorites: data.favorites };
+        return { ...doc, favorites: data.favorites };
       });
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
@@ -175,9 +175,8 @@ export default function Post({
                 <div>
                   <button
                     onClick={() => {
-                      if (!state.userAuth.token) {
-                        loginPromptController();
-                      }
+                      if (!state.userAuth.token) return loginPromptController();
+
                       post.favorites.includes(state.userAuth.id)
                         ? handleUnFavoritePost()
                         : handleFavoritePost();

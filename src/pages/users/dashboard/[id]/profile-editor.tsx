@@ -2,6 +2,7 @@ import {
   IoAdd,
   IoArrowUndoOutline,
   IoBookmarkOutline,
+  IoBriefcase,
   IoCalendarNumberOutline,
   IoClipboardOutline,
   IoCloseCircle,
@@ -14,7 +15,9 @@ import {
   IoHeartHalfOutline,
   IoHomeOutline,
   IoImageOutline,
+  IoKey,
   IoLinkOutline,
+  IoLocation,
   IoLockClosedOutline,
   IoLockOpenOutline,
   IoLogoFacebook,
@@ -25,6 +28,7 @@ import {
   IoPhonePortraitOutline,
   IoPlanetOutline,
   IoReload,
+  IoShareSocial,
   IoStar,
   IoSyncOutline,
   IoTrash,
@@ -34,7 +38,7 @@ import {
 import moment from 'moment';
 import Compressor from 'compressorjs';
 import Layout from '@/components/Layout';
-import { BiUserX } from 'react-icons/bi';
+import { BiUser, BiUserCheck, BiUserX } from 'react-icons/bi';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
 import { actions } from '@/data/reducer-actions';
@@ -287,7 +291,6 @@ export default function ProfileEditor(): JSX.Element {
           user: { ...data },
         },
       });
-      console.log(data);
     } catch (error: any) {
       console.error(error);
       setError({
@@ -463,7 +466,7 @@ export default function ProfileEditor(): JSX.Element {
               <IoPencilOutline />
               <span>Detalhes pessoais</span>
             </h2>
-            <span>Edite e salve as alterações</span>
+            <span>Salve após fazer alterações!</span>
           </section>
 
           <section className='data-container'>
@@ -487,7 +490,7 @@ export default function ProfileEditor(): JSX.Element {
                       <IoImageOutline className='camera-icon' />
                     )}
                     <label htmlFor='cover' title='Selecionar imagem de capa'>
-                      <span>Selecionar imagem de capa</span>
+                      <span>Imagem de capa</span>
                       <IoAdd />
                     </label>
                     <button
@@ -540,585 +543,650 @@ export default function ProfileEditor(): JSX.Element {
                   </div>
                 </section>
 
-                <section className='form-section'>
-                  <div className='form-element'>
-                    <label htmlFor='first_name'>
-                      <IoEllipsisHorizontal />
-                      <span>Nome</span>
-                    </label>
-                    <input
-                      type='text'
-                      id='first_name'
-                      name='first_name'
-                      autoComplete='off'
-                      placeholder='Escreva o seu nome'
-                      aria-label='Escreva o seu nome'
-                      required={true}
-                      onChange={(e): void => handleChange(e)}
-                      value={state.user.first_name}
-                    />
+                <div className='data-section'>
+                  <div className='description'>
+                    <h2>
+                      <BiUser />
+                      <span>Informações Pessoais</span>
+                    </h2>
+                    <p>
+                      Informações usadas para identificação e contato. Por
+                      favor, inserir informações reais e verdadeiras para evitar
+                      bloqueio de conta.
+                    </p>
                   </div>
-                  <div className='form-element'>
-                    <label htmlFor='last_name'>
-                      <IoEllipsisHorizontal />
-                      <span>Apelido</span>
-                    </label>
-                    <input
-                      type='text'
-                      id='last_name'
-                      name='last_name'
-                      autoComplete='off'
-                      placeholder='Escreva o seu apelido'
-                      aria-label='Escreva o seu apelido'
-                      value={state.user.last_name}
-                      required={true}
-                      onChange={(e): void => handleChange(e)}
-                    />
-                  </div>
-                </section>
 
-                <section className='form-section'>
-                  <div className='form-element'>
-                    <label htmlFor='main_phone_number'>
-                      <IoPhonePortraitOutline />
-                      <span>Número de telemóvel (Principal)</span>
-                    </label>
-                    <input
-                      type='number'
-                      id='main_phone_number'
-                      name='main_phone_number'
-                      placeholder='Escreva o seu número de telemóvel'
-                      aria-label='Escreva o seu número de telemóvel'
-                      onChange={(e): void => handleChange(e)}
-                      value={state.user.main_phone_number}
-                    />
-                  </div>
-                  <div className='form-element'>
-                    <label htmlFor='alternative_phone_number'>
-                      <IoPhonePortraitOutline />
-                      <span>Número de telemóvel (Alternativo)</span>
-                    </label>
-                    <input
-                      type='number'
-                      id='alternative_phone_number'
-                      name='alternative_phone_number'
-                      placeholder='Escreva o seu número de telemóvel'
-                      aria-label='Escreva o seu número de telemóvel'
-                      onChange={(e): void => handleChange(e)}
-                      value={state.user.alternative_phone_number}
-                    />
-                  </div>
-                </section>
+                  <div className='items-container'>
+                    <section className='form-section'>
+                      <div className='form-element'>
+                        <label htmlFor='first_name'>
+                          <IoEllipsisHorizontal />
+                          <span>Nome</span>
+                        </label>
+                        <input
+                          type='text'
+                          id='first_name'
+                          name='first_name'
+                          autoComplete='off'
+                          placeholder='Escreva o seu nome'
+                          aria-label='Escreva o seu nome'
+                          required={true}
+                          onChange={(e): void => handleChange(e)}
+                          value={state.user.first_name}
+                        />
+                      </div>
+                      <div className='form-element'>
+                        <label htmlFor='last_name'>
+                          <IoEllipsisHorizontal />
+                          <span>Apelido</span>
+                        </label>
+                        <input
+                          type='text'
+                          id='last_name'
+                          name='last_name'
+                          autoComplete='off'
+                          placeholder='Escreva o seu apelido'
+                          aria-label='Escreva o seu apelido'
+                          value={state.user.last_name}
+                          required={true}
+                          onChange={(e): void => handleChange(e)}
+                        />
+                      </div>
+                    </section>
+                    <section className='form-section'>
+                      <div className='form-element'>
+                        <label htmlFor='main_phone_number'>
+                          <IoPhonePortraitOutline />
+                          <span>Número de telemóvel (Principal)</span>
+                        </label>
+                        <input
+                          type='number'
+                          id='main_phone_number'
+                          name='main_phone_number'
+                          placeholder='Escreva o seu número de telemóvel'
+                          aria-label='Escreva o seu número de telemóvel'
+                          onChange={(e): void => handleChange(e)}
+                          value={state.user.main_phone_number}
+                        />
+                      </div>
+                      <div className='form-element'>
+                        <label htmlFor='alternative_phone_number'>
+                          <IoPhonePortraitOutline />
+                          <span>Número de telemóvel (Alternativo)</span>
+                        </label>
+                        <input
+                          type='number'
+                          id='alternative_phone_number'
+                          name='alternative_phone_number'
+                          placeholder='Escreva o seu número de telemóvel'
+                          aria-label='Escreva o seu número de telemóvel'
+                          onChange={(e): void => handleChange(e)}
+                          value={state.user.alternative_phone_number}
+                        />
+                      </div>
+                    </section>
+                    <section className='form-section'>
+                      <div className='form-element'>
+                        <label htmlFor='main_phone_number'>
+                          <IoHeartHalfOutline />
+                          <span>Gênero</span>
+                        </label>
+                        <select
+                          name='gender'
+                          id='gender'
+                          value={state.user.gender}
+                          onChange={(e): void => handleChange(e)}>
+                          <option value='Masculino'>Masculino</option>
+                          <option value='Femenino'>Femenino</option>
+                          <option value='Outro'>Outro</option>
+                        </select>
+                      </div>
+                      <div className='form-element'>
+                        <label htmlFor='birth_date'>
+                          <IoCalendarNumberOutline />
+                          <span>Data de Nascimento</span>
+                        </label>
+                        <input
+                          type='date'
+                          id='birth_date'
+                          name='birth_date'
+                          onChange={(e): void => handleChange(e)}
+                        />
+                      </div>
+                    </section>
 
-                <section className='form-section'>
-                  <div className='form-element'>
-                    <label htmlFor='main_phone_number'>
-                      <IoHeartHalfOutline />
-                      <span>Gênero</span>
-                    </label>
-                    <select
-                      name='gender'
-                      id='gender'
-                      value={state.user.gender}
-                      onChange={(e): void => handleChange(e)}>
-                      <option value='Masculino'>Masculino</option>
-                      <option value='Femenino'>Femenino</option>
-                      <option value='Outro'>Outro</option>
-                    </select>
+                    <section className='form-section'>
+                      <div className='form-element'>
+                        <label htmlFor='bio'>
+                          <IoCreateOutline />
+                          <span>Biografia</span>
+                        </label>
+                        <input
+                          type='text'
+                          id='bio'
+                          name='bio'
+                          maxLength={128}
+                          placeholder='Escreva uma breve biografia para o seu perfil'
+                          aria-label='Escreva uma breve biografia para o seu perfil'
+                          onChange={(e): void => handleChange(e)}
+                          value={state.user.bio}
+                        />
+                      </div>
+                    </section>
                   </div>
-                  <div className='form-element'>
-                    <label htmlFor='birth_date'>
-                      <IoCalendarNumberOutline />
-                      <span>Data de Nascimento</span>
-                    </label>
-                    <input
-                      type='date'
-                      id='birth_date'
-                      name='birth_date'
-                      onChange={(e): void => handleChange(e)}
-                    />
-                  </div>
-                </section>
+                  <section className='form-section' id='genres-section'>
+                    {state.user.spoken_languages.length > 0 && (
+                      <div className='genres-container'>
+                        {state.user.spoken_languages.map((language, index) => (
+                          <div className='genre' key={index.toString()}>
+                            <span>{language}</span>
+                            <button
+                              onClick={(): void => {
+                                dispatch({
+                                  type: actions.USER_DATA,
+                                  payload: {
+                                    ...state,
+                                    user: {
+                                      ...state.user,
+                                      spoken_languages:
+                                        state.user.spoken_languages.filter(
+                                          (item) => item !== language
+                                        ),
+                                    },
+                                  },
+                                });
+                              }}>
+                              <IoCloseCircle />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <div className='form-element'>
+                      <label htmlFor='spoken_languages'>
+                        <IoEarthOutline />
+                        <span>Línguas (máx. 5)</span>
+                      </label>
+                      <select
+                        title='Selecione a língua'
+                        onChange={(e) => {
+                          dispatch({
+                            type: actions.USER_DATA,
+                            payload: {
+                              ...state,
+                              user: {
+                                ...state.user,
+                                spoken_languages: ((): string[] => {
+                                  const value = e.target.value;
+                                  const languages = state.user.spoken_languages;
+                                  if (
+                                    languages.some((item) => item === value) ||
+                                    languages.length >= 5
+                                  )
+                                    return languages;
+                                  return [...languages, value];
+                                })(),
+                              },
+                            },
+                          });
+                        }}>
+                        {user_languages
+                          .sort((a, b) => (a > b ? 1 : -1))
+                          .map((item, index) => (
+                            <option value={item} key={index}>
+                              {item}
+                            </option>
+                          ))}
+                      </select>
+                    </div>
+                  </section>
 
-                <section className='form-section'>
-                  <div className='form-element'>
-                    <label htmlFor='bio'>
-                      <IoCreateOutline />
-                      <span>Biografia</span>
-                    </label>
-                    <input
-                      type='text'
-                      id='bio'
-                      name='bio'
-                      maxLength={128}
-                      placeholder='Escreva uma breve biografia para o seu perfil'
-                      aria-label='Escreva uma breve biografia para o seu perfil'
-                      onChange={(e): void => handleChange(e)}
-                      value={state.user.bio}
-                    />
-                  </div>
-                </section>
+                  <section className='form-section' id='genres-section'>
+                    {state.user.professional_skills.length > 0 && (
+                      <div className='genres-container'>
+                        {state.user.professional_skills.map((skill, index) => (
+                          <div className='genre' key={index.toString()}>
+                            <span>{skill}</span>
+                            <button
+                              onClick={(): void => {
+                                dispatch({
+                                  type: actions.USER_DATA,
+                                  payload: {
+                                    ...state,
+                                    user: {
+                                      ...state.user,
+                                      professional_skills:
+                                        state.user.professional_skills.filter(
+                                          (item) => item !== skill
+                                        ),
+                                    },
+                                  },
+                                });
+                              }}>
+                              <IoCloseCircle />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <div className='form-element'>
+                      <label htmlFor='professional_skills'>
+                        <IoConstructOutline />
+                        <span>Habilidades Profissionais (máx. 10)</span>
+                      </label>
+                      <select
+                        title='Selecione a habilidade'
+                        onChange={(e) => {
+                          dispatch({
+                            type: actions.USER_DATA,
+                            payload: {
+                              ...state,
+                              user: {
+                                ...state.user,
+                                professional_skills: ((): string[] => {
+                                  const value = e.target.value;
+                                  const skills = state.user.professional_skills;
+                                  if (
+                                    skills.some((item) => item === value) ||
+                                    skills.length >= 10
+                                  )
+                                    return skills;
+                                  return [...skills, value];
+                                })(),
+                              },
+                            },
+                          });
+                        }}>
+                        {user_skills
+                          .sort((a, b) => (a > b ? 1 : -1))
+                          .map((item, index) => (
+                            <option value={item} key={index}>
+                              {item}
+                            </option>
+                          ))}
+                      </select>
+                    </div>
+                  </section>
+                </div>
 
-                <section className='form-section' id='genres-section'>
-                  {state.user.spoken_languages.length > 0 && (
-                    <div className='genres-container'>
-                      {state.user.spoken_languages.map((language, index) => (
-                        <div className='genre' key={index.toString()}>
-                          <span>{language}</span>
-                          <button
-                            onClick={(): void => {
-                              dispatch({
-                                type: actions.USER_DATA,
-                                payload: {
-                                  ...state,
-                                  user: {
-                                    ...state.user,
-                                    spoken_languages:
-                                      state.user.spoken_languages.filter(
-                                        (item) => item !== language
-                                      ),
+                <div className='data-section'>
+                  <div className='description'>
+                    <h2>
+                      <IoLocation />
+                      <span>Localização e Endereço</span>
+                    </h2>
+                    <p>
+                      Informações usadas para entregas de compras feitas nas
+                      lojas.
+                    </p>
+                  </div>
+
+                  <div className='items-container'>
+                    <section className='form-section'>
+                      <div className='form-element'>
+                        <label htmlFor='country'>
+                          <IoPlanetOutline />
+                          <span>País</span>
+                        </label>
+                        <select
+                          name='country'
+                          id='country'
+                          value={state.user.location?.country}
+                          onChange={(e): void => {
+                            countries.forEach((obj) => {
+                              if (obj.country === e.target.value) {
+                                setCountryStates([...obj.states]);
+                              }
+                            });
+                            dispatch({
+                              type: actions.USER_DATA,
+                              payload: {
+                                ...state,
+                                user: {
+                                  ...state.user,
+                                  location: {
+                                    ...state.user.location,
+                                    country: e.target.value,
                                   },
                                 },
-                              });
-                            }}>
-                            <IoCloseCircle />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  <div className='form-element'>
-                    <label htmlFor='spoken_languages'>
-                      <IoEarthOutline />
-                      <span>Línguas (máx. 5)</span>
-                    </label>
-                    <select
-                      title='Selecione a língua'
-                      onChange={(e) => {
-                        dispatch({
-                          type: actions.USER_DATA,
-                          payload: {
-                            ...state,
-                            user: {
-                              ...state.user,
-                              spoken_languages: ((): string[] => {
-                                const value = e.target.value;
-                                const languages = state.user.spoken_languages;
-                                if (
-                                  languages.some((item) => item === value) ||
-                                  languages.length >= 5
-                                )
-                                  return languages;
-                                return [...languages, value];
-                              })(),
-                            },
-                          },
-                        });
-                      }}>
-                      {user_languages
-                        .sort((a, b) => (a > b ? 1 : -1))
-                        .map((item, index) => (
-                          <option value={item} key={index}>
-                            {item}
-                          </option>
-                        ))}
-                    </select>
-                  </div>
-                </section>
+                              },
+                            });
+                          }}>
+                          {countries
+                            .sort((a, b) => (a.country > b.country ? 1 : -1))
+                            .map((item, index) => (
+                              <option value={item.country} key={index}>
+                                {item.country}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
 
-                <section className='form-section' id='genres-section'>
-                  {state.user.professional_skills.length > 0 && (
-                    <div className='genres-container'>
-                      {state.user.professional_skills.map((skill, index) => (
-                        <div className='genre' key={index.toString()}>
-                          <span>{skill}</span>
-                          <button
-                            onClick={(): void => {
-                              dispatch({
-                                type: actions.USER_DATA,
-                                payload: {
-                                  ...state,
-                                  user: {
-                                    ...state.user,
-                                    professional_skills:
-                                      state.user.professional_skills.filter(
-                                        (item) => item !== skill
-                                      ),
+                      <div className='form-element'>
+                        <label htmlFor='state'>
+                          <IoStar />
+                          <span>Provícia / Estado</span>
+                        </label>
+                        <select
+                          name='state'
+                          id='state'
+                          value={state.user.location?.state}
+                          defaultValue={state.user.location?.state}
+                          onChange={(e): void => {
+                            dispatch({
+                              type: actions.USER_DATA,
+                              payload: {
+                                ...state,
+                                user: {
+                                  ...state.user,
+                                  location: {
+                                    ...state.user.location,
+                                    state: e.target.value,
                                   },
                                 },
-                              });
-                            }}>
-                            <IoCloseCircle />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  <div className='form-element'>
-                    <label htmlFor='professional_skills'>
-                      <IoConstructOutline />
-                      <span>Habilidades Profissionais (máx. 10)</span>
-                    </label>
-                    <select
-                      title='Selecione a habilidade'
-                      onChange={(e) => {
-                        dispatch({
-                          type: actions.USER_DATA,
-                          payload: {
-                            ...state,
-                            user: {
-                              ...state.user,
-                              professional_skills: ((): string[] => {
-                                const value = e.target.value;
-                                const skills = state.user.professional_skills;
-                                if (
-                                  skills.some((item) => item === value) ||
-                                  skills.length >= 10
-                                )
-                                  return skills;
-                                return [...skills, value];
-                              })(),
-                            },
-                          },
-                        });
-                      }}>
-                      {user_skills
-                        .sort((a, b) => (a > b ? 1 : -1))
-                        .map((item, index) => (
-                          <option value={item} key={index}>
-                            {item}
-                          </option>
-                        ))}
-                    </select>
+                              },
+                            });
+                          }}>
+                          {countryStates
+                            .sort((a, b) => (a > b ? 1 : -1))
+                            .map((item, index) => (
+                              <option value={item} key={index}>
+                                {item}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
+                    </section>
+                    <section className='form-section'>
+                      <div className='form-element'>
+                        <label htmlFor='adress'>
+                          <IoHomeOutline />
+                          <span>Endereço</span>
+                        </label>
+                        <input
+                          type='text'
+                          id='adress'
+                          placeholder='Endereço'
+                          aria-label='Endereço'
+                          maxLength={128}
+                          value={state.user.location?.adress}
+                          onChange={(e): void => {
+                            dispatch({
+                              type: actions.USER_DATA,
+                              payload: {
+                                ...state,
+                                user: {
+                                  ...state.user,
+                                  location: {
+                                    ...state.user.location,
+                                    adress: e.target.value,
+                                  },
+                                },
+                              },
+                            });
+                          }}
+                        />
+                      </div>
+                      <div className='form-element'>
+                        <label htmlFor='zip_code'>
+                          <IoBookmarkOutline />
+                          <span>Código Postal</span>
+                        </label>
+                        <input
+                          type='text'
+                          id='zip_code'
+                          name='zip_code'
+                          maxLength={5}
+                          placeholder='Escreva o seu código postal'
+                          aria-label='Escreva o seu código postal'
+                          value={state.user.location?.zip_code}
+                          onChange={(e): void => {
+                            dispatch({
+                              type: actions.USER_DATA,
+                              payload: {
+                                ...state,
+                                user: {
+                                  ...state.user,
+                                  location: {
+                                    ...state.user.location,
+                                    zip_code: e.target.value,
+                                  },
+                                },
+                              },
+                            });
+                          }}
+                        />
+                      </div>
+                    </section>
                   </div>
-                </section>
+                </div>
 
-                <section className='form-section'>
-                  <div className='form-element'>
-                    <label htmlFor='country'>
-                      <IoPlanetOutline />
-                      <span>País</span>
-                    </label>
-                    <select
-                      name='country'
-                      id='country'
-                      value={state.user.location?.country}
-                      onChange={(e): void => {
-                        countries.forEach((obj) => {
-                          if (obj.country === e.target.value) {
-                            setCountryStates([...obj.states]);
-                          }
-                        });
-                        dispatch({
-                          type: actions.USER_DATA,
-                          payload: {
-                            ...state,
-                            user: {
-                              ...state.user,
-                              location: {
-                                ...state.user.location,
-                                country: e.target.value,
-                              },
-                            },
-                          },
-                        });
-                      }}>
-                      {countries
-                        .sort((a, b) => (a.country > b.country ? 1 : -1))
-                        .map((item, index) => (
-                          <option value={item.country} key={index}>
-                            {item.country}
-                          </option>
-                        ))}
-                    </select>
+                <div className='data-section'>
+                  <div className='description'>
+                    <h2>
+                      <IoShareSocial/>
+                      <span>Redes e Mídias Sociais</span>
+                    </h2>
+                    <p>
+                      Informações destacadas no seu perfil de usuário, loja e
+                      compartilhada com o público para aumentar a sua audiência.
+                    </p>
                   </div>
 
-                  <div className='form-element'>
-                    <label htmlFor='state'>
-                      <IoStar />
-                      <span>Provícia / Estado</span>
-                    </label>
-                    <select
-                      name='state'
-                      id='state'
-                      value={state.user.location?.state}
-                      defaultValue={state.user.location?.state}
-                      onChange={(e): void => {
-                        dispatch({
-                          type: actions.USER_DATA,
-                          payload: {
-                            ...state,
-                            user: {
-                              ...state.user,
-                              location: {
-                                ...state.user.location,
-                                state: e.target.value,
+                  <div className='items-container'>
+                    <section className='form-section'>
+                      <div className='form-element'>
+                        <label htmlFor='whatsapp'>
+                          <IoLogoWhatsapp />
+                          <span>Whatsapp</span>
+                        </label>
+                        <input
+                          type='text'
+                          id='whatsapp'
+                          placeholder='Contacto do Whatsapp'
+                          aria-label='Whatsapp'
+                          value={state.user.social_network?.whatsapp}
+                          onChange={(e): void => {
+                            dispatch({
+                              type: actions.USER_DATA,
+                              payload: {
+                                ...state,
+                                user: {
+                                  ...state.user,
+                                  social_network: {
+                                    ...state.user.social_network,
+                                    whatsapp: e.target.value,
+                                  },
+                                },
                               },
-                            },
-                          },
-                        });
-                      }}>
-                      {countryStates
-                        .sort((a, b) => (a > b ? 1 : -1))
-                        .map((item, index) => (
-                          <option value={item} key={index}>
-                            {item}
-                          </option>
-                        ))}
-                    </select>
-                  </div>
-                </section>
+                            });
+                          }}
+                        />
+                      </div>
+                      <div className='form-element'>
+                        <label htmlFor='facebook'>
+                          <IoLogoFacebook />
+                          <span>Facebook</span>
+                        </label>
+                        <input
+                          type='text'
+                          id='facebook'
+                          placeholder='Link do perfil de facebook'
+                          aria-label='facebook'
+                          value={state.user.social_network?.facebook}
+                          onChange={(e): void => {
+                            dispatch({
+                              type: actions.USER_DATA,
+                              payload: {
+                                ...state,
+                                user: {
+                                  ...state.user,
+                                  social_network: {
+                                    ...state.user.social_network,
+                                    facebook: e.target.value,
+                                  },
+                                },
+                              },
+                            });
+                          }}
+                        />
+                      </div>
+                    </section>
 
-                <section className='form-section'>
-                  <div className='form-element'>
-                    <label htmlFor='adress'>
-                      <IoHomeOutline />
-                      <span>Endereço</span>
-                    </label>
-                    <input
-                      type='text'
-                      id='adress'
-                      placeholder='Endereço'
-                      aria-label='Endereço'
-                      maxLength={128}
-                      value={state.user.location?.adress}
-                      onChange={(e): void => {
-                        dispatch({
-                          type: actions.USER_DATA,
-                          payload: {
-                            ...state,
-                            user: {
-                              ...state.user,
-                              location: {
-                                ...state.user.location,
-                                adress: e.target.value,
+                    <section className='form-section'>
+                      <div className='form-element'>
+                        <label htmlFor='website'>
+                          <FaBlog />
+                          <span>Website</span>
+                        </label>
+                        <input
+                          type='text'
+                          id='website'
+                          placeholder='Link do website ou blog'
+                          aria-label='website'
+                          value={state.user.social_network?.website}
+                          onChange={(e): void => {
+                            dispatch({
+                              type: actions.USER_DATA,
+                              payload: {
+                                ...state,
+                                user: {
+                                  ...state.user,
+                                  social_network: {
+                                    ...state.user.social_network,
+                                    website: e.target.value,
+                                  },
+                                },
                               },
-                            },
-                          },
-                        });
-                      }}
-                    />
-                  </div>
-                  <div className='form-element'>
-                    <label htmlFor='zip_code'>
-                      <IoBookmarkOutline />
-                      <span>Código Postal</span>
-                    </label>
-                    <input
-                      type='text'
-                      id='zip_code'
-                      name='zip_code'
-                      maxLength={5}
-                      placeholder='Escreva o seu código postal'
-                      aria-label='Escreva o seu código postal'
-                      value={state.user.location?.zip_code}
-                      onChange={(e): void => {
-                        dispatch({
-                          type: actions.USER_DATA,
-                          payload: {
-                            ...state,
-                            user: {
-                              ...state.user,
-                              location: {
-                                ...state.user.location,
-                                zip_code: e.target.value,
+                            });
+                          }}
+                        />
+                      </div>
+                      <div className='form-element'>
+                        <label htmlFor='instagram'>
+                          <IoLogoInstagram />
+                          <span>Instagram</span>
+                        </label>
+                        <input
+                          type='text'
+                          id='instagram'
+                          placeholder='Link do perfil do instagram'
+                          aria-label='instagram'
+                          value={state.user.social_network?.instagram}
+                          onChange={(e): void => {
+                            dispatch({
+                              type: actions.USER_DATA,
+                              payload: {
+                                ...state,
+                                user: {
+                                  ...state.user,
+                                  social_network: {
+                                    ...state.user.social_network,
+                                    instagram: e.target.value,
+                                  },
+                                },
                               },
-                            },
-                          },
-                        });
-                      }}
-                    />
-                  </div>
-                </section>
+                            });
+                          }}
+                        />
+                      </div>
+                    </section>
 
-                <section className='form-section'>
-                  <div className='form-element'>
-                    <label htmlFor='whatsapp'>
-                      <IoLogoWhatsapp />
-                      <span>Whatsapp</span>
-                    </label>
-                    <input
-                      type='text'
-                      id='whatsapp'
-                      placeholder='Contacto do Whatsapp'
-                      aria-label='Whatsapp'
-                      value={state.user.social_network?.whatsapp}
-                      onChange={(e): void => {
-                        dispatch({
-                          type: actions.USER_DATA,
-                          payload: {
-                            ...state,
-                            user: {
-                              ...state.user,
-                              social_network: {
-                                ...state.user.social_network,
-                                whatsapp: e.target.value,
+                    <section className='form-section'>
+                      <div className='form-element'>
+                        <label htmlFor='linkedin'>
+                          <FaLinkedinIn />
+                          <span>Linkedin</span>
+                        </label>
+                        <input
+                          type='text'
+                          id='linkedin'
+                          placeholder='Link do perfil do linkedin'
+                          aria-label='linkedin'
+                          value={state.user.social_network?.linkedin}
+                          onChange={(e): void => {
+                            dispatch({
+                              type: actions.USER_DATA,
+                              payload: {
+                                ...state,
+                                user: {
+                                  ...state.user,
+                                  social_network: {
+                                    ...state.user.social_network,
+                                    linkedin: e.target.value,
+                                  },
+                                },
                               },
-                            },
-                          },
-                        });
-                      }}
-                    />
+                            });
+                          }}
+                        />
+                      </div>
+                    </section>
                   </div>
-                  <div className='form-element'>
-                    <label htmlFor='facebook'>
-                      <IoLogoFacebook />
-                      <span>Facebook</span>
-                    </label>
-                    <input
-                      type='text'
-                      id='facebook'
-                      placeholder='Link do perfil de facebook'
-                      aria-label='facebook'
-                      value={state.user.social_network?.facebook}
-                      onChange={(e): void => {
-                        dispatch({
-                          type: actions.USER_DATA,
-                          payload: {
-                            ...state,
-                            user: {
-                              ...state.user,
-                              social_network: {
-                                ...state.user.social_network,
-                                facebook: e.target.value,
-                              },
-                            },
-                          },
-                        });
-                      }}
-                    />
-                  </div>
-                </section>
+                </div>
 
-                <section className='form-section'>
-                  <div className='form-element'>
-                    <label htmlFor='website'>
-                      <FaBlog />
-                      <span>Website</span>
-                    </label>
-                    <input
-                      type='text'
-                      id='website'
-                      placeholder='Link do website ou blog'
-                      aria-label='website'
-                      value={state.user.social_network?.website}
-                      onChange={(e): void => {
-                        dispatch({
-                          type: actions.USER_DATA,
-                          payload: {
-                            ...state,
-                            user: {
-                              ...state.user,
-                              social_network: {
-                                ...state.user.social_network,
-                                website: e.target.value,
-                              },
-                            },
-                          },
-                        });
-                      }}
-                    />
+                <div className='data-section'>
+                  <div className='description'>
+                    <h2>
+                      <IoKey />
+                      <span>Atualização de Senhas</span>
+                    </h2>
+                    <p>
+                      Por favor, evite usar senhas fracas e já utilizadas
+                      anteriormente ou em outros sites para melhorar a segurança
+                      da sua conta.
+                    </p>
                   </div>
-                  <div className='form-element'>
-                    <label htmlFor='instagram'>
-                      <IoLogoInstagram />
-                      <span>Instagram</span>
-                    </label>
-                    <input
-                      type='text'
-                      id='instagram'
-                      placeholder='Link do perfil do instagram'
-                      aria-label='instagram'
-                      value={state.user.social_network?.instagram}
-                      onChange={(e): void => {
-                        dispatch({
-                          type: actions.USER_DATA,
-                          payload: {
-                            ...state,
-                            user: {
-                              ...state.user,
-                              social_network: {
-                                ...state.user.social_network,
-                                instagram: e.target.value,
-                              },
-                            },
-                          },
-                        });
-                      }}
-                    />
-                  </div>
-                </section>
 
-                <section className='form-section'>
-                  <div className='form-element'>
-                    <label htmlFor='linkedin'>
-                      <FaLinkedinIn />
-                      <span>Linkedin</span>
-                    </label>
-                    <input
-                      type='text'
-                      id='linkedin'
-                      placeholder='Link do perfil do linkedin'
-                      aria-label='linkedin'
-                      value={state.user.social_network?.linkedin}
-                      onChange={(e): void => {
-                        dispatch({
-                          type: actions.USER_DATA,
-                          payload: {
-                            ...state,
-                            user: {
-                              ...state.user,
-                              social_network: {
-                                ...state.user.social_network,
-                                linkedin: e.target.value,
-                              },
-                            },
-                          },
-                        });
-                      }}
-                    />
+                  <div className='items-container'>
+                    <section className='form-section'>
+                      <div className='form-element'>
+                        <label htmlFor='password'>
+                          <IoLockOpenOutline />
+                          <span>Nova senha</span>
+                        </label>
+                        <input
+                          type='password'
+                          id='password'
+                          name='password'
+                          minLength={8}
+                          aria-hidden='true'
+                          placeholder='Escreva a sua nova senha'
+                          aria-label='Escreva a sua nova senha'
+                          onChange={(e): void => handlePasswordsChange(e)}
+                        />
+                      </div>
+                      <div className='form-element'>
+                        <label htmlFor='confirm_password'>
+                          <IoLockClosedOutline />
+                          <span>Confirme a senha</span>
+                        </label>
+                        <input
+                          type='password'
+                          id='confirm_password'
+                          name='confirm_password'
+                          aria-hidden='true'
+                          minLength={8}
+                          placeholder='Confirme a sua senha'
+                          aria-label='Confirme a sua senha'
+                          onChange={(e): void => handlePasswordsChange(e)}
+                        />
+                      </div>
+                    </section>
                   </div>
-                </section>
-
-                <section className='form-section'>
-                  <div className='form-element'>
-                    <label htmlFor='password'>
-                      <IoLockOpenOutline />
-                      <span>Nova senha</span>
-                    </label>
-                    <input
-                      type='password'
-                      id='password'
-                      name='password'
-                      minLength={8}
-                      aria-hidden='true'
-                      placeholder='Escreva a sua nova senha'
-                      aria-label='Escreva a sua nova senha'
-                      onChange={(e): void => handlePasswordsChange(e)}
-                    />
-                  </div>
-                  <div className='form-element'>
-                    <label htmlFor='confirm_password'>
-                      <IoLockClosedOutline />
-                      <span>Confirme a senha</span>
-                    </label>
-                    <input
-                      type='password'
-                      id='confirm_password'
-                      name='confirm_password'
-                      aria-hidden='true'
-                      minLength={8}
-                      placeholder='Confirme a sua senha'
-                      aria-label='Confirme a sua senha'
-                      onChange={(e): void => handlePasswordsChange(e)}
-                    />
-                  </div>
-                </section>
+                </div>
 
                 <section className={'working-data-container'}>
-                  <h2>
-                    <span>Experiência Profissional</span>
-                  </h2>
+                  <div className='description'>
+                    <h2>
+                      <IoBriefcase />
+                      <span>Experiência Profissional</span>
+                    </h2>
+                    <p>
+                      Adicione informações relativas a sua experiência ou campo
+                      de atuação.
+                    </p>
+                  </div>
                   <section className='cards-container'>
                     {state.user.working_experience.length > 0 ? (
                       state.user.working_experience.map((item) => (
@@ -1214,6 +1282,13 @@ export default function ProfileEditor(): JSX.Element {
             </section>
 
             <section className='actions-container'>
+              <div className='description'>
+                <h2>
+                  <BiUserCheck />
+                  <span>Salvamento de Alterações</span>
+                </h2>
+                <p>Salve as alterações feitas.</p>
+              </div>
               <div>
                 {!loading.status && !error.status && (
                   <>
@@ -1274,12 +1349,14 @@ export default function ProfileEditor(): JSX.Element {
               </div>
             </section>
             <section className='delete-account'>
-              <h2>
-                <BiUserX />
-                <span>Remoção de Dados e Conta</span>
-              </h2>
-              <section>
+              <div className='description'>
+                <h2>
+                  <BiUserX />
+                  <span>Remoção de Dados e Conta</span>
+                </h2>
                 <p>Remover todos os seus dados e apagar a conta.</p>
+              </div>
+              <section>
                 <span> Cuidado, essa ação é irreversível.</span>
               </section>
               <button className='save' onClick={deleteAccountPromptController}>

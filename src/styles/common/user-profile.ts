@@ -50,6 +50,26 @@ export const UserProfileContainer = styled.div`
     }
   }
 
+  .description {
+    h2 {
+      display: flex;
+      font-size: 1.4rem;
+      font-weight: 500;
+      align-items: center;
+      width: 100%;
+      gap: 12px;
+      padding: 10px 0;
+      svg {
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    p {
+      line-height: 1.4rem;
+    }
+  }
+
   article {
     width: 100%;
     margin-top: 90px;
@@ -106,23 +126,32 @@ export const UserProfileContainer = styled.div`
 
         .form {
           width: 100%;
-          max-width: 640px;
+          max-width: 740px;
           display: flex;
           justify-content: flex-start;
           flex-direction: column;
           gap: 18px;
 
+          .data-section {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+
+            .items-container {
+              display: flex;
+              flex-direction: column;
+              gap: 20px;
+            }
+          }
+
           .working-data-container {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-
-            h2 {
-              text-align: center;
-              font-size: 1.1rem;
-              font-weight: 500;
-              color: rgb(${({ theme }) => theme.primary_variant});
-            }
+            gap: 20px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
 
             .add-url {
               ${BaseButton}
@@ -307,7 +336,7 @@ export const UserProfileContainer = styled.div`
                 height: fit-content;
                 position: absolute;
                 top: 3px;
-                left: 3px;
+                left: calc(0% + 35px);
                 background: rgba(${({ theme }) => theme.primary}, 0.8);
                 padding: 8px;
               }
@@ -316,13 +345,13 @@ export const UserProfileContainer = styled.div`
                 ${Button_Mono_A}
                 position: absolute;
                 top: 3px;
-                right: 3px;
+                right: 32px;
                 width: 30px;
                 height: 30px;
                 border-radius: 50%;
                 background: rgba(${({ theme }) => theme.primary}, 0.8);
                 :hover {
-                  background: rgb(${({ theme }) => theme.alert});
+                  background: rgba(${({ theme }) => theme.alert}, 0.6);
                 }
               }
             }
@@ -352,14 +381,14 @@ export const UserProfileContainer = styled.div`
               .clear-image {
                 ${Button_Mono_A}
                 position: absolute;
-                bottom: 50px;
+                top: 10px;
                 right: calc(50% - 120px);
-                width: 40px;
-                height: 40px;
+                width: 30px;
+                height: 30px;
                 border-radius: 50%;
-                background: rgb(${({ theme }) => theme.font});
+                background: rgba(${({ theme }) => theme.primary}, 0.8);
                 :hover {
-                  background: rgb(${({ theme }) => theme.alert});
+                  background: rgba(${({ theme }) => theme.alert}, 0.6);
                 }
               }
             }
@@ -468,26 +497,9 @@ export const UserProfileContainer = styled.div`
         border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
         line-height: 1.4rem;
 
-        h2 {
-          display: flex;
-          font-size: 1.4rem;
-          font-weight: 500;
-          align-items: center;
-          width: 100%;
-          gap: 12px;
-
-          svg {
-            width: 30px;
-            height: 30px;
-          }
-        }
-
         section {
-          p {
-            margin-top: 10px;
-          }
-
           span {
+            line-height: 1.8rem;
             color: rgb(${({ theme }) => theme.alert});
           }
         }
