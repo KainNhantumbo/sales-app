@@ -27,12 +27,14 @@ import {
   IoReload,
   IoStar,
   IoSyncOutline,
+  IoTrash,
   IoTrashOutline,
   IoWatchOutline,
 } from 'react-icons/io5';
 import moment from 'moment';
 import Compressor from 'compressorjs';
 import Layout from '@/components/Layout';
+import { BiUserX } from 'react-icons/bi';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
 import { actions } from '@/data/reducer-actions';
@@ -46,12 +48,18 @@ import user_languages from '../../../../data/languages.json';
 import UserWorkingData from '../../../../components/modals/UserWorkingData';
 import { UserProfileContainer as Container } from '@/styles/common/user-profile';
 import user_skills from '../../../../data/professional-skills.json';
+import DeleteAccountPrompt from '../../../../components/modals/DeleteAccountPrompt';
 
 export default function ProfileEditor(): JSX.Element {
   const theme = useTheme();
   const router: NextRouter = useRouter();
-  const { state, fetchAPI, dispatch, userWorkingDataController } =
-    useAppContext();
+  const {
+    state,
+    fetchAPI,
+    dispatch,
+    userWorkingDataController,
+    deleteAccountPromptController,
+  } = useAppContext();
 
   const [loading, setLoading] = useState<{
     status: boolean;
@@ -418,6 +426,8 @@ export default function ProfileEditor(): JSX.Element {
   return (
     <Layout>
       <Container>
+        <DeleteAccountPrompt />
+
         {loading.status && loading.key === 'user-data' && (
           <section className='fetching-state'>
             <div>
@@ -1262,6 +1272,20 @@ export default function ProfileEditor(): JSX.Element {
                   </>
                 )}
               </div>
+            </section>
+            <section className='delete-account'>
+              <h2>
+                <BiUserX />
+                <span>Remoção de Dados e Conta</span>
+              </h2>
+              <section>
+                <p>Remover todos os seus dados e apagar a conta.</p>
+                <span> Cuidado, essa ação é irreversível.</span>
+              </section>
+              <button className='save' onClick={deleteAccountPromptController}>
+                <IoTrash />
+                <span>Apagar dados</span>
+              </button>
             </section>
           </section>
         </article>

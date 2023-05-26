@@ -456,6 +456,46 @@ export const UserProfileContainer = styled.div`
           }
         }
       }
+
+      .delete-account {
+        width: 100%;
+        max-width: 1280px;
+        padding: 20px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
+        line-height: 1.4rem;
+
+        h2 {
+          display: flex;
+          font-size: 1.4rem;
+          font-weight: 500;
+          align-items: center;
+          width: 100%;
+          gap: 12px;
+
+          svg {
+            width: 30px;
+            height: 30px;
+          }
+        }
+
+        section {
+          p {
+            margin-top: 10px;
+          }
+
+          span {
+            color: rgb(${({ theme }) => theme.alert});
+          }
+        }
+
+        .save {
+          ${BaseButton}
+        }
+      }
     }
   }
 `;

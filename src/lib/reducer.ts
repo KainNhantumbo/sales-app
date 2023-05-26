@@ -4,6 +4,7 @@ import type { State, Action } from '../../@types/reducer';
 export const initialState: State = {
   isLogoutPrompt: false,
   isLoginPrompt: false,
+  isDeleteAccountPrompt: false,
   isDeleteCommentPrompt: { status: false, commentId: '' },
   isUserWorkingDataModal: false,
   isConnected: false,
@@ -96,6 +97,8 @@ export default function reducer(state: State, action: Action) {
       return { ...state, isLogoutPrompt: !state.isLogoutPrompt };
     case actions.LOGIN_PROMPT:
       return { ...state, isLoginPrompt: !state.isLoginPrompt };
+    case actions.DELETE_ACCOUNT_PROMPT:
+      return { ...state, isDeleteAccountPrompt: !state.isDeleteAccountPrompt };
     case actions.DELETE_COMMENT_PROMPT:
       return {
         ...state,

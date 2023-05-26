@@ -38,10 +38,11 @@ export const CommentsContainer = styled.div`
       justify-content: flex-start;
       gap: 20px;
 
-      .current-comment {
+      .current-comment,
+      .sub-coment {
         display: flex;
         flex-direction: row;
-        gap: 20px;
+        gap: 10px;
         background: rgb(${({ theme }) => theme.foreground});
         border-radius: 15px;
         padding: 20px;
@@ -79,13 +80,21 @@ export const CommentsContainer = styled.div`
         button {
           ${BaseButton}
           height: fit-content;
-          width: 80px;
+          min-width: 110px;
           span {
             padding: 0;
           }
           @media screen and (max-width: 480px) {
             width: 100%;
           }
+        }
+      }
+
+      .sub-coment {
+        padding: 0;
+        margin: 0;
+        @media screen and (max-width: 700px) {
+          margin-bottom: 30px;
         }
       }
 
@@ -96,12 +105,14 @@ export const CommentsContainer = styled.div`
         font-size: 0.96rem;
 
         .comment {
+          position: relative;
           display: flex;
           flex-direction: column;
           gap: 8px;
           background: rgb(${({ theme }) => theme.foreground});
           border-radius: 15px;
           padding: 20px;
+
 
           .header {
             width: 100%;
@@ -148,6 +159,16 @@ export const CommentsContainer = styled.div`
               }
             }
 
+            .body {
+              display: flex;
+              flex-direction: row;
+              gap: 10px;
+
+              h3 {
+                font-weight: 500;
+              }
+            }
+
             .actions {
               .like,
               .delete,
@@ -165,12 +186,21 @@ export const CommentsContainer = styled.div`
               .delete:hover {
                 color: rgb(${({ theme }) => theme.alert});
               }
+
+              @media screen and (max-width: 700px) {
+                position: absolute;
+                bottom: 8px;
+                right: 20px;
+              }
             }
           }
 
           .body {
             margin-left: 40px;
             line-height: 1.4rem;
+            @media screen and (max-width: 700px) {
+              margin-bottom: 30px;
+            }
           }
         }
       }

@@ -17,6 +17,7 @@ import moment from 'moment';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useTheme } from 'styled-components';
 import DeleteCommentPrompt from './modals/DeleteCommentPrompt';
+import { AxiosResponse } from 'axios';
 
 type Props = {
   post: IBlogPost;
@@ -43,7 +44,10 @@ export default function Comments({ post }: Props): JSX.Element {
     key: 'create-comment' | 'update-comment' | 'delete-comment';
   }>({ status: false, msg: '', key: 'create-comment' });
 
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [activeModes, setActiveModes] = useState({
+    edit: false,
+    reply: false,
+  });
   // ---------------functions----------------
   const formattedComments = useMemo(() => {
     const group: { [index: string]: IComment[] } = {};
@@ -56,6 +60,32 @@ export default function Comments({ post }: Props): JSX.Element {
 
   function getCommentReplies(parentId: string) {
     return formattedComments[parentId];
+  }
+
+  function clearCommentData() {
+    setActiveModes({ edit: false, reply: false });
+    dispatch({
+      type: actions.CREATE_COMMENT,
+      payload: {
+        ...state,
+        comment: {
+          _id: '',
+          source_id: '',
+          created_by: {
+            _id: '',
+            first_name: '',
+            last_name: '',
+            profile_image: { id: '', url: '' },
+          },
+          content: '',
+          parent_id: '',
+          favorites: [],
+          invalidated: false,
+          updatedAt: '',
+          createdAt: '',
+        },
+      },
+    });
   }
 
   async function getComments(): Promise<void> {
@@ -88,28 +118,7 @@ export default function Comments({ post }: Props): JSX.Element {
           parent_id: null,
         },
       });
-      dispatch({
-        type: actions.CREATE_COMMENT,
-        payload: {
-          ...state,
-          comment: {
-            _id: '',
-            source_id: '',
-            created_by: {
-              _id: '',
-              first_name: '',
-              last_name: '',
-              profile_image: { id: '', url: '' },
-            },
-            content: '',
-            parent_id: '',
-            favorites: [],
-            invalidated: false,
-            updatedAt: '',
-            createdAt: '',
-          },
-        },
-      });
+      clearCommentData();
       getComments();
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
@@ -123,7 +132,42 @@ export default function Comments({ post }: Props): JSX.Element {
     }
   }
 
-  async function handledeleteComment(id: string) {
+  async function handleUpdateComment(id: string) {
+    try {
+      const { data }: AxiosResponse<IComment> = await fetchAPI({
+        method: 'patch',
+        url: `/api/v1/users/comments/${id}`,
+        data: {
+          ...state.comment,
+        },
+      });
+
+      dispatch({
+        type: actions.UPDATE_COMMENTS_LIST,
+        payload: {
+          ...state,
+          commentsList: [
+            ...state.commentsList.map((comment) =>
+              comment._id === data._id ? { ...comment, ...data } : comment
+            ),
+          ],
+        },
+      });
+      clearCommentData();
+    } catch (err: any) {
+      console.error(err.response?.data?.message || err);
+      setError({
+        status: true,
+        key: 'create-comment',
+        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.',
+      });
+    } finally {
+      setLoading({ status: false, key: 'create-comment' });
+    }
+  }
+
+  async function handleDeleteComment(id: string) {
+    clearCommentData();
     try {
       await fetchAPI({ method: 'delete', url: `/api/v1/users/comments/${id}` });
       deleteCommentPromptController(false, '');
@@ -157,9 +201,51 @@ export default function Comments({ post }: Props): JSX.Element {
     }
   }
 
-  async function handleUpdateComment(id: string) {
+  function handleEditComment(data: IComment): void {
+    clearCommentData();
+    setActiveModes({ edit: true, reply: false });
+    dispatch({
+      type: actions.CREATE_COMMENT,
+      payload: {
+        ...state,
+        comment: {
+          ...state.comment,
+          ...data,
+        },
+      },
+    });
+  }
+
+  function handleReplyComment(data: IComment): void {
+    clearCommentData();
+    setActiveModes({ edit: false, reply: true });
+    dispatch({
+      type: actions.CREATE_COMMENT,
+      payload: {
+        ...state,
+        comment: {
+          ...state.comment,
+          _id: data._id,
+          parent_id: data._id,
+        },
+      },
+    });
+  }
+
+  async function handleSendReplyComment(id: string | null): Promise<void> {
     setLoading({ status: true, key: 'create-comment' });
     try {
+      await fetchAPI({
+        method: 'post',
+        url: '/api/v1/users/comments',
+        data: {
+          source_id: post._id,
+          content: state.comment.content,
+          parent_id: state.comment.parent_id,
+        },
+      });
+      clearCommentData();
+      getComments();
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
       setError({
@@ -172,53 +258,11 @@ export default function Comments({ post }: Props): JSX.Element {
     }
   }
 
-  function handleEditComment(id: string) {
-    setIsEditMode(true);
-    dispatch({
-      type: actions.CREATE_COMMENT,
-      payload: {
-        ...state,
-        comment: {
-          ...state.comment,
-          ...state.commentsList.filter((e) => e._id === id),
-        },
-      },
-    });
-  }
-
-  function handleCancelEditComment(id: string) {
-    setIsEditMode(false);
-    dispatch({
-      type: actions.CREATE_COMMENT,
-      payload: {
-        ...state,
-        comment: {
-          _id: '',
-          source_id: '',
-          created_by: {
-            _id: '',
-            first_name: '',
-            last_name: '',
-            profile_image: { id: '', url: '' },
-          },
-          content: '',
-          parent_id: '',
-          favorites: [],
-          invalidated: false,
-          updatedAt: '',
-          createdAt: '',
-        },
-      },
-    });
-  }
-
-  async function handleDenounceComment(id: string) {}
-
-  async function handleReplyComment(id: string) {}
+  async function handleDenounceComment(id: string): Promise<void> {}
 
   useEffect(() => {
     console.log(formattedComments);
-    console.log(state.commentsList);
+    // console.log(state.commentsList);
   }, [state.commentsList]);
 
   useEffect(() => {
@@ -235,7 +279,7 @@ export default function Comments({ post }: Props): JSX.Element {
 
   return (
     <Container>
-      <DeleteCommentPrompt deleteFn={handledeleteComment} />
+      <DeleteCommentPrompt deleteFn={handleDeleteComment} />
 
       <section className='comments-section'>
         <section className='title'>
@@ -248,73 +292,75 @@ export default function Comments({ post }: Props): JSX.Element {
         </section>
 
         <section className='comments-wrapper'>
-          <section className='current-comment'>
-            <div className='comment-swapper'>
-              {state.userAuth.profile_image && (
-                <img
-                  src={state.userAuth.profile_image}
-                  alt='current user profile picture'
-                />
-              )}
-              {!state.userAuth.profile_image && <BiUser />}
-              <textarea
-                placeholder={
-                  state.commentsList.length < 1
-                    ? 'Seja o primeiro a adicionar um comentário...'
-                    : 'Adicionar um novo comentário...'
-                }
-                name='current-commet'
-                value={state.comment.content}
-                rows={5}
-                onMouseDown={() => {
-                  if (!state.userAuth.token) {
-                    loginPromptController();
+          {activeModes.edit || activeModes.reply ? null : (
+            <section className='current-comment'>
+              <div className='comment-swapper'>
+                {state.userAuth.profile_image && (
+                  <img
+                    src={state.userAuth.profile_image}
+                    alt='current user profile picture'
+                  />
+                )}
+                {!state.userAuth.profile_image && <BiUser />}
+                <textarea
+                  placeholder={
+                    state.commentsList.length < 1
+                      ? 'Seja o primeiro a adicionar um comentário...'
+                      : 'Adicionar um novo comentário...'
                   }
-                }}
-                onChange={(e): void => {
-                  dispatch({
-                    type: actions.CREATE_COMMENT,
-                    payload: {
-                      ...state,
-                      comment: {
-                        ...state.comment,
-                        content: e.target.value,
+                  name='current-commet'
+                  value={state.comment.content}
+                  rows={5}
+                  onMouseDown={() => {
+                    if (!state.userAuth.token) {
+                      loginPromptController();
+                    }
+                  }}
+                  onChange={(e): void => {
+                    dispatch({
+                      type: actions.CREATE_COMMENT,
+                      payload: {
+                        ...state,
+                        comment: {
+                          ...state.comment,
+                          content: e.target.value,
+                        },
                       },
-                    },
-                  });
-                }}
-              />
-            </div>
-
-            {!loading.status &&
-              error.status &&
-              error.key === 'create-comment' && (
-                <span className='error-message'>{error.msg}</span>
-              )}
-            {loading.status && !error.status && (
-              <div className='loader'>
-                <MoonLoader
-                  size={30}
-                  color={`rgb(${theme.primary_variant})`}
-                  cssOverride={{
-                    display: 'block',
-                    margin: '0 auto',
+                    });
                   }}
                 />
               </div>
-            )}
-            {!loading.status && !error.status && (
-              <button
-                disabled={
-                  loading.status ||
-                  error.status ||
-                  (state.comment.content.length < 2 && true)
-                }
-                onClick={handleCreateComment}>
-                <span>Enviar</span>
-              </button>
-            )}
-          </section>
+
+              {!loading.status &&
+                error.status &&
+                error.key === 'create-comment' && (
+                  <span className='error-message'>{error.msg}</span>
+                )}
+              {loading.status && !error.status && (
+                <div className='loader'>
+                  <MoonLoader
+                    size={30}
+                    color={`rgb(${theme.primary_variant})`}
+                    cssOverride={{
+                      display: 'block',
+                      margin: '0 auto',
+                    }}
+                  />
+                </div>
+              )}
+              {!loading.status && !error.status && (
+                <button
+                  disabled={
+                    loading.status ||
+                    error.status ||
+                    (state.comment.content.length < 2 && true)
+                  }
+                  onClick={handleCreateComment}>
+                  <span>Enviar</span>
+                </button>
+              )}
+            </section>
+          )}
 
           <section className='comments-container'>
             {getCommentReplies('null') !== null &&
@@ -336,8 +382,8 @@ export default function Comments({ post }: Props): JSX.Element {
                         )}
 
                         <h3>
-                          {comment.created_by.first_name}{' '}
-                          {comment.created_by.last_name}
+                          @{comment.created_by.first_name.toLowerCase()}_
+                          {comment.created_by.last_name.toLowerCase()}
                         </h3>
 
                         <span>
@@ -365,12 +411,22 @@ export default function Comments({ post }: Props): JSX.Element {
                         </button>
                         {comment.created_by._id === state.userAuth?.id ? (
                           <>
-                            <button
-                              className='edit'
-                              onClick={() => handleEditComment(comment._id)}>
-                              <FaEdit />
-                              <span>Editar</span>
-                            </button>
+                            {!activeModes.edit ||
+                            comment._id !== state.comment._id ? (
+                              <button
+                                className='edit'
+                                onClick={() => handleEditComment(comment)}>
+                                <FaEdit />
+                                <span>Editar</span>
+                              </button>
+                            ) : (
+                              <button
+                                className='edit'
+                                onClick={clearCommentData}>
+                                <FaEdit />
+                                <span>Cancelar</span>
+                              </button>
+                            )}
                             <button
                               className='delete'
                               onClick={() =>
@@ -390,45 +446,354 @@ export default function Comments({ post }: Props): JSX.Element {
                               <IoFlag />
                               <span>Denunciar</span>
                             </button>
-                            <button
-                              className='reply'
-                              onClick={() => handleReplyComment(comment._id)}>
-                              <IoArrowUndo />
-                              <span>Responder</span>
-                            </button>
+                            {!activeModes.reply ||
+                            comment._id !== state.comment._id ? (
+                              <button
+                                className='reply'
+                                onClick={() => handleReplyComment(comment)}>
+                                <IoArrowUndo />
+                                <span>Responder</span>
+                              </button>
+                            ) : (
+                              <button
+                                className='reply'
+                                onClick={() => clearCommentData()}>
+                                <IoArrowUndo />
+                                <span>Cancelar</span>
+                              </button>
+                            )}
                           </>
                         )}
                       </div>
                     </div>
 
                     <div className='body'>
-                      {!isEditMode && (
-                        <p>
-                          {comment.parent_id && <span>@{'Reply'}</span>}{' '}
-                          {comment.content}
-                        </p>
+                      {comment._id !== state.comment._id && (
+                        <p>{comment.content}</p>
                       )}
-                      {isEditMode && (
-                        <textarea
-                          placeholder='Adicionar comentário...'
-                          name='current-commet'
-                          value={state.comment.content}
-                          rows={5}
-                          onChange={(e): void => {
-                            dispatch({
-                              type: actions.CREATE_COMMENT,
-                              payload: {
-                                ...state,
-                                comment: {
-                                  ...state.comment,
-                                  content: e.target.value,
-                                },
-                              },
-                            });
-                          }}
-                        />
-                      )}
+                      {comment._id === state.comment.parent_id &&
+                        activeModes.reply && <p>{comment.content}</p>}
                     </div>
+
+                    {comment._id === state.comment._id && (
+                      <section className='sub-coment'>
+                        <div className='comment-swapper'>
+                          <textarea
+                            placeholder={
+                              state.commentsList.length < 1
+                                ? 'Seja o primeiro a adicionar um comentário...'
+                                : 'Adicionar um novo comentário...'
+                            }
+                            name='current-commet'
+                            value={state.comment.content}
+                            rows={5}
+                            onMouseDown={() => {
+                              if (!state.userAuth.token) {
+                                loginPromptController();
+                              }
+                            }}
+                            onChange={(e): void => {
+                              dispatch({
+                                type: actions.CREATE_COMMENT,
+                                payload: {
+                                  ...state,
+                                  comment: {
+                                    ...state.comment,
+                                    content: e.target.value,
+                                  },
+                                },
+                              });
+                            }}
+                          />
+                        </div>
+
+                        {!loading.status &&
+                          error.status &&
+                          error.key === 'create-comment' && (
+                            <span className='error-message'>{error.msg}</span>
+                          )}
+                        {loading.status && !error.status && (
+                          <div className='loader'>
+                            <MoonLoader
+                              size={30}
+                              color={`rgb(${theme.primary_variant})`}
+                              cssOverride={{
+                                display: 'block',
+                                margin: '0 auto',
+                              }}
+                            />
+                          </div>
+                        )}
+                        {!loading.status && !error.status && (
+                          <button
+                            disabled={
+                              loading.status ||
+                              error.status ||
+                              (state.comment.content.length < 2 && true)
+                            }
+                            onClick={() =>
+                              activeModes.edit
+                                ? handleUpdateComment(comment._id)
+                                : activeModes.reply
+                                ? handleSendReplyComment(comment.parent_id)
+                                : handleCreateComment()
+                            }>
+                            {activeModes.edit ? (
+                              <span>Atualizar</span>
+                            ) : activeModes.reply ? (
+                              <span>Responder</span>
+                            ) : (
+                              <span>Enviar</span>
+                            )}
+                          </button>
+                        )}
+                      </section>
+                    )}
+
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {/* -------------replies comments---------------*/}
+                    {getCommentReplies(comment._id) !== null &&
+                      getCommentReplies(comment._id)?.length > 0 &&
+                      getCommentReplies(comment._id)
+                        .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
+                        .map((comment) => (
+                          <div key={comment._id} className='comment'>
+                            <div className='header'>
+                              <div className='props'>
+                                {state.userAuth.profile_image && (
+                                  <img
+                                    src={state.userAuth.profile_image}
+                                    alt='current user profile picture'
+                                  />
+                                )}
+                                {!state.userAuth.profile_image && (
+                                  <BiUser className='user-icon' />
+                                )}
+
+                                <h3>
+                                  @{comment.created_by.first_name.toLowerCase()}
+                                  _{comment.created_by.last_name.toLowerCase()}
+                                </h3>
+
+                                <span>
+                                  {' '}
+                                  <IoEllipse className='dot' />{' '}
+                                  {moment(comment.createdAt).fromNow()}
+                                </span>
+                              </div>
+                              <div className='actions'>
+                                <button
+                                  className='like'
+                                  disabled={state.userAuth?.id === '' && true}
+                                  onClick={() => {
+                                    if (!state.userAuth?.token) return;
+                                    comment.favorites.includes(
+                                      state.userAuth?.id
+                                    )
+                                      ? handleUnFavoriteComment(comment._id)
+                                      : handleFavoriteComment(comment._id);
+                                  }}>
+                                  <span>{comment.favorites.length}</span>
+                                  {comment.favorites.includes(
+                                    state.userAuth.id
+                                  ) ? (
+                                    <IoHeart />
+                                  ) : (
+                                    <IoHeartOutline />
+                                  )}
+                                </button>
+                                {comment.created_by._id ===
+                                state.userAuth?.id ? (
+                                  <>
+                                    {!activeModes.edit ||
+                                    comment._id !== state.comment._id ? (
+                                      <button
+                                        className='edit'
+                                        onClick={() =>
+                                          handleEditComment(comment)
+                                        }>
+                                        <FaEdit />
+                                        <span>Editar</span>
+                                      </button>
+                                    ) : (
+                                      <button
+                                        className='edit'
+                                        onClick={clearCommentData}>
+                                        <FaEdit />
+                                        <span>Cancelar</span>
+                                      </button>
+                                    )}
+                                    <button
+                                      className='delete'
+                                      onClick={() =>
+                                        deleteCommentPromptController(
+                                          true,
+                                          comment._id
+                                        )
+                                      }>
+                                      <FaTrash />
+                                      <span>Deletar</span>
+                                    </button>
+                                  </>
+                                ) : (
+                                  <>
+                                    <button
+                                      className='denounce'
+                                      onClick={() =>
+                                        handleDenounceComment(comment._id)
+                                      }>
+                                      <IoFlag />
+                                      <span>Denunciar</span>
+                                    </button>
+                                    {!activeModes.reply ||
+                                    comment._id !== state.comment._id ? (
+                                      <button
+                                        className='reply'
+                                        onClick={() =>
+                                          handleReplyComment(comment)
+                                        }>
+                                        <IoArrowUndo />
+                                        <span>Responder</span>
+                                      </button>
+                                    ) : (
+                                      <button
+                                        className='reply'
+                                        onClick={() => clearCommentData()}>
+                                        <IoArrowUndo />
+                                        <span>Cancelar</span>
+                                      </button>
+                                    )}
+                                  </>
+                                )}
+                              </div>
+                            </div>
+
+                            <div className='body'>
+                              {comment._id !== state.comment._id && (
+                                <>
+                                  <h3>
+                                    {state.commentsList.map((element) => {
+                                      if (element.parent_id === comment._id) {
+                                        return `@${element.created_by.first_name.toLowerCase()}_${comment.created_by.last_name.toLowerCase()}`;
+                                      }
+                                      return '';
+                                    })}
+                                  </h3>
+                                  <p>{comment.content}</p>
+                                </>
+                              )}
+                              {comment._id === state.comment.parent_id &&
+                                activeModes.reply && (
+                                  <>
+                                    <h3>
+                                      {state.commentsList.map((element) => {
+                                        if (element._id === comment.parent_id) {
+                                          return `@${element.created_by.first_name}_${element.created_by.last_name}`;
+                                        }
+                                        return '';
+                                      })}
+                                    </h3>
+                                    <p>{comment.content}</p>
+                                  </>
+                                )}
+                            </div>
+
+                            {comment._id === state.comment._id && (
+                              <section className='sub-coment'>
+                                <div className='comment-swapper'>
+                                  <textarea
+                                    placeholder={
+                                      state.commentsList.length < 1
+                                        ? 'Seja o primeiro a adicionar um comentário...'
+                                        : 'Adicionar um novo comentário...'
+                                    }
+                                    name='current-commet'
+                                    value={state.comment.content}
+                                    rows={5}
+                                    onMouseDown={() => {
+                                      if (!state.userAuth.token) {
+                                        loginPromptController();
+                                      }
+                                    }}
+                                    onChange={(e): void => {
+                                      dispatch({
+                                        type: actions.CREATE_COMMENT,
+                                        payload: {
+                                          ...state,
+                                          comment: {
+                                            ...state.comment,
+                                            content: e.target.value,
+                                          },
+                                        },
+                                      });
+                                    }}
+                                  />
+                                </div>
+
+                                {!loading.status &&
+                                  error.status &&
+                                  error.key === 'create-comment' && (
+                                    <span className='error-message'>
+                                      {error.msg}
+                                    </span>
+                                  )}
+                                {loading.status && !error.status && (
+                                  <div className='loader'>
+                                    <MoonLoader
+                                      size={30}
+                                      color={`rgb(${theme.primary_variant})`}
+                                      cssOverride={{
+                                        display: 'block',
+                                        margin: '0 auto',
+                                      }}
+                                    />
+                                  </div>
+                                )}
+                                {!loading.status && !error.status && (
+                                  <button
+                                    disabled={
+                                      loading.status ||
+                                      error.status ||
+                                      (state.comment.content.length < 2 && true)
+                                    }
+                                    onClick={() =>
+                                      activeModes.edit
+                                        ? handleUpdateComment(comment._id)
+                                        : activeModes.reply
+                                        ? handleSendReplyComment(
+                                            null
+                                          )
+                                        : handleCreateComment()
+                                    }>
+                                    {activeModes.edit ? (
+                                      <span>Atualizar</span>
+                                    ) : activeModes.reply ? (
+                                      <span>Responder</span>
+                                    ) : (
+                                      <span>Enviar</span>
+                                    )}
+                                  </button>
+                                )}
+                              </section>
+                            )}
+                          </div>
+                        ))}
                   </div>
                 ))}
           </section>

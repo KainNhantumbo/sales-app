@@ -63,10 +63,7 @@ export default function Post({
       });
       const { data } = await getPost(post.slug);
       setPost((doc) => {
-        return {
-          ...doc,
-          favorites: data.favorites,
-        };
+        return  { ...doc, favorites: data.favorites };
       });
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
@@ -81,10 +78,7 @@ export default function Post({
       });
       const { data } = await getPost(post.slug);
       setPost((doc) => {
-        return {
-          ...doc,
-          favorites: data.favorites,
-        };
+        return { ...doc, favorites: data.favorites };
       });
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
@@ -187,7 +181,6 @@ export default function Post({
                       post.favorites.includes(state.userAuth.id)
                         ? handleUnFavoritePost()
                         : handleFavoritePost();
-                        console.log(post.favorites)
                     }}>
                     {post.favorites.includes(state.userAuth.id) ? (
                       <IoHeart />

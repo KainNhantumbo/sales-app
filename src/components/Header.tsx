@@ -111,7 +111,7 @@ export default function Header(): JSX.Element {
             </motion.nav>
           )}
         </AnimatePresence>
-
+        
         <motion.button
           whileTap={{ scale: 0.8 }}
           title='Toggle menu panel'

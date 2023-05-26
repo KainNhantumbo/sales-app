@@ -59,7 +59,7 @@ export const HeaderContainer = styled.header`
     gap: 20px;
 
     .active {
-      color:  rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_variant});
     }
 
     section {
@@ -138,14 +138,15 @@ export const HeaderContainer = styled.header`
         margin-left: 20px;
 
         span {
-          padding: 5px;
+          padding: 5px 8px;
           width: max-content;
-          border-radius: 3px;
+          border-radius: 20px;
 
           :hover {
             cursor: pointer;
             background-color: rgb(${({ theme }) => theme.primary_variant});
             color: rgb(${({ theme }) => theme.neutral});
+            transition: all 200ms ease-in-out;
           }
         }
         button {
@@ -174,7 +175,8 @@ export const HeaderContainer = styled.header`
       ${BaseButton}
     }
 
-    .user-account, .user-logout{
+    .user-account,
+    .user-logout {
       ${BaseButtonOutline}
       border: none;
     }
@@ -185,10 +187,33 @@ export const HeaderContainer = styled.header`
   }
 
   .toggle-btn {
-    ${Button_Mono_B}
+    border: none;
+    border-radius: 8px;
+    background: none;
+    color: rgb(${({ theme }) => theme.font});
+    border: 1px solid rgba(${({ theme }) => theme.accent}, 0.07);
+    position: relative;
+    width: fit-content;
+    cursor: pointer;
+    display: grid;
+    place-content: center;
+    padding: 10px;
+    outline: none;
+
+
+    :hover {
+      color: rgb(${({ theme }) => theme.primary_variant});
+    }
+
+    svg {
+      pointer-events: none;
+      width: 20px;
+      height: 20px;
+    }
     position: fixed;
-    top: 18px;
+    top: 13px;
     right: 20px;
+    
     @media screen and (min-width: 770px) {
       display: none;
     }

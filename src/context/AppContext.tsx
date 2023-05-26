@@ -20,6 +20,7 @@ interface IContext {
   logoutPromptController: () => void;
   deleteCommentPromptController: (status: boolean, id: string) => void;
   loginPromptController: () => void;
+  deleteAccountPromptController: () => void;
   userWorkingDataController: () => void;
   logoutUser: () => Promise<void>;
   fetchAPI: (config: AxiosRequestConfig) => AxiosPromise<any>;
@@ -31,6 +32,7 @@ const context = createContext<IContext>({
   logoutUser: async () => {},
   fetchAPI: (): any => {},
   logoutPromptController: () => {},
+  deleteAccountPromptController: () => {},
   deleteCommentPromptController: (status: boolean, id: string) => {},
   loginPromptController: () => {},
   userWorkingDataController: () => {},
@@ -41,6 +43,12 @@ export default function AppContext(props: AppContext): JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // ============= modal controllers =================== //
+  function deleteAccountPromptController(): void {
+    dispatch({
+      type: actions.DELETE_ACCOUNT_PROMPT,
+    });
+  }
+
   function logoutPromptController(): void {
     dispatch({
       type: actions.LOGOUT_PROMPT,
@@ -196,13 +204,14 @@ export default function AppContext(props: AppContext): JSX.Element {
       <context.Provider
         value={{
           state,
+          fetchAPI,
           dispatch,
           logoutUser,
-          fetchAPI,
           loginPromptController,
           logoutPromptController,
-          deleteCommentPromptController,
           userWorkingDataController,
+          deleteCommentPromptController,
+          deleteAccountPromptController,
         }}>
         {props.children}
       </context.Provider>
