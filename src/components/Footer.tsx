@@ -1,7 +1,12 @@
 import {
+  IoExtensionPuzzleOutline,
+  IoHelpBuoyOutline,
   IoLockOpenOutline,
   IoNewspaperOutline,
   IoPaperPlaneOutline,
+  IoShieldCheckmark,
+  IoShieldCheckmarkOutline,
+  IoSpeedometerOutline,
 } from 'react-icons/io5';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -16,6 +21,22 @@ export default function Footer(): JSX.Element {
   const { state } = useAppContext();
   return (
     <Container>
+      <section className='featured-container'>
+        <h3>
+          <IoShieldCheckmarkOutline/>
+          <span>Sérios sobre segurança e privacidade</span>
+        </h3>
+        <h3>
+          <IoSpeedometerOutline/>
+          <span>
+            Performance e estabilidade
+          </span>
+        </h3>
+        <h3>
+          <IoHelpBuoyOutline/>
+          <span>24 horas de suporte integrado</span>
+        </h3>
+      </section>
       <section className='navigation'>
         <nav>
           <section>
@@ -34,7 +55,7 @@ export default function Footer(): JSX.Element {
           <section>
             <h3>
               <IoNewspaperOutline />
-              <span>Legal e Contacto</span>
+              <span>Institucional</span>
             </h3>
             <div className='elements'>
               <Link href={'/legal/privacy-policy'}>
@@ -43,8 +64,8 @@ export default function Footer(): JSX.Element {
               <Link href={'/legal/terms-and-conditions'}>
                 <span>Termos e Condições</span>
               </Link>
-              <Link href={'/contact'}>
-                <span>Contacto</span>
+              <Link href={'/legal/about'}>
+                <span>Sobre nós</span>
               </Link>
             </div>
           </section>
@@ -67,6 +88,20 @@ export default function Footer(): JSX.Element {
               </Link>
               <Link href={'/auth/reset-password'}>
                 <span>Recuperar conta</span>
+              </Link>
+            </div>
+          </section>
+          <section>
+            <h3>
+              <IoExtensionPuzzleOutline />
+              <span>Atendimento e Suporte</span>
+            </h3>
+            <div className='elements'>
+              <Link href={'/contact'}>
+                <span>Contacto</span>
+              </Link>
+              <Link href={'/faq'}>
+                <span>Perguntas frequêntes</span>
               </Link>
             </div>
           </section>

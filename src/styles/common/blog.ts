@@ -17,11 +17,96 @@ export const BlogContainer = styled.div`
     }
   }
 
+  .banner-container {
+    width: 100%;
+    background: rgb(${({ theme }) => theme.foreground}, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 0 20px;
+    padding-top: 120px;
+    padding-bottom: 40px;
+
+    .wrapper {
+      width: 100%;
+      max-width: 1080px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 50px;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+      position: relative;
+      gap: 20px;
+      h1 {
+        font-size: 2.8rem;
+        font-weight: 500;
+        line-height: 3.2rem;
+      }
+      p {
+        font-size: 1.4rem;
+        line-height: 2rem;
+      }
+
+      a {
+        ${BaseButton}
+        padding: 12px;
+      }
+
+      ::before {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        left: 40px;
+        top: 60px;
+        border-radius: 50%;
+        z-index: -999;
+        transform: rotate(180);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 100px 60px rgba(${({ theme }) => theme.primary}, 0.8);
+      }
+
+      @media screen and (max-width: 900px) {
+        h1 {
+          font-size: 1.8rem;
+          font-weight: 500;
+          line-height: 2.2rem;
+        }
+
+        span {
+          font-size: 0.9rem;
+          line-height: 1.2rem;
+        }
+
+        a {
+          font-size: 1rem;
+        }
+      }
+    }
+
+    img {
+      max-width: 300px;
+      max-height: 300px;
+      object-fit: cover;
+
+      @media screen and (max-width: 610px) {
+        display: none;
+      }
+    }
+  }
+
   .search-container {
     width: 100%;
     margin: 0 auto;
     max-width: 980px;
-    margin-top: 100px;
+    margin-top: 10px;
     display: flex;
     justify-content: flex-end;
     flex-direction: row;

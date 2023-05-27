@@ -9,6 +9,7 @@ export const ContactContainer = styled.div`
   line-height: 1.6rem;
   background: rgb(${({ theme }) => theme.background});
 
+
   h2,
   h3 {
     font-weight: 500;

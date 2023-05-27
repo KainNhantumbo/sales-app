@@ -8,20 +8,63 @@ export const FooterContainer = styled.footer`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background: rgba(${({ theme }) => theme.foreground_variant}, 0.9);
+  background: rgba(${({ theme }) => theme.foreground_variant}, 0.5);
+  backdrop-filter: blur(10px);
+  position: relative;
+
+  ::before {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    right: 50%;
+    bottom: 110px;
+    border-radius: 50%;
+    z-index: -999;
+    transform: rotate(180);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 100px 60px rgba(${({ theme }) => theme.primary}, 0.8);
+  }
+
+  .featured-container {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 40px;
+    justify-content: space-evenly;
+    border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.3);
+    padding: 20px;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+
+    h3 {
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      font-size: 1.1rem;
+      svg {
+        width: 20px;
+        height: 20px;
+        color: rgb(${({ theme }) => theme.primary_variant});
+      }
+      span {
+        padding-left: 5px;
+      }
+    }
+  }
 
   .navigation {
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
     gap: 20px;
-    margin-top: 20px;
 
     nav {
-      width: 90%;
+      width: 100%;
+      max-width: 1280px;
       display: flex;
       flex-flow: row wrap;
-      gap: 30px;
+      gap: 40px;
       justify-content: flex-start;
       margin: 0 auto;
 
@@ -37,6 +80,7 @@ export const FooterContainer = styled.footer`
           svg {
             width: 20px;
             height: 20px;
+            color: rgb(${({ theme }) => theme.primary_variant});
           }
           span {
             padding-left: 5px;
@@ -46,10 +90,11 @@ export const FooterContainer = styled.footer`
         .elements {
           display: flex;
           flex-direction: column;
+          align-items: center;
           gap: 8px;
 
           a {
-            font-size: 0.96rem;
+            font-size: 0.98rem;
             span {
               line-height: 1.2rem;
               :hover {
@@ -69,9 +114,11 @@ export const FooterContainer = styled.footer`
     gap: 20px;
     align-items: center;
     align-self: center;
-    width: 90%;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
     position: relative;
-    border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.5);
+    border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.3);
 
     .logo {
       padding-top: 10px;
@@ -148,7 +195,8 @@ export const FooterContainer = styled.footer`
     align-items: center;
     line-height: 1.4rem;
     color: rgb(${({ theme }) => theme.neutral});
-    background: rgba(${({ theme }) => theme.accent}, 0.9);
+    background: rgba(${({ theme }) => theme.accent}, 0.3);
+    backdrop-filter: blur(10px);
     padding: 10px 0;
 
     @media screen and (max-width: 350px) {

@@ -59,10 +59,10 @@ export const app_metadata = {
 
 export const urls = [
   { name: 'Início', url: '/', alias: '+' },
-  { name: 'Blog', url: '/blog', alias: 'blog' },
   { name: 'Lojas', url: '/stores', alias: 'stores' },
-  { name: 'Feed', url: '/feed', alias: 'feed' },
   { name: 'Produtos', url: '/products', alias: 'products' },
+  { name: 'Blog', url: '/blog', alias: 'blog' },
+  { name: 'Feed', url: '/feed', alias: 'feed' },
 ];
 
 export const store_features = [

@@ -19,7 +19,7 @@ export const UserProfileContainer = styled.div`
 
   * {
     ::selection {
-      background: rgb(${({ theme }) => theme.background_variant});
+      background: rgba(${({ theme }) => theme.font}, 0.2);
       color: rgb(${({ theme }) => theme.primary_variant});
     }
   }

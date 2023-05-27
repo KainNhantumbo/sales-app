@@ -96,7 +96,7 @@ export default function ResetPassword(): JSX.Element {
                   className='login'
                   type='submit'
                   disabled={loading || error.status ? true : false}>
-                  <span>Confirmar</span>
+                  <span>Enviar e-mail</span>
                 </button>
               </form>
 

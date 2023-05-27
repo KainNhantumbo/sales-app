@@ -1,28 +1,63 @@
 import Link from 'next/link';
+import ErrorPage from '../error-page';
+import Layout from '@/components/Layout';
 import { useRouter } from 'next/router';
 import { getPosts } from '@/lib/queries';
-import Layout from '@/components/Layout';
 import { formatDate } from '@/lib/time-fns';
 import { IBlogPosts } from '../../../@types';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
-import { IoArrowForwardOutline, IoHeart } from 'react-icons/io5';
+import {
+  IoArrowForwardOutline,
+  IoHeart,
+  IoStorefrontOutline,
+} from 'react-icons/io5';
 import { BlogContainer as Container } from '@/styles/common/blog';
 import SearchComponent from '@/components/Search';
+import { complements } from '@/data/app-data';
+import Image from 'next/image';
+import buyingWomenImg from '../../../public/assets/buying_women.png';
 
 type Props = { posts: IBlogPosts[] };
 
 export default function Blog(props: Props): JSX.Element {
   const { posts } = props;
   const router = useRouter();
+  if (!posts) {
+    return <ErrorPage retryFn={router.reload} />;
+  }
 
   return (
     <Layout>
       <Container>
-        <section className='search-container'>
-          <SearchComponent />
-        </section>
+        <section className='banner-container'>
+          <div className='wrapper'>
+            <div className='title'>
+              <h1>Blog da {complements.defaultTitle}</h1>
+              <p>
+                <strong>
+                  Explore idéias, conceitos e artigos que ajudam a alavancar o
+                  seu negócio.
+                </strong>{' '}
+                Ainda não tem uma loja? Monte hoje mesmo uma loja virtual do seu
+                jeito e com todas funcionalidades que você precisa de graça!
+              </p>
+              <Link href={'/auth/sign-in'}>
+                <IoStorefrontOutline />
+                <span>Criar loja grátis</span>
+              </Link>
+            </div>
 
+            <Image
+              src={buyingWomenImg}
+              alt='buying women art from freepick.com'
+            />
+          </div>
+        </section>
         <article>
+          <section className='search-container'>
+            <SearchComponent />
+          </section>
+
           <section className='posts-container'>
             {posts.map((post) => (
               <Link
@@ -71,10 +106,17 @@ export default function Blog(props: Props): JSX.Element {
 }
 
 export async function getStaticProps() {
-  const { data } = await getPosts({});
-
-  return {
-    props: { posts: [...data] },
-    revalidate: 10,
-  };
+  try {
+    const { data } = await getPosts({});
+    return {
+      props: { posts: [...data] },
+      revalidate: 10,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      props: {},
+      revalidate: 10,
+    };
+  }
 }

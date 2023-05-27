@@ -16,13 +16,17 @@ export const errorPage = styled.article`
     font-size: 1.2rem;
     font-weight: 500;
     h1 {
-      font-weight: 600;
-      font-size: 8rem;
+      font-weight: 500;
+      font-size: 2.4rem;
+      line-height: 2.8rem;
+      color: rgb(${({ theme }) => theme.alert});
+
     }
 
     button {
       margin-top: 20px;
       ${BaseButtonOutline}
+      font-weight: 500;
       color: rgb(${({ theme }) => theme.font});
     }
   }

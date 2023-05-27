@@ -13,6 +13,7 @@ import {
 import moment from 'moment';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import { shareUrls } from '@/lib/share-urls';
@@ -26,7 +27,7 @@ import { PostContainer as Container } from '@/styles/common/post';
 import { useTheme } from 'styled-components';
 import Comments from '@/components/Comments';
 import { useAppContext } from '@/context/AppContext';
-import { useState, useEffect } from 'react';
+import ErrorPage from '@/pages/error-page';
 
 interface IPost {
   post: IBlogPost;
@@ -41,6 +42,10 @@ export default function Post({
   const [post, setPost] = useState(initialPost);
   const router = useRouter();
   const theme = useTheme();
+
+  if (!initialPost) {
+    return <ErrorPage retryFn={router.reload} />;
+  }
 
   const readingProps = readingTime(
     post.content.concat(post.excerpt),
@@ -186,7 +191,7 @@ export default function Post({
                     ) : (
                       <IoHeartOutline />
                     )}
-                    <span>{post.favorites.length} Favoritos</span>
+                    <span>{post.favorites.length} Favoritar</span>
                   </button>
                 </div>
               </section>
@@ -276,11 +281,19 @@ export async function getStaticPaths(): Promise<any> {
 }
 
 export async function getStaticProps({ params: { slug } }: any) {
-  const data = (
-    await Promise.all([getPost(slug), getPosts({ limit: 3, offset: 0 })])
-  ).map((res) => res.data);
-  return {
-    props: { post: { ...data[0] }, latestPosts: [...data[1]] },
-    revalidate: 10,
-  };
+  try {
+    const data = (
+      await Promise.all([getPost(slug), getPosts({ limit: 3, offset: 0 })])
+    ).map((res) => res.data);
+    return {
+      props: { post: { ...data[0] }, latestPosts: [...data[1]] },
+      revalidate: 10,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      props: {},
+      revalidate: 10,
+    };
+  }
 }

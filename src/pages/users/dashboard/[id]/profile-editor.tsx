@@ -1184,7 +1184,7 @@ export default function ProfileEditor(): JSX.Element {
                     </h2>
                     <p>
                       Adicione informações relativas a sua experiência ou campo
-                      de atuação.
+                      de atuação profissional.
                     </p>
                   </div>
                   <section className='cards-container'>
