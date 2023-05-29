@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BaseButton } from '../defaults';
 
 export const FooterContainer = styled.footer`
   width: 100%;
@@ -27,6 +28,7 @@ export const FooterContainer = styled.footer`
   }
 
   .featured-container {
+    padding: 0 20px;
     display: flex;
     flex-flow: row wrap;
     gap: 40px;
@@ -58,6 +60,7 @@ export const FooterContainer = styled.footer`
     justify-content: flex-start;
     flex-direction: column;
     gap: 20px;
+    padding: 0 20px;
 
     nav {
       width: 100%;
@@ -111,13 +114,14 @@ export const FooterContainer = styled.footer`
   .social-container {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 10px;
     align-items: center;
     align-self: center;
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
     position: relative;
+    padding: 0 20px;
     border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.3);
 
     .logo {
@@ -161,27 +165,22 @@ export const FooterContainer = styled.footer`
     }
 
     .theme-switcher {
+      ${BaseButton}
       position: absolute;
-      top: calc(50% - 15px);
-      right: 20px;
-      padding: 10px;
+      top: calc(50% - 90px);
+      right: 10px;
       border: none;
-      cursor: pointer;
-      color: rgb(${({ theme }) => theme.font});
       width: 40px;
       height: 40px;
-      display: grid;
-      place-items: center;
-      background: rgba(${({ theme }) => theme.primary}, 0.2);
-      border-radius: 10px;
-
+      background: rgba(${({ theme }) => theme.primary}, 0.8);
       :hover {
         color: rgb(${({ theme }) => theme.primary_variant});
       }
-
+      span {
+        padding: 0;
+      }
       svg {
-        width: 20px;
-        height: 20px;
+        left: calc(50% - 10px);
       }
     }
   }

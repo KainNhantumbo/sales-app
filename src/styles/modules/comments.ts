@@ -58,11 +58,12 @@ export const CommentsContainer = styled.div`
           width: 100%;
         }
 
-        image,
+        img,
         svg {
           width: 50px;
           height: 50px;
           border-radius: 50%;
+          pointer-events: none;
         }
 
         img {
@@ -113,7 +114,6 @@ export const CommentsContainer = styled.div`
           border-radius: 15px;
           padding: 20px;
 
-
           .header {
             width: 100%;
             display: flex;
@@ -126,11 +126,12 @@ export const CommentsContainer = styled.div`
               align-items: center;
               gap: 10px;
 
-              image,
+              img,
               .user-icon {
                 width: 30px;
                 height: 30px;
                 border-radius: 50%;
+                pointer-events: none;
               }
 
               img {

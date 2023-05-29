@@ -179,6 +179,17 @@ export const HeaderContainer = styled.header`
     .user-logout {
       ${BaseButtonOutline}
       border: none;
+      
+      img {
+        object-fit: cover;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        position: absolute;
+        top: calc(50% - 11px);
+        left: 5px;
+        pointer-events: none;
+      }
     }
 
     @media screen and (max-width: 770px) {
@@ -200,7 +211,6 @@ export const HeaderContainer = styled.header`
     padding: 10px;
     outline: none;
 
-
     :hover {
       color: rgb(${({ theme }) => theme.primary_variant});
     }
@@ -213,7 +223,7 @@ export const HeaderContainer = styled.header`
     position: fixed;
     top: 13px;
     right: 20px;
-    
+
     @media screen and (min-width: 770px) {
       display: none;
     }

@@ -50,7 +50,7 @@ import { DotLoader, PulseLoader } from 'react-spinners';
 import countries from '../../../../data/countries.json';
 import user_languages from '../../../../data/languages.json';
 import UserWorkingData from '../../../../components/modals/UserWorkingData';
-import { UserProfileContainer as Container } from '@/styles/common/user-profile';
+import { UserProfileContainer as Container } from '@/styles/common/profile-editor';
 import user_skills from '../../../../data/professional-skills.json';
 import DeleteAccountPrompt from '../../../../components/modals/DeleteAccountPrompt';
 
@@ -273,8 +273,6 @@ export default function ProfileEditor(): JSX.Element {
           gender: state.user.gender,
           birth_date: state.user.birth_date,
           bio: state.user.bio,
-          cover_image: coverImageData,
-          profile_image: profileImageData,
           professional_skills: state.user.professional_skills,
           spoken_languages: state.user.spoken_languages,
           location: state.user.location,
@@ -964,7 +962,7 @@ export default function ProfileEditor(): JSX.Element {
                 <div className='data-section'>
                   <div className='description'>
                     <h2>
-                      <IoShareSocial/>
+                      <IoShareSocial />
                       <span>Redes e Mídias Sociais</span>
                     </h2>
                     <p>

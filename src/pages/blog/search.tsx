@@ -1,17 +1,17 @@
 import Link from 'next/link';
 import moment from 'moment';
 import Layout from '@/components/Layout';
-import Loader from '@/components/Loader';
 import { IBlogPosts } from '../../../@types/index';
 import { getPosts } from '@/lib/queries';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { IoLibraryOutline, IoOpenOutline } from 'react-icons/io5';
+import { IoHeart, IoLibraryOutline, IoOpenOutline } from 'react-icons/io5';
 import SearchComponent from '@/components/Search';
-import { BlogContainer as Container } from '@/styles/common/blog';
-import { IoIosPlanet, IoMdCalendar } from 'react-icons/io';
+import { BlogSeachContainer as Container } from '@/styles/common/blog-search';
+import { IoIosAlbums, IoIosPlanet, IoMdCalendar } from 'react-icons/io';
 import { DotLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
+import { formatDate } from '@/lib/time-fns';
 
 export default function BlogSearch() {
   const router = useRouter();
@@ -113,8 +113,16 @@ export default function BlogSearch() {
                     <div className='content-container'>
                       <div className='details'>
                         <div>
+                          <IoIosAlbums />
+                          <span>{post.category || 'Miscelânia'}</span>
+                        </div>
+                        <div>
                           <IoMdCalendar />
-                          <span>{moment(post.updatedAt).format('LL')}</span>
+                          <span>{formatDate(post.updatedAt)}</span>
+                        </div>
+                        <div>
+                          <IoHeart />
+                          <span>{post.favorites.length} favoritos</span>
                         </div>
                       </div>
                       <h3>{post.title}</h3>

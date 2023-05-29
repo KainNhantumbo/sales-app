@@ -72,6 +72,44 @@ export const initialState: State = {
     createdAt: '',
     updatedAt: '',
   },
+  store: {
+    _id: '',
+    name: '',
+    active: false,
+    plan: '',
+    verified_store: false,
+    created_by: {
+      profile_image: '',
+      first_name: '',
+      last_name: '',
+      email: '',
+      main_phone_number: Number(),
+      alternative_phone_number: Number(),
+      social_network: {
+        website: '',
+        whatsapp: '',
+        instagram: '',
+        facebook: '',
+        linkedin: '',
+      },
+    },
+    description: '',
+    slogan: '',
+    category: '',
+    cover_image: { id: '', url: '' },
+    privacy_policy: '',
+    terms_policy: '',
+    delivery_policy: '',
+    mission_and_values: '',
+    invalidated: false,
+    location: {
+      country: '',
+      state: '',
+      adress: '',
+    },
+    createdAt: '',
+    updatedAt: '',
+  },
   comment: {
     _id: '',
     source_id: '',
@@ -135,6 +173,11 @@ export default function reducer(state: State, action: Action) {
       return {
         ...state,
         user: action.payload?.user!,
+      };
+    case actions.STORE_DATA:
+      return {
+        ...state,
+        store: action.payload?.store!,
       };
     case actions.SEARCH:
       return {

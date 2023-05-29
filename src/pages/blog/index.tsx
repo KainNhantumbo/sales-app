@@ -35,7 +35,7 @@ export default function Blog(props: Props): JSX.Element {
               <h1>Blog da {complements.defaultTitle}</h1>
               <p>
                 <strong>
-                  Explore idéias, conceitos e artigos que ajudam a alavancar o
+                  Explore idéias, conceitos e artigos que possam ajudar a alavancar o
                   seu negócio.
                 </strong>{' '}
                 Ainda não tem uma loja? Monte hoje mesmo uma loja virtual do seu

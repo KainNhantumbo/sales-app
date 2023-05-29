@@ -136,7 +136,6 @@ export default function Footer(): JSX.Element {
           {darkmode ? <BiSun /> : <BiMoon />}
         </motion.button>
       </div>
-
       <section>
         <div className='copyright'>
           <span>&copy; {complements.copyrightSentence}</span>

@@ -1,10 +1,10 @@
-import { IComment, ISignInData, ISignUp, User } from './index';
+import { IComment, ISignInData, ISignUp, Store, User } from './index';
 
 export type State = {
   isLogoutPrompt: boolean;
   isLoginPrompt: boolean;
   isDeleteAccountPrompt: boolean;
-  isDeleteCommentPrompt: {status: boolean, commentId: string};
+  isDeleteCommentPrompt: { status: boolean; commentId: string };
   isUserWorkingDataModal: boolean;
   isConnected: boolean;
   userAuth: {
@@ -20,6 +20,7 @@ export type State = {
   signupData: ISignUp;
   signInData: ISignInData;
   user: User;
+  store: Store;
   comment: IComment;
   commentsList: IComment[];
 };

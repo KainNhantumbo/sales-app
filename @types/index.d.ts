@@ -178,6 +178,9 @@ export type Product = {
 export type Store = {
   _id: string;
   name: string;
+  active: boolean;
+  plan: string;
+  verified_store: boolean;
   created_by: {
     profile_image: string;
     first_name: string;
@@ -196,11 +199,10 @@ export type Store = {
   description: string;
   slogan?: string;
   category: string;
-  cover_image?: { id: string; url: string; blurhash: string };
-  profile_image?: { id: string; url: string; blurhash: string };
-  privacy_policy: string;
-  terms_policy: string;
-  delivery_policy: string;
+  cover_image?: { id: string; url: string };
+  privacy_policy?: string;
+  terms_policy?: string;
+  delivery_policy?: string;
   mission_and_values?: string;
   invalidated: boolean;
   location: {
