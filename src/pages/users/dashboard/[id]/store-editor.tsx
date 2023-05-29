@@ -1,25 +1,26 @@
 import {
   IoAdd,
   IoArrowUndoOutline,
-  IoCreateOutline,
+  IoCart,
+  IoDocuments,
   IoEllipsisHorizontal,
-  IoHeartHalfOutline,
   IoHomeOutline,
   IoImageOutline,
+  IoLayersOutline,
   IoLocation,
   IoPencilOutline,
-  IoPhonePortraitOutline,
   IoPlanetOutline,
+  IoRadioButtonOff,
+  IoRadioButtonOn,
   IoReload,
+  IoSave,
   IoStar,
   IoStorefront,
   IoSyncOutline,
-  IoTrash,
   IoTrashOutline,
 } from 'react-icons/io5';
 import Compressor from 'compressorjs';
 import Layout from '@/components/Layout';
-import { BiUserCheck, BiUserX } from 'react-icons/bi';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
 import { actions } from '@/data/reducer-actions';
@@ -27,9 +28,9 @@ import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import countries from '../../../../data/countries.json';
-import { StoreEditorContainer as Container } from '@/styles/common/store-editor';
 import { InputEvents } from '../../../../../@types';
-import product_categories from '../../../../data/product-categories.json'
+import product_categories from '../../../../data/product-categories.json';
+import { StoreEditorContainer as Container } from '@/styles/common/store-editor';
 
 export default function StoreEditor(): JSX.Element {
   const theme = useTheme();
@@ -47,7 +48,9 @@ export default function StoreEditor(): JSX.Element {
   }>({ status: false, msg: '', key: 'store-data' });
 
   // --------------------states---------------------
-  const [countryStates, setCountryStates] = useState<string[]>([]);
+  const [countryStates, setCountryStates] = useState<string[]>([
+    state.store.location?.state,
+  ]);
   const [coverImageFile, setCoverImageFile] = useState<FileList | null>(null);
 
   const [coverImageData, setCoverImageData] = useState({
@@ -63,7 +66,7 @@ export default function StoreEditor(): JSX.Element {
   // --------------------functions------------------
   function handleChange(e: InputEvents): void {
     dispatch({
-      type: actions.USER_DATA,
+      type: actions.STORE_DATA,
       payload: {
         ...state,
         store: {
@@ -138,7 +141,7 @@ export default function StoreEditor(): JSX.Element {
           type: actions.STORE_DATA,
           payload: {
             ...state,
-            store: { ...data },
+            store: { ...state.store, ...data },
           },
         });
       })
@@ -165,14 +168,14 @@ export default function StoreEditor(): JSX.Element {
         url: '/api/v1/users/store',
         data: {
           name: state.store.name,
+          category: state.store.category,
           description: state.store.description,
           slogan: state.store.slogan,
-          category: state.store.category,
           privacy_policy: state.store.privacy_policy,
           terms_policy: state.store.terms_policy,
           delivery_policy: state.store.delivery_policy,
-          mission_and_values: state.store.mission_and_values,
           location: state.store.location,
+          active: state.store.active,
           coverImageData,
         },
       });
@@ -247,7 +250,7 @@ export default function StoreEditor(): JSX.Element {
               <IoPencilOutline />
               <span>Detalhes da Loja</span>
             </h2>
-            <span>Salve após fazer alterações!</span>
+            <span className='details'>Salve após fazer alterações!</span>
           </section>
 
           <section className='data-container'>
@@ -261,10 +264,10 @@ export default function StoreEditor(): JSX.Element {
                         src={coverImageData.data}
                         alt='cover image'
                       />
-                    ) : state.user.cover_image?.url ? (
+                    ) : state.store.cover_image?.url ? (
                       <img
                         className='cover-image'
-                        src={state.user.cover_image?.url}
+                        src={state.store.cover_image?.url}
                         alt='cover image'
                       />
                     ) : (
@@ -288,6 +291,9 @@ export default function StoreEditor(): JSX.Element {
                       multiple={false}
                       onChange={(e) => setCoverImageFile(e.target.files)}
                     />
+                    <span className='description'>
+                      Dimensões: 620 x 220 pixels. Máx. 800Kb.
+                    </span>
                   </div>
                 </section>
 
@@ -298,107 +304,120 @@ export default function StoreEditor(): JSX.Element {
                       <span>Informações da Loja</span>
                     </h2>
                     <p>
-                      Informações usadas para identificação e contato. Por
-                      favor, inserir informações reais e verdadeiras para evitar
-                      a suspensão da loja.
+                      Informações usadas para perfil da loja. Por favor, inserir
+                      informações correctas, reais e verdadeiras para evitar a
+                      suspensão da loja.
                     </p>
                   </div>
 
                   <div className='items-container'>
                     <section className='form-section'>
                       <div className='form-element'>
-                        <label htmlFor='first_name'>
+                        <label htmlFor='name'>
                           <IoEllipsisHorizontal />
                           <span>Nome da Loja</span>
                         </label>
                         <input
                           type='text'
-                          id='first_name'
-                          name='first_name'
+                          id='name'
+                          name='name'
                           autoComplete='off'
-                          placeholder='Escreva o seu nome'
-                          aria-label='Escreva o seu nome'
-                          required={true}
-                          onChange={(e): void => handleChange(e)}
-                          value={state.user.first_name}
+                          placeholder='Escreva o nome da loja'
+                          aria-label='Escreva o nome da loja'
+                          onChange={(e): void =>
+                            e.target.value.length > 64
+                              ? undefined
+                              : handleChange(e)
+                          }
+                          value={state.store.name}
                         />
+                        <span className='counter'>{`${
+                          state.store.name?.length || 0
+                        } / 64`}</span>
                       </div>
                       <div className='form-element'>
-                        <label htmlFor='last_name'>
-                          <IoEllipsisHorizontal />
-                          <span>Apelido</span>
-                        </label>
-                        <select name="category" id="category">
-                          {}
-                        </select>
-                      </div>
-                    </section>
-                    <section className='form-section'>
-                      <div className='form-element'>
-                        <label htmlFor='main_phone_number'>
-                          <IoPhonePortraitOutline />
-                          <span>Número de telemóvel (Principal)</span>
-                        </label>
-                        <input
-                          type='number'
-                          id='main_phone_number'
-                          name='main_phone_number'
-                          placeholder='Escreva o seu número de telemóvel'
-                          aria-label='Escreva o seu número de telemóvel'
-                          onChange={(e): void => handleChange(e)}
-                          value={state.user.main_phone_number}
-                        />
-                      </div>
-                      <div className='form-element'>
-                        <label htmlFor='alternative_phone_number'>
-                          <IoPhonePortraitOutline />
-                          <span>Número de telemóvel (Alternativo)</span>
-                        </label>
-                        <input
-                          type='number'
-                          id='alternative_phone_number'
-                          name='alternative_phone_number'
-                          placeholder='Escreva o seu número de telemóvel'
-                          aria-label='Escreva o seu número de telemóvel'
-                          onChange={(e): void => handleChange(e)}
-                          value={state.user.alternative_phone_number}
-                        />
-                      </div>
-                    </section>
-                    <section className='form-section'>
-                      <div className='form-element'>
-                        <label htmlFor='main_phone_number'>
-                          <IoHeartHalfOutline />
-                          <span>Gênero</span>
+                        <label htmlFor='category'>
+                          <IoLayersOutline />
+                          <span>Categoria Principal dos Produtos</span>
                         </label>
                         <select
-                          name='gender'
-                          id='gender'
-                          value={state.user.gender}
-                          onChange={(e): void => handleChange(e)}>
-                          <option value='Masculino'>Masculino</option>
-                          <option value='Femenino'>Femenino</option>
-                          <option value='Outro'>Outro</option>
+                          name='category'
+                          id='category'
+                          value={state.store.category}
+                          onChange={(e) => {
+                            dispatch({
+                              type: actions.STORE_DATA,
+                              payload: {
+                                ...state,
+                                store: {
+                                  ...state.store,
+                                  category: e.target.value,
+                                },
+                              },
+                            });
+                          }}>
+                          {product_categories
+                            .sort((a, b) => (a > b ? 1 : -1))
+                            .map((item, index) => (
+                              <option key={index.toString()} value={item}>
+                                {item}
+                              </option>
+                            ))}
                         </select>
+                      </div>
+                    </section>
+                    <section className='form-section'>
+                      <div className='form-element'>
+                        <label htmlFor='slogan'>
+                          <IoEllipsisHorizontal />
+                          <span>Slogan da Loja</span>
+                        </label>
+                        <input
+                          type='text'
+                          id='slogan'
+                          name='slogan'
+                          autoComplete='off'
+                          placeholder='Escreva o slogan de sua loja'
+                          aria-label='Escreva o slogan de sua loja'
+                          onChange={(e): void =>
+                            e.target.value.length > 64
+                              ? undefined
+                              : handleChange(e)
+                          }
+                          value={state.store.slogan}
+                          maxLength={64}
+                        />
+                        <span className='counter'>{`${
+                          state.store.slogan?.length || 0
+                        } / 64`}</span>
                       </div>
                     </section>
 
                     <section className='form-section'>
                       <div className='form-element'>
-                        <label htmlFor='bio'>
-                          <IoCreateOutline />
-                          <span>Biografia</span>
+                        <label htmlFor='description'>
+                          <IoEllipsisHorizontal />
+                          <span>Descrição da Loja</span>
                         </label>
-                        <input
-                          type='text'
-                          id='bio'
-                          name='bio'
-                          maxLength={128}
-                          placeholder='Escreva uma breve biografia para o seu perfil'
-                          aria-label='Escreva uma breve biografia para o seu perfil'
-                          onChange={(e): void => handleChange(e)}
-                          value={state.user.bio}
+
+                        <textarea
+                          id='description'
+                          name='description'
+                          autoComplete='off'
+                          placeholder='Escreva a descrição de sua loja'
+                          aria-label='Escreva a descrição de sua loja'
+                          onChange={(e): void =>
+                            e.target.value.length > 256
+                              ? undefined
+                              : handleChange(e)
+                          }
+                          value={state.store.description}
+                          maxLength={256}
+                          rows={5}
                         />
+                        <span className='counter'>{`${
+                          state.store.description?.length || 0
+                        } / 256`}</span>
                       </div>
                     </section>
                   </div>
@@ -411,8 +430,9 @@ export default function StoreEditor(): JSX.Element {
                       <span>Localização e Endereço</span>
                     </h2>
                     <p>
-                      Informações usadas para entregas de compras feitas nas
-                      lojas.
+                      Localização e endereço da sua loja física (caso exista) ou
+                      a sua localização de partida (casa, armazém dos produtos,
+                      etc.).
                     </p>
                   </div>
 
@@ -426,7 +446,7 @@ export default function StoreEditor(): JSX.Element {
                         <select
                           name='country'
                           id='country'
-                          value={state.user.location?.country}
+                          value={state.store.location?.country}
                           onChange={(e): void => {
                             countries.forEach((obj) => {
                               if (obj.country === e.target.value) {
@@ -434,13 +454,13 @@ export default function StoreEditor(): JSX.Element {
                               }
                             });
                             dispatch({
-                              type: actions.USER_DATA,
+                              type: actions.STORE_DATA,
                               payload: {
                                 ...state,
-                                user: {
-                                  ...state.user,
+                                store: {
+                                  ...state.store,
                                   location: {
-                                    ...state.user.location,
+                                    ...state.store.location,
                                     country: e.target.value,
                                   },
                                 },
@@ -465,17 +485,16 @@ export default function StoreEditor(): JSX.Element {
                         <select
                           name='state'
                           id='state'
-                          value={state.user.location?.state}
-                          defaultValue={state.user.location?.state}
+                          value={state.store.location?.state}
                           onChange={(e): void => {
                             dispatch({
-                              type: actions.USER_DATA,
+                              type: actions.STORE_DATA,
                               payload: {
                                 ...state,
-                                user: {
-                                  ...state.user,
+                                store: {
+                                  ...state.store,
                                   location: {
-                                    ...state.user.location,
+                                    ...state.store.location,
                                     state: e.target.value,
                                   },
                                 },
@@ -501,26 +520,123 @@ export default function StoreEditor(): JSX.Element {
                         <input
                           type='text'
                           id='adress'
-                          placeholder='Endereço'
-                          aria-label='Endereço'
-                          maxLength={128}
-                          value={state.user.location?.adress}
-                          onChange={(e): void => {
-                            dispatch({
-                              type: actions.USER_DATA,
-                              payload: {
-                                ...state,
-                                user: {
-                                  ...state.user,
-                                  location: {
-                                    ...state.user.location,
-                                    adress: e.target.value,
+                          placeholder='Localidade, bairro, rua, quarteirão, número da casa, etc.'
+                          aria-label='Localidade, bairro, rua, quarteirão, número da casa, etc.'
+                          maxLength={256}
+                          value={state.store.location?.adress}
+                          onChange={(e): void =>
+                            e.target.value.length > 256
+                              ? undefined
+                              : dispatch({
+                                  type: actions.STORE_DATA,
+                                  payload: {
+                                    ...state,
+                                    store: {
+                                      ...state.store,
+                                      location: {
+                                        ...state.store.location,
+                                        adress: e.target.value,
+                                      },
+                                    },
                                   },
-                                },
-                              },
-                            });
-                          }}
+                                })
+                          }
                         />
+                        <span className='counter'>{`${
+                          state.store.location?.adress?.length || 0
+                        } / 256`}</span>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+
+                <div className='data-section'>
+                  <div className='description'>
+                    <h2>
+                      <IoDocuments />
+                      <span>Políticas da Loja</span>
+                    </h2>
+
+                    <p>
+                      Documentação e regras de conduta endereçada aos clientes
+                      que visitam a sua loja.
+                    </p>
+                  </div>
+
+                  <div className='items-container'>
+                    <section className='form-section'>
+                      <div className='form-element'>
+                        <label htmlFor='terms_policy'>
+                          <IoEllipsisHorizontal />
+                          <span>Termos e Condições</span>
+                        </label>
+                        <textarea
+                          id='terms_policy'
+                          name='terms_policy'
+                          autoComplete='off'
+                          placeholder='Escreva os termos e condições da sua loja'
+                          aria-label='Escreva os termos e condições da sua loja'
+                          rows={12}
+                          onChange={(e): void =>
+                            e.target.value.length > 2048
+                              ? undefined
+                              : handleChange(e)
+                          }
+                          value={state.store.terms_policy}
+                        />
+                        <span className='counter'>{`${
+                          state.store.terms_policy?.length || 0
+                        } / 2048`}</span>
+                      </div>
+                    </section>
+                    <section className='form-section'>
+                      <div className='form-element'>
+                        <label htmlFor='privacy_policy'>
+                          <IoEllipsisHorizontal />
+                          <span>Política de Privacidade</span>
+                        </label>
+                        <textarea
+                          id='privacy_policy'
+                          name='privacy_policy'
+                          autoComplete='off'
+                          placeholder='Escreva a política de privacidade da sua loja'
+                          aria-label='Escreva a política de privacidade da sua loja'
+                          rows={12}
+                          onChange={(e): void =>
+                            e.target.value.length > 2048
+                              ? undefined
+                              : handleChange(e)
+                          }
+                          value={state.store.privacy_policy}
+                        />
+                        <span className='counter'>{`${
+                          state.store.privacy_policy?.length || 0
+                        } / 2048`}</span>
+                      </div>
+                    </section>
+                    <section className='form-section'>
+                      <div className='form-element'>
+                        <label htmlFor='delivery_policy'>
+                          <IoEllipsisHorizontal />
+                          <span>Política de Entregas ao Cliente</span>
+                        </label>
+                        <textarea
+                          id='delivery_policy'
+                          name='delivery_policy'
+                          autoComplete='off'
+                          placeholder='Escreva a política de entrega de encomendas ao cliente da sua loja'
+                          aria-label='Escreva a política de entrega de encomendas ao cliente da sua loja'
+                          rows={12}
+                          onChange={(e): void =>
+                            e.target.value.length > 1024
+                              ? undefined
+                              : handleChange(e)
+                          }
+                          value={state.store.delivery_policy}
+                        />
+                        <span className='counter'>{`${
+                          state.store.delivery_policy?.length || 0
+                        } / 1024`}</span>
                       </div>
                     </section>
                   </div>
@@ -528,10 +644,54 @@ export default function StoreEditor(): JSX.Element {
               </section>
             </section>
 
+            <section className='delete-account'>
+              <div className='description'>
+                <h2>
+                  <IoCart />
+                  <span>Activação da Loja</span>
+                </h2>
+                <p>
+                  Por padrão, a loja está desativada, isso significa que os a
+                  loja e os seus produtos não aprecerão ao público ou nas
+                  pesquisas feitas pelos usuários da plataforma. Active após o
+                  preenchimento correcto das informações acima.
+                </p>
+                <p className='p-bottom'>
+                  Clique no botão abaixo para activar ou desactivar a loja.
+                </p>
+              </div>
+              <button
+                className='save'
+                onClick={() =>
+                  dispatch({
+                    type: actions.STORE_DATA,
+                    payload: {
+                      ...state,
+                      store: {
+                        ...state.store,
+                        active: !state.store.active,
+                      },
+                    },
+                  })
+                }>
+                {!state.store.active ? (
+                  <>
+                    <IoRadioButtonOff color={`rgb(${theme.alert})`} />
+                    <span>Loja Desactivada</span>
+                  </>
+                ) : (
+                  <>
+                    <IoRadioButtonOn color={`rgb(${theme.secondary})`} />
+                    <span>Loja Activada</span>
+                  </>
+                )}
+              </button>
+            </section>
+
             <section className='actions-container'>
               <div className='description'>
                 <h2>
-                  <BiUserCheck />
+                  <IoSave />
                   <span>Salvamento de Alterações</span>
                 </h2>
                 <p>Salve as alterações feitas.</p>
@@ -591,22 +751,6 @@ export default function StoreEditor(): JSX.Element {
                   </>
                 )}
               </div>
-            </section>
-            <section className='delete-account'>
-              <div className='description'>
-                <h2>
-                  <BiUserX />
-                  <span>Activação da Loja</span>
-                </h2>
-                <p>
-                  Por padrão a loja está desativada. Active após o preenchimento
-                  das informações acima.
-                </p>
-              </div>
-              <button className='save' onClick={() => {}}>
-                <IoTrash />
-                <span>Activar</span>
-              </button>
             </section>
           </section>
         </article>

@@ -1,5 +1,6 @@
 import { actions } from '@/data/reducer-actions';
 import type { State, Action } from '../../@types/reducer';
+import product_categories from '../data/product-categories.json';
 
 export const initialState: State = {
   isLogoutPrompt: false,
@@ -95,16 +96,15 @@ export const initialState: State = {
     },
     description: '',
     slogan: '',
-    category: '',
+    category: product_categories[0],
     cover_image: { id: '', url: '' },
     privacy_policy: '',
     terms_policy: '',
     delivery_policy: '',
-    mission_and_values: '',
     invalidated: false,
     location: {
-      country: '',
-      state: '',
+      country: 'Mozambique',
+      state: 'Maputo',
       adress: '',
     },
     createdAt: '',

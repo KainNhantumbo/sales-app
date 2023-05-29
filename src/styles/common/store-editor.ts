@@ -68,6 +68,11 @@ export const StoreEditorContainer = styled.div`
     p {
       line-height: 1.4rem;
     }
+
+    .p-bottom {
+      color: rgb(${({ theme }) => theme.primary_variant});
+      margin-top: 5px;
+    }
   }
 
   article {
@@ -101,8 +106,11 @@ export const StoreEditorContainer = styled.div`
           width: 20px;
           height: 20px;
         }
+      }
 
+      .details {
         @media screen and (max-width: 460px) {
+          display: none;
         }
       }
     }
@@ -155,6 +163,7 @@ export const StoreEditorContainer = styled.div`
             @media screen and (max-width: 655px) {
               flex-direction: column;
             }
+
             .form-element {
               display: flex;
               flex-direction: column;
@@ -168,12 +177,17 @@ export const StoreEditorContainer = styled.div`
               input[type='date'] {
                 padding-top: 20px;
               }
+
+              .counter {
+                align-self: end;
+                font-size: 0.9rem;
+              }
             }
 
             .image-container {
               width: 100%;
               display: flex;
-              align-items: center;
+              align-items: start;
               flex-direction: column;
               gap: 10px;
               justify-content: center;
@@ -182,6 +196,10 @@ export const StoreEditorContainer = styled.div`
 
               input {
                 display: none;
+              }
+
+              .description {
+                line-height: 1.2rem;
               }
             }
 
@@ -225,37 +243,6 @@ export const StoreEditorContainer = styled.div`
                 background: rgba(${({ theme }) => theme.primary}, 0.8);
                 :hover {
                   background: rgba(${({ theme }) => theme.alert}, 0.6);
-                }
-              }
-            }
-
-          }
-
-          #genres-section {
-            flex-direction: column-reverse;
-            .genres-container {
-              display: flex;
-              justify-content: flex-start;
-
-              flex-flow: row wrap;
-              gap: 10px;
-
-              .genre {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 10px;
-                border-radius: 3px;
-                gap: 10px;
-                background: rgb(${({ theme }) => theme.foreground});
-                box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);
-
-                button {
-                  ${Button_Mono_B}
-                  border: none;
-                  :hover {
-                    color: rgb(${({ theme }) => theme.alert});
-                  }
                 }
               }
             }

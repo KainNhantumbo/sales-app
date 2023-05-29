@@ -203,7 +203,6 @@ export type Store = {
   privacy_policy?: string;
   terms_policy?: string;
   delivery_policy?: string;
-  mission_and_values?: string;
   invalidated: boolean;
   location: {
     country: string;

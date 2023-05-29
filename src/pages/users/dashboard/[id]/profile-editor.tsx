@@ -76,7 +76,9 @@ export default function ProfileEditor(): JSX.Element {
   }>({ status: false, msg: '', key: 'user-data' });
 
   // --------------------states---------------------
-  const [countryStates, setCountryStates] = useState<string[]>([]);
+  const [countryStates, setCountryStates] = useState<string[]>([
+    state.user.location?.state,
+  ]);
   const [coverImageFile, setCoverImageFile] = useState<FileList | null>(null);
   const [profileImageFile, setProfileImageFile] = useState<FileList | null>(
     null
@@ -464,7 +466,7 @@ export default function ProfileEditor(): JSX.Element {
               <IoPencilOutline />
               <span>Detalhes pessoais</span>
             </h2>
-            <span>Salve após fazer alterações!</span>
+            <span className='details'>Salve após fazer alterações!</span>
           </section>
 
           <section className='data-container'>
@@ -505,6 +507,9 @@ export default function ProfileEditor(): JSX.Element {
                       multiple={false}
                       onChange={(e) => setCoverImageFile(e.target.files)}
                     />
+                    <span className='description'>
+                      Dimensões: 620 x 220 pixels. Máx. 800Kb.
+                    </span>
                   </div>
                 </section>
 
@@ -538,6 +543,9 @@ export default function ProfileEditor(): JSX.Element {
                       multiple={false}
                       onChange={(e) => setProfileImageFile(e.target.files)}
                     />
+                    <span className='description'>
+                      Dimensões: 150 x 150 pixels. Máx. 800Kb.
+                    </span>
                   </div>
                 </section>
 

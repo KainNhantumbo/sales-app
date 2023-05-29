@@ -101,8 +101,11 @@ export const UserProfileContainer = styled.div`
           width: 20px;
           height: 20px;
         }
+      }
 
+      .details {
         @media screen and (max-width: 460px) {
+          display: none;
         }
       }
     }
