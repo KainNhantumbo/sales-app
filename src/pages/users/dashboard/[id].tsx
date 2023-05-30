@@ -7,7 +7,7 @@ import {
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { useTheme } from 'styled-components';
-import { app_metadata } from '@/data/app-data';
+import { app_metadata, dashboardRoutes } from '@/data/app-data';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { IoAlbumsOutline, IoApps } from 'react-icons/io5';
@@ -18,28 +18,7 @@ export default function Dashboard(): JSX.Element {
   const router: NextRouter = useRouter();
   const { state } = useAppContext();
 
-  const actionRoutes = [
-    {
-      url: `/users/dashboard/${state.userAuth.id}/profile-editor`,
-      icon: BiUserCheck,
-      label: 'Editor de Perfil',
-    },
-    {
-      url: `/users/dashboard/${state.userAuth.id}/store-editor`,
-      icon: BiStoreAlt,
-      label: 'Editor de Loja',
-    },
-    {
-      url: `/users/dashboard/${state.userAuth.id}/job-editor`,
-      icon: BiBriefcaseAlt2,
-      label: 'Empregos',
-    },
-    {
-      url: `/users/dashboard/${state.userAuth.id}/post-editor`,
-      icon: IoAlbumsOutline,
-      label: 'Postagens',
-    },
-  ];
+  const actionRoutes = dashboardRoutes(state.userAuth?.id);
 
   return (
     <Layout>

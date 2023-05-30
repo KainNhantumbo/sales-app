@@ -110,6 +110,27 @@ export const initialState: State = {
     createdAt: '',
     updatedAt: '',
   },
+  product: {
+    _id: '',
+    name: '',
+    category: product_categories[0],
+    description: '',
+    created_by: '',
+    store: '',
+    promotion: { status: false, percentage: 0 },
+    price: 0,
+    delivery_tax: 0,
+    quantity: 0,
+    images: {
+      img_0: { id: '', url: '' },
+      img_1: { id: '', url: '' },
+      img_2: { id: '', url: '' },
+      img_3: { id: '', url: '' },
+    },
+    invalidated: false,
+    favorites: [],
+    allow_comments: false,
+  },
   comment: {
     _id: '',
     source_id: '',
@@ -178,6 +199,11 @@ export default function reducer(state: State, action: Action) {
       return {
         ...state,
         store: action.payload?.store!,
+      };
+    case actions.PRODUCT_DATA:
+      return {
+        ...state,
+        product: action.payload?.product!,
       };
     case actions.SEARCH:
       return {

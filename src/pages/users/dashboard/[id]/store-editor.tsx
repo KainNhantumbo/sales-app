@@ -58,11 +58,6 @@ export default function StoreEditor(): JSX.Element {
     data: '',
   });
 
-  // const [img0File, setImg0File] = useState<FileList | null>(null);
-  // const [img1File, setImg1File] = useState<FileList | null>(null);
-  // const [img2File, setImg2File] = useState<FileList | null>(null);
-  // const [img3File, setImg3File] = useState<FileList | null>(null);
-
   // --------------------functions------------------
   function handleChange(e: InputEvents): void {
     dispatch({
@@ -104,7 +99,7 @@ export default function StoreEditor(): JSX.Element {
     fetchAPI({
       method: 'delete',
       url: `/api/v1/users/account/assets`,
-      data: { image: state.user.cover_image?.id },
+      data: { image: state.store.cover_image?.id },
     })
       .then(() => {
         setCoverImageData({
@@ -115,8 +110,8 @@ export default function StoreEditor(): JSX.Element {
           type: actions.USER_DATA,
           payload: {
             ...state,
-            user: {
-              ...state.user,
+            store: {
+              ...state.store,
               cover_image: {
                 id: '',
                 url: '',
@@ -315,7 +310,7 @@ export default function StoreEditor(): JSX.Element {
                       <div className='form-element'>
                         <label htmlFor='name'>
                           <IoEllipsisHorizontal />
-                          <span>Nome da Loja</span>
+                          <span>Nome da Loja *</span>
                         </label>
                         <input
                           type='text'
@@ -338,7 +333,7 @@ export default function StoreEditor(): JSX.Element {
                       <div className='form-element'>
                         <label htmlFor='category'>
                           <IoLayersOutline />
-                          <span>Categoria Principal dos Produtos</span>
+                          <span>Categoria Principal dos Produtos *</span>
                         </label>
                         <select
                           name='category'
@@ -397,7 +392,7 @@ export default function StoreEditor(): JSX.Element {
                       <div className='form-element'>
                         <label htmlFor='description'>
                           <IoEllipsisHorizontal />
-                          <span>Descrição da Loja</span>
+                          <span>Descrição da Loja *</span>
                         </label>
 
                         <textarea

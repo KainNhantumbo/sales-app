@@ -1,4 +1,4 @@
-import { IComment, ISignInData, ISignUp, Store, User } from './index';
+import { IComment, ISignInData, ISignUp, Product, Store, User } from './index';
 
 export type State = {
   isLogoutPrompt: boolean;
@@ -21,6 +21,7 @@ export type State = {
   signInData: ISignInData;
   user: User;
   store: Store;
+  product: Product;
   comment: IComment;
   commentsList: IComment[];
 };

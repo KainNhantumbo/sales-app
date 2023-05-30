@@ -1,13 +1,18 @@
 import {
+  IoAlbums,
+  IoBriefcase,
   IoCard,
   IoCartOutline,
   IoChatbubbleEllipsesOutline,
+  IoGrid,
   IoInfiniteOutline,
   IoLogoFacebook,
   IoMegaphoneOutline,
   IoRocketOutline,
+  IoStorefront,
 } from 'react-icons/io5';
 import Package from '../../package.json';
+import { IoMdPerson } from 'react-icons/io';
 import type { Author } from '../../@types/index';
 import authorPicture from '../../public/assets/author.jpg';
 import { FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
@@ -117,3 +122,33 @@ export const pricing_data = [
     ],
   },
 ];
+
+export function dashboardRoutes(id: string) {
+  return [
+    {
+      url: `/users/dashboard/${id}/profile-editor`,
+      icon: IoMdPerson,
+      label: 'Editor de Perfil',
+    },
+    {
+      url: `/users/dashboard/${id}/store-editor`,
+      icon: IoStorefront,
+      label: 'Editor de Loja',
+    },
+    {
+      url: `/users/dashboard/${id}/products`,
+      icon: IoGrid,
+      label: 'Produtos',
+    },
+    {
+      url: `/users/dashboard/${id}/job-editor`,
+      icon: IoBriefcase,
+      label: 'Empregos',
+    },
+    {
+      url: `/users/dashboard/${id}/post-editor`,
+      icon: IoAlbums,
+      label: 'Postagens',
+    },
+  ].sort((a, b) => (a.label > b.label ? 1 : -1));
+}

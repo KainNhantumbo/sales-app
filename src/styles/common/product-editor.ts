@@ -7,7 +7,7 @@ import {
   StyledLabels,
 } from '../defaults';
 
-export const StoreEditorContainer = styled.div`
+export const ProductEditorContainer = styled.div`
   position: relative;
   width: 100%;
   min-height: 90vh;
@@ -91,6 +91,7 @@ export const StoreEditorContainer = styled.div`
       flex-flow: row nowrap;
       align-items: center;
       margin-bottom: 10px;
+      z-index: 0;
 
       h2 {
         white-space: nowrap;
@@ -183,65 +184,137 @@ export const StoreEditorContainer = styled.div`
               }
             }
 
-            .image-container {
+            .check-box {
               width: 100%;
               display: flex;
-              align-items: start;
-              flex-direction: column;
-              gap: 10px;
-              justify-content: center;
-              position: relative;
-              margin-bottom: 20px;
+              justify-content: flex-start;
+              align-items: flex-start;
+              gap: 8px;
+              margin: 5px 0;
 
-              input {
-                display: none;
-              }
+              input[type='checkbox'] {
+                position: relative;
+                width: 60px;
+                height: 20px;
+                appearance: none;
+                left: 25px;
+                -moz-appearance: none;
 
-              .description {
-                line-height: 1.2rem;
+                outline: none;
+                border-radius: 15px;
+                box-shadow: inset 0 0 5px
+                  rgba(${({ theme }) => theme.accent}, 0.2);
+                transition: 0.5s ease;
+                margin-top: 0.4em;
+                margin-right: 0.2em;
+
+                :checked {
+                  background: rgba(${({ theme }) => theme.primary});
+                }
+
+                ::after {
+                  content: '';
+                  position: absolute;
+                  width: 24px;
+                  height: 24px;
+                  transform: scale(1.1);
+                  border-radius: 50%;
+                  top: -2px;
+                  left: 0;
+                  background: rgba(${({ theme }) => theme.font});
+                  box-shadow: 0 0 20px rgba(${({ theme }) => theme.accent}, .5);
+                  transition: all 0.2s ease;
+                }
+
+                :checked::after {
+                  transform: scale(1.1) translateX(35px);
+                  background: rgba(${({ theme }) => theme.primary_variant});
+                }
               }
             }
 
-            .cover-image {
-              img {
-                width: 100%;
-                border-radius: 10px;
-                max-width: 1280px;
-                max-height: 150px;
-                object-fit: cover;
+            .images-container {
+              width: 100%;
+              display: flex;
+              flex-flow: row wrap;
+              justify-content: center;
+              gap: 20px;
+              margin: 0 auto;
+
+              .header {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                justify-content: start;
+
+                h2 {
+                  font-size: 1.2rem;
+                  font-weight: 500;
+                  line-height: 1.6rem;
+                }
               }
 
-              .camera-icon {
-                width: 680px;
-                height: 150px;
-                border-radius: 12px;
-                margin: 0 auto;
-                padding: 5px;
-                background: rgba(${({ theme }) => theme.font}, 0.1);
-              }
+              .img-container {
+                display: flex;
+                align-items: start;
+                flex-flow: row wrap;
+                gap: 10px;
+                justify-content: center;
+                position: relative;
+                margin-bottom: 20px;
 
-              label {
-                ${BaseButton}
-                width: fit-content;
-                height: fit-content;
-                position: absolute;
-                top: 3px;
-                left: calc(0% + 35px);
-                background: rgba(${({ theme }) => theme.primary}, 0.8);
-                padding: 8px;
-              }
+                input {
+                  display: none;
+                }
 
-              .clear-image {
-                ${Button_Mono_A}
-                position: absolute;
-                top: 3px;
-                right: 32px;
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                background: rgba(${({ theme }) => theme.primary}, 0.8);
-                :hover {
-                  background: rgba(${({ theme }) => theme.alert}, 0.6);
+                .description {
+                  line-height: 1.2rem;
+                }
+
+                img {
+                  width: 100%;
+                  border-radius: 10px;
+                  width: 320px;
+                  height: 420px;
+                  object-fit: cover;
+                }
+
+                .camera-icon {
+                  width: 320px;
+                  height: 420px;
+                  border-radius: 12px;
+                  margin: 0 auto;
+                  padding: 5px;
+                  background: rgba(${({ theme }) => theme.font}, 0.1);
+                }
+
+                label {
+                  ${Button_Mono_A}
+                  width: 30px;
+                  height: 30px;
+                  position: absolute;
+                  border-radius: 50%;
+                  top: 5px;
+                  left: calc(0% + 5px);
+                  background: rgba(${({ theme }) => theme.primary}, 0.8);
+                  padding: 8px;
+                  :hover {
+                    background: rgba(${({ theme }) => theme.primary}, 0.6);
+                  }
+                }
+
+                .clear-image {
+                  ${Button_Mono_A}
+                  position: absolute;
+                  top: 5px;
+                  right: 5px;
+                  width: 30px;
+                  height: 30px;
+                  border-radius: 50%;
+                  background: rgba(${({ theme }) => theme.primary}, 0.8);
+                  :hover {
+                    background: rgba(${({ theme }) => theme.alert}, 0.6);
+                  }
                 }
               }
             }
@@ -306,29 +379,6 @@ export const StoreEditorContainer = styled.div`
           .save {
             ${BaseButton}
           }
-        }
-      }
-
-      .delete-account {
-        width: 100%;
-        max-width: 1280px;
-        padding: 20px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
-        line-height: 1.4rem;
-
-        section {
-          span {
-            line-height: 1.8rem;
-            color: rgb(${({ theme }) => theme.alert});
-          }
-        }
-
-        .save {
-          ${BaseButton}
         }
       }
     }

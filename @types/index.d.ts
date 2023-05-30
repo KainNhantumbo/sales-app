@@ -150,29 +150,19 @@ export type UserPost = {
 
 export type Product = {
   _id: string;
-  title: string;
+  name: string;
   category: string;
   description: string;
   created_by: string;
   store: string;
+  promotion: { status: boolean; percentage: number };
   price: number;
-  old_price?: number;
-  discount_value?: number;
-  delivery_tax?: number;
-  negotiable_price: boolean;
-  sell_amount_type: string;
-  images: { id: string; file_id: string; url: string; blurhash: string }[];
-  favorites: { _id: string; first_name: string; last_name: string }[];
-  has_available_stock: boolean;
-  allow_comments: boolean;
+  delivery_tax: number;
+  quantity: number;
+  images: { [x: string]: { id: string; url: string } };
   invalidated: boolean;
-  location: {
-    country: string;
-    state: string;
-    adress: string;
-  };
-  createdAt: string;
-  updatedAt: string;
+  favorites: string[];
+  allow_comments: boolean;
 };
 
 export type Store = {
