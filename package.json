@@ -1,6 +1,6 @@
 {
   "name": "Rubymart",
-  "version": "0.1.8 (beta)",
+  "version": "0.1.9 (beta)",
   "private": true,
   "author": "Kain Nhantumbo",
   "url": "https://rubymart.vercel.app",
@@ -15,7 +15,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@editorjs/editorjs": "^2.27.0",
     "@emailjs/browser": "^3.11.0",
+    "@lexical/react": "^0.11.1",
+    "@popperjs/core": "^2.11.8",
     "@types/node": "20.0.0",
     "@types/react": "18.2.5",
     "@types/react-dom": "18.2.3",
@@ -24,6 +27,7 @@
     "compressorjs": "^1.2.1",
     "framer-motion": "^10.12.7",
     "keen-slider-extended": "^6.8.8",
+    "lexical": "^0.11.1",
     "moment": "^2.29.4",
     "next": "13.4.0",
     "rc-pagination": "^3.4.2",

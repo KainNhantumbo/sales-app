@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import moment from 'moment';
 import Layout from '@/components/Layout';
 import { IBlogPosts } from '../../../@types/index';
 import { getPosts } from '@/lib/queries';
@@ -8,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { IoHeart, IoLibraryOutline, IoOpenOutline } from 'react-icons/io5';
 import SearchComponent from '@/components/Search';
 import { BlogSeachContainer as Container } from '@/styles/common/blog-search';
-import { IoIosAlbums, IoIosPlanet, IoMdCalendar } from 'react-icons/io';
+import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
 import { DotLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import { formatDate } from '@/lib/time-fns';
@@ -18,11 +17,11 @@ export default function BlogSearch() {
   const theme = useTheme();
   const [posts, setPosts] = useState<IBlogPosts[]>([]);
   const [loading, setLoading] = useState<{ status: boolean }>({
-    status: false,
+    status: false
   });
   const [error, setError] = useState<{ status: boolean; msg: string }>({
     status: false,
-    msg: '',
+    msg: ''
   });
 
   async function fetchPosts(): Promise<void> {
@@ -30,20 +29,20 @@ export default function BlogSearch() {
     setLoading({ status: true });
     try {
       const { data } = await getPosts({
-        search: router.query?.q as string,
+        search: router.query?.q as string
       });
       setPosts(data);
       if (data?.length === 0) {
         setError({
           status: true,
-          msg: 'Não há resultados para a sua pesquisa',
+          msg: 'Não há resultados para a sua pesquisa'
         });
       }
     } catch (e: any) {
       console.error(e);
       setError({
         status: true,
-        msg: 'Um erro ocorreu durante o processamento da sua requisição. Por favor, tente mais tarde',
+        msg: 'Um erro ocorreu durante o processamento da sua requisição. Por favor, tente mais tarde'
       });
     } finally {
       setLoading({ status: false });
@@ -51,11 +50,14 @@ export default function BlogSearch() {
   }
 
   useEffect(() => {
-    setTimeout(() => {
+    const fetchTimer = setTimeout(() => {
       if (router.query['q']) {
         fetchPosts();
       }
     }, 500);
+    return () => {
+      clearTimeout(fetchTimer);
+    };
   }, [router.query]);
 
   useEffect(() => {
@@ -86,7 +88,7 @@ export default function BlogSearch() {
               style={{
                 fontWeight: '400',
                 fontSize: '1.4rem',
-                lineHeight: '1.8rem',
+                lineHeight: '1.8rem'
               }}>
               Pesquisou por: {router.query?.q}
             </section>

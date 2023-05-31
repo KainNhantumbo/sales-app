@@ -17,13 +17,13 @@ import {
   IoStar,
   IoStorefront,
   IoSyncOutline,
-  IoTrashOutline,
+  IoTrashOutline
 } from 'react-icons/io5';
 import Compressor from 'compressorjs';
 import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
-import { actions } from '@/data/reducer-actions';
+import { actions } from '@/data/actions';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
@@ -49,13 +49,13 @@ export default function StoreEditor(): JSX.Element {
 
   // --------------------states---------------------
   const [countryStates, setCountryStates] = useState<string[]>([
-    state.store.location?.state,
+    state.store.location?.state
   ]);
   const [coverImageFile, setCoverImageFile] = useState<FileList | null>(null);
 
   const [coverImageData, setCoverImageData] = useState({
     id: '',
-    data: '',
+    data: ''
   });
 
   // --------------------functions------------------
@@ -66,9 +66,9 @@ export default function StoreEditor(): JSX.Element {
         ...state,
         store: {
           ...state.store,
-          [e.target.name]: e.target.value,
-        },
-      },
+          [e.target.name]: e.target.value
+        }
+      }
     });
   }
 
@@ -87,10 +87,10 @@ export default function StoreEditor(): JSX.Element {
             const encodedImage: string = e.target?.result as string;
             setCoverImageData({
               id: state.user.cover_image?.id || '',
-              data: encodedImage,
+              data: encodedImage
             });
           };
-        },
+        }
       });
     }
   }
@@ -99,12 +99,12 @@ export default function StoreEditor(): JSX.Element {
     fetchAPI({
       method: 'delete',
       url: `/api/v1/users/account/assets`,
-      data: { image: state.store.cover_image?.id },
+      data: { image: state.store.cover_image?.id }
     })
       .then(() => {
         setCoverImageData({
           id: '',
-          data: '',
+          data: ''
         });
         dispatch({
           type: actions.USER_DATA,
@@ -114,10 +114,10 @@ export default function StoreEditor(): JSX.Element {
               ...state.store,
               cover_image: {
                 id: '',
-                url: '',
-              },
-            },
-          },
+                url: ''
+              }
+            }
+          }
         });
       })
       .catch((error) => {
@@ -129,15 +129,15 @@ export default function StoreEditor(): JSX.Element {
     setLoading({ status: true, key: 'store-data' });
     fetchAPI({
       method: 'get',
-      url: `/api/v1/users/store`,
+      url: `/api/v1/users/store`
     })
       .then(({ data }) => {
         dispatch({
           type: actions.STORE_DATA,
           payload: {
             ...state,
-            store: { ...state.store, ...data },
-          },
+            store: { ...state.store, ...data }
+          }
         });
       })
       .catch((error) => {
@@ -147,7 +147,7 @@ export default function StoreEditor(): JSX.Element {
           msg:
             error?.response?.data?.message ||
             'Oops! Algo deu errado. Tente novamente.',
-          key: 'store-data',
+          key: 'store-data'
         });
       })
       .finally(() => {
@@ -171,8 +171,8 @@ export default function StoreEditor(): JSX.Element {
           delivery_policy: state.store.delivery_policy,
           location: state.store.location,
           active: state.store.active,
-          coverImageData,
-        },
+          coverImageData
+        }
       });
     } catch (error: any) {
       console.error(error);
@@ -181,7 +181,7 @@ export default function StoreEditor(): JSX.Element {
         msg:
           error?.response?.data?.message ||
           'Oops! Algo deu errado. Tente novamente.',
-        key: 'store-update',
+        key: 'store-update'
       });
     } finally {
       setLoading({ status: false, key: 'store-update' });
@@ -346,9 +346,9 @@ export default function StoreEditor(): JSX.Element {
                                 ...state,
                                 store: {
                                   ...state.store,
-                                  category: e.target.value,
-                                },
-                              },
+                                  category: e.target.value
+                                }
+                              }
                             });
                           }}>
                           {product_categories
@@ -456,10 +456,10 @@ export default function StoreEditor(): JSX.Element {
                                   ...state.store,
                                   location: {
                                     ...state.store.location,
-                                    country: e.target.value,
-                                  },
-                                },
-                              },
+                                    country: e.target.value
+                                  }
+                                }
+                              }
                             });
                           }}>
                           {countries
@@ -490,10 +490,10 @@ export default function StoreEditor(): JSX.Element {
                                   ...state.store,
                                   location: {
                                     ...state.store.location,
-                                    state: e.target.value,
-                                  },
-                                },
-                              },
+                                    state: e.target.value
+                                  }
+                                }
+                              }
                             });
                           }}>
                           {countryStates
@@ -530,10 +530,10 @@ export default function StoreEditor(): JSX.Element {
                                       ...state.store,
                                       location: {
                                         ...state.store.location,
-                                        adress: e.target.value,
-                                      },
-                                    },
-                                  },
+                                        adress: e.target.value
+                                      }
+                                    }
+                                  }
                                 })
                           }
                         />
@@ -664,9 +664,9 @@ export default function StoreEditor(): JSX.Element {
                       ...state,
                       store: {
                         ...state.store,
-                        active: !state.store.active,
-                      },
-                    },
+                        active: !state.store.active
+                      }
+                    }
                   })
                 }>
                 {!state.store.active ? (
@@ -720,7 +720,7 @@ export default function StoreEditor(): JSX.Element {
                         color={`rgb(${theme.primary})`}
                         aria-placeholder='Processando...'
                         cssOverride={{
-                          display: 'block',
+                          display: 'block'
                         }}
                       />
                       <span>Processando...</span>

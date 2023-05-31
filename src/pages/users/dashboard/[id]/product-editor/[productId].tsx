@@ -16,7 +16,7 @@ import {
   IoReload,
   IoSave,
   IoSyncOutline,
-  IoTrashOutline,
+  IoTrashOutline
 } from 'react-icons/io5';
 import { AxiosResponse } from 'axios';
 import Compressor from 'compressorjs';
@@ -24,7 +24,7 @@ import Layout from '@/components/Layout';
 import { InputEvents, Product } from '@/../@types';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
-import { actions } from '@/data/reducer-actions';
+import { actions } from '@/data/actions';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
@@ -51,7 +51,7 @@ export default function ProductEditor(): JSX.Element {
     img_0: { id: '', data: '' },
     img_1: { id: '', data: '' },
     img_2: { id: '', data: '' },
-    img_3: { id: '', data: '' },
+    img_3: { id: '', data: '' }
   });
 
   // --------------------functions--------------------
@@ -72,11 +72,11 @@ export default function ProductEditor(): JSX.Element {
               ...obj,
               [`img_${index}`]: {
                 id: state.user.cover_image?.id || '',
-                data: encodedImage,
-              },
+                data: encodedImage
+              }
             }));
           };
-        },
+        }
       });
     }
   }
@@ -88,9 +88,9 @@ export default function ProductEditor(): JSX.Element {
         ...state,
         product: {
           ...state.product,
-          [e.target.name]: e.target.value,
-        },
-      },
+          [e.target.name]: e.target.value
+        }
+      }
     });
   }
 
@@ -100,7 +100,7 @@ export default function ProductEditor(): JSX.Element {
         setImagesData((data) => {
           return {
             ...data,
-            [index]: { id: '', data: '' },
+            [index]: { id: '', data: '' }
           };
         });
       }
@@ -109,14 +109,14 @@ export default function ProductEditor(): JSX.Element {
     fetchAPI({
       method: 'delete',
       url: `/api/v1/users/product/assets`,
-      data: { image: id },
+      data: { image: id }
     })
       .then(() => {
         if (index) {
           setImagesData((data) => {
             return {
               ...data,
-              [index]: { id: '', data: '' },
+              [index]: { id: '', data: '' }
             };
           });
         }
@@ -131,10 +131,10 @@ export default function ProductEditor(): JSX.Element {
                 img_0: { id: '', url: '' },
                 img_1: { id: '', url: '' },
                 img_2: { id: '', url: '' },
-                img_3: { id: '', url: '' },
-              },
-            },
-          },
+                img_3: { id: '', url: '' }
+              }
+            }
+          }
         });
       })
       .catch((error) => {
@@ -146,15 +146,15 @@ export default function ProductEditor(): JSX.Element {
     setLoading({ status: true, key: 'product-data' });
     fetchAPI({
       method: 'get',
-      url: `/api/v1/users/products/${productId}`,
+      url: `/api/v1/users/products/${productId}`
     })
       .then(({ data }: AxiosResponse<Product>) => {
         dispatch({
           type: actions.PRODUCT_DATA,
           payload: {
             ...state,
-            product: { ...state.product, ...data },
-          },
+            product: { ...state.product, ...data }
+          }
         });
       })
       .catch((error) => {
@@ -164,7 +164,7 @@ export default function ProductEditor(): JSX.Element {
           msg:
             error?.response?.data?.message ||
             'Oops! Algo deu errado. Tente novamente.',
-          key: 'product-data',
+          key: 'product-data'
         });
       })
       .finally(() => {
@@ -191,10 +191,10 @@ export default function ProductEditor(): JSX.Element {
             img_0: imagesData.img_0,
             img_1: imagesData.img_1,
             img_2: imagesData.img_2,
-            img_3: imagesData.img_3,
+            img_3: imagesData.img_3
           },
-          allow_comments: state.product.allow_comments,
-        },
+          allow_comments: state.product.allow_comments
+        }
       });
     } catch (error: any) {
       console.error(error);
@@ -203,7 +203,7 @@ export default function ProductEditor(): JSX.Element {
         msg:
           error?.response?.data?.message ||
           'Oops! Algo deu errado. Tente novamente.',
-        key: 'product-update',
+        key: 'product-update'
       });
     } finally {
       setLoading({ status: false, key: 'product-update' });
@@ -229,10 +229,10 @@ export default function ProductEditor(): JSX.Element {
             img_0: imagesData.img_0,
             img_1: imagesData.img_1,
             img_2: imagesData.img_2,
-            img_3: imagesData.img_3,
+            img_3: imagesData.img_3
           },
-          allow_comments: state.product.allow_comments,
-        },
+          allow_comments: state.product.allow_comments
+        }
       });
     } catch (error: any) {
       console.error(error);
@@ -241,7 +241,7 @@ export default function ProductEditor(): JSX.Element {
         msg:
           error?.response?.data?.message ||
           'Oops! Algo deu errado. Tente novamente.',
-        key: 'product-update',
+        key: 'product-update'
       });
     } finally {
       setLoading({ status: false, key: 'product-update' });
@@ -249,10 +249,11 @@ export default function ProductEditor(): JSX.Element {
   }
 
   useEffect((): (() => void) | void => {
+    console.log(router.query);
     const productId: string = router.query?.productId as string;
-    if (!productId) return;
+    if (!productId || productId=== 'new') return;
     const fetch_data = setTimeout(() => {
-      // handleGet(productId);
+      handleGet(productId);
     }, 100);
     return () => clearTimeout(fetch_data);
   }, []);
@@ -261,15 +262,15 @@ export default function ProductEditor(): JSX.Element {
   useEffect(() => {
     fetchAPI({
       method: 'get',
-      url: `/api/v1/users/store?fields=name`,
+      url: `/api/v1/users/store?fields=name`
     })
       .then(({ data }) => {
         dispatch({
           type: actions.STORE_DATA,
           payload: {
             ...state,
-            store: { ...state.store, ...data },
-          },
+            store: { ...state.store, ...data }
+          }
         });
       })
       .catch((error) => {
@@ -341,7 +342,7 @@ export default function ProductEditor(): JSX.Element {
                       </p>
                     </div>
                     {Object.entries(imagesData).map(([key, value], index) => (
-                      <div className='img-container'>
+                      <div className='img-container' key={key}>
                         {value.data ? (
                           <img
                             className='cover-image'
@@ -474,9 +475,9 @@ export default function ProductEditor(): JSX.Element {
                                 ...state,
                                 product: {
                                   ...state.product,
-                                  category: e.target.value,
-                                },
-                              },
+                                  category: e.target.value
+                                }
+                              }
                             });
                           }}>
                           {product_categories
@@ -560,10 +561,10 @@ export default function ProductEditor(): JSX.Element {
                                   ...state.product,
                                   promotion: {
                                     ...state.product.promotion,
-                                    status: e.target.checked,
-                                  },
-                                },
-                              },
+                                    status: e.target.checked
+                                  }
+                                }
+                              }
                             });
                           }}
                           checked={state.product.promotion.status}
@@ -593,10 +594,10 @@ export default function ProductEditor(): JSX.Element {
                                   ...state.product,
                                   promotion: {
                                     ...state.product.promotion,
-                                    percentage: Number(e.target.value),
-                                  },
-                                },
-                              },
+                                    percentage: Number(e.target.value)
+                                  }
+                                }
+                              }
                             });
                           }}
                         />
@@ -621,9 +622,9 @@ export default function ProductEditor(): JSX.Element {
                                 ...state,
                                 product: {
                                   ...state.product,
-                                  allow_comments: e.target.checked,
-                                },
-                              },
+                                  allow_comments: e.target.checked
+                                }
+                              }
                             });
                           }}
                         />
@@ -671,7 +672,7 @@ export default function ProductEditor(): JSX.Element {
                         color={`rgb(${theme.primary})`}
                         aria-placeholder='Processando...'
                         cssOverride={{
-                          display: 'block',
+                          display: 'block'
                         }}
                       />
                       <span>Processando...</span>

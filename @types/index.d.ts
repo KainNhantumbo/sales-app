@@ -1,7 +1,7 @@
-import {} from 'styled-components';
+import type {} from 'styled-components';
 import type { IconType } from 'react-icons';
+import type { StaticImageData } from 'next/image';
 import type { ReactNode, ChangeEvent, FormEvent } from 'react';
-import { StaticImageData } from 'next/image';
 
 // ========================================== //
 // -------------static types-------------------
@@ -17,6 +17,14 @@ export type ShareUrls = {
   name: string;
   url: string;
   icon: IconType;
+};
+
+export type AppStatus = {
+  is_active: boolean;
+  icon: IconType;
+  err_message: string | undefined;
+  button_label: string | undefined;
+  action_function: (() => void) | undefined;
 };
 
 export type Theme = {
@@ -148,22 +156,27 @@ export type UserPost = {
   updatedAt: string;
 };
 
-export type Product = {
+export type ProductsList = {
   _id: string;
   name: string;
   category: string;
+  price: number;
+  quantity: number;
+  promotion: { status: boolean; percentage: number };
+  favorites: string[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+export interface Product extends ProductsList {
   description: string;
   created_by: string;
   store: string;
-  promotion: { status: boolean; percentage: number };
-  price: number;
   delivery_tax: number;
-  quantity: number;
   images: { [x: string]: { id: string; url: string } };
   invalidated: boolean;
-  favorites: string[];
   allow_comments: boolean;
-};
+}
 
 export type Store = {
   _id: string;

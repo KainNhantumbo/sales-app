@@ -1,21 +1,33 @@
-import { actions } from '@/data/reducer-actions';
+import { actions } from '@/data/actions';
 import type { State, Action } from '../../@types/reducer';
 import product_categories from '../data/product-categories.json';
+import { IoBag } from 'react-icons/io5';
 
 export const initialState: State = {
   isLogoutPrompt: false,
   isLoginPrompt: false,
+  isFilterActive: false,
+  isSearchActive: false,
+  isSortActive: false,
+  productsListQuery: { query: '', sort: '' },
   isDeleteAccountPrompt: false,
   isDeleteCommentPrompt: { status: false, commentId: '' },
   isUserWorkingDataModal: false,
   isConnected: false,
+  app_status: {
+    icon: IoBag,
+    is_active: false,
+    button_label: '',
+    action_function: undefined,
+    err_message: undefined
+  },
   userAuth: {
     id: '',
     name: '',
     token: '',
     email: '',
     profile_image: '',
-    invalidated: false,
+    invalidated: false
   },
   search: '',
   newSubscriptorValue: { subscriptor: '' },
@@ -24,11 +36,11 @@ export const initialState: State = {
     last_name: '',
     email: '',
     password: '',
-    confirm_password: '',
+    confirm_password: ''
   },
   signInData: {
     email: '',
-    password: '',
+    password: ''
   },
   user: {
     _id: '',
@@ -54,24 +66,24 @@ export const initialState: State = {
         start_date: '',
         description: '',
         portfolio_url: '',
-        company_name: '',
-      },
+        company_name: ''
+      }
     ],
     location: {
       country: '',
       state: '',
       adress: '',
-      zip_code: '',
+      zip_code: ''
     },
     social_network: {
       website: '',
       whatsapp: '',
       instagram: '',
       facebook: '',
-      linkedin: '',
+      linkedin: ''
     },
     createdAt: '',
-    updatedAt: '',
+    updatedAt: ''
   },
   store: {
     _id: '',
@@ -91,8 +103,8 @@ export const initialState: State = {
         whatsapp: '',
         instagram: '',
         facebook: '',
-        linkedin: '',
-      },
+        linkedin: ''
+      }
     },
     description: '',
     slogan: '',
@@ -105,10 +117,10 @@ export const initialState: State = {
     location: {
       country: 'Mozambique',
       state: 'Maputo',
-      adress: '',
+      adress: ''
     },
     createdAt: '',
-    updatedAt: '',
+    updatedAt: ''
   },
   product: {
     _id: '',
@@ -125,11 +137,13 @@ export const initialState: State = {
       img_0: { id: '', url: '' },
       img_1: { id: '', url: '' },
       img_2: { id: '', url: '' },
-      img_3: { id: '', url: '' },
+      img_3: { id: '', url: '' }
     },
+    createdAt: '',
+    updatedAt: '',
     invalidated: false,
     favorites: [],
-    allow_comments: false,
+    allow_comments: false
   },
   comment: {
     _id: '',
@@ -138,20 +152,50 @@ export const initialState: State = {
       _id: '',
       first_name: '',
       last_name: '',
-      profile_image: { id: '', url: '' },
+      profile_image: { id: '', url: '' }
     },
     content: '',
     parent_id: '',
     favorites: [],
     invalidated: false,
     updatedAt: '',
-    createdAt: '',
+    createdAt: ''
   },
-  commentsList: [],
+  productList: [],
+  commentsList: []
 };
 
 export default function reducer(state: State, action: Action) {
   switch (action.type) {
+    case actions.SEARCH_BOX_CONTROL:
+      return {
+        ...state,
+        isFilterActive: false,
+        isSortActive: false,
+        isSearchActive: !state.isSearchActive
+      };
+    case actions.SORT_BOX_CONTROL:
+      return {
+        ...state,
+        isFilterActive: false,
+        isSearchActive: false,
+        isSortActive: !state.isSortActive
+      };
+    case actions.CLEAN_UP_MODALS:
+      return {
+        ...state,
+        isFilterActive: false,
+        isSearchActive: false,
+        isSortActive: false,
+        isPromptActive: false
+      };
+    case actions.PRODUCTS_LIST_QUERY:
+      return {
+        ...state,
+        productsListQuery: action.payload?.productsListQuery!
+      };
+    case actions.APP_STATUS:
+      return { ...state, app_status: action.payload?.app_status! };
     case actions.LOGOUT_PROMPT:
       return { ...state, isLogoutPrompt: !state.isLogoutPrompt };
     case actions.LOGIN_PROMPT:
@@ -161,65 +205,70 @@ export default function reducer(state: State, action: Action) {
     case actions.DELETE_COMMENT_PROMPT:
       return {
         ...state,
-        isDeleteCommentPrompt: action.payload?.isDeleteCommentPrompt!,
+        isDeleteCommentPrompt: action.payload?.isDeleteCommentPrompt!
       };
     case actions.USER_WORKING_DATA_MODAL:
       return {
         ...state,
-        isUserWorkingDataModal: !state.isUserWorkingDataModal,
+        isUserWorkingDataModal: !state.isUserWorkingDataModal
       };
     case actions.USER_AUTH:
       return {
         ...state,
-        userAuth: action.payload?.userAuth!,
+        userAuth: action.payload?.userAuth!
       };
     case actions.IS_CONNECTED:
       return {
         ...state,
-        isConnected: action.payload?.isConnected!,
+        isConnected: action.payload?.isConnected!
       };
     case actions.NEW_SUBSCRIPTOR_VALUE:
       return {
         ...state,
-        newSubscriptorValue: action.payload?.newSubscriptorValue!,
+        newSubscriptorValue: action.payload?.newSubscriptorValue!
       };
     case actions.SIGNUP_DATA:
       return {
         ...state,
-        signupData: action.payload?.signupData!,
+        signupData: action.payload?.signupData!
       };
     case actions.SIGNIN_DATA:
       return { ...state, signInData: action.payload?.signInData! };
     case actions.USER_DATA:
       return {
         ...state,
-        user: action.payload?.user!,
+        user: action.payload?.user!
       };
     case actions.STORE_DATA:
       return {
         ...state,
-        store: action.payload?.store!,
+        store: action.payload?.store!
       };
     case actions.PRODUCT_DATA:
       return {
         ...state,
-        product: action.payload?.product!,
+        product: action.payload?.product!
+      };
+    case actions.PRODUCTS_LIST_DATA:
+      return {
+        ...state,
+        productList: action.payload?.productList!
       };
     case actions.SEARCH:
       return {
         ...state,
-        search: action.payload?.search!,
+        search: action.payload?.search!
       };
 
     case actions.CREATE_COMMENT:
       return {
         ...state,
-        comment: action.payload?.comment!,
+        comment: action.payload?.comment!
       };
     case actions.UPDATE_COMMENTS_LIST:
       return {
         ...state,
-        commentsList: action.payload?.commentsList!,
+        commentsList: action.payload?.commentsList!
       };
     default:
       return { ...state };

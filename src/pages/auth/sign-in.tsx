@@ -2,10 +2,10 @@ import {
   IoLockClosedOutline,
   IoLogoFacebook,
   IoLogoGoogle,
-  IoMailOutline,
+  IoMailOutline
 } from 'react-icons/io5';
 import fetch from '../../config/client';
-import { actions } from '../../data/reducer-actions';
+import { actions } from '../../data/actions';
 import { useState, useEffect } from 'react';
 import { useAppContext } from '../../context/AppContext';
 import { NextRouter, useRouter } from 'next/router';
@@ -30,9 +30,9 @@ export default function Signin(): JSX.Element {
         ...state,
         signInData: {
           ...state.signInData,
-          [e.target.name]: e.target.value,
-        },
-      },
+          [e.target.name]: e.target.value
+        }
+      }
     });
   };
 
@@ -41,7 +41,7 @@ export default function Signin(): JSX.Element {
     if (state.signInData.password.length < 8) {
       setError({
         status: true,
-        message: 'A senha deve conter pelo menos 8 carácteres',
+        message: 'A senha deve conter pelo menos 8 carácteres'
       });
       return;
     }
@@ -51,7 +51,7 @@ export default function Signin(): JSX.Element {
         method: 'post',
         url: '/api/v1/auth/default/login',
         data: state.signInData,
-        withCredentials: true,
+        withCredentials: true
       });
       dispatch({
         type: actions.USER_AUTH,
@@ -63,9 +63,9 @@ export default function Signin(): JSX.Element {
             invalidated: data?.invalidated,
             email: data?.email,
             name: data?.name,
-            profile_image: data?.profile_image,
-          },
-        },
+            profile_image: data?.profile_image
+          }
+        }
       });
       router.push(`/users/dashboard/${data?.id}`);
     } catch (error: any) {

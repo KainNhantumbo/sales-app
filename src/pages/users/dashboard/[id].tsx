@@ -1,16 +1,11 @@
-import {
-  BiBriefcaseAlt2,
-  BiStoreAlt,
-  BiUser,
-  BiUserCheck,
-} from 'react-icons/bi';
+import { BiUser } from 'react-icons/bi';
+import { IoApps } from 'react-icons/io5';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { useTheme } from 'styled-components';
 import { app_metadata, dashboardRoutes } from '@/data/app-data';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { IoAlbumsOutline, IoApps } from 'react-icons/io5';
 import { UserDashboardContainer as Container } from '@/styles/common/user-dashbord';
 
 export default function Dashboard(): JSX.Element {
@@ -41,7 +36,7 @@ export default function Dashboard(): JSX.Element {
                 )}
               </div>
               <div className='status-container'>
-                <h3>{state.userAuth.name}</h3>
+                <h3>Olá, {state.userAuth.name}.</h3>
                 <p>{state.userAuth.email}</p>
               </div>
             </section>
@@ -55,12 +50,12 @@ export default function Dashboard(): JSX.Element {
                     onClick={() => router.push(card.url)}
                     initial={{
                       scale: 1,
-                      boxShadow: `0px 0px 30px rgba(${theme.accent}, 0.09)`,
+                      boxShadow: `0px 0px 30px rgba(${theme.accent}, 0.09)`
                     }}
                     whileTap={{ scale: 0.9 }}
                     whileHover={{
                       boxShadow: `0px 0px 25px rgba(${theme.accent}, 0.1)`,
-                      scale: 1.05,
+                      scale: 1.05
                     }}>
                     <card.icon />
                     <h3>{card.label}</h3>

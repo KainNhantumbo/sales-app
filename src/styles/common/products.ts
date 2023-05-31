@@ -5,7 +5,7 @@ import {
   Button_Mono_A,
   Button_Mono_B,
   StyledInputs,
-  StyledLabels,
+  StyledLabels
 } from '../defaults';
 
 export const ProductListContainer = styled.div`
@@ -15,7 +15,7 @@ export const ProductListContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  background: rgb(${({ theme }) => theme.foreground});
+  background: rgb(${({ theme }) => theme.background});
 
   * {
     ::selection {
@@ -33,58 +33,55 @@ export const ProductListContainer = styled.div`
     backdrop-filter: blur(10px);
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    p {
-      color: rgb(${({ theme }) => theme.alert});
-      padding: 0 20px;
-      line-height: 1.6rem;
-      text-align: center;
-    }
-    button {
-      ${BaseButtonOutline}
+    .center {
+      position: relative;
+      top: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      font-size: 1.2rem;
     }
   }
 
-  .search-container {
-    width: 100%;
-    margin: 0 auto;
-    max-width: 980px;
-    margin-top: 10px;
+  .products-list_container__end-mark {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background: rgb(${({ theme }) => theme.foreground});
+    color: rgb(${({ theme }) => theme.primary_variant});
+    border-radius: 20px;
+    margin-top: 5px;
+    svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    @media screen and (max-width: 1000px) {
+      border-radius: 10px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+
+  .error-message {
+    height: 70vh;
+    font-size: 1.4rem;
+    text-align: center;
+    line-height: 2rem;
     display: flex;
-    justify-content: flex-end;
-    flex-direction: row;
-    padding: 0 40px;
-
-    form {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      .form-element {
-        position: relative;
-        width: 100%;
-        ${StyledInputs}
-
-        svg {
-          position: absolute;
-          top: calc(50% - 10px);
-          left: 10px;
-          width: 20px;
-          height: 20px;
-          color: rgba(${({ theme }) => theme.font}, 0.5);
-        }
-      }
-
-      button {
-        ${Button_Mono_B}
-        width: 41px;
-        height: 41px;
-      }
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 20px;
+    gap: 10px;
+    svg {
+      width: 70px;
+      height: 70px;
+    }
+    span,
+    p {
+      max-width: 600px;
     }
   }
 
@@ -97,13 +94,121 @@ export const ProductListContainer = styled.div`
     flex-direction: column;
     gap: 20px;
 
-    .filters-container {
-      width: 100%;
-      display: flex;
-      flex-flow: row wrap;
+    .main-container {
+      .empty-data_container {
+        width: 100%;
+        height: 100%;
+        background: rgb(${({ theme }) => theme.background});
+        top: 95px;
+        left: 0;
+        display: grid;
+        place-content: center;
+        user-select: none;
+        position: fixed;
 
-      .add-product {
-        ${BaseButton}
+        .content {
+          position: relative;
+          top: -100px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          line-height: 1.6rem;
+          margin: 0 10px;
+
+          svg {
+            width: 70px;
+            height: 70px;
+            color: rgb(${({ theme }) => theme.primary_variant});
+          }
+
+          h3 {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-top: 20px;
+          }
+        }
+      }
+
+      .products-list_container {
+        display: flex;
+        flex-direction: column;
+        padding: 0 10px;
+        padding-top: 25px;
+
+        .products-list_item {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          padding: 20px;
+          background: rgb(${({ theme }) => theme.foreground});
+          border-radius: 12px;
+          border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+
+          .products-list_item_primary {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+            padding-bottom: 15px;
+
+            .top-side,
+            .bottom-side {
+              display: flex;
+              flex-flow: row wrap;
+              gap: 10px;
+              align-items: center;
+            }
+
+            .top-side {
+              font-weight: 500;
+              .name {
+                color: rgb(${({ theme }) => theme.primary_variant});
+              }
+              .id {
+                text-transform: uppercase;
+              }
+              .promotion {
+                border-radius: 18px;
+                background: rgb(${({ theme }) => theme.background});
+                border: 2px solid rgba(${({ theme }) => theme.secondary}, 0.5);
+                padding: 3px 8px;
+                color: rgb(${({ theme }) => theme.secondary});
+              }
+            }
+
+            .bottom-side {
+              div {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 3px;
+                line-height: 1.2rem;
+              }
+
+              .date {
+                text-transform: capitalize;
+              }
+            }
+          }
+          .products-list_item_secondary {
+            display: flex;
+            flex-flow: row wrap;
+            gap: 12px;
+
+            button {
+              ${BaseButtonOutline}
+              border: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
+              border-radius: 25px;
+              padding: 5px 12px;
+              span {
+                padding: 0;
+              }
+            }
+          }
+        }
       }
     }
   }

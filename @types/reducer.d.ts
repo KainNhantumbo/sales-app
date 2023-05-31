@@ -1,4 +1,13 @@
-import { IComment, ISignInData, ISignUp, Product, Store, User } from './index';
+import {
+  AppStatus,
+  IComment,
+  ISignInData,
+  ISignUp,
+  Product,
+  ProductsList,
+  Store,
+  User
+} from './index';
 
 export type State = {
   isLogoutPrompt: boolean;
@@ -7,6 +16,10 @@ export type State = {
   isDeleteCommentPrompt: { status: boolean; commentId: string };
   isUserWorkingDataModal: boolean;
   isConnected: boolean;
+  isSearchActive: boolean;
+  isSortActive: boolean;
+  isFilterActive: boolean;
+  app_status: AppStatus;
   userAuth: {
     id: string;
     token: string;
@@ -22,8 +35,10 @@ export type State = {
   user: User;
   store: Store;
   product: Product;
+  productList: ProductsList[];
   comment: IComment;
   commentsList: IComment[];
+  productsListQuery: { query: string; sort: string };
 };
 
 export type Action = { type: string; payload?: State };

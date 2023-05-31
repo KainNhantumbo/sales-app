@@ -2,11 +2,11 @@ import {
   IoEllipsisHorizontal,
   IoLockClosedOutline,
   IoLockOpenOutline,
-  IoMailOutline,
+  IoMailOutline
 } from 'react-icons/io5';
 import fetch from '../../config/client';
 import { useAppContext } from '@/context/AppContext';
-import { actions } from '@/data/reducer-actions';
+import { actions } from '@/data/actions';
 import { useState, useEffect } from 'react';
 import { InputEvents, SubmitEvent } from '../../../@types';
 import { NextRouter, useRouter } from 'next/router';
@@ -33,9 +33,9 @@ export default function Signup(): JSX.Element {
         ...state,
         signupData: {
           ...state.signupData,
-          [e.target.name]: e.target.value,
-        },
-      },
+          [e.target.name]: e.target.value
+        }
+      }
     });
   };
 
@@ -44,12 +44,12 @@ export default function Signup(): JSX.Element {
     if (state.signupData.password !== state.signupData.confirm_password)
       return setError({
         status: true,
-        message: 'As senhas devem ser iguais.',
+        message: 'As senhas devem ser iguais.'
       });
     if (state.signupData.password.length < 8)
       return setError({
         status: true,
-        message: 'As senhas devem ter pelo menos 8 carácteres.',
+        message: 'As senhas devem ter pelo menos 8 carácteres.'
       });
 
     try {
@@ -62,8 +62,8 @@ export default function Signup(): JSX.Element {
           password: state.signupData.password,
           first_name: state.signupData.first_name,
           last_name: state.signupData.last_name,
-          user_type: 'user',
-        },
+          user_type: 'user'
+        }
       });
       router.push('/auth/sign-up-confirm');
     } catch (error: any) {
@@ -192,7 +192,7 @@ export default function Signup(): JSX.Element {
                     aria-placeholder='Processando...'
                     cssOverride={{
                       display: 'block',
-                      margin: '0 auto',
+                      margin: '0 auto'
                     }}
                   />
                 }

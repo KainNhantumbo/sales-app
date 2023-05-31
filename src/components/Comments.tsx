@@ -4,13 +4,13 @@ import {
   IoEllipse,
   IoFlag,
   IoHeart,
-  IoHeartOutline,
+  IoHeartOutline
 } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
 import { useState, useEffect, useMemo } from 'react';
 import { CommentsContainer as Container } from '@/styles/modules/comments';
 import { IBlogPost, IComment } from '../../@types';
-import { actions } from '@/data/reducer-actions';
+import { actions } from '@/data/actions';
 import { MoonLoader } from 'react-spinners';
 import { BiUser } from 'react-icons/bi';
 import moment from 'moment';
@@ -30,7 +30,7 @@ export default function Comments({ post }: Props): JSX.Element {
     dispatch,
     fetchAPI,
     loginPromptController,
-    deleteCommentPromptController,
+    deleteCommentPromptController
   } = useAppContext();
 
   const [loading, setLoading] = useState<{
@@ -46,7 +46,7 @@ export default function Comments({ post }: Props): JSX.Element {
 
   const [activeModes, setActiveModes] = useState({
     edit: false,
-    reply: false,
+    reply: false
   });
   // ---------------functions----------------
   const formattedComments = useMemo(() => {
@@ -75,16 +75,16 @@ export default function Comments({ post }: Props): JSX.Element {
             _id: '',
             first_name: '',
             last_name: '',
-            profile_image: { id: '', url: '' },
+            profile_image: { id: '', url: '' }
           },
           content: '',
           parent_id: '',
           favorites: [],
           invalidated: false,
           updatedAt: '',
-          createdAt: '',
-        },
-      },
+          createdAt: ''
+        }
+      }
     });
   }
 
@@ -92,14 +92,14 @@ export default function Comments({ post }: Props): JSX.Element {
     try {
       const { data } = await fetchAPI({
         method: 'get',
-        url: `/api/v1/users/comments/${post._id}`,
+        url: `/api/v1/users/comments/${post._id}`
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
         payload: {
           ...state,
-          commentsList: [...data],
-        },
+          commentsList: [...data]
+        }
       });
     } catch (error) {
       console.error(error);
@@ -115,8 +115,8 @@ export default function Comments({ post }: Props): JSX.Element {
         data: {
           source_id: post._id,
           content: state.comment.content,
-          parent_id: null,
-        },
+          parent_id: null
+        }
       });
       clearCommentData();
       getComments();
@@ -125,7 +125,7 @@ export default function Comments({ post }: Props): JSX.Element {
       setError({
         status: true,
         key: 'create-comment',
-        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.',
+        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.'
       });
     } finally {
       setLoading({ status: false, key: 'create-comment' });
@@ -138,8 +138,8 @@ export default function Comments({ post }: Props): JSX.Element {
         method: 'patch',
         url: `/api/v1/users/comments/${id}`,
         data: {
-          ...state.comment,
-        },
+          ...state.comment
+        }
       });
 
       dispatch({
@@ -149,9 +149,9 @@ export default function Comments({ post }: Props): JSX.Element {
           commentsList: [
             ...state.commentsList.map((comment) =>
               comment._id === data._id ? { ...comment, ...data } : comment
-            ),
-          ],
-        },
+            )
+          ]
+        }
       });
       clearCommentData();
     } catch (err: any) {
@@ -159,7 +159,7 @@ export default function Comments({ post }: Props): JSX.Element {
       setError({
         status: true,
         key: 'create-comment',
-        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.',
+        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.'
       });
     } finally {
       setLoading({ status: false, key: 'create-comment' });
@@ -181,7 +181,7 @@ export default function Comments({ post }: Props): JSX.Element {
     try {
       await fetchAPI({
         method: 'post',
-        url: `/api/v1/users/favorites/comments/${id}`,
+        url: `/api/v1/users/favorites/comments/${id}`
       });
       getComments();
     } catch (err: any) {
@@ -193,7 +193,7 @@ export default function Comments({ post }: Props): JSX.Element {
     try {
       await fetchAPI({
         method: 'patch',
-        url: `/api/v1/users/favorites/comments/${id}`,
+        url: `/api/v1/users/favorites/comments/${id}`
       });
       getComments();
     } catch (err: any) {
@@ -210,9 +210,9 @@ export default function Comments({ post }: Props): JSX.Element {
         ...state,
         comment: {
           ...state.comment,
-          ...data,
-        },
-      },
+          ...data
+        }
+      }
     });
   }
 
@@ -226,9 +226,9 @@ export default function Comments({ post }: Props): JSX.Element {
         comment: {
           ...state.comment,
           _id: data._id,
-          parent_id: data._id,
-        },
-      },
+          parent_id: data._id
+        }
+      }
     });
   }
 
@@ -241,8 +241,8 @@ export default function Comments({ post }: Props): JSX.Element {
         data: {
           source_id: post._id,
           content: state.comment.content,
-          parent_id: state.comment.parent_id,
-        },
+          parent_id: state.comment.parent_id
+        }
       });
       clearCommentData();
       getComments();
@@ -251,7 +251,7 @@ export default function Comments({ post }: Props): JSX.Element {
       setError({
         status: true,
         key: 'create-comment',
-        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.',
+        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.'
       });
     } finally {
       setLoading({ status: false, key: 'create-comment' });
@@ -323,9 +323,9 @@ export default function Comments({ post }: Props): JSX.Element {
                         ...state,
                         comment: {
                           ...state.comment,
-                          content: e.target.value,
-                        },
-                      },
+                          content: e.target.value
+                        }
+                      }
                     });
                   }}
                 />
@@ -343,7 +343,7 @@ export default function Comments({ post }: Props): JSX.Element {
                     color={`rgb(${theme.primary_variant})`}
                     cssOverride={{
                       display: 'block',
-                      margin: '0 auto',
+                      margin: '0 auto'
                     }}
                   />
                 </div>
@@ -499,9 +499,9 @@ export default function Comments({ post }: Props): JSX.Element {
                                   ...state,
                                   comment: {
                                     ...state.comment,
-                                    content: e.target.value,
-                                  },
-                                },
+                                    content: e.target.value
+                                  }
+                                }
                               });
                             }}
                           />
@@ -519,7 +519,7 @@ export default function Comments({ post }: Props): JSX.Element {
                               color={`rgb(${theme.primary_variant})`}
                               cssOverride={{
                                 display: 'block',
-                                margin: '0 auto',
+                                margin: '0 auto'
                               }}
                             />
                           </div>
@@ -738,9 +738,9 @@ export default function Comments({ post }: Props): JSX.Element {
                                           ...state,
                                           comment: {
                                             ...state.comment,
-                                            content: e.target.value,
-                                          },
-                                        },
+                                            content: e.target.value
+                                          }
+                                        }
                                       });
                                     }}
                                   />
@@ -760,7 +760,7 @@ export default function Comments({ post }: Props): JSX.Element {
                                       color={`rgb(${theme.primary_variant})`}
                                       cssOverride={{
                                         display: 'block',
-                                        margin: '0 auto',
+                                        margin: '0 auto'
                                       }}
                                     />
                                   </div>
@@ -776,9 +776,7 @@ export default function Comments({ post }: Props): JSX.Element {
                                       activeModes.edit
                                         ? handleUpdateComment(comment._id)
                                         : activeModes.reply
-                                        ? handleSendReplyComment(
-                                            null
-                                          )
+                                        ? handleSendReplyComment(null)
                                         : handleCreateComment()
                                     }>
                                     {activeModes.edit ? (

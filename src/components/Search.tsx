@@ -1,7 +1,7 @@
 import { IoSearch } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { actions } from '@/data/reducer-actions';
+import { actions } from '@/data/actions';
 
 export default function SearchComponent(): JSX.Element {
   const { state, dispatch } = useAppContext();
@@ -21,8 +21,8 @@ export default function SearchComponent(): JSX.Element {
               type: actions.SEARCH,
               payload: {
                 ...state,
-                search: e.target.value,
-              },
+                search: e.target.value
+              }
             });
           }}
         />

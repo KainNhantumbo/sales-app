@@ -3,7 +3,7 @@ import { IoArrowBackOutline, IoTrash } from 'react-icons/io5';
 import { PromptContainer as Container } from '../../styles/modules/logout-prompt';
 import { useAppContext } from '@/context/AppContext';
 import { useRouter, NextRouter } from 'next/router';
-import { actions } from '@/data/reducer-actions';
+import { actions } from '@/data/actions';
 
 export default function DeleteCommentPrompt(): JSX.Element {
   const { state, fetchAPI, dispatch, deleteAccountPromptController } =
@@ -14,7 +14,7 @@ export default function DeleteCommentPrompt(): JSX.Element {
     try {
       await fetchAPI({
         method: 'delete',
-        url: '/api/v1/users/account',
+        url: '/api/v1/users/account'
       });
       dispatch({
         type: actions.USER_AUTH,
@@ -26,9 +26,9 @@ export default function DeleteCommentPrompt(): JSX.Element {
             token: '',
             email: '',
             profile_image: '',
-            invalidated: false,
-          },
-        },
+            invalidated: false
+          }
+        }
       });
       deleteAccountPromptController();
       router.push('/');
@@ -54,8 +54,8 @@ export default function DeleteCommentPrompt(): JSX.Element {
               opacity: 1,
               scale: 1,
               transition: {
-                duration: 0.3,
-              },
+                duration: 0.3
+              }
             }}
             exit={{ opacity: 0, scale: 0 }}>
             <div className='dialog-prompt'>

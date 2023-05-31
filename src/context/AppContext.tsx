@@ -3,11 +3,11 @@ import {
   useEffect,
   createContext,
   Dispatch,
-  useReducer,
+  useReducer
 } from 'react';
 import fetch from '../config/client';
 import ThemeContext from './ThemeContext';
-import { actions } from '@/data/reducer-actions';
+import { actions } from '@/data/actions';
 import { NextRouter, useRouter } from 'next/router';
 import { Action, State } from '../../@types/reducer';
 import type { AppContext } from '../../@types/index';
@@ -20,6 +20,8 @@ interface IContext {
   logoutPromptController: () => void;
   deleteCommentPromptController: (status: boolean, id: string) => void;
   loginPromptController: () => void;
+  sortBoxController: () => void;
+  searchBoxController: () => void;
   deleteAccountPromptController: () => void;
   userWorkingDataController: () => void;
   logoutUser: () => Promise<void>;
@@ -32,10 +34,12 @@ const context = createContext<IContext>({
   logoutUser: async () => {},
   fetchAPI: (): any => {},
   logoutPromptController: () => {},
+  searchBoxController: () => {},
+  sortBoxController: () => {},
   deleteAccountPromptController: () => {},
   deleteCommentPromptController: (status: boolean, id: string) => {},
   loginPromptController: () => {},
-  userWorkingDataController: () => {},
+  userWorkingDataController: () => {}
 });
 
 export default function AppContext(props: AppContext): JSX.Element {
@@ -45,20 +49,28 @@ export default function AppContext(props: AppContext): JSX.Element {
   // ============= modal controllers =================== //
   function deleteAccountPromptController(): void {
     dispatch({
-      type: actions.DELETE_ACCOUNT_PROMPT,
+      type: actions.DELETE_ACCOUNT_PROMPT
     });
   }
 
   function logoutPromptController(): void {
     dispatch({
-      type: actions.LOGOUT_PROMPT,
+      type: actions.LOGOUT_PROMPT
     });
   }
 
   function loginPromptController(): void {
     dispatch({
-      type: actions.LOGIN_PROMPT,
+      type: actions.LOGIN_PROMPT
     });
+  }
+
+  function searchBoxController(): void {
+    dispatch({ type: actions.SEARCH_BOX_CONTROL });
+  }
+
+  function sortBoxController(): void {
+    dispatch({ type: actions.SORT_BOX_CONTROL });
   }
 
   function deleteCommentPromptController(status: boolean, id?: string): void {
@@ -66,14 +78,14 @@ export default function AppContext(props: AppContext): JSX.Element {
       type: actions.DELETE_COMMENT_PROMPT,
       payload: {
         ...state,
-        isDeleteCommentPrompt: { status, commentId: id || '' },
-      },
+        isDeleteCommentPrompt: { status, commentId: id || '' }
+      }
     });
   }
 
   function userWorkingDataController(): void {
     dispatch({
-      type: actions.USER_WORKING_DATA_MODAL,
+      type: actions.USER_WORKING_DATA_MODAL
     });
   }
 
@@ -92,7 +104,7 @@ export default function AppContext(props: AppContext): JSX.Element {
 
     return fetch({
       ...config,
-      headers: { authorization: `Bearer ${state.userAuth.token}` },
+      headers: { authorization: `Bearer ${state.userAuth.token}` }
     });
   }
 
@@ -101,7 +113,7 @@ export default function AppContext(props: AppContext): JSX.Element {
       await fetchAPI({
         method: 'post',
         url: '/api/v1/auth/default/logout',
-        withCredentials: true,
+        withCredentials: true
       });
       dispatch({
         type: actions.USER_AUTH,
@@ -113,9 +125,9 @@ export default function AppContext(props: AppContext): JSX.Element {
             token: '',
             email: '',
             profile_image: '',
-            invalidated: false,
-          },
-        },
+            invalidated: false
+          }
+        }
       });
       logoutPromptController();
       router.push('/auth/sign-in');
@@ -129,7 +141,7 @@ export default function AppContext(props: AppContext): JSX.Element {
       const { data } = await fetch({
         method: 'get',
         url: '/api/v1/auth/default/refresh',
-        withCredentials: true,
+        withCredentials: true
       });
       dispatch({
         type: actions.USER_AUTH,
@@ -141,9 +153,9 @@ export default function AppContext(props: AppContext): JSX.Element {
             invalidated: data?.invalidated,
             email: data?.email,
             name: data?.name,
-            profile_image: data?.profile_image,
-          },
-        },
+            profile_image: data?.profile_image
+          }
+        }
       });
     } catch (err: any) {
       console.error(err);
@@ -161,7 +173,7 @@ export default function AppContext(props: AppContext): JSX.Element {
           const { data } = await fetch({
             method: 'get',
             url: '/api/v1/auth/default/refresh',
-            withCredentials: true,
+            withCredentials: true
           });
           dispatch({
             type: actions.USER_AUTH,
@@ -173,9 +185,9 @@ export default function AppContext(props: AppContext): JSX.Element {
                 invalidated: data?.invalidated,
                 email: data?.email,
                 name: data?.name,
-                profile_image: data?.profile_image,
-              },
-            },
+                profile_image: data?.profile_image
+              }
+            }
           });
         } catch (err: any) {
           dispatch({
@@ -188,9 +200,9 @@ export default function AppContext(props: AppContext): JSX.Element {
                 token: '',
                 email: '',
                 profile_image: '',
-                invalidated: false,
-              },
-            },
+                invalidated: false
+              }
+            }
           });
           console.error(err);
         }
@@ -212,6 +224,8 @@ export default function AppContext(props: AppContext): JSX.Element {
           userWorkingDataController,
           deleteCommentPromptController,
           deleteAccountPromptController,
+          searchBoxController,
+          sortBoxController
         }}>
         {props.children}
       </context.Provider>

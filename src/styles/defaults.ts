@@ -122,7 +122,7 @@ export const Button_Mono_B = css`
 export const StyledCornerButton = css`
   border-radius: 50%;
   background: rgba(${({ theme }) => theme.primary}, 0.4);
-  color: rgb(${({ theme }) => theme.primary});
+  color: rgb(${({ theme }) => theme.accent});
   border: none;
   width: fit-content;
   cursor: pointer;
@@ -131,7 +131,7 @@ export const StyledCornerButton = css`
   padding: 5px;
 
   :hover {
-    background: rgb(${({ theme }) => theme.secondary});
+    background: rgb(${({ theme }) => theme.alert});
     transition: all 200ms ease;
     svg {
       color: #fff;

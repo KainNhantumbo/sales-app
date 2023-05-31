@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import fetch from '../config/client';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
-import { actions } from '@/data/reducer-actions';
+import { actions } from '@/data/actions';
 import { IoMailOpen, IoPaperPlaneOutline } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
 import newsletter_image from '../../public/assets/newsletter.png';
@@ -21,18 +21,18 @@ export default function NewsLetter(): JSX.Element {
       await fetch({
         method: 'post',
         url: '/api/v1/users/newsletter',
-        data: state.newSubscriptorValue,
+        data: state.newSubscriptorValue
       });
       dispatch({
         type: actions.NEW_SUBSCRIPTOR_VALUE,
         payload: {
           ...state,
-          newSubscriptorValue: { subscriptor: '' },
-        },
+          newSubscriptorValue: { subscriptor: '' }
+        }
       });
       setError({
         status: true,
-        message: 'Inscreveu-se a newsletter com sucesso.',
+        message: 'Inscreveu-se a newsletter com sucesso.'
       });
     } catch (error: any) {
       console.error(error);
@@ -86,8 +86,8 @@ export default function NewsLetter(): JSX.Element {
                       type: actions.NEW_SUBSCRIPTOR_VALUE,
                       payload: {
                         ...state,
-                        newSubscriptorValue: { subscriptor: e.target.value },
-                      },
+                        newSubscriptorValue: { subscriptor: e.target.value }
+                      }
                     })
                   }
                 />
@@ -109,7 +109,7 @@ export default function NewsLetter(): JSX.Element {
                   aria-placeholder='Processando...'
                   cssOverride={{
                     display: 'block',
-                    margin: '0 auto',
+                    margin: '0 auto'
                   }}
                 />
               </>
