@@ -31,6 +31,7 @@ import countries from '../../../../data/countries.json';
 import { InputEvents } from '../../../../../@types';
 import product_categories from '../../../../data/product-categories.json';
 import { StoreEditorContainer as Container } from '@/styles/common/store-editor';
+import { complements } from '@/data/app-data';
 
 export default function StoreEditor(): JSX.Element {
   const theme = useTheme();
@@ -215,7 +216,12 @@ export default function StoreEditor(): JSX.Element {
   }, [error.status]);
 
   return (
-    <Layout>
+    <Layout
+      metadata={{
+        title: `${complements.defaultTitle} | Editor de Loja`,
+        updatedAt: state.store.updatedAt,
+        createdAt: state.store.createdAt
+      }}>
       <Container>
         {loading.status && loading.key === 'store-data' && (
           <section className='fetching-state'>

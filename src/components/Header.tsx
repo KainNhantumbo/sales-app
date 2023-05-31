@@ -17,19 +17,20 @@ export default function Header(): JSX.Element {
   const [isMenu, setIsMenu] = useState<boolean>(false);
   const { asPath, push }: NextRouter = useRouter();
   const { state, logoutPromptController } = useAppContext();
-  const toggleMenu = (): void => {
+  
+  function toggleMenu(): void {
     setIsMenu(!isMenu);
-  };
+  }
 
-  const changeWidth = (): void => {
+  function changeWidth(): void {
     if (window.innerWidth > 770) {
       setIsMenu(true);
     } else {
       setIsMenu(false);
     }
-  };
+  }
 
-  useEffect(() => {
+  useEffect((): () => void => {
     changeWidth();
     window.addEventListener('resize', changeWidth);
     return () => {
@@ -83,7 +84,7 @@ export default function Header(): JSX.Element {
                   </>
                 ) : !asPath.includes('dashboard') ? (
                   <button
-                    title='Minha conta'
+                    title='Painel de Controle e Conta'
                     className='user-account'
                     onClick={() =>
                       push(`/users/dashboard/${state.userAuth.id}`)
@@ -96,7 +97,7 @@ export default function Header(): JSX.Element {
                     ) : (
                       <BiUser />
                     )}
-                    <span>Minha conta</span>
+                    <span>Conta</span>
                   </button>
                 ) : (
                   <button
@@ -114,7 +115,7 @@ export default function Header(): JSX.Element {
         
         <motion.button
           whileTap={{ scale: 0.8 }}
-          title='Toggle menu panel'
+          title='Abrir ou fechar o menu'
           className='toggle-btn'
           onClick={toggleMenu}>
           {!isMenu ? <HiViewList /> : <HiX />}

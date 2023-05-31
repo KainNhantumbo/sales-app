@@ -1,4 +1,11 @@
+import {
+  IoArrowForwardOutline,
+  IoEllipsisHorizontal,
+  IoHeart,
+  IoStorefrontOutline
+} from 'react-icons/io5';
 import Link from 'next/link';
+import Image from 'next/image';
 import ErrorPage from '../error-page';
 import Layout from '@/components/Layout';
 import { useRouter } from 'next/router';
@@ -6,16 +13,11 @@ import { getPosts } from '@/lib/queries';
 import { formatDate } from '@/lib/time-fns';
 import { IBlogPosts } from '../../../@types';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
-import {
-  IoArrowForwardOutline,
-  IoHeart,
-  IoStorefrontOutline,
-} from 'react-icons/io5';
 import { BlogContainer as Container } from '@/styles/common/blog';
 import SearchComponent from '@/components/Search';
 import { complements } from '@/data/app-data';
-import Image from 'next/image';
 import buyingWomenImg from '../../../public/assets/buying_women.png';
+import NewsLetter from '@/components/Newsletter';
 
 type Props = { posts: IBlogPosts[] };
 
@@ -27,7 +29,7 @@ export default function Blog(props: Props): JSX.Element {
   }
 
   return (
-    <Layout>
+    <Layout metadata={{ title: complements.defaultTitle + ' | Blog' }}>
       <Container>
         <section className='banner-container'>
           <div className='wrapper'>
@@ -35,8 +37,8 @@ export default function Blog(props: Props): JSX.Element {
               <h1>Blog da {complements.defaultTitle}</h1>
               <p>
                 <strong>
-                  Explore idéias, conceitos e dicas que possam ajudar a alavancar o
-                  seu negócio.
+                  Explore idéias, conceitos e dicas que possam ajudar a
+                  alavancar o seu negócio.
                 </strong>{' '}
                 Ainda não tem uma loja? Monte hoje mesmo uma loja virtual do seu
                 jeito e com todas funcionalidades que você precisa de graça!
@@ -98,8 +100,14 @@ export default function Blog(props: Props): JSX.Element {
                 </>
               </Link>
             ))}
+            {posts.length > 0 && (
+              <div className='posts-container__end-mark'>
+                <IoEllipsisHorizontal />
+              </div>
+            )}
           </section>
         </article>
+        <NewsLetter />
       </Container>
     </Layout>
   );
@@ -110,13 +118,13 @@ export async function getStaticProps() {
     const { data } = await getPosts({});
     return {
       props: { posts: [...data] },
-      revalidate: 10,
+      revalidate: 10
     };
   } catch (error) {
     console.error(error);
     return {
       props: {},
-      revalidate: 10,
+      revalidate: 10
     };
   }
 }

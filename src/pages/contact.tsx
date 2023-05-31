@@ -17,14 +17,14 @@ export default function Contact(): JSX.Element {
     email: complements.email,
     subject: '',
     message: '',
-    from_email: '',
+    from_email: ''
   });
 
   // picks form data
   function formDataPicker(e: InputEvents): void {
     setFormData((prevData) => ({
       ...prevData,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }));
   }
 
@@ -53,7 +53,7 @@ export default function Contact(): JSX.Element {
   }
 
   return (
-    <Layout metadata={{ title: 'Contacte-nos' }}>
+    <Layout metadata={{ title: complements.defaultTitle + ' | Contato' }}>
       <Container>
         <article className='container'>
           <section className='intro'>
@@ -74,7 +74,7 @@ export default function Contact(): JSX.Element {
             <span>
               <a
                 target='_blank'
-                rel='noreferrer'
+                rel='noreferrer noopener'
                 href={`mailto:${complements.email}`}>
                 {complements.email}
               </a>

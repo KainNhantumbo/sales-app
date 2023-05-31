@@ -28,6 +28,7 @@ import AppStatus from '@/components/AppStatus';
 import { formatDate } from '@/lib/time-fns';
 import moment from 'moment';
 import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
+import { complements } from '@/data/app-data';
 
 export default function Products(): JSX.Element {
   const theme = useTheme();
@@ -97,7 +98,8 @@ export default function Products(): JSX.Element {
   }, []);
 
   return (
-    <Layout metadata={{ title: 'Lista de Produtos' }}>
+    <Layout
+      metadata={{ title: `${complements.defaultTitle} | Lista de Produtos` }}>
       <DeleteProductPrompt deleteFn={handleDeleteProduct} />
       <Container>
         {loading.status && !error.status && (

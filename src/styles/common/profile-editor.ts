@@ -5,7 +5,7 @@ import {
   Button_Mono_A,
   Button_Mono_B,
   StyledInputs,
-  StyledLabels,
+  StyledLabels
 } from '../defaults';
 
 export const UserProfileContainer = styled.div`
@@ -33,12 +33,15 @@ export const UserProfileContainer = styled.div`
     backdrop-filter: blur(10px);
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
+    div {
+      position: relative;
+      top: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      font-size: 1.2rem;
+    }
     p {
       color: rgb(${({ theme }) => theme.alert});
       padding: 0 20px;

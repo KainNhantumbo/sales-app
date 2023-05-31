@@ -2,13 +2,13 @@ import {
   IoIosAlbums,
   IoIosBookmark,
   IoMdCalendar,
-  IoMdTime,
+  IoMdTime
 } from 'react-icons/io';
 import {
   IoChatbubblesOutline,
   IoHeart,
   IoHeartOutline,
-  IoOpenOutline,
+  IoOpenOutline
 } from 'react-icons/io5';
 import moment from 'moment';
 import Link from 'next/link';
@@ -28,16 +28,14 @@ import { useTheme } from 'styled-components';
 import Comments from '@/components/Comments';
 import { useAppContext } from '@/context/AppContext';
 import ErrorPage from '@/pages/error-page';
+import NewsLetter from '@/components/Newsletter';
 
 interface IPost {
   post: IBlogPost;
   latestPosts: IBlogPosts[];
 }
 
-export default function Post({
-  post: initialPost,
-  latestPosts,
-}: IPost): JSX.Element {
+export default function Post({ post: initialPost, latestPosts }: IPost) {
   const { state, fetchAPI, loginPromptController } = useAppContext();
   const [post, setPost] = useState(initialPost);
   const router = useRouter();
@@ -57,14 +55,14 @@ export default function Post({
     title: post.title,
     slug: post.slug,
     excerpt: post.excerpt,
-    hostname: complements.websiteUrl,
+    hostname: complements.websiteUrl
   });
 
-  async function handleFavoritePost() {
+  async function handleFavoritePost(): Promise<void> {
     try {
       await fetchAPI({
         method: 'post',
-        url: `/api/v1/users/favorites/blog-posts/${post._id}`,
+        url: `/api/v1/users/favorites/blog-posts/${post._id}`
       });
       const { data } = await getPost(post.slug);
       setPost((doc) => {
@@ -75,11 +73,11 @@ export default function Post({
     }
   }
 
-  async function handleUnFavoritePost() {
+  async function handleUnFavoritePost(): Promise<void> {
     try {
       await fetchAPI({
         method: 'patch',
-        url: `/api/v1/users/favorites/blog-posts/${post._id}`,
+        url: `/api/v1/users/favorites/blog-posts/${post._id}`
       });
       const { data } = await getPost(post.slug);
       setPost((doc) => {
@@ -95,7 +93,7 @@ export default function Post({
       metadata={{
         title: post.title,
         updatedAt: post.updatedAt,
-        createdAt: post.createdAt,
+        createdAt: post.createdAt
       }}>
       <Container className='wrapper'>
         <div className='main-container'>
@@ -266,6 +264,7 @@ export default function Post({
               </div>
             </section>
           </article>
+          <NewsLetter />
         </div>
       </Container>
     </Layout>
@@ -276,7 +275,7 @@ export async function getStaticPaths(): Promise<any> {
   const slugs = await getPaths();
   return {
     paths: slugs,
-    fallback: false,
+    fallback: false
   };
 }
 
@@ -287,13 +286,13 @@ export async function getStaticProps({ params: { slug } }: any) {
     ).map((res) => res.data);
     return {
       props: { post: { ...data[0] }, latestPosts: [...data[1]] },
-      revalidate: 10,
+      revalidate: 10
     };
   } catch (error) {
     console.error(error);
     return {
       props: {},
-      revalidate: 10,
+      revalidate: 10
     };
   }
 }

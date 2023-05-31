@@ -1,22 +1,22 @@
+import { motion } from 'framer-motion';
 import { BiUser } from 'react-icons/bi';
 import { IoApps } from 'react-icons/io5';
-import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { useTheme } from 'styled-components';
-import { app_metadata, dashboardRoutes } from '@/data/app-data';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
+import { app_metadata, complements, dashboardRoutes } from '@/data/app-data';
 import { UserDashboardContainer as Container } from '@/styles/common/user-dashbord';
 
 export default function Dashboard(): JSX.Element {
   const theme = useTheme();
-  const router: NextRouter = useRouter();
   const { state } = useAppContext();
-
+  const router: NextRouter = useRouter();
   const actionRoutes = dashboardRoutes(state.userAuth?.id);
 
   return (
-    <Layout>
+    <Layout
+      metadata={{ title: `${complements.defaultTitle} | Painel de Controle` }}>
       <Container>
         <article>
           <section className='header'>

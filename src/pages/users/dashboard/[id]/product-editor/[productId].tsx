@@ -30,6 +30,7 @@ import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import product_categories from '@/data/product-categories.json';
 import { ProductEditorContainer as Container } from '@/styles/common/product-editor';
+import { complements } from '@/data/app-data';
 
 export default function ProductEditor(): JSX.Element {
   const theme = useTheme();
@@ -336,7 +337,8 @@ export default function ProductEditor(): JSX.Element {
   }, [error.status]);
 
   return (
-    <Layout>
+    <Layout
+      metadata={{ title: `${complements.defaultTitle} | Editor de Produto` }}>
       <Container>
         {loading.status && loading.key === 'product-data' && (
           <section className='fetching-state'>

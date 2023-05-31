@@ -1,7 +1,7 @@
 import {
   IoBalloonOutline,
   IoHeartOutline,
-  IoStorefrontOutline,
+  IoStorefrontOutline
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -10,17 +10,20 @@ import { NextRouter, useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import { useTheme } from 'styled-components';
 import NewsLetter from '@/components/Newsletter';
-import { store_features, pricing_data } from '@/data/app-data';
 import { HomeContainer as Container } from '@/styles/common/home';
 import flying_paper from '../../public/assets/flying paper.png';
 import africa_culture from '../../public/assets/africa-culture.png';
+import { store_features, pricing_data, complements } from '@/data/app-data';
 
 export default function Home(): JSX.Element {
   const router: NextRouter = useRouter();
   const theme = useTheme();
 
   return (
-    <Layout>
+    <Layout
+      metadata={{
+        title: `${complements.defaultTitle} | Página Inicial`
+      }}>
       <Container>
         <article>
           <section className='introduction'>
@@ -58,7 +61,7 @@ export default function Home(): JSX.Element {
                     key={index.toString()}
                     whileHover={{
                       translateY: -8,
-                      boxShadow: `0px 20px 25px rgba(${theme.accent}, 0.09)`,
+                      boxShadow: `0px 20px 25px rgba(${theme.accent}, 0.09)`
                     }}>
                     <card.icon />
                     <h3>{card.title}</h3>
@@ -82,7 +85,7 @@ export default function Home(): JSX.Element {
                 a secção de contacto no rodapé ou acesse o nosso blog para
                 aprender mais sobre o e-commerce e vendas em lojas virtuais.
               </span>
-              <Link href={'/about-us'}>
+              <Link href={'/legal/about'}>
                 <IoHeartOutline />
                 <span>Saiba mais</span>
               </Link>
@@ -115,7 +118,7 @@ export default function Home(): JSX.Element {
                       key={index.toString()}
                       whileHover={{
                         boxShadow: `0 0 25px rgba(${theme.accent}, 0.09)`,
-                        border: '1px solid transparent',
+                        border: '1px solid transparent'
                       }}>
                       <h4>{plan.type}</h4>
                       <h3>{plan.title}</h3>

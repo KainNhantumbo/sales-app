@@ -179,15 +179,19 @@ export const HeaderContainer = styled.header`
     .user-logout {
       ${BaseButtonOutline}
       border: none;
-      
+      overflow: visible;
+      span {
+        padding-left: 0;
+        padding-right: 20px;
+      }
       img {
         object-fit: cover;
         border-radius: 50%;
-        width: 22px;
-        height: 22px;
+        width: 28px;
+        height: 28px;
         position: absolute;
-        top: calc(50% - 11px);
-        left: 5px;
+        top: calc(50% - 14px);
+        right: -6px;
         pointer-events: none;
       }
     }

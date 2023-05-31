@@ -116,6 +116,25 @@ export const BlogSeachContainer = styled.div`
       justify-content: flex-start;
       gap: 12px;
 
+      .posts-container__end-mark {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        background: rgb(${({ theme }) => theme.foreground});
+        color: rgb(${({ theme }) => theme.primary_variant});
+        border-radius: 20px;
+        svg {
+          width: 25px;
+          height: 25px;
+        }
+
+        @media screen and (max-width: 1000px) {
+          border-radius: 10px;
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+      }
+
       .post {
         width: 100%;
         display: flex;

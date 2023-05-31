@@ -53,6 +53,7 @@ import UserWorkingData from '../../../../components/modals/UserWorkingData';
 import { UserProfileContainer as Container } from '@/styles/common/profile-editor';
 import user_skills from '../../../../data/professional-skills.json';
 import DeleteAccountPrompt from '../../../../components/modals/DeleteAccountPrompt';
+import { complements } from '@/data/app-data';
 
 export default function ProfileEditor(): JSX.Element {
   const theme = useTheme();
@@ -427,7 +428,12 @@ export default function ProfileEditor(): JSX.Element {
   }
 
   return (
-    <Layout>
+    <Layout
+      metadata={{
+        title: `${complements.defaultTitle} | Editor de Perfil de Usuário`,
+        updatedAt: state.user.updatedAt,
+        createdAt: state.user.createdAt
+      }}>
       <Container>
         <DeleteAccountPrompt />
 

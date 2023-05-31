@@ -4,7 +4,7 @@ import {
   BaseButtonOutline,
   Button_Mono_A,
   StyledInputs,
-  StyledLabels,
+  StyledLabels
 } from '../defaults';
 
 export const ProductEditorContainer = styled.div`
@@ -32,12 +32,35 @@ export const ProductEditorContainer = styled.div`
     backdrop-filter: blur(10px);
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
+    .center {
+      position: relative;
+      top: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      font-size: 1.2rem;
+    }
+  }
+
+  .fetching-state {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5000;
+    background: rgba(${({ theme }) => theme.foreground}, 0.5);
+    backdrop-filter: blur(10px);
+    width: 100%;
+    height: 100%;
+    div {
+      position: relative;
+      top: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      font-size: 1.2rem;
+    }
     p {
       color: rgb(${({ theme }) => theme.alert});
       padding: 0 20px;
@@ -222,7 +245,7 @@ export const ProductEditorContainer = styled.div`
                   top: -2px;
                   left: 0;
                   background: rgba(${({ theme }) => theme.font});
-                  box-shadow: 0 0 20px rgba(${({ theme }) => theme.accent}, .5);
+                  box-shadow: 0 0 20px rgba(${({ theme }) => theme.accent}, 0.5);
                   transition: all 0.2s ease;
                 }
 

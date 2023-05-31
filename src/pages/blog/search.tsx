@@ -1,20 +1,27 @@
+import {
+  IoEllipsisHorizontal,
+  IoHeart,
+  IoLibraryOutline,
+  IoOpenOutline
+} from 'react-icons/io5';
 import Link from 'next/link';
-import Layout from '@/components/Layout';
-import { IBlogPosts } from '../../../@types/index';
-import { getPosts } from '@/lib/queries';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { IoHeart, IoLibraryOutline, IoOpenOutline } from 'react-icons/io5';
-import SearchComponent from '@/components/Search';
-import { BlogSeachContainer as Container } from '@/styles/common/blog-search';
-import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
+import { getPosts } from '@/lib/queries';
+import Layout from '@/components/Layout';
 import { DotLoader } from 'react-spinners';
-import { useTheme } from 'styled-components';
+import { useEffect, useState } from 'react';
 import { formatDate } from '@/lib/time-fns';
+import { useTheme } from 'styled-components';
+import { complements } from '@/data/app-data';
+import NewsLetter from '@/components/Newsletter';
+import SearchComponent from '@/components/Search';
+import { IBlogPosts } from '../../../@types/index';
+import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
+import { BlogSeachContainer as Container } from '@/styles/common/blog-search';
 
 export default function BlogSearch() {
-  const router = useRouter();
   const theme = useTheme();
+  const router = useRouter();
   const [posts, setPosts] = useState<IBlogPosts[]>([]);
   const [loading, setLoading] = useState<{ status: boolean }>({
     status: false
@@ -49,25 +56,28 @@ export default function BlogSearch() {
     }
   }
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     const fetchTimer = setTimeout(() => {
       if (router.query['q']) {
         fetchPosts();
       }
     }, 500);
-    return () => {
+    return (): void => {
       clearTimeout(fetchTimer);
     };
   }, [router.query]);
 
-  useEffect(() => {
-    return () => {
+  useEffect((): (() => void) => {
+    return (): void => {
       setLoading({ status: false });
     };
   }, []);
 
   return (
-    <Layout>
+    <Layout
+      metadata={{
+        title: `${complements.defaultTitle} | Pesquisa de Postagens`
+      }}>
       <Container>
         <div className='main-container'>
           <section className='search-container'>
@@ -138,8 +148,14 @@ export default function BlogSearch() {
                   </>
                 </Link>
               ))}
+              {posts.length > 0 && (
+                <div className='posts-container__end-mark'>
+                  <IoEllipsisHorizontal />
+                </div>
+              )}
             </section>
           </article>
+          <NewsLetter />
         </div>
       </Container>
     </Layout>

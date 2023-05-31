@@ -1,12 +1,5 @@
 import styled from 'styled-components';
-import {
-  BaseButton,
-  BaseButtonOutline,
-  Button_Mono_A,
-  Button_Mono_B,
-  StyledInputs,
-  StyledLabels
-} from '../defaults';
+import { BaseButtonOutline } from '../defaults';
 
 export const ProductListContainer = styled.div`
   position: relative;
@@ -33,7 +26,7 @@ export const ProductListContainer = styled.div`
     backdrop-filter: blur(10px);
     width: 100%;
     height: 100%;
-    .center {
+    div {
       position: relative;
       top: 300px;
       display: flex;

@@ -2,15 +2,15 @@ import {
   IoExtensionPuzzleOutline,
   IoHelpBuoyOutline,
   IoLockOpenOutline,
+  IoMoon,
   IoNewspaperOutline,
   IoPaperPlaneOutline,
-  IoShieldCheckmark,
   IoShieldCheckmarkOutline,
   IoSpeedometerOutline,
+  IoSunny
 } from 'react-icons/io5';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { BiMoon, BiSun } from 'react-icons/bi';
 import { complements, urls } from '@/data/app-data';
 import { useAppContext } from '@/context/AppContext';
 import { useThemeContext } from '@/context/ThemeContext';
@@ -23,17 +23,15 @@ export default function Footer(): JSX.Element {
     <Container>
       <section className='featured-container'>
         <h3>
-          <IoShieldCheckmarkOutline/>
+          <IoShieldCheckmarkOutline />
           <span>Sérios sobre segurança e privacidade</span>
         </h3>
         <h3>
-          <IoSpeedometerOutline/>
-          <span>
-            Performance e estabilidade
-          </span>
+          <IoSpeedometerOutline />
+          <span>Performance e estabilidade</span>
         </h3>
         <h3>
-          <IoHelpBuoyOutline/>
+          <IoHelpBuoyOutline />
           <span>24 horas de suporte integrado</span>
         </h3>
       </section>
@@ -61,8 +59,8 @@ export default function Footer(): JSX.Element {
               <Link href={'/legal/privacy-policy'}>
                 <span>Política de Privacidade</span>
               </Link>
-              <Link href={'/legal/terms-and-conditions'}>
-                <span>Termos e Condições</span>
+              <Link href={'/legal/terms-of-use'}>
+                <span>Termos de Uso</span>
               </Link>
               <Link href={'/legal/about'}>
                 <span>Sobre nós</span>
@@ -129,11 +127,11 @@ export default function Footer(): JSX.Element {
         <motion.button
           whileTap={{ scale: 0.7 }}
           transition={{ type: 'spring', duration: 0.5 }}
-          title='Change Theme'
-          aria-label='Toogle theme'
+          title='Trocar o tema'
+          aria-label='Trocar o tema'
           className='theme-switcher'
           onClick={themeSwitcher}>
-          {darkmode ? <BiSun /> : <BiMoon />}
+          {darkmode ? <IoSunny /> : <IoMoon />}
         </motion.button>
       </div>
       <section>
