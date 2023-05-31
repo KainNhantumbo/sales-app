@@ -165,7 +165,7 @@ export const UserDashboardContainer = styled.div`
           gap: 15px;
           width: 150px;
           height: 100%;
-          border-radius: 20px;
+          border-radius: 12px;
           padding: 20px;
           background: rgb(${({ theme }) => theme.foreground});
           cursor: pointer;

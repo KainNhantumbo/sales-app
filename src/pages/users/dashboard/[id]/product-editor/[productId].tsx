@@ -34,7 +34,8 @@ import { ProductEditorContainer as Container } from '@/styles/common/product-edi
 export default function ProductEditor(): JSX.Element {
   const theme = useTheme();
   const router: NextRouter = useRouter();
-  const { state, fetchAPI, dispatch } = useAppContext();
+  const { state, fetchAPI, dispatch, deleteProductPromptController } =
+    useAppContext();
 
   const [loading, setLoading] = useState<{
     status: boolean;
@@ -146,7 +147,7 @@ export default function ProductEditor(): JSX.Element {
     setLoading({ status: true, key: 'product-data' });
     fetchAPI({
       method: 'get',
-      url: `/api/v1/users/products/${productId}`
+      url: `/api/v1/users/products/${productId}?fields=-created_by`
     })
       .then(({ data }: AxiosResponse<Product>) => {
         dispatch({
@@ -183,19 +184,25 @@ export default function ProductEditor(): JSX.Element {
           name: state.product.name,
           category: state.product.category,
           description: state.product.description,
+          specifications: state.product.specifications,
           price: state.product.price,
           delivery_tax: state.product.delivery_tax,
           quantity: state.product.quantity,
           promotion: state.product.promotion,
-          productImages: {
-            img_0: imagesData.img_0,
-            img_1: imagesData.img_1,
-            img_2: imagesData.img_2,
-            img_3: imagesData.img_3
-          },
-          allow_comments: state.product.allow_comments
+          allow_comments: state.product.allow_comments,
+          productImages: [
+            ...Object.entries(imagesData).filter(([key, value]) =>
+              value.data !== ''
+                ? { [key]: { id: value.id, data: value.data } }
+                : null
+            )
+          ].reduce((accumulator, currentValue) => {
+            const group = { [currentValue[0]]: currentValue[1] };
+            return { ...accumulator, ...group };
+          }, {})
         }
       });
+      router.back();
     } catch (error: any) {
       console.error(error);
       setError({
@@ -220,20 +227,26 @@ export default function ProductEditor(): JSX.Element {
           name: state.product.name,
           category: state.product.category,
           description: state.product.description,
+          specifications: state.product.specifications,
           price: state.product.price,
           delivery_tax: state.product.delivery_tax,
           quantity: state.product.quantity,
           promotion: state.product.promotion,
           store: state.store._id,
-          images: {
-            img_0: imagesData.img_0,
-            img_1: imagesData.img_1,
-            img_2: imagesData.img_2,
-            img_3: imagesData.img_3
-          },
-          allow_comments: state.product.allow_comments
+          allow_comments: state.product.allow_comments,
+          productImages: [
+            ...Object.entries(imagesData).filter(([key, value]) =>
+              value.data !== ''
+                ? { [key]: { id: value.id, data: value.data } }
+                : null
+            )
+          ].reduce((accumulator, currentValue) => {
+            const group = { [currentValue[0]]: currentValue[1] };
+            return { ...accumulator, ...group };
+          }, {})
         }
       });
+      router.back();
     } catch (error: any) {
       console.error(error);
       setError({
@@ -248,14 +261,46 @@ export default function ProductEditor(): JSX.Element {
     }
   }
 
+  // fetch product
   useEffect((): (() => void) | void => {
-    console.log(router.query);
     const productId: string = router.query?.productId as string;
-    if (!productId || productId=== 'new') return;
+    if (!productId || productId === 'new') return;
     const fetch_data = setTimeout(() => {
       handleGet(productId);
     }, 100);
-    return () => clearTimeout(fetch_data);
+    return () => {
+      clearTimeout(fetch_data);
+      dispatch({
+        type: actions.PRODUCT_DATA,
+        payload: {
+          ...state,
+          product: {
+            _id: '',
+            name: '',
+            category: product_categories[0],
+            description: '',
+            specifications: '',
+            created_by: '',
+            store: '',
+            promotion: { status: false, percentage: 0 },
+            price: 0,
+            delivery_tax: 0,
+            quantity: 0,
+            images: {
+              img_0: { id: '', url: '' },
+              img_1: { id: '', url: '' },
+              img_2: { id: '', url: '' },
+              img_3: { id: '', url: '' }
+            },
+            createdAt: '',
+            updatedAt: '',
+            invalidated: false,
+            favorites: [],
+            allow_comments: false
+          }
+        }
+      });
+    };
   }, []);
 
   // fetch product store id
@@ -284,7 +329,7 @@ export default function ProductEditor(): JSX.Element {
       if (error.status && error.key === 'product-update') {
         setError({ status: false, msg: '', key: 'product-data' });
       }
-    }, 5000);
+    }, 8000);
     return () => {
       clearTimeout(desc);
     };
@@ -319,7 +364,7 @@ export default function ProductEditor(): JSX.Element {
           <section className='header'>
             <h2>
               <IoPencilOutline />
-              <span>Detalhes da Loja</span>
+              <span>Detalhes do Produto</span>
             </h2>
             <span className='details'>Salve após fazer alterações!</span>
           </section>
@@ -329,7 +374,7 @@ export default function ProductEditor(): JSX.Element {
               <section className='form'>
                 <section className='form-section'>
                   <div className='images-container'>
-                    <div className='header'>
+                    <div className='images-container_header'>
                       <h2>
                         <span>Carregue as imagens do produto</span>
                       </h2>
@@ -350,7 +395,7 @@ export default function ProductEditor(): JSX.Element {
                             alt={`product image ${index.toString()}`}
                             title={`Imagem do Produto ${index.toString()}`}
                           />
-                        ) : state.product.images[key].url ? (
+                        ) : state.product.images[key]?.url ? (
                           <img
                             className='cover-image'
                             src={state.product.images[key].url}
@@ -358,12 +403,7 @@ export default function ProductEditor(): JSX.Element {
                             title={`Imagem do Produto ${index.toString()}`}
                           />
                         ) : (
-                          <IoImageOutline
-                            onClick={() => {
-                              console.log(String(key));
-                            }}
-                            className='camera-icon'
-                          />
+                          <IoImageOutline className='camera-icon' />
                         )}
 
                         <label
@@ -444,16 +484,44 @@ export default function ProductEditor(): JSX.Element {
                           placeholder='Escreva a descrição do produto'
                           aria-label='Escreva a descrição do produto'
                           onChange={(e): void =>
-                            e.target.value.length > 2048
+                            e.target.value.length > 512
                               ? undefined
                               : handleChange(e)
                           }
                           value={state.product.description}
+                          maxLength={512}
+                          rows={8}
+                        />
+                        <span className='counter'>{`${
+                          state.product.description?.length || 0
+                        } / 512`}</span>
+                      </div>
+                    </section>
+
+                    <section className='form-section'>
+                      <div className='form-element'>
+                        <label htmlFor='specifications'>
+                          <IoEllipsisHorizontal />
+                          <span>Especificações do Produto</span>
+                        </label>
+
+                        <textarea
+                          id='specifications'
+                          name='specifications'
+                          autoComplete='off'
+                          placeholder='Coloque as especificações do produto'
+                          aria-label='Coloque as especificações do produto'
+                          onChange={(e): void =>
+                            e.target.value.length > 2048
+                              ? undefined
+                              : handleChange(e)
+                          }
+                          value={state.product.specifications}
                           maxLength={2048}
                           rows={12}
                         />
                         <span className='counter'>{`${
-                          state.product.description?.length || 0
+                          state.product.specifications?.length || 0
                         } / 2048`}</span>
                       </div>
                     </section>
@@ -659,10 +727,17 @@ export default function ProductEditor(): JSX.Element {
                 )}
 
                 {error.status &&
-                  error.key === 'product-update' &&
-                  !loading.status && (
-                    <h3 className='error-message'>{error.msg}</h3>
-                  )}
+                error.key === 'product-update' &&
+                !loading.status &&
+                error.msg.includes('.') ? (
+                  error.msg
+                    .split('.')
+                    .map((phrase) => (
+                      <div className='error-message'>{phrase}</div>
+                    ))
+                ) : (
+                  <div className='error-message'>{error.msg}</div>
+                )}
 
                 {loading.status &&
                   loading.key === 'product-update' &&

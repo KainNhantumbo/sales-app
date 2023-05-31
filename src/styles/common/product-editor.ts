@@ -241,7 +241,7 @@ export const ProductEditorContainer = styled.div`
               gap: 20px;
               margin: 0 auto;
 
-              .header {
+              .images-container_header {
                 display: flex;
                 flex-direction: column;
                 gap: 10px;

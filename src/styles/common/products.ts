@@ -135,8 +135,8 @@ export const ProductListContainer = styled.div`
       .products-list_container {
         display: flex;
         flex-direction: column;
-        padding: 0 10px;
-        padding-top: 25px;
+        padding: 25px 10px;
+        gap: 10px;
 
         .products-list_item {
           display: flex;
@@ -180,12 +180,20 @@ export const ProductListContainer = styled.div`
             }
 
             .bottom-side {
-              div {
+              .item {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
                 gap: 3px;
                 line-height: 1.2rem;
+              }
+
+              .promo-price {
+                i {
+                  font-weight: 500;
+                  text-decoration: line-through;
+                  color: rgb(${({ theme }) => theme.alert});
+                }
               }
 
               .date {

@@ -13,6 +13,8 @@ export type State = {
   isLogoutPrompt: boolean;
   isLoginPrompt: boolean;
   isDeleteAccountPrompt: boolean;
+  isDeactivateStorePrompt: boolean;
+  isDeleteProductPrompt: { status: boolean; productId: string };
   isDeleteCommentPrompt: { status: boolean; commentId: string };
   isUserWorkingDataModal: boolean;
   isConnected: boolean;

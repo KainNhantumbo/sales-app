@@ -19,6 +19,10 @@ export const ToolbarContainer = styled.section`
   align-items: center;
   gap: 5px;
 
+  @media screen and (max-width: 350px) {
+    justify-content: center;
+  }
+
   .left-container,
   .right-container {
     display: flex;
@@ -60,9 +64,7 @@ export const ToolbarContainer = styled.section`
       padding-left: 20px;
       @media screen and (max-width: 350px) {
         padding: 0;
-        text-underline-offset: 3px;
-        text-decoration: underline;
-        text-decoration-color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_variant});
       }
     }
 

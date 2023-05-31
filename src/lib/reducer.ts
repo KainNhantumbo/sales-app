@@ -11,7 +11,9 @@ export const initialState: State = {
   isSortActive: false,
   productsListQuery: { query: '', sort: '' },
   isDeleteAccountPrompt: false,
+  isDeactivateStorePrompt: false,
   isDeleteCommentPrompt: { status: false, commentId: '' },
+  isDeleteProductPrompt: { status: false, productId: '' },
   isUserWorkingDataModal: false,
   isConnected: false,
   app_status: {
@@ -127,6 +129,7 @@ export const initialState: State = {
     name: '',
     category: product_categories[0],
     description: '',
+    specifications: '',
     created_by: '',
     store: '',
     promotion: { status: false, percentage: 0 },
@@ -202,6 +205,16 @@ export default function reducer(state: State, action: Action) {
       return { ...state, isLoginPrompt: !state.isLoginPrompt };
     case actions.DELETE_ACCOUNT_PROMPT:
       return { ...state, isDeleteAccountPrompt: !state.isDeleteAccountPrompt };
+    case actions.DEACTIVATE_STORE_PROMPT:
+      return {
+        ...state,
+        isDeactivateStorePrompt: !state.isDeactivateStorePrompt
+      };
+    case actions.DELETE_PRODUCT_PROMPT:
+      return {
+        ...state,
+        isDeleteProductPrompt: action.payload?.isDeleteProductPrompt!
+      };
     case actions.DELETE_COMMENT_PROMPT:
       return {
         ...state,

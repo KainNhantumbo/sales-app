@@ -19,10 +19,12 @@ interface IContext {
   dispatch: Dispatch<Action>;
   logoutPromptController: () => void;
   deleteCommentPromptController: (status: boolean, id: string) => void;
+  deleteProductPromptController: (status: boolean, id: string) => void;
   loginPromptController: () => void;
   sortBoxController: () => void;
   searchBoxController: () => void;
   deleteAccountPromptController: () => void;
+  deleteDeactivateStorePromptController: () => void;
   userWorkingDataController: () => void;
   logoutUser: () => Promise<void>;
   fetchAPI: (config: AxiosRequestConfig) => AxiosPromise<any>;
@@ -37,12 +39,14 @@ const context = createContext<IContext>({
   searchBoxController: () => {},
   sortBoxController: () => {},
   deleteAccountPromptController: () => {},
+  deleteDeactivateStorePromptController: () => {},
+  deleteProductPromptController: (status: boolean, id: string) => {},
   deleteCommentPromptController: (status: boolean, id: string) => {},
   loginPromptController: () => {},
   userWorkingDataController: () => {}
 });
 
-export default function AppContext(props: AppContext): JSX.Element {
+export default function AppContext(props: AppContext) {
   const router: NextRouter = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -50,6 +54,12 @@ export default function AppContext(props: AppContext): JSX.Element {
   function deleteAccountPromptController(): void {
     dispatch({
       type: actions.DELETE_ACCOUNT_PROMPT
+    });
+  }
+
+  function deleteDeactivateStorePromptController(): void {
+    dispatch({
+      type: actions.DEACTIVATE_STORE_PROMPT
     });
   }
 
@@ -78,7 +88,17 @@ export default function AppContext(props: AppContext): JSX.Element {
       type: actions.DELETE_COMMENT_PROMPT,
       payload: {
         ...state,
-        isDeleteCommentPrompt: { status, commentId: id || '' }
+        isDeleteCommentPrompt: { status, commentId: id ?? '' }
+      }
+    });
+  }
+
+  function deleteProductPromptController(status: boolean, id?: string): void {
+    dispatch({
+      type: actions.DELETE_PRODUCT_PROMPT,
+      payload: {
+        ...state,
+        isDeleteProductPrompt: { status, productId: id ?? '' }
       }
     });
   }
@@ -219,13 +239,15 @@ export default function AppContext(props: AppContext): JSX.Element {
           fetchAPI,
           dispatch,
           logoutUser,
+          sortBoxController,
+          searchBoxController,
           loginPromptController,
           logoutPromptController,
           userWorkingDataController,
           deleteCommentPromptController,
+          deleteProductPromptController,
           deleteAccountPromptController,
-          searchBoxController,
-          sortBoxController
+          deleteDeactivateStorePromptController
         }}>
         {props.children}
       </context.Provider>

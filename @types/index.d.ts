@@ -169,9 +169,10 @@ export type ProductsList = {
 };
 
 export interface Product extends ProductsList {
-  description: string;
-  created_by: string;
   store: string;
+  created_by: string;
+  description: string;
+  specifications: string;
   delivery_tax: number;
   images: { [x: string]: { id: string; url: string } };
   invalidated: boolean;

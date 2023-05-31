@@ -27,11 +27,13 @@ import SortBox from '@/components/modals/SortBox';
 import AppStatus from '@/components/AppStatus';
 import { formatDate } from '@/lib/time-fns';
 import moment from 'moment';
+import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
 
 export default function Products(): JSX.Element {
-  const { state, dispatch, fetchAPI } = useAppContext();
   const theme = useTheme();
   const router: NextRouter = useRouter();
+  const { state, dispatch, fetchAPI, deleteProductPromptController } =
+    useAppContext();
   const [loading, setLoading] = useState<{ status: boolean }>({
     status: false
   });
@@ -45,9 +47,9 @@ export default function Products(): JSX.Element {
     setLoading({ status: true });
     try {
       const { data }: AxiosResponse<ProductsList[]> = await fetchAPI({
-        url: `/api/v1/users/products?fields=name,price,quantity,promotion,favorites,createdAt,updatedAt${
-          `&sort=${state.productsListQuery.sort}` ?? ''
-        }${`&search=${state.productsListQuery.query}` ?? ''}`
+        url: `/api/v1/users/products?fields=name,price,quantity,promotion,category,favorites,createdAt,updatedAt${`&sort=${
+          state.productsListQuery.sort || 'updatedAt'
+        }`}${`&search=${state.productsListQuery.query || ''}`}`
       });
       dispatch({
         type: actions.PRODUCTS_LIST_DATA,
@@ -69,6 +71,19 @@ export default function Products(): JSX.Element {
     }
   }
 
+  async function handleDeleteProduct(productId: string) {
+    try {
+      await fetchAPI({
+        method: 'delete',
+        url: `/api/v1/users/products/${productId}`
+      });
+      deleteProductPromptController(false, '');
+      fetchProducts();
+    } catch (err: any) {
+      console.error(err.response?.data?.message || err);
+    }
+  }
+
   useEffect(() => {
     fetchProducts();
     return () => {};
@@ -83,6 +98,7 @@ export default function Products(): JSX.Element {
 
   return (
     <Layout metadata={{ title: 'Lista de Produtos' }}>
+      <DeleteProductPrompt deleteFn={handleDeleteProduct} />
       <Container>
         {loading.status && !error.status && (
           <section className='fetching-state'>
@@ -137,25 +153,41 @@ export default function Products(): JSX.Element {
                       )}
                     </div>
                     <div className='bottom-side'>
-                      <div>
-                        <IoPricetagsOutline />
-                        <span>MZN {product.price}</span>
-                      </div>
-                      <div>
+                      {product.promotion.status ? (
+                        <div className='item promo-price'>
+                          <IoPricetagsOutline />
+                          <span>
+                            MZN <i>{product.price}</i>{' '}
+                            {(
+                              product.price -
+                              (product.price * product.promotion.percentage) /
+                                100
+                            ).toFixed(2)}
+                          </span>
+                        </div>
+                      ) : (
+                        <div className='item promo-price'>
+                          <IoPricetagsOutline />
+                          <span>MZN {product.price}</span>
+                        </div>
+                      )}
+                      <div className='item'>
                         <IoLayersOutline />
                         <span>{product.category ?? 'Sem categoria'}</span>
                       </div>
-                      <div>
+                      <div className='item'>
                         <IoHeartOutline />
                         <span>{product.favorites.length} Favoritos</span>
                       </div>
-                      <div className='date'>
+                      <div className='item date'>
                         <IoCalendar />
                         <span>
-                          {moment(product.createdAt).format('MMMM D, yyyy')}
+                          {moment(product.createdAt).format(
+                            'MMMM D, yyyy HH:mm'
+                          )}
                         </span>
                       </div>
-                      <div>
+                      <div className='item'>
                         <IoStorefront />
                         <span>{product.quantity} Produtos Estocados</span>
                       </div>
@@ -163,14 +195,26 @@ export default function Products(): JSX.Element {
                   </div>
                   <div className='products-list_item_secondary'>
                     <button
+                      title='Editar e atualizar informações do produto'
                       onClick={() =>
                         router.push(
-                          `/users/dashboard/${state.userAuth.id}/product-editor/${product._id}}`
+                          `/users/dashboard/${state.userAuth.id}/product-editor/${product._id}`
                         )
                       }>
                       <span>Editar produto</span>
                     </button>
-                    <button onClick={() => {}}>
+                    <button
+                      title='Ver o produto na sua loja'
+                      onClick={() =>
+                        router.push(`/users/stores/products/${product._id}`)
+                      }>
+                      <span>Ver o produto</span>
+                    </button>
+                    <button
+                      title='Eliminar produto da sua loja'
+                      onClick={() =>
+                        deleteProductPromptController(true, product._id)
+                      }>
                       <span>Eliminar produto</span>
                     </button>
                   </div>

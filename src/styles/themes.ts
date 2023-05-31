@@ -7,13 +7,13 @@ export const light_default: Theme = {
   accent: '12, 3, 13',
   neutral: '255, 255, 255',
   primary: '253, 200, 134',
-  secondary: '32, 193, 77',
+  secondary: '28, 173, 255',
   background: '250, 250, 250',
   foreground: '255, 255, 255',
   primary_variant: '228, 113, 49',
   secondary_variant: '157, 145, 255',
   background_variant: '245, 242, 234',
-  foreground_variant: '240, 240, 240',
+  foreground_variant: '240, 240, 240'
 };
 
 export const dark_default: Theme = {
@@ -23,11 +23,11 @@ export const dark_default: Theme = {
   accent: '25, 25, 28',
   neutral: '240, 240,240',
   primary: '253, 200, 134',
-  secondary: '32, 193, 77',
+  secondary: '28, 173, 255',
   background: '32, 33, 36',
   foreground: '41, 42, 46',
   primary_variant: '228, 113, 49',
   secondary_variant: '157, 145, 255',
   background_variant: '32, 33, 36',
-  foreground_variant: '34, 37, 41',
+  foreground_variant: '34, 37, 41'
 };
