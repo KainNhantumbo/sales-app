@@ -54,6 +54,7 @@ import { UserProfileContainer as Container } from '@/styles/common/profile-edito
 import user_skills from '../../../../data/professional-skills.json';
 import DeleteAccountPrompt from '../../../../components/modals/DeleteAccountPrompt';
 import { complements } from '@/data/app-data';
+import Image from 'next/image';
 
 export default function ProfileEditor(): JSX.Element {
   const theme = useTheme();
@@ -481,13 +482,17 @@ export default function ProfileEditor(): JSX.Element {
                 <section className='form-section'>
                   <div className='image-container cover-image'>
                     {coverImageData.data ? (
-                      <img
+                      <Image
+                        width={620}
+                        height={220}
                         className='cover-image'
                         src={coverImageData.data}
                         alt='cover image'
                       />
                     ) : state.user.cover_image?.url ? (
-                      <img
+                      <Image
+                        width={620}
+                        height={220}
                         className='cover-image'
                         src={state.user.cover_image?.url}
                         alt='cover image'
@@ -514,7 +519,7 @@ export default function ProfileEditor(): JSX.Element {
                       onChange={(e) => setCoverImageFile(e.target.files)}
                     />
                     <span className='description'>
-                      Dimensões: 620 x 220 pixels. Máx. 800Kb.
+                      Dimensões: 620 x 220 pixels.
                     </span>
                   </div>
                 </section>
@@ -522,9 +527,16 @@ export default function ProfileEditor(): JSX.Element {
                 <section className='form-section'>
                   <div className='image-container profile-image'>
                     {profileImageData.data ? (
-                      <img src={profileImageData.data} alt='profile image' />
+                      <Image
+                        width={150}
+                        height={150}
+                        src={profileImageData.data}
+                        alt='profile image'
+                      />
                     ) : state.user.profile_image?.url ? (
-                      <img
+                      <Image
+                        width={150}
+                        height={150}
                         src={state.user.profile_image?.url}
                         alt='profile image'
                       />
@@ -532,7 +544,7 @@ export default function ProfileEditor(): JSX.Element {
                       <IoImageOutline className='camera-icon' />
                     )}
                     <label htmlFor='avatar' title='Change profile picture'>
-                      <span>Selecionar imagem de perfil</span>
+                      <span>Imagem de perfil</span>
                       <IoAdd />
                     </label>
                     <button
@@ -550,7 +562,7 @@ export default function ProfileEditor(): JSX.Element {
                       onChange={(e) => setProfileImageFile(e.target.files)}
                     />
                     <span className='description'>
-                      Dimensões: 150 x 150 pixels. Máx. 800Kb.
+                      Dimensões: 150 x 150 pixels.
                     </span>
                   </div>
                 </section>
@@ -583,9 +595,16 @@ export default function ProfileEditor(): JSX.Element {
                           placeholder='Escreva o seu nome'
                           aria-label='Escreva o seu nome'
                           required={true}
-                          onChange={(e): void => handleChange(e)}
+                          onChange={(e): void =>
+                            e.target.value.length > 32
+                              ? undefined
+                              : handleChange(e)
+                          }
                           value={state.user.first_name}
                         />
+                        <span className='counter'>{`${
+                          state.user.first_name?.length || 0
+                        } / 32`}</span>
                       </div>
                       <div className='form-element'>
                         <label htmlFor='last_name'>
@@ -601,8 +620,15 @@ export default function ProfileEditor(): JSX.Element {
                           aria-label='Escreva o seu apelido'
                           value={state.user.last_name}
                           required={true}
-                          onChange={(e): void => handleChange(e)}
+                          onChange={(e): void =>
+                            e.target.value.length > 32
+                              ? undefined
+                              : handleChange(e)
+                          }
                         />
+                        <span className='counter'>{`${
+                          state.user.last_name?.length || 0
+                        } / 32`}</span>
                       </div>
                     </section>
                     <section className='form-section'>
@@ -617,9 +643,16 @@ export default function ProfileEditor(): JSX.Element {
                           name='main_phone_number'
                           placeholder='Escreva o seu número de telemóvel'
                           aria-label='Escreva o seu número de telemóvel'
-                          onChange={(e): void => handleChange(e)}
                           value={state.user.main_phone_number}
+                          onChange={(e): void =>
+                            e.target.value.length > 9
+                              ? undefined
+                              : handleChange(e)
+                          }
                         />
+                        <span className='counter'>{`${
+                          state.user.main_phone_number?.length || 0
+                        } / 9`}</span>
                       </div>
                       <div className='form-element'>
                         <label htmlFor='alternative_phone_number'>
@@ -632,9 +665,16 @@ export default function ProfileEditor(): JSX.Element {
                           name='alternative_phone_number'
                           placeholder='Escreva o seu número de telemóvel'
                           aria-label='Escreva o seu número de telemóvel'
-                          onChange={(e): void => handleChange(e)}
                           value={state.user.alternative_phone_number}
+                          onChange={(e): void =>
+                            e.target.value.length > 9
+                              ? undefined
+                              : handleChange(e)
+                          }
                         />
+                        <span className='counter'>{`${
+                          state.user.alternative_phone_number?.length || 0
+                        } / 9`}</span>
                       </div>
                     </section>
                     <section className='form-section'>
@@ -660,6 +700,8 @@ export default function ProfileEditor(): JSX.Element {
                         </label>
                         <input
                           type='date'
+                          min={'1950-01-01'}
+                          max={'2013-01-01'}
                           id='birth_date'
                           name='birth_date'
                           onChange={(e): void => handleChange(e)}
@@ -680,9 +722,16 @@ export default function ProfileEditor(): JSX.Element {
                           maxLength={128}
                           placeholder='Escreva uma breve biografia para o seu perfil'
                           aria-label='Escreva uma breve biografia para o seu perfil'
-                          onChange={(e): void => handleChange(e)}
                           value={state.user.bio}
+                          onChange={(e): void =>
+                            e.target.value.length > 128
+                              ? undefined
+                              : handleChange(e)
+                          }
                         />
+                        <span className='counter'>{`${
+                          state.user.bio?.length || 0
+                        } / 128`}</span>
                       </div>
                     </section>
                   </div>
@@ -922,22 +971,27 @@ export default function ProfileEditor(): JSX.Element {
                           aria-label='Endereço'
                           maxLength={128}
                           value={state.user.location?.adress}
-                          onChange={(e): void => {
-                            dispatch({
-                              type: actions.USER_DATA,
-                              payload: {
-                                ...state,
-                                user: {
-                                  ...state.user,
-                                  location: {
-                                    ...state.user.location,
-                                    adress: e.target.value
+                          onChange={(e): void =>
+                            e.target.value.length > 128
+                              ? undefined
+                              : dispatch({
+                                  type: actions.USER_DATA,
+                                  payload: {
+                                    ...state,
+                                    user: {
+                                      ...state.user,
+                                      location: {
+                                        ...state.user.location,
+                                        adress: e.target.value
+                                      }
+                                    }
                                   }
-                                }
-                              }
-                            });
-                          }}
+                                })
+                          }
                         />
+                        <span className='counter'>{`${
+                          state.user.location?.adress?.length || 0
+                        } / 128`}</span>
                       </div>
                       <div className='form-element'>
                         <label htmlFor='zip_code'>
@@ -948,12 +1002,11 @@ export default function ProfileEditor(): JSX.Element {
                           type='text'
                           id='zip_code'
                           name='zip_code'
-                          maxLength={5}
                           placeholder='Escreva o seu código postal'
                           aria-label='Escreva o seu código postal'
                           value={state.user.location?.zip_code}
-                          onChange={(e): void => {
-                            dispatch({
+                          onChange={(e): void => 
+                            e.target.value.length > 5 ? undefined : dispatch({
                               type: actions.USER_DATA,
                               payload: {
                                 ...state,
@@ -965,9 +1018,12 @@ export default function ProfileEditor(): JSX.Element {
                                   }
                                 }
                               }
-                            });
-                          }}
+                            })
+                          }
                         />
+                        <span className='counter'>{`${
+                          state.user.location?.zip_code?.length || 0
+                        } / 5`}</span>
                       </div>
                     </section>
                   </div>

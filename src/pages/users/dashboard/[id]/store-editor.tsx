@@ -32,6 +32,7 @@ import { InputEvents } from '../../../../../@types';
 import product_categories from '../../../../data/product-categories.json';
 import { StoreEditorContainer as Container } from '@/styles/common/store-editor';
 import { complements } from '@/data/app-data';
+import Image from 'next/image';
 
 export default function StoreEditor(): JSX.Element {
   const theme = useTheme();
@@ -260,13 +261,17 @@ export default function StoreEditor(): JSX.Element {
                 <section className='form-section'>
                   <div className='image-container cover-image'>
                     {coverImageData.data ? (
-                      <img
+                      <Image
+                        width={620}
+                        height={220}
                         className='cover-image'
                         src={coverImageData.data}
                         alt='cover image'
                       />
                     ) : state.store.cover_image?.url ? (
-                      <img
+                      <Image
+                        width={620}
+                        height={220}
                         className='cover-image'
                         src={state.store.cover_image?.url}
                         alt='cover image'

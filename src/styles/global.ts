@@ -8,21 +8,16 @@ export const GlobalStyles = createGlobalStyle`
     max-width: 100%;
   }
   
-  span, label {
+  label {
     user-select: none;
   }
   
   body {
-    font-family: CentraNube, Inter, 'Open Sans', Roboto, Poppins, 'PT Sans', sans-serif;
-    color: rgb(${({ theme }) => theme.font});
     width: 100%;
-    background: rgb(${({ theme }) => theme.foreground});
     position: relative;
-  }
-
-  input, textarea, select {
-    background: rgb(${({ theme }) => theme.foreground});
     color: rgb(${({ theme }) => theme.font});
+    background: rgb(${({ theme }) => theme.foreground});
+    font-family: CentraNube, Inter, 'Open Sans', Roboto, 'Helvetica Neue', -apple-system, sans-serif;
   }
 
   html {
@@ -32,14 +27,12 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   ::-webkit-scrollbar {
-    scroll-behavior: smooth;
     width: 8px;
-    background: none;
     background: rgba(${({ theme }) => theme.background}, .3);
   }
 
   ::-webkit-scrollbar-thumb {
     border-radius: 15px;
-    background: rgba(${({ theme }) => theme.font}, 1);
+    background: rgb(${({ theme }) => theme.font});
   }
 `;

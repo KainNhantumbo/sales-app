@@ -11,7 +11,7 @@ export default function About(): JSX.Element {
           <section>
             <h1>Sobre nós</h1>
           </section>
-          <QRCode value='dnfanslkfnlaksnfoiansfasnfiansfasif' />
+          
           <section className='body-container'></section>
         </article>
       </Container>

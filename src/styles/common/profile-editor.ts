@@ -301,6 +301,10 @@ export const UserProfileContainer = styled.div`
               input[type='date'] {
                 padding-top: 20px;
               }
+              .counter {
+                align-self: end;
+                font-size: 0.9rem;
+              }
             }
 
             .image-container {

@@ -106,6 +106,7 @@ export default function Post({ post: initialPost, latestPosts }: IPost) {
                 <div className='author'>
                   <Image
                     width={30}
+                    height={30}
                     src={author.picture as any}
                     alt='article author photo'
                   />
@@ -158,7 +159,9 @@ export default function Post({ post: initialPost, latestPosts }: IPost) {
                 </div>
               </section>
               <h4>{post.excerpt}</h4>
-              <img
+              <Image
+                width={900}
+                height={480}
                 className='article-image'
                 src={post.cover_image.url}
                 alt={post.title}
@@ -212,7 +215,12 @@ export default function Post({ post: initialPost, latestPosts }: IPost) {
               </section>
 
               <section className='author-container'>
-                <Image src={author.picture} alt='article author photo' />
+                <Image
+                  width={150}
+                  height={150}
+                  src={author.picture}
+                  alt='article author photo'
+                />
                 <div>
                   <h3>{author.name}</h3>
                   <span className='description'>{author.description}</span>
@@ -235,7 +243,9 @@ export default function Post({ post: initialPost, latestPosts }: IPost) {
                       className={'post'}
                       href={`/post/${post.slug}`}>
                       <>
-                        <img
+                        <Image
+                          width={300}
+                          height={210}
                           src={post.cover_image.url}
                           alt={`Image of ${post.title} article.`}
                         />
@@ -248,10 +258,11 @@ export default function Post({ post: initialPost, latestPosts }: IPost) {
                           </div>
                           <h3>{post.title}</h3>
                           <p>
-                            {post.excerpt.length > 160
-                              ? `${post.excerpt.slice(0, 160) + '...'}`
+                            {post.excerpt.length > 200
+                              ? `${post.excerpt.slice(0, 210) + '...'}`
                               : post.excerpt}
                           </p>
+
                           <button
                             onClick={() => router.push(`/post/${post.slug}`)}>
                             <IoOpenOutline />
@@ -281,18 +292,12 @@ export async function getStaticPaths(): Promise<any> {
 
 export async function getStaticProps({ params: { slug } }: any) {
   try {
-    const data = (
+    const [post, latestPosts] = (
       await Promise.all([getPost(slug), getPosts({ limit: 3, offset: 0 })])
     ).map((res) => res.data);
-    return {
-      props: { post: { ...data[0] }, latestPosts: [...data[1]] },
-      revalidate: 10
-    };
+    return { props: { post, latestPosts }, revalidate: 10 };
   } catch (error) {
     console.error(error);
-    return {
-      props: {},
-      revalidate: 10
-    };
+    return { props: {}, revalidate: 10 };
   }
 }

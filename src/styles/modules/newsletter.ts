@@ -16,9 +16,7 @@ export const NewsletterContainer = styled.section`
   margin: 40px auto;
 
   @media screen and (max-width: 820px) {
-    width: 100%;
-    max-width: 100%;
-    margin: 40px 0;
+    max-width: 95%;
   }
 
   .error-message {

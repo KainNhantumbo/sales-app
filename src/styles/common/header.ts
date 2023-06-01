@@ -179,11 +179,6 @@ export const HeaderContainer = styled.header`
     .user-logout {
       ${BaseButtonOutline}
       border: none;
-      overflow: visible;
-      span {
-        padding-left: 0;
-        padding-right: 20px;
-      }
       img {
         object-fit: cover;
         border-radius: 50%;
@@ -193,6 +188,14 @@ export const HeaderContainer = styled.header`
         top: calc(50% - 14px);
         right: -6px;
         pointer-events: none;
+      }
+    }
+
+    .user-account {
+      overflow: visible;
+      span {
+        padding-left: 0;
+        padding-right: 20px;
       }
     }
 

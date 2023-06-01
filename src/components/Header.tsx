@@ -1,7 +1,7 @@
 import {
   IoLogInOutline,
   IoLogOutOutline,
-  IoStorefrontOutline,
+  IoStorefrontOutline
 } from 'react-icons/io5';
 import Link from 'next/link';
 import { BiUser } from 'react-icons/bi';
@@ -17,7 +17,7 @@ export default function Header(): JSX.Element {
   const [isMenu, setIsMenu] = useState<boolean>(false);
   const { asPath, push }: NextRouter = useRouter();
   const { state, logoutPromptController } = useAppContext();
-  
+
   function toggleMenu(): void {
     setIsMenu(!isMenu);
   }
@@ -30,7 +30,7 @@ export default function Header(): JSX.Element {
     }
   }
 
-  useEffect((): () => void => {
+  useEffect((): (() => void) => {
     changeWidth();
     window.addEventListener('resize', changeWidth);
     return () => {
@@ -55,7 +55,7 @@ export default function Header(): JSX.Element {
               exit={{
                 opacity: 0,
                 translateY: -70,
-                transition: { duration: 0.25 },
+                transition: { duration: 0.25 }
               }}
               style={{ display: isMenu ? 'flex' : 'none' }}>
               <section>
@@ -91,8 +91,10 @@ export default function Header(): JSX.Element {
                     }>
                     {state.userAuth.profile_image ? (
                       <img
+                        loading='lazy'
+                        decoding='async'
                         src={state.userAuth.profile_image}
-                        alt='user profile image'
+                        alt='User profile image'
                       />
                     ) : (
                       <BiUser />
@@ -112,7 +114,7 @@ export default function Header(): JSX.Element {
             </motion.nav>
           )}
         </AnimatePresence>
-        
+
         <motion.button
           whileTap={{ scale: 0.8 }}
           title='Abrir ou fechar o menu'

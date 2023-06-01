@@ -1,5 +1,5 @@
+import { BaseButton } from '../defaults';
 import styled, { css } from 'styled-components';
-import { BaseButton, BaseButtonOutline, StyledInputs } from '../defaults';
 
 const ShareLinksStyles = css`
   display: flex;
@@ -106,7 +106,7 @@ export const PostContainer = styled.div`
           justify-content: flex-start;
           align-items: center;
           padding: 10px 0;
-          gap: 18px;
+          gap: 12px;
 
           img {
             width: 30px;
@@ -257,6 +257,7 @@ export const PostContainer = styled.div`
         width: 80px;
         height: 80px;
         border-radius: 50%;
+        object-fit: cover;
       }
       h3 {
         font-weight: 500;
@@ -290,11 +291,15 @@ export const PostContainer = styled.div`
 
       @media screen and (max-width: 770px) {
         flex-direction: column;
+        max-width: 420px;
+        align-items: center;
+       margin: 0 auto;
       }
 
       .post {
         width: fit-content;
         display: flex;
+        max-height: 450px;
         flex-direction: column;
         border-radius: 10px;
         background: rgb(${({ theme }) => theme.foreground});
@@ -320,6 +325,9 @@ export const PostContainer = styled.div`
           flex-direction: column;
           gap: 10px;
           padding: 20px;
+          height: 100%;
+          justify-content: space-between; 
+
           .details {
             display: flex;
             justify-content: flex-start;
@@ -355,6 +363,7 @@ export const PostContainer = styled.div`
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
+            justify-self: flex-end;
             :hover {
               color: rgb(${({ theme }) => theme.primary_variant});
             }
