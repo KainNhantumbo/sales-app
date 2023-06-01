@@ -1,6 +1,7 @@
 import Layout from '@/components/Layout';
 import { AboutContainer as Container } from '../../styles/common/about';
 import { complements } from '@/data/app-data';
+import QRCode from 'react-qr-code';
 
 export default function About(): JSX.Element {
   return (
@@ -10,10 +11,8 @@ export default function About(): JSX.Element {
           <section>
             <h1>Sobre nós</h1>
           </section>
-
-          <section className='body-container'>
-
-          </section>
+          <QRCode value='dnfanslkfnlaksnfoiansfasnfiansfasif' />
+          <section className='body-container'></section>
         </article>
       </Container>
     </Layout>
