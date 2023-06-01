@@ -6,23 +6,21 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { NextRouter, useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import { useTheme } from 'styled-components';
 import NewsLetter from '@/components/Newsletter';
-import { DiscoverContainer as Container } from '@/styles/common/home';
-import flying_paper from '../../public/assets/flying paper.png';
-import africa_culture from '../../public/assets/africa-culture.png';
+import { DiscoverContainer as Container } from '@/styles/common/discover';
+import flying_paper from '../../../public/assets/flying paper.png';
+import africa_culture from '../../../public/assets/africa-culture.png';
 import { store_features, pricing_data, complements } from '@/data/app-data';
 
 export default function Discover(): JSX.Element {
-  const router: NextRouter = useRouter();
   const theme = useTheme();
 
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Página Inicial`
+        title: `${complements.defaultTitle} | Descubra-nos`
       }}>
       <Container>
         <article>

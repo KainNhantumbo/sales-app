@@ -5,6 +5,7 @@ import {
   ISignUp,
   Product,
   ProductsList,
+  PublicProducts,
   Store,
   User
 } from './index';
@@ -40,6 +41,7 @@ export type State = {
   productList: ProductsList[];
   comment: IComment;
   commentsList: IComment[];
+  publicProducts: PublicProducts[];
   productsListQuery: { query: string; sort: string };
 };
 

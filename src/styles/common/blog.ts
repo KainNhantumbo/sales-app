@@ -19,7 +19,7 @@ export const BlogContainer = styled.div`
 
   .banner-container {
     width: 100%;
-    background: rgb(${({ theme }) => theme.foreground}, 0.8);
+    background: rgba(${({ theme }) => theme.foreground}, 0.8);
     backdrop-filter: blur(10px);
     padding: 0 20px;
     padding-top: 120px;
@@ -39,8 +39,6 @@ export const BlogContainer = styled.div`
     .title {
       display: flex;
       flex-direction: column;
-      width: 100%;
-      max-width: 1080px;
       margin: 0 auto;
       position: relative;
       gap: 20px;

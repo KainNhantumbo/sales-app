@@ -12,12 +12,12 @@ import { useRouter } from 'next/router';
 import { getPosts } from '@/lib/queries';
 import { formatDate } from '@/lib/time-fns';
 import { IBlogPosts } from '../../../@types';
+import { complements } from '@/data/app-data';
+import NewsLetter from '@/components/Newsletter';
+import SearchComponent from '@/components/Search';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
 import { BlogContainer as Container } from '@/styles/common/blog';
-import SearchComponent from '@/components/Search';
-import { complements } from '@/data/app-data';
 import buyingWomenImg from '../../../public/assets/buying_women.png';
-import NewsLetter from '@/components/Newsletter';
 
 type Props = { posts: IBlogPosts[] };
 
@@ -116,15 +116,9 @@ export default function Blog(props: Props): JSX.Element {
 export async function getStaticProps() {
   try {
     const { data } = await getPosts({});
-    return {
-      props: { posts: [...data] },
-      revalidate: 10
-    };
+    return { props: { posts: [...data] }, revalidate: 10 };
   } catch (error) {
     console.error(error);
-    return {
-      props: {},
-      revalidate: 10
-    };
+    return { props: {}, revalidate: 10 };
   }
 }

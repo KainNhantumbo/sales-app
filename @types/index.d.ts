@@ -179,6 +179,16 @@ export interface Product extends ProductsList {
   allow_comments: boolean;
 }
 
+export type PublicProducts = {
+  _id: string;
+  name: string;
+  price: number;
+  promotion: { status: boolean; percentage: number };
+  favorites: string[];
+  created_by: string;
+  cover_image?: { id: string; url: string } ;
+}
+
 export type Store = {
   _id: string;
   name: string;

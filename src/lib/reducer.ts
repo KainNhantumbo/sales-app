@@ -165,6 +165,7 @@ export const initialState: State = {
     createdAt: ''
   },
   productList: [],
+  publicProducts: [],
   commentsList: []
 };
 
@@ -256,6 +257,11 @@ export default function reducer(state: State, action: Action) {
       return {
         ...state,
         store: action.payload?.store!
+      };
+    case actions.PUBLIC_PRODUCTS_LIST_DATA:
+      return {
+        ...state,
+        publicProducts: action.payload?.publicProducts!
       };
     case actions.PRODUCT_DATA:
       return {

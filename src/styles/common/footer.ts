@@ -172,6 +172,7 @@ export const FooterContainer = styled.footer`
       border: none;
       width: 40px;
       height: 40px;
+      outline: none;
       background: rgba(${({ theme }) => theme.primary}, 0.8);
       :hover {
         color: rgb(${({ theme }) => theme.primary_variant});
