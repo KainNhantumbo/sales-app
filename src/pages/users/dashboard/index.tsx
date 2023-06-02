@@ -12,7 +12,7 @@ export default function Dashboard(): JSX.Element {
   const theme = useTheme();
   const { state } = useAppContext();
   const router: NextRouter = useRouter();
-  const actionRoutes = dashboardRoutes(state.userAuth?.id);
+  const actionRoutes = dashboardRoutes();
 
   return (
     <Layout
@@ -26,18 +26,18 @@ export default function Dashboard(): JSX.Element {
             </h2>
             <section className='user-container'>
               <div className='avatar-container'>
-                {state.userAuth.profile_image ? (
+                {state.auth.profile_image ? (
                   <img
-                    src={state.userAuth.profile_image}
-                    alt={`${state.userAuth.name} + profile picture`}
+                    src={state.auth.profile_image}
+                    alt={`${state.auth.name} + profile picture`}
                   />
                 ) : (
                   <BiUser />
                 )}
               </div>
               <div className='status-container'>
-                <h3>Olá, {state.userAuth.name}.</h3>
-                <p>{state.userAuth.email}</p>
+                <h3>Olá, {state.auth.name}.</h3>
+                <p>{state.auth.email}</p>
               </div>
             </section>
           </section>

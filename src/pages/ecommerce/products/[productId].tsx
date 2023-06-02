@@ -13,14 +13,18 @@ import { EcommerceProductContainer as Container } from '@/styles/common/ecommerc
 
 type Props = { product: Product };
 
-export default function Product(props: Props): JSX.Element {
+export default function Product({ product }: Props): JSX.Element {
   const router: NextRouter = useRouter();
-
-  if (!props.product) {
+  if (!product) {
     return <ErrorPage retryFn={router.reload} />;
   }
   return (
-    <Layout>
+    <Layout
+      metadata={{
+        title: `${complements.defaultTitle} | ${product.name}`,
+        createdAt: product.createdAt,
+        updatedAt: product.updatedAt
+      }}>
       <QRCode
         size={10}
         style={{

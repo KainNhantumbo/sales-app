@@ -27,17 +27,19 @@ import { actions } from '@/data/actions';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
-import countries from '../../../../data/countries.json';
-import { InputEvents } from '../../../../../@types';
-import product_categories from '../../../../data/product-categories.json';
+import countries from '../../../data/countries.json';
+import { InputEvents } from '../../../../@types';
+import product_categories from '../../../data/product-categories.json';
 import { StoreEditorContainer as Container } from '@/styles/common/store-editor';
 import { complements } from '@/data/app-data';
 import Image from 'next/image';
+import DeactivatePrompt from '@/components/modals/DeativateStorePrompt';
 
 export default function StoreEditor(): JSX.Element {
   const theme = useTheme();
   const router: NextRouter = useRouter();
-  const { state, fetchAPI, dispatch } = useAppContext();
+  const { state, fetchAPI, dispatch, deactivateStorePromptController } =
+    useAppContext();
 
   const [loading, setLoading] = useState<{
     status: boolean;
@@ -224,6 +226,7 @@ export default function StoreEditor(): JSX.Element {
         createdAt: state.store.createdAt
       }}>
       <Container>
+        <DeactivatePrompt />
         {loading.status && loading.key === 'store-data' && (
           <section className='fetching-state'>
             <div>
@@ -666,32 +669,33 @@ export default function StoreEditor(): JSX.Element {
                   Clique no botão abaixo para activar ou desactivar a loja.
                 </p>
               </div>
-              <button
-                className='save'
-                onClick={() =>
-                  dispatch({
-                    type: actions.STORE_DATA,
-                    payload: {
-                      ...state,
-                      store: {
-                        ...state.store,
-                        active: !state.store.active
+
+              {!state.store.active ? (
+                <button
+                  className='save'
+                  onClick={() =>
+                    dispatch({
+                      type: actions.STORE_DATA,
+                      payload: {
+                        ...state,
+                        store: {
+                          ...state.store,
+                          active: !state.store.active
+                        }
                       }
-                    }
-                  })
-                }>
-                {!state.store.active ? (
-                  <>
-                    <IoRadioButtonOff color={`rgb(${theme.alert})`} />
-                    <span>Loja Desactivada</span>
-                  </>
-                ) : (
-                  <>
-                    <IoRadioButtonOn color={`rgb(${theme.secondary})`} />
-                    <span>Loja Activada</span>
-                  </>
-                )}
-              </button>
+                    })
+                  }>
+                  <IoRadioButtonOff color={`rgb(${theme.alert})`} />
+                  <span>Loja Desactivada</span>
+                </button>
+              ) : (
+                <button
+                  className='save'
+                  onClick={() => deactivateStorePromptController()}>
+                  <IoRadioButtonOn color={`rgb(${theme.secondary})`} />
+                  <span>Loja Activada</span>
+                </button>
+              )}
             </section>
 
             <section className='actions-container'>

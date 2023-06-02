@@ -23,7 +23,7 @@ export type State = {
   isSortActive: boolean;
   isFilterActive: boolean;
   app_status: AppStatus;
-  userAuth: {
+  auth: {
     id: string;
     token: string;
     invalidated: boolean;

@@ -1,10 +1,10 @@
-import Layout from '../components/Layout';
+import { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { motion } from 'framer-motion';
+import Layout from '../components/Layout';
 import { InputEvents, SubmitEvent } from '../../@types';
 import { complements } from '@/data/app-data';
 import { BiEnvelope, BiMailSend } from 'react-icons/bi';
-import { ChangeEvent, FormEvent, useState } from 'react';
 import { ContactContainer as Container } from '@/styles/common/contact';
 
 export default function Contact(): JSX.Element {

@@ -41,8 +41,11 @@ export const HeaderContainer = styled.header`
       font-weight: 500;
       color: rgb(${({ theme }) => theme.font});
       font-family: 'Roboto Slab', 'Roboto';
-      i {
-        color: rgb(${({ theme }) => theme.secondary});
+      sup {
+        position: relative;
+        top: -10px;
+        font-size: 0.8rem;
+        color: rgb(${({ theme }) => theme.primary_variant});
       }
     }
   }

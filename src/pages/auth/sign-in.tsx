@@ -17,7 +17,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import backgroundImage from '../../../public/assets/background1.png';
 
-export default function Signin(): JSX.Element {
+export default function SignIn(): JSX.Element {
   const { state, dispatch } = useAppContext();
   const router: NextRouter = useRouter();
   const [loading, setLoading] = useState(false);
@@ -36,7 +36,7 @@ export default function Signin(): JSX.Element {
     });
   };
 
-  const handleSubmit = async (e: SubmitEvent): Promise<void> => {
+  async function handleSubmit(e: SubmitEvent): Promise<void> {
     e.preventDefault();
     if (state.signInData.password.length < 8) {
       setError({
@@ -57,7 +57,7 @@ export default function Signin(): JSX.Element {
         type: actions.USER_AUTH,
         payload: {
           ...state,
-          userAuth: {
+          auth: {
             id: data?.id,
             token: data?.token,
             invalidated: data?.invalidated,
@@ -74,7 +74,7 @@ export default function Signin(): JSX.Element {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   useEffect(() => {
     const desc = setTimeout(() => {
@@ -86,7 +86,9 @@ export default function Signin(): JSX.Element {
   }, [error.status]);
 
   return (
-    <Layout>
+    <Layout metadata={{
+      title: `${complements.defaultTitle} | Acessar Conta`
+    }}>
       <Container>
         <Image src={backgroundImage} alt='background image' />
         <main>

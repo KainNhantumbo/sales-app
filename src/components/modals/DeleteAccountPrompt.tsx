@@ -20,7 +20,7 @@ export default function DeleteCommentPrompt(): JSX.Element {
         type: actions.USER_AUTH,
         payload: {
           ...state,
-          userAuth: {
+          auth: {
             id: '',
             name: '',
             token: '',

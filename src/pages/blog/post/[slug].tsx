@@ -35,7 +35,10 @@ interface IPost {
   latestPosts: IBlogPosts[];
 }
 
-export default function Post({ post: initialPost, latestPosts }: IPost) {
+export default function Post({
+  post: initialPost,
+  latestPosts
+}: IPost): JSX.Element {
   const { state, fetchAPI, loginPromptController } = useAppContext();
   const [post, setPost] = useState(initialPost);
   const router = useRouter();
@@ -181,13 +184,13 @@ export default function Post({ post: initialPost, latestPosts }: IPost) {
                 <div>
                   <button
                     onClick={() => {
-                      if (!state.userAuth.token) return loginPromptController();
+                      if (!state.auth.token) return loginPromptController();
 
-                      post.favorites.includes(state.userAuth.id)
+                      post.favorites.includes(state.auth.id)
                         ? handleUnFavoritePost()
                         : handleFavoritePost();
                     }}>
-                    {post.favorites.includes(state.userAuth.id) ? (
+                    {post.favorites.includes(state.auth.id) ? (
                       <IoHeart />
                     ) : (
                       <IoHeartOutline />

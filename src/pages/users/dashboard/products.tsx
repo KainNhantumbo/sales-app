@@ -17,7 +17,7 @@ import { actions } from '@/data/actions';
 import { useAppContext } from '@/context/AppContext';
 import { NextRouter, useRouter } from 'next/router';
 import { useTheme } from 'styled-components';
-import { ProductsList } from '../../../../../@types';
+import { ProductsList } from '../../../../@types';
 import { ProductListContainer as Container } from '@/styles/common/products';
 import ToolBox from '@/components/modals/ToolBox';
 import SearchBox from '@/components/modals/SearchBox';
@@ -195,7 +195,7 @@ export default function Products(): JSX.Element {
                   </div>
                   <div className='products-list_item_secondary'>
                     <Link
-                      href={`/users/dashboard/${state.userAuth.id}/product-editor/${product._id}`}
+                      href={`/users/dashboard/product-editor/${product._id}`}
                       title='Editar e atualizar informações do produto'>
                       <span>Editar produto</span>
                     </Link>

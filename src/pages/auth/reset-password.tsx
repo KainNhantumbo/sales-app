@@ -1,14 +1,14 @@
-import { IoMailOutline } from 'react-icons/io5';
+import Link from 'next/link';
 import fetch from '../../config/client';
+import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
 import { SubmitEvent } from '../../../@types';
-import { PasswordReseterContainer as Container } from '../../styles/common/pasword-reseter';
+import { IoMailOutline } from 'react-icons/io5';
 import { complements } from '@/data/app-data';
-import Layout from '@/components/Layout';
-import Link from 'next/link';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import { NextRouter, useRouter } from 'next/router';
+import { PasswordReseterContainer as Container } from '../../styles/common/pasword-reseter';
 
 export default function ResetPassword(): JSX.Element {
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,7 @@ export default function ResetPassword(): JSX.Element {
         method: 'post',
         url: '/api/v1/users/auth/request-new-password',
         data: email,
-        withCredentials: true,
+        withCredentials: true
       });
       router.push('/auth/reset-password-confirmation');
     } catch (error: any) {
@@ -47,7 +47,10 @@ export default function ResetPassword(): JSX.Element {
   }, [error.status]);
 
   return (
-    <Layout>
+    <Layout
+      metadata={{
+        title: `${complements.defaultTitle} | Atualização de Senha`
+      }}>
       <Container>
         <main>
           <article>
@@ -86,7 +89,7 @@ export default function ResetPassword(): JSX.Element {
                       aria-placeholder='Processando...'
                       cssOverride={{
                         display: 'block',
-                        margin: '0 auto',
+                        margin: '0 auto'
                       }}
                     />
                   </>

@@ -1,17 +1,13 @@
-import {
-  IoLockClosedOutline,
-  IoLockOpenOutline,
-  IoMailOutline,
-} from 'react-icons/io5';
+import Link from 'next/link';
 import fetch from '../../config/client';
 import { useState, useEffect } from 'react';
-import { InputEvents, SubmitEvent } from '../../../@types';
-import { PasswordReseterContainer as Container } from '../../styles/common/pasword-reseter';
 import { complements } from '@/data/app-data';
 import Layout from '@/components/Layout';
-import Link from 'next/link';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
+import { InputEvents, SubmitEvent } from '../../../@types';
+import { IoLockClosedOutline, IoLockOpenOutline } from 'react-icons/io5';
+import { PasswordReseterContainer as Container } from '../../styles/common/pasword-reseter';
 
 export default function UpdatePassword(): JSX.Element {
   const theme = useTheme();
@@ -19,22 +15,22 @@ export default function UpdatePassword(): JSX.Element {
   const [error, setError] = useState({ status: false, message: '' });
   const [passwords, setPasswords] = useState({
     password: '',
-    confirm_password: '',
+    confirm_password: ''
   });
 
-  const handleChange = (e: InputEvents): void => {
+  function handleChange(e: InputEvents): void {
     setPasswords((state) => ({
       ...state,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }));
-  };
+  }
 
   async function handleSubmit(e: SubmitEvent): Promise<void> {
     e.preventDefault();
     if (passwords.password !== passwords.confirm_password)
       return setError({
         status: true,
-        message: 'A as senhas devem ser iguais e maiores que 8 carácteres.',
+        message: 'A as senhas devem ser iguais e maiores que 8 carácteres.'
       });
 
     try {
@@ -43,7 +39,7 @@ export default function UpdatePassword(): JSX.Element {
         method: 'post',
         url: '/api/v1/users/auth/update-password',
         data: passwords.password,
-        withCredentials: true,
+        withCredentials: true
       });
     } catch (error: any) {
       console.error(error);
@@ -53,7 +49,7 @@ export default function UpdatePassword(): JSX.Element {
     }
   }
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     const desc = setTimeout(() => {
       setError({ status: false, message: '' });
     }, 5000);
@@ -63,7 +59,10 @@ export default function UpdatePassword(): JSX.Element {
   }, [error.status]);
 
   return (
-    <Layout>
+    <Layout
+      metadata={{
+        title: `${complements.defaultTitle} | Atualização de Senha`
+      }}>
       <Container>
         <main>
           <article>
@@ -118,7 +117,7 @@ export default function UpdatePassword(): JSX.Element {
                       aria-placeholder='Processando...'
                       cssOverride={{
                         display: 'block',
-                        margin: '0 auto',
+                        margin: '0 auto'
                       }}
                     />
                   </>

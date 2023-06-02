@@ -24,7 +24,7 @@ interface IContext {
   sortBoxController: () => void;
   searchBoxController: () => void;
   deleteAccountPromptController: () => void;
-  deleteDeactivateStorePromptController: () => void;
+  deactivateStorePromptController: () => void;
   userWorkingDataController: () => void;
   logoutUser: () => Promise<void>;
   fetchAPI: (config: AxiosRequestConfig) => Promise<AxiosResponse<any, any>>;
@@ -39,7 +39,7 @@ const context = createContext<IContext>({
   searchBoxController: () => {},
   sortBoxController: () => {},
   deleteAccountPromptController: () => {},
-  deleteDeactivateStorePromptController: () => {},
+  deactivateStorePromptController: () => {},
   deleteProductPromptController: (status: boolean, id: string) => {},
   deleteCommentPromptController: (status: boolean, id: string) => {},
   loginPromptController: () => {},
@@ -57,7 +57,7 @@ export default function AppContext(props: AppContext) {
     });
   }
 
-  function deleteDeactivateStorePromptController(): void {
+  function deactivateStorePromptController(): void {
     dispatch({
       type: actions.DEACTIVATE_STORE_PROMPT
     });
@@ -121,7 +121,7 @@ export default function AppContext(props: AppContext) {
         type: actions.USER_AUTH,
         payload: {
           ...state,
-          userAuth: {
+          auth: {
             id: data?.id,
             token: data?.token,
             invalidated: data?.invalidated,
@@ -136,7 +136,7 @@ export default function AppContext(props: AppContext) {
         type: actions.USER_AUTH,
         payload: {
           ...state,
-          userAuth: {
+          auth: {
             id: '',
             name: '',
             token: '',
@@ -168,7 +168,7 @@ export default function AppContext(props: AppContext) {
     );
     return fetch({
       ...config,
-      headers: { authorization: `Bearer ${state.userAuth.token}` }
+      headers: { authorization: `Bearer ${state.auth.token}` }
     });
   }
 
@@ -183,7 +183,7 @@ export default function AppContext(props: AppContext) {
         type: actions.USER_AUTH,
         payload: {
           ...state,
-          userAuth: {
+          auth: {
             id: '',
             name: '',
             token: '',
@@ -211,7 +211,7 @@ export default function AppContext(props: AppContext) {
         type: actions.USER_AUTH,
         payload: {
           ...state,
-          userAuth: {
+          auth: {
             id: data?.id,
             token: data?.token,
             invalidated: data?.invalidated,
@@ -226,16 +226,16 @@ export default function AppContext(props: AppContext) {
     }
   }
 
-  useEffect(() => {
+  useEffect((): void => {
     authenticateUser();
   }, []);
 
-  useEffect(() => {
-    const revalidateUserAuth = setTimeout((): void => {
+  useEffect((): (() => void) => {
+    const timer = setTimeout((): void => {
       validateAuth();
     }, 1000 * 60 * 4);
-    return () => clearTimeout(revalidateUserAuth);
-  }, [state.userAuth]);
+    return () => clearTimeout(timer);
+  }, [state.auth]);
 
   return (
     <ThemeContext>
@@ -253,7 +253,7 @@ export default function AppContext(props: AppContext) {
           deleteCommentPromptController,
           deleteProductPromptController,
           deleteAccountPromptController,
-          deleteDeactivateStorePromptController
+          deactivateStorePromptController
         }}>
         {props.children}
       </context.Provider>

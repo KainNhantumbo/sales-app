@@ -35,8 +35,7 @@ import { complements } from '@/data/app-data';
 export default function ProductEditor(): JSX.Element {
   const theme = useTheme();
   const router: NextRouter = useRouter();
-  const { state, fetchAPI, dispatch, deleteProductPromptController } =
-    useAppContext();
+  const { state, fetchAPI, dispatch } = useAppContext();
 
   const [loading, setLoading] = useState<{
     status: boolean;
@@ -389,7 +388,7 @@ export default function ProductEditor(): JSX.Element {
                       </p>
                     </div>
                     {Object.entries(imagesData).map(([key, value], index) => (
-                      <div className='img-container' key={key}>
+                      <div className='img-container' key={index.toString()}>
                         {value.data ? (
                           <img
                             className='cover-image'

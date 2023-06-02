@@ -16,15 +16,15 @@ interface IProps {
 export default function Layout({ children, metadata }: IProps) {
   const router: NextRouter = useRouter();
   const { state } = useAppContext();
-
+  
   useEffect(() => {
     const isUserAuthenticated = setTimeout(() => {
-      if (router.asPath.includes('dashboard') && !state.userAuth.id) {
+      if (router.asPath.includes('dashboard') && !state.auth.id) {
         router.push('/auth/sign-in');
       }
-    }, 500);
+    }, 5000);
     return () => clearTimeout(isUserAuthenticated);
-  }, [state.userAuth]);
+  }, [state.auth]);
 
   return (
     <>

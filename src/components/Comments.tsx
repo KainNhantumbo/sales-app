@@ -295,13 +295,13 @@ export default function Comments({ post }: Props): JSX.Element {
           {activeModes.edit || activeModes.reply ? null : (
             <section className='current-comment'>
               <div className='comment-swapper'>
-                {state.userAuth.profile_image && (
+                {state.auth.profile_image && (
                   <img
-                    src={state.userAuth.profile_image}
+                    src={state.auth.profile_image}
                     alt='current user profile picture'
                   />
                 )}
-                {!state.userAuth.profile_image && <BiUser />}
+                {!state.auth.profile_image && <BiUser />}
                 <textarea
                   placeholder={
                     state.commentsList.length < 1
@@ -312,7 +312,7 @@ export default function Comments({ post }: Props): JSX.Element {
                   value={state.comment.content}
                   rows={5}
                   onMouseDown={() => {
-                    if (!state.userAuth.token) {
+                    if (!state.auth.token) {
                       loginPromptController();
                     }
                   }}
@@ -371,13 +371,13 @@ export default function Comments({ post }: Props): JSX.Element {
                   <div key={comment._id} className='comment'>
                     <div className='header'>
                       <div className='props'>
-                        {state.userAuth.profile_image && (
+                        {state.auth.profile_image && (
                           <img
-                            src={state.userAuth.profile_image}
+                            src={state.auth.profile_image}
                             alt='current user profile picture'
                           />
                         )}
-                        {!state.userAuth.profile_image && (
+                        {!state.auth.profile_image && (
                           <BiUser className='user-icon' />
                         )}
 
@@ -395,21 +395,21 @@ export default function Comments({ post }: Props): JSX.Element {
                       <div className='actions'>
                         <button
                           className='like'
-                          disabled={state.userAuth?.id === '' && true}
+                          disabled={state.auth?.id === '' && true}
                           onClick={() => {
-                            if (!state.userAuth?.token) return;
-                            comment.favorites.includes(state.userAuth?.id)
+                            if (!state.auth?.token) return;
+                            comment.favorites.includes(state.auth?.id)
                               ? handleUnFavoriteComment(comment._id)
                               : handleFavoriteComment(comment._id);
                           }}>
                           <span>{comment.favorites.length}</span>
-                          {comment.favorites.includes(state.userAuth.id) ? (
+                          {comment.favorites.includes(state.auth.id) ? (
                             <IoHeart />
                           ) : (
                             <IoHeartOutline />
                           )}
                         </button>
-                        {comment.created_by._id === state.userAuth?.id ? (
+                        {comment.created_by._id === state.auth?.id ? (
                           <>
                             {!activeModes.edit ||
                             comment._id !== state.comment._id ? (
@@ -488,7 +488,7 @@ export default function Comments({ post }: Props): JSX.Element {
                             value={state.comment.content}
                             rows={5}
                             onMouseDown={() => {
-                              if (!state.userAuth.token) {
+                              if (!state.auth.token) {
                                 loginPromptController();
                               }
                             }}
@@ -576,13 +576,13 @@ export default function Comments({ post }: Props): JSX.Element {
                           <div key={comment._id} className='comment'>
                             <div className='header'>
                               <div className='props'>
-                                {state.userAuth.profile_image && (
+                                {state.auth.profile_image && (
                                   <img
-                                    src={state.userAuth.profile_image}
+                                    src={state.auth.profile_image}
                                     alt='current user profile picture'
                                   />
                                 )}
-                                {!state.userAuth.profile_image && (
+                                {!state.auth.profile_image && (
                                   <BiUser className='user-icon' />
                                 )}
 
@@ -600,26 +600,21 @@ export default function Comments({ post }: Props): JSX.Element {
                               <div className='actions'>
                                 <button
                                   className='like'
-                                  disabled={state.userAuth?.id === '' && true}
+                                  disabled={state.auth?.id === '' && true}
                                   onClick={() => {
-                                    if (!state.userAuth?.token) return;
-                                    comment.favorites.includes(
-                                      state.userAuth?.id
-                                    )
+                                    if (!state.auth?.token) return;
+                                    comment.favorites.includes(state.auth?.id)
                                       ? handleUnFavoriteComment(comment._id)
                                       : handleFavoriteComment(comment._id);
                                   }}>
                                   <span>{comment.favorites.length}</span>
-                                  {comment.favorites.includes(
-                                    state.userAuth.id
-                                  ) ? (
+                                  {comment.favorites.includes(state.auth.id) ? (
                                     <IoHeart />
                                   ) : (
                                     <IoHeartOutline />
                                   )}
                                 </button>
-                                {comment.created_by._id ===
-                                state.userAuth?.id ? (
+                                {comment.created_by._id === state.auth?.id ? (
                                   <>
                                     {!activeModes.edit ||
                                     comment._id !== state.comment._id ? (
@@ -727,7 +722,7 @@ export default function Comments({ post }: Props): JSX.Element {
                                     value={state.comment.content}
                                     rows={5}
                                     onMouseDown={() => {
-                                      if (!state.userAuth.token) {
+                                      if (!state.auth.token) {
                                         loginPromptController();
                                       }
                                     }}

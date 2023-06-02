@@ -42,17 +42,17 @@ import { BiUser, BiUserCheck, BiUserX } from 'react-icons/bi';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
 import { actions } from '@/data/actions';
-import { InputEvents } from '../../../../../@types';
+import { InputEvents } from '../../../../@types';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { FaBlog, FaLinkedinIn } from 'react-icons/fa';
 import { DotLoader, PulseLoader } from 'react-spinners';
-import countries from '../../../../data/countries.json';
-import user_languages from '../../../../data/languages.json';
-import UserWorkingData from '../../../../components/modals/UserWorkingData';
+import countries from '../../../data/countries.json';
+import user_languages from '../../../data/languages.json';
+import UserWorkingData from '../../../components/modals/UserWorkingData';
 import { UserProfileContainer as Container } from '@/styles/common/profile-editor';
-import user_skills from '../../../../data/professional-skills.json';
-import DeleteAccountPrompt from '../../../../components/modals/DeleteAccountPrompt';
+import user_skills from '../../../data/professional-skills.json';
+import DeleteAccountPrompt from '../../../components/modals/DeleteAccountPrompt';
 import { complements } from '@/data/app-data';
 import Image from 'next/image';
 
@@ -230,7 +230,7 @@ export default function ProfileEditor(): JSX.Element {
     setLoading({ status: true, key: 'user-data' });
     fetchAPI({
       method: 'get',
-      url: `/api/v1/users/account/${router.query?.id || state.userAuth.id}`
+      url: `/api/v1/users/account/${router.query?.id || state.auth.id}`
     })
       .then(({ data }) => {
         const formattedData = Array.isArray(data) ? data[0] : data;
@@ -1005,20 +1005,22 @@ export default function ProfileEditor(): JSX.Element {
                           placeholder='Escreva o seu código postal'
                           aria-label='Escreva o seu código postal'
                           value={state.user.location?.zip_code}
-                          onChange={(e): void => 
-                            e.target.value.length > 5 ? undefined : dispatch({
-                              type: actions.USER_DATA,
-                              payload: {
-                                ...state,
-                                user: {
-                                  ...state.user,
-                                  location: {
-                                    ...state.user.location,
-                                    zip_code: e.target.value
+                          onChange={(e): void =>
+                            e.target.value.length > 5
+                              ? undefined
+                              : dispatch({
+                                  type: actions.USER_DATA,
+                                  payload: {
+                                    ...state,
+                                    user: {
+                                      ...state.user,
+                                      location: {
+                                        ...state.user.location,
+                                        zip_code: e.target.value
+                                      }
+                                    }
                                   }
-                                }
-                              }
-                            })
+                                })
                           }
                         />
                         <span className='counter'>{`${

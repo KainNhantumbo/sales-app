@@ -23,7 +23,7 @@ export const initialState: State = {
     action_function: undefined,
     err_message: undefined
   },
-  userAuth: {
+  auth: {
     id: '',
     name: '',
     token: '',
@@ -227,10 +227,7 @@ export default function reducer(state: State, action: Action) {
         isUserWorkingDataModal: !state.isUserWorkingDataModal
       };
     case actions.USER_AUTH:
-      return {
-        ...state,
-        userAuth: action.payload?.userAuth!
-      };
+      return { ...state, auth: action.payload?.auth! };
     case actions.IS_CONNECTED:
       return {
         ...state,

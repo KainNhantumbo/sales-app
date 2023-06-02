@@ -43,7 +43,9 @@ export default function Header(): JSX.Element {
       <div className='wrapper'>
         <div className='logo'>
           <Link href={'/'}>
-            <span>{complements.defaultTitle}</span>
+            <span>
+              {complements.defaultTitle} <sup>beta</sup>
+            </span>
           </Link>
         </div>
         <AnimatePresence>
@@ -71,7 +73,7 @@ export default function Header(): JSX.Element {
                 ))}
               </section>
               <div className='auth-btns'>
-                {!state.userAuth.id || !state.userAuth.token ? (
+                {!state.auth.id || !state.auth.token ? (
                   <>
                     <Link href={'/auth/sign-in'} className='login-btn'>
                       <IoLogInOutline />
@@ -86,14 +88,12 @@ export default function Header(): JSX.Element {
                   <button
                     title='Painel de Controle e Conta'
                     className='user-account'
-                    onClick={() =>
-                      push(`/users/dashboard/${state.userAuth.id}`)
-                    }>
-                    {state.userAuth.profile_image ? (
+                    onClick={() => push(`/users/dashboard`)}>
+                    {state.auth.profile_image ? (
                       <img
                         loading='lazy'
                         decoding='async'
-                        src={state.userAuth.profile_image}
+                        src={state.auth.profile_image}
                         alt='User profile image'
                       />
                     ) : (

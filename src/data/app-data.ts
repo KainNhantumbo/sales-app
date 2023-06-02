@@ -123,30 +123,30 @@ export const pricing_data = [
   }
 ];
 
-export function dashboardRoutes(id: string) {
+export function dashboardRoutes() {
   return [
     {
-      url: `/users/dashboard/${id}/profile-editor`,
+      url: `/users/dashboard/profile-editor`,
       icon: IoMdPerson,
       label: 'Editor de Perfil'
     },
     {
-      url: `/users/dashboard/${id}/store-editor`,
+      url: `/users/dashboard/store-editor`,
       icon: IoStorefront,
       label: 'Editor de Loja'
     },
     {
-      url: `/users/dashboard/${id}/products`,
+      url: `/users/dashboard/products`,
       icon: IoGrid,
       label: 'Produtos'
     },
     {
-      url: `/users/dashboard/${id}/job-editor`,
+      url: `/users/dashboard/job-editor`,
       icon: IoBriefcase,
       label: 'Empregos'
     },
     {
-      url: `/users/dashboard/${id}/post-editor`,
+      url: `/users/dashboard/post-editor`,
       icon: IoAlbums,
       label: 'Postagens'
     }

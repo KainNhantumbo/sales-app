@@ -4,6 +4,7 @@ import {
   IoLockOpenOutline,
   IoMailOutline
 } from 'react-icons/io5';
+import Image from 'next/image';
 import fetch from '../../config/client';
 import { useAppContext } from '@/context/AppContext';
 import { actions } from '@/data/actions';
@@ -16,17 +17,16 @@ import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import Link from 'next/link';
 import { complements } from '@/data/app-data';
-import Image from 'next/image';
 import backgroundImage from '../../../public/assets/background1.png';
 
-export default function Signup(): JSX.Element {
+export default function SignUp(): JSX.Element {
   const router: NextRouter = useRouter();
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ status: false, message: '' });
 
-  const handleChange = (e: InputEvents): void => {
+  function handleChange(e: InputEvents): void {
     dispatch({
       type: actions.SIGNUP_DATA,
       payload: {
@@ -37,7 +37,7 @@ export default function Signup(): JSX.Element {
         }
       }
     });
-  };
+  }
 
   async function handleSubmit(e: SubmitEvent): Promise<void> {
     e.preventDefault();
@@ -74,7 +74,7 @@ export default function Signup(): JSX.Element {
     }
   }
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     const desc = setTimeout(() => {
       setError({ status: false, message: '' });
     }, 5000);
@@ -84,7 +84,10 @@ export default function Signup(): JSX.Element {
   }, [error.status]);
 
   return (
-    <Layout>
+    <Layout
+      metadata={{
+        title: `${complements.defaultTitle} | Nova Conta de Usuário`
+      }}>
       <Container>
         <Image src={backgroundImage} alt='background image' />
         <main>

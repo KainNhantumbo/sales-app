@@ -1,12 +1,16 @@
 import Layout from '@/components/Layout';
+import { complements } from '@/data/app-data';
 import { ResetPassordConfirmation as Container } from '@/styles/common/reset-password-confirmation';
 import Link from 'next/link';
 import { FaEnvelopeOpenText } from 'react-icons/fa';
 import { IoMailOpen } from 'react-icons/io5';
 
-export default function ResetPassConfirmation() {
+export default function ResetPassConfirmation(): JSX.Element {
   return (
-    <Layout>
+    <Layout
+      metadata={{
+        title: `${complements.defaultTitle} | Confirmação de Atualização de Senha`
+      }}>
       <Container>
         <main>
           <article>
