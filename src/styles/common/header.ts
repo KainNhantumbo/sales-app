@@ -200,6 +200,15 @@ export const HeaderContainer = styled.header`
         padding-left: 0;
         padding-right: 20px;
       }
+
+      svg {
+        position: absolute;
+        top: calc(50% - 11px);
+        right: 0;
+        margin-left: 50px;
+        width: 22px;
+        height: 22px;
+      }
     }
 
     @media screen and (max-width: 770px) {

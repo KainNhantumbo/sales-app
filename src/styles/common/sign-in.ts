@@ -3,7 +3,7 @@ import {
   BaseButton,
   BaseButtonOutline,
   StyledInputs,
-  StyledLabels,
+  StyledLabels
 } from '../defaults';
 
 export const SignInContainer = styled.div`
@@ -14,7 +14,7 @@ export const SignInContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  background: rgba(${({ theme }) => theme.background_variant}, .3);
+  background: rgba(${({ theme }) => theme.background_variant}, 0.3);
 
   * {
     ::selection {
@@ -113,7 +113,7 @@ export const SignInContainer = styled.div`
           cursor: pointer;
 
           :hover {
-            color: rgb(${({ theme }) => theme.accent});
+            color: rgb(${({ theme }) => theme.font});
             transition: all 200ms ease;
           }
         }

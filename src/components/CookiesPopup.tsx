@@ -46,7 +46,7 @@ const CookiesPopup = (): JSX.Element => {
             </p>
             <button onClick={advisorController}>
               <IoCheckmark />
-              <span>Entendi</span>
+              <span>Sim, compreendo.</span>
             </button>
           </div>
         </section>

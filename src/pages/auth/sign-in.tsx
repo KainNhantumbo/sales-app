@@ -23,7 +23,7 @@ export default function SignIn(): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ status: false, message: '' });
 
-  const handleChange = (e: InputEvents): void => {
+  function handleChange({ e }: { e: InputEvents }): void {
     dispatch({
       type: actions.SIGNIN_DATA,
       payload: {
@@ -34,7 +34,7 @@ export default function SignIn(): JSX.Element {
         }
       }
     });
-  };
+  }
 
   async function handleSubmit(e: SubmitEvent): Promise<void> {
     e.preventDefault();
@@ -67,7 +67,7 @@ export default function SignIn(): JSX.Element {
           }
         }
       });
-      router.push(`/users/dashboard/${data?.id}`);
+      router.push(`/users/dashboard`);
     } catch (error: any) {
       console.error(error);
       setError({ status: true, message: error?.response?.data?.message });
@@ -76,7 +76,7 @@ export default function SignIn(): JSX.Element {
     }
   }
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     const desc = setTimeout(() => {
       setError({ status: false, message: '' });
     }, 5000);
@@ -86,9 +86,10 @@ export default function SignIn(): JSX.Element {
   }, [error.status]);
 
   return (
-    <Layout metadata={{
-      title: `${complements.defaultTitle} | Acessar Conta`
-    }}>
+    <Layout
+      metadata={{
+        title: `${complements.defaultTitle} | Acessar Conta`
+      }}>
       <Container>
         <Image src={backgroundImage} alt='background image' />
         <main>
@@ -112,7 +113,7 @@ export default function SignIn(): JSX.Element {
                     placeholder='Escreva o seu e-mail'
                     aria-label='Escreva o seu e-mail'
                     required
-                    onChange={(e): void => handleChange(e)}
+                    onChange={(e): void => handleChange({ e })}
                   />
                 </section>
 
@@ -128,7 +129,7 @@ export default function SignIn(): JSX.Element {
                     aria-hidden='true'
                     placeholder='Escreva a sua senha'
                     aria-label='Escreva a sua senha'
-                    onChange={(e): void => handleChange(e)}
+                    onChange={(e): void => handleChange({ e })}
                   />
                 </section>
                 <div className='password-reset'>

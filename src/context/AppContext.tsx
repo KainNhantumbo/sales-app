@@ -20,6 +20,7 @@ interface IContext {
   logoutPromptController: () => void;
   deleteCommentPromptController: (status: boolean, id: string) => void;
   deleteProductPromptController: (status: boolean, id: string) => void;
+  shareProductController: (status: boolean, id: string) => void;
   loginPromptController: () => void;
   sortBoxController: () => void;
   searchBoxController: () => void;
@@ -42,6 +43,7 @@ const context = createContext<IContext>({
   deactivateStorePromptController: () => {},
   deleteProductPromptController: (status: boolean, id: string) => {},
   deleteCommentPromptController: (status: boolean, id: string) => {},
+  shareProductController: (status: boolean, id: string) => {},
   loginPromptController: () => {},
   userWorkingDataController: () => {}
 });
@@ -51,34 +53,24 @@ export default function AppContext(props: AppContext) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // ============= modal controllers =================== //
+  function userWorkingDataController(): void {
+    dispatch({ type: actions.USER_WORKING_DATA_MODAL });
+  }
   function deleteAccountPromptController(): void {
-    dispatch({
-      type: actions.DELETE_ACCOUNT_PROMPT
-    });
+    dispatch({ type: actions.DELETE_ACCOUNT_PROMPT });
   }
-
   function deactivateStorePromptController(): void {
-    dispatch({
-      type: actions.DEACTIVATE_STORE_PROMPT
-    });
+    dispatch({ type: actions.DEACTIVATE_STORE_PROMPT });
   }
-
   function logoutPromptController(): void {
-    dispatch({
-      type: actions.LOGOUT_PROMPT
-    });
+    dispatch({ type: actions.LOGOUT_PROMPT });
   }
-
   function loginPromptController(): void {
-    dispatch({
-      type: actions.LOGIN_PROMPT
-    });
+    dispatch({ type: actions.LOGIN_PROMPT });
   }
-
   function searchBoxController(): void {
     dispatch({ type: actions.SEARCH_BOX_CONTROL });
   }
-
   function sortBoxController(): void {
     dispatch({ type: actions.SORT_BOX_CONTROL });
   }
@@ -103,9 +95,13 @@ export default function AppContext(props: AppContext) {
     });
   }
 
-  function userWorkingDataController(): void {
+  function shareProductController(status: boolean, id?: string): void {
     dispatch({
-      type: actions.USER_WORKING_DATA_MODAL
+      type: actions.SHARE_PRODUCT_MODAL,
+      payload: {
+        ...state,
+        isShareProductModal: { status, productId: id ?? '' }
+      }
     });
   }
 
@@ -253,7 +249,8 @@ export default function AppContext(props: AppContext) {
           deleteCommentPromptController,
           deleteProductPromptController,
           deleteAccountPromptController,
-          deactivateStorePromptController
+          deactivateStorePromptController,
+          shareProductController
         }}>
         {props.children}
       </context.Provider>

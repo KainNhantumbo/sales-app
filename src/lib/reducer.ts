@@ -14,6 +14,7 @@ export const initialState: State = {
   isDeactivateStorePrompt: false,
   isDeleteCommentPrompt: { status: false, commentId: '' },
   isDeleteProductPrompt: { status: false, productId: '' },
+  isShareProductModal: { status: false, productId: '' },
   isUserWorkingDataModal: false,
   isConnected: false,
   app_status: {
