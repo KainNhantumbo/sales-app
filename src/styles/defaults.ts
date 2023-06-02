@@ -175,7 +175,7 @@ export const StyledInputs = css`
     border-radius: 10px;
     background: rgba(${({ theme }) => theme.background}, 0.7);
     border: 1px solid rgba(${({ theme }) => theme.accent}, 0.05);
-
+    color: rgb(${({ theme }) => theme.font});
     :focus {
       border: 1px solid rgba(${({ theme }) => theme.accent}, 0.15);
       box-shadow: 0 0 20px rgba(${({ theme }) => theme.accent}, 0.06);

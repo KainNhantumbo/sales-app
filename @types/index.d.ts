@@ -67,11 +67,15 @@ declare module 'styled-components' {
 }
 
 // --------------client data--------------------------
-export type UserNewPostType = {
+export type UserPost = {
+  _id: string;
   title: string;
-  description: string;
-  imageData?: { data: string; blurhash: string };
+  content: string;
+  created_by: string;
+  cover_image: { id: string; url: string };
   allow_comments: boolean;
+  updatedAt: string;
+  createdAt: string;
 };
 
 export type PostListProps = {
@@ -143,19 +147,6 @@ export interface IBlogPost extends IBlogPosts {
   content: string;
 }
 
-export type UserPost = {
-  _id: string;
-  title: string;
-  description: string;
-  created_by: string;
-  cover_image?: { id: string; url: string; blurhash: string };
-  allow_comments: boolean;
-  invalidated: boolean;
-  favorites: { _id: string; first_name: string; last_name: string }[];
-  createdAt: string;
-  updatedAt: string;
-};
-
 export type ProductsList = {
   _id: string;
   name: string;
@@ -186,14 +177,14 @@ export type PublicProducts = {
   promotion: { status: boolean; percentage: number };
   favorites: string[];
   created_by: string;
-  cover_image?: { id: string; url: string } ;
-}
+  cover_image?: { id: string; url: string };
+};
 
 export type Store = {
   _id: string;
   name: string;
   active: boolean;
-  plan: string;
+  plan: { type: string; issued_date: string; exp_date: string };
   verified_store: boolean;
   created_by: {
     profile_image: string;

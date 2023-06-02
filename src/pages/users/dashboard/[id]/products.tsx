@@ -1,8 +1,6 @@
 import {
   IoCalendar,
-  IoDiamondOutline,
   IoEllipsisHorizontal,
-  IoHeart,
   IoHeartOutline,
   IoLayersOutline,
   IoPricetagsOutline,
@@ -196,28 +194,29 @@ export default function Products(): JSX.Element {
                     </div>
                   </div>
                   <div className='products-list_item_secondary'>
-                    <button
-                      title='Editar e atualizar informações do produto'
-                      onClick={() =>
-                        router.push(
-                          `/users/dashboard/${state.userAuth.id}/product-editor/${product._id}`
-                        )
-                      }>
+                    <Link
+                      href={`/users/dashboard/${state.userAuth.id}/product-editor/${product._id}`}
+                      title='Editar e atualizar informações do produto'>
                       <span>Editar produto</span>
-                    </button>
-                    <button
-                      title='Ver o produto na sua loja'
-                      onClick={() =>
-                        router.push(`/users/stores/products/${product._id}`)
-                      }>
+                    </Link>
+                    <Link
+                      href={`/users/stores/products/${product._id}`}
+                      title='Ver o produto na sua loja'>
                       <span>Ver o produto</span>
-                    </button>
+                    </Link>
                     <button
                       title='Eliminar produto da sua loja'
                       onClick={() =>
                         deleteProductPromptController(true, product._id)
                       }>
                       <span>Eliminar produto</span>
+                    </button>
+                    <button
+                      title='Compartilhar produto da sua loja'
+                      onClick={() =>
+                        deleteProductPromptController(true, product._id)
+                      }>
+                      <span>Compartilhar</span>
                     </button>
                   </div>
                 </div>

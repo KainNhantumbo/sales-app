@@ -12,7 +12,7 @@ import { NextRouter, useRouter } from 'next/router';
 import { Action, State } from '../../@types/reducer';
 import type { AppContext } from '../../@types/index';
 import reducer, { initialState } from '@/lib/reducer';
-import { AxiosError, AxiosPromise, AxiosRequestConfig } from 'axios';
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 interface IContext {
   state: State;
@@ -27,7 +27,7 @@ interface IContext {
   deleteDeactivateStorePromptController: () => void;
   userWorkingDataController: () => void;
   logoutUser: () => Promise<void>;
-  fetchAPI: (config: AxiosRequestConfig) => AxiosPromise<any>;
+  fetchAPI: (config: AxiosRequestConfig) => Promise<AxiosResponse<any, any>>;
 }
 
 const context = createContext<IContext>({
@@ -110,18 +110,62 @@ export default function AppContext(props: AppContext) {
   }
 
   // ----------------user authentication--------------------------
-  function fetchAPI(config: AxiosRequestConfig): AxiosPromise<any> {
+  async function validateAuth(): Promise<void> {
+    try {
+      const { data } = await fetch({
+        method: 'get',
+        url: '/api/v1/auth/default/refresh',
+        withCredentials: true
+      });
+      dispatch({
+        type: actions.USER_AUTH,
+        payload: {
+          ...state,
+          userAuth: {
+            id: data?.id,
+            token: data?.token,
+            invalidated: data?.invalidated,
+            email: data?.email,
+            name: data?.name,
+            profile_image: data?.profile_image
+          }
+        }
+      });
+    } catch (err: any) {
+      dispatch({
+        type: actions.USER_AUTH,
+        payload: {
+          ...state,
+          userAuth: {
+            id: '',
+            name: '',
+            token: '',
+            email: '',
+            profile_image: '',
+            invalidated: false
+          }
+        }
+      });
+      console.error(err);
+    }
+  }
+
+  function fetchAPI(
+    config: AxiosRequestConfig
+  ): Promise<AxiosResponse<any, any>> {
     fetch.interceptors.response.use(
       undefined,
       (err: AxiosError): Promise<never> => {
         const status = Number(err.response?.status);
         if (status > 400 && status < 404) {
-          router.push('/auth/sign-in');
+          validateAuth().catch((err) => {
+            console.error(err);
+            router.push('/auth/sign-in');
+          });
         }
         return Promise.reject(err);
       }
     );
-
     return fetch({
       ...config,
       headers: { authorization: `Bearer ${state.userAuth.token}` }
@@ -188,45 +232,7 @@ export default function AppContext(props: AppContext) {
 
   useEffect(() => {
     const revalidateUserAuth = setTimeout((): void => {
-      (async function (): Promise<void> {
-        try {
-          const { data } = await fetch({
-            method: 'get',
-            url: '/api/v1/auth/default/refresh',
-            withCredentials: true
-          });
-          dispatch({
-            type: actions.USER_AUTH,
-            payload: {
-              ...state,
-              userAuth: {
-                id: data?.id,
-                token: data?.token,
-                invalidated: data?.invalidated,
-                email: data?.email,
-                name: data?.name,
-                profile_image: data?.profile_image
-              }
-            }
-          });
-        } catch (err: any) {
-          dispatch({
-            type: actions.USER_AUTH,
-            payload: {
-              ...state,
-              userAuth: {
-                id: '',
-                name: '',
-                token: '',
-                email: '',
-                profile_image: '',
-                invalidated: false
-              }
-            }
-          });
-          console.error(err);
-        }
-      })();
+      validateAuth();
     }, 1000 * 60 * 4);
     return () => clearTimeout(revalidateUserAuth);
   }, [state.userAuth]);

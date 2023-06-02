@@ -199,7 +199,8 @@ export const ProductListContainer = styled.div`
             flex-flow: row wrap;
             gap: 12px;
 
-            button {
+            button,
+            a {
               ${BaseButtonOutline}
               border: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
               border-radius: 25px;

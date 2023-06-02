@@ -91,7 +91,7 @@ export const initialState: State = {
     _id: '',
     name: '',
     active: false,
-    plan: '',
+    plan: { type: '', issued_date: '', exp_date: '' },
     verified_store: false,
     created_by: {
       profile_image: '',
@@ -146,7 +146,7 @@ export const initialState: State = {
     updatedAt: '',
     invalidated: false,
     favorites: [],
-    allow_comments: false
+    allow_comments: true
   },
   comment: {
     _id: '',

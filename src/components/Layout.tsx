@@ -19,7 +19,7 @@ export default function Layout({ children, metadata }: IProps) {
 
   useEffect(() => {
     const isUserAuthenticated = setTimeout(() => {
-      if (router.asPath.includes('users') && !state.userAuth.id) {
+      if (router.asPath.includes('dashboard') && !state.userAuth.id) {
         router.push('/auth/sign-in');
       }
     }, 500);

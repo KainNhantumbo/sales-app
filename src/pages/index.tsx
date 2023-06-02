@@ -8,9 +8,9 @@ import Link from 'next/link';
 import { useRouter, NextRouter } from 'next/router';
 import AppContext, { useAppContext } from '@/context/AppContext';
 import { complements } from '@/data/app-data';
-import { useTheme } from 'styled-components';
+import { DefaultTheme, useTheme } from 'styled-components';
 import { HomeContainer as Container } from '@/styles/common/home';
-import { Product, ProductsList, PublicProducts } from '../../@types';
+import { PublicProducts } from '../../@types';
 import fetch from '../config/client';
 import NewsLetter from '@/components/Newsletter';
 import opening_store_png from '../../public/assets/opening.png';
@@ -23,10 +23,10 @@ interface IProps {
 
 export default function Home({ products }: IProps): JSX.Element {
   const router: NextRouter = useRouter();
-  const theme = useTheme();
+  const theme: DefaultTheme = useTheme();
   const { state, dispatch, loginPromptController } = useAppContext();
 
-  useEffect(() => {
+  useEffect((): void => {
     if (products) {
       console.log(state.publicProducts);
       dispatch({
