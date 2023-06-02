@@ -12,7 +12,6 @@ export const CookiesPopupContainer = styled.div`
     position: absolute;
     left: 20px;
     bottom: 20px;
-    background: rgba(${({ theme }) => theme.foreground}, 0.8);
     border-radius: 20px;
     padding: 20px;
     max-width: 350px;
@@ -23,6 +22,7 @@ export const CookiesPopupContainer = styled.div`
     gap: 10px;
     line-height: 1.4rem;
     font-size: 0.9rem;
+    background: rgba(${({ theme }) => theme.foreground}, 0.8);
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);
 
     ::before {

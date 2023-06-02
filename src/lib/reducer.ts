@@ -217,6 +217,11 @@ export default function reducer(state: State, action: Action) {
         ...state,
         isDeleteProductPrompt: action.payload?.isDeleteProductPrompt!
       };
+    case actions.SHARE_PRODUCT_MODAL:
+      return {
+        ...state,
+        isShareProductModal: action.payload?.isShareProductModal!
+      };
     case actions.DELETE_COMMENT_PROMPT:
       return {
         ...state,

@@ -27,12 +27,18 @@ import { formatDate } from '@/lib/time-fns';
 import moment from 'moment';
 import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
 import { complements } from '@/data/app-data';
+import ShareProducts from '@/components/modals/ShareProductModal';
 
 export default function Products(): JSX.Element {
   const theme = useTheme();
   const router: NextRouter = useRouter();
-  const { state, dispatch, fetchAPI, deleteProductPromptController } =
-    useAppContext();
+  const {
+    state,
+    dispatch,
+    fetchAPI,
+    shareProductController,
+    deleteProductPromptController
+  } = useAppContext();
   const [loading, setLoading] = useState<{ status: boolean }>({
     status: false
   });
@@ -99,6 +105,7 @@ export default function Products(): JSX.Element {
     <Layout
       metadata={{ title: `${complements.defaultTitle} | Lista de Produtos` }}>
       <DeleteProductPrompt deleteFn={handleDeleteProduct} />
+
       <Container>
         {loading.status && !error.status && (
           <section className='fetching-state'>
@@ -111,9 +118,10 @@ export default function Products(): JSX.Element {
 
         <SearchBox />
         <SortBox />
-
         <ToolBox />
         <AppStatus />
+        <ShareProducts />
+
         <article>
           {!loading.status && error.status && (
             <section className='error-message'>
@@ -213,9 +221,7 @@ export default function Products(): JSX.Element {
                     </button>
                     <button
                       title='Compartilhar produto da sua loja'
-                      onClick={() =>
-                        deleteProductPromptController(true, product._id)
-                      }>
+                      onClick={() => shareProductController(true, product._id)}>
                       <span>Compartilhar</span>
                     </button>
                   </div>
