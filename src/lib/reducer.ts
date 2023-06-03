@@ -177,14 +177,14 @@ export default function reducer(state: State, action: Action) {
         ...state,
         isFilterActive: false,
         isSortActive: false,
-        isSearchActive: !state.isSearchActive
+        isSearchActive: action.payload.isSearchActive
       };
     case actions.SORT_BOX_CONTROL:
       return {
         ...state,
         isFilterActive: false,
         isSearchActive: false,
-        isSortActive: !state.isSortActive
+        isSortActive: action.payload.isSortActive
       };
     case actions.CLEAN_UP_MODALS:
       return {
@@ -197,100 +197,103 @@ export default function reducer(state: State, action: Action) {
     case actions.PRODUCTS_LIST_QUERY:
       return {
         ...state,
-        productsListQuery: action.payload?.productsListQuery!
+        productsListQuery: action.payload.productsListQuery
       };
     case actions.APP_STATUS:
-      return { ...state, app_status: action.payload?.app_status! };
+      return { ...state, app_status: action.payload.app_status };
     case actions.LOGOUT_PROMPT:
-      return { ...state, isLogoutPrompt: !state.isLogoutPrompt };
+      return { ...state, isLogoutPrompt: action.payload.isLogoutPrompt };
     case actions.LOGIN_PROMPT:
-      return { ...state, isLoginPrompt: !state.isLoginPrompt };
+      return { ...state, isLoginPrompt: action.payload.isLoginPrompt };
     case actions.DELETE_ACCOUNT_PROMPT:
-      return { ...state, isDeleteAccountPrompt: !state.isDeleteAccountPrompt };
+      return {
+        ...state,
+        isDeleteAccountPrompt: action.payload.isDeleteAccountPrompt
+      };
     case actions.DEACTIVATE_STORE_PROMPT:
       return {
         ...state,
-        isDeactivateStorePrompt: !state.isDeactivateStorePrompt
+        isDeactivateStorePrompt: action.payload.isDeactivateStorePrompt
       };
     case actions.DELETE_PRODUCT_PROMPT:
       return {
         ...state,
-        isDeleteProductPrompt: action.payload?.isDeleteProductPrompt!
+        isDeleteProductPrompt: action.payload.isDeleteProductPrompt
       };
     case actions.SHARE_PRODUCT_MODAL:
       return {
         ...state,
-        isShareProductModal: action.payload?.isShareProductModal!
+        isShareProductModal: action.payload.isShareProductModal
       };
     case actions.DELETE_COMMENT_PROMPT:
       return {
         ...state,
-        isDeleteCommentPrompt: action.payload?.isDeleteCommentPrompt!
+        isDeleteCommentPrompt: action.payload.isDeleteCommentPrompt
       };
     case actions.USER_WORKING_DATA_MODAL:
       return {
         ...state,
-        isUserWorkingDataModal: !state.isUserWorkingDataModal
+        isUserWorkingDataModal: action.payload.isUserWorkingDataModal
       };
     case actions.USER_AUTH:
-      return { ...state, auth: action.payload?.auth! };
+      return { ...state, auth: action.payload.auth };
     case actions.IS_CONNECTED:
       return {
         ...state,
-        isConnected: action.payload?.isConnected!
+        isConnected: action.payload.isConnected
       };
     case actions.NEW_SUBSCRIPTOR_VALUE:
       return {
         ...state,
-        newSubscriptorValue: action.payload?.newSubscriptorValue!
+        newSubscriptorValue: action.payload.newSubscriptorValue
       };
     case actions.SIGNUP_DATA:
       return {
         ...state,
-        signupData: action.payload?.signupData!
+        signupData: action.payload.signupData
       };
     case actions.SIGNIN_DATA:
-      return { ...state, signInData: action.payload?.signInData! };
+      return { ...state, signInData: action.payload.signInData };
     case actions.USER_DATA:
       return {
         ...state,
-        user: action.payload?.user!
+        user: action.payload.user
       };
     case actions.STORE_DATA:
       return {
         ...state,
-        store: action.payload?.store!
+        store: action.payload.store
       };
     case actions.PUBLIC_PRODUCTS_LIST_DATA:
       return {
         ...state,
-        publicProducts: action.payload?.publicProducts!
+        publicProducts: action.payload.publicProducts
       };
     case actions.PRODUCT_DATA:
       return {
         ...state,
-        product: action.payload?.product!
+        product: action.payload.product
       };
     case actions.PRODUCTS_LIST_DATA:
       return {
         ...state,
-        productList: action.payload?.productList!
+        productList: action.payload.productList
       };
     case actions.SEARCH:
       return {
         ...state,
-        search: action.payload?.search!
+        search: action.payload.search
       };
 
     case actions.CREATE_COMMENT:
       return {
         ...state,
-        comment: action.payload?.comment!
+        comment: action.payload.comment
       };
     case actions.UPDATE_COMMENTS_LIST:
       return {
         ...state,
-        commentsList: action.payload?.commentsList!
+        commentsList: action.payload.commentsList
       };
     default:
       return { ...state };

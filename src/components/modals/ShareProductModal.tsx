@@ -7,14 +7,7 @@ import {
 import { complements } from '@/data/app-data';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '@/context/AppContext';
-import {
-  IoArrowBackOutline,
-  IoArrowUndo,
-  IoClose,
-  IoShare,
-  IoShareSocial,
-  IoStop
-} from 'react-icons/io5';
+import { IoClose, IoShareSocial } from 'react-icons/io5';
 import { ShareProductContainer as Container } from '../../styles/modules/share-product-modal';
 
 export default function ShareProducts(): JSX.Element {
@@ -114,8 +107,8 @@ export default function ShareProducts(): JSX.Element {
                 <button
                   className='prompt-cancel'
                   onClick={() => shareProductController(false, '')}>
-                  <IoArrowUndo />
-                  <span>Cancelar</span>
+                  <IoClose />
+                  <span>Fechar</span>
                 </button>
               </div>
             </div>

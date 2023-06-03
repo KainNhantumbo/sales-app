@@ -61,6 +61,7 @@ export default function NewsLetter(): JSX.Element {
         <Image
           width={800}
           height={800}
+          priority
           src={newsletter_image}
           alt='newsletter image by freepick'
         />

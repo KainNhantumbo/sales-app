@@ -7,6 +7,7 @@ import {
 } from 'react';
 import fetch from '../config/client';
 import ThemeContext from './ThemeContext';
+import SocketContext from './SocketContext';
 import { actions } from '@/data/actions';
 import { NextRouter, useRouter } from 'next/router';
 import { Action, State } from '../../@types/reducer';
@@ -41,9 +42,9 @@ const context = createContext<IContext>({
   sortBoxController: () => {},
   deleteAccountPromptController: () => {},
   deactivateStorePromptController: () => {},
-  deleteProductPromptController: (status: boolean, id: string) => {},
-  deleteCommentPromptController: (status: boolean, id: string) => {},
-  shareProductController: (status: boolean, id: string) => {},
+  deleteProductPromptController: () => {},
+  deleteCommentPromptController: () => {},
+  shareProductController: () => {},
   loginPromptController: () => {},
   userWorkingDataController: () => {}
 });
@@ -54,25 +55,56 @@ export default function AppContext(props: AppContext) {
 
   // ============= modal controllers =================== //
   function userWorkingDataController(): void {
-    dispatch({ type: actions.USER_WORKING_DATA_MODAL });
+    dispatch({
+      type: actions.USER_WORKING_DATA_MODAL,
+      payload: {
+        ...state,
+        isUserWorkingDataModal: !state.isUserWorkingDataModal
+      }
+    });
   }
   function deleteAccountPromptController(): void {
-    dispatch({ type: actions.DELETE_ACCOUNT_PROMPT });
+    dispatch({
+      type: actions.DELETE_ACCOUNT_PROMPT,
+      payload: { ...state, isDeleteAccountPrompt: !state.isDeleteAccountPrompt }
+    });
   }
   function deactivateStorePromptController(): void {
-    dispatch({ type: actions.DEACTIVATE_STORE_PROMPT });
+    dispatch({
+      type: actions.DEACTIVATE_STORE_PROMPT,
+      payload: {
+        ...state,
+        isDeactivateStorePrompt: !state.isDeactivateStorePrompt
+      }
+    });
   }
+
   function logoutPromptController(): void {
-    dispatch({ type: actions.LOGOUT_PROMPT });
+    dispatch({
+      type: actions.LOGOUT_PROMPT,
+      payload: { ...state, isLogoutPrompt: !state.isLogoutPrompt }
+    });
   }
+
   function loginPromptController(): void {
-    dispatch({ type: actions.LOGIN_PROMPT });
+    dispatch({
+      type: actions.LOGIN_PROMPT,
+      payload: { ...state, isLoginPrompt: !state.isLoginPrompt }
+    });
   }
+
   function searchBoxController(): void {
-    dispatch({ type: actions.SEARCH_BOX_CONTROL });
+    dispatch({
+      type: actions.SEARCH_BOX_CONTROL,
+      payload: { ...state, isSearchActive: !state.isSearchActive }
+    });
   }
+
   function sortBoxController(): void {
-    dispatch({ type: actions.SORT_BOX_CONTROL });
+    dispatch({
+      type: actions.SORT_BOX_CONTROL,
+      payload: { ...state, isSortActive: !state.isSortActive }
+    });
   }
 
   function deleteCommentPromptController(status: boolean, id?: string): void {
@@ -252,7 +284,7 @@ export default function AppContext(props: AppContext) {
           deactivateStorePromptController,
           shareProductController
         }}>
-        {props.children}
+        <SocketContext>{props.children}</SocketContext>
       </context.Provider>
     </ThemeContext>
   );

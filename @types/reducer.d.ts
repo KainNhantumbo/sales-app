@@ -46,4 +46,4 @@ export type State = {
   productsListQuery: { query: string; sort: string };
 };
 
-export type Action = { type: string; payload?: State };
+export type Action = { type: string; payload: State };
