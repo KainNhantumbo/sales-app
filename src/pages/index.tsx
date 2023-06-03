@@ -6,7 +6,7 @@ import Layout from '@/components/Layout';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter, NextRouter } from 'next/router';
-import AppContext, { useAppContext } from '@/context/AppContext';
+import  { useAppContext } from '@/context/AppContext';
 import { blurDataUrlImage, complements } from '@/data/app-data';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { HomeContainer as Container } from '@/styles/common/home';
@@ -15,8 +15,7 @@ import fetch from '../config/client';
 import NewsLetter from '@/components/Newsletter';
 import opening_store_png from '../../public/assets/opening.png';
 import { actions } from '@/data/actions';
-import { PulseLoader } from 'react-spinners';
-
+import { PulseLoader } from 'react-spinners'; 
 interface IProps {
   products: PublicProducts[];
 }
@@ -74,7 +73,7 @@ export default function Home({ products }: IProps): JSX.Element {
               width={600}
               height={400}
               blurDataURL={blurDataUrlImage}
-              src={'https://d33wubrfki0l68.cloudfront.net/23d11918fc9ca2da73ffb04637f5069b409188f9/07bfa/blog/static/5bf14ba00a63f9f368079e6b9b260758/bbe0c/react-query-typescript.jpg'}
+              src={opening_store_png}
               alt='openning store art designed by freepick.com'
             />
           </div>
