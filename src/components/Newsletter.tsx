@@ -8,6 +8,7 @@ import { IoMailOpen, IoPaperPlaneOutline } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
 import newsletter_image from '../../public/assets/newsletter.png';
 import { NewsletterContainer as Container } from '../styles/modules/newsletter';
+import { blurDataUrlImage } from '@/data/app-data';
 
 export default function NewsLetter(): JSX.Element {
   const theme = useTheme();
@@ -62,6 +63,7 @@ export default function NewsLetter(): JSX.Element {
           width={800}
           height={800}
           priority
+          blurDataURL={blurDataUrlImage}
           src={newsletter_image}
           alt='newsletter image by freepick'
         />

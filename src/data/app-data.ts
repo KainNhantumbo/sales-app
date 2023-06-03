@@ -16,6 +16,9 @@ import { IoMdPerson } from 'react-icons/io';
 import type { Author } from '../../@types/index';
 import authorPicture from '../../public/assets/author.jpg';
 import { FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
+import blurImageData from './blur-data-url-image.json';
+
+export const blurDataUrlImage = blurImageData.data;
 
 export const author: Author = {
   name: Package.author,

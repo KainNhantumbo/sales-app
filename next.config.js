@@ -6,6 +6,9 @@ const nextConfig = {
     // Enables the styled-components SWC transform
     styledComponents: true,
   },
+  images: {
+    domains: ['https://res.cloudinary.com']
+  }
 }
 
 module.exports = nextConfig

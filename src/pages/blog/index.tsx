@@ -1,3 +1,4 @@
+
 import {
   IoArrowForwardOutline,
   IoEllipsisHorizontal,
@@ -12,7 +13,7 @@ import { useRouter } from 'next/router';
 import { getPosts } from '@/lib/queries';
 import { formatDate } from '@/lib/time-fns';
 import { IBlogPosts } from '../../../@types';
-import { complements } from '@/data/app-data';
+import { blurDataUrlImage, complements } from '@/data/app-data';
 import NewsLetter from '@/components/Newsletter';
 import SearchComponent from '@/components/Search';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
@@ -51,6 +52,7 @@ export default function Blog(props: Props): JSX.Element {
 
             <Image
               src={buyingWomenImg}
+              blurDataURL={blurDataUrlImage}
               alt='buying women art from freepick.com'
             />
           </div>
