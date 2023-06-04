@@ -1,9 +1,10 @@
 {
   "name": "Rubymart",
-  "version": "0.3.2(beta)",
+  "version": "0.4.0 (beta)",
   "private": true,
   "author": "Kain Nhantumbo",
   "url": "https://rubymart.vercel.app",
+  "companyName": "Ruby Labs, Lda.",
   "websiteName": "Rubymart - Sales Store of Mozambique",
   "email": "connectadevelops@gmail.com",
   "copyrightSentence": "2023 Rubymart | Todos os Direitos Reservados.",

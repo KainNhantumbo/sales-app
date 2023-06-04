@@ -19,7 +19,7 @@ export const FooterContainer = styled.footer`
     width: 1px;
     height: 1px;
     right: 50%;
-    bottom: 110px;
+    bottom: 80px;
     border-radius: 50%;
     z-index: -999;
     transform: rotate(180);
@@ -111,97 +111,91 @@ export const FooterContainer = styled.footer`
     }
   }
 
-  .social-container {
+  .base-container {
     display: flex;
     flex-direction: row;
     gap: 10px;
     align-items: center;
-    align-self: center;
+    justify-content: space-between;
     width: 100%;
     max-width: 1280px;
-    margin: 0 auto;
     position: relative;
-    padding: 0 20px;
-    border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.3);
+    padding: 30px;
+    margin: 0 auto;
 
-    .logo {
-      padding-top: 10px;
-      text-align: center;
-      span {
-        font-size: 1.4rem;
-        font-weight: 500;
-        color: rgb(${({ theme }) => theme.font});
-        font-family: 'Roboto Slab', 'Roboto';
-        i {
-          color: rgb(${({ theme }) => theme.secondary});
+    @media screen and (max-width: 470px) {
+      flex-direction: column-reverse;
+      gap: 30px;
+    }
+
+    .base-container_presentation {
+      .logo {
+        p {
+          line-height: 1.1rem;
+          font-weight: 400;
+        }
+      }
+
+      .sharer-button {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+        padding-top: 10px;
+
+        @media screen and (max-width: 470px) {
+          justify-content: center;
+        }
+
+        a {
+          width: 30px;
+          height: 30px;
+          display: grid;
+          place-items: center;
+          border-radius: 10px;
+
+          :hover {
+            color: rgb(${({ theme }) => theme.primary_variant});
+          }
+
+          svg {
+            width: 20px;
+            height: 20px;
+          }
         }
       }
     }
 
-    .social-media {
+    .theme-fluent-buttons {
+      background: none;
       display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 10px;
-      padding-top: 10px;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 2px;
+      border: 1px solid rgba(${({ theme }) => theme.font}, 0.5);
+      border-radius: 20px;
+      padding: 3px;
 
-      a {
-        width: 40px;
-        height: 40px;
+      button {
         display: grid;
+        place-content: center;
         place-items: center;
-        background: rgba(${({ theme }) => theme.primary}, 0.2);
-        border-radius: 10px;
+        border: none;
+        background: none;
+        padding: 8px;
+        border-radius: 50%;
+        outline: none;
+        user-select: none;
 
         :hover {
-          color: rgb(${({ theme }) => theme.primary_variant});
+          cursor: pointer;
+          background: rgba(${({ theme }) => theme.font}, 0.2);
         }
 
         svg {
-          width: 20px;
-          height: 20px;
+          color: rgb(${({ theme }) => theme.font});
         }
       }
-    }
-
-    .theme-switcher {
-      ${BaseButton}
-      position: absolute;
-      top: calc(50% - 90px);
-      right: 10px;
-      border: none;
-      width: 40px;
-      height: 40px;
-      outline: none;
-      background: rgba(${({ theme }) => theme.primary}, 0.8);
-      :hover {
-        color: rgb(${({ theme }) => theme.primary_variant});
-      }
-      span {
-        padding: 0;
-      }
-      svg {
-        left: calc(50% - 10px);
-      }
-    }
-  }
-
-  .copyright {
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px;
-    flex-direction: column;
-    font-size: 0.9rem;
-    align-items: center;
-    line-height: 1.4rem;
-    color: rgb(${({ theme }) => theme.neutral});
-    background: rgba(${({ theme }) => theme.accent}, 0.3);
-    backdrop-filter: blur(10px);
-    padding: 10px 0;
-
-    @media screen and (max-width: 350px) {
-      text-align: center;
-      padding: 10px;
     }
   }
 `;

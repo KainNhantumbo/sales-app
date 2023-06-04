@@ -1,12 +1,11 @@
-import { IoCart } from 'react-icons/io5';
+import { IoBagHandle, IoCart } from 'react-icons/io5';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import RequestLogin from '@/components/modals/RequestLogin';
 import Layout from '@/components/Layout';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter, NextRouter } from 'next/router';
-import  { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/AppContext';
 import { blurDataUrlImage, complements } from '@/data/app-data';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { HomeContainer as Container } from '@/styles/common/home';
@@ -15,7 +14,7 @@ import fetch from '../config/client';
 import NewsLetter from '@/components/Newsletter';
 import opening_store_png from '../../public/assets/opening.png';
 import { actions } from '@/data/actions';
-import { PulseLoader } from 'react-spinners'; 
+import { PulseLoader } from 'react-spinners';
 interface IProps {
   products: PublicProducts[];
 }
@@ -44,6 +43,7 @@ export default function Home({ products }: IProps): JSX.Element {
         title: `${complements.defaultTitle} | Produtos e Serviços`
       }}>
       <RequestLogin />
+
       {/* <div className='loading-container'>
         <PulseLoader
           color={`rgb(${theme.primary})`}
@@ -85,7 +85,37 @@ export default function Home({ products }: IProps): JSX.Element {
               {state.publicProducts.length > 0 &&
                 state.publicProducts.map((item) => (
                   <div key={item._id} className='product-container'>
-
+                    <div className='product-image'>
+                      {item.images && Object.values(item.images)[0]?.url && (
+                        <Image
+                          src={Object.values(item.images)[0]?.url}
+                          width={200}
+                          height={200}
+                          alt={`Imagem de ${item.name}`}
+                        />
+                      )}
+                      {!item.images && <IoBagHandle />}
+                    </div>
+                    <div className='product-details'>
+                      <h3>
+                        <span>{item.name}</span>
+                      </h3>
+                      {item.promotion.status ? (
+                        <div className='item promo-price'>
+                          <span>
+                            MZN <i>{item.price}</i>{' '}
+                            {(
+                              item.price -
+                              (item.price * item.promotion.percentage) / 100
+                            ).toFixed(2)}
+                          </span>
+                        </div>
+                      ) : (
+                        <div className='item promo-price'>
+                          <span>MZN {item.price.toFixed(2)}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ))}
             </section>

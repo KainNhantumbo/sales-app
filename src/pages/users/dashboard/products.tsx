@@ -23,7 +23,6 @@ import ToolBox from '@/components/modals/ToolBox';
 import SearchBox from '@/components/modals/SearchBox';
 import SortBox from '@/components/modals/SortBox';
 import AppStatus from '@/components/AppStatus';
-import { formatDate } from '@/lib/time-fns';
 import moment from 'moment';
 import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
 import { complements } from '@/data/app-data';
@@ -97,7 +96,12 @@ export default function Products(): JSX.Element {
   useEffect(() => {
     return () => {
       setLoading({ status: false });
-      dispatch({ type: actions.CLEAN_UP_MODALS });
+      dispatch({
+        type: actions.CLEAN_UP_MODALS,
+        payload: {
+          ...state
+        }
+      });
     };
   }, []);
 

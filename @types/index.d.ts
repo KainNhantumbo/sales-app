@@ -176,8 +176,7 @@ export type PublicProducts = {
   price: number;
   promotion: { status: boolean; percentage: number };
   favorites: string[];
-  created_by: string;
-  cover_image?: { id: string; url: string };
+  images: { [x: string]: { id: string; url: string } } | undefined;
 };
 
 export type Store = {

@@ -30,6 +30,7 @@ export const author: Author = {
 export const complements = {
   defaultTitle: Package.name,
   email: Package.email,
+  companyName: Package.companyName,
   websiteName: Package.websiteName,
   websiteUrl: Package.url,
   copyrightSentence: Package.copyrightSentence,

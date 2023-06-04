@@ -1,13 +1,16 @@
 import {
+  IoDesktopOutline,
   IoExtensionPuzzleOutline,
   IoHelpBuoyOutline,
   IoLockOpenOutline,
   IoMoon,
+  IoMoonOutline,
   IoNewspaperOutline,
   IoPaperPlaneOutline,
   IoShieldCheckmarkOutline,
   IoSpeedometerOutline,
-  IoSunny
+  IoSunny,
+  IoSunnyOutline
 } from 'react-icons/io5';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -17,7 +20,7 @@ import { useThemeContext } from '@/context/ThemeContext';
 import { FooterContainer as Container } from '../styles/common/footer';
 
 export default function Footer(): JSX.Element {
-  const { darkmode, themeSwitcher } = useThemeContext();
+  const { setDarkMode, setLightMode, matchMediaTheme } = useThemeContext();
   const { state } = useAppContext();
   return (
     <Container>
@@ -106,39 +109,42 @@ export default function Footer(): JSX.Element {
         </nav>
       </section>
 
-      <div className='social-container'>
-        <div className='logo'>
-          <span>{complements.defaultTitle}</span>
+      <div className='base-container'>
+        <div className='base-container_presentation'>
+          <div className='logo'>
+            <p>
+              &copy; {new Date().getFullYear()} {complements.defaultTitle} |
+            {complements.companyName}
+            </p>
+          </div>
+          <div className='sharer-button'>
+            {complements.socialMedia.map((option) => (
+              <motion.a
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.8 }}
+                href={option.url}
+                title={option.name}
+                target={'_blank'}
+                rel={'noreferrer noopener'}
+                key={option.name}>
+                {<option.icon />}
+              </motion.a>
+            ))}
+          </div>
         </div>
-        <div className='social-media'>
-          {complements.socialMedia.map((option) => (
-            <motion.a
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.8 }}
-              href={option.url}
-              title={option.name}
-              target={'_blank'}
-              rel={'noreferrer noopener'}
-              key={option.name}>
-              {<option.icon />}
-            </motion.a>
-          ))}
+
+        <div className='theme-fluent-buttons'>
+          <button title='Modo claro' onClick={setLightMode}>
+            <IoSunnyOutline />
+          </button>
+          <button title='Automático' onClick={matchMediaTheme}>
+            <IoDesktopOutline />
+          </button>
+          <button title='Modo escuro ' onClick={setDarkMode}>
+            <IoMoonOutline />
+          </button>
         </div>
-        <motion.button
-          whileTap={{ scale: 0.7 }}
-          transition={{ type: 'spring', duration: 0.5 }}
-          title='Trocar o tema'
-          aria-label='Trocar o tema'
-          className='theme-switcher'
-          onClick={themeSwitcher}>
-          {darkmode ? <IoSunny /> : <IoMoon />}
-        </motion.button>
       </div>
-      <section>
-        <div className='copyright'>
-          <span>&copy; {complements.copyrightSentence}</span>
-        </div>
-      </section>
     </Container>
   );
 }
