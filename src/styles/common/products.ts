@@ -163,6 +163,7 @@ export const ProductListContainer = styled.div`
               .id {
                 text-transform: uppercase;
               }
+              
               .promotion {
                 border-radius: 18px;
                 background: rgb(${({ theme }) => theme.background});

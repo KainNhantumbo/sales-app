@@ -11,7 +11,6 @@ import { dark_default, light_default } from '../styles/themes';
 import { Theme } from '../../@types';
 
 interface IContext {
-  themeSwitcher: () => void;
   slidePageUp: () => void;
   matchMediaTheme: () => void;
   setLightMode: () => void;
@@ -26,7 +25,6 @@ interface ITheme {
 }
 
 const context = createContext<IContext>({
-  themeSwitcher: () => {},
   matchMediaTheme: () => {},
   setLightMode: () => {},
   setDarkMode: () => {},
@@ -39,16 +37,6 @@ export default function ThemeContext({ children }: IProps): JSX.Element {
     darkMode: false
   });
   const [currentTheme, setCurrentTheme] = useState<Theme>(light_default);
-
-  function themeSwitcher(): void {
-    if (!themeSettings.darkMode) {
-      setCurrentTheme(dark_default);
-      setThemeSettings({ darkMode: true });
-    } else {
-      setCurrentTheme(light_default);
-      setThemeSettings({ darkMode: false });
-    }
-  }
 
   function setDarkMode(): void {
     setCurrentTheme(dark_default);
@@ -103,7 +91,6 @@ export default function ThemeContext({ children }: IProps): JSX.Element {
       <GlobalStyles />
       <context.Provider
         value={{
-          themeSwitcher,
           slidePageUp,
           darkmode: themeSettings.darkMode,
           setDarkMode,

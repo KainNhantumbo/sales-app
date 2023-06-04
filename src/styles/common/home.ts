@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BaseButton } from '../defaults';
+import { BaseButton, StyledCornerButton } from '../defaults';
 
 export const HomeContainer = styled.div`
   position: relative;
@@ -7,7 +7,7 @@ export const HomeContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  background: rgb(${({ theme }) => theme.foreground});
+  background: rgb(${({ theme }) => theme.background});
 
   * {
     ::selection {
@@ -23,6 +23,8 @@ export const HomeContainer = styled.div`
     padding: 0 20px;
     padding-top: 100px;
     padding-bottom: 40px;
+    margin-bottom: 20px;
+    border-radius: 0 0 20px 20px;
 
     .wrapper {
       width: 100%;
@@ -79,7 +81,8 @@ export const HomeContainer = styled.div`
       }
 
       @media screen and (max-width: 420px) {
-        h1, h3 {
+        h1,
+        h3 {
           line-height: 1.6rem;
           font-size: 1.3rem;
           svg {
@@ -102,6 +105,116 @@ export const HomeContainer = styled.div`
     }
   }
 
+  .content-wrapper {
+    width: 100%;
+    max-width: 1480px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding-bottom: 50px;
+  }
+
+
+  aside {
+    width: 100%;
+    max-width: 400px;
+
+  }
+
   article {
+    width: 100%;
+    .products-container {
+      display: flex;
+      flex-flow: row wrap;
+      gap: 12px;
+      padding: 0 20px;
+
+      .product-container {
+        width: 100%;
+        max-width: 230px;
+        height: 350px;
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        background: rgb(${({ theme }) => theme.foreground});
+
+        .product-image {
+          position: relative;
+
+          .promotion {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+
+            border-radius: 12px;
+            background: rgba(${({ theme }) => theme.neutral}, 0.9);
+            border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
+            padding: 3px 8px;
+            color: rgb(${({ theme }) => theme.secondary});
+          }
+
+          .favorite-button {
+            ${StyledCornerButton}
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(${({ theme }) => theme.neutral}, 0.9);
+            border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
+
+            svg {
+              color: rgb(${({ theme }) => theme.secondary});
+            }
+          }
+          img {
+            width: 100%;
+            height: 100%;
+            height: 230px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+          }
+
+          .no-image-icon {
+            width: 100%;
+            height: 100%;
+            max-width: 230px;
+            padding: 30px;
+            border-radius: 10px 10px 0 0;
+          }
+        }
+
+        .product-details {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          padding: 12px;
+
+          h3 {
+            line-height: 1.11rem;
+            font-size: 0.97rem;
+          }
+
+          .item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 3px;
+            line-height: 1.2rem;
+
+            i {
+              font-weight: 500;
+              color: rgb(${({ theme }) => theme.primary_variant});
+            }
+          }
+
+          .promo-price {
+            .percentage {
+              font-weight: 500;
+              text-decoration: line-through;
+              color: rgb(${({ theme }) => theme.alert});
+            }
+          }
+        }
+      }
+    }
   }
 `;

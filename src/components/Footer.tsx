@@ -3,13 +3,11 @@ import {
   IoExtensionPuzzleOutline,
   IoHelpBuoyOutline,
   IoLockOpenOutline,
-  IoMoon,
   IoMoonOutline,
   IoNewspaperOutline,
   IoPaperPlaneOutline,
   IoShieldCheckmarkOutline,
   IoSpeedometerOutline,
-  IoSunny,
   IoSunnyOutline
 } from 'react-icons/io5';
 import Link from 'next/link';
@@ -113,8 +111,8 @@ export default function Footer(): JSX.Element {
         <div className='base-container_presentation'>
           <div className='logo'>
             <p>
-              &copy; {new Date().getFullYear()} {complements.defaultTitle} |
-            {complements.companyName}
+              &copy; {new Date().getFullYear()} {complements.defaultTitle} |{' '}
+              {complements.companyName}
             </p>
           </div>
           <div className='sharer-button'>
@@ -137,7 +135,7 @@ export default function Footer(): JSX.Element {
           <button title='Modo claro' onClick={setLightMode}>
             <IoSunnyOutline />
           </button>
-          <button title='Automático' onClick={matchMediaTheme}>
+          <button title='Modo automático' onClick={matchMediaTheme}>
             <IoDesktopOutline />
           </button>
           <button title='Modo escuro ' onClick={setDarkMode}>

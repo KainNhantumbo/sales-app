@@ -22,7 +22,6 @@ export const FooterContainer = styled.footer`
     bottom: 80px;
     border-radius: 50%;
     z-index: -999;
-    transform: rotate(180);
     backdrop-filter: blur(10px);
     box-shadow: 0 0 100px 60px rgba(${({ theme }) => theme.primary}, 0.8);
   }
@@ -33,7 +32,7 @@ export const FooterContainer = styled.footer`
     flex-flow: row wrap;
     gap: 40px;
     justify-content: space-evenly;
-    border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.3);
+    border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
     padding: 20px;
     width: 100%;
     max-width: 1280px;
@@ -157,7 +156,7 @@ export const FooterContainer = styled.footer`
           :hover {
             color: rgb(${({ theme }) => theme.primary_variant});
           }
-          
+
 
           svg {
             width: 20px;
@@ -173,7 +172,7 @@ export const FooterContainer = styled.footer`
       flex-direction: row;
       flex-wrap: nowrap;
       gap: 2px;
-      border: 1px solid rgba(${({ theme }) => theme.font}, 0.5);
+      border: 1px solid rgba(${({ theme }) => theme.font}, 0.3);
       border-radius: 20px;
       padding: 3px;
 
