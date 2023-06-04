@@ -157,6 +157,7 @@ export const FooterContainer = styled.footer`
           :hover {
             color: rgb(${({ theme }) => theme.primary_variant});
           }
+          
 
           svg {
             width: 20px;
