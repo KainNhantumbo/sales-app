@@ -11,11 +11,12 @@ import { DefaultTheme, useTheme } from 'styled-components';
 import { HomeContainer as Container } from '@/styles/common/home';
 import { PublicProducts } from '../../@types';
 import fetch from '../config/client';
-import NewsLetter from '@/components/Newsletter';
 import opening_store_png from '../../public/assets/opening.png';
 import { actions } from '@/data/actions';
 import { PulseLoader } from 'react-spinners';
 import { useQuery } from '@tanstack/react-query';
+import SearchEngine from '@/components/SearchEngine';
+
 interface IProps {
   products: PublicProducts[];
 }
@@ -25,25 +26,26 @@ export default function Home({ products }: IProps): JSX.Element {
   const theme: DefaultTheme = useTheme();
   const { state, dispatch, loginPromptController, fetchAPI } = useAppContext();
 
-  async function getSingleProduct(productId: string): Promise<void> {
-    try {
-      const { data } = await fetch<PublicProducts>({
-        method: 'get',
-        url: `/api/v1/users/products/public?productId=${productId}`
-      });
-      console.log(data);
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
-    }
-  }
-
   async function handleFavoriteProduct(id: string) {
     try {
-      await fetchAPI({
+      const { data } = await fetchAPI({
         method: 'post',
         url: `/api/v1/users/favorites/products/${id}`
       });
-      getSingleProduct(id);
+      dispatch({
+        type: actions.PUBLIC_PRODUCTS_LIST_DATA,
+        payload: {
+          ...state,
+          publicProducts: [
+            ...state.publicProducts.map((product) => {
+              if (product._id === id) {
+                return { ...product, favorites: data };
+              }
+              return product;
+            })
+          ]
+        }
+      });
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
@@ -51,11 +53,24 @@ export default function Home({ products }: IProps): JSX.Element {
 
   async function handleUnFavoriteProduct(id: string) {
     try {
-      await fetchAPI({
+      const { data } = await fetchAPI({
         method: 'patch',
         url: `/api/v1/users/favorites/products/${id}`
       });
-      getSingleProduct(id);
+      dispatch({
+        type: actions.PUBLIC_PRODUCTS_LIST_DATA,
+        payload: {
+          ...state,
+          publicProducts: [
+            ...state.publicProducts.map((product) => {
+              if (product._id === id) {
+                return { ...product, favorites: data };
+              }
+              return product;
+            })
+          ]
+        }
+      });
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
@@ -117,7 +132,9 @@ export default function Home({ products }: IProps): JSX.Element {
           </div>
         </section>
         <div className='content-wrapper'>
-          <aside></aside>
+          <aside>
+            <SearchEngine />
+          </aside>
 
           <article>
             <section className='products-container'>
@@ -126,7 +143,9 @@ export default function Home({ products }: IProps): JSX.Element {
                   <div key={item._id} className='product-container'>
                     <div className='product-image'>
                       {item.promotion.status && (
-                        <span className='promotion'>Promoção {item.promotion.percentage}% </span>
+                        <span className='promotion'>
+                          Promoção {item.promotion.percentage}%{' '}
+                        </span>
                       )}
                       <button
                         title='Adicionar a lista de favoritos'
@@ -161,7 +180,9 @@ export default function Home({ products }: IProps): JSX.Element {
                         <IoBagHandle className='no-image-icon' />
                       )}
                     </div>
-                    <div className='product-details'>
+                    <Link
+                      href={`/ecommerce/products/${item._id}`}
+                      className='product-details'>
                       {item.promotion.status ? (
                         <div className='item promo-price'>
                           <h4>
@@ -190,27 +211,29 @@ export default function Home({ products }: IProps): JSX.Element {
                             : item.name}{' '}
                         </span>
                       </h3>
-                    </div>
+                    </Link>
                   </div>
                 ))}
             </section>
           </article>
         </div>
-       
       </Container>
     </Layout>
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(): Promise<
+  | { props: { products: PublicProducts[] } }
+  | { props: { products?: undefined } }
+> {
   try {
     const { data } = await fetch<PublicProducts[]>({
       method: 'get',
       url: `/api/v1/users/products/public?page=1`
     });
-    return { props: { products: [...data] }, revalidate: 10 };
+    return { props: { products: [...data] } };
   } catch (error) {
     console.error(error);
-    return { props: {}, revalidate: 10 };
+    return { props: {} };
   }
 }

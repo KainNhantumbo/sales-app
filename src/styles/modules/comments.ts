@@ -91,9 +91,15 @@ export const CommentsContainer = styled.div`
         }
       }
 
+      .reply-comment {
+        margin-top: 10px;
+        border-left: 3px solid rgb(${({ theme }) => theme.primary_variant});
+      }
+
       .sub-coment {
         padding: 0;
         margin: 0;
+
         @media screen and (max-width: 700px) {
           margin-bottom: 30px;
         }

@@ -111,14 +111,15 @@ export const HomeContainer = styled.div`
     display: flex;
     flex-direction: row;
     gap: 20px;
+    padding: 0 20px;
+    margin: 0 auto;
     padding-bottom: 50px;
   }
-
 
   aside {
     width: 100%;
     max-width: 400px;
-
+    position: relative;
   }
 
   article {
@@ -185,12 +186,14 @@ export const HomeContainer = styled.div`
         .product-details {
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 8px;
           padding: 12px;
+          height: 100%;
+          cursor: pointer;
 
           h3 {
-            line-height: 1.11rem;
-            font-size: 0.97rem;
+            line-height: 1.3rem;
+            font-size: 0.98rem;
           }
 
           .item {

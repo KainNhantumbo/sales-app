@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BaseButton } from '../defaults';
 
 export const AboutContainer = styled.div`
   position: relative;
@@ -32,6 +33,10 @@ export const AboutContainer = styled.div`
     flex-direction: column;
     gap: 30px;
 
+    @media screen and (max-width: 450px) {
+      padding: 20px 10px;
+    }
+
     .mozambique-colors {
       width: 100%;
       height: 20px;
@@ -43,7 +48,7 @@ export const AboutContainer = styled.div`
         content: '';
         width: 100%;
         height: 20px;
-        background: #fed024;
+        background: #77c64e;
         position: absolute;
         top: -30px;
         left: 0;
@@ -54,7 +59,7 @@ export const AboutContainer = styled.div`
         content: '';
         width: 100%;
         height: 20px;
-        background: #77c64e;
+        background: #fed024;
         position: absolute;
         bottom: -30px;
         left: 0;
@@ -71,7 +76,7 @@ export const AboutContainer = styled.div`
       line-height: 3.2rem;
       font-size: 2.8rem;
       font-weight: 500;
-      max-width: 900px;
+      max-width: 800px;
 
       @media screen and (max-width: 450px) {
         font-size: 1.8rem;
@@ -162,17 +167,20 @@ export const AboutContainer = styled.div`
       display: flex;
       flex-direction: column;
       gap: 20px;
-      background: rgb(${({ theme }) => theme.background});
       padding: 40px;
       border-radius: 20px;
 
+      @media screen and (max-width: 450px) {
+        padding: 20px 10px;
+      }
+
       h2 {
-        align-self: flex-end;
+        padding-bottom: 30px;
       }
 
       .core-habits-container_items {
         display: flex;
-        gap: 20px;
+        gap: 25px;
         flex-flow: row wrap;
         align-items: center;
         justify-content: center;
@@ -186,7 +194,7 @@ export const AboutContainer = styled.div`
         border-radius: 20px;
         width: fit-content;
         background: rgb(${({ theme }) => theme.foreground});
-        box-shadow: 0 0 20px rgba(${({ theme }) => theme.accent}, 0.08);
+        box-shadow: 0 0 30px 10px rgba(${({ theme }) => theme.accent}, 0.1);
         border-right: 4px solid transparent;
         cursor: pointer;
         h3 {
@@ -206,7 +214,7 @@ export const AboutContainer = styled.div`
         }
 
         :nth-child(n + 1) {
-          border-right: 4px solid rgb(${({ theme }) => theme.text});
+          border-right: 4px solid rgb(${({ theme }) => theme.primary});
           max-width: 300px;
           strong {
             color: rgb(${({ theme }) => theme.font});
@@ -246,7 +254,10 @@ export const AboutContainer = styled.div`
         }
       }
 
-      h2 {
+      a {
+        ${BaseButton}
+        padding: 12px;
+        margin: 20px 0;
       }
     }
   }

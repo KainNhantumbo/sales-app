@@ -5,7 +5,6 @@ export const BlogContainer = styled.div`
   position: relative;
   width: 100%;
   min-height: 50vh;
-  position: relative;
   display: flex;
   flex-direction: column;
   background: rgb(${({ theme }) => theme.background});

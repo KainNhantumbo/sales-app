@@ -25,10 +25,11 @@ import { getPaths, getPost, getPosts } from '@/lib/queries';
 import type { IBlogPost, IBlogPosts } from '@/../../@types/index';
 import { PostContainer as Container } from '@/styles/common/post';
 import { useTheme } from 'styled-components';
-import Comments from '@/components/Comments';
+import Comments from '@/components/comments/Comments';
 import { useAppContext } from '@/context/AppContext';
 import ErrorPage from '@/pages/error-page';
 import NewsLetter from '@/components/Newsletter';
+import { useQuery } from '@tanstack/react-query';
 
 interface IPost {
   post: IBlogPost;
@@ -63,14 +64,11 @@ export default function Post({
 
   async function handleFavoritePost(): Promise<void> {
     try {
-      await fetchAPI({
+      const { data } = await fetchAPI({
         method: 'post',
         url: `/api/v1/users/favorites/blog-posts/${post._id}`
       });
-      const { data } = await getPost(post.slug);
-      setPost((doc) => {
-        return { ...doc, favorites: data.favorites };
-      });
+      setPost((doc) => ({ ...doc, favorites: data }));
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
@@ -78,14 +76,11 @@ export default function Post({
 
   async function handleUnFavoritePost(): Promise<void> {
     try {
-      await fetchAPI({
+      const { data } = await fetchAPI({
         method: 'patch',
         url: `/api/v1/users/favorites/blog-posts/${post._id}`
       });
-      const { data } = await getPost(post.slug);
-      setPost((doc) => {
-        return { ...doc, favorites: data.favorites };
-      });
+      setPost((doc) => ({ ...doc, favorites: data }));
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }

@@ -1,10 +1,12 @@
+import Link from 'next/link';
 import Layout from '@/components/Layout';
 import { complements } from '@/data/app-data';
 import { motion } from 'framer-motion';
 import { useTheme } from 'styled-components';
-import { AboutContainer as Container } from '../../styles/common/about';
 import { IoIosQuote } from 'react-icons/io';
 import NewsLetter from '@/components/Newsletter';
+import { IoStorefrontOutline } from 'react-icons/io5';
+import { AboutContainer as Container } from '../../styles/common/about';
 
 export default function About(): JSX.Element {
   const theme = useTheme();
@@ -23,7 +25,7 @@ export default function About(): JSX.Element {
       paragraph: 'Seja direto. Vá direto.'
     },
     {
-      phrase: 'Faça a p*rra de uma vez e vá se divertir aos montes.',
+      phrase: 'Faça as tarefas de uma vez e vá se divertir aos montes.',
       paragraph: 'Trabalhe seriamente nas coisas certas com urgência.'
     },
     {
@@ -105,7 +107,7 @@ export default function About(): JSX.Element {
           </section>
 
           <section className='core-habits-container'>
-            <h2>Hábitos Essenciais ❤</h2>
+            <h2>❤ Hábitos Essenciais</h2>
             <div className='core-habits-container_items'>
               {core_habits.map((habit, index) => (
                 <motion.div
@@ -117,7 +119,7 @@ export default function About(): JSX.Element {
                   }}
                   whileHover={{
                     translateY: -8,
-                    boxShadow: `0px 20px 25px rgba(${theme.accent}, 0.09)`
+                    boxShadow: `0px 20px 30px 10px rgba(${theme.accent}, 0.09)`
                   }}
                   className={`core-habit ${'item' + index.toString()}`}>
                   <h3>{'0'.concat(Number(index + 1).toString())}</h3>
@@ -143,6 +145,10 @@ export default function About(): JSX.Element {
               negócios. Queremos que desenvolva relações prósperas com a
               comunidade {complements.defaultTitle} e alcance os seus objetivos.
             </p>
+            <Link href={'/auth/sign-in'}>
+              <IoStorefrontOutline />
+              <span>Junte-se a nós!</span>
+            </Link>
           </section>
         </article>
         <NewsLetter />

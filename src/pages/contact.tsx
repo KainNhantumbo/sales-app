@@ -65,6 +65,22 @@ export default function Contact(): JSX.Element {
               <strong>formulário de contacto</strong> para que possamos
               esclarecer quaisquer questões sobre os nossos produtos e serviços.
             </p>
+            <p>
+              <strong>
+                Lembre-se que sempre estaremos abertos a sugestões de como
+                podemos melhor ajudar.
+              </strong>
+              Viu algum incomum, problemas ou erros no sistema? Reporte, assim
+              corrigimos o mais rápido possível.
+            </p>
+            <p>
+              <strong>
+                Cultivamos a boa interação e comunicação entre os nossos
+                clientes, usuários e parceiros.
+              </strong>{' '}
+              Caso algo de errado tenha acontecido, nos escreva, sempre estará
+              em anonimato.
+            </p>
           </section>
           <div>
             <h3>
