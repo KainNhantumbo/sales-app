@@ -1,4 +1,3 @@
-
 import {
   IoArrowForwardOutline,
   IoEllipsisHorizontal,
@@ -7,16 +6,19 @@ import {
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import ErrorPage from '../error-page';
-import Layout from '@/components/Layout';
 import { useRouter } from 'next/router';
+import Layout from '@/components/Layout';
+import { actions } from '@/data/actions';
 import { getPosts } from '@/lib/queries';
 import { formatDate } from '@/lib/time-fns';
 import { IBlogPosts } from '../../../@types';
-import { blurDataUrlImage, complements } from '@/data/app-data';
 import NewsLetter from '@/components/Newsletter';
 import SearchComponent from '@/components/Search';
+import { useAppContext } from '@/context/AppContext';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
+import { blurDataUrlImage, complements } from '@/data/app-data';
 import { BlogContainer as Container } from '@/styles/common/blog';
 import buyingWomenImg from '../../../public/assets/buying_women.png';
 
@@ -25,9 +27,53 @@ type Props = { posts: IBlogPosts[] };
 export default function Blog(props: Props): JSX.Element {
   const { posts } = props;
   const router = useRouter();
+  const { state, dispatch } = useAppContext();
+  const [status, setStatus] = useState({
+    loading: false,
+    error: false,
+    hasMorePosts: true
+  });
+
   if (!posts) {
     return <ErrorPage retryFn={router.reload} />;
   }
+
+  async function fetchPosts({ pageParam = 0 }) {
+    const { data } = await getPosts({ offset: pageParam * 3, limit: 3 });
+    return { data, currentOffset: pageParam + 1 };
+  }
+
+  useEffect(() => {
+    if (state.blogPostsList.length > 0) return;
+    dispatch({
+      type: actions.BLOG_POSTS_LIST_QUERY,
+      payload: {
+        ...state,
+        blogPostsList: [...state.blogPostsList, ...posts]
+      }
+    });
+
+    return () => {
+      dispatch({
+        type: actions.BLOG_POSTS_LIST_QUERY,
+        payload: { ...state, blogPostsList: [] }
+      });
+    };
+  }, [posts]);
+
+  // const {
+  //   data,
+  //   error,
+  //   fetchNextPage,
+  //   hasNextPage,
+  //   isFetching,
+  //   isFetchingNextPage,
+  //   status
+  // } = useInfiniteQuery({
+  //   queryKey: ['blog-posts'],
+  //   queryFn: fetchPosts,
+  //   getNextPageParam: (lastPage, pages) => lastPage.currentOffset
+  // });
 
   return (
     <Layout metadata={{ title: complements.defaultTitle + ' | Blog' }}>
@@ -54,6 +100,7 @@ export default function Blog(props: Props): JSX.Element {
               src={buyingWomenImg}
               blurDataURL={blurDataUrlImage}
               alt='buying women art from freepick.com'
+              priority
             />
           </div>
         </section>
@@ -63,7 +110,7 @@ export default function Blog(props: Props): JSX.Element {
           </section>
 
           <section className='posts-container'>
-            {posts.map((post) => (
+            {state.blogPostsList.map((post) => (
               <Link
                 key={post._id}
                 className={'post'}
@@ -102,6 +149,8 @@ export default function Blog(props: Props): JSX.Element {
                 </>
               </Link>
             ))}
+            <button onClick={() => {}}>Get next page</button>
+
             {posts.length > 0 && (
               <div className='posts-container__end-mark'>
                 <IoEllipsisHorizontal />
@@ -117,7 +166,7 @@ export default function Blog(props: Props): JSX.Element {
 
 export async function getStaticProps() {
   try {
-    const { data } = await getPosts({});
+    const { data } = await getPosts({ offset: 0, limit: 3 });
     return { props: { posts: [...data] }, revalidate: 10 };
   } catch (error) {
     console.error(error);

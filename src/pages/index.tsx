@@ -14,7 +14,6 @@ import fetch from '../config/client';
 import opening_store_png from '../../public/assets/opening.png';
 import { actions } from '@/data/actions';
 import { PulseLoader } from 'react-spinners';
-import { useQuery } from '@tanstack/react-query';
 import SearchEngine from '@/components/SearchEngine';
 
 interface IProps {

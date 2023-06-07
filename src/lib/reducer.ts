@@ -18,6 +18,7 @@ export const initialState: State = {
   isUserWorkingDataModal: false,
   isDenounceModal: false,
   isConnected: false,
+  blogPostsList: [],
   denounce: {
     reson: '',
     content: '',
@@ -306,6 +307,11 @@ export default function reducer(state: State, action: Action) {
       return { ...state, denounce: action.payload.denounce };
     case actions.DENOUNCE_MODAL:
       return { ...state, isDenounceModal: action.payload.isDenounceModal };
+    case actions.BLOG_POSTS_LIST_QUERY:
+      return {
+        ...state,
+        blogPostsList: action.payload.blogPostsList
+      };
     default:
       return { ...state };
   }

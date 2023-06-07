@@ -1,5 +1,6 @@
 import {
   AppStatus,
+  IBlogPosts,
   IComment,
   ISignInData,
   ISignUp,
@@ -47,6 +48,7 @@ export type State = {
   commentsList: IComment[];
   publicProducts: PublicProducts[];
   productsListQuery: { query: string; sort: string };
+  blogPostsList: IBlogPosts[]
 };
 
 export type Action = { type: string; payload: State };

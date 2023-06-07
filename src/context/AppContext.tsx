@@ -14,13 +14,6 @@ import { Action, State } from '../../@types/reducer';
 import { AppContext } from '../../@types/index';
 import reducer, { initialState } from '@/lib/reducer';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {}
-  }
-});
 
 interface IContext {
   state: State;
@@ -283,28 +276,26 @@ export default function AppContext(props: AppContext) {
 
   return (
     <ThemeContext>
-      <QueryClientProvider client={queryClient}>
-        <context.Provider
-          value={{
-            state,
-            fetchAPI,
-            dispatch,
-            logoutUser,
-            sortBoxController,
-            searchBoxController,
-            loginPromptController,
-            logoutPromptController,
-            userWorkingDataController,
-            deleteCommentPromptController,
-            deleteProductPromptController,
-            deleteAccountPromptController,
-            deactivateStorePromptController,
-            shareProductController,
-            denounceModalController
-          }}>
-          <SocketContext>{props.children}</SocketContext>
-        </context.Provider>
-      </QueryClientProvider>
+      <context.Provider
+        value={{
+          state,
+          fetchAPI,
+          dispatch,
+          logoutUser,
+          sortBoxController,
+          searchBoxController,
+          loginPromptController,
+          logoutPromptController,
+          userWorkingDataController,
+          deleteCommentPromptController,
+          deleteProductPromptController,
+          deleteAccountPromptController,
+          deactivateStorePromptController,
+          shareProductController,
+          denounceModalController
+        }}>
+        <SocketContext>{props.children}</SocketContext>
+      </context.Provider>
     </ThemeContext>
   );
 }
