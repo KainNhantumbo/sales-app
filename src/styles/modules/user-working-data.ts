@@ -3,7 +3,7 @@ import {
   BaseButton,
   BaseButtonOutline,
   StyledInputs,
-  StyledLabels,
+  StyledLabels
 } from '../defaults';
 
 export const CapturerContainer = styled.section`
@@ -83,6 +83,10 @@ export const CapturerContainer = styled.section`
 
             input[type='date'] {
               padding-top: 20px;
+            }
+            .counter {
+              align-self: end;
+              font-size: 0.9rem;
             }
           }
         }

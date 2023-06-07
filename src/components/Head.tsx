@@ -5,14 +5,26 @@ import { complements } from '@/data/app-data';
 export default function Metadata(props: HeadProps): JSX.Element {
   return (
     <Head>
-      <link rel='icon' type='image/png' href='/favicon.png' />
-      <link rel='shortcut icon' href='/public/favicon.png' />
+      <meta
+        name='apple-mobile-web-app-title'
+        content={complements.defaultTitle}
+      />
+      <meta
+        name='viewport'
+        content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'
+      />
+      <meta name='apple-mobile-web-app-capable' content='yes' />
+      <meta name='apple-mobile-web-app-status-bar-style' content='default' />
+      <meta name='format-detection' content='telephone=no' />
+      <meta name='mobile-web-app-capable' content='yes' />
+      <link rel='icon' type='image/png' href='/rubymart256.png' />
+      <meta name='msapplication-tap-highlight' content='no' />
+      <link rel='shortcut icon' href='/rubymart256' />
       <meta name='msapplication-TileColor' content='#000000' />
       <meta property='og:locale' content='pt_BR' />
       <meta property='og:type' content='website' />
       <meta name='theme-color' content='#fff' />
       <meta httpEquiv='Content-Type' content='text/html; charset=UTF-8' />
-      <meta name='viewport' content='width=device-width, initial-scale=1' />
       <meta property='og:url' content={complements.websiteUrl} />
       <meta property='og:site_name' content={complements.websiteName} />
       <link rel='canonical' href={complements.websiteUrl} />

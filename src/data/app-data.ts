@@ -156,3 +156,29 @@ export function dashboardRoutes() {
     }
   ].sort((a, b) => (a.label > b.label ? 1 : -1));
 }
+
+export const denounceReasons = [
+  'Terrorismo',
+  'Discurso de incentivo ao ódio',
+  'Actividade sexual',
+  'Nudez',
+  'Spam',
+  'Violência',
+  'Vendas suspeitas ou não autorizadas',
+  'Disseminação de informações falsas',
+  'Assédio sexual',
+  'Suicídio ou automutilação',
+  'Bullyng',
+  'Agressão a pessoas ou animais',
+  'Abuso de menores',
+  'Promoção ao uso de drogas',
+  'Imagens íntimas não concensuais',
+  'Infrigimento de direitos autorais',
+  'Fraude',
+  'Ridicularização de vítimas',
+  'Linguagem pejorativa / insultuosa',
+  'Propagandas ilegais',
+  'Difamação'
+]
+  .sort((a, b) => (a > b ? 1 : -1))
+  .map((reason) => ({ label: reason, value: reason }));

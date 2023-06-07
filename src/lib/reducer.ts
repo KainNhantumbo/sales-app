@@ -16,7 +16,14 @@ export const initialState: State = {
   isDeleteProductPrompt: { status: false, productId: '' },
   isShareProductModal: { status: false, productId: '' },
   isUserWorkingDataModal: false,
+  isDenounceModal: false,
   isConnected: false,
+  denounce: {
+    reson: '',
+    content: '',
+    source_url: '',
+    resource_id: ''
+  },
   app_status: {
     icon: IoBag,
     is_active: false,
@@ -295,6 +302,10 @@ export default function reducer(state: State, action: Action) {
         ...state,
         commentsList: action.payload.commentsList
       };
+    case actions.CREATE_DENOUNCE:
+      return { ...state, denounce: action.payload.denounce };
+    case actions.DENOUNCE_MODAL:
+      return { ...state, isDenounceModal: action.payload.isDenounceModal };
     default:
       return { ...state };
   }

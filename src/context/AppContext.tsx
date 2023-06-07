@@ -26,6 +26,7 @@ interface IContext {
   state: State;
   dispatch: Dispatch<Action>;
   logoutPromptController: () => void;
+  denounceModalController: () => void;
   deleteCommentPromptController: (status: boolean, id: string) => void;
   deleteProductPromptController: (status: boolean, id: string) => void;
   shareProductController: (status: boolean, id: string) => void;
@@ -52,6 +53,7 @@ const context = createContext<IContext>({
   deleteProductPromptController: () => {},
   deleteCommentPromptController: () => {},
   shareProductController: () => {},
+  denounceModalController: () => {},
   loginPromptController: () => {},
   userWorkingDataController: () => {}
 });
@@ -111,6 +113,13 @@ export default function AppContext(props: AppContext) {
     dispatch({
       type: actions.SORT_BOX_CONTROL,
       payload: { ...state, isSortActive: !state.isSortActive }
+    });
+  }
+
+  function denounceModalController(): void {
+    dispatch({
+      type: actions.DENOUNCE_MODAL,
+      payload: { ...state, isDenounceModal: !state.isDenounceModal }
     });
   }
 
@@ -185,8 +194,8 @@ export default function AppContext(props: AppContext) {
     }
   }
 
-  function fetchAPI(
-    config: AxiosRequestConfig
+  function fetchAPI<U extends AxiosRequestConfig>(
+    config: U
   ): Promise<AxiosResponse<any, any>> {
     fetch.interceptors.response.use(
       undefined,
@@ -290,7 +299,8 @@ export default function AppContext(props: AppContext) {
             deleteProductPromptController,
             deleteAccountPromptController,
             deactivateStorePromptController,
-            shareProductController
+            shareProductController,
+            denounceModalController
           }}>
           <SocketContext>{props.children}</SocketContext>
         </context.Provider>

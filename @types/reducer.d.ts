@@ -7,6 +7,7 @@ import {
   ProductsList,
   PublicProducts,
   Store,
+  TDenounce,
   User
 } from './index';
 
@@ -19,11 +20,13 @@ export type State = {
   isDeleteCommentPrompt: { status: boolean; commentId: string };
   isShareProductModal: { status: boolean; productId: string };
   isUserWorkingDataModal: boolean;
+  isDenounceModal: boolean;
   isConnected: boolean;
   isSearchActive: boolean;
   isSortActive: boolean;
   isFilterActive: boolean;
   app_status: AppStatus;
+  denounce: TDenounce;
   auth: {
     id: string;
     token: string;

@@ -4,6 +4,7 @@ import {
   IoStorefrontOutline
 } from 'react-icons/io5';
 import Link from 'next/link';
+import Image from 'next/image';
 import { BiUser } from 'react-icons/bi';
 import { useState, useEffect } from 'react';
 import { HiViewList, HiX } from 'react-icons/hi';
@@ -11,6 +12,7 @@ import { NextRouter, useRouter } from 'next/router';
 import { complements, urls } from '@/data/app-data';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import rubymart_logo from '../../public/rubymart_logo.png';
 import { HeaderContainer as Container } from '../styles/common/header';
 
 export default function Header(): JSX.Element {
@@ -43,9 +45,13 @@ export default function Header(): JSX.Element {
       <div className='wrapper'>
         <div className='logo'>
           <Link href={'/'}>
-            <span>
-              {complements.defaultTitle} <sup>beta</sup>
-            </span>
+            <Image
+              alt='Rubymart'
+              src={rubymart_logo}
+              width={600}
+              height={134}
+            />{' '}
+       
           </Link>
         </div>
         <AnimatePresence>

@@ -28,25 +28,24 @@ export const HeaderContainer = styled.header`
 
   .logo {
     position: absolute;
-    top: calc(50% - 12px);
+    top: calc(50% - 16px);
     left: 30px;
     cursor: pointer;
+    margin-right: 40px;
+
+    a {
+      position: relative;
+    }
+
+    img {
+      width: 100%;
+      max-width: 130px;
+      height: 100%;
+      object-fit: cover;
+    }
 
     @media screen and (max-width: 600px) {
       left: 30px;
-    }
-
-    span {
-      font-size: 1.4rem;
-      font-weight: 500;
-      color: rgb(${({ theme }) => theme.font});
-      font-family: 'Roboto Slab', 'Roboto';
-      sup {
-        position: relative;
-        top: -10px;
-        font-size: 0.8rem;
-        color: rgb(${({ theme }) => theme.primary_variant});
-      }
     }
   }
 

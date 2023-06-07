@@ -113,7 +113,7 @@ export default function Post({
                 <div className='share-options'>
                   <div className='title'>Compartilhe:</div>
                   <div className='options'>
-                    {shareMedia.map((option) => (
+                    {shareMedia.map((option, index) => (
                       <motion.a
                         whileHover={{ scale: 1.2 }}
                         whileTap={{ scale: 0.8 }}
@@ -121,7 +121,7 @@ export default function Post({
                         title={option.name}
                         target={'_blank'}
                         rel={'noreferrer noopener'}
-                        key={option.name}>
+                        key={String(index)}>
                         {<option.icon />}
                       </motion.a>
                     ))}

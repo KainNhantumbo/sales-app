@@ -1,14 +1,17 @@
-import { IoSearch } from 'react-icons/io5';
-import { useRouter } from 'next/router';
-import { useAppContext } from '@/context/AppContext';
-import { actions } from '@/data/actions';
-import { SeachEngineContainer as Container } from '../styles/modules/search-engine';
-import product_categories from '../data/product-categories.json';
 import Select from 'react-select';
+import { useRouter } from 'next/router';
+import { actions } from '@/data/actions';
+import { IoSearch } from 'react-icons/io5';
+import { useTheme } from 'styled-components';
+import { useAppContext } from '@/context/AppContext';
+import { renderReactSelectCSS } from '@/styles/select';
+import product_categories from '../data/product-categories.json';
+import { SeachEngineContainer as Container } from '../styles/modules/search-engine';
 
 export default function SearchEngine(): JSX.Element {
   const { state, dispatch } = useAppContext();
   const router = useRouter();
+  const theme = useTheme();
 
   const categoryOptions = product_categories.map((category) => ({
     value: category,
@@ -51,9 +54,9 @@ export default function SearchEngine(): JSX.Element {
       </div>
       <div className='categories-container'>
         <Select
-          styles={{}}
-          noOptionsMessage={() => 'Selecionar categoria'}
           options={categoryOptions}
+          placeholder={'Categoria de produtos'}
+          styles={renderReactSelectCSS(theme)}
         />
       </div>
     </Container>

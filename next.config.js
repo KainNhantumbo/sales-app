@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
+const nextPWA = require('next-pwa')({
+  dest: 'public',
+  disable: process.env.NODE_ENV === 'development',
+  register: true,
+  scope: '/'
+});
 
-const nextConfig = {
+module.exports = nextPWA({
   reactStrictMode: true,
   swcMinify: true,
   compiler: {
@@ -9,6 +15,4 @@ const nextConfig = {
   images: {
     domains: ['https://res.cloudinary.com/']
   }
-};
-
-module.exports = nextConfig;
+});

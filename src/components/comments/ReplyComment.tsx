@@ -15,7 +15,7 @@ type TComment = {
   comment: IComment;
   clearCommentData: () => void;
   updateComment: (id: string) => Promise<void>;
-  handleDenounceComment: (id: string) => Promise<void>;
+  handleDenounceComment: (id: string) => void;
   handleUnFavoriteComment: (id: string) => Promise<void>;
   handleFavoriteComment: (id: string) => Promise<void>;
   handleReplyComment: (data: IComment) => void;
@@ -42,13 +42,14 @@ export default function ReplyComment(props: TComment): JSX.Element {
     <>
       <div className='header'>
         <div className='props'>
-          {state.auth.profile_image && (
+          {props.comment.created_by?.profile_image?.url ? (
             <img
-              src={state.auth.profile_image}
+              src={props.comment.created_by?.profile_image?.url}
               alt='current user profile picture'
             />
+          ) : (
+            <BiUser className='user-icon' />
           )}
-          {!state.auth.profile_image && <BiUser className='user-icon' />}
 
           <h3>
             @{props.comment.created_by.first_name.toLowerCase()}_
@@ -132,47 +133,29 @@ export default function ReplyComment(props: TComment): JSX.Element {
       </div>
 
       <div className='body'>
-        <div className='body'>
-          {props.comment._id !== state.comment._id && (
+        {props.comment._id !== state.comment._id && (
+          <>
+            {!props.comment.content.includes('\n') ? (
+              <p>{props.comment.content}</p>
+            ) : (
+              props.comment.content
+                .split('\n')
+                .map((phrase, index) => <p key={String(index)}>{phrase}</p>)
+            )}
+          </>
+        )}
+        {props.comment._id === state.comment.parent_id &&
+          props.status.reply && (
             <>
-              <h3>
-                {state.commentsList.map((element) => {
-                  if (element.parent_id === props.comment._id) {
-                    return `@${element.created_by.first_name.toLowerCase()}_${props.comment.created_by.last_name.toLowerCase()}`;
-                  }
-                  return '';
-                })}
-              </h3>
               {!props.comment.content.includes('\n') ? (
                 <p>{props.comment.content}</p>
               ) : (
                 props.comment.content
                   .split('\n')
-                  .map((phrase) => <p>{phrase}</p>)
+                  .map((phrase, index) => <p key={String(index)}>{phrase}</p>)
               )}
             </>
           )}
-          {props.comment._id === state.comment.parent_id &&
-            props.status.reply && (
-              <>
-                <h3>
-                  {state.commentsList.map((element) => {
-                    if (element._id === props.comment.parent_id) {
-                      return `@${element.created_by.first_name}_${element.created_by.last_name}`;
-                    }
-                    return '';
-                  })}
-                </h3>
-                {!props.comment.content.includes('\n') ? (
-                  <p>{props.comment.content}</p>
-                ) : (
-                  props.comment.content
-                    .split('\n')
-                    .map((phrase) => <p>{phrase}</p>)
-                )}
-              </>
-            )}
-        </div>
       </div>
     </>
   );

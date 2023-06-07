@@ -1,40 +1,28 @@
-import {
-  IoArrowUndo,
-  IoChatbubbleEllipsesOutline,
-  IoEllipse,
-  IoFlag,
-  IoHeart,
-  IoHeartOutline
-} from 'react-icons/io5';
-import { useAppContext } from '@/context/AppContext';
-import { useState, useEffect, useMemo } from 'react';
-import { CommentsContainer as Container } from '@/styles/modules/comments';
-import { IBlogPost, IComment } from '../../../@types';
-import { actions } from '@/data/actions';
-import { MoonLoader } from 'react-spinners';
-import { BiUser } from 'react-icons/bi';
-import moment from 'moment';
-import { FaEdit, FaTrash } from 'react-icons/fa';
-import { useTheme } from 'styled-components';
-import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
+import Comment from './Comment';
 import { AxiosResponse } from 'axios';
 import CommentForm from './CommentForm';
-import ReplyCommentForm from './ReplyCommentForm';
-import Comment from './Comment';
+import { actions } from '@/data/actions';
 import ReplyComment from './ReplyComment';
+import { IBlogPost, IComment } from '../../../@types';
+import ReplyCommentForm from './ReplyCommentForm';
+import { useState, useEffect, useMemo } from 'react';
+import { useAppContext } from '@/context/AppContext';
+import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
+import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
+import { CommentsContainer as Container } from '@/styles/modules/comments';
+import Denounce from '../modals/DenounceModal';
 
 type Props = {
   post: IBlogPost;
 };
 
 export default function Comments({ post }: Props): JSX.Element {
-  const theme = useTheme();
   const {
     state,
     dispatch,
     fetchAPI,
-    loginPromptController,
-    deleteCommentPromptController
+    deleteCommentPromptController,
+    denounceModalController
   } = useAppContext();
 
   const [loading, setLoading] = useState<{
@@ -288,11 +276,52 @@ export default function Comments({ post }: Props): JSX.Element {
     }
   }
 
-  async function handleDenounceComment(id: string): Promise<void> {}
+  function handleDenounceComment(id: string): void {
+    dispatch({
+      type: actions.CREATE_DENOUNCE,
+      payload: {
+        ...state,
+        denounce: {
+          ...state.denounce,
+          resource_id: id
+        }
+      }
+    });
+    denounceModalController();
+  }
+
+  async function handleCreateDenounce(): Promise<void> {
+    const [comment] = state.commentsList.filter(
+      (comment) => comment._id === state.denounce.resource_id
+    );
+    try {
+      await fetchAPI({
+        method: 'post',
+        url: `/api/v1/users/denounces`,
+        data: {
+          source_url: state.denounce.source_url,
+          reason: state.denounce.reson,
+          content: state.denounce.content,
+          denounced_by: state.auth.id,
+          meta: {
+            resource_id: comment._id,
+            resource_type: 'Comentário',
+            resource_content: comment.content,
+            resource_owner: comment.created_by.first_name.concat(
+              ' ',
+              comment.created_by.last_name
+            )
+          }
+        }
+      });
+    } catch (err: any) {
+      console.error(err.response?.data?.message || err);
+    }
+  }
 
   useEffect(() => {
-    console.log(formattedComments);
-    // console.log(state.commentsList);
+    console.info(formattedComments);
+    console.info(state.commentsList);
   }, [state.commentsList]);
 
   useEffect(() => {
@@ -315,6 +344,10 @@ export default function Comments({ post }: Props): JSX.Element {
   return (
     <Container>
       <DeleteCommentPrompt deleteFn={handleDeleteComment} />
+      <Denounce
+        title='Denunciar comentário'
+        handleCreateDenounce={handleCreateDenounce}
+      />
 
       <section className='comments-section'>
         <section className='title'>
@@ -342,7 +375,7 @@ export default function Comments({ post }: Props): JSX.Element {
               getCommentReplies('null')
                 .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
                 .map((comment) => (
-                  <div key={comment._id} className='comment'>
+                  <div id={comment._id} key={comment._id} className='comment'>
                     <Comment
                       comment={comment}
                       clearCommentData={clearCommentData}
@@ -381,6 +414,7 @@ export default function Comments({ post }: Props): JSX.Element {
                         .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
                         .map((comment) => (
                           <div
+                            id={comment._id}
                             key={comment._id}
                             className='comment reply-comment'>
                             <ReplyComment

@@ -72,7 +72,7 @@ export type UserPost = {
   title: string;
   content: string;
   created_by: string;
-  cover_image: { id: string; url: string };
+  profile_image: { id: string; url: string };
   allow_comments: boolean;
   updatedAt: string;
   createdAt: string;
@@ -274,4 +274,11 @@ export type User = {
   };
   createdAt: string;
   updatedAt: string;
+};
+
+export type TDenounce = {
+  reson: string;
+  source_url: string;
+  content: string;
+  resource_id: string
 };

@@ -166,16 +166,6 @@ export const CommentsContainer = styled.div`
               }
             }
 
-            .body {
-              display: flex;
-              flex-direction: row;
-              gap: 10px;
-
-              h3 {
-                font-weight: 500;
-              }
-            }
-
             .actions {
               .like,
               .delete,
@@ -205,6 +195,7 @@ export const CommentsContainer = styled.div`
           .body {
             margin-left: 40px;
             line-height: 1.4rem;
+
             @media screen and (max-width: 700px) {
               margin-bottom: 30px;
             }
