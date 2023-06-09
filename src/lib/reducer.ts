@@ -14,7 +14,8 @@ export const initialState: State = {
     price_range: NaN,
     promotion: undefined,
     query: '',
-    sort: '',},
+    sort: '',
+  },
   productsListQuery: { query: '', sort: '' },
   isDeleteAccountPrompt: false,
   isDeactivateStorePrompt: false,
@@ -22,14 +23,11 @@ export const initialState: State = {
   isDeleteProductPrompt: { status: false, productId: '' },
   isShareProductModal: { status: false, productId: '' },
   isUserWorkingDataModal: false,
-  isDenounceModal: false,
   isConnected: false,
   blogPostsList: [],
   denounce: {
     reson: '',
     content: '',
-    source_url: '',
-    resource_id: '',
   },
   app_status: {
     icon: IoBag,
@@ -311,8 +309,6 @@ export default function reducer(state: State, action: Action) {
       };
     case actions.CREATE_DENOUNCE:
       return { ...state, denounce: action.payload.denounce };
-    case actions.DENOUNCE_MODAL:
-      return { ...state, isDenounceModal: action.payload.isDenounceModal };
     case actions.BLOG_POSTS_LIST_QUERY:
       return {
         ...state,

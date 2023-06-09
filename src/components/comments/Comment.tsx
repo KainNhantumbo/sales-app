@@ -3,19 +3,20 @@ import {
   IoEllipse,
   IoFlag,
   IoHeart,
-  IoHeartOutline
+  IoHeartOutline,
 } from 'react-icons/io5';
 import moment from 'moment';
 import { BiUser } from 'react-icons/bi';
 import { IComment } from '../../../@types';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useAppContext } from '@/context/AppContext';
+import { useRouter } from 'next/router';
+import { complements } from '@/data/app-data';
 
 type TComment = {
   comment: IComment;
   clearCommentData: () => void;
   updateComment: (id: string) => Promise<void>;
-  handleDenounceComment: (id: string) => void;
   handleUnFavoriteComment: (id: string) => Promise<void>;
   handleFavoriteComment: (id: string) => Promise<void>;
   handleReplyComment: (data: IComment) => void;
@@ -37,6 +38,7 @@ type TComment = {
 
 export default function Comment(props: TComment): JSX.Element {
   const { state, deleteCommentPromptController } = useAppContext();
+  const router = useRouter();
 
   return (
     <>
@@ -107,7 +109,13 @@ export default function Comment(props: TComment): JSX.Element {
             <>
               <button
                 className='denounce'
-                onClick={() => props.handleDenounceComment(props.comment._id)}>
+                onClick={() =>
+                  router.push(
+                    `/denounce?url=${complements.websiteUrl.concat(
+                      router.asPath
+                    )}&type=comment&id=${props.comment._id}`
+                  )
+                }>
                 <IoFlag />
                 <span>Denunciar</span>
               </button>

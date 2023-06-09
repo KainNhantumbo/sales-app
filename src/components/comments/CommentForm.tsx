@@ -51,6 +51,11 @@ export default function CommentForm(props: TCommentForm): JSX.Element {
                   loginPromptController();
                 }
               }}
+              onTouchEnd={() => {
+                if (!state.auth.token) {
+                  loginPromptController();
+                }
+              }}
               onChange={(e): void => {
                 dispatch({
                   type: actions.CREATE_COMMENT,

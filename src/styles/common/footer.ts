@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { BaseButton } from '../defaults';
 
 export const FooterContainer = styled.footer`
   width: 100%;
@@ -79,6 +78,7 @@ export const FooterContainer = styled.footer`
           align-items: center;
           font-weight: 500;
           font-size: 1.1rem;
+          margin: 0 auto;
           svg {
             width: 20px;
             height: 20px;
@@ -157,7 +157,6 @@ export const FooterContainer = styled.footer`
             color: rgb(${({ theme }) => theme.primary_variant});
           }
 
-
           svg {
             width: 20px;
             height: 20px;
@@ -175,6 +174,10 @@ export const FooterContainer = styled.footer`
       border: 1px solid rgba(${({ theme }) => theme.font}, 0.3);
       border-radius: 20px;
       padding: 3px;
+
+      .active {
+        background: rgba(${({ theme }) => theme.font}, 0.2);
+      }
 
       button {
         display: grid;

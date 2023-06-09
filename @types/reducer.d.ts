@@ -22,7 +22,6 @@ export type State = {
   isDeleteCommentPrompt: { status: boolean; commentId: string };
   isShareProductModal: { status: boolean; productId: string };
   isUserWorkingDataModal: boolean;
-  isDenounceModal: boolean;
   isConnected: boolean;
   isSearchActive: boolean;
   isSortActive: boolean;

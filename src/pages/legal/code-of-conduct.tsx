@@ -4,7 +4,7 @@ import { LegalContainer as Container } from '@/styles/common/legal';
 
 export default function CodeOfConduct(): JSX.Element {
   return (
-    <Layout metadata={{ title: complements.defaultTitle + ' | Termos de Uso' }}>
+    <Layout metadata={{ title: complements.defaultTitle + ' | Código de Conduta' }}>
       <Container>
         <article>
           <section>

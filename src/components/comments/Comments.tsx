@@ -10,20 +10,15 @@ import { useAppContext } from '@/context/AppContext';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
 import { CommentsContainer as Container } from '@/styles/modules/comments';
-import Denounce from '../modals/DenounceModal';
+import Link from 'next/link';
 
 type Props = {
   post: IBlogPost;
 };
 
 export default function Comments({ post }: Props): JSX.Element {
-  const {
-    state,
-    dispatch,
-    fetchAPI,
-    deleteCommentPromptController,
-    denounceModalController
-  } = useAppContext();
+  const { state, dispatch, fetchAPI, deleteCommentPromptController } =
+    useAppContext();
 
   const [loading, setLoading] = useState<{
     status: boolean;
@@ -38,7 +33,7 @@ export default function Comments({ post }: Props): JSX.Element {
 
   const [activeModes, setActiveModes] = useState({
     edit: false,
-    reply: false
+    reply: false,
   });
   // ---------------functions----------------
   const formattedComments = useMemo(() => {
@@ -67,16 +62,16 @@ export default function Comments({ post }: Props): JSX.Element {
             _id: '',
             first_name: '',
             last_name: '',
-            profile_image: { id: '', url: '' }
+            profile_image: { id: '', url: '' },
           },
           content: '',
           parent_id: '',
           favorites: [],
           invalidated: false,
           updatedAt: '',
-          createdAt: ''
-        }
-      }
+          createdAt: '',
+        },
+      },
     });
   }
 
@@ -84,14 +79,14 @@ export default function Comments({ post }: Props): JSX.Element {
     try {
       const { data } = await fetchAPI({
         method: 'get',
-        url: `/api/v1/users/comments/${post._id}`
+        url: `/api/v1/users/comments/${post._id}`,
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
         payload: {
           ...state,
-          commentsList: [...data]
-        }
+          commentsList: [...data],
+        },
       });
     } catch (error) {
       console.error(error);
@@ -107,15 +102,15 @@ export default function Comments({ post }: Props): JSX.Element {
         data: {
           source_id: post._id,
           content: state.comment.content,
-          parent_id: null
-        }
+          parent_id: null,
+        },
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
         payload: {
           ...state,
-          commentsList: [...state.commentsList, data]
-        }
+          commentsList: [...state.commentsList, data],
+        },
       });
       clearCommentData();
     } catch (err: any) {
@@ -123,7 +118,7 @@ export default function Comments({ post }: Props): JSX.Element {
       setError({
         status: true,
         key: 'create-comment',
-        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.'
+        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.',
       });
     } finally {
       setLoading({ status: false, key: 'create-comment' });
@@ -136,8 +131,8 @@ export default function Comments({ post }: Props): JSX.Element {
         method: 'patch',
         url: `/api/v1/users/comments/${id}`,
         data: {
-          ...state.comment
-        }
+          ...state.comment,
+        },
       });
 
       dispatch({
@@ -147,9 +142,9 @@ export default function Comments({ post }: Props): JSX.Element {
           commentsList: [
             ...state.commentsList.map((comment) =>
               comment._id === data._id ? { ...comment, ...data } : comment
-            )
-          ]
-        }
+            ),
+          ],
+        },
       });
       clearCommentData();
     } catch (err: any) {
@@ -157,7 +152,7 @@ export default function Comments({ post }: Props): JSX.Element {
       setError({
         status: true,
         key: 'create-comment',
-        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.'
+        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.',
       });
     } finally {
       setLoading({ status: false, key: 'create-comment' });
@@ -185,9 +180,9 @@ export default function Comments({ post }: Props): JSX.Element {
         comment: {
           ...state.comment,
           _id: data._id,
-          parent_id: data._id
-        }
-      }
+          parent_id: data._id,
+        },
+      },
     });
   }
 
@@ -200,9 +195,9 @@ export default function Comments({ post }: Props): JSX.Element {
         ...state,
         comment: {
           ...state.comment,
-          ...data
-        }
-      }
+          ...data,
+        },
+      },
     });
   }
 
@@ -210,7 +205,7 @@ export default function Comments({ post }: Props): JSX.Element {
     try {
       const { data } = await fetchAPI({
         method: 'post',
-        url: `/api/v1/users/favorites/comments/${id}`
+        url: `/api/v1/users/favorites/comments/${id}`,
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
@@ -219,9 +214,9 @@ export default function Comments({ post }: Props): JSX.Element {
           commentsList: [
             ...state.commentsList.map((comment) =>
               comment._id === id ? { ...comment, favorites: data } : comment
-            )
-          ]
-        }
+            ),
+          ],
+        },
       });
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
@@ -232,7 +227,7 @@ export default function Comments({ post }: Props): JSX.Element {
     try {
       const { data } = await fetchAPI({
         method: 'patch',
-        url: `/api/v1/users/favorites/comments/${id}`
+        url: `/api/v1/users/favorites/comments/${id}`,
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
@@ -241,9 +236,9 @@ export default function Comments({ post }: Props): JSX.Element {
           commentsList: [
             ...state.commentsList.map((comment) =>
               comment._id === id ? { ...comment, favorites: data } : comment
-            )
-          ]
-        }
+            ),
+          ],
+        },
       });
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
@@ -259,8 +254,8 @@ export default function Comments({ post }: Props): JSX.Element {
         data: {
           source_id: post._id,
           content: state.comment.content,
-          parent_id: state.comment.parent_id
-        }
+          parent_id: state.comment.parent_id,
+        },
       });
       clearCommentData();
       getComments();
@@ -269,53 +264,10 @@ export default function Comments({ post }: Props): JSX.Element {
       setError({
         status: true,
         key: 'create-comment',
-        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.'
+        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.',
       });
     } finally {
       setLoading({ status: false, key: 'create-comment' });
-    }
-  }
-
-  function handleDenounceComment(id: string): void {
-    dispatch({
-      type: actions.CREATE_DENOUNCE,
-      payload: {
-        ...state,
-        denounce: {
-          ...state.denounce,
-          resource_id: id
-        }
-      }
-    });
-    denounceModalController();
-  }
-
-  async function handleCreateDenounce(): Promise<void> {
-    const [comment] = state.commentsList.filter(
-      (comment) => comment._id === state.denounce.resource_id
-    );
-    try {
-      await fetchAPI({
-        method: 'post',
-        url: `/api/v1/users/denounces`,
-        data: {
-          source_url: state.denounce.source_url,
-          reason: state.denounce.reson,
-          content: state.denounce.content,
-          denounced_by: state.auth.id,
-          meta: {
-            resource_id: comment._id,
-            resource_type: 'Comentário',
-            resource_content: comment.content,
-            resource_owner: comment.created_by.first_name.concat(
-              ' ',
-              comment.created_by.last_name
-            )
-          }
-        }
-      });
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
     }
   }
 
@@ -344,10 +296,6 @@ export default function Comments({ post }: Props): JSX.Element {
   return (
     <Container>
       <DeleteCommentPrompt deleteFn={handleDeleteComment} />
-      <Denounce
-        title='Denunciar comentário'
-        handleCreateDenounce={handleCreateDenounce}
-      />
 
       <section className='comments-section'>
         <section className='title'>
@@ -356,7 +304,17 @@ export default function Comments({ post }: Props): JSX.Element {
             <span>Comentários</span>
             <span>• {state.commentsList.length}</span>
           </h2>
-          <p>Seja respeitoso e educado nos seus comentários.</p>
+          <p>
+            Por favor, seja educado nos seus comentários e respeite o nosso{' '}
+            <Link href={'/legal/code-of-conduct'}>
+              <span>código de conduta</span>
+            </Link>{' '}
+            e os nossos{' '}
+            <Link href={'/legal/terms-of-use'}>
+              <span>termos e condições</span>
+            </Link>
+            .
+          </p>
         </section>
 
         <section className='comments-wrapper'>
@@ -366,7 +324,7 @@ export default function Comments({ post }: Props): JSX.Element {
               reply: activeModes.reply,
               edit: activeModes.edit,
               error,
-              loading
+              loading,
             }}
           />
           <section className='comments-container'>
@@ -379,7 +337,6 @@ export default function Comments({ post }: Props): JSX.Element {
                     <Comment
                       comment={comment}
                       clearCommentData={clearCommentData}
-                      handleDenounceComment={handleDenounceComment}
                       handleEditComment={handleEditComment}
                       handleFavoriteComment={handleFavoriteComment}
                       handleUnFavoriteComment={handleUnFavoriteComment}
@@ -389,7 +346,7 @@ export default function Comments({ post }: Props): JSX.Element {
                         reply: activeModes.reply,
                         edit: activeModes.edit,
                         error,
-                        loading
+                        loading,
                       }}
                     />
                     {comment._id === state.comment._id && (
@@ -402,7 +359,7 @@ export default function Comments({ post }: Props): JSX.Element {
                           reply: activeModes.reply,
                           edit: activeModes.edit,
                           error,
-                          loading
+                          loading,
                         }}
                       />
                     )}
@@ -420,7 +377,6 @@ export default function Comments({ post }: Props): JSX.Element {
                             <ReplyComment
                               comment={comment}
                               clearCommentData={clearCommentData}
-                              handleDenounceComment={handleDenounceComment}
                               handleEditComment={handleEditComment}
                               handleFavoriteComment={handleFavoriteComment}
                               handleUnFavoriteComment={handleUnFavoriteComment}
@@ -430,7 +386,7 @@ export default function Comments({ post }: Props): JSX.Element {
                                 reply: activeModes.reply,
                                 edit: activeModes.edit,
                                 error,
-                                loading
+                                loading,
                               }}
                             />
 
@@ -444,7 +400,7 @@ export default function Comments({ post }: Props): JSX.Element {
                                   reply: activeModes.reply,
                                   edit: activeModes.edit,
                                   error,
-                                  loading
+                                  loading,
                                 }}
                               />
                             )}

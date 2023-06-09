@@ -18,7 +18,7 @@ import { useThemeContext } from '@/context/ThemeContext';
 import { FooterContainer as Container } from '../styles/common/footer';
 
 export default function Footer(): JSX.Element {
-  const { setDarkMode, setLightMode, matchMediaTheme } = useThemeContext();
+  const { setDarkMode,darkmode, setLightMode, matchMediaTheme } = useThemeContext();
   const { state } = useAppContext();
   return (
     <Container>
@@ -57,17 +57,17 @@ export default function Footer(): JSX.Element {
               <span>Institucional</span>
             </h3>
             <div className='elements'>
-              <Link href={'/legal/privacy-policy'}>
-                <span>Política de Privacidade</span>
-              </Link>
               <Link href={'/legal/terms-of-use'}>
                 <span>Termos de Uso</span>
               </Link>
-              <Link href={'/legal/code-of-conduct'}>
-                <span>Código de Conduta</span>
-              </Link>
               <Link href={'/legal/about'}>
                 <span>Sobre nós</span>
+              </Link>
+              <Link href={'/legal/privacy-policy'}>
+                <span>Política de Privacidade</span>
+              </Link>
+              <Link href={'/legal/code-of-conduct'}>
+                <span>Código de Conduta</span>
               </Link>
             </div>
           </section>
@@ -105,6 +105,9 @@ export default function Footer(): JSX.Element {
               <Link href={'/faq'}>
                 <span>Perguntas frequêntes</span>
               </Link>
+              <Link href={'/denounce'}>
+                <span>Denunciar abuso</span>
+              </Link>
             </div>
           </section>
         </nav>
@@ -135,13 +138,13 @@ export default function Footer(): JSX.Element {
         </div>
 
         <div className='theme-fluent-buttons'>
-          <button title='Modo claro' onClick={setLightMode}>
+          <button title='Modo claro' className={!darkmode ? 'active': ''} onClick={setLightMode}>
             <IoSunnyOutline />
           </button>
           <button title='Modo automático' onClick={matchMediaTheme}>
             <IoDesktopOutline />
           </button>
-          <button title='Modo escuro ' onClick={setDarkMode}>
+          <button title='Modo escuro ' className={darkmode ? 'active': ''} onClick={setDarkMode}>
             <IoMoonOutline />
           </button>
         </div>

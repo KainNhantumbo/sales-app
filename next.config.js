@@ -15,7 +15,6 @@ module.exports = nextPWA({
   images: {
     domains: ['https://res.cloudinary.com/']
   },
-  trailingSlash: true,
   experimental: {
     scrollRestoration: true
   }

@@ -20,8 +20,8 @@ export type ShareUrls = {
 };
 
 export type TSearchProducts = {
-  sort: string ;
-  query: string ;
+  sort: string;
+  query: string;
   price_range: number;
   category: string | undefined;
   promotion: boolean | undefined;
@@ -286,7 +286,5 @@ export type User = {
 
 export type TDenounce = {
   reson: string;
-  source_url: string;
   content: string;
-  resource_id: string;
 };
