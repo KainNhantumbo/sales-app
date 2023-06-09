@@ -63,6 +63,9 @@ export default function Footer(): JSX.Element {
               <Link href={'/legal/terms-of-use'}>
                 <span>Termos de Uso</span>
               </Link>
+              <Link href={'/legal/code-of-conduct'}>
+                <span>Código de Conduta</span>
+              </Link>
               <Link href={'/legal/about'}>
                 <span>Sobre nós</span>
               </Link>

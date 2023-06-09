@@ -183,7 +183,7 @@ export default function SearchEngine(): JSX.Element {
       <div className='caret-container'>
         <h3>
           <IoPricetags />
-          <span>Faixa de Preço (em percentagem)</span>
+          <span>Faixa de Preço</span>
         </h3>
         <div className='price-range'>
           <div className='prices'>
@@ -192,7 +192,7 @@ export default function SearchEngine(): JSX.Element {
               Até: MZN{' '}
               {(state.queryPublicProducts.price_range &&
                 Number(state.queryPublicProducts.price_range).toFixed(2)) ||
-                0}
+                Number(0).toFixed(2)}
             </p>
           </div>
 
