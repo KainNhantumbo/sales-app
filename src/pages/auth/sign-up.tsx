@@ -2,22 +2,22 @@ import {
   IoEllipsisHorizontal,
   IoLockClosedOutline,
   IoLockOpenOutline,
-  IoMailOutline
+  IoMailOutline,
 } from 'react-icons/io5';
+import Link from 'next/link';
 import Image from 'next/image';
 import fetch from '../../config/client';
-import { useAppContext } from '@/context/AppContext';
 import { actions } from '@/data/actions';
-import { useState, useEffect } from 'react';
-import { InputEvents, SubmitEvent } from '../../../@types';
-import { NextRouter, useRouter } from 'next/router';
-import { SignUpContainer as Container } from '../../styles/common/sign-up';
 import Layout from '@/components/Layout';
+import { useState, useEffect } from 'react';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
-import Link from 'next/link';
 import { complements } from '@/data/app-data';
-import backgroundImage from '../../../public/assets/background1.png';
+import { NextRouter, useRouter } from 'next/router';
+import { useAppContext } from '@/context/AppContext';
+import { InputEvents, SubmitEvent } from '../../../@types';
+import backgroundImage from '../../../public/assets/background1.jpg';
+import { SignUpContainer as Container } from '../../styles/common/sign-up';
 
 export default function SignUp(): JSX.Element {
   const router: NextRouter = useRouter();
@@ -33,9 +33,9 @@ export default function SignUp(): JSX.Element {
         ...state,
         signupData: {
           ...state.signupData,
-          [e.target.name]: e.target.value
-        }
-      }
+          [e.target.name]: e.target.value,
+        },
+      },
     });
   }
 
@@ -44,12 +44,12 @@ export default function SignUp(): JSX.Element {
     if (state.signupData.password !== state.signupData.confirm_password)
       return setError({
         status: true,
-        message: 'As senhas devem ser iguais.'
+        message: 'As senhas devem ser iguais.',
       });
     if (state.signupData.password.length < 8)
       return setError({
         status: true,
-        message: 'As senhas devem ter pelo menos 8 carácteres.'
+        message: 'As senhas devem ter pelo menos 8 carácteres.',
       });
 
     try {
@@ -62,8 +62,8 @@ export default function SignUp(): JSX.Element {
           password: state.signupData.password,
           first_name: state.signupData.first_name,
           last_name: state.signupData.last_name,
-          user_type: 'user'
-        }
+          user_type: 'user',
+        },
       });
       router.push('/auth/sign-up-confirm');
     } catch (error: any) {
@@ -86,10 +86,15 @@ export default function SignUp(): JSX.Element {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Nova Conta de Usuário`
+        title: `${complements.defaultTitle} | Nova Conta de Usuário`,
       }}>
       <Container>
-        <Image src={backgroundImage} alt='background image' />
+        <Image
+          src={backgroundImage}
+          width={1368}
+          height={769}
+          alt='background image'
+        />
         <main>
           <article>
             <div className='form-container'>
@@ -195,7 +200,7 @@ export default function SignUp(): JSX.Element {
                     aria-placeholder='Processando...'
                     cssOverride={{
                       display: 'block',
-                      margin: '0 auto'
+                      margin: '0 auto',
                     }}
                   />
                 }

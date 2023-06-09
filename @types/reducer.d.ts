@@ -9,6 +9,7 @@ import {
   PublicProducts,
   Store,
   TDenounce,
+  TSearchProducts,
   User
 } from './index';
 
@@ -48,7 +49,8 @@ export type State = {
   commentsList: IComment[];
   publicProducts: PublicProducts[];
   productsListQuery: { query: string; sort: string };
-  blogPostsList: IBlogPosts[]
+  blogPostsList: IBlogPosts[],
+  queryPublicProducts: TSearchProducts
 };
 
 export type Action = { type: string; payload: State };

@@ -9,6 +9,12 @@ export const initialState: State = {
   isFilterActive: false,
   isSearchActive: false,
   isSortActive: false,
+  queryPublicProducts: {
+    category: undefined,
+    price_range: NaN,
+    promotion: undefined,
+    query: '',
+    sort: '',},
   productsListQuery: { query: '', sort: '' },
   isDeleteAccountPrompt: false,
   isDeactivateStorePrompt: false,
@@ -23,14 +29,14 @@ export const initialState: State = {
     reson: '',
     content: '',
     source_url: '',
-    resource_id: ''
+    resource_id: '',
   },
   app_status: {
     icon: IoBag,
     is_active: false,
     button_label: '',
     action_function: undefined,
-    err_message: undefined
+    err_message: undefined,
   },
   auth: {
     id: '',
@@ -38,7 +44,7 @@ export const initialState: State = {
     token: '',
     email: '',
     profile_image: '',
-    invalidated: false
+    invalidated: false,
   },
   search: '',
   newSubscriptorValue: { subscriptor: '' },
@@ -47,11 +53,11 @@ export const initialState: State = {
     last_name: '',
     email: '',
     password: '',
-    confirm_password: ''
+    confirm_password: '',
   },
   signInData: {
     email: '',
-    password: ''
+    password: '',
   },
   user: {
     _id: '',
@@ -77,24 +83,24 @@ export const initialState: State = {
         start_date: '',
         description: '',
         portfolio_url: '',
-        company_name: ''
-      }
+        company_name: '',
+      },
     ],
     location: {
       country: '',
       state: '',
       adress: '',
-      zip_code: ''
+      zip_code: '',
     },
     social_network: {
       website: '',
       whatsapp: '',
       instagram: '',
       facebook: '',
-      linkedin: ''
+      linkedin: '',
     },
     createdAt: '',
-    updatedAt: ''
+    updatedAt: '',
   },
   store: {
     _id: '',
@@ -114,8 +120,8 @@ export const initialState: State = {
         whatsapp: '',
         instagram: '',
         facebook: '',
-        linkedin: ''
-      }
+        linkedin: '',
+      },
     },
     description: '',
     slogan: '',
@@ -128,10 +134,10 @@ export const initialState: State = {
     location: {
       country: 'Mozambique',
       state: 'Maputo',
-      adress: ''
+      adress: '',
     },
     createdAt: '',
-    updatedAt: ''
+    updatedAt: '',
   },
   product: {
     _id: '',
@@ -149,13 +155,13 @@ export const initialState: State = {
       img_0: { id: '', url: '' },
       img_1: { id: '', url: '' },
       img_2: { id: '', url: '' },
-      img_3: { id: '', url: '' }
+      img_3: { id: '', url: '' },
     },
     createdAt: '',
     updatedAt: '',
     invalidated: false,
     favorites: [],
-    allow_comments: true
+    allow_comments: true,
   },
   comment: {
     _id: '',
@@ -164,18 +170,18 @@ export const initialState: State = {
       _id: '',
       first_name: '',
       last_name: '',
-      profile_image: { id: '', url: '' }
+      profile_image: { id: '', url: '' },
     },
     content: '',
     parent_id: '',
     favorites: [],
     invalidated: false,
     updatedAt: '',
-    createdAt: ''
+    createdAt: '',
   },
   productList: [],
   publicProducts: [],
-  commentsList: []
+  commentsList: [],
 };
 
 export default function reducer(state: State, action: Action) {
@@ -185,14 +191,14 @@ export default function reducer(state: State, action: Action) {
         ...state,
         isFilterActive: false,
         isSortActive: false,
-        isSearchActive: action.payload.isSearchActive
+        isSearchActive: action.payload.isSearchActive,
       };
     case actions.SORT_BOX_CONTROL:
       return {
         ...state,
         isFilterActive: false,
         isSearchActive: false,
-        isSortActive: action.payload.isSortActive
+        isSortActive: action.payload.isSortActive,
       };
     case actions.CLEAN_UP_MODALS:
       return {
@@ -200,12 +206,12 @@ export default function reducer(state: State, action: Action) {
         isFilterActive: false,
         isSearchActive: false,
         isSortActive: false,
-        isPromptActive: false
+        isPromptActive: false,
       };
     case actions.PRODUCTS_LIST_QUERY:
       return {
         ...state,
-        productsListQuery: action.payload.productsListQuery
+        productsListQuery: action.payload.productsListQuery,
       };
     case actions.APP_STATUS:
       return { ...state, app_status: action.payload.app_status };
@@ -216,92 +222,92 @@ export default function reducer(state: State, action: Action) {
     case actions.DELETE_ACCOUNT_PROMPT:
       return {
         ...state,
-        isDeleteAccountPrompt: action.payload.isDeleteAccountPrompt
+        isDeleteAccountPrompt: action.payload.isDeleteAccountPrompt,
       };
     case actions.DEACTIVATE_STORE_PROMPT:
       return {
         ...state,
-        isDeactivateStorePrompt: action.payload.isDeactivateStorePrompt
+        isDeactivateStorePrompt: action.payload.isDeactivateStorePrompt,
       };
     case actions.DELETE_PRODUCT_PROMPT:
       return {
         ...state,
-        isDeleteProductPrompt: action.payload.isDeleteProductPrompt
+        isDeleteProductPrompt: action.payload.isDeleteProductPrompt,
       };
     case actions.SHARE_PRODUCT_MODAL:
       return {
         ...state,
-        isShareProductModal: action.payload.isShareProductModal
+        isShareProductModal: action.payload.isShareProductModal,
       };
     case actions.DELETE_COMMENT_PROMPT:
       return {
         ...state,
-        isDeleteCommentPrompt: action.payload.isDeleteCommentPrompt
+        isDeleteCommentPrompt: action.payload.isDeleteCommentPrompt,
       };
     case actions.USER_WORKING_DATA_MODAL:
       return {
         ...state,
-        isUserWorkingDataModal: action.payload.isUserWorkingDataModal
+        isUserWorkingDataModal: action.payload.isUserWorkingDataModal,
       };
     case actions.USER_AUTH:
       return { ...state, auth: action.payload.auth };
     case actions.IS_CONNECTED:
       return {
         ...state,
-        isConnected: action.payload.isConnected
+        isConnected: action.payload.isConnected,
       };
     case actions.NEW_SUBSCRIPTOR_VALUE:
       return {
         ...state,
-        newSubscriptorValue: action.payload.newSubscriptorValue
+        newSubscriptorValue: action.payload.newSubscriptorValue,
       };
     case actions.SIGNUP_DATA:
       return {
         ...state,
-        signupData: action.payload.signupData
+        signupData: action.payload.signupData,
       };
     case actions.SIGNIN_DATA:
       return { ...state, signInData: action.payload.signInData };
     case actions.USER_DATA:
       return {
         ...state,
-        user: action.payload.user
+        user: action.payload.user,
       };
     case actions.STORE_DATA:
       return {
         ...state,
-        store: action.payload.store
+        store: action.payload.store,
       };
     case actions.PUBLIC_PRODUCTS_LIST_DATA:
       return {
         ...state,
-        publicProducts: action.payload.publicProducts
+        publicProducts: action.payload.publicProducts,
       };
     case actions.PRODUCT_DATA:
       return {
         ...state,
-        product: action.payload.product
+        product: action.payload.product,
       };
     case actions.PRODUCTS_LIST_DATA:
       return {
         ...state,
-        productList: action.payload.productList
+        productList: action.payload.productList,
       };
     case actions.SEARCH:
       return {
         ...state,
-        search: action.payload.search
+        search: action.payload.search,
       };
 
     case actions.CREATE_COMMENT:
       return {
         ...state,
-        comment: action.payload.comment
+        comment: action.payload.comment,
       };
     case actions.UPDATE_COMMENTS_LIST:
       return {
         ...state,
-        commentsList: action.payload.commentsList
+        commentsList: action.payload.commentsList,
       };
     case actions.CREATE_DENOUNCE:
       return { ...state, denounce: action.payload.denounce };
@@ -310,7 +316,12 @@ export default function reducer(state: State, action: Action) {
     case actions.BLOG_POSTS_LIST_QUERY:
       return {
         ...state,
-        blogPostsList: action.payload.blogPostsList
+        blogPostsList: action.payload.blogPostsList,
+      };
+    case actions.QUERY_PUBLIC_PRODUCTS_LIST:
+      return {
+        ...state,
+        queryPublicProducts: action.payload.queryPublicProducts,
       };
     default:
       return { ...state };

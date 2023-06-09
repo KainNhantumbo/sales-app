@@ -194,6 +194,6 @@ export const StyledInputs = css`
   }
 
   textarea {
-    resize: none;
+    resize: vertical;
   }
 `;

@@ -136,5 +136,8 @@ export const SignUpContainer = styled.div`
     font-size: 0.92rem;
     font-weight: 500;
     line-height: 1.4rem;
+    background:rgba(${({ theme }) => theme.foreground}, .6) ;
+    padding: 5px 10px;
+    border-radius: 20px;
   }
 `;

@@ -19,6 +19,14 @@ export type ShareUrls = {
   icon: IconType;
 };
 
+export type TSearchProducts = {
+  sort: string ;
+  query: string ;
+  price_range: number;
+  category: string | undefined;
+  promotion: boolean | undefined;
+};
+
 export type AppStatus = {
   is_active: boolean;
   icon: IconType;
@@ -280,5 +288,5 @@ export type TDenounce = {
   reson: string;
   source_url: string;
   content: string;
-  resource_id: string
+  resource_id: string;
 };

@@ -28,7 +28,6 @@ export const SignInContainer = styled.div`
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
     z-index: -1;
     object-fit: cover;
     filter: blur(3px);
@@ -164,5 +163,8 @@ export const SignInContainer = styled.div`
     font-size: 0.92rem;
     font-weight: 500;
     line-height: 1.4rem;
+    background:rgba(${({ theme }) => theme.foreground}, .6) ;
+    padding: 5px 10px;
+    border-radius: 20px;
   }
 `;

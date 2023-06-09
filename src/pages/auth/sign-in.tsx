@@ -2,20 +2,20 @@ import {
   IoLockClosedOutline,
   IoLogoFacebook,
   IoLogoGoogle,
-  IoMailOutline
+  IoMailOutline,
 } from 'react-icons/io5';
-import fetch from '../../config/client';
-import { actions } from '../../data/actions';
-import { useState, useEffect } from 'react';
-import { useAppContext } from '../../context/AppContext';
-import { NextRouter, useRouter } from 'next/router';
-import { InputEvents, SubmitEvent } from '../../../@types';
-import { SignInContainer as Container } from '../../styles/common/sign-in';
-import { complements } from '@/data/app-data';
-import Layout from '@/components/Layout';
 import Link from 'next/link';
 import Image from 'next/image';
-import backgroundImage from '../../../public/assets/background1.png';
+import fetch from '../../config/client';
+import Layout from '@/components/Layout';
+import { useState, useEffect } from 'react';
+import { actions } from '../../data/actions';
+import { complements } from '@/data/app-data';
+import { NextRouter, useRouter } from 'next/router';
+import { useAppContext } from '../../context/AppContext';
+import { InputEvents, SubmitEvent } from '../../../@types';
+import { SignInContainer as Container } from '../../styles/common/sign-in';
+import backgroundImage from '../../../public/assets/background1.jpg';
 
 export default function SignIn(): JSX.Element {
   const { state, dispatch } = useAppContext();
@@ -30,9 +30,9 @@ export default function SignIn(): JSX.Element {
         ...state,
         signInData: {
           ...state.signInData,
-          [e.target.name]: e.target.value
-        }
-      }
+          [e.target.name]: e.target.value,
+        },
+      },
     });
   }
 
@@ -41,7 +41,7 @@ export default function SignIn(): JSX.Element {
     if (state.signInData.password.length < 8) {
       setError({
         status: true,
-        message: 'A senha deve conter pelo menos 8 carácteres'
+        message: 'A senha deve conter pelo menos 8 carácteres',
       });
       return;
     }
@@ -51,7 +51,7 @@ export default function SignIn(): JSX.Element {
         method: 'post',
         url: '/api/v1/auth/default/login',
         data: state.signInData,
-        withCredentials: true
+        withCredentials: true,
       });
       dispatch({
         type: actions.USER_AUTH,
@@ -63,9 +63,9 @@ export default function SignIn(): JSX.Element {
             invalidated: data?.invalidated,
             email: data?.email,
             name: data?.name,
-            profile_image: data?.profile_image
-          }
-        }
+            profile_image: data?.profile_image,
+          },
+        },
       });
       router.push(`/users/dashboard`);
     } catch (error: any) {
@@ -88,10 +88,15 @@ export default function SignIn(): JSX.Element {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Acessar Conta`
+        title: `${complements.defaultTitle} | Acessar Conta`,
       }}>
       <Container>
-        <Image src={backgroundImage} alt='background image' />
+        <Image
+          src={backgroundImage}
+          width={1368}
+          height={769}
+          alt='background image'
+        />
         <main>
           <article>
             <div className='form-container'>

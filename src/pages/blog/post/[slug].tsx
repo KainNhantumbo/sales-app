@@ -29,7 +29,6 @@ import Comments from '@/components/comments/Comments';
 import { useAppContext } from '@/context/AppContext';
 import ErrorPage from '@/pages/error-page';
 import NewsLetter from '@/components/Newsletter';
-import { useQuery } from '@tanstack/react-query';
 
 interface IPost {
   post: IBlogPost;

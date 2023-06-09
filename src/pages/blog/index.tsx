@@ -2,56 +2,68 @@ import {
   IoArrowForwardOutline,
   IoEllipsisHorizontal,
   IoHeart,
+  IoReload,
   IoStorefrontOutline
 } from 'react-icons/io5';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import ErrorPage from '../error-page';
 import { useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import { actions } from '@/data/actions';
 import { getPosts } from '@/lib/queries';
 import { formatDate } from '@/lib/time-fns';
-import { IBlogPosts } from '../../../@types';
+import { useTheme } from 'styled-components';
+import { PulseLoader } from 'react-spinners';
 import NewsLetter from '@/components/Newsletter';
 import SearchComponent from '@/components/Search';
 import { useAppContext } from '@/context/AppContext';
+import { useInView } from 'react-intersection-observer';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
 import { blurDataUrlImage, complements } from '@/data/app-data';
 import { BlogContainer as Container } from '@/styles/common/blog';
 import buyingWomenImg from '../../../public/assets/buying_women.png';
 
-type Props = { posts: IBlogPosts[] };
-
-export default function Blog(props: Props): JSX.Element {
-  const { posts } = props;
+export default function Blog(): JSX.Element {
+  const LIMIT = 5;
+  const theme = useTheme();
   const router = useRouter();
   const { state, dispatch } = useAppContext();
-  const [status, setStatus] = useState({
-    loading: false,
-    error: false,
-    hasMorePosts: true
-  });
+  const { ref, inView } = useInView();
 
-  if (!posts) {
-    return <ErrorPage retryFn={router.reload} />;
-  }
+  const { data, fetchNextPage, hasNextPage, isFetching, isError } =
+    useInfiniteQuery({
+      queryKey: ['blog-posts'],
+      queryFn: fetchPosts,
+      getNextPageParam: (lastPage) =>
+        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
+    });
 
   async function fetchPosts({ pageParam = 0 }) {
-    const { data } = await getPosts({ offset: pageParam * 3, limit: 3 });
+    const { data } = await getPosts({
+      offset: pageParam * LIMIT,
+      limit: LIMIT
+    });
     return { data, currentOffset: pageParam + 1 };
   }
 
   useEffect(() => {
-    if (state.blogPostsList.length > 0) return;
-    dispatch({
-      type: actions.BLOG_POSTS_LIST_QUERY,
-      payload: {
-        ...state,
-        blogPostsList: [...state.blogPostsList, ...posts]
-      }
-    });
+    if (data) {
+      const reducedPosts = data?.pages
+        .map((page) => {
+          return page.data;
+        })
+        .reduce((accumulator, currentObj) => [...accumulator, ...currentObj]);
+
+      dispatch({
+        type: actions.BLOG_POSTS_LIST_QUERY,
+        payload: {
+          ...state,
+          blogPostsList: [...reducedPosts]
+        }
+      });
+    }
 
     return () => {
       dispatch({
@@ -59,21 +71,13 @@ export default function Blog(props: Props): JSX.Element {
         payload: { ...state, blogPostsList: [] }
       });
     };
-  }, [posts]);
+  }, [data]);
 
-  // const {
-  //   data,
-  //   error,
-  //   fetchNextPage,
-  //   hasNextPage,
-  //   isFetching,
-  //   isFetchingNextPage,
-  //   status
-  // } = useInfiniteQuery({
-  //   queryKey: ['blog-posts'],
-  //   queryFn: fetchPosts,
-  //   getNextPageParam: (lastPage, pages) => lastPage.currentOffset
-  // });
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage, hasNextPage]);
 
   return (
     <Layout metadata={{ title: complements.defaultTitle + ' | Blog' }}>
@@ -110,11 +114,14 @@ export default function Blog(props: Props): JSX.Element {
           </section>
 
           <section className='posts-container'>
-            {state.blogPostsList.map((post) => (
+            {state.blogPostsList.map((post, index) => (
               <Link
                 key={post._id}
                 className={'post'}
-                href={`/blog/post/${post.slug}`}>
+                href={`/blog/post/${post.slug}`}
+                ref={
+                  state.blogPostsList.length === index + 1 ? ref : undefined
+                }>
                 <>
                   <img
                     src={post.cover_image.url}
@@ -149,9 +156,35 @@ export default function Blog(props: Props): JSX.Element {
                 </>
               </Link>
             ))}
-            <button onClick={() => {}}>Get next page</button>
 
-            {posts.length > 0 && (
+            <div className='stats-container'>
+              {isError && !isFetching && (
+                <div className=' fetch-error-message '>
+                  <h3>Erro ao carregar postagens</h3>
+                  <button onClick={() => fetchNextPage()}>
+                    <IoReload />
+                    <span>Tentar novamente</span>
+                  </button>
+                </div>
+              )}
+
+              {isFetching && !isError && (
+                <div className='loading'>
+                  <PulseLoader
+                    size={20}
+                    color={`rgb(${theme.primary_variant})`}
+                    aria-placeholder='Processando...'
+                    cssOverride={{
+                      display: 'block'
+                    }}
+                  />
+                </div>
+              )}
+
+              {!hasNextPage && !isFetching && !isError && <p>Chegou ao fim</p>}
+            </div>
+
+            {state.blogPostsList.length > 0 && (
               <div className='posts-container__end-mark'>
                 <IoEllipsisHorizontal />
               </div>
@@ -162,14 +195,4 @@ export default function Blog(props: Props): JSX.Element {
       </Container>
     </Layout>
   );
-}
-
-export async function getStaticProps() {
-  try {
-    const { data } = await getPosts({ offset: 0, limit: 3 });
-    return { props: { posts: [...data] }, revalidate: 10 };
-  } catch (error) {
-    console.error(error);
-    return { props: {}, revalidate: 10 };
-  }
 }
