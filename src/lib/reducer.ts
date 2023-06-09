@@ -16,6 +16,7 @@ export const initialState: State = {
     query: '',
     sort: '',
   },
+  isPublicProductsFilters: false,
   productsListQuery: { query: '', sort: '' },
   isDeleteAccountPrompt: false,
   isDeactivateStorePrompt: false,
@@ -318,6 +319,11 @@ export default function reducer(state: State, action: Action) {
       return {
         ...state,
         queryPublicProducts: action.payload.queryPublicProducts,
+      };
+    case actions.PUBLIC_PRODUCTS_FILTERS_MENU:
+      return {
+        ...state,
+        isPublicProductsFilters: action.payload.isPublicProductsFilters,
       };
     default:
       return { ...state };

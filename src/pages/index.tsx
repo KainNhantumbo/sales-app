@@ -6,6 +6,7 @@ import {
   IoHeart,
   IoHeartOutline,
   IoReload,
+  IoSearch,
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -86,13 +87,20 @@ export default function Home({ products }: IProps): JSX.Element {
   const LIMIT = 10;
   const { ref, inView } = useInView();
 
-  const { data, refetch, isRefetching,fetchNextPage, hasNextPage, isFetching, isError } =
-    useInfiniteQuery({
-      queryKey: ['public-products'],
-      queryFn: fetchPublicProducts,
-      getNextPageParam: (lastPage) =>
-        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
-    });
+  const {
+    data,
+    refetch,
+    isRefetching,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isError,
+  } = useInfiniteQuery({
+    queryKey: ['public-products'],
+    queryFn: fetchPublicProducts,
+    getNextPageParam: (lastPage) =>
+      lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
+  });
 
   async function fetchPublicProducts({
     pageParam = 0,
@@ -182,15 +190,25 @@ export default function Home({ products }: IProps): JSX.Element {
               placeholder='blur'
               blurDataURL={blurDataUrlImage}
               src={opening_store_png}
-              alt='openning store art designed by freepick.com'
+              alt='Openning store art - designed by freepick.com'
             />
           </div>
         </section>
-        <div className='content-wrapper'>
-          <aside>
-            <SearchEngine />
-          </aside>
 
+        <div className='content-wrapper'>
+          <button className='openFluentFilters' onClick={()=> {
+            dispatch({
+              type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
+              payload: {
+                ...state,
+                isPublicProductsFilters: true,
+              },
+            })
+          }}>
+            <IoSearch/>
+            <span>Pesquisar e filtrar produtos</span>
+          </button>
+          <SearchEngine />
           <article>
             {state.publicProducts.length < 1 && !isFetching && !isError && (
               <div className='empty-data_container'>
@@ -247,14 +265,16 @@ export default function Home({ products }: IProps): JSX.Element {
                         )}
                       </button>
                       {item.images && Object.values(item.images)[0]?.url && (
-                        <Image
-                          src={Object.values(item.images)[0]?.url}
-                          width={250}
-                          height={250}
-                          blurDataURL={blurDataUrlImage}
-                          placeholder='blur'
-                          alt={`Imagem de ${item.name}`}
-                        />
+                        <Link href={`/ecommerce/products/${item._id}`}>
+                          <Image
+                            src={Object.values(item.images)[0]?.url}
+                            width={250}
+                            height={250}
+                            blurDataURL={blurDataUrlImage}
+                            placeholder='blur'
+                            alt={`Imagem de ${item.name}`}
+                          />
+                        </Link>
                       )}
                       {!item.images && (
                         <IoBagHandle className='no-image-icon' />
@@ -294,46 +314,46 @@ export default function Home({ products }: IProps): JSX.Element {
                     </Link>
                   </div>
                 ))}
+            </section>
 
-              <div className='stats-container'>
-                {isError && !isFetching && (
-                  <div className=' fetch-error-message '>
-                    <h3>Erro ao carregar produtos</h3>
-                    <button onClick={() => fetchNextPage()}>
-                      <IoReload />
-                      <span>Tentar novamente</span>
-                    </button>
-                  </div>
-                )}
-
-                {isFetching && !isError && (
-                  <div className='loading'>
-                    <PulseLoader
-                      size={20}
-                      color={`rgb(${theme.primary_variant})`}
-                      aria-placeholder='Processando...'
-                      cssOverride={{
-                        display: 'block',
-                      }}
-                    />
-                    {isRefetching && <p>Tentando novamente</p>}
-                  </div>
-                )}
-
-                {!hasNextPage &&
-                  !isFetching &&
-                  !isError &&
-                  state.publicProducts.length > 0 && (
-                    <p>Sem mais produtos para mostrar</p>
-                  )}
-              </div>
-
-              {state.publicProducts.length > 0 && (
-                <div className='posts-container__end-mark'>
-                  <IoEllipsisHorizontal />
+            <div className='stats-container'>
+              {isError && !isFetching && (
+                <div className=' fetch-error-message '>
+                  <h3>Erro ao carregar produtos</h3>
+                  <button onClick={() => fetchNextPage()}>
+                    <IoReload />
+                    <span>Tentar novamente</span>
+                  </button>
                 </div>
               )}
-            </section>
+
+              {isFetching && !isError && (
+                <div className='loading'>
+                  <PulseLoader
+                    size={20}
+                    color={`rgb(${theme.primary_variant})`}
+                    aria-placeholder='Processando...'
+                    cssOverride={{
+                      display: 'block',
+                    }}
+                  />
+                  {isRefetching && <p>Tentando novamente</p>}
+                </div>
+              )}
+
+              {!hasNextPage &&
+                !isFetching &&
+                !isError &&
+                state.publicProducts.length > 0 && (
+                  <p>Sem mais produtos para mostrar</p>
+                )}
+            </div>
+
+            {state.publicProducts.length > 0 && (
+              <div className='posts-container__end-mark'>
+                <IoEllipsisHorizontal />
+              </div>
+            )}
           </article>
         </div>
       </Container>

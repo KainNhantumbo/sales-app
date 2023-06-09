@@ -29,6 +29,9 @@ export const CommentsContainer = styled.div`
       p {
         margin-top: 10px;
         line-height: 1.6rem;
+        a {
+          color: rgb(${({ theme }) => theme.primary_variant});
+        }
       }
     }
 

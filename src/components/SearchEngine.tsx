@@ -1,4 +1,5 @@
 import {
+  IoCartOutline,
   IoClose,
   IoFilter,
   IoGift,
@@ -14,10 +15,50 @@ import { renderReactSelectCSS } from '@/styles/select';
 import product_categories from '../data/product-categories.json';
 import { SeachEngineContainer as Container } from '../styles/modules/search-engine';
 import Slider from 'rc-slider';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function SearchEngine(): JSX.Element {
-  const { state, dispatch } = useAppContext();
   const theme = useTheme();
+  const { state, dispatch } = useAppContext();
+
+  function toggleMenu(): void {
+    dispatch({
+      type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
+      payload: {
+        ...state,
+        isPublicProductsFilters: !state.isPublicProductsFilters,
+      },
+    });
+  }
+
+  function changeWidth(): void {
+    if (window.innerWidth > 830) {
+      dispatch({
+        type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
+        payload: {
+          ...state,
+          isPublicProductsFilters: true,
+        },
+      });
+    } else {
+      dispatch({
+        type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
+        payload: {
+          ...state,
+          isPublicProductsFilters: false,
+        },
+      });
+    }
+  }
+
+  useEffect((): (() => void) => {
+    changeWidth();
+    window.addEventListener('resize', changeWidth);
+    return () => {
+      window.removeEventListener('resize', changeWidth);
+    };
+  }, []);
 
   const categoryOptions = product_categories.map((category) => ({
     value: category,
@@ -64,160 +105,234 @@ export default function SearchEngine(): JSX.Element {
   );
 
   return (
-    <Container>
-      <section className='header-container'>
-        <h3>
-          <IoFilter />
-          <span>Filtros</span>
-        </h3>
-
-        {Object.values(state.queryPublicProducts)
-          .map((value) => (value ? true : false))
-          .some((value) => value === true) && renderClearButton()}
-      </section>
-      <div className='form-container'>
-        <form
-          className='form-search'
-          onSubmit={(e): void => {
-            e.preventDefault();
-          }}>
-          <div className='form-element' title='Search'>
-            <input
-              type='text'
-              placeholder='Pesquisar produtos...'
-              value={state.queryPublicProducts.query}
-              onChange={(e): void => {
-                dispatch({
-                  type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
-                  payload: {
-                    ...state,
-                    queryPublicProducts: {
-                      ...state.queryPublicProducts,
-                      query: e.target.value,
-                    },
-                  },
-                });
-              }}
-            />
-          </div>
-        </form>
-      </div>
-
-      <div className='caret-container'>
-        <h3>
-          <IoLayersOutline />
-          <span>Filtrar por categoria</span>
-        </h3>
-        <Select
-          options={categoryOptions}
-          placeholder={'Selecione uma categoria'}
-          styles={renderReactSelectCSS(theme)}
-          onChange={(option: any): void => {
-            dispatch({
-              type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
-              payload: {
-                ...state,
-                queryPublicProducts: {
-                  ...state.queryPublicProducts,
-                  category: String(option?.value),
-                },
-              },
-            });
-          }}
-        />
-      </div>
-
-      <div className='caret-container'>
-        <h3>
-          <BiSortAlt2 />
-          <span>Organizar por</span>
-        </h3>
-        <Select
-          options={sortOptions}
-          placeholder={'Selecione a opção'}
-          styles={renderReactSelectCSS(theme)}
-          onChange={(option: any): void => {
-            dispatch({
-              type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
-              payload: {
-                ...state,
-                queryPublicProducts: {
-                  ...state.queryPublicProducts,
-                  sort: String(option?.value),
-                },
-              },
-            });
-          }}
-        />
-      </div>
-      <div className='caret-container'>
-        <h3>
-          <IoGift />
-          <span>Promoções</span>
-        </h3>
-        <Select
-          options={promotionOptions}
-          placeholder={'Selecione a opção'}
-          styles={renderReactSelectCSS(theme)}
-          defaultInputValue={promotionOptions[0].value}
-          onChange={(option: any): void => {
-            dispatch({
-              type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
-              payload: {
-                ...state,
-                queryPublicProducts: {
-                  ...state.queryPublicProducts,
-                  promotion:
-                    option?.value === 'true'
-                      ? true
-                      : option?.value === 'false'
-                      ? false
-                      : undefined,
-                },
-              },
-            });
-          }}
-        />
-      </div>
-
-      <div className='caret-container'>
-        <h3>
-          <IoPricetags />
-          <span>Faixa de Preço</span>
-        </h3>
-        <div className='price-range'>
-          <div className='prices'>
-            <p>De: MZN 0.00</p>
-            <p>
-              Até: MZN{' '}
-              {(state.queryPublicProducts.price_range &&
-                Number(state.queryPublicProducts.price_range).toFixed(2)) ||
-                Number(0).toFixed(2)}
-            </p>
-          </div>
-
-          <Slider
-            min={0}
-            value={
-              Number.isNaN(state.queryPublicProducts.price_range)
-                ? 0
-                : state.queryPublicProducts.price_range
-            }
-            onChange={(value) => {
+    <AnimatePresence>
+      {state.isPublicProductsFilters && (
+        <Container
+          onClick={(e: any): void => {
+            const target = (e as any).target.classList;
+            if (target[0]?.includes('search-engine')) {
               dispatch({
-                type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
+                type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
                 payload: {
                   ...state,
-                  queryPublicProducts: {
-                    ...state.queryPublicProducts,
-                    price_range: Number(value),
-                  },
+                  isPublicProductsFilters: false,
                 },
               });
+            }
+          }}>
+          <motion.div
+            className='wrapper-container'
+            drag={'y'}
+            dragElastic={{ top: 0.12, bottom: 0.5 }}
+            dragConstraints={{ top: 0, bottom: 0 }}
+            onDragEnd={(event, info) => {
+              event.preventDefault();
+              event.stopImmediatePropagation();
+              if (info.offset.y > 350) {
+                dispatch({
+                  type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
+                  payload: {
+                    ...state,
+                    isPublicProductsFilters: false,
+                  },
+                });
+              }
             }}
-          />
-        </div>
-      </div>
-    </Container>
+            style={{ display: state.isPublicProductsFilters ? 'flex' : 'none' }}
+            initial={{ translateY: 720 }}
+            animate={{ translateY: 0 }}
+            transition={{ duration: 0.38 }}
+            exit={{
+              opacity: 0,
+              translateY: 720,
+              transition: { duration: 0.38 },
+            }}>
+            <button
+              onTouchEnd={toggleMenu}
+              onClick={toggleMenu}
+              className='onDragCloseButton'
+              title='Fechar aba'
+            />
+
+            <section className='header-container'>
+              <h3>
+                <IoFilter />
+                <span>Filtros</span>
+              </h3>
+
+              {Object.values(state.queryPublicProducts)
+                .map((value) => (value ? true : false))
+                .some((value) => value === true) && renderClearButton()}
+            </section>
+            <div className='form-container'>
+              <form
+                className='form-search'
+                onSubmit={(e): void => {
+                  e.preventDefault();
+                }}>
+                <div className='form-element' title='Search'>
+                  <input
+                    type='text'
+                    placeholder='Pesquisar produtos...'
+                    value={state.queryPublicProducts.query}
+                    onChange={(e): void => {
+                      dispatch({
+                        type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
+                        payload: {
+                          ...state,
+                          queryPublicProducts: {
+                            ...state.queryPublicProducts,
+                            query: e.target.value,
+                          },
+                        },
+                      });
+                    }}
+                  />
+                </div>
+              </form>
+            </div>
+
+            <div className='caret-container'>
+              <h3>
+                <IoLayersOutline />
+                <span>Filtrar por categoria</span>
+              </h3>
+              <Select
+                options={categoryOptions}
+                placeholder={'Selecione uma categoria'}
+                styles={renderReactSelectCSS(theme)}
+                onChange={(option: any): void => {
+                  dispatch({
+                    type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
+                    payload: {
+                      ...state,
+                      queryPublicProducts: {
+                        ...state.queryPublicProducts,
+                        category: String(option?.value),
+                      },
+                    },
+                  });
+                }}
+              />
+            </div>
+
+            <div className='caret-container'>
+              <h3>
+                <BiSortAlt2 />
+                <span>Organizar por</span>
+              </h3>
+              <Select
+                options={sortOptions}
+                placeholder={'Selecione a opção'}
+                styles={renderReactSelectCSS(theme)}
+                onChange={(option: any): void => {
+                  dispatch({
+                    type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
+                    payload: {
+                      ...state,
+                      queryPublicProducts: {
+                        ...state.queryPublicProducts,
+                        sort: String(option?.value),
+                      },
+                    },
+                  });
+                }}
+              />
+            </div>
+            <div className='caret-container'>
+              <h3>
+                <IoGift />
+                <span>Promoções</span>
+              </h3>
+              <Select
+                options={promotionOptions}
+                placeholder={'Selecione a opção'}
+                styles={renderReactSelectCSS(theme)}
+                defaultInputValue={promotionOptions[0].value}
+                onChange={(option: any): void => {
+                  dispatch({
+                    type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
+                    payload: {
+                      ...state,
+                      queryPublicProducts: {
+                        ...state.queryPublicProducts,
+                        promotion:
+                          option?.value === 'true'
+                            ? true
+                            : option?.value === 'false'
+                            ? false
+                            : undefined,
+                      },
+                    },
+                  });
+                }}
+              />
+            </div>
+
+            <div className='caret-container'>
+              <h3>
+                <IoPricetags />
+                <span>Faixa de Preço</span>
+              </h3>
+              <div className='price-range'>
+                <div className='prices'>
+                  <p>De: MZN 0.00</p>
+                  <p>
+                    Até: MZN{' '}
+                    {(state.queryPublicProducts.price_range &&
+                      Number(state.queryPublicProducts.price_range).toFixed(
+                        2
+                      )) ||
+                      Number(0).toFixed(2)}
+                  </p>
+                </div>
+
+                <Slider
+                  min={0}
+                  value={
+                    Number.isNaN(state.queryPublicProducts.price_range)
+                      ? 0
+                      : state.queryPublicProducts.price_range
+                  }
+                  onChange={(value) => {
+                    dispatch({
+                      type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
+                      payload: {
+                        ...state,
+                        queryPublicProducts: {
+                          ...state.queryPublicProducts,
+                          price_range: Number(value),
+                        },
+                      },
+                    });
+                  }}
+                />
+              </div>
+
+              {Object.values(state.queryPublicProducts)
+                .map((value) => (value ? true : false))
+                .some((value) => value === true) && (
+                <motion.button
+                  whileTap={{ scale: 0.8 }}
+                  whileHover={{ scale: 1.05 }}
+                  className='show-results-btn'
+                  onClick={() =>
+                    dispatch({
+                      type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
+                      payload: {
+                        ...state,
+                        isPublicProductsFilters: false,
+                      },
+                    })
+                  }>
+                  <IoCartOutline />
+                  <span>Mostrar {state.publicProducts.length} resultados</span>
+                </motion.button>
+              )}
+            </div>
+          </motion.div>
+        </Container>
+      )}
+    </AnimatePresence>
   );
 }

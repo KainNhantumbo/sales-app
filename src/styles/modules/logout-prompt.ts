@@ -13,7 +13,6 @@ export const PromptContainer = styled.section`
 	display: grid;
 	place-content: center;
 	user-select: none;
-	position: fixed;
 	line-height: 1.4rem;
 
 	.dialog-prompt {

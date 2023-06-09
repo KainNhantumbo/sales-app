@@ -4,6 +4,7 @@ import {
   IoClose,
   IoEllipsisHorizontal,
 } from 'react-icons/io5';
+import Link from 'next/link';
 import Select from 'react-select';
 import Layout from '@/components/Layout';
 import { useAppContext } from '@/context/AppContext';
@@ -15,7 +16,6 @@ import { motion } from 'framer-motion';
 import { actions } from '@/data/actions';
 import { denounceReasons } from '@/data/app-data';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import RequestLogin from '@/components/modals/RequestLogin';
 import { DenounceContainer as Container } from '../styles/common/denounce';
 

@@ -1,5 +1,6 @@
 import {
   IoArrowUndo,
+  IoClose,
   IoEllipse,
   IoFlag,
   IoHeart,
@@ -131,7 +132,7 @@ export default function Comment(props: TComment): JSX.Element {
                 <button
                   className='reply'
                   onClick={() => props.clearCommentData()}>
-                  <IoArrowUndo />
+                  <IoClose />
                   <span>Cancelar</span>
                 </button>
               )}

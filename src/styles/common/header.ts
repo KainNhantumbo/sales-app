@@ -12,7 +12,7 @@ export const HeaderContainer = styled.header`
   padding: 20px 8px;
   font-weight: 500;
   font-size: 1.1rem;
-  z-index: 10000;
+  z-index: 20000;
 
   .wrapper {
     margin: 0 auto;

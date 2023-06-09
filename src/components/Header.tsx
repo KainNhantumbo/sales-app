@@ -1,15 +1,15 @@
 import {
   IoLogInOutline,
   IoLogOutOutline,
-  IoStorefrontOutline
+  IoStorefrontOutline,
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
+import { urls } from '@/data/app-data';
 import { BiUser } from 'react-icons/bi';
 import { useState, useEffect } from 'react';
 import { HiViewList, HiX } from 'react-icons/hi';
 import { NextRouter, useRouter } from 'next/router';
-import { complements, urls } from '@/data/app-data';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import rubymart_logo from '../../public/rubymart_logo.png';
@@ -51,7 +51,6 @@ export default function Header(): JSX.Element {
               width={600}
               height={134}
             />{' '}
-       
           </Link>
         </div>
         <AnimatePresence>
@@ -63,7 +62,7 @@ export default function Header(): JSX.Element {
               exit={{
                 opacity: 0,
                 translateY: -70,
-                transition: { duration: 0.25 }
+                transition: { duration: 0.25 },
               }}
               style={{ display: isMenu ? 'flex' : 'none' }}>
               <section>

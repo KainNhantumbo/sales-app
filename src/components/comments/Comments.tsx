@@ -272,8 +272,8 @@ export default function Comments({ post }: Props): JSX.Element {
   }
 
   useEffect(() => {
-    console.info(formattedComments);
-    console.info(state.commentsList);
+    // console.info(formattedComments);
+    // console.info(state.commentsList);
   }, [state.commentsList]);
 
   useEffect(() => {

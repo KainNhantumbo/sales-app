@@ -50,6 +50,7 @@ export type State = {
   productsListQuery: { query: string; sort: string };
   blogPostsList: IBlogPosts[],
   queryPublicProducts: TSearchProducts
+  isPublicProductsFilters: boolean
 };
 
 export type Action = { type: string; payload: State };
