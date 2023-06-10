@@ -6,21 +6,22 @@ import {
   IoLayersOutline,
   IoPricetags,
 } from 'react-icons/io5';
+import Slider from 'rc-slider';
+import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { actions } from '@/data/actions';
 import { BiSortAlt2 } from 'react-icons/bi';
 import { useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
 import { renderReactSelectCSS } from '@/styles/select';
+import { AnimatePresence, motion } from 'framer-motion';
 import product_categories from '../data/product-categories.json';
 import { SeachEngineContainer as Container } from '../styles/modules/search-engine';
-import Slider from 'rc-slider';
-import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
 
 export default function SearchEngine(): JSX.Element {
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
+  const [innerWidth, setInnerWidth] = useState(0);
 
   function toggleMenu(): void {
     dispatch({
@@ -33,6 +34,7 @@ export default function SearchEngine(): JSX.Element {
   }
 
   function changeWidth(): void {
+    setInnerWidth(window.innerWidth);
     if (window.innerWidth > 830) {
       dispatch({
         type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
@@ -66,14 +68,14 @@ export default function SearchEngine(): JSX.Element {
   }));
 
   const sortOptions = [
-    { value: 'createdAt', label: 'Adicionado Recentemente' },
-    { value: '-createdAt', label: 'Adicionado Antigamente' },
+    { value: '-createdAt', label: 'Adicionado Recentemente' },
+    { value: 'createdAt', label: 'Adicionado Antigamente' },
     { value: 'name', label: 'Nome' },
     { value: '-name', label: 'Nome (Invertido)' },
     { value: 'category', label: 'Categoria' },
     { value: '-category', label: 'Categoria (Invertido)' },
-    { value: 'price', label: 'Preço (Alto para Baixo)' },
-    { value: '-price', label: 'Preço (Baixo para Alto)' },
+    { value: '-price', label: 'Preço (Alto para Baixo)' },
+    { value: 'price', label: 'Preço (Baixo para Alto)' },
   ];
 
   const promotionOptions = [
@@ -122,8 +124,8 @@ export default function SearchEngine(): JSX.Element {
           }}>
           <motion.div
             className='wrapper-container'
-            drag={'y'}
-            dragElastic={{ top: 0.12, bottom: 0.5 }}
+            drag={innerWidth > 830 ? false : 'y'}
+            dragElastic={{ top: 0.12, bottom: 0.1 }}
             dragConstraints={{ top: 0, bottom: 0 }}
             onDragEnd={(event, info) => {
               event.preventDefault();
@@ -139,14 +141,24 @@ export default function SearchEngine(): JSX.Element {
               }
             }}
             style={{ display: state.isPublicProductsFilters ? 'flex' : 'none' }}
-            initial={{ translateY: 720 }}
-            animate={{ translateY: 0 }}
+            initial={
+              innerWidth > 830 ? { translateX: -720 } : { translateY: 720 }
+            }
+            animate={innerWidth > 830 ? { translateX: 0 } : { translateY: 0 }}
             transition={{ duration: 0.38 }}
-            exit={{
-              opacity: 0,
-              translateY: 720,
-              transition: { duration: 0.38 },
-            }}>
+            exit={
+              innerWidth > 830
+                ? {
+                    opacity: 0,
+                    translateX: -720,
+                    transition: { duration: 0.4 },
+                  }
+                : {
+                    opacity: 0,
+                    translateY: 720,
+                    transition: { duration: 0.38 },
+                  }
+            }>
             <button
               onTouchEnd={toggleMenu}
               onClick={toggleMenu}
@@ -225,6 +237,17 @@ export default function SearchEngine(): JSX.Element {
                 options={sortOptions}
                 placeholder={'Selecione a opção'}
                 styles={renderReactSelectCSS(theme)}
+                value={
+                  state.queryPublicProducts.sort
+                    ? {
+                        label: sortOptions.filter(
+                          (element) =>
+                            element.value === state.queryPublicProducts.sort
+                        )[0].label,
+                        value: state.queryPublicProducts.sort,
+                      }
+                    : undefined
+                }
                 onChange={(option: any): void => {
                   dispatch({
                     type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
@@ -248,7 +271,13 @@ export default function SearchEngine(): JSX.Element {
                 options={promotionOptions}
                 placeholder={'Selecione a opção'}
                 styles={renderReactSelectCSS(theme)}
-                defaultInputValue={promotionOptions[0].value}
+                value={
+                  state.queryPublicProducts.promotion
+                    ? promotionOptions[1]
+                    : state.queryPublicProducts.promotion === false
+                    ? promotionOptions[2]
+                    : promotionOptions[0]
+                }
                 onChange={(option: any): void => {
                   dispatch({
                     type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
@@ -289,6 +318,8 @@ export default function SearchEngine(): JSX.Element {
 
                 <Slider
                   min={0}
+                  step={50}
+                  max={75000}
                   value={
                     Number.isNaN(state.queryPublicProducts.price_range)
                       ? 0

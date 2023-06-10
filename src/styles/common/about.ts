@@ -70,6 +70,11 @@ export const AboutContainer = styled.div`
 
     .introdution {
       margin-top: 20px;
+      text-align: justify;
+
+      p {
+        margin-bottom: 15px;
+      }
     }
 
     h1 {
@@ -108,8 +113,8 @@ export const AboutContainer = styled.div`
         text-align: center;
         font-style: italic;
         font-weight: 500;
-        font-size: 1.6rem;
-        line-height: 2.4rem;
+        font-size: 1.4rem;
+        line-height: 2rem;
       }
     }
 
@@ -129,6 +134,9 @@ export const AboutContainer = styled.div`
 
       .motto {
         max-width: 680px;
+        p {
+          margin-bottom: 15px;
+        }
         h3 {
           font-size: 1.2rem;
           font-weight: 500;
@@ -167,15 +175,23 @@ export const AboutContainer = styled.div`
       display: flex;
       flex-direction: column;
       gap: 20px;
-      padding: 40px;
+      padding: 40px 0;
       border-radius: 20px;
 
       @media screen and (max-width: 450px) {
         padding: 20px 10px;
       }
 
-      h2 {
-        padding-bottom: 30px;
+      h3 {
+        font-size: 1.2rem;
+        font-weight: 500;
+        line-height: 1.6rem;
+        margin-bottom: 10px;
+        span {
+          text-decoration-line: underline;
+          text-decoration-color: rgb(${({ theme }) => theme.primary});
+          text-underline-offset: 8px;
+        }
       }
 
       .core-habits-container_items {
@@ -193,10 +209,10 @@ export const AboutContainer = styled.div`
         padding: 50px 30px;
         border-radius: 20px;
         width: fit-content;
-        background: rgb(${({ theme }) => theme.foreground});
+        background: rgb(${({ theme }) => theme.background});
         box-shadow: 0 0 30px 10px rgba(${({ theme }) => theme.accent}, 0.1);
         border-right: 4px solid transparent;
-        cursor: pointer;
+        cursor: grab;
         h3 {
           font-size: 1.8rem;
           font-weight: 500;

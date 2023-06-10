@@ -217,7 +217,7 @@ export const HeaderContainer = styled.header`
 
   .toggle-btn {
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     background: none;
     color: rgb(${({ theme }) => theme.font});
     border: 1px solid rgba(${({ theme }) => theme.accent}, 0.07);

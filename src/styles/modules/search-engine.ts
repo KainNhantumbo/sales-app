@@ -1,10 +1,10 @@
-import styled from 'styled-components';
 import {
   BaseButton,
   BaseButtonOutline,
   Button_Mono_B,
   StyledInputs,
 } from '../defaults';
+import styled from 'styled-components';
 
 export const SeachEngineContainer = styled.aside`
   width: 100%;
@@ -42,7 +42,7 @@ export const SeachEngineContainer = styled.aside`
       position: relative;
       width: 400px;
       box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.08);
-      border-radius: 12px 12px 0 0;
+      border-radius: 12px;
       margin-bottom: -30px;
       padding-bottom: 40px;
 
@@ -364,96 +364,6 @@ export const SeachEngineContainer = styled.aside`
         animation-duration: 0.3s;
         animation-fill-mode: both;
         animation-play-state: paused;
-      }
-      .rc-slider-tooltip-zoom-down-leave {
-        display: block !important;
-        animation-duration: 0.3s;
-        animation-fill-mode: both;
-        animation-play-state: paused;
-      }
-      .rc-slider-tooltip-zoom-down-enter.rc-slider-tooltip-zoom-down-enter-active,
-      .rc-slider-tooltip-zoom-down-appear.rc-slider-tooltip-zoom-down-appear-active {
-        animation-name: rcSliderTooltipZoomDownIn;
-        animation-play-state: running;
-      }
-      .rc-slider-tooltip-zoom-down-leave.rc-slider-tooltip-zoom-down-leave-active {
-        animation-name: rcSliderTooltipZoomDownOut;
-        animation-play-state: running;
-      }
-      .rc-slider-tooltip-zoom-down-enter,
-      .rc-slider-tooltip-zoom-down-appear {
-        transform: scale(0, 0);
-        animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-      }
-      .rc-slider-tooltip-zoom-down-leave {
-        animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
-      }
-      @keyframes rcSliderTooltipZoomDownIn {
-        0% {
-          transform: scale(0, 0);
-          transform-origin: 50% 100%;
-          opacity: 0;
-        }
-        100% {
-          transform: scale(1, 1);
-          transform-origin: 50% 100%;
-        }
-      }
-      @keyframes rcSliderTooltipZoomDownOut {
-        0% {
-          transform: scale(1, 1);
-          transform-origin: 50% 100%;
-        }
-        100% {
-          transform: scale(0, 0);
-          transform-origin: 50% 100%;
-          opacity: 0;
-        }
-      }
-      .rc-slider-tooltip {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-        visibility: visible;
-        box-sizing: border-box;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-      }
-      .rc-slider-tooltip * {
-        box-sizing: border-box;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-      }
-      .rc-slider-tooltip-hidden {
-        display: none;
-      }
-      .rc-slider-tooltip-placement-top {
-        padding: 4px 0 8px 0;
-      }
-      .rc-slider-tooltip-inner {
-        min-width: 24px;
-        height: 24px;
-        padding: 6px 2px;
-        color: #fff;
-        font-size: 12px;
-        line-height: 1;
-        text-align: center;
-        text-decoration: none;
-        background-color: #6c6c6c;
-        border-radius: 6px;
-        box-shadow: 0 0 4px #d9d9d9;
-      }
-      .rc-slider-tooltip-arrow {
-        position: absolute;
-        width: 0;
-        height: 0;
-        border-color: transparent;
-        border-style: solid;
-      }
-      .rc-slider-tooltip-placement-top .rc-slider-tooltip-arrow {
-        bottom: 4px;
-        left: 50%;
-        margin-left: -4px;
-        border-width: 4px 4px 0;
-        border-top-color: #6c6c6c;
       }
     }
   }

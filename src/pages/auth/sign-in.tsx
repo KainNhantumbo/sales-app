@@ -15,7 +15,7 @@ import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '../../context/AppContext';
 import { InputEvents, SubmitEvent } from '../../../@types';
 import { SignInContainer as Container } from '../../styles/common/sign-in';
-import backgroundImage from '../../../public/assets/background1.jpg';
+import backgroundImage from '../../../public/assets/africa-unveiled.png';
 
 export default function SignIn(): JSX.Element {
   const { state, dispatch } = useAppContext();
@@ -88,7 +88,7 @@ export default function SignIn(): JSX.Element {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Acessar Conta`,
+        title: `${complements.defaultTitle} | Acessar Conta de Usuário`,
       }}>
       <Container>
         <Image
@@ -155,7 +155,7 @@ export default function SignIn(): JSX.Element {
               </form>
 
               <div className='sign-in-options'>
-                <h3>
+                {/* <h3>
                   <span> ━━━━ Ou acesse com ━━━━ </span>
                 </h3>
                 <div className='login-btns'>
@@ -167,7 +167,7 @@ export default function SignIn(): JSX.Element {
                     <IoLogoFacebook />
                     <span>Facebook</span>{' '}
                   </Link>
-                </div>
+                </div> */}
                 <div className='signup-request'>
                   Ainda não tem uma conta?
                   <Link href={'/auth/sign-up'}>

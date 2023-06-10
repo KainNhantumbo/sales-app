@@ -10,6 +10,7 @@ export const SignInContainer = styled.div`
   position: relative;
   padding: 60px 0;
   width: 100%;
+  padding-top: 90px;
   min-height: 100vh;
   position: relative;
   display: flex;

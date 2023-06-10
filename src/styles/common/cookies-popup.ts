@@ -17,11 +17,11 @@ export const CookiesPopupContainer = styled.div`
     max-width: 350px;
     display: flex;
     flex-direction: column;
-    backdrop-filter: blur(10px);
     align-items: center;
     gap: 10px;
     line-height: 1.4rem;
     font-size: 0.9rem;
+    backdrop-filter: blur(10px);
     background: rgba(${({ theme }) => theme.foreground}, 0.8);
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);
 

@@ -16,7 +16,7 @@ import { complements } from '@/data/app-data';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { InputEvents, SubmitEvent } from '../../../@types';
-import backgroundImage from '../../../public/assets/background1.jpg';
+import backgroundImage from '../../../public/assets/africa-unveiled.png';
 import { SignUpContainer as Container } from '../../styles/common/sign-up';
 
 export default function SignUp(): JSX.Element {

@@ -124,6 +124,9 @@ export const HomeContainer = styled.div`
       bottom: 20px;
       left: calc(50% - 150px);
       z-index: 12000;
+      backdrop-filter: blur(10px);
+      background: rgba(${({ theme }) => theme.primary}, 0.8);
+      box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);
 
       @media screen and (min-width: 830px) {
         display: none;
@@ -145,6 +148,7 @@ export const HomeContainer = styled.div`
       display: grid;
       place-content: center;
       user-select: none;
+      margin-top: 200px;
 
       .content {
         position: relative;
@@ -337,6 +341,7 @@ export const HomeContainer = styled.div`
       font-size: 1.1rem;
       line-height: 1.4rem;
       align-self: flex-end;
+      padding-top: 3500px;
 
       button {
         ${BaseButton}

@@ -25,6 +25,7 @@ import RequestLogin from '@/components/modals/RequestLogin';
 import opening_store_png from '../../public/assets/opening.png';
 import { blurDataUrlImage, complements } from '@/data/app-data';
 import { HomeContainer as Container } from '@/styles/common/home';
+import { motion } from 'framer-motion';
 
 interface IProps {
   products: PublicProducts[];
@@ -113,7 +114,7 @@ export default function Home({ products }: IProps): JSX.Element {
       url: `/api/v1/users/products/public?offset=${
         LIMIT * pageParam
       }&limit=${LIMIT}${category ? `&category=${category}` : ''}${
-        price_range > 0 ? `&price_range=${price_range}` : ''
+        price_range > 0 ? `&max_price=${price_range}` : ''
       }${promotion !== undefined ? `&promotion=${String(promotion)}` : ''}${
         query ? `&search=${query}` : ''
       }${sort ? `&sort=${sort}` : ''}`,
@@ -155,7 +156,7 @@ export default function Home({ products }: IProps): JSX.Element {
   useEffect(() => {
     const timer = setTimeout(() => {
       refetch({ queryKey: ['public-products'] });
-    }, 400);
+    }, 500);
     return () => {
       clearTimeout(timer);
     };
@@ -196,18 +197,22 @@ export default function Home({ products }: IProps): JSX.Element {
         </section>
 
         <div className='content-wrapper'>
-          <button className='openFluentFilters' onClick={()=> {
-            dispatch({
-              type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
-              payload: {
-                ...state,
-                isPublicProductsFilters: true,
-              },
-            })
-          }}>
-            <IoSearch/>
+          <motion.button
+            whileTap={{ scale: 0.8 }}
+            whileHover={{ scale: 1.05 }}
+            className='openFluentFilters'
+            onClick={() => {
+              dispatch({
+                type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
+                payload: {
+                  ...state,
+                  isPublicProductsFilters: true,
+                },
+              });
+            }}>
+            <IoSearch />
             <span>Pesquisar e filtrar produtos</span>
-          </button>
+          </motion.button>
           <SearchEngine />
           <article>
             {state.publicProducts.length < 1 && !isFetching && !isError && (
@@ -231,7 +236,11 @@ export default function Home({ products }: IProps): JSX.Element {
             <section className='products-container'>
               {state.publicProducts.length > 0 &&
                 state.publicProducts.map((item, index) => (
-                  <div
+                  <motion.div
+                    whileHover={{
+                      translateY: -8,
+                      boxShadow: `0px 12px 25px 10px rgba(${theme.accent}, 0.09)`,
+                    }}
                     key={item._id}
                     className='product-container'
                     ref={
@@ -312,7 +321,7 @@ export default function Home({ products }: IProps): JSX.Element {
                         </span>
                       </h3>
                     </Link>
-                  </div>
+                  </motion.div>
                 ))}
             </section>
 

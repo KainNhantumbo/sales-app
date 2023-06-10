@@ -14,29 +14,29 @@ export default function About(): JSX.Element {
     {
       phrase:
         'Entregar o melhor período de experiência aos usuários e clientes.',
-      paragraph: 'Detalhes importam, adicione valor a cada interação.'
+      paragraph: 'Detalhes importam, adicione valor a cada interação.',
     },
     {
       phrase: 'A normalidade é tediosa e irritante.',
-      paragraph: 'Procure novos desafios a cada momento.'
+      paragraph: 'Procure novos desafios a cada momento.',
     },
     {
       phrase: 'Sem políticas burocráticas.',
-      paragraph: 'Seja direto. Vá direto.'
+      paragraph: 'Seja direto. Vá direto.',
     },
     {
       phrase: 'Faça as tarefas de uma vez e vá se divertir aos montes.',
-      paragraph: 'Trabalhe seriamente nas coisas certas com urgência.'
+      paragraph: 'Trabalhe seriamente nas coisas certas com urgência.',
     },
     {
       phrase: 'Cresça 1% todos os dias.',
       paragraph:
-        'Interaja e faça progresso almejando a perfeição. Adote uma mentalidade de sucesso.'
+        'Interaja e faça progresso almejando a perfeição. Adote uma mentalidade de sucesso.',
     },
     {
       phrase: 'Actos aleatórios de bondade',
-      paragraph: 'Seja um líquido positivo.'
-    }
+      paragraph: 'Seja um líquido positivo.',
+    },
   ];
   return (
     <Layout metadata={{ title: complements.defaultTitle + ' | Sobre nós' }}>
@@ -64,40 +64,59 @@ export default function About(): JSX.Element {
               construindo com cada passo dado a nossa liberdade em criar
               soluções digitais que facilitam o nosso dia-a-dia.
             </p>
+            <p>
+              No entanto, um dos nossos maiores pilares é a produtividade e
+              desempenho no trabalho. Enquanto nós amamos a produtividade,
+              percebemos que a produtividade está em si, inalcansável. Tem
+              tantas ferramentas para auxiliar no gerenciamento dos nossos
+              negócios e vendas, mas tudo em diferentes ecossistemas. Deve haver
+              uma maneira melhor de se trabalhar com mais eficiência - por isso,
+              criamos a {complements.defaultTitle}, uma ferramenta mais moderna,
+              cá da terra, agora como uma maneira de tornar a nossa visão de
+              fazer as coisas de forma mais produtiva.
+            </p>
+            <p>
+              Claramente, o nosso objectivo é ajudar a crescer e dar maior
+              visibilidade aos negócios, vendas e campanhas de marketing dos
+              usuários e, fazendo com que as suas actividades de laborais sejam
+              gerenciadas na nossa plataforma, ajudando as pessoas serem mais
+              produtivas e retornando pelo menos 20% do seu tempo de volta para
+              dedicar a vida a outras coisas. Uma ferramenta para substituir
+              todas. Nós estamos apenas começando e somos muito gratos pelo
+              apoio da comunidade que está com a nossa equipe nesta jornada.
+            </p>
           </section>
 
           <blockquote>
             <p>
               "Um bom espaço de trabalho combina pessoas excepcionais e
-              problemas desafiadores" - Kain Nhantumbo
+              problemas desafiadores." - Kain Nhantumbo
             </p>
           </blockquote>
 
           <section className='mission-container'>
             <div className='motto'>
               <h3>
-                <span>Nossa</span> missão
+                ❤ <span>Nossa</span> missão
               </h3>
               <p>
-                Enquanto nós amamos a produtividade no nosso dia-a-dia,
-                percebemos que a produtividade está em si, inalcansável. Tem
-                tantas ferramentas para auxiliar no gerenciamento dos nossos
-                negócios e vendas, mas tudo em diferentes ecossistemas. Deve
-                haver uma maneira melhor de se trabalhar com mais eficiência -
-                por isso, criamos a {complements.defaultTitle}, uma ferramenta
-                mais moderna, cá da terra, agora como uma maneira de tornar a
-                nossa visão de fazer as coisas de forma mais produtiva.
+                Os pequenos e médios negócios contribuem significativamente e
+                fortalecem a economia moçambicana. Sua tenacidade, perceverança
+                e sonhos representam a espinha dorsal da nossa força de
+                trabalho.
+              </p>
+
+              <p>
+                Mas esses negócios enfrentam desafios desproporcionais ao seu
+                tamanho e recursos. E os provedores de tecnologia se concentram
+                principalmente nas atividade das grandes empreendimentos,
+                criando serviços fora do contato e fora do alcance de pequenos e
+                médios negócios.
               </p>
               <p>
-                Eventualmente, o nosso objectivo é ajudar a crescer e dar maior
-                visibilidade aos negócios, vendas e campanhas de marketing dos
-                usuários e, fazendo com que as suas actividades de laborais
-                sejam gerenciadas na nossa plataforma, ajudando as pessoas serem
-                mais produtivas e retornando pelo menos 20% do seu tempo de
-                volta para dedicar a vida a outras coisas. Uma ferramenta para
-                substituir todas. Nós estamos apenas começando e somos muito
-                gratos pelo apoio da comunidade que está com a nossa equipe
-                nesta jornada.
+                Na {complements.defaultTitle}, nossa missão é nivelar o campo de
+                jogo para os pequenos e médios empreendimentos que alimentam a
+                nossa economia.
               </p>
             </div>
             <div className='corner-motto'>
@@ -107,19 +126,24 @@ export default function About(): JSX.Element {
           </section>
 
           <section className='core-habits-container'>
-            <h2>❤ Hábitos Essenciais</h2>
+            <h3>
+              ❤ <span>Hábitos</span> que apoiam a nossa visão
+            </h3>
             <div className='core-habits-container_items'>
               {core_habits.map((habit, index) => (
                 <motion.div
                   key={index.toString()}
                   initial={{ scale: 0 }}
+                  drag={true}
+                  dragConstraints={{ top: 0, left: 0, bottom: 0, right: 0 }}
+                  dragElastic={0.3}
                   whileInView={{
                     scale: 1,
-                    transition: { duration: 0.5, bounce: 1 }
+                    transition: { duration: 0.5, bounce: 1 },
                   }}
                   whileHover={{
                     translateY: -8,
-                    boxShadow: `0px 20px 30px 10px rgba(${theme.accent}, 0.09)`
+                    boxShadow: `0px 20px 30px 10px rgba(${theme.accent}, 0.09)`,
                   }}
                   className={`core-habit ${'item' + index.toString()}`}>
                   <h3>{'0'.concat(Number(index + 1).toString())}</h3>
@@ -134,16 +158,17 @@ export default function About(): JSX.Element {
 
           <section className='our-motto-container'>
             <h3>
-              <span>Nosso</span> lema
+              ❤ <span>Nosso</span> lema
             </h3>
             <h2>
               Cresça e produza mais conosco <IoIosQuote />{' '}
             </h2>
 
             <p>
-              A nossa equipe é energética e apaixonada pelo mercado dos grandes
-              negócios. Queremos que desenvolva relações prósperas com a
-              comunidade {complements.defaultTitle} e alcance os seus objetivos.
+              A nossa equipe é energética e apaixonada pelo mercado dos pequenos
+              e médios negócios e quer ajudar na sua evolução. Queremos que
+              desenvolva relações prósperas com a comunidade{' '}
+              {complements.defaultTitle} e alcance os seus objetivos.
             </p>
             <Link href={'/auth/sign-in'}>
               <IoStorefrontOutline />

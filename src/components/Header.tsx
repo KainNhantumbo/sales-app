@@ -1,4 +1,5 @@
 import {
+  IoAppsOutline,
   IoLogInOutline,
   IoLogOutOutline,
   IoStorefrontOutline,
@@ -125,7 +126,7 @@ export default function Header(): JSX.Element {
           title='Abrir ou fechar o menu'
           className='toggle-btn'
           onClick={toggleMenu}>
-          {!isMenu ? <HiViewList /> : <HiX />}
+          {!isMenu ? <IoAppsOutline /> : <HiX />}
         </motion.button>
       </div>
     </Container>
