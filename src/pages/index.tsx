@@ -12,6 +12,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import fetch from '../config/client';
+import { motion } from 'framer-motion';
 import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
 import { PulseLoader } from 'react-spinners';
@@ -25,13 +26,8 @@ import RequestLogin from '@/components/modals/RequestLogin';
 import opening_store_png from '../../public/assets/opening.png';
 import { blurDataUrlImage, complements } from '@/data/app-data';
 import { HomeContainer as Container } from '@/styles/common/home';
-import { motion } from 'framer-motion';
 
-interface IProps {
-  products: PublicProducts[];
-}
-
-export default function Home({ products }: IProps): JSX.Element {
+export default function Home(): JSX.Element {
   const theme: DefaultTheme = useTheme();
   const { state, dispatch, loginPromptController, fetchAPI } = useAppContext();
 
@@ -88,20 +84,13 @@ export default function Home({ products }: IProps): JSX.Element {
   const LIMIT = 10;
   const { ref, inView } = useInView();
 
-  const {
-    data,
-    refetch,
-    isRefetching,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isError,
-  } = useInfiniteQuery({
-    queryKey: ['public-products'],
-    queryFn: fetchPublicProducts,
-    getNextPageParam: (lastPage) =>
-      lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
-  });
+  const { data, refetch, fetchNextPage, hasNextPage, isFetching, isError } =
+    useInfiniteQuery({
+      queryKey: ['public-products'],
+      queryFn: fetchPublicProducts,
+      getNextPageParam: (lastPage) =>
+        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
+    });
 
   async function fetchPublicProducts({
     pageParam = 0,
@@ -286,7 +275,9 @@ export default function Home({ products }: IProps): JSX.Element {
                         </Link>
                       )}
                       {!item.images && (
-                        <IoBagHandle className='no-image-icon' />
+                        <Link href={`/ecommerce/products/${item._id}`}>
+                          <IoBagHandle className='no-image-icon' />
+                        </Link>
                       )}
                     </div>
                     <Link
@@ -346,7 +337,6 @@ export default function Home({ products }: IProps): JSX.Element {
                       display: 'block',
                     }}
                   />
-                  {isRefetching && <p>Tentando novamente</p>}
                 </div>
               )}
 
@@ -368,20 +358,4 @@ export default function Home({ products }: IProps): JSX.Element {
       </Container>
     </Layout>
   );
-}
-
-export async function getServerSideProps(): Promise<
-  | { props: { products: PublicProducts[] } }
-  | { props: { products?: undefined } }
-> {
-  try {
-    const { data } = await fetch<PublicProducts[]>({
-      method: 'get',
-      url: `/api/v1/users/products/public?offset=0&limit=10`,
-    });
-    return { props: { products: [...data] } };
-  } catch (error) {
-    console.error(error);
-    return { props: {} };
-  }
 }

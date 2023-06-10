@@ -30,7 +30,7 @@ interface IContext {
   logoutPromptController: () => void;
   deleteCommentPromptController: (status: boolean, id: string) => void;
   deleteProductPromptController: (status: boolean, id: string) => void;
-  shareProductController: (status: boolean, id: string) => void;
+  shareProductController: () => void;
   loginPromptController: () => void;
   sortBoxController: () => void;
   searchBoxController: () => void;
@@ -136,12 +136,12 @@ export default function AppContext(props: AppContext) {
     });
   }
 
-  function shareProductController(status: boolean, id?: string): void {
+  function shareProductController(): void {
     dispatch({
       type: actions.SHARE_PRODUCT_MODAL,
       payload: {
         ...state,
-        isShareProductModal: { status, productId: id ?? '' }
+        isShareProductModal: !state.isShareProductModal
       }
     });
   }

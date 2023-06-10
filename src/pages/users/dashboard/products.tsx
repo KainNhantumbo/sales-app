@@ -5,7 +5,7 @@ import {
   IoLayersOutline,
   IoPricetagsOutline,
   IoStorefront,
-  IoWarningOutline
+  IoWarningOutline,
 } from 'react-icons/io5';
 import { VscEmptyWindow } from 'react-icons/vsc';
 import Link from 'next/link';
@@ -36,14 +36,14 @@ export default function Products(): JSX.Element {
     dispatch,
     fetchAPI,
     shareProductController,
-    deleteProductPromptController
+    deleteProductPromptController,
   } = useAppContext();
   const [loading, setLoading] = useState<{ status: boolean }>({
-    status: false
+    status: false,
   });
   const [error, setError] = useState<{ status: boolean; msg: string }>({
     status: false,
-    msg: ''
+    msg: '',
   });
 
   async function fetchProducts(): Promise<void> {
@@ -53,14 +53,14 @@ export default function Products(): JSX.Element {
       const { data }: AxiosResponse<ProductsList[]> = await fetchAPI({
         url: `/api/v1/users/products?fields=name,price,quantity,promotion,category,favorites,createdAt,updatedAt${`&sort=${
           state.productsListQuery.sort || 'updatedAt'
-        }`}${`&search=${state.productsListQuery.query || ''}`}`
+        }`}${`&search=${state.productsListQuery.query || ''}`}`,
       });
       dispatch({
         type: actions.PRODUCTS_LIST_DATA,
         payload: {
           ...state,
-          productList: data
-        }
+          productList: data,
+        },
       });
       if (data?.length === 0)
         setError({ status: true, msg: 'Nada para mostrar.' });
@@ -68,7 +68,7 @@ export default function Products(): JSX.Element {
       console.error(e);
       setError({
         status: true,
-        msg: 'Um erro ocorreu durante o processamento da sua requisição. Por favor, tente novamente.'
+        msg: 'Um erro ocorreu durante o processamento da sua requisição. Por favor, tente novamente.',
       });
     } finally {
       setLoading({ status: false });
@@ -79,7 +79,7 @@ export default function Products(): JSX.Element {
     try {
       await fetchAPI({
         method: 'delete',
-        url: `/api/v1/users/products/${productId}`
+        url: `/api/v1/users/products/${productId}`,
       });
       deleteProductPromptController(false, '');
       fetchProducts();
@@ -99,8 +99,8 @@ export default function Products(): JSX.Element {
       dispatch({
         type: actions.CLEAN_UP_MODALS,
         payload: {
-          ...state
-        }
+          ...state,
+        },
       });
     };
   }, []);
@@ -124,7 +124,6 @@ export default function Products(): JSX.Element {
         <SortBox />
         <ToolBox />
         <AppStatus />
-        <ShareProducts />
 
         <article>
           {!loading.status && error.status && (
@@ -148,8 +147,10 @@ export default function Products(): JSX.Element {
               </div>
             )}
             <div className='products-list_container'>
-              {state.productList.map((product) => (
+              {state.productList.map((product, index) => (
                 <div key={product._id} className='products-list_item'>
+                  {index === 0 && <ShareProducts productId={product._id} />}
+
                   <div className='products-list_item_primary'>
                     <div className='top-side'>
                       <h3 className='name'>
@@ -225,7 +226,7 @@ export default function Products(): JSX.Element {
                     </button>
                     <button
                       title='Compartilhar produto da sua loja'
-                      onClick={() => shareProductController(true, product._id)}>
+                      onClick={() => shareProductController()}>
                       <span>Compartilhar</span>
                     </button>
                   </div>

@@ -9,8 +9,9 @@ import {
   PublicProducts,
   Store,
   TDenounce,
+  TPublicProduct,
   TSearchProducts,
-  User
+  User,
 } from './index';
 
 export type State = {
@@ -20,7 +21,7 @@ export type State = {
   isDeactivateStorePrompt: boolean;
   isDeleteProductPrompt: { status: boolean; productId: string };
   isDeleteCommentPrompt: { status: boolean; commentId: string };
-  isShareProductModal: { status: boolean; productId: string };
+  isShareProductModal: boolean;
   isUserWorkingDataModal: boolean;
   isConnected: boolean;
   isSearchActive: boolean;
@@ -43,14 +44,15 @@ export type State = {
   user: User;
   store: Store;
   product: Product;
+  publicProduct: TPublicProduct;
   productList: ProductsList[];
   comment: IComment;
   commentsList: IComment[];
   publicProducts: PublicProducts[];
   productsListQuery: { query: string; sort: string };
-  blogPostsList: IBlogPosts[],
-  queryPublicProducts: TSearchProducts
-  isPublicProductsFilters: boolean
+  blogPostsList: IBlogPosts[];
+  queryPublicProducts: TSearchProducts;
+  isPublicProductsFilters: boolean;
 };
 
 export type Action = { type: string; payload: State };

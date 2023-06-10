@@ -2,13 +2,13 @@ import {
   IoIosAlbums,
   IoIosBookmark,
   IoMdCalendar,
-  IoMdTime
+  IoMdTime,
 } from 'react-icons/io';
 import {
   IoChatbubblesOutline,
   IoHeart,
   IoHeartOutline,
-  IoOpenOutline
+  IoOpenOutline,
 } from 'react-icons/io5';
 import moment from 'moment';
 import Link from 'next/link';
@@ -37,7 +37,7 @@ interface IPost {
 
 export default function Post({
   post: initialPost,
-  latestPosts
+  latestPosts,
 }: IPost): JSX.Element {
   const { state, fetchAPI, loginPromptController } = useAppContext();
   const [post, setPost] = useState(initialPost);
@@ -58,14 +58,14 @@ export default function Post({
     title: post.title,
     slug: post.slug,
     excerpt: post.excerpt,
-    hostname: complements.websiteUrl
+    hostname: complements.websiteUrl,
   });
 
   async function handleFavoritePost(): Promise<void> {
     try {
       const { data } = await fetchAPI({
         method: 'post',
-        url: `/api/v1/users/favorites/blog-posts/${post._id}`
+        url: `/api/v1/users/favorites/blog-posts/${post._id}`,
       });
       setPost((doc) => ({ ...doc, favorites: data }));
     } catch (err: any) {
@@ -77,7 +77,7 @@ export default function Post({
     try {
       const { data } = await fetchAPI({
         method: 'patch',
-        url: `/api/v1/users/favorites/blog-posts/${post._id}`
+        url: `/api/v1/users/favorites/blog-posts/${post._id}`,
       });
       setPost((doc) => ({ ...doc, favorites: data }));
     } catch (err: any) {
@@ -90,7 +90,7 @@ export default function Post({
       metadata={{
         title: post.title,
         updatedAt: post.updatedAt,
-        createdAt: post.createdAt
+        createdAt: post.createdAt,
       }}>
       <Container className='wrapper'>
         <div className='main-container'>
@@ -225,7 +225,7 @@ export default function Post({
               </section>
             </section>
 
-            <Comments post={post} />
+            <Comments contentId={post._id} />
 
             <section className='featured-posts-container'>
               <h2>
@@ -283,7 +283,7 @@ export async function getStaticPaths(): Promise<any> {
   const slugs = await getPaths();
   return {
     paths: slugs,
-    fallback: false
+    fallback: false,
   };
 }
 

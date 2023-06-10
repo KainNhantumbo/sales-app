@@ -16,7 +16,7 @@ import {
   IoReload,
   IoSave,
   IoSyncOutline,
-  IoTrashOutline
+  IoTrashOutline,
 } from 'react-icons/io5';
 import { AxiosResponse } from 'axios';
 import Compressor from 'compressorjs';
@@ -52,7 +52,7 @@ export default function ProductEditor(): JSX.Element {
     img_0: { id: '', data: '' },
     img_1: { id: '', data: '' },
     img_2: { id: '', data: '' },
-    img_3: { id: '', data: '' }
+    img_3: { id: '', data: '' },
   });
 
   // --------------------functions--------------------
@@ -73,11 +73,11 @@ export default function ProductEditor(): JSX.Element {
               ...obj,
               [`img_${index}`]: {
                 id: state.user.cover_image?.id || '',
-                data: encodedImage
-              }
+                data: encodedImage,
+              },
             }));
           };
-        }
+        },
       });
     }
   }
@@ -89,9 +89,9 @@ export default function ProductEditor(): JSX.Element {
         ...state,
         product: {
           ...state.product,
-          [e.target.name]: e.target.value
-        }
-      }
+          [e.target.name]: e.target.value,
+        },
+      },
     });
   }
 
@@ -101,7 +101,7 @@ export default function ProductEditor(): JSX.Element {
         setImagesData((data) => {
           return {
             ...data,
-            [index]: { id: '', data: '' }
+            [index]: { id: '', data: '' },
           };
         });
       }
@@ -110,14 +110,14 @@ export default function ProductEditor(): JSX.Element {
     fetchAPI({
       method: 'delete',
       url: `/api/v1/users/product/assets`,
-      data: { image: id }
+      data: { image: id },
     })
       .then(() => {
         if (index) {
           setImagesData((data) => {
             return {
               ...data,
-              [index]: { id: '', data: '' }
+              [index]: { id: '', data: '' },
             };
           });
         }
@@ -132,10 +132,10 @@ export default function ProductEditor(): JSX.Element {
                 img_0: { id: '', url: '' },
                 img_1: { id: '', url: '' },
                 img_2: { id: '', url: '' },
-                img_3: { id: '', url: '' }
-              }
-            }
-          }
+                img_3: { id: '', url: '' },
+              },
+            },
+          },
         });
       })
       .catch((error) => {
@@ -147,15 +147,15 @@ export default function ProductEditor(): JSX.Element {
     setLoading({ status: true, key: 'product-data' });
     fetchAPI({
       method: 'get',
-      url: `/api/v1/users/products/${productId}?fields=-created_by`
+      url: `/api/v1/users/products/${productId}?fields=-created_by`,
     })
       .then(({ data }: AxiosResponse<Product>) => {
         dispatch({
           type: actions.PRODUCT_DATA,
           payload: {
             ...state,
-            product: { ...state.product, ...data }
-          }
+            product: { ...state.product, ...data },
+          },
         });
       })
       .catch((error) => {
@@ -165,7 +165,7 @@ export default function ProductEditor(): JSX.Element {
           msg:
             error?.response?.data?.message ||
             'Oops! Algo deu errado. Tente novamente.',
-          key: 'product-data'
+          key: 'product-data',
         });
       })
       .finally(() => {
@@ -195,12 +195,12 @@ export default function ProductEditor(): JSX.Element {
               value.data !== ''
                 ? { [key]: { id: value.id, data: value.data } }
                 : null
-            )
+            ),
           ].reduce((accumulator, currentValue) => {
             const group = { [currentValue[0]]: currentValue[1] };
             return { ...accumulator, ...group };
-          }, {})
-        }
+          }, {}),
+        },
       });
       router.back();
     } catch (error: any) {
@@ -210,7 +210,7 @@ export default function ProductEditor(): JSX.Element {
         msg:
           error?.response?.data?.message ||
           'Oops! Algo deu errado. Tente novamente.',
-        key: 'product-update'
+        key: 'product-update',
       });
     } finally {
       setLoading({ status: false, key: 'product-update' });
@@ -239,12 +239,12 @@ export default function ProductEditor(): JSX.Element {
               value.data !== ''
                 ? { [key]: { id: value.id, data: value.data } }
                 : null
-            )
+            ),
           ].reduce((accumulator, currentValue) => {
             const group = { [currentValue[0]]: currentValue[1] };
             return { ...accumulator, ...group };
-          }, {})
-        }
+          }, {}),
+        },
       });
       router.back();
     } catch (error: any) {
@@ -254,7 +254,7 @@ export default function ProductEditor(): JSX.Element {
         msg:
           error?.response?.data?.message ||
           'Oops! Algo deu errado. Tente novamente.',
-        key: 'product-update'
+        key: 'product-update',
       });
     } finally {
       setLoading({ status: false, key: 'product-update' });
@@ -290,15 +290,15 @@ export default function ProductEditor(): JSX.Element {
               img_0: { id: '', url: '' },
               img_1: { id: '', url: '' },
               img_2: { id: '', url: '' },
-              img_3: { id: '', url: '' }
+              img_3: { id: '', url: '' },
             },
             createdAt: '',
             updatedAt: '',
             invalidated: false,
             favorites: [],
-            allow_comments: false
-          }
-        }
+            allow_comments: false,
+          },
+        },
       });
     };
   }, []);
@@ -307,15 +307,15 @@ export default function ProductEditor(): JSX.Element {
   useEffect(() => {
     fetchAPI({
       method: 'get',
-      url: `/api/v1/users/store?fields=name`
+      url: `/api/v1/users/store?fields=name`,
     })
       .then(({ data }) => {
         dispatch({
           type: actions.STORE_DATA,
           payload: {
             ...state,
-            store: { ...state.store, ...data }
-          }
+            store: { ...state.store, ...data },
+          },
         });
       })
       .catch((error) => {
@@ -544,9 +544,9 @@ export default function ProductEditor(): JSX.Element {
                                 ...state,
                                 product: {
                                   ...state.product,
-                                  category: e.target.value
-                                }
-                              }
+                                  category: e.target.value,
+                                },
+                              },
                             });
                           }}>
                           {product_categories
@@ -630,10 +630,10 @@ export default function ProductEditor(): JSX.Element {
                                   ...state.product,
                                   promotion: {
                                     ...state.product.promotion,
-                                    status: e.target.checked
-                                  }
-                                }
-                              }
+                                    status: e.target.checked,
+                                  },
+                                },
+                              },
                             });
                           }}
                           checked={state.product.promotion.status}
@@ -663,10 +663,10 @@ export default function ProductEditor(): JSX.Element {
                                   ...state.product,
                                   promotion: {
                                     ...state.product.promotion,
-                                    percentage: Number(e.target.value)
-                                  }
-                                }
-                              }
+                                    percentage: Number(e.target.value),
+                                  },
+                                },
+                              },
                             });
                           }}
                         />
@@ -691,9 +691,9 @@ export default function ProductEditor(): JSX.Element {
                                 ...state,
                                 product: {
                                   ...state.product,
-                                  allow_comments: e.target.checked
-                                }
-                              }
+                                  allow_comments: e.target.checked,
+                                },
+                              },
                             });
                           }}
                         />
@@ -748,7 +748,7 @@ export default function ProductEditor(): JSX.Element {
                         color={`rgb(${theme.primary})`}
                         aria-placeholder='Processando...'
                         cssOverride={{
-                          display: 'block'
+                          display: 'block',
                         }}
                       />
                       <span>Processando...</span>

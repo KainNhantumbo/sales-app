@@ -2,61 +2,78 @@ import {
   FaFacebook,
   FaLinkedinIn,
   FaPinterest,
-  FaTwitter
+  FaTwitter,
 } from 'react-icons/fa';
+import fetch from '../../config/client';
+import { Product } from '../../../@types';
+import { useEffect, useState } from 'react';
 import { complements } from '@/data/app-data';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '@/context/AppContext';
-import { IoClose, IoShareSocial } from 'react-icons/io5';
+import { IoClose, IoCloseCircle, IoShareSocial } from 'react-icons/io5';
 import { ShareProductContainer as Container } from '../../styles/modules/share-product-modal';
 
-export default function ShareProducts(): JSX.Element {
+type TProps = {
+  productId: string;
+};
+
+export default function ShareProducts(props: TProps): JSX.Element {
   const { state, shareProductController } = useAppContext();
+  const [data, setData] = useState<Product>();
+  const [isError, setIsError] = useState<boolean>(false);
 
-  const getProductdata = () => {
-    const productId = state.isShareProductModal.productId;
-    if (productId) {
-      const [foundProduct] = state.productList.filter(
-        (product) => product._id === productId
-      );
-
-      return [
-        {
-          name: 'Compartilhe no LinkedIn',
-          url: `https://www.linkedin.com/shareArticle?mini=true&url=${complements.websiteUrl}/ecommerce/products/${foundProduct._id}&title=${foundProduct.name}&summary=${foundProduct.category}`,
-          icon: FaLinkedinIn
-        },
-        {
-          name: 'Compartilhe no Facebook',
-          url: `https://www.facebook.com/sharer/sharer.php?u=${complements.websiteUrl}/ecommerce/products/${foundProduct._id}`,
-          icon: FaFacebook
-        },
-        {
-          name: 'Compartilhe no Twitter',
-          url: `https://twitter.com/intent/tweet?text=${complements.websiteUrl}/ecommerce/products/${foundProduct._id}`,
-          icon: FaTwitter
-        },
-        {
-          name: 'Compartilhe no Pinterest',
-          url: `https://pinterest.com/pin/create/button/?url=${complements.websiteUrl}/ecommerce/products/${foundProduct._id}&media=${complements.websiteUrl}/ecommerce/products/${foundProduct._id}&description=${foundProduct.category}`,
-          icon: FaPinterest
-        }
-      ];
+  const getResource = async (productId: string) => {
+    try {
+      const { data } = await fetch<Product>({
+        method: 'get',
+        url: `/api/v1/users/products/public/${productId}`,
+      });
+      setData(data);
+    } catch (err: any) {
+      setIsError(true);
+      console.error(err?.response?.data?.message ?? err);
     }
-    return [];
   };
+
+  useEffect(() => {
+    getResource(props.productId);
+    return () => setIsError(false);
+  }, []);
+
+  const getProductdata = () => [
+    {
+      name: 'Compartilhe no LinkedIn',
+      url: `https://www.linkedin.com/shareArticle?mini=true&url=${complements.websiteUrl}/ecommerce/products/${data?._id}&title=${data?.name}&summary=${data?.category}`,
+      icon: FaLinkedinIn,
+    },
+    {
+      name: 'Compartilhe no Facebook',
+      url: `https://www.facebook.com/sharer/sharer.php?u=${complements.websiteUrl}/ecommerce/products/${data?._id}`,
+      icon: FaFacebook,
+    },
+    {
+      name: 'Compartilhe no Twitter',
+      url: `https://twitter.com/intent/tweet?text=${complements.websiteUrl}/ecommerce/products/${data?._id}`,
+      icon: FaTwitter,
+    },
+    {
+      name: 'Compartilhe no Pinterest',
+      url: `https://pinterest.com/pin/create/button/?url=${complements.websiteUrl}/ecommerce/products/${data?._id}&media=${complements.websiteUrl}/ecommerce/products/${data?._id}&description=${data?.name}`,
+      icon: FaPinterest,
+    },
+  ];
 
   const options = getProductdata();
 
   return (
     <AnimatePresence>
-      {state.isShareProductModal.status && (
+      {state.isShareProductModal && (
         <Container
           className='main'
           onClick={(e: any): void => {
             const target = (e as any).target.classList;
             if (target.contains('main')) {
-              shareProductController(false, '');
+              shareProductController();
             }
           }}>
           <motion.section
@@ -65,30 +82,31 @@ export default function ShareProducts(): JSX.Element {
             animate={{
               y: 0,
               transition: {
-                duration: 0.45
-              }
+                duration: 0.45,
+              },
             }}
             exit={{
               y: 500,
               transition: {
-                duration: 0.45
-              }
+                duration: 0.45,
+              },
             }}>
             <div className='dialog-prompt'>
               <div className='top'>
                 <h2>
                   <IoShareSocial />
-                  <span>Compartilhar na Produto </span>
+                  <span>Compartilhar o produto</span>
                 </h2>
                 <button
                   className='quit'
                   title='Close'
-                  onClick={() => shareProductController(false, '')}>
+                  onClick={shareProductController}>
                   <IoClose />
                 </button>
               </div>
               <section className='prompt-info'>
                 {options.length > 0 &&
+                  !isError &&
                   options.map((option, index) => (
                     <motion.a
                       whileHover={{ scale: 1.04 }}
@@ -103,10 +121,16 @@ export default function ShareProducts(): JSX.Element {
                     </motion.a>
                   ))}
               </section>
+              {isError && (
+                <div className='static-error-message'>
+                  <IoCloseCircle />
+                  <span>Erro ao carregar informações. Tente novamente.</span>
+                </div>
+              )}
               <div className='prompt-actions'>
                 <button
                   className='prompt-cancel'
-                  onClick={() => shareProductController(false, '')}>
+                  onClick={shareProductController}>
                   <IoClose />
                   <span>Fechar</span>
                 </button>

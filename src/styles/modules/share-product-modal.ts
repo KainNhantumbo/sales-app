@@ -35,6 +35,14 @@ export const ShareProductContainer = styled.section`
     }
   }
 
+  .static-error-message {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: rgb(${({ theme }) => theme.alert});
+    gap: 5px;
+  }
+
   .dialog-prompt {
     display: flex;
     justify-content: flex-start;
@@ -47,7 +55,6 @@ export const ShareProductContainer = styled.section`
     margin: 5px;
     background: rgb(${({ theme }) => theme.foreground});
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);
-    
 
     .prompt-info {
       display: flex;

@@ -1,22 +1,22 @@
+import Link from 'next/link';
 import Comment from './Comment';
 import { AxiosResponse } from 'axios';
 import CommentForm from './CommentForm';
 import { actions } from '@/data/actions';
 import ReplyComment from './ReplyComment';
-import { IBlogPost, IComment } from '../../../@types';
+import { IComment } from '../../../@types';
 import ReplyCommentForm from './ReplyCommentForm';
 import { useState, useEffect, useMemo } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
 import { CommentsContainer as Container } from '@/styles/modules/comments';
-import Link from 'next/link';
 
-type Props = {
-  post: IBlogPost;
-};
-
-export default function Comments({ post }: Props): JSX.Element {
+export default function Comments({
+  contentId,
+}: {
+  contentId: string;
+}): JSX.Element {
   const { state, dispatch, fetchAPI, deleteCommentPromptController } =
     useAppContext();
 
@@ -79,7 +79,7 @@ export default function Comments({ post }: Props): JSX.Element {
     try {
       const { data } = await fetchAPI({
         method: 'get',
-        url: `/api/v1/users/comments/${post._id}`,
+        url: `/api/v1/users/comments/${contentId}`,
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
@@ -100,7 +100,7 @@ export default function Comments({ post }: Props): JSX.Element {
         method: 'post',
         url: '/api/v1/users/comments',
         data: {
-          source_id: post._id,
+          source_id: contentId,
           content: state.comment.content,
           parent_id: null,
         },
@@ -252,7 +252,7 @@ export default function Comments({ post }: Props): JSX.Element {
         method: 'post',
         url: '/api/v1/users/comments',
         data: {
-          source_id: post._id,
+          source_id: contentId,
           content: state.comment.content,
           parent_id: state.comment.parent_id,
         },
@@ -277,7 +277,9 @@ export default function Comments({ post }: Props): JSX.Element {
   }, [state.commentsList]);
 
   useEffect(() => {
-    getComments();
+    if (contentId) {
+      getComments();
+    }
     return () => {
       setActiveModes({ reply: false, edit: false });
       clearCommentData();

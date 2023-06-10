@@ -22,7 +22,7 @@ export const initialState: State = {
   isDeactivateStorePrompt: false,
   isDeleteCommentPrompt: { status: false, commentId: '' },
   isDeleteProductPrompt: { status: false, productId: '' },
-  isShareProductModal: { status: false, productId: '' },
+  isShareProductModal: false,
   isUserWorkingDataModal: false,
   isConnected: false,
   blogPostsList: [],
@@ -181,6 +181,39 @@ export const initialState: State = {
   productList: [],
   publicProducts: [],
   commentsList: [],
+  publicProduct: {
+    _id: '',
+    name: '',
+    category: product_categories[0],
+    description: '',
+    specifications: '',
+    created_by: '',
+    store: {
+      _id: '',
+      name: '',
+      location: {
+        country: '',
+        state: '',
+        adress: '',
+      },
+      category: '',
+    },
+    promotion: { status: false, percentage: 0 },
+    price: 0,
+    delivery_tax: 0,
+    quantity: 0,
+    images: {
+      img_0: { id: '', url: '' },
+      img_1: { id: '', url: '' },
+      img_2: { id: '', url: '' },
+      img_3: { id: '', url: '' },
+    },
+    createdAt: '',
+    updatedAt: '',
+    invalidated: false,
+    favorites: [],
+    allow_comments: true,
+  },
 };
 
 export default function reducer(state: State, action: Action) {
@@ -325,6 +358,8 @@ export default function reducer(state: State, action: Action) {
         ...state,
         isPublicProductsFilters: action.payload.isPublicProductsFilters,
       };
+    case actions.PUBLIC_PRODUCT_DATA:
+      return { ...state, publicProduct: action.payload.publicProduct };
     default:
       return { ...state };
   }

@@ -187,6 +187,35 @@ export type PublicProducts = {
   images: { [x: string]: { id: string; url: string } } | undefined;
 };
 
+export type TPublicProduct = {
+  _id: string;
+  name: string;
+  category: string;
+  price: number;
+  quantity: number;
+  promotion: { status: boolean; percentage: number };
+  favorites: string[];
+  createdAt: string;
+  updatedAt: string;
+  created_by: string;
+  description: string;
+  specifications: string;
+  delivery_tax: number;
+  invalidated: boolean;
+  allow_comments: boolean;
+  images: { [x: string]: { id: string; url: string } } | undefined;
+  store: {
+    _id: string;
+    name: string;
+    location: {
+      country: string;
+      state: string;
+      adress: string;
+    };
+    category: string;
+  };
+};
+
 export type Store = {
   _id: string;
   name: string;

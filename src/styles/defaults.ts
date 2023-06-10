@@ -12,6 +12,7 @@ export const BaseButtonOutline = css`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  outline: none;
   :hover {
     color: rgb(${({ theme }) => theme.primary_variant});
   }
