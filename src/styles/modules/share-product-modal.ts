@@ -35,14 +35,6 @@ export const ShareProductContainer = styled.section`
     }
   }
 
-  .static-error-message {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    color: rgb(${({ theme }) => theme.alert});
-    gap: 5px;
-  }
-
   .dialog-prompt {
     display: flex;
     justify-content: flex-start;

@@ -8,6 +8,7 @@ import {
   ProductsList,
   PublicProducts,
   Store,
+  TCart,
   TDenounce,
   TPublicProduct,
   TSearchProducts,
@@ -53,6 +54,7 @@ export type State = {
   blogPostsList: IBlogPosts[];
   queryPublicProducts: TSearchProducts;
   isPublicProductsFilters: boolean;
+  cart: TCart[];
 };
 
 export type Action = { type: string; payload: State };

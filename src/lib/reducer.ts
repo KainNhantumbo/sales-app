@@ -201,19 +201,13 @@ export const initialState: State = {
     promotion: { status: false, percentage: 0 },
     price: 0,
     delivery_tax: 0,
-    quantity: 0,
-    images: {
-      img_0: { id: '', url: '' },
-      img_1: { id: '', url: '' },
-      img_2: { id: '', url: '' },
-      img_3: { id: '', url: '' },
-    },
+    images: undefined,
     createdAt: '',
     updatedAt: '',
-    invalidated: false,
     favorites: [],
     allow_comments: true,
   },
+  cart:[],
 };
 
 export default function reducer(state: State, action: Action) {
@@ -360,6 +354,8 @@ export default function reducer(state: State, action: Action) {
       };
     case actions.PUBLIC_PRODUCT_DATA:
       return { ...state, publicProduct: action.payload.publicProduct };
+    case actions.PRODUCTS_CART:
+      return { ...state, cart: action.payload.cart };
     default:
       return { ...state };
   }

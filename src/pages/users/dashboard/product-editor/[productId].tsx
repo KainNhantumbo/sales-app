@@ -580,7 +580,7 @@ export default function ProductEditor(): JSX.Element {
                       <div className='form-element'>
                         <label htmlFor='price'>
                           <IoPricetagsOutline />
-                          <span>Preço por unidade (Meticais)</span>
+                          <span>Preço (em meticais e sem decimais) </span>
                         </label>
                         <input
                           type='number'

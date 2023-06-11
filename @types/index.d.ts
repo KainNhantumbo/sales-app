@@ -192,7 +192,6 @@ export type TPublicProduct = {
   name: string;
   category: string;
   price: number;
-  quantity: number;
   promotion: { status: boolean; percentage: number };
   favorites: string[];
   createdAt: string;
@@ -201,7 +200,6 @@ export type TPublicProduct = {
   description: string;
   specifications: string;
   delivery_tax: number;
-  invalidated: boolean;
   allow_comments: boolean;
   images: { [x: string]: { id: string; url: string } } | undefined;
   store: {
@@ -316,4 +314,9 @@ export type User = {
 export type TDenounce = {
   reson: string;
   content: string;
+};
+
+export type TCart = {
+  productId: string;
+  quantity: number;
 };

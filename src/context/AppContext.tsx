@@ -146,6 +146,12 @@ export default function AppContext(props: AppContext) {
     });
   }
 
+  // ----------------product cart--------------------------
+
+
+
+
+  
   // ----------------user authentication--------------------------
   async function validateAuth(): Promise<void> {
     try {

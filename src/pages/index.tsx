@@ -246,7 +246,6 @@ export default function Home(): JSX.Element {
                       <button
                         title='Adicionar a lista de favoritos'
                         className='favorite-button'
-                        disabled={state.auth?.id === '' && true}
                         onClick={() => {
                           if (!state.auth?.token) {
                             loginPromptController();
@@ -286,28 +285,38 @@ export default function Home(): JSX.Element {
                       {item.promotion.status ? (
                         <div className='item promo-price'>
                           <h4>
-                            <i>MZN </i>
-                            <span className='percentage'>
-                              {item.price}
+                            <span className='old-price'>
+                              {new Intl.NumberFormat('pt-BR', {
+                                currency: 'MZN',
+                                style: 'currency',
+                              }).format(item.price)}
                             </span>{' '}
-                            {(
-                              item.price -
-                              (item.price * item.promotion.percentage) / 100
-                            ).toFixed(2)}
+                            <span className='actual-price'>
+                              {new Intl.NumberFormat('pt-BR', {
+                                currency: 'MZN',
+                                style: 'currency',
+                              }).format(
+                                item.price -
+                                  (item.price * item.promotion.percentage) / 100
+                              )}
+                            </span>
                           </h4>
                         </div>
                       ) : (
                         <div className='item promo-price'>
-                          <span>
-                            <i>MZN </i>
-                            {item.price.toFixed(2)}
+                          <span className='actual-price'>
+                            {new Intl.NumberFormat('pt-BR', {
+                              currency: 'MZN',
+                              style: 'currency',
+                              useGrouping: true,
+                            }).format(item.price)}
                           </span>
                         </div>
                       )}
                       <h3>
                         <span>
-                          {item.name.length > 65
-                            ? item.name.slice(0, 65) + '...'
+                          {item.name.length > 55
+                            ? item.name.slice(0, 55) + '...'
                             : item.name}{' '}
                         </span>
                       </h3>

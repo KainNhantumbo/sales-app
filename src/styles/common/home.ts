@@ -7,6 +7,7 @@ export const HomeContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  min-height: 50vh;
   background: rgb(${({ theme }) => theme.background});
 
   * {
@@ -251,7 +252,7 @@ export const HomeContainer = styled.div`
           img {
             width: 100%;
             height: 100%;
-            height: 230px;
+            height: 215px;
             object-fit: cover;
             border-radius: 10px 10px 0 0;
 
@@ -304,14 +305,14 @@ export const HomeContainer = styled.div`
             gap: 3px;
             line-height: 1.2rem;
 
-            i {
+            .actual-price {
               font-weight: 500;
               color: rgb(${({ theme }) => theme.primary_variant});
             }
           }
 
           .promo-price {
-            .percentage {
+            .old-price {
               font-weight: 500;
               text-decoration: line-through;
               color: rgb(${({ theme }) => theme.alert});

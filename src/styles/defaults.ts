@@ -44,6 +44,7 @@ export const BaseButton = css`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  outline: none;
   :hover {
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.09);
   }
@@ -80,6 +81,7 @@ export const Button_Mono_A = css`
   padding: 10px;
   width: fit-content;
   cursor: pointer;
+  outline: none;
 
   :hover {
     background: rgb(${({ theme }) => theme.secondary});
@@ -105,6 +107,7 @@ export const Button_Mono_B = css`
   cursor: pointer;
   display: grid;
   place-content: center;
+  outline: none;
 
   :hover {
     color: rgb(${({ theme }) => theme.primary_variant});
@@ -130,6 +133,7 @@ export const StyledCornerButton = css`
   display: grid;
   place-content: center;
   padding: 5px;
+  outline: none;
 
   :hover {
     background: rgb(${({ theme }) => theme.alert});

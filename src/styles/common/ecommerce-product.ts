@@ -1,5 +1,10 @@
 import styled from 'styled-components';
-import { BaseButton, BaseButtonOutline, StyledCornerButton } from '../defaults';
+import {
+  BaseButton,
+  BaseButtonOutline,
+  StyledCornerButton,
+  StyledInputs,
+} from '../defaults';
 
 export const EcommerceProductContainer = styled.div`
   position: relative;
@@ -30,7 +35,7 @@ export const EcommerceProductContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
-    gap: 50px;
+    gap: 30px;
 
     @media screen and (max-width: 990px) {
       flex-direction: column;
@@ -51,35 +56,193 @@ export const EcommerceProductContainer = styled.div`
         margin: 0 auto;
       }
 
-      h1 {
-        font-size: 1.6rem;
-        font-weight: 500;
-        line-height: 2rem;
-        margin: 0;
-        padding: 0;
-      }
-
-      .description {
-        line-height: 1.4rem;
-        font-size: 0.96rem;
-      }
-
-      .tags-container {
+      .product-name {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        gap: 12px;
+
+        h1 {
+          font-size: 1.6rem;
+          font-weight: 500;
+          line-height: 2rem;
+          margin: 0;
+          padding: 0;
+        }
+
+        p {
+          line-height: 1.4rem;
+          font-size: 0.9rem;
+
+          i {
+            color: rgb(${({ theme }) => theme.primary_variant});
+          }
+        }
+      }
+
+      .front-container {
+        display: flex;
+        flex-direction: column;
         gap: 20px;
 
-        .favorite-button {
-          ${BaseButtonOutline}
-          color: rgb(${({ theme }) => theme.primary_variant});
-          :hover {
-            color: rgb(${({ theme }) => theme.primary_variant});
-            background: rgba(${({ theme }) => theme.primary}, 0.2);
+        .product-details {
+          display: flex;
+          flex-direction: row;
+          gap: 8px;
+
+          .price-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+
+            .promo-alert {
+              font-weight: 500;
+              color: rgb(${({ theme }) => theme.alert});
+              display: flex;
+              flex-direction: row;
+              gap: 3px;
+              align-items: center;
+              border-radius: 12px;
+              padding: 8px 10px;
+              background: rgba(${({ theme }) => theme.primary}, 0.2);
+
+              svg {
+                width: 20px;
+                height: 20px;
+              }
+            }
+
+            .actual-price {
+              font-size: 1.4rem;
+              line-height: 1.2rem;
+              font-weight: 500;
+              color: rgb(${({ theme }) => theme.primary_variant});
+            }
           }
         }
 
-        .share-button {
-          ${BaseButtonOutline}
+        .actions-container {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          padding-top: 12px;
+          border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+
+          .favorite-button {
+            ${BaseButtonOutline}
+            color: rgb(${({ theme }) => theme.primary_variant});
+            :hover {
+              color: rgb(${({ theme }) => theme.primary_variant});
+              background: rgba(${({ theme }) => theme.primary}, 0.2);
+            }
+          }
+
+          .share-button {
+            ${BaseButtonOutline}
+          }
+        }
+
+        .cart-container {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          padding-top: 18px;
+          border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+
+          .cart-quantity {
+            display: flex;
+            flex-direction: row;
+            gap: 18px;
+            justify-content: space-between;
+            align-items: center;
+            h3 {
+              font-weight: 500;
+              display: flex;
+              flex-direction: column;
+              gap: 12px;
+
+              i {
+                font-weight: 400;
+                font-size: 0.9rem;
+              }
+            }
+          }
+
+          .cart-manage {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            align-items: center;
+
+            ${StyledInputs}
+            input {
+              max-width: 80px;
+            }
+
+            button {
+              ${StyledCornerButton}
+              padding: 5px;
+              background: rgb(${({ theme }) => theme.primary_variant});
+              :hover {
+                background: rgb(${({ theme }) => theme.secondary});
+              }
+              svg {
+                width: 25px;
+                height: 25px;
+                color: rgb(${({ theme }) => theme.neutral});
+              }
+            }
+          }
+
+          .cart-actions {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+
+            .add-to-cart_button {
+              ${BaseButtonOutline}
+              padding: 12px;
+              color: rgb(${({ theme }) => theme.primary_variant});
+              :hover {
+                color: rgb(${({ theme }) => theme.primary_variant});
+                background: rgba(${({ theme }) => theme.primary}, 0.2);
+              }
+            }
+            .buy_button {
+              ${BaseButton}
+            }
+          }
+        }
+        .qr-code-container {
+          padding-top: 12px;
+          border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+          display: flex;
+          flex-direction: row;
+          gap: 20px;
+          justify-content: space-between;
+          align-items: center;
+
+          .description {
+            display: flex;
+            flex-direction: row;
+            gap: 18px;
+            justify-content: space-between;
+            align-items: center;
+            h3 {
+              font-weight: 500;
+              display: flex;
+              flex-direction: column;
+              gap: 12px;
+
+              i {
+                font-weight: 400;
+                font-size: 0.9rem;
+              }
+            }
+          }
         }
       }
     }
@@ -98,7 +261,7 @@ export const EcommerceProductContainer = styled.div`
 
       .no-image-icon {
         width: 100%;
-        max-width: 320px;
+        max-width: 420px;
         height: 420px;
       }
 
@@ -219,7 +382,7 @@ export const EcommerceProductContainer = styled.div`
         align-items: center;
         width: 100%;
         gap: 12px;
-        
+
         color: rgb(${({ theme }) => theme.primary_variant});
         svg {
           width: 25px;
@@ -238,12 +401,36 @@ export const EcommerceProductContainer = styled.div`
         gap: 20px;
         align-items: center;
 
-        .name, i {
+        .name,
+        i {
           font-weight: 500;
         }
 
         a {
           ${BaseButton}
+        }
+      }
+    }
+
+    .no-comments-message {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+
+      h3 {
+        display: flex;
+        font-size: 1rem;
+        font-weight: 500;
+        align-items: center;
+        width: 100%;
+        gap: 12px;
+
+        svg {
+          width: 25px;
+          height: 25px;
         }
       }
     }

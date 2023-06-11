@@ -149,7 +149,13 @@ export default function Products(): JSX.Element {
             <div className='products-list_container'>
               {state.productList.map((product, index) => (
                 <div key={product._id} className='products-list_item'>
-                  {index === 0 && <ShareProducts productId={product._id} />}
+                  {index === 0 && (
+                    <ShareProducts
+                      productId={product._id}
+                      category={product.category}
+                      name={product.name}
+                    />
+                  )}
 
                   <div className='products-list_item_primary'>
                     <div className='top-side'>
