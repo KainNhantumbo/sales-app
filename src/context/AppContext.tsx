@@ -3,7 +3,7 @@ import {
   useEffect,
   createContext,
   Dispatch,
-  useReducer
+  useReducer,
 } from 'react';
 import fetch from '../config/client';
 import ThemeContext from './ThemeContext';
@@ -11,7 +11,7 @@ import SocketContext from './SocketContext';
 import { actions } from '@/data/actions';
 import { NextRouter, useRouter } from 'next/router';
 import { Action, State } from '../../@types/reducer';
-import { AppContext } from '../../@types/index';
+import { AppContext, TCart } from '../../@types/index';
 import reducer, { initialState } from '@/lib/reducer';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
@@ -19,9 +19,9 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      networkMode: 'always'
-    }
-  }
+      networkMode: 'always',
+    },
+  },
 });
 
 interface IContext {
@@ -33,10 +33,15 @@ interface IContext {
   shareProductController: () => void;
   loginPromptController: () => void;
   sortBoxController: () => void;
+  cartModalController: () => void;
   searchBoxController: () => void;
   deleteAccountPromptController: () => void;
   deactivateStorePromptController: () => void;
   userWorkingDataController: () => void;
+  addProductToCart: (props: TCart) => void;
+  removeProductFromCart: (currentProductId: string) => void;
+  updateCartProduct: (props: { productId: string; quantity: number }) => void;
+  getCartProduct: (currentProductId: string) => TCart;
   logoutUser: () => Promise<void>;
   fetchAPI: (config: AxiosRequestConfig) => Promise<AxiosResponse<any, any>>;
 }
@@ -48,14 +53,25 @@ const context = createContext<IContext>({
   fetchAPI: (): any => {},
   logoutPromptController: () => {},
   searchBoxController: () => {},
+  cartModalController: () => {},
   sortBoxController: () => {},
   deleteAccountPromptController: () => {},
   deactivateStorePromptController: () => {},
   deleteProductPromptController: () => {},
   deleteCommentPromptController: () => {},
+  removeProductFromCart: () => {},
+  updateCartProduct: () => {},
+  getCartProduct: () => ({
+    productId: '',
+    quantity: 1,
+    productName: '',
+    price: 0,
+    previewImage: undefined,
+  }),
+  addProductToCart: () => {},
   shareProductController: () => {},
   loginPromptController: () => {},
-  userWorkingDataController: () => {}
+  userWorkingDataController: () => {},
 });
 
 export default function AppContext(props: AppContext) {
@@ -63,19 +79,28 @@ export default function AppContext(props: AppContext) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // ============= modal controllers =================== //
+  function cartModalController(): void {
+    dispatch({
+      type: actions.CART_MODAL,
+      payload: { ...state, isCartModal: !state.isCartModal },
+    });
+  }
   function userWorkingDataController(): void {
     dispatch({
       type: actions.USER_WORKING_DATA_MODAL,
       payload: {
         ...state,
-        isUserWorkingDataModal: !state.isUserWorkingDataModal
-      }
+        isUserWorkingDataModal: !state.isUserWorkingDataModal,
+      },
     });
   }
   function deleteAccountPromptController(): void {
     dispatch({
       type: actions.DELETE_ACCOUNT_PROMPT,
-      payload: { ...state, isDeleteAccountPrompt: !state.isDeleteAccountPrompt }
+      payload: {
+        ...state,
+        isDeleteAccountPrompt: !state.isDeleteAccountPrompt,
+      },
     });
   }
   function deactivateStorePromptController(): void {
@@ -83,36 +108,36 @@ export default function AppContext(props: AppContext) {
       type: actions.DEACTIVATE_STORE_PROMPT,
       payload: {
         ...state,
-        isDeactivateStorePrompt: !state.isDeactivateStorePrompt
-      }
+        isDeactivateStorePrompt: !state.isDeactivateStorePrompt,
+      },
     });
   }
 
   function logoutPromptController(): void {
     dispatch({
       type: actions.LOGOUT_PROMPT,
-      payload: { ...state, isLogoutPrompt: !state.isLogoutPrompt }
+      payload: { ...state, isLogoutPrompt: !state.isLogoutPrompt },
     });
   }
 
   function loginPromptController(): void {
     dispatch({
       type: actions.LOGIN_PROMPT,
-      payload: { ...state, isLoginPrompt: !state.isLoginPrompt }
+      payload: { ...state, isLoginPrompt: !state.isLoginPrompt },
     });
   }
 
   function searchBoxController(): void {
     dispatch({
       type: actions.SEARCH_BOX_CONTROL,
-      payload: { ...state, isSearchActive: !state.isSearchActive }
+      payload: { ...state, isSearchActive: !state.isSearchActive },
     });
   }
 
   function sortBoxController(): void {
     dispatch({
       type: actions.SORT_BOX_CONTROL,
-      payload: { ...state, isSortActive: !state.isSortActive }
+      payload: { ...state, isSortActive: !state.isSortActive },
     });
   }
 
@@ -121,8 +146,8 @@ export default function AppContext(props: AppContext) {
       type: actions.DELETE_COMMENT_PROMPT,
       payload: {
         ...state,
-        isDeleteCommentPrompt: { status, commentId: id ?? '' }
-      }
+        isDeleteCommentPrompt: { status, commentId: id ?? '' },
+      },
     });
   }
 
@@ -131,8 +156,8 @@ export default function AppContext(props: AppContext) {
       type: actions.DELETE_PRODUCT_PROMPT,
       payload: {
         ...state,
-        isDeleteProductPrompt: { status, productId: id ?? '' }
-      }
+        isDeleteProductPrompt: { status, productId: id ?? '' },
+      },
     });
   }
 
@@ -141,24 +166,81 @@ export default function AppContext(props: AppContext) {
       type: actions.SHARE_PRODUCT_MODAL,
       payload: {
         ...state,
-        isShareProductModal: !state.isShareProductModal
-      }
+        isShareProductModal: !state.isShareProductModal,
+      },
     });
   }
 
   // ----------------product cart--------------------------
 
+  function getCartProduct(currentProductId: string): TCart {
+    const foundProduct = state.cart.some(
+      (product) => product.productId === currentProductId
+    );
 
+    if (foundProduct)
+      return state.cart.filter(
+        (product) => product.productId === currentProductId
+      )[0];
+    return {
+      productId: '',
+      quantity: 1,
+      productName: '',
+      previewImage: undefined,
+      price: 0,
+    };
+  }
 
+  function updateCartProduct(props: {
+    productId: string;
+    quantity: number;
+  }): void {
+    dispatch({
+      type: actions.PRODUCTS_CART,
+      payload: {
+        ...state,
+        cart: [
+          ...state.cart.map((product) =>
+            product.productId === props.productId
+              ? { ...product, ...props }
+              : product
+          ),
+        ],
+      },
+    });
+  }
 
-  
+  function removeProductFromCart(currentProductId: string): void {
+    dispatch({
+      type: actions.PRODUCTS_CART,
+      payload: {
+        ...state,
+        cart: [
+          ...state.cart.filter(
+            (product) => product.productId !== currentProductId
+          ),
+        ],
+      },
+    });
+  }
+
+  function addProductToCart(props: TCart): void {
+    dispatch({
+      type: actions.PRODUCTS_CART,
+      payload: {
+        ...state,
+        cart: [...state.cart, { ...props }],
+      },
+    });
+  }
+
   // ----------------user authentication--------------------------
   async function validateAuth(): Promise<void> {
     try {
       const { data } = await fetch({
         method: 'get',
         url: '/api/v1/auth/default/refresh',
-        withCredentials: true
+        withCredentials: true,
       });
       dispatch({
         type: actions.USER_AUTH,
@@ -170,9 +252,9 @@ export default function AppContext(props: AppContext) {
             invalidated: data?.invalidated,
             email: data?.email,
             name: data?.name,
-            profile_image: data?.profile_image
-          }
-        }
+            profile_image: data?.profile_image,
+          },
+        },
       });
     } catch (err: any) {
       dispatch({
@@ -185,9 +267,9 @@ export default function AppContext(props: AppContext) {
             token: '',
             email: '',
             profile_image: '',
-            invalidated: false
-          }
-        }
+            invalidated: false,
+          },
+        },
       });
       console.error(err);
     }
@@ -211,7 +293,7 @@ export default function AppContext(props: AppContext) {
     );
     return fetch({
       ...config,
-      headers: { authorization: `Bearer ${state.auth.token}` }
+      headers: { authorization: `Bearer ${state.auth.token}` },
     });
   }
 
@@ -220,7 +302,7 @@ export default function AppContext(props: AppContext) {
       await fetchAPI({
         method: 'post',
         url: '/api/v1/auth/default/logout',
-        withCredentials: true
+        withCredentials: true,
       });
       dispatch({
         type: actions.USER_AUTH,
@@ -232,9 +314,9 @@ export default function AppContext(props: AppContext) {
             token: '',
             email: '',
             profile_image: '',
-            invalidated: false
-          }
-        }
+            invalidated: false,
+          },
+        },
       });
       logoutPromptController();
       router.push('/auth/sign-in');
@@ -248,7 +330,7 @@ export default function AppContext(props: AppContext) {
       const { data } = await fetch({
         method: 'get',
         url: '/api/v1/auth/default/refresh',
-        withCredentials: true
+        withCredentials: true,
       });
       dispatch({
         type: actions.USER_AUTH,
@@ -260,14 +342,35 @@ export default function AppContext(props: AppContext) {
             invalidated: data?.invalidated,
             email: data?.email,
             name: data?.name,
-            profile_image: data?.profile_image
-          }
-        }
+            profile_image: data?.profile_image,
+          },
+        },
       });
     } catch (err: any) {
       console.error(err);
     }
   }
+
+  function syncCartToLocalStorege(): void {
+    const CART_KEY = 'cart-items';
+    localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
+  }
+
+  function restoreCartFromLocalStorage(): void {
+    const CART_KEY = 'cart-items';
+    const data: TCart[] = JSON.parse(localStorage.getItem(CART_KEY) || `[]`);
+
+    if (data?.length > 0)
+      dispatch({
+        type: actions.PRODUCTS_CART,
+        payload: { ...state, cart: data },
+      });
+  }
+
+  useEffect(() => {
+    if (state.cart.length > 0) syncCartToLocalStorege();
+    else restoreCartFromLocalStorage();
+  }, [state.cart]);
 
   useEffect((): void => {
     authenticateUser();
@@ -299,6 +402,11 @@ export default function AppContext(props: AppContext) {
             deleteAccountPromptController,
             deactivateStorePromptController,
             shareProductController,
+            addProductToCart,
+            removeProductFromCart,
+            updateCartProduct,
+            getCartProduct,
+            cartModalController,
           }}>
           <SocketContext>{props.children}</SocketContext>
         </context.Provider>

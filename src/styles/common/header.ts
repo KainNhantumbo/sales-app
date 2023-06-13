@@ -50,12 +50,12 @@ export const HeaderContainer = styled.header`
   }
 
   nav {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     height: 100%;
-    position: relative;
     top: -4px;
     left: 180px;
     gap: 20px;
@@ -134,7 +134,7 @@ export const HeaderContainer = styled.header`
         width: 100%;
         display: flex;
         align-items: flex-start;
-        justify-content: start;
+        justify-content: space-between;
         flex-direction: column;
         gap: 18px;
         margin-left: 20px;
@@ -159,7 +159,7 @@ export const HeaderContainer = styled.header`
     }
   }
 
-  .auth-btns {
+  .left-corner-container {
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -167,6 +167,44 @@ export const HeaderContainer = styled.header`
     justify-self: flex-end;
     position: relative;
     left: -190px;
+
+    .cart-button {
+      position: relative;
+      border: none;
+      border-radius: 12px;
+      background: none;
+      color: rgb(${({ theme }) => theme.font});
+      width: fit-content;
+      cursor: pointer;
+      display: grid;
+      place-content: center;
+      padding: 10px;
+      outline: none;
+      border: 1px solid rgba(${({ theme }) => theme.accent}, 0.07);
+
+      span {
+        width: 22px;
+        height: 22px;
+        position: absolute;
+        right: -5px;
+        bottom: -5px;
+        border-radius: 50%;
+        background: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.neutral});
+        display: grid;
+        font-size: 0.98rem;
+        place-content: center;
+      }
+      :hover {
+        color: rgb(${({ theme }) => theme.primary_variant});
+      }
+
+      svg {
+        pointer-events: none;
+        width: 20px;
+        height: 20px;
+      }
+    }
 
     .login-btn {
       ${BaseButtonOutline}
@@ -216,12 +254,14 @@ export const HeaderContainer = styled.header`
   }
 
   .toggle-btn {
+    position: fixed;
+    top: 13px;
+    right: 20px;
     border: none;
     border-radius: 12px;
     background: none;
     color: rgb(${({ theme }) => theme.font});
     border: 1px solid rgba(${({ theme }) => theme.accent}, 0.07);
-    position: relative;
     width: fit-content;
     cursor: pointer;
     display: grid;
@@ -238,9 +278,6 @@ export const HeaderContainer = styled.header`
       width: 20px;
       height: 20px;
     }
-    position: fixed;
-    top: 13px;
-    right: 20px;
 
     @media screen and (min-width: 770px) {
       display: none;

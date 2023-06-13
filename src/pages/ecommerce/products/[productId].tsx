@@ -2,6 +2,7 @@ import {
   IoAdd,
   IoBagHandle,
   IoCartOutline,
+  IoCheckmark,
   IoChevronBack,
   IoChevronForward,
   IoContract,
@@ -44,6 +45,10 @@ export default function Product({ product }: any): JSX.Element {
     fetchAPI,
     loginPromptController,
     shareProductController,
+    addProductToCart,
+    removeProductFromCart,
+    updateCartProduct,
+    getCartProduct,
   } = useAppContext();
   const theme = useTheme();
   const [innerWidth, setInnerWidth] = useState(0);
@@ -265,19 +270,121 @@ export default function Product({ product }: any): JSX.Element {
                       <i>(não aplicável a serviços)</i>
                     </h3>
                     <div className='cart-manage'>
-                      <button>
-                        <IoAdd />
+                      <button
+                        onClick={() =>
+                          state.cart.some(
+                            (product) =>
+                              product.productId === state.publicProduct._id
+                          )
+                            ? updateCartProduct({
+                                productId: state.publicProduct._id,
+                                quantity:
+                                  getCartProduct(state.publicProduct._id)
+                                    .quantity > 1
+                                    ? getCartProduct(state.publicProduct._id)
+                                        .quantity - 1
+                                    : 1,
+                              })
+                            : addProductToCart({
+                                productId: state.publicProduct._id,
+                                productName: state.publicProduct.name,
+                                quantity: 1,
+                                price: state.publicProduct.promotion.status
+                                  ? state.publicProduct.price -
+                                    (state.publicProduct.price *
+                                      state.publicProduct.promotion
+                                        .percentage) /
+                                      100
+                                  : state.publicProduct.price,
+                                previewImage: state.publicProduct.images
+                                  ? {
+                                      id: Object.values(
+                                        state.publicProduct.images
+                                      )[0]?.id,
+                                      url: Object.values(
+                                        state.publicProduct.images
+                                      )[0]?.url,
+                                    }
+                                  : undefined,
+                              })
+                        }>
+                        <IoRemove />
                       </button>
                       <input
                         type='number'
                         title='Quantidade'
                         min={1}
                         aria-label='Quantidade'
-                        value={1}
-                        onChange={(e) => {}}
+                        value={getCartProduct(state.publicProduct._id).quantity}
+                        onChange={(e) =>
+                          state.cart.some(
+                            (product) =>
+                              product.productId === state.publicProduct._id
+                          )
+                            ? updateCartProduct({
+                                productId: state.publicProduct._id,
+                                quantity: Number(e.target.value),
+                              })
+                            : addProductToCart({
+                                productId: state.publicProduct._id,
+                                productName: state.publicProduct.name,
+                                quantity: 1,
+                                price: state.publicProduct.promotion.status
+                                  ? state.publicProduct.price -
+                                    (state.publicProduct.price *
+                                      state.publicProduct.promotion
+                                        .percentage) /
+                                      100
+                                  : state.publicProduct.price,
+                                previewImage: state.publicProduct.images
+                                  ? {
+                                      id: Object.values(
+                                        state.publicProduct.images
+                                      )[0]?.id,
+                                      url: Object.values(
+                                        state.publicProduct.images
+                                      )[0]?.url,
+                                    }
+                                  : undefined,
+                              })
+                        }
                       />
-                      <button>
-                        <IoRemove />
+                      <button
+                        onClick={() =>
+                          state.cart.some(
+                            (product) =>
+                              product.productId === state.publicProduct._id
+                          )
+                            ? updateCartProduct({
+                                productId: state.publicProduct._id,
+                                quantity:
+                                  getCartProduct(state.publicProduct._id)
+                                    .quantity + 1,
+                              })
+                            : addProductToCart({
+                                productId: state.publicProduct._id,
+                                productName: state.publicProduct.name,
+                                quantity: 1,
+                                price: state.publicProduct.promotion.status
+                                  ? state.publicProduct.price -
+                                    (state.publicProduct.price *
+                                      state.publicProduct.promotion
+                                        .percentage) /
+                                      100
+                                  : state.publicProduct.price,
+                                previewImage: state.publicProduct.images
+                                  ? {
+                                      id: Object.values(
+                                        state.publicProduct.images
+                                      )[0]?.id,
+                                      url: Object.values(
+                                        state.publicProduct.images
+                                      )[0]?.url,
+                                    }
+                                  : undefined,
+                              })
+                        }>
+                        <IoAdd />
                       </button>
                     </div>
                   </div>
@@ -289,16 +396,47 @@ export default function Product({ product }: any): JSX.Element {
                     <button
                       className='add-to-cart_button'
                       onClick={() =>
-                        dispatch({
-                          type: actions.PRODUCTS_CART,
-                          payload: {
-                            ...state,
-                            cart: [],
-                          },
-                        })
+                        state.cart.some(
+                          (product) =>
+                            product.productId === state.publicProduct._id
+                        )
+                          ? removeProductFromCart(state.publicProduct._id)
+                          : addProductToCart({
+                              productId: state.publicProduct._id,
+                              productName: state.publicProduct.name,
+                              quantity: 1,
+                              price: state.publicProduct.promotion.status
+                                ? state.publicProduct.price -
+                                  (state.publicProduct.price *
+                                    state.publicProduct.promotion.percentage) /
+                                    100
+                                : state.publicProduct.price,
+                              previewImage: state.publicProduct.images
+                                ? {
+                                    id: Object.values(
+                                      state.publicProduct.images
+                                    )[0]?.id,
+                                    url: Object.values(
+                                      state.publicProduct.images
+                                    )[0]?.url,
+                                  }
+                                : undefined,
+                            })
                       }>
-                      <IoAdd />
-                      <span>Adicionar ao carrinho</span>
+                      {state.cart.some(
+                        (product) =>
+                          product.productId === state.publicProduct._id
+                      ) ? (
+                        <>
+                          <IoCheckmark />
+                          <span>Adicionado ao carrinho</span>
+                        </>
+                      ) : (
+                        <>
+                          <IoAdd />
+                          <span>Adicionar ao carrinho</span>
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>
@@ -307,7 +445,7 @@ export default function Product({ product }: any): JSX.Element {
                   <div className='description'>
                     <h3>
                       <span>Código do Produto</span>
-                      <i>(Endereço da página)</i>
+                      <i>(Endereço do produto)</i>
                     </h3>
                   </div>
                   <QRCode

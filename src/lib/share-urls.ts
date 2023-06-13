@@ -3,6 +3,7 @@ import {
   FaLinkedinIn,
   FaPinterest,
   FaTwitter,
+  FaWhatsapp,
 } from 'react-icons/fa';
 import type { ShareUrls } from '../../@types';
 
@@ -13,12 +14,18 @@ interface IProps {
   excerpt: string;
 }
 
+
 export function shareUrls(props: IProps): ShareUrls[] {
   return [
     {
       name: 'Compartilhe no LinkedIn',
       url: `https://www.linkedin.com/shareArticle?mini=true&url=${props.hostname}/blog/post/${props.slug}&title=${props.title}&summary=${props.excerpt}`,
       icon: FaLinkedinIn,
+    },
+    {
+      name: 'Compartilhe no WhatsApp',
+      url: `https://api.whatsapp.com/send?text=${props.title}&url=${props.hostname}/blog/post/${props.slug}`,
+      icon: FaWhatsapp,
     },
     {
       name: 'Compartilhe no Facebook',

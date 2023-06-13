@@ -318,5 +318,8 @@ export type TDenounce = {
 
 export type TCart = {
   productId: string;
+  productName: string;
   quantity: number;
+  price: number;
+  previewImage: { id: string; url: string } | undefined;
 };

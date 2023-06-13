@@ -118,6 +118,7 @@ export default function Post({
                         whileTap={{ scale: 0.8 }}
                         href={option.url}
                         title={option.name}
+                        aria-label={option.name}
                         target={'_blank'}
                         rel={'noreferrer noopener'}
                         key={String(index)}>

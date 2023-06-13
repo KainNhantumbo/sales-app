@@ -1,15 +1,16 @@
 import {
+  IoClose,
   IoAppsOutline,
   IoLogInOutline,
   IoLogOutOutline,
   IoStorefrontOutline,
+  IoCartOutline,
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
 import { urls } from '@/data/app-data';
 import { BiUser } from 'react-icons/bi';
 import { useState, useEffect } from 'react';
-import { HiViewList, HiX } from 'react-icons/hi';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -19,7 +20,7 @@ import { HeaderContainer as Container } from '../styles/common/header';
 export default function Header(): JSX.Element {
   const [isMenu, setIsMenu] = useState<boolean>(false);
   const { asPath, push }: NextRouter = useRouter();
-  const { state, logoutPromptController } = useAppContext();
+  const { state, cartModalController, logoutPromptController } = useAppContext();
 
   function toggleMenu(): void {
     setIsMenu(!isMenu);
@@ -78,7 +79,25 @@ export default function Header(): JSX.Element {
                   </Link>
                 ))}
               </section>
-              <div className='auth-btns'>
+
+              <div className='left-corner-container'>
+                <motion.button
+                  whileTap={{ scale: 0.8 }}
+                  title='Abrir ou fechar o carrinho'
+                  aria-label='Abrir ou fechar o carrinho'
+                  className='cart-button'
+                  onClick={() => {
+                    if (!isMenu) {
+                      toggleMenu();
+                    }
+                    cartModalController()
+                  }}>
+                  <IoCartOutline />
+                  <span>
+                    <i>{state.cart.length}</i>
+                  </span>
+                </motion.button>
+
                 {!state.auth.id || !state.auth.token ? (
                   <>
                     <Link href={'/auth/sign-in'} className='login-btn'>
@@ -124,9 +143,10 @@ export default function Header(): JSX.Element {
         <motion.button
           whileTap={{ scale: 0.8 }}
           title='Abrir ou fechar o menu'
+          aria-label='Abrir ou fechar o menu'
           className='toggle-btn'
           onClick={toggleMenu}>
-          {!isMenu ? <IoAppsOutline /> : <HiX />}
+          {!isMenu ? <IoAppsOutline /> : <IoClose />}
         </motion.button>
       </div>
     </Container>

@@ -219,7 +219,7 @@ export default function Products(): JSX.Element {
                       <span>Editar produto</span>
                     </Link>
                     <Link
-                      href={`/users/stores/products/${product._id}`}
+                      href={`/ecommerce/products/${product._id}`}
                       title='Ver o produto na sua loja'>
                       <span>Ver o produto</span>
                     </Link>

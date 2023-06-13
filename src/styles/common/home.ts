@@ -237,10 +237,10 @@ export const HomeContainer = styled.div`
             color: rgb(${({ theme }) => theme.secondary});
           }
 
-          .favorite-button {
+          .favorite-button, .cart-button {
             ${StyledCornerButton}
             position: absolute;
-            top: 8px;
+            bottom: 8px;
             right: 8px;
             background: rgba(${({ theme }) => theme.neutral}, 0.9);
             border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
@@ -249,6 +249,11 @@ export const HomeContainer = styled.div`
               color: rgb(${({ theme }) => theme.secondary});
             }
           }
+
+          .cart-button {
+            left: 8px;
+          }
+
           img {
             width: 100%;
             height: 100%;

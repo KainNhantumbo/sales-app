@@ -1,4 +1,4 @@
-import { Theme } from '../../@types/index';
+import type { Theme } from '../../@types/index';
 
 export const light_default: Theme = {
   alert: '253, 56, 79',
@@ -13,7 +13,7 @@ export const light_default: Theme = {
   primary_variant: '228, 113, 49',
   secondary_variant: '157, 145, 255',
   background_variant: '245, 242, 234',
-  foreground_variant: '240, 240, 240'
+  foreground_variant: '240, 240, 240',
 };
 
 export const dark_default: Theme = {
@@ -29,5 +29,5 @@ export const dark_default: Theme = {
   primary_variant: '228, 113, 49',
   secondary_variant: '157, 145, 255',
   background_variant: '32, 33, 36',
-  foreground_variant: '34, 37, 41'
+  foreground_variant: '34, 37, 41',
 };

@@ -18,8 +18,8 @@ const ShareLinksStyles = css`
     gap: 10px;
 
     a {
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       display: grid;
       place-items: center;
       background: rgba(${({ theme }) => theme.primary}, 0.2);

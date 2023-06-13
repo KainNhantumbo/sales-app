@@ -9,6 +9,7 @@ export const initialState: State = {
   isFilterActive: false,
   isSearchActive: false,
   isSortActive: false,
+  isCartModal: false,
   queryPublicProducts: {
     category: undefined,
     price_range: NaN,
@@ -207,7 +208,7 @@ export const initialState: State = {
     favorites: [],
     allow_comments: true,
   },
-  cart:[],
+  cart: [],
 };
 
 export default function reducer(state: State, action: Action) {
@@ -356,6 +357,8 @@ export default function reducer(state: State, action: Action) {
       return { ...state, publicProduct: action.payload.publicProduct };
     case actions.PRODUCTS_CART:
       return { ...state, cart: action.payload.cart };
+    case actions.CART_MODAL:
+      return { ...state, isCartModal: action.payload.isCartModal };
     default:
       return { ...state };
   }

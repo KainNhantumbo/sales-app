@@ -2,6 +2,7 @@ import {
   IoBagHandle,
   IoBarcodeOutline,
   IoCart,
+  IoCartOutline,
   IoEllipsisHorizontal,
   IoHeart,
   IoHeartOutline,
@@ -28,8 +29,15 @@ import { blurDataUrlImage, complements } from '@/data/app-data';
 import { HomeContainer as Container } from '@/styles/common/home';
 
 export default function Home(): JSX.Element {
+  const {
+    state,
+    dispatch,
+    loginPromptController,
+    addProductToCart,
+    removeProductFromCart,
+    fetchAPI,
+  } = useAppContext();
   const theme: DefaultTheme = useTheme();
-  const { state, dispatch, loginPromptController, fetchAPI } = useAppContext();
 
   async function handleFavoriteProduct(id: string) {
     try {
@@ -226,12 +234,13 @@ export default function Home(): JSX.Element {
               {state.publicProducts.length > 0 &&
                 state.publicProducts.map((item, index) => (
                   <motion.div
+                    key={item._id}
+                    whileTap={{ scale: 0.98 }}
+                    className='product-container'
                     whileHover={{
                       translateY: -8,
                       boxShadow: `0px 12px 25px 10px rgba(${theme.accent}, 0.09)`,
                     }}
-                    key={item._id}
-                    className='product-container'
                     ref={
                       state.publicProducts.length === index + 1
                         ? ref
@@ -245,20 +254,53 @@ export default function Home(): JSX.Element {
                       )}
                       <button
                         title='Adicionar a lista de favoritos'
+                        aria-label='Adicionar a lista de favoritos'
                         className='favorite-button'
                         onClick={() => {
-                          if (!state.auth?.token) {
-                            loginPromptController();
-                            return;
-                          }
-                          item.favorites.includes(state.auth?.id)
-                            ? handleUnFavoriteProduct(item._id)
-                            : handleFavoriteProduct(item._id);
+                          if (!state.auth?.token)
+                            return loginPromptController();
+                          else if (item.favorites.includes(state.auth?.id))
+                            return handleUnFavoriteProduct(item._id);
+                          return handleFavoriteProduct(item._id);
                         }}>
                         {item.favorites.includes(state.auth.id) ? (
                           <IoHeart />
                         ) : (
                           <IoHeartOutline />
+                        )}
+                      </button>
+                      <button
+                        title='Adicionar ao carrinho'
+                        aria-label='Adicionar ao carrinho'
+                        className='cart-button'
+                        onClick={() => {
+                          state.cart.some(
+                            (product) => product.productId === item._id
+                          )
+                            ? removeProductFromCart(item._id)
+                            : addProductToCart({
+                                productId: item._id,
+                                productName: item.name,
+                                price: item.promotion.status
+                                  ? item.price -
+                                    (item.price * item.promotion.percentage) /
+                                      100
+                                  : item.price,
+                                quantity: 1,
+                                previewImage: item.images
+                                  ? {
+                                      id: Object.values(item.images)[0]?.id,
+                                      url: Object.values(item.images)[0]?.url,
+                                    }
+                                  : undefined,
+                              });
+                        }}>
+                        {state.cart.some(
+                          (product) => product.productId === item._id
+                        ) ? (
+                          <IoCart />
+                        ) : (
+                          <IoCartOutline />
                         )}
                       </button>
                       {item.images && Object.values(item.images)[0]?.url && (
