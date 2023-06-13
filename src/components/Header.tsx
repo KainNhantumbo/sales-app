@@ -87,7 +87,7 @@ export default function Header(): JSX.Element {
                   aria-label='Abrir ou fechar o carrinho'
                   className='cart-button'
                   onClick={() => {
-                    if (!isMenu) {
+                    if (window.innerWidth < 770) {
                       toggleMenu();
                     }
                     cartModalController()

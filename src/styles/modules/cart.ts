@@ -1,5 +1,10 @@
 import styled from 'styled-components';
-import { BaseButton, BaseButtonOutline } from '../defaults';
+import {
+  BaseButton,
+  BaseButtonOutline,
+  StyledCornerButton,
+  StyledInputs,
+} from '../defaults';
 
 export const CartContainer = styled.section`
   position: fixed;
@@ -12,10 +17,11 @@ export const CartContainer = styled.section`
   left: 0;
   display: grid;
   place-content: center;
+  place-items: center;
   user-select: none;
   line-height: 1.4rem;
 
-  .dialog-prompt {
+  .main-container {
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -23,18 +29,176 @@ export const CartContainer = styled.section`
     padding: 20px;
     border-radius: 10px;
     background: rgb(${({ theme }) => theme.foreground});
+    width: 100%;
     max-width: 500px;
-    margin: 25px;
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);
+    margin: 0 auto;
+    
+    @media screen and (max-width: 465px) {
+      gap: 10px;
+    }
 
     .prompt-info {
       display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      color: rgb(${({ theme }) => theme.primary_variant});
+      font-weight: 500;
+
+      svg {
+        width: 25px;
+        height: 25px;
+      }
+    }
+
+    .cart-items-container {
+      width: 100%;
+      height: 100%;
+      max-height: 400px;
+      display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      gap: 10px;
-      span {
+      overflow-y: scroll;
+      padding: 12px 3px;
+
+      @media screen and (max-width: 465px) {
+        padding: 5px 3px;
+      }
+
+      .item-container {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+        border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+
+        @media screen and (max-width: 470px) {
+          flex-direction: column;
+        }
+
+        .item-actions-container {
+          display: flex;
+          gap: 12px;
+          flex-direction: column;
+          align-items: center;
+
+          @media screen and (max-width: 470px) {
+            flex-direction: row;
+          }
+
+          .remove-item {
+            ${BaseButtonOutline}
+
+            :hover {
+              color: rgb(${({ theme }) => theme.alert});
+            }
+          }
+        }
+      }
+
+      .item-details {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        img {
+          width: 100%;
+          max-width: 60px;
+          max-height: 60px;
+          border-radius: 5px;
+          object-fit: cover;
+        }
+
+        h3,
+        p {
+          font-size: 0.95rem;
+          font-weight: 500;
+          line-height: 1.2rem;
+        }
+
+        h3 {
+          width: 100%;
+          max-width: 220px;
+        }
+        p {
+          color: rgb(${({ theme }) => theme.primary_variant});
+          span {
+            color: rgb(${({ theme }) => theme.font});
+          }
+        }
+      }
+
+      .item-manage {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        align-items: center;
+
+        ${StyledInputs}
+        input {
+          max-width: 60px;
+          padding: 10px;
+        }
+
+        button {
+          ${StyledCornerButton}
+          background: rgb(${({ theme }) => theme.primary_variant});
+          padding: 2px;
+          :hover {
+            background: rgb(${({ theme }) => theme.secondary});
+          }
+          svg {
+            width: 20px;
+            height: 20px;
+            color: rgb(${({ theme }) => theme.neutral});
+          }
+        }
+      }
+    }
+
+    .totals-container {
+      display: flex;
+      flex-flow: row wrap;
+      gap: 20px;
+      justify-content: space-between;
+      line-height: 1.6rem;
+      align-items: center;
+      font-weight: 500;
+
+      h3 {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        align-items: center;
+      }
+    }
+
+    .no-items-container {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-content: center;
+      place-items: center;
+      font-size: 1.4rem;
+      line-height: 1.8rem;
+
+      h2 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        line-height: 1.8rem;
+        font-size: 1.2rem;
         font-weight: 500;
-        color: rgb(${({ theme }) => theme.primary_variant});
+        svg {
+          width: 50px;
+          height: 50px;
+          color: rgb(${({ theme }) => theme.primary_variant});
+        }
       }
     }
 
@@ -42,15 +206,8 @@ export const CartContainer = styled.section`
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
-      gap: 10px;
       .prompt-cancel {
         ${BaseButtonOutline}
-        border: none;
-      }
-      .prompt-accept {
-        ${BaseButton}
-        background: rgb(${({ theme }) => theme.alert});
-        color: rgb(${({ theme }) => theme.neutral});
       }
     }
   }

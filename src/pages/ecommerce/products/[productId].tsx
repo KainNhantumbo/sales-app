@@ -112,7 +112,6 @@ export default function Product({ product }: any): JSX.Element {
   }, []);
 
   useEffect(() => {
-    console.log(product);
     if (product) {
       dispatch({
         type: actions.PUBLIC_PRODUCT_DATA,

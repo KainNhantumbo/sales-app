@@ -4,6 +4,7 @@ import {
   createContext,
   Dispatch,
   useReducer,
+  useLayoutEffect,
 } from 'react';
 import fetch from '../config/client';
 import ThemeContext from './ThemeContext';
@@ -172,7 +173,6 @@ export default function AppContext(props: AppContext) {
   }
 
   // ----------------product cart--------------------------
-
   function getCartProduct(currentProductId: string): TCart {
     const foundProduct = state.cart.some(
       (product) => product.productId === currentProductId
@@ -215,11 +215,14 @@ export default function AppContext(props: AppContext) {
       type: actions.PRODUCTS_CART,
       payload: {
         ...state,
-        cart: [
-          ...state.cart.filter(
-            (product) => product.productId !== currentProductId
-          ),
-        ],
+        cart:
+          state.cart.length < 2
+            ? []
+            : [
+                ...state.cart.filter(
+                  (product) => product.productId !== currentProductId
+                ),
+              ],
       },
     });
   }
@@ -234,6 +237,29 @@ export default function AppContext(props: AppContext) {
     });
   }
 
+  function syncCartToLocalStorege(): void {
+    const CART_KEY = 'cart-items';
+    localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
+  }
+
+  function restoreCartFromLocalStorage(): void {
+    const CART_KEY = 'cart-items';
+    const data: TCart[] = JSON.parse(localStorage.getItem(CART_KEY) || `[]`);
+
+    if (data?.length > 0)
+      dispatch({
+        type: actions.PRODUCTS_CART,
+        payload: { ...state, cart: data },
+      });
+  }
+
+  useEffect(() => {
+    syncCartToLocalStorege();
+  }, [state.cart]);
+
+  useLayoutEffect(() => {
+    restoreCartFromLocalStorage();
+  }, []);
   // ----------------user authentication--------------------------
   async function validateAuth(): Promise<void> {
     try {
@@ -350,27 +376,6 @@ export default function AppContext(props: AppContext) {
       console.error(err);
     }
   }
-
-  function syncCartToLocalStorege(): void {
-    const CART_KEY = 'cart-items';
-    localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
-  }
-
-  function restoreCartFromLocalStorage(): void {
-    const CART_KEY = 'cart-items';
-    const data: TCart[] = JSON.parse(localStorage.getItem(CART_KEY) || `[]`);
-
-    if (data?.length > 0)
-      dispatch({
-        type: actions.PRODUCTS_CART,
-        payload: { ...state, cart: data },
-      });
-  }
-
-  useEffect(() => {
-    if (state.cart.length > 0) syncCartToLocalStorege();
-    else restoreCartFromLocalStorage();
-  }, [state.cart]);
 
   useEffect((): void => {
     authenticateUser();

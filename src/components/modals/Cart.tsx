@@ -1,11 +1,16 @@
-import {} from 'react';
-import { useAppContext } from '@/context/AppContext';
 import {
   IoAdd,
+  IoAlbumsOutline,
   IoArrowBackOutline,
   IoBackspace,
+  IoCart,
+  IoCartOutline,
+  IoLayers,
   IoRemove,
 } from 'react-icons/io5';
+import Image from 'next/image';
+import { blurDataUrlImage } from '@/data/app-data';
+import { useAppContext } from '@/context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CartContainer as Container } from '../../styles/modules/cart';
 
@@ -41,83 +46,155 @@ export default function Cart() {
               },
             }}
             exit={{ opacity: 0, scale: 0 }}>
-            <div className='dialog-prompt'>
-              <div className='prompt-info'>
-                <span className='prompt-title'>Carrinho</span>
-              </div>
-              <section className='cart-items-container'>
-                {state.cart.map((product) => (
-                  <div key={product.productId} className='product'>
-                    <h3>
-                      <span>{product.productName}</span>
-                    </h3>
-                    <h3>
-                      <span>{product.price}</span>
-                    </h3>
-                    <div className='cart-manage'>
-                      <button
-                        onClick={() =>
-                          updateCartProduct({
-                            productId: product.productId,
-                            quantity:
-                              getCartProduct(product.productId).quantity > 1
-                                ? getCartProduct(product.productId).quantity - 1
-                                : 1,
-                          })
-                        }>
-                        <IoRemove />
-                      </button>
-                      <input
-                        type='number'
-                        title='Quantidade'
-                        min={1}
-                        aria-label='Quantidade'
-                        value={getCartProduct(product.productId).quantity}
-                        onChange={(e) =>
-                          updateCartProduct({
-                            productId: product.productId,
-                            quantity: Number(e.target.value),
-                          })
-                        }
-                      />
-                      <button
-                        onClick={() =>
-                          updateCartProduct({
-                            productId: product.productId,
-                            quantity:
-                              getCartProduct(product.productId).quantity + 1,
-                          })
-                        }>
-                        <IoAdd />
-                      </button>
-                    </div>
-                    <div className='actions-container'>
-                      <button className='remove-product'>
-                        <IoBackspace /> <span>Remover</span>
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </section>
-              <section className='totals-container'>
-                <h3>
-                  <span>
-                    {state.cart.reduce(
-                      (accumulator, currentProduct) =>
-                        (accumulator += currentProduct.price),
+            <section className='main-container'>
+              <h3 className='prompt-info'>
+                <IoCart />
+                <span>Carrinho</span>
+              </h3>
 
-                      0
-                    )}
-                  </span>
-                </h3>
+              <section className='cart-items-container'>
+                {state.cart.length > 0 &&
+                  state.cart.map((product) => (
+                    <div key={product.productId} className='item-container'>
+                      <div className='item-details'>
+                        <Image
+                          width={320}
+                          height={420}
+                          src={product.previewImage?.url ?? blurDataUrlImage}
+                          alt={'product preview image'}
+                        />
+                        <div>
+                          <h3>
+                            <span>
+                              {product.productName.length > 55
+                                ? product.productName.slice(0, 55) + '...'
+                                : product.productName}{' '}
+                            </span>
+                          </h3>
+                          <p>
+                            Preço:{' '}
+                            <span>
+                              {new Intl.NumberFormat('pt-BR', {
+                                currency: 'MZN',
+                                style: 'currency',
+                                useGrouping: true,
+                              }).format(product.price)}
+                            </span>
+                          </p>
+                          <p>
+                            <>Subtotal: </>
+                            <span>
+                              {new Intl.NumberFormat('pt-BR', {
+                                currency: 'MZN',
+                                style: 'currency',
+                                useGrouping: true,
+                              }).format(product.price * product.quantity)}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                      <div className='item-actions-container'>
+                        <div className='item-manage'>
+                          <motion.button
+                            whileTap={{ scale: 0.8 }}
+                            whileHover={{ scale: 1.05 }}
+                            onClick={() =>
+                              updateCartProduct({
+                                productId: product.productId,
+                                quantity:
+                                  getCartProduct(product.productId).quantity > 1
+                                    ? getCartProduct(product.productId)
+                                        .quantity - 1
+                                    : 1,
+                              })
+                            }>
+                            <IoRemove />
+                          </motion.button>
+                          <input
+                            type='number'
+                            title='Quantidade'
+                            min={1}
+                            aria-label='Quantidade'
+                            value={getCartProduct(product.productId).quantity}
+                            onChange={(e) =>
+                              updateCartProduct({
+                                productId: product.productId,
+                                quantity: Number(e.target.value),
+                              })
+                            }
+                          />
+                          <motion.button
+                            whileTap={{ scale: 0.8 }}
+                            whileHover={{ scale: 1.05 }}
+                            onClick={() =>
+                              updateCartProduct({
+                                productId: product.productId,
+                                quantity:
+                                  getCartProduct(product.productId).quantity +
+                                  1,
+                              })
+                            }>
+                            <IoAdd />
+                          </motion.button>
+                        </div>
+
+                        <motion.button
+                          whileTap={{ scale: 0.8 }}
+                          whileHover={{ scale: 1.05 }}
+                          className='remove-item'
+                          onClick={() =>
+                            removeProductFromCart(product.productId)
+                          }>
+                          <IoBackspace /> <span>Remover</span>
+                        </motion.button>
+                      </div>
+                    </div>
+                  ))}
               </section>
+
+              {state.cart.length < 1 && (
+                <div className='no-items-container'>
+                  <h2>
+                    <IoAlbumsOutline />
+                    <span>Nada para mostrar no carrinho</span>
+                  </h2>
+                </div>
+              )}
+
+              {state.cart.length > 0 && (
+                <section className='totals-container'>
+                  <h3>
+                    <IoLayers />
+                    <span>Custo total</span>
+                  </h3>
+                  <p>
+                    {new Intl.NumberFormat('pt-BR', {
+                      currency: 'MZN',
+                      style: 'currency',
+                      useGrouping: true,
+                    }).format(
+                      state.cart.reduce(
+                        (accumulator, currentProduct) =>
+                          (accumulator +=
+                            currentProduct.price * currentProduct.quantity),
+
+                        0
+                      )
+                    )}
+                  </p>
+                </section>
+              )}
               <div className='prompt-actions'>
-                <button className='prompt-cancel' onClick={cartModalController}>
+                <motion.button
+                  whileTap={{ scale: 0.8 }}
+                  whileHover={{ scale: 1.05 }}
+                  className='prompt-cancel'
+                  onClick={cartModalController}>
                   <IoArrowBackOutline />
                   <span>Fechar o carrinho</span>
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </section>
           </motion.section>
         </Container>
       )}

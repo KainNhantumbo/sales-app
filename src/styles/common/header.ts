@@ -8,7 +8,7 @@ export const HeaderContainer = styled.header`
   top: 0;
   left: 0;
   backdrop-filter: blur(5px);
-  background: rgba(${({ theme }) => theme.foreground}, 0.6);
+  background: rgba(${({ theme }) => theme.foreground}, 0.7);
   padding: 20px 8px;
   font-weight: 500;
   font-size: 1.1rem;
