@@ -59,19 +59,9 @@ export default function ShareProducts({
           }}>
           <motion.section
             className='dialog-modal'
-            initial={{ y: 500 }}
-            animate={{
-              y: 0,
-              transition: {
-                duration: 0.45,
-              },
-            }}
-            exit={{
-              y: 500,
-              transition: {
-                duration: 0.45,
-              },
-            }}>
+            initial={{ y: 700 }}
+            animate={{ y: 0, transition: { duration: 0.45 } }}
+            exit={{ y: 700, transition: { duration: 0.45 } }}>
             <div className='dialog-prompt'>
               <div className='top'>
                 <h2>

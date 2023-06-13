@@ -7,30 +7,29 @@ import {
   IoStorefront,
   IoWarningOutline,
 } from 'react-icons/io5';
-import { VscEmptyWindow } from 'react-icons/vsc';
 import Link from 'next/link';
 import { AxiosResponse } from 'axios';
+import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
 import { DotLoader } from 'react-spinners';
 import { useEffect, useState } from 'react';
-import { actions } from '@/data/actions';
-import { useAppContext } from '@/context/AppContext';
-import { NextRouter, useRouter } from 'next/router';
 import { useTheme } from 'styled-components';
-import { ProductsList } from '../../../../@types';
-import { ProductListContainer as Container } from '@/styles/common/products';
-import ToolBox from '@/components/modals/ToolBox';
-import SearchBox from '@/components/modals/SearchBox';
-import SortBox from '@/components/modals/SortBox';
-import AppStatus from '@/components/AppStatus';
-import moment from 'moment';
-import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
 import { complements } from '@/data/app-data';
+import AppStatus from '@/components/AppStatus';
+import { VscEmptyWindow } from 'react-icons/vsc';
+import { ProductsList } from '../../../../@types';
+import ToolBox from '@/components/modals/ToolBox';
+import SortBox from '@/components/modals/SortBox';
+import { NextRouter, useRouter } from 'next/router';
+import SearchBox from '@/components/modals/SearchBox';
+import { useAppContext } from '@/context/AppContext';
+import moment from 'moment';
 import ShareProducts from '@/components/modals/ShareProductModal';
+import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
+import { ProductListContainer as Container } from '@/styles/common/products';
 
 export default function Products(): JSX.Element {
   const theme = useTheme();
-  const router: NextRouter = useRouter();
   const {
     state,
     dispatch,

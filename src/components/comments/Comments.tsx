@@ -272,11 +272,6 @@ export default function Comments({
   }
 
   useEffect(() => {
-    // console.info(formattedComments);
-    // console.info(state.commentsList);
-  }, [state.commentsList]);
-
-  useEffect(() => {
     if (contentId) {
       getComments();
     }

@@ -8,7 +8,7 @@ import {
   IoPaperPlaneOutline,
   IoShieldCheckmarkOutline,
   IoSpeedometerOutline,
-  IoSunnyOutline
+  IoSunnyOutline,
 } from 'react-icons/io5';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -18,8 +18,9 @@ import { useThemeContext } from '@/context/ThemeContext';
 import { FooterContainer as Container } from '../styles/common/footer';
 
 export default function Footer(): JSX.Element {
-  const { setDarkMode,darkmode, setLightMode, matchMediaTheme } = useThemeContext();
   const { state } = useAppContext();
+  const { setDarkMode, darkmode, setLightMode, matchMediaTheme } =
+    useThemeContext();
   return (
     <Container>
       <section className='featured-container'>
@@ -138,13 +139,19 @@ export default function Footer(): JSX.Element {
         </div>
 
         <div className='theme-fluent-buttons'>
-          <button title='Modo claro' className={!darkmode ? 'active': ''} onClick={setLightMode}>
+          <button
+            title='Modo claro'
+            className={!darkmode ? 'active' : ''}
+            onClick={setLightMode}>
             <IoSunnyOutline />
           </button>
           <button title='Modo automático' onClick={matchMediaTheme}>
             <IoDesktopOutline />
           </button>
-          <button title='Modo escuro ' className={darkmode ? 'active': ''} onClick={setDarkMode}>
+          <button
+            title='Modo escuro '
+            className={darkmode ? 'active' : ''}
+            onClick={setDarkMode}>
             <IoMoonOutline />
           </button>
         </div>

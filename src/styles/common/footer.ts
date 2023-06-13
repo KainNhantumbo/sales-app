@@ -128,6 +128,10 @@ export const FooterContainer = styled.footer`
     }
 
     .base-container_presentation {
+      @media screen and (max-width: 680px) {
+        padding-bottom: 40px;
+      }
+
       .logo {
         p {
           line-height: 1.1rem;
@@ -198,6 +202,15 @@ export const FooterContainer = styled.footer`
         svg {
           color: rgb(${({ theme }) => theme.font});
         }
+      }
+
+      @media screen and (max-width: 680px) {
+        position: relative;
+        bottom: 20px;
+      }
+
+      @media screen and (max-width: 470px) {
+        bottom: 0;
       }
     }
   }

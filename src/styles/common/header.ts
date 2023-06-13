@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BaseButton, BaseButtonOutline, Button_Mono_B } from '../defaults';
+import { BaseButton, BaseButtonOutline } from '../defaults';
 
 export const HeaderContainer = styled.header`
   width: 100%;
@@ -8,7 +8,7 @@ export const HeaderContainer = styled.header`
   top: 0;
   left: 0;
   backdrop-filter: blur(5px);
-  background: rgba(${({ theme }) => theme.foreground}, 0.7);
+  background: rgba(${({ theme }) => theme.foreground}, 0.8);
   padding: 20px 8px;
   font-weight: 500;
   font-size: 1.1rem;

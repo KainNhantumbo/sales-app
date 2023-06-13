@@ -1,6 +1,8 @@
 import {
   IoAdd,
+  IoAlertCircle,
   IoBagHandle,
+  IoBan,
   IoCartOutline,
   IoCheckmark,
   IoChevronBack,
@@ -17,26 +19,27 @@ import {
   IoShareSocial,
   IoStorefront,
 } from 'react-icons/io5';
-import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import QRCode from 'react-qr-code';
 import { motion } from 'framer-motion';
+import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
-import { complements } from '@/data/app-data';
-import ErrorPage from '@/pages/error-page';
-import { NextRouter, useRouter } from 'next/router';
 import fetch from '../../../config/client';
+import ErrorPage from '@/pages/error-page';
+import { formatDate } from '@/lib/time-fns';
+import { useEffect, useState } from 'react';
 import { Product } from '../../../../@types';
-import RequestLogin from '@/components/modals/RequestLogin';
-import ShareProducts from '@/components/modals/ShareProductModal';
+import { useTheme } from 'styled-components';
+import { complements } from '@/data/app-data';
+import NewsLetter from '@/components/Newsletter';
+import ReactImageGallery from 'react-image-gallery';
+import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import 'react-image-gallery/styles/css/image-gallery.css';
-import ReactImageGallery from 'react-image-gallery';
-import { useTheme } from 'styled-components';
-import { actions } from '@/data/actions';
-import { EcommerceProductContainer as Container } from '@/styles/common/ecommerce-product';
+import RequestLogin from '@/components/modals/RequestLogin';
+import ShareProducts from '@/components/modals/ShareProductModal';
 import Comments from '@/components/comments/Comments';
-import NewsLetter from '@/components/Newsletter';
-import Link from 'next/link';
+import { EcommerceProductContainer as Container } from '@/styles/common/ecommerce-product';
 
 export default function Product({ product }: any): JSX.Element {
   const {
@@ -143,18 +146,18 @@ export default function Product({ product }: any): JSX.Element {
             <div className='images-container'>
               {state.publicProduct.images && (
                 <ReactImageGallery
+                  lazyLoad={true}
+                  useBrowserFullscreen={true}
+                  additionalClass='navigator'
+                  autoPlay={false}
+                  showPlayButton={false}
+                  thumbnailPosition={innerWidth > 445 ? 'left' : 'bottom'}
                   items={Object.values(state.publicProduct.images).map(
                     (image) => ({
                       thumbnail: image.url,
                       original: image.url,
                     })
                   )}
-                  lazyLoad={true}
-                  thumbnailPosition={innerWidth > 420 ? 'left' : 'bottom'}
-                  useBrowserFullscreen={true}
-                  additionalClass='navigator'
-                  autoPlay={false}
-                  showPlayButton={false}
                   renderRightNav={(onClick, disabled) => (
                     <button
                       className='nav-right'
@@ -269,7 +272,9 @@ export default function Product({ product }: any): JSX.Element {
                       <i>(não aplicável a serviços)</i>
                     </h3>
                     <div className='cart-manage'>
-                      <button
+                      <motion.button
+                        whileTap={{ scale: 0.8 }}
+                        whileHover={{ scale: 1.05 }}
                         onClick={() =>
                           state.cart.some(
                             (product) =>
@@ -308,7 +313,7 @@ export default function Product({ product }: any): JSX.Element {
                               })
                         }>
                         <IoRemove />
-                      </button>
+                      </motion.button>
                       <input
                         type='number'
                         title='Quantidade'
@@ -348,7 +353,9 @@ export default function Product({ product }: any): JSX.Element {
                               })
                         }
                       />
-                      <button
+                      <motion.button
+                        whileTap={{ scale: 0.8 }}
+                        whileHover={{ scale: 1.05 }}
                         onClick={() =>
                           state.cart.some(
                             (product) =>
@@ -384,15 +391,20 @@ export default function Product({ product }: any): JSX.Element {
                               })
                         }>
                         <IoAdd />
-                      </button>
+                      </motion.button>
                     </div>
                   </div>
                   <div className='cart-actions'>
-                    <button className='buy_button'>
+                    <motion.button
+                      whileTap={{ scale: 0.8 }}
+                      whileHover={{ scale: 1.05 }}
+                      className='buy_button'>
                       <IoCartOutline />
                       <span>Comprar agora</span>
-                    </button>
-                    <button
+                    </motion.button>
+                    <motion.button
+                     whileTap={{ scale: 0.8 }}
+                     whileHover={{ scale: 1.05 }}
                       className='add-to-cart_button'
                       onClick={() =>
                         state.cart.some(
@@ -436,7 +448,7 @@ export default function Product({ product }: any): JSX.Element {
                           <span>Adicionar ao carrinho</span>
                         </>
                       )}
-                    </button>
+                    </motion.button>
                   </div>
                 </div>
 
@@ -507,6 +519,78 @@ export default function Product({ product }: any): JSX.Element {
                 </section>
               </div>
             )}
+
+            <div className='data-section'>
+              <div className='description'>
+                <h3>
+                  <IoEllipsisHorizontal />
+                  <span>Dados do Produto</span>
+                </h3>
+              </div>
+              <section className='content-container meta-data'>
+                <p>
+                  <i>ID do Produto:</i> {state.publicProduct._id}
+                </p>
+                <div>
+                  <h3>
+                    <span>
+                      <i>Publicado em:</i>{' '}
+                      {formatDate(state.publicProduct.createdAt)}
+                    </span>
+                  </h3>
+                  {state.publicProduct.updatedAt !==
+                    state.publicProduct.createdAt && (
+                    <h3>
+                      <span>
+                        <i>Última atualização:</i>{' '}
+                        {formatDate(state.publicProduct.updatedAt)}
+                      </span>
+                    </h3>
+                  )}
+                </div>
+              </section>
+            </div>
+
+            <div className='data-section'>
+              <div className='description'>
+                <h3>
+                  <IoBan />
+                  <span>Denúncia</span>
+                </h3>
+              </div>
+              <section className='content-container denounce'>
+                <h3>
+                  <span>Notou algo errado com o produto?</span>
+                </h3>
+
+                <p>
+                  Zelamos pela segurança dos usuários e clientes na plataforma,
+                  se notou algo estranho ou suspeito, não exite em fazer uma
+                  denúncia, o denunciado não saberá a sua identidade.
+                </p>
+                <div>
+                  <p>
+                    As denúncias serão processadas de acordo com o nosso{' '}
+                    <Link href={'/legal/code-of-conduct'}>
+                      <span>código de conduta</span>
+                    </Link>{' '}
+                    e os nossos{' '}
+                    <Link href={'/legal/terms-of-use'}>
+                      <span>termos e condições</span>
+                    </Link>
+                    .
+                  </p>
+                  <Link
+                    className='denounce-anchor'
+                    href={`/denounce?url=${complements.websiteUrl.concat(
+                      router.asPath
+                    )}&type=product&id=${state.publicProduct._id}`}>
+                    <IoAlertCircle />
+                    <span>Denunciar Produto</span>
+                  </Link>
+                </div>
+              </section>
+            </div>
 
             <section className='store-container'>
               <h2>

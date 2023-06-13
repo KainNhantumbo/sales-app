@@ -1,10 +1,10 @@
-import styled from 'styled-components';
 import {
   BaseButton,
   BaseButtonOutline,
   StyledCornerButton,
   StyledInputs,
 } from '../defaults';
+import styled from 'styled-components';
 
 export const EcommerceProductContainer = styled.div`
   position: relative;
@@ -29,6 +29,10 @@ export const EcommerceProductContainer = styled.div`
     align-self: center;
     margin: 0 auto;
     padding-top: 110px;
+
+    @media screen and (max-width: 445px) {
+      padding-top: 90px;
+    }
   }
 
   aside {
@@ -67,6 +71,11 @@ export const EcommerceProductContainer = styled.div`
           line-height: 2rem;
           margin: 0;
           padding: 0;
+
+          @media screen and (max-width: 550px) {
+            font-size: 1.2rem;
+            line-height: 1.8rem;
+          }
         }
 
         p {
@@ -128,6 +137,11 @@ export const EcommerceProductContainer = styled.div`
           padding-top: 12px;
           border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
 
+          @media screen and (max-width: 390px) {
+            flex-direction: column;
+            gap: 12px;
+          }
+
           .favorite-button {
             ${BaseButtonOutline}
             color: rgb(${({ theme }) => theme.primary_variant});
@@ -155,6 +169,11 @@ export const EcommerceProductContainer = styled.div`
             gap: 18px;
             justify-content: space-between;
             align-items: center;
+
+            @media screen and (max-width: 445px) {
+              flex-direction: column;
+              justify-content: center;
+            }
             h3 {
               font-weight: 500;
               display: flex;
@@ -165,6 +184,10 @@ export const EcommerceProductContainer = styled.div`
                 font-weight: 400;
                 font-size: 0.9rem;
               }
+
+              @media screen and (max-width: 445px)  {
+                text-align: center;
+              }
             }
           }
 
@@ -173,6 +196,10 @@ export const EcommerceProductContainer = styled.div`
             flex-direction: row;
             gap: 8px;
             align-items: center;
+
+            @media screen and (max-width: 430px) {
+              gap: 20px;
+            }
 
             ${StyledInputs}
             input {
@@ -202,6 +229,10 @@ export const EcommerceProductContainer = styled.div`
             padding-top: 18px;
             border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
 
+            @media screen and (max-width: 430px) {
+              flex-direction: column;
+            } 
+
             .add-to-cart_button {
               ${BaseButtonOutline}
               padding: 12px;
@@ -209,6 +240,7 @@ export const EcommerceProductContainer = styled.div`
               :hover {
                 color: rgb(${({ theme }) => theme.primary_variant});
                 background: rgba(${({ theme }) => theme.primary}, 0.2);
+                transition: all 200ms ease-in-out;
               }
             }
             .buy_button {
@@ -221,9 +253,9 @@ export const EcommerceProductContainer = styled.div`
           border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
           display: flex;
           flex-direction: row;
-          gap: 20px;
           justify-content: space-between;
           align-items: center;
+
 
           .description {
             display: flex;
@@ -249,14 +281,18 @@ export const EcommerceProductContainer = styled.div`
 
     .images-container {
       width: fit-content;
+      width: 100%;
 
       @media screen and (max-width: 990px) {
-        width: 100%;
         max-width: 480px;
       }
 
       @media screen and (max-width: 990px) {
         width: fit-content;
+      }
+
+      @media screen and (max-width: 445px) {
+        padding: 0;
       }
 
       .no-image-icon {
@@ -267,6 +303,13 @@ export const EcommerceProductContainer = styled.div`
 
       .navigator {
         position: relative;
+
+        @media screen and (max-width: 445px) {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+
         .image-gallery-image {
           border-radius: 12px;
           border: 3px solid transparent;
@@ -353,8 +396,8 @@ export const EcommerceProductContainer = styled.div`
           gap: 12px;
           padding: 10px 0;
           svg {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
           }
         }
       }
@@ -363,6 +406,61 @@ export const EcommerceProductContainer = styled.div`
         p {
           line-height: 1.6rem;
           margin-bottom: 12px;
+        }
+      }
+
+      .meta-data {
+        display: flex;
+        flex-direction: column;
+        text-transform: uppercase;
+
+        i {
+          font-weight: 500;
+        }
+
+        div {
+          display: flex;
+          flex-flow: row wrap;
+          gap: 12px;
+          line-height: 1.6rem;
+        }
+      }
+
+      .denounce {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        h3 {
+          font-size: 1.1rem;
+          line-height: 1.6rem;
+          font-weight: 500;
+        }
+
+        p {
+          a {
+            color: rgb(${({ theme }) => theme.secondary});
+          }
+        }
+
+        div {
+          width: 100%;
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          justify-content: space-between;
+          @media screen and (max-width: 485px) {
+            flex-direction: column;
+            align-items: start;
+          }
+        }
+
+        .denounce-anchor {
+          ${BaseButtonOutline}
+          color: rgb(${({ theme }) => theme.primary_variant});
+          background: rgba(${({ theme }) => theme.primary}, 0.2);
+          text-overflow: clip;
+          overflow: visible;
         }
       }
     }
@@ -374,6 +472,10 @@ export const EcommerceProductContainer = styled.div`
       padding: 16px 20px;
       border-radius: 12px;
       border: 3px solid rgba(${({ theme }) => theme.primary}, 0.8);
+
+      @media screen and (max-width: 430px) {
+        padding: 12px;
+      }
 
       h2 {
         display: flex;
