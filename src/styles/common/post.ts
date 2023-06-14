@@ -157,7 +157,7 @@ export const PostContainer = styled.div`
       }
     }
 
-    #content {
+    .content {
       max-width: 1000px;
       margin: 0 auto;
       font-size: 1rem;
@@ -182,8 +182,8 @@ export const PostContainer = styled.div`
       }
 
       h2 {
-        font-size: 1.5rem;
-        line-height: 2.2rem;
+        font-size: 1.4rem;
+        line-height: 2rem;
         color: rgb(${({ theme }) => theme.primary_variant});
       }
 
@@ -205,6 +205,16 @@ export const PostContainer = styled.div`
         border-radius: 5px;
         margin: 10px auto;
         box-shadow: 0 12px 35px rgba(${({ theme }) => theme.accent}, 0.3);
+      }
+
+      blockquote {
+        margin: 0 auto;
+        text-align: center;
+        font-weight: 500;
+      }
+
+      i {
+        font-style: italic;
       }
     }
   }
@@ -293,7 +303,7 @@ export const PostContainer = styled.div`
         flex-direction: column;
         max-width: 420px;
         align-items: center;
-       margin: 0 auto;
+        margin: 0 auto;
       }
 
       .post {
@@ -326,7 +336,7 @@ export const PostContainer = styled.div`
           gap: 10px;
           padding: 20px;
           height: 100%;
-          justify-content: space-between; 
+          justify-content: space-between;
 
           .details {
             display: flex;

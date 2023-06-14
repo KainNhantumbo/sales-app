@@ -29,6 +29,10 @@ import Comments from '@/components/comments/Comments';
 import { useAppContext } from '@/context/AppContext';
 import ErrorPage from '@/pages/error-page';
 import NewsLetter from '@/components/Newsletter';
+import EditorJsRenderer, {
+  TParsedContent,
+} from '@/components/EditorJSRenderer';
+import editorJsHtml from 'editorjs-html';
 
 interface IPost {
   post: IBlogPost;
@@ -47,9 +51,11 @@ export default function Post({
   if (!initialPost) {
     return <ErrorPage retryFn={router.reload} />;
   }
+  const EditorJsToHtml = editorJsHtml();
+  const postContent = EditorJsToHtml.parse(post.content) as TParsedContent[];
 
   const readingProps = readingTime(
-    post.content.concat(post.excerpt),
+    String.prototype.concat(post.excerpt, postContent as unknown as string),
     undefined,
     'pt-br'
   );
@@ -166,10 +172,7 @@ export default function Post({
               />
             </section>
 
-            <section
-              id='content'
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
+            <EditorJsRenderer data={post.content} className='content' />
 
             <section className='base-container'>
               <section className='favorites-wrapper'>

@@ -1,30 +1,26 @@
-import { OutputData } from "@editorjs/editorjs";
-import React from "react";
-
-//use require since editorjs-html doesn't have types
-const editorJsHtml = require("editorjs-html");
+import React from 'react';
+import { OutputData } from '@editorjs/editorjs';
+import editorJsHtml from "editorjs-html";
 const EditorJsToHtml = editorJsHtml();
 
-type Props = {
-  data: OutputData;
-};
-type ParsedContent = string | JSX.Element;
+export type TParsedContent = string | JSX.Element;
+type TProps = { data: OutputData; className: string };
 
-const EditorJsRenderer = ({ data }: Props) => {
-  const html = EditorJsToHtml.parse(data) as ParsedContent[];
+export default function EditorJsRenderer({
+  data,
+  className,
+}: TProps): JSX.Element {
+  const html = EditorJsToHtml.parse(data) as TParsedContent[];
   return (
-    //✔️ It's important to add key={data.time} here to re-render based on the latest data.
-    <div className="prose max-w-full" key={data.time}>
+    <div className={className}>
       {html.map((item, index) => {
-        if (typeof item === "string") {
+        if (typeof item === 'string') {
           return (
-            <div dangerouslySetInnerHTML={{ __html: item }} key={index}></div>
+            <div dangerouslySetInnerHTML={{ __html: item }} key={String(index)}/>
           );
         }
         return item;
       })}
     </div>
   );
-};
-
-export default EditorJsRenderer;
+}

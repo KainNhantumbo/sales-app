@@ -237,8 +237,10 @@ export const BlogContainer = styled.div`
 
         img {
           width: 100%;
+          height: 100%;
           max-width: 280px;
           object-fit: cover;
+          max-height: 250px;
           border-radius: 10px 0 0 10px;
           @media screen and (max-width: 635px) {
             width: 100%;

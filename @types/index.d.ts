@@ -1,6 +1,7 @@
 import type {} from 'styled-components';
 import type { IconType } from 'react-icons';
 import type { StaticImageData } from 'next/image';
+import { OutputData } from '@editorjs/editorjs';
 import type { ReactNode, ChangeEvent, FormEvent } from 'react';
 
 // ========================================== //
@@ -152,7 +153,7 @@ export interface IBlogPosts {
   favorites: string[];
 }
 export interface IBlogPost extends IBlogPosts {
-  content: string;
+  content: OutputData;
 }
 
 export type ProductsList = {
