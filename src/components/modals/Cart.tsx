@@ -3,13 +3,14 @@ import {
   IoAlbumsOutline,
   IoArrowBackOutline,
   IoBackspace,
+  IoBagCheck,
   IoCart,
-  IoCartOutline,
-  IoLayers,
   IoRemove,
 } from 'react-icons/io5';
 import Image from 'next/image';
+import { FaDollarSign } from 'react-icons/fa';
 import { blurDataUrlImage } from '@/data/app-data';
+import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CartContainer as Container } from '../../styles/modules/cart';
@@ -23,6 +24,7 @@ export default function Cart() {
     updateCartProduct,
     dispatch,
   } = useAppContext();
+  const router: NextRouter = useRouter();
 
   return (
     <AnimatePresence>
@@ -47,10 +49,13 @@ export default function Cart() {
             }}
             exit={{ opacity: 0, scale: 0 }}>
             <section className='main-container'>
-              <h3 className='prompt-info'>
-                <IoCart />
-                <span>Carrinho</span>
-              </h3>
+              <section className='prompt-header'>
+                <h3 className='prompt-title'>
+                  <IoCart />
+                  <span>Carrinho</span>
+                </h3>
+                <p>{state.cart.length} itens</p>
+              </section>
 
               <section className='cart-items-container'>
                 {state.cart.length > 0 &&
@@ -164,7 +169,7 @@ export default function Cart() {
               {state.cart.length > 0 && (
                 <section className='totals-container'>
                   <h3>
-                    <IoLayers />
+                    <FaDollarSign />
                     <span>Custo total</span>
                   </h3>
                   <p>
@@ -193,6 +198,20 @@ export default function Cart() {
                   <IoArrowBackOutline />
                   <span>Fechar o carrinho</span>
                 </motion.button>
+
+                {state.cart.length > 0 && (
+                  <motion.button
+                    whileTap={{ scale: 0.8 }}
+                    whileHover={{ scale: 1.05 }}
+                    className='prompt-checkout'
+                    onClick={() => {
+                      cartModalController();
+                      router.push(`/ecommerce/products/purchase`);
+                    }}>
+                    <IoBagCheck />
+                    <span>Comprar agora</span>
+                  </motion.button>
+                )}
               </div>
             </section>
           </motion.section>

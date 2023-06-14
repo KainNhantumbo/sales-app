@@ -19,15 +19,15 @@ export default function Metadata(props: HeadProps): JSX.Element {
       <meta name='mobile-web-app-capable' content='yes' />
       <link rel='icon' type='image/png' href='/rubymart256.png' />
       <meta name='msapplication-tap-highlight' content='no' />
-      <link rel='shortcut icon' href='/rubymart256' />
+      <link rel='shortcut icon' href='/rubymart192.png' />
       <meta name='msapplication-TileColor' content='#000000' />
       <meta property='og:locale' content='pt_BR' />
       <meta property='og:type' content='website' />
       <meta name='theme-color' content='#fff' />
       <meta httpEquiv='Content-Type' content='text/html; charset=UTF-8' />
+      <link rel='canonical' href={complements.websiteUrl} />
       <meta property='og:url' content={complements.websiteUrl} />
       <meta property='og:site_name' content={complements.websiteName} />
-      <link rel='canonical' href={complements.websiteUrl} />
       <meta
         name='robots'
         content='follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large'

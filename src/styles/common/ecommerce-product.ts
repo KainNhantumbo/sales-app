@@ -185,7 +185,7 @@ export const EcommerceProductContainer = styled.div`
                 font-size: 0.9rem;
               }
 
-              @media screen and (max-width: 445px)  {
+              @media screen and (max-width: 445px) {
                 text-align: center;
               }
             }
@@ -231,7 +231,7 @@ export const EcommerceProductContainer = styled.div`
 
             @media screen and (max-width: 430px) {
               flex-direction: column;
-            } 
+            }
 
             .add-to-cart_button {
               ${BaseButtonOutline}
@@ -255,7 +255,6 @@ export const EcommerceProductContainer = styled.div`
           flex-direction: row;
           justify-content: space-between;
           align-items: center;
-
 
           .description {
             display: flex;
@@ -297,8 +296,11 @@ export const EcommerceProductContainer = styled.div`
 
       .no-image-icon {
         width: 100%;
-        max-width: 420px;
+        max-width: 380px;
         height: 420px;
+        padding: 20px;
+        border-radius: 20px;
+        background: rgba(${({ theme }) => theme.primary}, 0.1);
       }
 
       .navigator {

@@ -1,9 +1,9 @@
 import {
   IoAdd,
   IoAlertCircle,
+  IoBagCheck,
   IoBagHandle,
   IoBan,
-  IoCartOutline,
   IoCheckmark,
   IoChevronBack,
   IoChevronForward,
@@ -27,6 +27,7 @@ import Layout from '@/components/Layout';
 import fetch from '../../../config/client';
 import ErrorPage from '@/pages/error-page';
 import { formatDate } from '@/lib/time-fns';
+import { FaCartPlus } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { Product } from '../../../../@types';
 import { useTheme } from 'styled-components';
@@ -39,6 +40,7 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import RequestLogin from '@/components/modals/RequestLogin';
 import ShareProducts from '@/components/modals/ShareProductModal';
 import Comments from '@/components/comments/Comments';
+import product_categories from '../../../data/product-categories.json';
 import { EcommerceProductContainer as Container } from '@/styles/common/ecommerce-product';
 
 export default function Product({ product }: any): JSX.Element {
@@ -124,6 +126,40 @@ export default function Product({ product }: any): JSX.Element {
         },
       });
     }
+    return () => {
+      dispatch({
+        type: actions.PUBLIC_PRODUCT_DATA,
+        payload: {
+          ...state,
+          publicProduct: {
+            _id: '',
+            name: '',
+            category: product_categories[0],
+            description: '',
+            specifications: '',
+            created_by: '',
+            store: {
+              _id: '',
+              name: '',
+              location: {
+                country: '',
+                state: '',
+                adress: '',
+              },
+              category: '',
+            },
+            promotion: { status: false, percentage: 0 },
+            price: 0,
+            delivery_tax: 0,
+            images: undefined,
+            createdAt: '',
+            updatedAt: '',
+            favorites: [],
+            allow_comments: true,
+          },
+        },
+      });
+    };
   }, []);
 
   return (
@@ -182,7 +218,12 @@ export default function Product({ product }: any): JSX.Element {
                 />
               )}
 
-              {!product.images && <IoBagHandle className='no-image-icon' />}
+              {!product.images && (
+                <IoBagHandle
+                  title='Produto sem imagem'
+                  className='no-image-icon'
+                />
+              )}
             </div>
 
             <section className='product-container'>
@@ -398,13 +439,44 @@ export default function Product({ product }: any): JSX.Element {
                     <motion.button
                       whileTap={{ scale: 0.8 }}
                       whileHover={{ scale: 1.05 }}
-                      className='buy_button'>
-                      <IoCartOutline />
+                      className='buy_button'
+                      onClick={() => {
+                        if (
+                          !state.cart.some(
+                            (product) =>
+                              product.productId === state.publicProduct._id
+                          )
+                        ) {
+                          addProductToCart({
+                            productId: state.publicProduct._id,
+                            productName: state.publicProduct.name,
+                            quantity: 1,
+                            price: state.publicProduct.promotion.status
+                              ? state.publicProduct.price -
+                                (state.publicProduct.price *
+                                  state.publicProduct.promotion.percentage) /
+                                  100
+                              : state.publicProduct.price,
+                            previewImage: state.publicProduct.images
+                              ? {
+                                  id: Object.values(
+                                    state.publicProduct.images
+                                  )[0]?.id,
+                                  url: Object.values(
+                                    state.publicProduct.images
+                                  )[0]?.url,
+                                }
+                              : undefined,
+                          });
+                        }
+                        router.push('/ecommerce/products/purchase');
+                      }}>
+                      <IoBagCheck />
                       <span>Comprar agora</span>
                     </motion.button>
                     <motion.button
-                     whileTap={{ scale: 0.8 }}
-                     whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.8 }}
+                      whileHover={{ scale: 1.05 }}
                       className='add-to-cart_button'
                       onClick={() =>
                         state.cart.some(
@@ -444,7 +516,7 @@ export default function Product({ product }: any): JSX.Element {
                         </>
                       ) : (
                         <>
-                          <IoAdd />
+                          <FaCartPlus />
                           <span>Adicionar ao carrinho</span>
                         </>
                       )}

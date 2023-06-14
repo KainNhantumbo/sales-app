@@ -57,6 +57,7 @@ export const HomeContainer = styled.div`
       h3 {
         font-size: 1.4rem;
         line-height: 2rem;
+        font-weight: 400;
       }
 
       ::before {
@@ -77,7 +78,7 @@ export const HomeContainer = styled.div`
         h1 {
           font-size: 1.8rem;
           font-weight: 500;
-          line-height: 2.2rem;
+          line-height: 2rem;
         }
       }
 
@@ -89,6 +90,11 @@ export const HomeContainer = styled.div`
           svg {
             display: none;
           }
+        }
+
+        h3 {
+          font-size: 1rem;
+          line-height: 1.4rem;
         }
       }
     }
@@ -137,6 +143,7 @@ export const HomeContainer = styled.div`
 
   article {
     width: 100%;
+    min-height: 100px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -187,6 +194,8 @@ export const HomeContainer = styled.div`
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
+      place-content: center center;
+      place-items: center center;
 
       @media screen and (max-width: 1350px) {
         grid-template-columns: repeat(3, 230px);
@@ -220,6 +229,9 @@ export const HomeContainer = styled.div`
           max-width: 100%;
           height: 200px;
           flex-direction: row;
+          border-radius: 20px;
+          padding: 12px;
+          gap: 5px;
         }
 
         .product-image {
@@ -237,7 +249,8 @@ export const HomeContainer = styled.div`
             color: rgb(${({ theme }) => theme.secondary});
           }
 
-          .favorite-button, .cart-button {
+          .favorite-button,
+          .cart-button {
             ${StyledCornerButton}
             position: absolute;
             bottom: 8px;
@@ -262,18 +275,19 @@ export const HomeContainer = styled.div`
             border-radius: 10px 10px 0 0;
 
             @media screen and (max-width: 500px) {
-              width: 250px;
-              min-width: 250px;
+              width: 240px;
+              min-width: 240px;
               height: 100%;
-              border-radius: 10px 0 0 10px;
+              border-radius: 20px;
+              box-shadow: 0 0 25px 3px rgba(${({ theme }) => theme.accent}, 0.2);
             }
-            @media screen and (max-width: 460px) {
-              width: 200px;
-              min-width: 200px;
-            }
-            @media screen and (max-width: 380px) {
+            @media screen and (max-width: 470px) {
               width: 180px;
               min-width: 180px;
+            }
+            @media screen and (max-width: 400px) {
+              width: 150px;
+              min-width: 150px;
             }
           }
 
@@ -283,6 +297,22 @@ export const HomeContainer = styled.div`
             max-width: 230px;
             padding: 30px;
             border-radius: 10px 10px 0 0;
+
+            @media screen and (max-width: 500px) {
+              width: 240px;
+              min-width: 240px;
+              height: 100%;
+              border-radius: 20px;
+              box-shadow: 0 0 25px 3px rgba(${({ theme }) => theme.accent}, 0.2);
+            }
+            @media screen and (max-width: 460px) {
+              width: 180px;
+              min-width: 180px;
+            }
+            @media screen and (max-width: 400px) {
+              width: 150px;
+              min-width: 150px;
+            }
           }
         }
 
@@ -313,6 +343,17 @@ export const HomeContainer = styled.div`
             .actual-price {
               font-weight: 500;
               color: rgb(${({ theme }) => theme.primary_variant});
+            }
+          }
+
+          .buy-mobile-button {
+            display: none;
+            @media screen and (max-width: 500px) {
+              display: flex;
+              ${BaseButton}
+              overflow: visible;
+              border-radius: 20px;
+              pointer-events: none;
             }
           }
 

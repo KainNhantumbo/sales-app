@@ -33,22 +33,28 @@ export const CartContainer = styled.section`
     max-width: 500px;
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);
     margin: 0 auto;
-    
+
     @media screen and (max-width: 465px) {
       gap: 10px;
     }
 
-    .prompt-info {
+    .prompt-header {
+      width: 100%;
       display: flex;
-      flex-direction: row;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      color: rgb(${({ theme }) => theme.primary_variant});
-      font-weight: 500;
+      .prompt-title {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        color: rgb(${({ theme }) => theme.primary_variant});
+        font-weight: 500;
 
-      svg {
-        width: 25px;
-        height: 25px;
+        svg {
+          width: 25px;
+          height: 25px;
+        }
       }
     }
 
@@ -108,7 +114,7 @@ export const CartContainer = styled.section`
           width: 100%;
           max-width: 60px;
           max-height: 60px;
-          border-radius: 5px;
+          border-radius: 50%;
           object-fit: cover;
         }
 
@@ -190,7 +196,7 @@ export const CartContainer = styled.section`
         flex-direction: column;
         align-items: center;
         gap: 20px;
-        padding: 20px;
+        padding: 50px 20px;
         line-height: 1.8rem;
         font-size: 1.2rem;
         font-weight: 500;
@@ -206,8 +212,13 @@ export const CartContainer = styled.section`
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
+      gap: 12px;
       .prompt-cancel {
         ${BaseButtonOutline}
+      }
+
+      .prompt-checkout {
+        ${BaseButton}
       }
     }
   }

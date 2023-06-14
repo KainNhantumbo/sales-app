@@ -1,4 +1,5 @@
 import {
+  IoBagCheck,
   IoBagHandle,
   IoBarcodeOutline,
   IoCart,
@@ -324,6 +325,10 @@ export default function Home(): JSX.Element {
                     <Link
                       href={`/ecommerce/products/${item._id}`}
                       className='product-details'>
+                      <button className='buy-mobile-button'>
+                        <IoBagCheck />
+                        <span>Comprar agora</span>
+                      </button>
                       {item.promotion.status ? (
                         <div className='item promo-price'>
                           <h4>
@@ -355,10 +360,11 @@ export default function Home(): JSX.Element {
                           </span>
                         </div>
                       )}
+
                       <h3>
                         <span>
-                          {item.name.length > 55
-                            ? item.name.slice(0, 55) + '...'
+                          {item.name.length > 40
+                            ? item.name.slice(0, 40) + '...'
                             : item.name}{' '}
                         </span>
                       </h3>

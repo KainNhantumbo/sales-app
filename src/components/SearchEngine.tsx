@@ -7,8 +7,8 @@ import {
   IoPricetags,
 } from 'react-icons/io5';
 import Slider from 'rc-slider';
-import { useEffect, useState } from 'react';
 import Select from 'react-select';
+import { useEffect, useState } from 'react';
 import { actions } from '@/data/actions';
 import { BiSortAlt2 } from 'react-icons/bi';
 import { useTheme } from 'styled-components';
@@ -17,11 +17,13 @@ import { renderReactSelectCSS } from '@/styles/select';
 import { AnimatePresence, motion } from 'framer-motion';
 import product_categories from '../data/product-categories.json';
 import { SeachEngineContainer as Container } from '../styles/modules/search-engine';
+import { useThemeContext } from '@/context/ThemeContext';
 
 export default function SearchEngine(): JSX.Element {
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
   const [innerWidth, setInnerWidth] = useState(0);
+  const { slidePageUp } = useThemeContext();
 
   function toggleMenu(): void {
     dispatch({
@@ -347,15 +349,17 @@ export default function SearchEngine(): JSX.Element {
                   whileTap={{ scale: 0.8 }}
                   whileHover={{ scale: 1.05 }}
                   className='show-results-btn'
-                  onClick={() =>
+                  onClick={() => {
                     dispatch({
                       type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
                       payload: {
                         ...state,
                         isPublicProductsFilters: false,
                       },
-                    })
-                  }>
+                    });
+
+                    if (innerWidth < 830) slidePageUp();
+                  }}>
                   <IoCartOutline />
                   <span>Mostrar {state.publicProducts.length} resultados</span>
                 </motion.button>
