@@ -21,7 +21,7 @@ import { PulseLoader } from 'react-spinners';
 import { PublicProducts } from '../../@types';
 import { useAppContext } from '@/context/AppContext';
 import SearchEngine from '@/components/SearchEngine';
-import { useInView } from 'react-intersection-observer';
+import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { DefaultTheme, useTheme } from 'styled-components';
 import RequestLogin from '@/components/modals/RequestLogin';
@@ -39,8 +39,10 @@ export default function Home(): JSX.Element {
     fetchAPI,
   } = useAppContext();
   const theme: DefaultTheme = useTheme();
+  const LIMIT: number = 12;
+  const { ref, inView }: InViewHookResponse = useInView();
 
-  async function handleFavoriteProduct(id: string) {
+  async function handleFavoriteProduct(id: string): Promise<void> {
     try {
       const { data } = await fetchAPI({
         method: 'post',
@@ -65,7 +67,7 @@ export default function Home(): JSX.Element {
     }
   }
 
-  async function handleUnFavoriteProduct(id: string) {
+  async function handleUnFavoriteProduct(id: string): Promise<void> {
     try {
       const { data } = await fetchAPI({
         method: 'patch',
@@ -89,9 +91,6 @@ export default function Home(): JSX.Element {
       console.error(err.response?.data?.message || err);
     }
   }
-
-  const LIMIT = 10;
-  const { ref, inView } = useInView();
 
   const { data, refetch, fetchNextPage, hasNextPage, isFetching, isError } =
     useInfiniteQuery({
@@ -120,7 +119,7 @@ export default function Home(): JSX.Element {
     return { data, currentOffset: pageParam + 1 };
   }
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     if (data) {
       const reducedPosts = data?.pages
         .map((page) => {
@@ -137,7 +136,7 @@ export default function Home(): JSX.Element {
       });
     }
 
-    return () => {
+    return (): void => {
       dispatch({
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
         payload: { ...state, publicProducts: [] },
@@ -145,17 +144,17 @@ export default function Home(): JSX.Element {
     };
   }, [data]);
 
-  useEffect(() => {
+  useEffect((): void => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
   }, [inView, fetchNextPage, hasNextPage]);
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     const timer = setTimeout(() => {
       refetch({ queryKey: ['public-products'] });
     }, 500);
-    return () => {
+    return (): void => {
       clearTimeout(timer);
     };
   }, [state.queryPublicProducts]);

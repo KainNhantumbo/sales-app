@@ -3,22 +3,22 @@ import {
   IoEllipsisHorizontal,
   IoHeart,
   IoReload,
-  IoStorefrontOutline
+  IoStorefrontOutline,
 } from 'react-icons/io5';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import { actions } from '@/data/actions';
 import { getPosts } from '@/lib/queries';
 import { formatDate } from '@/lib/time-fns';
-import { useTheme } from 'styled-components';
+import { DefaultTheme, useTheme } from 'styled-components';
 import { PulseLoader } from 'react-spinners';
 import NewsLetter from '@/components/Newsletter';
 import SearchComponent from '@/components/Search';
 import { useAppContext } from '@/context/AppContext';
-import { useInView } from 'react-intersection-observer';
+import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
 import { blurDataUrlImage, complements } from '@/data/app-data';
@@ -26,29 +26,31 @@ import { BlogContainer as Container } from '@/styles/common/blog';
 import buyingWomenImg from '../../../public/assets/buying_women.png';
 
 export default function Blog(): JSX.Element {
-  const LIMIT = 5;
-  const theme = useTheme();
-  const router = useRouter();
+  const LIMIT: number = 8;
+  const theme: DefaultTheme = useTheme();
+  const router: NextRouter = useRouter();
   const { state, dispatch } = useAppContext();
-  const { ref, inView } = useInView();
+  const { ref, inView }: InViewHookResponse = useInView();
 
   const { data, fetchNextPage, hasNextPage, isFetching, isError } =
     useInfiniteQuery({
       queryKey: ['blog-posts'],
       queryFn: fetchPosts,
       getNextPageParam: (lastPage) =>
-        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
+        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
     });
 
-  async function fetchPosts({ pageParam = 0 }) {
+  async function fetchPosts({
+    pageParam = 0,
+  }): Promise<{ data: any; currentOffset: number }> {
     const { data } = await getPosts({
       offset: pageParam * LIMIT,
-      limit: LIMIT
+      limit: LIMIT,
     });
     return { data, currentOffset: pageParam + 1 };
   }
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     if (data) {
       const reducedPosts = data?.pages
         .map((page) => {
@@ -60,20 +62,20 @@ export default function Blog(): JSX.Element {
         type: actions.BLOG_POSTS_LIST_QUERY,
         payload: {
           ...state,
-          blogPostsList: [...reducedPosts]
-        }
+          blogPostsList: [...reducedPosts],
+        },
       });
     }
 
-    return () => {
+    return (): void => {
       dispatch({
         type: actions.BLOG_POSTS_LIST_QUERY,
-        payload: { ...state, blogPostsList: [] }
+        payload: { ...state, blogPostsList: [] },
       });
     };
   }, [data]);
 
-  useEffect(() => {
+  useEffect((): void => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
@@ -175,7 +177,7 @@ export default function Blog(): JSX.Element {
                     color={`rgb(${theme.primary_variant})`}
                     aria-placeholder='Processando...'
                     cssOverride={{
-                      display: 'block'
+                      display: 'block',
                     }}
                   />
                 </div>

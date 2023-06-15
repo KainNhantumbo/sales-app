@@ -13,6 +13,11 @@ import {
   IoPerson,
   IoPersonCircleOutline,
   IoPersonOutline,
+  IoAdd,
+  IoBagCheck,
+  IoAnalytics,
+  IoChatbox,
+  IoChatboxEllipses,
 } from 'react-icons/io5';
 import type {
   Author,
@@ -28,6 +33,9 @@ import {
   FaLinkedinIn,
   FaTwitter,
   FaStoreAlt,
+  FaDollarSign,
+  FaAd,
+  FaAdn,
 } from 'react-icons/fa';
 import Package from '../../package.json';
 import blurImageData from './blur-data-url-image.json';
@@ -199,7 +207,7 @@ const shareUrlPaths = (props: TShareUrlPaths): TShareUrls[] => [
   },
 ];
 
-const dashboardActions = (state: State): TDashboardActions => ({
+const dashboardActions = (userId: string): TDashboardActions => ({
   user: {
     header: { label: 'Conta', icon: BiUser },
     paths: [
@@ -210,7 +218,7 @@ const dashboardActions = (state: State): TDashboardActions => ({
       },
       {
         label: 'Visitar o Perfil',
-        url: `/ecommerce/users/profile/${state.auth.id}`,
+        url: `/ecommerce/users/profile/${userId}`,
         icon: IoPersonCircleOutline,
       },
     ],
@@ -223,7 +231,71 @@ const dashboardActions = (state: State): TDashboardActions => ({
         url: '/users/dashboard/store-editor',
         icon: FaStoreAlt,
       },
-      { label: 'Produtos', url: '/users/dashboard/products', icon: IoAlbums },
+      {
+        label: 'Gerir Produtos',
+        url: '/users/dashboard/products',
+        icon: IoAlbums,
+      },
+      {
+        label: 'Criar Produto',
+        url: '/users/dashboard/product-editor',
+        icon: IoAdd,
+      },
+      {
+        label: 'Pedidos e Encomendas',
+        url: '/users/dashboard/orders',
+        icon: IoBagCheck,
+      },
+    ],
+  },
+  transaction: {
+    header: { label: 'Transações', icon: FaDollarSign },
+    paths: [
+      {
+        label: 'Transações de Clientes',
+        url: '/users/dashboard/customer-transactions',
+        icon: IoAnalytics,
+      },
+      {
+        label: 'Pagamento de Planos e Subscrições',
+        url: '/users/dashboard/transactions/subscription-payments',
+        icon: IoCard,
+      },
+      {
+        label: 'Pagamento de Anúncios',
+        url: '/users/dashboard/transactions/ad-payments',
+        icon: IoCard,
+      },
+    ],
+  },
+  ad: {
+    header: { label: 'Anúncios', icon: FaAd },
+    paths: [
+      {
+        label: 'Criar anúncio',
+        url: '/users/dashboard/create-ad',
+        icon: IoAdd,
+      },
+      {
+        label: 'Gerir anúncios',
+        url: '/users/dashboard/ads',
+        icon: FaAdn,
+      },
+    ],
+  },
+  message: {
+    header: { label: 'Mensagens', icon: IoChatbox },
+    paths: [
+      {
+        label: 'Criar Mensagem',
+        url: '/users/dashboard/create-message',
+        icon: IoAdd,
+      },
+      {
+        label: 'Gerir Mensagens',
+        url: '/users/dashboard/messages',
+        icon: IoChatboxEllipses,
+      },
     ],
   },
 });

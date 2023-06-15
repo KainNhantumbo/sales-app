@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BaseButtonOutline } from '../defaults';
+import { BaseButton, BaseButtonOutline } from '../defaults';
 
 export const ProductListContainer = styled.div`
   position: relative;
@@ -37,6 +37,58 @@ export const ProductListContainer = styled.div`
     }
   }
 
+  .stats-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-content: center;
+    place-items: center;
+    margin: 0 auto;
+    margin-top: 12px;
+
+    .fetch-error-message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin: 20px 0;
+      color: rgb(${({ theme }) => theme.alert});
+      font-weight: 500;
+      font-size: 1.1rem;
+      line-height: 1.4rem;
+      align-self: flex-end;
+      padding-top: 3500px;
+
+      button {
+        ${BaseButton}
+      }
+    }
+    p {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      font-weight: 500;
+      line-height: 1.6rem;
+      color: rgb(${({ theme }) => theme.primary_variant});
+    }
+
+    .loading {
+      width: 100%;
+      height: 100%;
+      align-self: flex-end;
+      display: flex;
+
+      flex-direction: row;
+      align-items: center;
+      font-weight: 500;
+      font-size: 1.1rem;
+      gap: 10px;
+      padding: 20px;
+      margin: 0 auto;
+
+      color: rgb(${({ theme }) => theme.primary_variant});
+    }
+  }
+
   .products-list_container__end-mark {
     display: grid;
     justify-content: center;
@@ -68,13 +120,17 @@ export const ProductListContainer = styled.div`
     justify-content: center;
     padding: 0 20px;
     gap: 10px;
-    svg {
+    .icon {
       width: 70px;
       height: 70px;
     }
     span,
     p {
       max-width: 600px;
+    }
+
+    button {
+      ${BaseButton}
     }
   }
 
@@ -163,7 +219,7 @@ export const ProductListContainer = styled.div`
               .id {
                 text-transform: uppercase;
               }
-              
+
               .promotion {
                 border-radius: 18px;
                 background: rgb(${({ theme }) => theme.background});

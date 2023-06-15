@@ -4,32 +4,35 @@ import {
   IoHeartOutline,
   IoLayersOutline,
   IoPricetagsOutline,
+  IoReload,
   IoStorefront,
   IoWarningOutline,
 } from 'react-icons/io5';
+import moment from 'moment';
 import Link from 'next/link';
 import { AxiosResponse } from 'axios';
-import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
-import { DotLoader } from 'react-spinners';
+import { actions } from '@/data/actions';
+import { DotLoader, PulseLoader } from 'react-spinners';
 import { useEffect, useState } from 'react';
 import { useTheme } from 'styled-components';
 import { complements } from '@/data/app-data';
 import AppStatus from '@/components/AppStatus';
 import { VscEmptyWindow } from 'react-icons/vsc';
+import { DefaultTheme } from 'styled-components';
 import { ProductsList } from '../../../../@types';
 import ToolBox from '@/components/modals/ToolBox';
 import SortBox from '@/components/modals/SortBox';
-import { NextRouter, useRouter } from 'next/router';
-import SearchBox from '@/components/modals/SearchBox';
 import { useAppContext } from '@/context/AppContext';
-import moment from 'moment';
+import SearchBox from '@/components/modals/SearchBox';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import ShareProducts from '@/components/modals/ShareProductModal';
 import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
 import { ProductListContainer as Container } from '@/styles/common/products';
 
 export default function Products(): JSX.Element {
-  const theme = useTheme();
+  const theme: DefaultTheme = useTheme();
   const {
     state,
     dispatch,
@@ -37,64 +40,92 @@ export default function Products(): JSX.Element {
     shareProductController,
     deleteProductPromptController,
   } = useAppContext();
-  const [loading, setLoading] = useState<{ status: boolean }>({
-    status: false,
-  });
-  const [error, setError] = useState<{ status: boolean; msg: string }>({
-    status: false,
-    msg: '',
+  const LIMIT: number = 12;
+  const { ref, inView }: InViewHookResponse = useInView();
+
+  const {
+    data,
+    fetchNextPage,
+    refetch,
+    hasNextPage,
+    isFetching,
+    isError,
+    error,
+  } = useInfiniteQuery({
+    queryKey: ['private-store-products'],
+    queryFn: fetchProducts,
+    getNextPageParam: (lastPage) =>
+      lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
   });
 
-  async function fetchProducts(): Promise<void> {
-    setError({ status: false, msg: '' });
-    setLoading({ status: true });
-    try {
-      const { data }: AxiosResponse<ProductsList[]> = await fetchAPI({
-        url: `/api/v1/users/products?fields=name,price,quantity,promotion,category,favorites,createdAt,updatedAt${`&sort=${
-          state.productsListQuery.sort || 'updatedAt'
-        }`}${`&search=${state.productsListQuery.query || ''}`}`,
-      });
-      dispatch({
-        type: actions.PRODUCTS_LIST_DATA,
-        payload: {
-          ...state,
-          productList: data,
-        },
-      });
-      if (data?.length === 0)
-        setError({ status: true, msg: 'Nada para mostrar.' });
-    } catch (e: any) {
-      console.error(e);
-      setError({
-        status: true,
-        msg: 'Um erro ocorreu durante o processamento da sua requisição. Por favor, tente novamente.',
-      });
-    } finally {
-      setLoading({ status: false });
-    }
+  async function fetchProducts({
+    pageParam = 0,
+  }): Promise<{ data: any; currentOffset: number }> {
+    const { data }: AxiosResponse<ProductsList[]> = await fetchAPI({
+      url: `/api/v1/users/products?offset=${
+        LIMIT * pageParam
+      }&limit=${LIMIT}fields=name,price,quantity,promotion,category,favorites,createdAt,updatedAt${`&sort=${
+        state.productsListQuery.sort || 'updatedAt'
+      }`}${`&search=${state.productsListQuery.query || ''}`}`,
+    });
+    return { data, currentOffset: pageParam + 1 };
   }
 
-  async function handleDeleteProduct(productId: string) {
+  async function handleDeleteProduct(productId: string): Promise<void> {
     try {
       await fetchAPI({
         method: 'delete',
         url: `/api/v1/users/products/${productId}`,
       });
       deleteProductPromptController(false, '');
-      fetchProducts();
+      refetch({ queryKey: ['private-store-products'] });
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
   }
 
+  useEffect((): (() => void) => {
+    if (data) {
+      const reducedData = data?.pages
+        .map((page) => {
+          return page.data;
+        })
+        .reduce((accumulator, currentObj) => [...accumulator, ...currentObj]);
+
+      dispatch({
+        type: actions.PRODUCTS_LIST_DATA,
+        payload: {
+          ...state,
+          productList: [...reducedData],
+        },
+      });
+    }
+
+    return (): void => {
+      dispatch({
+        type: actions.PRODUCTS_LIST_DATA,
+        payload: { ...state, productList: [] },
+      });
+    };
+  }, [data]);
+
   useEffect(() => {
-    fetchProducts();
-    return () => {};
+    const timer = setTimeout(() => {
+      refetch({ queryKey: ['private-store-products'] });
+    }, 500);
+    return () => {
+      clearTimeout(timer);
+    };
   }, [state.productsListQuery]);
 
   useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage, hasNextPage]);
+
+  useEffect(() => {
     return () => {
-      setLoading({ status: false });
       dispatch({
         type: actions.CLEAN_UP_MODALS,
         payload: {
@@ -110,7 +141,7 @@ export default function Products(): JSX.Element {
       <DeleteProductPrompt deleteFn={handleDeleteProduct} />
 
       <Container>
-        {loading.status && !error.status && (
+        {isFetching && !isError && (
           <section className='fetching-state'>
             <div className='center'>
               <DotLoader size={60} color={`rgb(${theme.primary})`} />
@@ -125,10 +156,20 @@ export default function Products(): JSX.Element {
         <AppStatus />
 
         <article>
-          {!loading.status && error.status && (
+          {!isFetching && isError && (
             <section className='error-message'>
               <IoWarningOutline />
-              <p>{error.msg}</p>
+              <p>
+                {(error as any).response?.data?.message ??
+                  'Erro ao carregar produtos'}
+              </p>
+              <button
+                onClick={() =>
+                  refetch({ queryKey: ['private-store-products'] })
+                }>
+                <IoReload className='icon' />
+                <span>Tentar novamente</span>
+              </button>
             </section>
           )}
 
@@ -147,7 +188,12 @@ export default function Products(): JSX.Element {
             )}
             <div className='products-list_container'>
               {state.productList.map((product, index) => (
-                <div key={product._id} className='products-list_item'>
+                <div
+                  key={product._id}
+                  className='products-list_item'
+                  ref={
+                    state.productList.length === index + 1 ? ref : undefined
+                  }>
                   {index === 0 && (
                     <ShareProducts
                       productId={product._id}
@@ -237,6 +283,38 @@ export default function Products(): JSX.Element {
                   </div>
                 </div>
               ))}
+
+              <div className='stats-container'>
+                {isError && !isFetching && state.productList.length > 0 && (
+                  <div className=' fetch-error-message '>
+                    <h3>Erro ao carregar produtos</h3>
+                    <button onClick={() => fetchNextPage()}>
+                      <IoReload />
+                      <span>Tentar novamente</span>
+                    </button>
+                  </div>
+                )}
+
+                {isFetching && !isError && (
+                  <div className='loading'>
+                    <PulseLoader
+                      size={20}
+                      color={`rgb(${theme.primary_variant})`}
+                      aria-placeholder='Processando...'
+                      cssOverride={{
+                        display: 'block',
+                      }}
+                    />
+                  </div>
+                )}
+
+                {!hasNextPage &&
+                  !isFetching &&
+                  !isError &&
+                  state.productList.length > 0 && (
+                    <p>Sem mais produtos para mostrar</p>
+                  )}
+              </div>
               {state.productList.length > 0 && (
                 <div className='products-list_container__end-mark'>
                   <IoEllipsisHorizontal />
