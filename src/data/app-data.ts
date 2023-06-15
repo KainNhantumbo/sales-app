@@ -10,13 +10,30 @@ import {
   IoMegaphoneOutline,
   IoRocketOutline,
   IoStorefront,
+  IoPerson,
+  IoPersonCircleOutline,
+  IoPersonOutline,
 } from 'react-icons/io5';
+import type {
+  Author,
+  TDashboardActions,
+  TShareUrlPaths,
+  TShareUrls,
+} from '../../@types/index';
+import {
+  FaFacebook,
+  FaPinterest,
+  FaWhatsapp,
+  FaInstagram,
+  FaLinkedinIn,
+  FaTwitter,
+  FaStoreAlt,
+} from 'react-icons/fa';
 import Package from '../../package.json';
-import { IoMdPerson } from 'react-icons/io';
-import type { Author } from '../../@types/index';
-import authorPicture from '../../public/assets/author.jpg';
-import { FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
 import blurImageData from './blur-data-url-image.json';
+import { BiUser } from 'react-icons/bi';
+import { State } from '../../@types/reducer';
+import authorPicture from '../../public/assets/author.jpg';
 
 export const blurDataUrlImage = blurImageData.data;
 
@@ -27,7 +44,7 @@ export const author: Author = {
     "It's my pleasure to introduce you to the exciting world of travel destinations, tips and affiliate marketing, providing you the knowledge to help you reach your full potential and make your dreams of earning while traveling come true.",
 };
 
-export const complements = {
+const complements = {
   defaultTitle: Package.name,
   email: Package.email,
   companyName: Package.companyName,
@@ -59,14 +76,14 @@ export const complements = {
   ],
 };
 
-export const app_metadata = {
+const app_metadata = {
   appName: Package.name,
   version: Package.version,
   notice: Package.notice,
   copyright: `© ${new Date().getFullYear()} ${Package.author}`,
 };
 
-export const urls = [
+const urls = [
   { name: 'Início', url: '/', alias: '+' },
   { name: 'Descobrir', url: '/ecommerce/discover', alias: 'discover' },
   { name: 'Lojas', url: '/stores', alias: 'stores' },
@@ -74,7 +91,7 @@ export const urls = [
   { name: 'Feed', url: '/feed', alias: 'feed' },
 ];
 
-export const store_features = [
+const store_features = [
   {
     title: 'Integração com meios de pagamento',
     description:
@@ -113,7 +130,7 @@ export const store_features = [
   },
 ];
 
-export const pricing_data = [
+const pricing_data = [
   {
     title: 'Gratuito (beta)',
     type: 'Começo',
@@ -127,37 +144,7 @@ export const pricing_data = [
   },
 ];
 
-export function dashboardRoutes() {
-  return [
-    {
-      url: `/users/dashboard/profile-editor`,
-      icon: IoMdPerson,
-      label: 'Editor de Perfil',
-    },
-    {
-      url: `/users/dashboard/store-editor`,
-      icon: IoStorefront,
-      label: 'Editor de Loja',
-    },
-    {
-      url: `/users/dashboard/products`,
-      icon: IoGrid,
-      label: 'Produtos',
-    },
-    {
-      url: `/users/dashboard/job-editor`,
-      icon: IoBriefcase,
-      label: 'Empregos',
-    },
-    {
-      url: `/users/dashboard/post-editor`,
-      icon: IoAlbums,
-      label: 'Postagens',
-    },
-  ].sort((a, b) => (a.label > b.label ? 1 : -1));
-}
-
-export const denounceReasons = [
+const denounceReasons = [
   'Terrorismo',
   'Discurso de incentivo ao ódio',
   'Actividade sexual',
@@ -183,3 +170,71 @@ export const denounceReasons = [
 ]
   .sort((a, b) => (a > b ? 1 : -1))
   .map((reason) => ({ label: reason, value: reason }));
+
+const shareUrlPaths = (props: TShareUrlPaths): TShareUrls[] => [
+  {
+    name: 'Compartilhe no LinkedIn',
+    url: `https://www.linkedin.com/shareArticle?mini=true&url=${props.hostname}/blog/post/${props.slug}&title=${props.title}&summary=${props.excerpt}`,
+    icon: FaLinkedinIn,
+  },
+  {
+    name: 'Compartilhe no WhatsApp',
+    url: `https://api.whatsapp.com/send?text=${props.title}&url=${props.hostname}/blog/post/${props.slug}`,
+    icon: FaWhatsapp,
+  },
+  {
+    name: 'Compartilhe no Facebook',
+    url: `https://www.facebook.com/sharer/sharer.php?u=${props.hostname}/blog/post/${props.slug}`,
+    icon: FaFacebook,
+  },
+  {
+    name: 'Compartilhe no Twitter',
+    url: `https://twitter.com/intent/tweet?text=${props.hostname}/blog/post/${props.slug}`,
+    icon: FaTwitter,
+  },
+  {
+    name: 'Compartilhe no Pinterest',
+    url: `https://pinterest.com/pin/create/button/?url=${props.hostname}/blog/post/${props.slug}&media=${props.hostname}/blog/post/${props.slug}&description=${props.excerpt}`,
+    icon: FaPinterest,
+  },
+];
+
+const dashboardActions = (state: State): TDashboardActions => ({
+  user: {
+    header: { label: 'Conta', icon: BiUser },
+    paths: [
+      {
+        label: 'Editar Perfil',
+        url: '/users/dashboard/profile-editor/',
+        icon: IoPersonOutline,
+      },
+      {
+        label: 'Visitar o Perfil',
+        url: `/ecommerce/users/profile/${state.auth.id}`,
+        icon: IoPersonCircleOutline,
+      },
+    ],
+  },
+  store: {
+    header: { label: 'Loja', icon: IoStorefront },
+    paths: [
+      {
+        label: 'Editor de Loja',
+        url: '/users/dashboard/store-editor',
+        icon: FaStoreAlt,
+      },
+      { label: 'Produtos', url: '/users/dashboard/products', icon: IoAlbums },
+    ],
+  },
+});
+
+export {
+  dashboardActions,
+  denounceReasons,
+  complements,
+  app_metadata,
+  urls,
+  store_features,
+  pricing_data,
+  shareUrlPaths,
+};

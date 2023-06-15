@@ -165,9 +165,9 @@ export const PostContainer = styled.div`
       padding-top: 30px;
 
       a {
-        color: rgb(${({ theme }) => theme.secondary});
+        color: #1a8eff;
         text-decoration: underline;
-        text-underline-offset: 2px;
+        text-underline-offset: 3px;
       }
 
       p {
@@ -215,6 +215,17 @@ export const PostContainer = styled.div`
 
       i {
         font-style: italic;
+      }
+
+      mark,
+      .cdx-marker {
+        background: rgba(${({ theme }) => theme.alert}, 0.08);
+        color: rgb(${({ theme }) => theme.primary_variant});
+      }
+
+      u,
+      .cdx-underline {
+        text-underline-offset: 3px;
       }
     }
   }

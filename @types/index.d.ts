@@ -7,6 +7,20 @@ import type { ReactNode, ChangeEvent, FormEvent } from 'react';
 // ========================================== //
 // -------------static types-------------------
 
+export type TShareUrlPaths = {
+  slug: string;
+  title: string;
+  hostname: string;
+  excerpt: string;
+};
+
+export type TDashboardActions = {
+  [x: string]: {
+    header: { label: string; icon: IconType };
+    paths: Array<{ label: string; url: string; icon: IconType }>;
+  };
+};
+
 export type InputEvents =
   | ChangeEvent<HTMLInputElement>
   | ChangeEvent<HTMLSelectElement>
@@ -14,7 +28,7 @@ export type InputEvents =
 
 export type SubmitEvent = FormEvent<HTMLFormElement>;
 
-export type ShareUrls = {
+export type TShareUrls = {
   name: string;
   url: string;
   icon: IconType;

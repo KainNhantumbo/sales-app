@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButtonOutline } from '../defaults';
 
-export const UserDashboardContainer = styled.div`
+export const DashboardContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100%;

@@ -14,25 +14,23 @@ import moment from 'moment';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import { useRouter } from 'next/router';
-import Layout from '@/components/Layout';
-import { shareUrls } from '@/lib/share-urls';
 import { motion } from 'framer-motion';
-import { author, complements } from '@/data/app-data';
+import { useRouter } from 'next/router';
+import editorJsHtml from 'editorjs-html';
+import Layout from '@/components/Layout';
+import ErrorPage from '@/pages/error-page';
 import { formatDate } from '@/lib/time-fns';
+import { useTheme } from 'styled-components';
+import NewsLetter from '@/components/Newsletter';
 import { readingTime } from 'reading-time-estimator';
+import Comments from '@/components/comments/Comments';
+import { useAppContext } from '@/context/AppContext';
 import { getPaths, getPost, getPosts } from '@/lib/queries';
 import type { IBlogPost, IBlogPosts } from '@/../../@types/index';
 import { PostContainer as Container } from '@/styles/common/post';
-import { useTheme } from 'styled-components';
-import Comments from '@/components/comments/Comments';
-import { useAppContext } from '@/context/AppContext';
-import ErrorPage from '@/pages/error-page';
-import NewsLetter from '@/components/Newsletter';
-import EditorJsRenderer, {
-  TParsedContent,
-} from '@/components/EditorJSRenderer';
-import editorJsHtml from 'editorjs-html';
+import EditorJsRenderer from '@/components/EditorJSRenderer';
+import type { TParsedContent } from '@/components/EditorJSRenderer';
+import { author, complements, shareUrlPaths } from '@/data/app-data';
 
 interface IPost {
   post: IBlogPost;
@@ -60,7 +58,7 @@ export default function Post({
     'pt-br'
   );
 
-  const shareMedia = shareUrls({
+  const shareMedia = shareUrlPaths({
     title: post.title,
     slug: post.slug,
     excerpt: post.excerpt,
@@ -172,7 +170,9 @@ export default function Post({
               />
             </section>
 
-            <EditorJsRenderer data={post.content} className='content' />
+            <section className='content'>
+              <EditorJsRenderer data={post.content} />
+            </section>
 
             <section className='base-container'>
               <section className='favorites-wrapper'>

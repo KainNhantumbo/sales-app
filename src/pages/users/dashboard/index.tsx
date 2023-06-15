@@ -5,14 +5,15 @@ import Layout from '@/components/Layout';
 import { useTheme } from 'styled-components';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { app_metadata, complements, dashboardRoutes } from '@/data/app-data';
-import { UserDashboardContainer as Container } from '@/styles/common/user-dashbord';
+import { app_metadata, complements, dashboardActions } from '@/data/app-data';
+import { DashboardContainer as Container } from '@/styles/common/dashbord';
+import Link from 'next/link';
 
 export default function Dashboard(): JSX.Element {
   const theme = useTheme();
   const { state } = useAppContext();
   const router: NextRouter = useRouter();
-  const actionRoutes = dashboardRoutes();
+  const actionRoutes = dashboardActions(state);
 
   return (
     <Layout
@@ -41,26 +42,33 @@ export default function Dashboard(): JSX.Element {
               </div>
             </section>
           </section>
-          <section className='actions'>
+          <section className='actions-container'>
             <div className='wrapper'>
               <div className='cards-container'>
-                {actionRoutes.map((card, index) => (
-                  <motion.div
-                    key={index.toString()}
-                    onClick={() => router.push(card.url)}
-                    initial={{
-                      scale: 1,
-                      boxShadow: `0px 0px 30px rgba(${theme.accent}, 0.09)`
-                    }}
-                    whileTap={{ scale: 0.9 }}
-                    whileHover={{
-                      boxShadow: `0px 0px 25px rgba(${theme.accent}, 0.1)`,
-                      scale: 1.05
-                    }}>
-                    <card.icon />
-                    <h3>{card.label}</h3>
-                  </motion.div>
-                ))}
+                {Object.values(actionRoutes)
+                  .sort((a, b) => (a.header > b.header ? 1 : -1))
+                  .map((element, index) => (
+                    <div
+                      key={String(index)}
+                      className='cards-container_element'>
+                      <h3>
+                        <element.header.icon />
+                        <span>{element.header.label}</span>
+                      </h3>
+                      <div className='paths-container'>
+                        {element.paths
+                          .sort((a, b) => (a.label > b.label ? 1 : -1))
+                          .map((path, index) => (
+                            <Link key={String(index)} href={path.url}>
+                              <h3>
+                                <path.icon />
+                                <span>{path.label}</span>
+                              </h3>
+                            </Link>
+                          ))}
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           </section>

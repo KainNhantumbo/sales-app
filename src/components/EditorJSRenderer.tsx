@@ -1,26 +1,25 @@
 import React from 'react';
 import { OutputData } from '@editorjs/editorjs';
-import editorJsHtml from "editorjs-html";
+import editorJsHtml from 'editorjs-html';
 const EditorJsToHtml = editorJsHtml();
 
 export type TParsedContent = string | JSX.Element;
-type TProps = { data: OutputData; className: string };
+type TProps = { data: OutputData };
 
-export default function EditorJsRenderer({
-  data,
-  className,
-}: TProps): JSX.Element {
+export default function EditorJsRenderer({ data }: TProps): JSX.Element {
   const html = EditorJsToHtml.parse(data) as TParsedContent[];
   return (
-    <div className={className}>
+    <>
       {html.map((item, index) => {
         if (typeof item === 'string') {
           return (
-            <div dangerouslySetInnerHTML={{ __html: item }} key={String(index)}/>
+            <div
+              dangerouslySetInnerHTML={{ __html: item }}
+              key={String(index)}
+            />
           );
         }
-        return item;
       })}
-    </div>
+    </>
   );
 }
