@@ -3,17 +3,18 @@ import { motion } from 'framer-motion';
 import { BiUser } from 'react-icons/bi';
 import { IoApps } from 'react-icons/io5';
 import Layout from '@/components/Layout';
-import { useTheme } from 'styled-components';
+import { DefaultTheme, useTheme } from 'styled-components';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { app_metadata, complements, dashboardActions } from '@/data/app-data';
 import { DashboardContainer as Container } from '@/styles/common/dashbord';
+import { TDashboardActions } from '../../../../@types';
 
 export default function Dashboard(): JSX.Element {
-  const theme = useTheme();
+  const theme: DefaultTheme = useTheme();
   const { state } = useAppContext();
   const router: NextRouter = useRouter();
-  const actionRoutes = dashboardActions(state.auth.id);
+  const actionRoutes: TDashboardActions = dashboardActions(state.auth.id);
 
   return (
     <Layout
@@ -46,7 +47,7 @@ export default function Dashboard(): JSX.Element {
             <div className='wrapper'>
               <div className='cards-container'>
                 {Object.values(actionRoutes)
-                  .sort((a, b) => (a.header > b.header ? 1 : -1))
+                  .sort((a, b) => (a.header.label > b.header.label ? 1 : -1))
                   .map((element, index) => (
                     <div
                       key={String(index)}

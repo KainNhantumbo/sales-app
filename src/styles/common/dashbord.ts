@@ -128,8 +128,9 @@ export const DashboardContainer = styled.div`
       }
     }
 
-    .actions {
+    .actions-container {
       width: 100%;
+      padding-bottom: 20px;
       user-select: none;
 
       .wrapper {
@@ -144,41 +145,64 @@ export const DashboardContainer = styled.div`
       }
 
       .cards-container {
+        width: 100%;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         grid-gap: 25px;
-        align-items: center;
-        justify-items: center;
 
-        @media screen and (max-width: 850px) {
-          grid-template-columns: repeat(2, 1fr);
-        }
         @media screen and (max-width: 570px) {
           grid-template-columns: 1fr;
         }
 
-        div {
+        .cards-container_element {
+          width: 100%;
           display: flex;
           flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          gap: 15px;
-          width: 150px;
-          height: 100%;
+
+          gap: 20px;
           border-radius: 12px;
           padding: 20px;
           background: rgb(${({ theme }) => theme.foreground});
-          cursor: pointer;
+          border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
 
           h3 {
-            font-size: 1rem;
-            line-height: 1.2rem;
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            align-items: center;
+            font-weight: 500;
+            color: rgb(${({ theme }) => theme.primary_variant});
+            font-size: 1.2rem;
+            line-height: 1.6rem;
+           
           }
 
-          svg {
-            width: 30px;
-            height: 30px;
-            color: rgb(${({ theme }) => theme.primary});
+          .paths-container {
+            width: 100%;
+            display: flex;
+            flex-flow: row wrap;
+            gap: 12px;
+            align-items: center;
+
+            .action {
+              border-radius: 12px;
+
+              a {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 8px;
+                padding: 20px;
+                border-radius: 12px;
+                background: rgb(${({ theme }) => theme.foreground});
+                font-size: 1.1rem;
+                line-height: 1.4rem;
+
+                :hover {
+                  color: rgb(${({ theme }) => theme.primary_variant});
+                }
+              }
+            }
           }
         }
       }
