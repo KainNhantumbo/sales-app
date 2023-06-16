@@ -11,6 +11,7 @@ import {
   TCart,
   TDenounce,
   TPublicProduct,
+  TPurchaseCheckOut,
   TSearchProducts,
   User,
 } from './index';
@@ -56,6 +57,7 @@ export type State = {
   queryPublicProducts: TSearchProducts;
   isPublicProductsFilters: boolean;
   cart: TCart[];
+  checkout: TPurchaseCheckOut;
 };
 
 export type Action = { type: string; payload: State };

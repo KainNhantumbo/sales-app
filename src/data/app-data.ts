@@ -1,30 +1,25 @@
 import {
-  IoAlbums,
-  IoBriefcase,
   IoCard,
   IoCartOutline,
   IoChatbubbleEllipsesOutline,
-  IoGrid,
   IoInfiniteOutline,
   IoLogoFacebook,
   IoMegaphoneOutline,
   IoRocketOutline,
   IoStorefront,
-  IoPerson,
-  IoPersonCircleOutline,
-  IoPersonOutline,
   IoAdd,
   IoBagCheck,
   IoAnalytics,
-  IoChatbox,
   IoChatboxEllipses,
+  IoCog,
+  IoEye,
+  IoFingerPrint,
+  IoAlbumsOutline,
+  IoCardOutline,
+  IoBasket,
+  IoDocument,
+  IoCash,
 } from 'react-icons/io5';
-import type {
-  Author,
-  TDashboardActions,
-  TShareUrlPaths,
-  TShareUrls,
-} from '../../@types/index';
 import {
   FaFacebook,
   FaPinterest,
@@ -32,20 +27,27 @@ import {
   FaInstagram,
   FaLinkedinIn,
   FaTwitter,
-  FaStoreAlt,
   FaDollarSign,
   FaAd,
-  FaAdn,
+  FaPaypal,
 } from 'react-icons/fa';
+import type {
+  Author,
+  TDashboardActions,
+  TPaymentOptions,
+  TShareUrlPaths,
+  TShareUrls,
+} from '../../@types/index';
 import Package from '../../package.json';
 import blurImageData from './blur-data-url-image.json';
-import { BiUser } from 'react-icons/bi';
-import { State } from '../../@types/reducer';
+import { BiUser, BiUserCheck } from 'react-icons/bi';
 import authorPicture from '../../public/assets/author.jpg';
+import { IconType } from 'react-icons';
+import { StaticImageData } from 'next/image';
 
-export const blurDataUrlImage = blurImageData.data;
+const blurDataUrlImage = blurImageData.data;
 
-export const author: Author = {
+const author: Author = {
   name: Package.author,
   picture: authorPicture,
   description:
@@ -212,14 +214,24 @@ const dashboardActions = (userId: string): TDashboardActions => ({
     header: { label: 'Conta', icon: BiUser },
     paths: [
       {
-        label: 'Editar Perfil',
+        label: 'Configurações da conta',
         url: '/users/dashboard/profile-editor/',
-        icon: IoPersonOutline,
+        icon: IoCog,
       },
       {
-        label: 'Visitar o Perfil',
+        label: 'Visualizar perfil',
         url: `/ecommerce/users/profile/${userId}`,
-        icon: IoPersonCircleOutline,
+        icon: IoEye,
+      },
+      {
+        label: 'Minhas compras',
+        url: `/users/dashboard/profile/shopping`,
+        icon: IoBasket,
+      },
+      {
+        label: 'Produtos favoritos',
+        url: `/users/dashboard/profile/favorite-products`,
+        icon: IoBasket,
       },
     ],
   },
@@ -227,24 +239,29 @@ const dashboardActions = (userId: string): TDashboardActions => ({
     header: { label: 'Loja', icon: IoStorefront },
     paths: [
       {
-        label: 'Editor de Loja',
+        label: 'Configurações da loja',
         url: '/users/dashboard/store-editor',
-        icon: FaStoreAlt,
+        icon: IoCog,
       },
       {
-        label: 'Gerir Produtos',
+        label: 'Gerir produtos',
         url: '/users/dashboard/products',
-        icon: IoAlbums,
+        icon: IoCog,
       },
       {
-        label: 'Criar Produto',
-        url: '/users/dashboard/product-editor',
+        label: 'Adicionar produto',
+        url: '/users/dashboard/product-editor/new',
         icon: IoAdd,
       },
       {
-        label: 'Pedidos e Encomendas',
-        url: '/users/dashboard/orders',
+        label: 'Vendas de produtos',
+        url: '/users/dashboard/store/orders',
         icon: IoBagCheck,
+      },
+      {
+        label: 'Verificação da loja',
+        url: `/users/dashboard/store/verification`,
+        icon: IoFingerPrint,
       },
     ],
   },
@@ -252,19 +269,19 @@ const dashboardActions = (userId: string): TDashboardActions => ({
     header: { label: 'Transações', icon: FaDollarSign },
     paths: [
       {
-        label: 'Transações de Clientes',
+        label: 'Transações de clientes',
         url: '/users/dashboard/customer-transactions',
         icon: IoAnalytics,
       },
       {
-        label: 'Pagamento de Planos e Subscrições',
+        label: 'Pagamento de planos e subscrições',
         url: '/users/dashboard/transactions/subscription-payments',
         icon: IoCard,
       },
       {
-        label: 'Pagamento de Anúncios',
+        label: 'Pagamento de anúncios',
         url: '/users/dashboard/transactions/ad-payments',
-        icon: IoCard,
+        icon: IoCardOutline,
       },
     ],
   },
@@ -278,27 +295,70 @@ const dashboardActions = (userId: string): TDashboardActions => ({
       },
       {
         label: 'Gerir anúncios',
-        url: '/users/dashboard/ads',
-        icon: FaAdn,
+        url: '/users/dashboard/ads/generics',
+        icon: IoCog,
+      },
+      {
+        label: 'Destacar produtos',
+        url: '/users/dashboard/ads/products',
+        icon: IoAlbumsOutline,
       },
     ],
   },
   message: {
-    header: { label: 'Mensagens', icon: IoChatbox },
+    header: { label: 'Mensagens', icon: IoChatboxEllipses },
     paths: [
       {
-        label: 'Criar Mensagem',
+        label: 'Criar mensagem',
         url: '/users/dashboard/create-message',
         icon: IoAdd,
       },
       {
-        label: 'Gerir Mensagens',
+        label: 'Gerir mensagens',
         url: '/users/dashboard/messages',
-        icon: IoChatboxEllipses,
+        icon: IoCog,
+      },
+    ],
+  },
+  documentation: {
+    header: { label: 'Documentação', icon: IoDocument },
+    paths: [
+      {
+        label: 'Código de conduta',
+        url: '/legal/code-of-conduct',
+        icon: BiUserCheck,
       },
     ],
   },
 });
+
+const states: Array<{ value: string; label: string }> = [
+  'Cabo Delgado',
+  'Gaza',
+  'Inhambane',
+  'Manica',
+  'Maputo',
+  'Cidade de Maputo',
+  'Nampula',
+  'Niassa',
+  'Sofala',
+  'Tete',
+  'Zambezia',
+]
+  .sort((a, b) => (a > b ? 1 : -1))
+  .map((state) => ({ value: state, label: state }));
+
+import emola_logo from '../../public/trademarks/emola logo.png';
+import mpesa_logo from '../../public/trademarks/mpesa logo.png';
+import ponto24_logo from '../../public/trademarks/ponto-24-logo.png';
+
+const payment_options: TPaymentOptions = [
+  { type: 'm-pesa', label: 'M-Pesa', image: mpesa_logo },
+  { type: 'e-mola', label: 'E-Mola', image: emola_logo },
+  { type: 'ponto-24', label: 'Conta Móvel', image: ponto24_logo },
+  { type: 'credit-card', label: 'Cartão de Crédito', icon: IoCard },
+  { type: 'paypal', label: 'Paypal', icon: FaPaypal },
+];
 
 export {
   dashboardActions,
@@ -308,5 +368,9 @@ export {
   urls,
   store_features,
   pricing_data,
+  author,
+  blurDataUrlImage,
   shareUrlPaths,
+  states,
+  payment_options,
 };

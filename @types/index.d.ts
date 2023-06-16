@@ -34,6 +34,13 @@ export type TShareUrls = {
   icon: IconType;
 };
 
+export type TPaymentOptions = Array<{
+  type: 'e-mola' | 'm-pesa' | 'credit-card' | 'paypal' | 'ponto-24';
+  label: 'E-Mola' | 'M-Pesa' | 'Cartão de Crédito' | 'Paypal' | 'Conta Móvel';
+  icon?: IconType | undefined;
+  image?: StaticImageData | undefined;
+}>;
+
 export type TSearchProducts = {
   sort: string;
   query: string;
@@ -337,4 +344,21 @@ export type TCart = {
   quantity: number;
   price: number;
   previewImage: { id: string; url: string } | undefined;
+};
+
+export type TPurchaseCheckOut = {
+  order_notes: string;
+  main_phone_number: string;
+  alternative_phone_number: string;
+  cart: Array<{ product_id: string; quantity: number }>;
+  location: {
+    country: string;
+    state: string;
+    city: string;
+    adress: string;
+    zip_code: string;
+  };
+  payment: {
+    type: 'e-mola' | 'm-pesa' | 'credit-card' | 'paypal' | 'ponto-24';
+  };
 };

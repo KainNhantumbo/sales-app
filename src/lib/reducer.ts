@@ -209,6 +209,22 @@ export const initialState: State = {
     allow_comments: true,
   },
   cart: [],
+  checkout: {
+    order_notes: '',
+    main_phone_number: '',
+    alternative_phone_number: '',
+    cart: [],
+    location: {
+      country: '',
+      state: '',
+      city: '',
+      adress: '',
+      zip_code: '',
+    },
+    payment: {
+      type: 'm-pesa',
+    },
+  },
 };
 
 export default function reducer(state: State, action: Action) {
@@ -359,6 +375,8 @@ export default function reducer(state: State, action: Action) {
       return { ...state, cart: action.payload.cart };
     case actions.CART_MODAL:
       return { ...state, isCartModal: action.payload.isCartModal };
+    case actions.PURCHASE_CHECKOUT_DATA:
+      return { ...state, checkout: action.payload.checkout };
     default:
       return { ...state };
   }

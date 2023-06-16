@@ -142,6 +142,19 @@ export const DashboardContainer = styled.div`
         gap: 20px;
         padding: 20px;
         border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+
+        h2 {
+          align-self: start;
+          display: flex;
+          flex-direction: row;
+          gap: 8px;
+          font-size: 1.3rem;
+          line-height: 1.8rem;
+          align-items: center;
+          font-weight: 500;
+          padding-top: 12px;
+          color: rgb(${({ theme }) => theme.font});
+        }
       }
 
       .cards-container {
@@ -158,7 +171,6 @@ export const DashboardContainer = styled.div`
           width: 100%;
           display: flex;
           flex-direction: column;
-
           gap: 20px;
           border-radius: 12px;
           padding: 20px;
@@ -174,7 +186,6 @@ export const DashboardContainer = styled.div`
             color: rgb(${({ theme }) => theme.primary_variant});
             font-size: 1.2rem;
             line-height: 1.6rem;
-           
           }
 
           .paths-container {

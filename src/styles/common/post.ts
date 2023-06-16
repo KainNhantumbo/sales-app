@@ -227,6 +227,11 @@ export const PostContainer = styled.div`
       .cdx-underline {
         text-underline-offset: 3px;
       }
+
+      .cdx-strikethrough,
+      s {
+        text-decoration: line-through;
+      }
     }
   }
 

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { BiUser } from 'react-icons/bi';
-import { IoApps } from 'react-icons/io5';
+import { IoApps, IoConstruct } from 'react-icons/io5';
 import Layout from '@/components/Layout';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { NextRouter, useRouter } from 'next/router';
@@ -45,6 +45,10 @@ export default function Dashboard(): JSX.Element {
           </section>
           <section className='actions-container'>
             <div className='wrapper'>
+              <h2>
+                <IoConstruct />
+                <span>Ferramentas</span>
+              </h2>
               <div className='cards-container'>
                 {Object.values(actionRoutes)
                   .sort((a, b) => (a.header.label > b.header.label ? 1 : -1))

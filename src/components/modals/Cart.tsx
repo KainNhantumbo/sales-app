@@ -15,14 +15,13 @@ import { useAppContext } from '@/context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CartContainer as Container } from '../../styles/modules/cart';
 
-export default function Cart() {
+export default function Cart(): JSX.Element {
   const {
     state,
     cartModalController,
     removeProductFromCart,
     getCartProduct,
     updateCartProduct,
-    dispatch,
   } = useAppContext();
   const router: NextRouter = useRouter();
 

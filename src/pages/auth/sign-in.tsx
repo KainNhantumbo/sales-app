@@ -1,9 +1,3 @@
-import {
-  IoLockClosedOutline,
-  IoLogoFacebook,
-  IoLogoGoogle,
-  IoMailOutline,
-} from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
 import fetch from '../../config/client';
@@ -14,6 +8,7 @@ import { complements } from '@/data/app-data';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '../../context/AppContext';
 import { InputEvents, SubmitEvent } from '../../../@types';
+import { IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
 import { SignInContainer as Container } from '../../styles/common/sign-in';
 import backgroundImage from '../../../public/assets/africa-unveiled.png';
 
