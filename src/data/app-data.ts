@@ -18,7 +18,6 @@ import {
   IoCardOutline,
   IoBasket,
   IoDocument,
-  IoCash,
 } from 'react-icons/io5';
 import {
   FaFacebook,
@@ -29,7 +28,7 @@ import {
   FaTwitter,
   FaDollarSign,
   FaAd,
-  FaPaypal,
+
 } from 'react-icons/fa';
 import type {
   Author,
@@ -42,8 +41,12 @@ import Package from '../../package.json';
 import blurImageData from './blur-data-url-image.json';
 import { BiUser, BiUserCheck } from 'react-icons/bi';
 import authorPicture from '../../public/assets/author.jpg';
-import { IconType } from 'react-icons';
-import { StaticImageData } from 'next/image';
+import visa_logo from '../../public/trademarks/visa.png';
+import paypal_log from '../../public/trademarks/paypal.png';
+import emola_logo from '../../public/trademarks/emola logo.png';
+import mpesa_logo from '../../public/trademarks/mpesa logo.png';
+import ponto24_logo from '../../public/trademarks/ponto-24-logo.png';
+import { SiVisa, SiMastercard, SiPaypal, SiPayoneer } from 'react-icons/si';
 
 const blurDataUrlImage = blurImageData.data;
 
@@ -348,16 +351,16 @@ const states: Array<{ value: string; label: string }> = [
   .sort((a, b) => (a > b ? 1 : -1))
   .map((state) => ({ value: state, label: state }));
 
-import emola_logo from '../../public/trademarks/emola logo.png';
-import mpesa_logo from '../../public/trademarks/mpesa logo.png';
-import ponto24_logo from '../../public/trademarks/ponto-24-logo.png';
-
 const payment_options: TPaymentOptions = [
   { type: 'm-pesa', label: 'M-Pesa', image: mpesa_logo },
   { type: 'e-mola', label: 'E-Mola', image: emola_logo },
   { type: 'ponto-24', label: 'Conta Móvel', image: ponto24_logo },
-  { type: 'credit-card', label: 'Cartão de Crédito', icon: IoCard },
-  { type: 'paypal', label: 'Paypal', icon: FaPaypal },
+  { type: 'paypal', label: 'Paypal', image: paypal_log },
+  {
+    type: 'credit-card',
+    label: 'Cartão de Crédito',
+    image: visa_logo,
+  },
 ];
 
 export {

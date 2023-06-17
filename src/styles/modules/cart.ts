@@ -116,6 +116,7 @@ export const CartContainer = styled.section`
           max-height: 60px;
           border-radius: 50%;
           object-fit: cover;
+          cursor: pointer;
         }
 
         h3,

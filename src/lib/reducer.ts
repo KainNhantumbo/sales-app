@@ -223,6 +223,14 @@ export const initialState: State = {
     },
     payment: {
       type: 'm-pesa',
+      data: {
+        emola_account: NaN,
+        mpesa_account: NaN,
+        card_holder_name: '',
+        cvc_code: NaN,
+        card_number: NaN,
+        expire_date: '',
+      },
     },
   },
 };

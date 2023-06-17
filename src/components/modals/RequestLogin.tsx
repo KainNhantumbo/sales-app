@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '@/context/AppContext';
 import { IoArrowBackOutline, IoExitOutline } from 'react-icons/io5';
 import { PromptContainer as Container } from '../../styles/modules/logout-prompt';
+import Link from 'next/link';
 
 export default function LogoutPrompt(): JSX.Element {
   const { state, loginPromptController } = useAppContext();
@@ -39,8 +40,16 @@ export default function LogoutPrompt(): JSX.Element {
                   {complements.defaultTitle} | Iniciar sessão
                 </span>
                 <p className='prompt-message'>
-                  Você precisa iniciar sessão para fazer isso.
+                  Você precisa iniciar sessão para continuar.
                 </p>
+                <div>
+                  <p>
+                    Ainda não tem uma conta?{'  '}
+                    <Link href='/auth/sign-up' onClick={loginPromptController}>
+                      Crie uma nova conta.
+                    </Link>
+                  </p>
+                </div>
               </div>
               <div className='prompt-actions'>
                 <button

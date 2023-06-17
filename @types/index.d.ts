@@ -34,11 +34,17 @@ export type TShareUrls = {
   icon: IconType;
 };
 
+export type TPaymentType =
+  | 'e-mola'
+  | 'm-pesa'
+  | 'credit-card'
+  | 'paypal'
+  | 'ponto-24';
+
 export type TPaymentOptions = Array<{
-  type: 'e-mola' | 'm-pesa' | 'credit-card' | 'paypal' | 'ponto-24';
+  type: TPaymentType;
   label: 'E-Mola' | 'M-Pesa' | 'Cartão de Crédito' | 'Paypal' | 'Conta Móvel';
-  icon?: IconType | undefined;
-  image?: StaticImageData | undefined;
+  image: StaticImageData;
 }>;
 
 export type TSearchProducts = {
@@ -359,6 +365,14 @@ export type TPurchaseCheckOut = {
     zip_code: string;
   };
   payment: {
-    type: 'e-mola' | 'm-pesa' | 'credit-card' | 'paypal' | 'ponto-24';
+    type: TPaymentType;
+    data: {
+      emola_account: number;
+      mpesa_account: number;
+      card_holder_name: string;
+      cvc_code: number;
+      card_number: number;
+      expire_date: string;
+    };
   };
 };

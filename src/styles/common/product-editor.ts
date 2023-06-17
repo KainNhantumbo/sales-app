@@ -4,7 +4,7 @@ import {
   BaseButtonOutline,
   Button_Mono_A,
   StyledInputs,
-  StyledLabels
+  StyledLabels,
 } from '../defaults';
 
 export const ProductEditorContainer = styled.div`

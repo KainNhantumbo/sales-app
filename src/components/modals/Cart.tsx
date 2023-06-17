@@ -22,6 +22,7 @@ export default function Cart(): JSX.Element {
     removeProductFromCart,
     getCartProduct,
     updateCartProduct,
+    loginPromptController,
   } = useAppContext();
   const router: NextRouter = useRouter();
 
@@ -66,6 +67,12 @@ export default function Cart(): JSX.Element {
                           height={420}
                           src={product.previewImage?.url ?? blurDataUrlImage}
                           alt={'product preview image'}
+                          onClick={() => {
+                            router.push(
+                              `/ecommerce/products/${product.productId}`
+                            );
+                            cartModalController();
+                          }}
                         />
                         <div>
                           <h3>
@@ -204,6 +211,11 @@ export default function Cart(): JSX.Element {
                     whileHover={{ scale: 1.05 }}
                     className='prompt-checkout'
                     onClick={() => {
+                      if (!state.auth.token) {
+                        loginPromptController();
+                        cartModalController();
+                        return;
+                      }
                       cartModalController();
                       router.push(`/ecommerce/products/purchase`);
                     }}>

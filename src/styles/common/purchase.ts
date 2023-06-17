@@ -30,72 +30,186 @@ export const PurchaseContainer = styled.div`
     padding: 110px 20px;
     gap: 20px;
 
-    @media screen and (max-width: 445px) {
-      padding-top: 90px;
+    @media screen and (max-width: 1080px) {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @media screen and (max-width: 640px) {
+      padding: 110px 8px;
     }
   }
 
   aside {
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 30px;
     max-width: 420px;
 
-    .payment-details {
-      display: flex;
+    @media screen and (max-width: 1080px) {
+      max-width: 620px;
     }
 
-    .payment-options-container {
-      width: 100%;
+    .payment-details {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
+      border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+      border-radius: 12px;
+      padding: 12px 18px;
+      user-select: none;
 
-      .payment-option {
-        width: 100%;
+      h2 {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        line-height: 1.6rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        gap: 5px;
         padding: 12px;
-        border-radius: 12px;
-        position: relative;
-        border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+        svg {
+          position: relative;
+          top: -2px;
+          width: 25px;
+          height: 25px;
+          color: rgb(${({ theme }) => theme.primary});
+        }
+      }
 
-        label {
-          padding-left: 30px;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          cursor: pointer;
-          line-height: 1.4rem;
-          font-weight: 500;
-  
+      .payment-options-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        .payment-option {
+          width: 100%;
+          padding: 12px;
+          border-radius: 12px;
+          position: relative;
+          border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+
+          label {
+            padding-left: 30px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            line-height: 1.4rem;
+            font-weight: 500;
+          }
+
+          input[type='radio'] {
+            position: absolute;
+            top: calc(50% - 10px);
+            left: 12px;
+            appearance: none;
+            -moz-appearance: none;
+            margin: 0;
+            background: rgb(${({ theme }) => theme.background});
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgb(${({ theme }) => theme.font});
+            border-radius: 50%;
+            display: grid;
+            place-content: center;
+
+            :hover {
+              cursor: pointer;
+            }
+            :checked::before {
+              content: '';
+              width: 8px;
+              height: 8px;
+              background: rgb(${({ theme }) => theme.font});
+              border-radius: 50%;
+              margin: auto;
+            }
+          }
+        }
+      }
+
+      .payment-method-preview-container {
+        width: 100%;
+        padding: 20px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          max-width: 200px;
+          max-height: 85px;
+          border-radius: 5px;
+          position: relative;
+          left: calc(50% - 110px);
         }
 
-        input[type='radio'] {
-          position: absolute;
-          top: calc(50% - 10px);
-          left: 12px;
-          appearance: none;
-          -moz-appearance: none;
-          margin: 0;
-          background: rgb(${({ theme }) => theme.background});
-          width: 20px;
-          height: 20px;
-          border: 2px solid rgb(${({ theme }) => theme.font});
-          border-radius: 50%;
-          display: grid;
-          place-content: center;
+        .credit-card,
+        .paypal {
+          height: 50px;
+          width: 150px;
+          left: calc(50% - 75px);
+        }
+      }
 
-          :hover {
-            cursor: pointer;
+      .payment-method-inputs {
+        padding: 20px 0;
+        border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+        .m-pesa,
+        .e-mola,
+        .credit-card {
+          .form-section {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            gap: 10px;
+
+            @media screen and (max-width: 465px) {
+              flex-direction: column;
+            }
+
+            .form-element {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+              width: 100%;
+              label {
+                ${StyledLabels};
+              }
+              ${StyledInputs}
+
+              .counter {
+                align-self: end;
+                font-size: 0.9rem;
+              }
+            }
           }
-          :checked::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: rgb(${({ theme }) => theme.font});
-            border-radius: 50%;
-            margin: auto;
+        }
+      }
+
+      .payment-finalization-container {
+        padding-top: 20px;
+        border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+
+        .actions-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+
+          .pay-button {
+            ${BaseButton}
+            width: 100%;
+            max-width: 280px;
+            border-radius: 20px;
+
+            span {
+              padding: 0;
+            }
           }
         }
       }
@@ -124,6 +238,10 @@ export const PurchaseContainer = styled.div`
         align-items: center;
         border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
         padding-bottom: 8px;
+
+        @media screen and (max-width: 640px) {
+          flex-direction: column;
+        }
 
         .title {
           display: flex;
@@ -163,29 +281,6 @@ export const PurchaseContainer = styled.div`
         justify-content: space-between;
         padding: 12px 0;
         border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
-        /* 
-        @media screen and (max-width: 470px) {
-          flex-direction: column;
-        } */
-
-        .item-actions-container {
-          display: flex;
-          gap: 12px;
-          flex-direction: column;
-          align-items: center;
-
-          @media screen and (max-width: 470px) {
-            flex-direction: row;
-          }
-
-          .remove-item {
-            ${BaseButtonOutline}
-
-            :hover {
-              color: rgb(${({ theme }) => theme.alert});
-            }
-          }
-        }
 
         .item-details {
           display: flex;
@@ -193,12 +288,24 @@ export const PurchaseContainer = styled.div`
           flex-direction: row;
           align-items: center;
           gap: 8px;
+          position: relative;
+
+          @media screen and (max-width: 640px) {
+            flex-direction: column;
+          }
+
           img {
             width: 100%;
             max-width: 60px;
             max-height: 60px;
             border-radius: 50%;
             object-fit: cover;
+
+            @media screen and (max-width: 640px) {
+              max-width: 100%;
+              max-height: 220px;
+              border-radius: 12px;
+            }
           }
 
           h3,
@@ -208,6 +315,10 @@ export const PurchaseContainer = styled.div`
             font-weight: 500;
             line-height: 1.2rem;
             width: 120px;
+
+            @media screen and (max-width: 640px) {
+              width: 100%;
+            }
           }
 
           h3 {
@@ -219,6 +330,9 @@ export const PurchaseContainer = styled.div`
             color: rgb(${({ theme }) => theme.primary_variant});
             span {
               color: rgb(${({ theme }) => theme.font});
+              @media screen and (max-width: 640px) {
+                color: rgb(${({ theme }) => theme.neutral});
+              }
             }
           }
 
@@ -226,11 +340,24 @@ export const PurchaseContainer = styled.div`
             display: flex;
             flex-direction: row;
             align-items: center;
-
             gap: 12px;
+            @media screen and (max-width: 640px) {
+              position: absolute;
+              top: 0;
+              left: 0;
+              height: 100%;
+              min-width: 200px;
+              border-radius: 12px;
+              flex-direction: column;
+              background: rgba(${({ theme }) => theme.accent}, 0.5);
+              color: rgb(${({ theme }) => theme.neutral});
+              padding: 20px;
+              backdrop-filter: blur(20px);
+            }
           }
         }
       }
+
       .totals-container {
         display: flex;
         flex-flow: row wrap;

@@ -6,8 +6,10 @@ import {
 } from '@/data/app-data';
 import {
   IoBagHandle,
+  IoBicycle,
   IoBookmarkOutline,
-  IoCartOutline,
+  IoCard,
+  IoCreateOutline,
   IoEllipsisHorizontal,
   IoHomeOutline,
   IoInformationCircle,
@@ -17,7 +19,7 @@ import {
 } from 'react-icons/io5';
 import Image from 'next/image';
 import { useEffect } from 'react';
-import Select from 'react-select';
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { actions } from '@/data/actions';
@@ -29,6 +31,9 @@ import { useAppContext } from '@/context/AppContext';
 import { renderReactSelectCSS } from '@/styles/select';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { PurchaseContainer as Container } from '@/styles/common/purchase';
+import renderPaymentInputs from '@/components/RenderPaymentMethodInputs';
+
+const Select = dynamic(import('react-select'), { ssr: false });
 
 export default function Purchase(): JSX.Element {
   const theme: DefaultTheme = useTheme();
@@ -72,7 +77,7 @@ export default function Purchase(): JSX.Element {
                   whileHover={{ scale: 1.05 }}
                   className='open-cart-button'
                   onClick={cartModalController}>
-                  <IoCartOutline />
+                  <IoCreateOutline />
                   <span>Fazer alterações</span>
                 </motion.button>
               </div>
@@ -85,7 +90,7 @@ export default function Purchase(): JSX.Element {
                       src={product.previewImage?.url ?? blurDataUrlImage}
                       alt={'product preview image'}
                     />
-                    <div>
+                    <div className='product-cost-container'>
                       <h3>
                         <span>
                           {product.productName.length > 55
@@ -349,6 +354,7 @@ export default function Purchase(): JSX.Element {
           <aside>
             <section className='payment-details'>
               <h2>
+                <IoCard />
                 <span>Detalhes de Pagamento</span>
               </h2>
               <section className='content-container'>
@@ -357,15 +363,7 @@ export default function Purchase(): JSX.Element {
                     <motion.div
                       key={String(index)}
                       className='payment-option'
-                      drag={true}
-                      dragElastic={0.3}
                       whileTap={{ scale: 0.98 }}
-                      dragConstraints={{
-                        top: 0,
-                        left: 0,
-                        bottom: 0,
-                        right: 0,
-                      }}
                       whileHover={{
                         boxShadow: `0px 12px 25px 10px rgba(${theme.accent}, 0.09)`,
                       }}>
@@ -378,11 +376,6 @@ export default function Purchase(): JSX.Element {
                         id={String(index)}
                         value={option.type}
                         checked={
-                          state.checkout.payment.type === option.type
-                            ? true
-                            : false
-                        }
-                        defaultChecked={
                           state.checkout.payment.type === option.type
                             ? true
                             : false
@@ -405,6 +398,41 @@ export default function Purchase(): JSX.Element {
                       />
                     </motion.div>
                   ))}
+                </section>
+                <section className='payment-method-preview-container'>
+                  {payment_options.map(
+                    (option, index) =>
+                      option.type === state.checkout.payment.type && (
+                        <Image
+                          key={String(index)}
+                          src={option.image}
+                          className={option.type}
+                          alt={String.prototype.concat(
+                            option.label,
+                            ' ',
+                            'logo'
+                          )}
+                          width={600}
+                          height={85}
+                        />
+                      )
+                  )}
+                </section>
+
+                <section className='payment-method-inputs'>
+                  {renderPaymentInputs(state.checkout.payment.type)}
+                </section>
+
+                <section className='payment-finalization-container'>
+                  <div className='actions-container'>
+                    <motion.button
+                      whileTap={{ scale: 0.8 }}
+                      whileHover={{ scale: 1.05 }}
+                      className='pay-button'
+                      onClick={() => {}}>
+                      <span>Processeguir</span>
+                    </motion.button>
+                  </div>
                 </section>
               </section>
             </section>

@@ -37,7 +37,6 @@ import ReactImageGallery from 'react-image-gallery';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import 'react-image-gallery/styles/css/image-gallery.css';
-import RequestLogin from '@/components/modals/RequestLogin';
 import ShareProducts from '@/components/modals/ShareProductModal';
 import Comments from '@/components/comments/Comments';
 import product_categories from '../../../data/product-categories.json';
@@ -175,7 +174,6 @@ export default function Product({ product }: any): JSX.Element {
           category={state.publicProduct.category}
           name={state.publicProduct.name}
         />
-        <RequestLogin />
 
         <div className='wrapper-container'>
           <aside>
@@ -469,6 +467,7 @@ export default function Product({ product }: any): JSX.Element {
                               : undefined,
                           });
                         }
+                        if (!state.auth.token) return loginPromptController();
                         router.push('/ecommerce/products/purchase');
                       }}>
                       <IoBagCheck />
