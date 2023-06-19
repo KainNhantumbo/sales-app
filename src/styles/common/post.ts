@@ -249,6 +249,10 @@ export const PostContainer = styled.div`
       margin: 0 auto;
       margin-bottom: 10px;
 
+      @media screen and (max-width: 440px) {
+        flex-direction: column;
+      }
+
       h2 {
         font-size: 1.2rem;
         line-height: 1.6rem;

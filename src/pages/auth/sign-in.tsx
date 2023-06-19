@@ -7,7 +7,7 @@ import { actions } from '../../data/actions';
 import { complements } from '@/data/app-data';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '../../context/AppContext';
-import { InputEvents, SubmitEvent } from '../../../@types';
+import { InputEvents, SubmitEvent, TAuth } from '../../../@types';
 import { IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
 import { SignInContainer as Container } from '../../styles/common/sign-in';
 import backgroundImage from '../../../public/assets/africa-unveiled.png';
@@ -42,7 +42,7 @@ export default function SignIn(): JSX.Element {
     }
     try {
       setLoading(true);
-      const { data } = await fetch({
+      const { data } = await fetch<TAuth>({
         method: 'post',
         url: '/api/v1/auth/default/login',
         data: state.signInData,
@@ -52,14 +52,7 @@ export default function SignIn(): JSX.Element {
         type: actions.USER_AUTH,
         payload: {
           ...state,
-          auth: {
-            id: data?.id,
-            token: data?.token,
-            invalidated: data?.invalidated,
-            email: data?.email,
-            name: data?.name,
-            profile_image: data?.profile_image,
-          },
+          auth: { ...data },
         },
       });
       router.push(`/users/dashboard`);

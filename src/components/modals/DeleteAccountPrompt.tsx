@@ -2,7 +2,7 @@ import {
   IoArrowBackOutline,
   IoLockClosedOutline,
   IoMailOutline,
-  IoTrash
+  IoTrash,
 } from 'react-icons/io5';
 import fetch from '../../config/client';
 import { actions } from '@/data/actions';
@@ -27,9 +27,9 @@ export default function DeleteCommentPrompt(): JSX.Element {
         ...state,
         signInData: {
           ...state.signInData,
-          [e.target.name]: e.target.value
-        }
-      }
+          [e.target.name]: e.target.value,
+        },
+      },
     });
   }
 
@@ -37,7 +37,7 @@ export default function DeleteCommentPrompt(): JSX.Element {
     try {
       await fetchAPI({
         method: 'delete',
-        url: '/api/v1/users/account'
+        url: '/api/v1/users/account',
       });
       dispatch({
         type: actions.USER_AUTH,
@@ -49,14 +49,20 @@ export default function DeleteCommentPrompt(): JSX.Element {
             token: '',
             email: '',
             profile_image: '',
-            invalidated: false
-          }
-        }
+            storeId: '',
+          },
+        },
       });
       deleteAccountPromptController();
       router.push('/');
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      setError({
+        status: true,
+        message:
+          error.response?.data?.message ||
+          'Erro ao eliminar os dados da conta.',
+      });
     }
   }
 
@@ -64,7 +70,7 @@ export default function DeleteCommentPrompt(): JSX.Element {
     if (state.signInData.password.length < 8) {
       setError({
         status: true,
-        message: 'A senha deve conter pelo menos 8 caracteres'
+        message: 'A senha deve conter pelo menos 8 caracteres',
       });
       return;
     }
@@ -75,19 +81,24 @@ export default function DeleteCommentPrompt(): JSX.Element {
         method: 'post',
         url: '/api/v1/auth/default/login',
         data: state.signInData,
-        withCredentials: true
+        withCredentials: true,
       });
 
       // logs the user out
       await fetchAPI({
         method: 'post',
         url: '/api/v1/auth/default/logout',
-        withCredentials: true
+        withCredentials: true,
       });
       deleteUserAccount();
     } catch (error: any) {
       console.error(error);
-      setError({ status: true, message: error?.response?.data?.message });
+      setError({
+        status: true,
+        message:
+          error.response?.data?.message ||
+          'Erro ao eliminar os dados da conta.',
+      });
     } finally {
       setLoading(false);
     }
@@ -120,8 +131,8 @@ export default function DeleteCommentPrompt(): JSX.Element {
               opacity: 1,
               scale: 1,
               transition: {
-                duration: 0.3
-              }
+                duration: 0.3,
+              },
             }}
             exit={{ opacity: 0, scale: 0 }}>
             <div className='dialog-prompt'>

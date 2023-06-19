@@ -165,7 +165,7 @@ export default function Purchase(): JSX.Element {
               </div>
 
               <section className='form'>
-                <section className='form-section phone-container'>
+                <section className='form-section'>
                   <div className='form-element '>
                     <label htmlFor='main_phone_number'>
                       <IoPhonePortraitOutline />
@@ -191,7 +191,7 @@ export default function Purchase(): JSX.Element {
                   <div className='form-element'>
                     <label htmlFor='alternative_phone_number'>
                       <IoPhonePortraitOutline />
-                      <span>Número de telemóvel (Alternativo)</span>
+                      <span>Número de telemóvel (Alt.)</span>
                     </label>
                     <input
                       type='number'
@@ -253,16 +253,51 @@ export default function Purchase(): JSX.Element {
                 </section>
                 <section className='form-section'>
                   <div className='form-element'>
+                    <label htmlFor='zip_code'>
+                      <IoBookmarkOutline />
+                      <span>Código Postal</span>
+                    </label>
+                    <input
+                      type='text'
+                      id='zip_code'
+                      name='zip_code'
+                      placeholder='Escreva o seu código postal'
+                      aria-label='Escreva o seu código postal'
+                      value={state.checkout.location.zip_code}
+                      onChange={(e): void =>
+                        e.target.value.length > 3
+                          ? undefined
+                          : dispatch({
+                              type: actions.PURCHASE_CHECKOUT_DATA,
+                              payload: {
+                                ...state,
+                                checkout: {
+                                  ...state.checkout,
+                                  location: {
+                                    ...state.checkout.location,
+                                    zip_code: e.target.value,
+                                  },
+                                },
+                              },
+                            })
+                      }
+                    />
+                    <span className='counter'>{`${
+                      state.checkout.location.zip_code.length || 0
+                    } / 3`}</span>
+                  </div>
+                </section>
+                <section className='form-section'>
+                  <div className='form-element'>
                     <label htmlFor='adress'>
                       <IoHomeOutline />
                       <span>Endereço *</span>
                     </label>
-                    <input
-                      type='text'
+                    <textarea
+                      rows={4}
                       id='adress'
-                      placeholder='Endereço'
-                      aria-label='Endereço'
-                      maxLength={128}
+                      placeholder='Escreva detalhes como o bairro, avenida/rua, quarteirão, número da casa, referências, etc.'
+                      aria-label='Escreva detalhes como o bairro, avenida/rua, quarteirão, número da casa, referências, etc.'
                       value={state.checkout.location.adress}
                       onChange={(e): void =>
                         e.target.value.length > 128
@@ -285,40 +320,6 @@ export default function Purchase(): JSX.Element {
                     <span className='counter'>{`${
                       state.checkout.location.adress.length || 0
                     } / 128`}</span>
-                  </div>
-                  <div className='form-element'>
-                    <label htmlFor='zip_code'>
-                      <IoBookmarkOutline />
-                      <span>Código Postal</span>
-                    </label>
-                    <input
-                      type='text'
-                      id='zip_code'
-                      name='zip_code'
-                      placeholder='Escreva o seu código postal'
-                      aria-label='Escreva o seu código postal'
-                      value={state.checkout.location.zip_code}
-                      onChange={(e): void =>
-                        e.target.value.length > 5
-                          ? undefined
-                          : dispatch({
-                              type: actions.PURCHASE_CHECKOUT_DATA,
-                              payload: {
-                                ...state,
-                                checkout: {
-                                  ...state.checkout,
-                                  location: {
-                                    ...state.checkout.location,
-                                    zip_code: e.target.value,
-                                  },
-                                },
-                              },
-                            })
-                      }
-                    />
-                    <span className='counter'>{`${
-                      state.checkout.location.zip_code.length || 0
-                    } / 5`}</span>
                   </div>
                 </section>
 

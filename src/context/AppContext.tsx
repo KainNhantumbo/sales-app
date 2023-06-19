@@ -12,7 +12,7 @@ import SocketContext from './SocketContext';
 import { actions } from '@/data/actions';
 import { NextRouter, useRouter } from 'next/router';
 import { Action, State } from '../../@types/reducer';
-import { AppContext, TCart } from '../../@types/index';
+import { AppContext, TAuth, TCart } from '../../@types/index';
 import reducer, { initialState } from '@/lib/reducer';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
@@ -263,7 +263,7 @@ export default function AppContext(props: AppContext) {
   // ----------------user authentication--------------------------
   async function validateAuth(): Promise<void> {
     try {
-      const { data } = await fetch({
+      const { data } = await fetch<TAuth>({
         method: 'get',
         url: '/api/v1/auth/default/refresh',
         withCredentials: true,
@@ -272,14 +272,7 @@ export default function AppContext(props: AppContext) {
         type: actions.USER_AUTH,
         payload: {
           ...state,
-          auth: {
-            id: data?.id,
-            token: data?.token,
-            invalidated: data?.invalidated,
-            email: data?.email,
-            name: data?.name,
-            profile_image: data?.profile_image,
-          },
+          auth: { ...data },
         },
       });
     } catch (err: any) {
@@ -287,14 +280,7 @@ export default function AppContext(props: AppContext) {
         type: actions.USER_AUTH,
         payload: {
           ...state,
-          auth: {
-            id: '',
-            name: '',
-            token: '',
-            email: '',
-            profile_image: '',
-            invalidated: false,
-          },
+          auth: { ...state.auth },
         },
       });
       console.error(err);
@@ -337,10 +323,10 @@ export default function AppContext(props: AppContext) {
           auth: {
             id: '',
             name: '',
+            storeId: '',
             token: '',
             email: '',
             profile_image: '',
-            invalidated: false,
           },
         },
       });
@@ -353,7 +339,7 @@ export default function AppContext(props: AppContext) {
 
   async function authenticateUser(): Promise<void> {
     try {
-      const { data } = await fetch({
+      const { data } = await fetch<TAuth>({
         method: 'get',
         url: '/api/v1/auth/default/refresh',
         withCredentials: true,
@@ -362,14 +348,7 @@ export default function AppContext(props: AppContext) {
         type: actions.USER_AUTH,
         payload: {
           ...state,
-          auth: {
-            id: data?.id,
-            token: data?.token,
-            invalidated: data?.invalidated,
-            email: data?.email,
-            name: data?.name,
-            profile_image: data?.profile_image,
-          },
+          auth: { ...data },
         },
       });
     } catch (err: any) {

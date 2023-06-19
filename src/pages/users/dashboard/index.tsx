@@ -14,7 +14,10 @@ export default function Dashboard(): JSX.Element {
   const theme: DefaultTheme = useTheme();
   const { state } = useAppContext();
   const router: NextRouter = useRouter();
-  const actionRoutes: TDashboardActions = dashboardActions(state.auth.id);
+  const actionRoutes: TDashboardActions = dashboardActions({
+    storeId: state.auth.storeId,
+    userId: state.auth.id,
+  });
 
   return (
     <Layout
@@ -70,7 +73,7 @@ export default function Dashboard(): JSX.Element {
                               initial={{ scale: 0 }}
                               drag={true}
                               dragElastic={0.3}
-                              whileTap={{ scale: 0.98 }}
+                              whileTap={{ scale: 0.90 }}
                               dragConstraints={{
                                 top: 0,
                                 left: 0,

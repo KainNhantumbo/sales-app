@@ -1010,7 +1010,7 @@ export default function ProfileEditor(): JSX.Element {
                           aria-label='Escreva o seu código postal'
                           value={state.user.location?.zip_code}
                           onChange={(e): void =>
-                            e.target.value.length > 5
+                            e.target.value.length > 3
                               ? undefined
                               : dispatch({
                                   type: actions.USER_DATA,
@@ -1029,7 +1029,7 @@ export default function ProfileEditor(): JSX.Element {
                         />
                         <span className='counter'>{`${
                           state.user.location?.zip_code?.length || 0
-                        } / 5`}</span>
+                        } / 3`}</span>
                       </div>
                     </section>
                   </div>
@@ -1207,7 +1207,7 @@ export default function ProfileEditor(): JSX.Element {
                     </h2>
                     <p>
                       Por favor, evite usar senhas fracas e já utilizadas
-                      anteriormente ou em outros sites para melhorar a segurança
+                      anteriormente em outros sites para melhorar a segurança
                       da sua conta.
                     </p>
                   </div>

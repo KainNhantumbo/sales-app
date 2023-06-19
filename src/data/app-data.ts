@@ -14,10 +14,12 @@ import {
   IoCog,
   IoEye,
   IoFingerPrint,
-  IoAlbumsOutline,
   IoCardOutline,
   IoBasket,
   IoDocument,
+  IoMail,
+  IoStorefrontOutline,
+  IoFlash,
 } from 'react-icons/io5';
 import {
   FaFacebook,
@@ -28,7 +30,6 @@ import {
   FaTwitter,
   FaDollarSign,
   FaAd,
-
 } from 'react-icons/fa';
 import type {
   Author,
@@ -46,7 +47,6 @@ import paypal_log from '../../public/trademarks/paypal.png';
 import emola_logo from '../../public/trademarks/emola logo.png';
 import mpesa_logo from '../../public/trademarks/mpesa logo.png';
 import ponto24_logo from '../../public/trademarks/ponto-24-logo.png';
-import { SiVisa, SiMastercard, SiPaypal, SiPayoneer } from 'react-icons/si';
 
 const blurDataUrlImage = blurImageData.data;
 
@@ -184,35 +184,44 @@ const denounceReasons = [
   .sort((a, b) => (a > b ? 1 : -1))
   .map((reason) => ({ label: reason, value: reason }));
 
-const shareUrlPaths = (props: TShareUrlPaths): TShareUrls[] => [
-  {
-    name: 'Compartilhe no LinkedIn',
-    url: `https://www.linkedin.com/shareArticle?mini=true&url=${props.hostname}/blog/post/${props.slug}&title=${props.title}&summary=${props.excerpt}`,
-    icon: FaLinkedinIn,
-  },
-  {
-    name: 'Compartilhe no WhatsApp',
-    url: `https://api.whatsapp.com/send?text=${props.title}&url=${props.hostname}/blog/post/${props.slug}`,
-    icon: FaWhatsapp,
-  },
-  {
-    name: 'Compartilhe no Facebook',
-    url: `https://www.facebook.com/sharer/sharer.php?u=${props.hostname}/blog/post/${props.slug}`,
-    icon: FaFacebook,
-  },
-  {
-    name: 'Compartilhe no Twitter',
-    url: `https://twitter.com/intent/tweet?text=${props.hostname}/blog/post/${props.slug}`,
-    icon: FaTwitter,
-  },
-  {
-    name: 'Compartilhe no Pinterest',
-    url: `https://pinterest.com/pin/create/button/?url=${props.hostname}/blog/post/${props.slug}&media=${props.hostname}/blog/post/${props.slug}&description=${props.excerpt}`,
-    icon: FaPinterest,
-  },
-];
+const shareUrlPaths = (props: TShareUrlPaths): TShareUrls[] =>
+  [
+    {
+      name: 'Compartilhe no LinkedIn',
+      url: `https://www.linkedin.com/shareArticle?mini=true&url=${props.hostname}/blog/post/${props.slug}&title=${props.title}&summary=${props.excerpt}`,
+      icon: FaLinkedinIn,
+    },
+    {
+      name: 'Compartilhe no WhatsApp',
+      url: `https://api.whatsapp.com/send?text=${props.title}&url=${props.hostname}/blog/post/${props.slug}`,
+      icon: FaWhatsapp,
+    },
+    {
+      name: 'Compartilhe no Facebook',
+      url: `https://www.facebook.com/sharer/sharer.php?u=${props.hostname}/blog/post/${props.slug}`,
+      icon: FaFacebook,
+    },
+    {
+      name: 'Compartilhe por E-mail',
+      url: `mailto:?subject=${props.title}&body=${props.hostname}/blog/post/${props.slug}`,
+      icon: IoMail,
+    },
+    {
+      name: 'Compartilhe no Twitter',
+      url: `https://twitter.com/intent/tweet?text=${props.hostname}/blog/post/${props.slug}`,
+      icon: FaTwitter,
+    },
+    {
+      name: 'Compartilhe no Pinterest',
+      url: `https://pinterest.com/pin/create/button/?url=${props.hostname}/blog/post/${props.slug}&media=${props.hostname}/blog/post/${props.slug}&description=${props.excerpt}`,
+      icon: FaPinterest,
+    },
+  ].sort((a, b) => (a.name > b.name ? 1 : -1));
 
-const dashboardActions = (userId: string): TDashboardActions => ({
+const dashboardActions = (props: {
+  userId: string;
+  storeId: string;
+}): TDashboardActions => ({
   user: {
     header: { label: 'Conta', icon: BiUser },
     paths: [
@@ -223,7 +232,7 @@ const dashboardActions = (userId: string): TDashboardActions => ({
       },
       {
         label: 'Visualizar perfil',
-        url: `/ecommerce/users/profile/${userId}`,
+        url: `/community/profile/${props.userId}`,
         icon: IoEye,
       },
       {
@@ -241,6 +250,11 @@ const dashboardActions = (userId: string): TDashboardActions => ({
   store: {
     header: { label: 'Loja', icon: IoStorefront },
     paths: [
+      {
+        label: 'Visualizar loja',
+        url: `/community/store/${props.storeId}`,
+        icon: IoStorefrontOutline,
+      },
       {
         label: 'Configurações da loja',
         url: '/users/dashboard/store-editor',
@@ -302,9 +316,9 @@ const dashboardActions = (userId: string): TDashboardActions => ({
         icon: IoCog,
       },
       {
-        label: 'Destacar produtos',
+        label: 'Destacar produtos da loja',
         url: '/users/dashboard/ads/products',
-        icon: IoAlbumsOutline,
+        icon: IoFlash,
       },
     ],
   },

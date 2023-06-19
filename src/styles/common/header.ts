@@ -209,10 +209,20 @@ export const HeaderContainer = styled.header`
     .login-btn {
       ${BaseButtonOutline}
       border: none;
+
+      span {
+        position: relative;
+        top: calc(50% - 7px);
+      }
     }
 
     .sign-in-btn {
       ${BaseButton}
+
+      span {
+        position: relative;
+        top: calc(50% - 7px);
+      }
     }
 
     .user-account,

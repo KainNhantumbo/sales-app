@@ -279,7 +279,6 @@ export const HomeContainer = styled.div`
               min-width: 240px;
               height: 100%;
               border-radius: 20px;
-              box-shadow: 0 0 25px 3px rgba(${({ theme }) => theme.accent}, 0.2);
             }
             @media screen and (max-width: 470px) {
               width: 180px;
@@ -303,7 +302,6 @@ export const HomeContainer = styled.div`
               min-width: 240px;
               height: 100%;
               border-radius: 20px;
-              box-shadow: 0 0 25px 3px rgba(${({ theme }) => theme.accent}, 0.2);
             }
             @media screen and (max-width: 460px) {
               width: 180px;
@@ -352,7 +350,6 @@ export const HomeContainer = styled.div`
               display: flex;
               ${BaseButton}
               overflow: visible;
-              border-radius: 20px;
               pointer-events: none;
             }
           }

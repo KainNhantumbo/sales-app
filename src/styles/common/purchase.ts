@@ -426,7 +426,7 @@ export const PurchaseContainer = styled.div`
           width: 100%;
           gap: 10px;
 
-          @media screen and (max-width: 655px) {
+          @media screen and (max-width: 600px) {
             flex-direction: column;
           }
 
@@ -446,9 +446,7 @@ export const PurchaseContainer = styled.div`
             }
           }
         }
-        .phone-container {
-          flex-direction: column;
-        }
+        
       }
     }
   }

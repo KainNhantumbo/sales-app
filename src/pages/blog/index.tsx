@@ -12,7 +12,7 @@ import { NextRouter, useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import { actions } from '@/data/actions';
 import { getPosts } from '@/lib/queries';
-import { formatDate } from '@/lib/time-fns';
+import { formatDate } from '@/lib/utils';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { PulseLoader } from 'react-spinners';
 import NewsLetter from '@/components/Newsletter';

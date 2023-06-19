@@ -2,7 +2,7 @@ import {
   IoEllipsisHorizontal,
   IoHeart,
   IoLibraryOutline,
-  IoOpenOutline
+  IoOpenOutline,
 } from 'react-icons/io5';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -10,7 +10,7 @@ import { getPosts } from '@/lib/queries';
 import Layout from '@/components/Layout';
 import { DotLoader } from 'react-spinners';
 import { useEffect, useState } from 'react';
-import { formatDate } from '@/lib/time-fns';
+import { formatDate } from '@/lib/utils';
 import { useTheme } from 'styled-components';
 import { complements } from '@/data/app-data';
 import NewsLetter from '@/components/Newsletter';
@@ -24,11 +24,11 @@ export default function BlogSearch() {
   const router = useRouter();
   const [posts, setPosts] = useState<IBlogPosts[]>([]);
   const [loading, setLoading] = useState<{ status: boolean }>({
-    status: false
+    status: false,
   });
   const [error, setError] = useState<{ status: boolean; msg: string }>({
     status: false,
-    msg: ''
+    msg: '',
   });
 
   async function fetchPosts(): Promise<void> {
@@ -36,20 +36,20 @@ export default function BlogSearch() {
     setLoading({ status: true });
     try {
       const { data } = await getPosts({
-        search: router.query?.q as string
+        search: router.query?.q as string,
       });
       setPosts(data);
       if (data?.length === 0) {
         setError({
           status: true,
-          msg: 'Não há resultados para a sua pesquisa'
+          msg: 'Não há resultados para a sua pesquisa',
         });
       }
     } catch (e: any) {
       console.error(e);
       setError({
         status: true,
-        msg: 'Um erro ocorreu durante o processamento da sua requisição. Por favor, tente mais tarde'
+        msg: 'Um erro ocorreu durante o processamento da sua requisição. Por favor, tente mais tarde',
       });
     } finally {
       setLoading({ status: false });
@@ -76,7 +76,7 @@ export default function BlogSearch() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Pesquisa de Postagens`
+        title: `${complements.defaultTitle} | Pesquisa de Postagens`,
       }}>
       <Container>
         <div className='main-container'>
@@ -98,7 +98,7 @@ export default function BlogSearch() {
               style={{
                 fontWeight: '400',
                 fontSize: '1.4rem',
-                lineHeight: '1.8rem'
+                lineHeight: '1.8rem',
               }}>
               Pesquisou por: {router.query?.q}
             </section>

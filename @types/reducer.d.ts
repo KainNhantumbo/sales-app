@@ -8,6 +8,7 @@ import {
   ProductsList,
   PublicProducts,
   Store,
+  TAuth,
   TCart,
   TDenounce,
   TPublicProduct,
@@ -32,14 +33,7 @@ export type State = {
   isFilterActive: boolean;
   app_status: AppStatus;
   denounce: TDenounce;
-  auth: {
-    id: string;
-    token: string;
-    invalidated: boolean;
-    profile_image: string;
-    name: string;
-    email: string;
-  };
+  auth:TAuth;
   search: string;
   newSubscriptorValue: { subscriptor: string };
   signupData: ISignUp;

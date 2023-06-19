@@ -6,6 +6,14 @@ import type { ReactNode, ChangeEvent, FormEvent } from 'react';
 
 // ========================================== //
 // -------------static types-------------------
+export type TAuth = {
+  id: string;
+  storeId: string;
+  token: string;
+  profile_image: string;
+  name: string;
+  email: string;
+};
 
 export type TShareUrlPaths = {
   slug: string;
@@ -133,7 +141,6 @@ export interface IComment {
   content: string;
   parent_id: string;
   favorites: string[];
-  invalidated: boolean;
   updatedAt: string;
   createdAt: string;
 }
@@ -156,7 +163,6 @@ export type ChatType = Array<{
   _id: string;
   sender: string;
   receiver: string;
-  invalidated: boolean;
 }>;
 
 export type MessageType = {
@@ -202,7 +208,6 @@ export interface Product extends ProductsList {
   specifications: string;
   delivery_tax: number;
   images: { [x: string]: { id: string; url: string } };
-  invalidated: boolean;
   allow_comments: boolean;
 }
 
@@ -242,6 +247,65 @@ export type TPublicProduct = {
   };
 };
 
+export type TPublicStore = {
+  _id: string;
+  name: string;
+  verified_store: boolean;
+  created_by: {
+    _id: string;
+    profile_image:
+      | {
+          id: string;
+          url: string;
+        }
+      | undefined;
+    first_name: string;
+    last_name: string;
+    email: string;
+    main_phone_number?: number | undefined;
+    alternative_phone_number?: number | undefined;
+    social_network?:
+      | {
+          website: string | undefined;
+          whatsapp: string | undefined;
+          instagram: string | undefined;
+          facebook: string | undefined;
+          linkedin: string | undefined;
+        }
+      | undefined;
+  };
+  description: string;
+  slogan: string;
+  category: string;
+  cover_image?: { id: string; url: string };
+  privacy_policy?: string | undefined;
+  terms_policy?: string | undefined;
+  delivery_policy?: string | undefined;
+  location: {
+    country: string;
+    state: string;
+    adress: string | undefined;
+  };
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Job = {
+  _id: string;
+  title: string;
+  description: string;
+  job_type: string;
+  apply_url?: string;
+  experience_level: string;
+  expected_salary?: string;
+  favorites: { _id: string; first_name: string; last_name: string }[];
+  professional_skills: string[] | never[];
+  created_by: string;
+  location?: { country: string; state: string };
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type Store = {
   _id: string;
   name: string;
@@ -270,7 +334,6 @@ export type Store = {
   privacy_policy?: string;
   terms_policy?: string;
   delivery_policy?: string;
-  invalidated: boolean;
   location: {
     country: string;
     state: string;
@@ -292,7 +355,6 @@ export type Job = {
   professional_skills: string[] | never[];
   created_by: string;
   location?: { country: string; state: string };
-  invalidated: boolean;
   createdAt: string;
   updatedAt: string;
 };

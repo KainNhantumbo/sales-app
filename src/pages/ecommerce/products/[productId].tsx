@@ -26,7 +26,7 @@ import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
 import fetch from '../../../config/client';
 import ErrorPage from '@/pages/error-page';
-import { formatDate } from '@/lib/time-fns';
+import { formatDate } from '@/lib/utils';
 import { FaCartPlus } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { Product } from '../../../../@types';
@@ -670,7 +670,7 @@ export default function Product({ product }: any): JSX.Element {
               </h2>
               <div className='contents-container'>
                 <section>
-                  <div className=''>
+                  <div>
                     <p className='name'>{state.publicProduct.store.name}</p>
                     <p className='category'>
                       Oferece serviços/produtos relacionados a{' '}

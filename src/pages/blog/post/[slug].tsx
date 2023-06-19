@@ -19,7 +19,7 @@ import { useRouter } from 'next/router';
 import editorJsHtml from 'editorjs-html';
 import Layout from '@/components/Layout';
 import ErrorPage from '@/pages/error-page';
-import { formatDate } from '@/lib/time-fns';
+import { formatDate } from '@/lib/utils';
 import { useTheme } from 'styled-components';
 import NewsLetter from '@/components/Newsletter';
 import { readingTime } from 'reading-time-estimator';
