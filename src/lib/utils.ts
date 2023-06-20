@@ -5,5 +5,8 @@ export function formatDate(date: string): string {
 }
 
 export function formatCurrency(currency: number) {
-  
+  return Intl.NumberFormat('pt-BR', {
+    currency: 'MZN',
+    style: 'currency',
+  }).format(currency);
 }

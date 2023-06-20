@@ -1,10 +1,4 @@
 import {
-  blurDataUrlImage,
-  complements,
-  payment_options,
-  states,
-} from '@/data/app-data';
-import {
   IoBagHandle,
   IoBicycle,
   IoBookmarkOutline,
@@ -17,6 +11,12 @@ import {
   IoPlanetOutline,
   IoStar,
 } from 'react-icons/io5';
+import {
+  blurDataUrlImage,
+  complements,
+  payment_options,
+  states,
+} from '@/data/app-data';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
@@ -32,6 +32,7 @@ import { renderReactSelectCSS } from '@/styles/select';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { PurchaseContainer as Container } from '@/styles/common/purchase';
 import renderPaymentInputs from '@/components/RenderPaymentMethodInputs';
+import { formatCurrency } from '@/lib/utils';
 
 const Select = dynamic(import('react-select'), { ssr: false });
 
@@ -102,23 +103,12 @@ export default function Purchase(): JSX.Element {
                         Quant. <span>{product.quantity}</span>
                       </p>
                       <p>
-                        Preço{' '}
-                        <span>
-                          {new Intl.NumberFormat('pt-BR', {
-                            currency: 'MZN',
-                            style: 'currency',
-                            useGrouping: true,
-                          }).format(product.price)}
-                        </span>
+                        Preço <span>{formatCurrency(product.price)}</span>
                       </p>
                       <p>
                         <>Subtotal </>
                         <span>
-                          {new Intl.NumberFormat('pt-BR', {
-                            currency: 'MZN',
-                            style: 'currency',
-                            useGrouping: true,
-                          }).format(product.price * product.quantity)}
+                          {formatCurrency(product.price * product.quantity)}
                         </span>
                       </p>
                     </div>
@@ -132,11 +122,7 @@ export default function Purchase(): JSX.Element {
                   <span>Custo total</span>
                 </h3>
                 <p>
-                  {new Intl.NumberFormat('pt-BR', {
-                    currency: 'MZN',
-                    style: 'currency',
-                    useGrouping: true,
-                  }).format(
+                  {formatCurrency(
                     state.cart.reduce(
                       (accumulator, currentProduct) =>
                         (accumulator +=

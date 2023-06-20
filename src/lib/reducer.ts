@@ -195,6 +195,7 @@ export const initialState: State = {
         adress: '',
       },
       category: '',
+      verified_store: false,
     },
     promotion: { status: false, percentage: 0 },
     price: 0,

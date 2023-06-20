@@ -22,6 +22,16 @@ export type TShareUrlPaths = {
   excerpt: string;
 };
 
+export type TSocialNetwork =
+  | {
+      website: string | undefined;
+      whatsapp: string | undefined;
+      instagram: string | undefined;
+      facebook: string | undefined;
+      linkedin: string | undefined;
+    }
+  | undefined;
+
 export type TDashboardActions = {
   [x: string]: {
     header: { label: string; icon: IconType };
@@ -244,6 +254,7 @@ export type TPublicProduct = {
       adress: string;
     };
     category: string;
+    verified_store: boolean;
   };
 };
 

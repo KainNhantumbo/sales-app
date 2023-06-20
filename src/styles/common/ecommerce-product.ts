@@ -474,6 +474,7 @@ export const EcommerceProductContainer = styled.div`
       padding: 16px 20px;
       border-radius: 12px;
       border: 3px solid rgba(${({ theme }) => theme.primary}, 0.8);
+      position: relative;
 
       @media screen and (max-width: 430px) {
         padding: 12px;
@@ -505,6 +506,10 @@ export const EcommerceProductContainer = styled.div`
         gap: 20px;
         align-items: center;
 
+        @media screen and (max-width: 430px) {
+          padding-top: 45px;
+        }
+
         .name,
         i {
           font-weight: 500;
@@ -512,6 +517,37 @@ export const EcommerceProductContainer = styled.div`
 
         a {
           ${BaseButton}
+        }
+      }
+      h5 {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 5px 12px;
+        gap: 5px;
+        border-radius: 8px;
+        background: rgb(${({ theme }) => theme.foreground});
+        color: rgb(${({ theme }) => theme.primary_variant});
+        font-size: 1rem;
+        line-height: 1.6rem;
+        font-weight: 500;
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 100;
+
+        @media screen and (max-width: 430px) {
+          top: 50px;
+          left: 12px;
+        }
+
+        svg {
+          width: 22px;
+          height: 22px;
+        }
+
+        .alert {
+          color: rgb(${({ theme }) => theme.secondary});
         }
       }
     }

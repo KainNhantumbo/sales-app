@@ -1,10 +1,10 @@
 import {
   IoDesktopOutline,
+  IoDocumentsOutline,
   IoExtensionPuzzleOutline,
   IoHelpBuoyOutline,
   IoLockOpenOutline,
   IoMoonOutline,
-  IoNewspaperOutline,
   IoPaperPlaneOutline,
   IoShieldCheckmarkOutline,
   IoSpeedometerOutline,
@@ -54,7 +54,7 @@ export default function Footer(): JSX.Element {
           </section>
           <section>
             <h3>
-              <IoNewspaperOutline />
+              <IoDocumentsOutline />
               <span>Institucional</span>
             </h3>
             <div className='elements'>

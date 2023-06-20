@@ -20,6 +20,7 @@ import {
   IoMail,
   IoStorefrontOutline,
   IoFlash,
+  IoLogoWhatsapp,
 } from 'react-icons/io5';
 import {
   FaFacebook,
@@ -30,6 +31,7 @@ import {
   FaTwitter,
   FaDollarSign,
   FaAd,
+  FaLink,
 } from 'react-icons/fa';
 import type {
   Author,
@@ -37,6 +39,7 @@ import type {
   TPaymentOptions,
   TShareUrlPaths,
   TShareUrls,
+  TSocialNetwork,
 } from '../../@types/index';
 import Package from '../../package.json';
 import blurImageData from './blur-data-url-image.json';
@@ -377,6 +380,55 @@ const payment_options: TPaymentOptions = [
   },
 ];
 
+const formatSocialNetwork = (data: TSocialNetwork) => {
+  if (data) {
+    return Object.entries(data)
+      .map(([key, value]) => {
+        switch (key) {
+          case 'facebook':
+            return {
+              name: 'Facebook',
+              url: value,
+              icon: IoLogoFacebook,
+            };
+          case 'instagram':
+            return {
+              name: 'Instagram',
+              url: value,
+              icon: FaInstagram,
+            };
+          case 'website':
+            return {
+              name: 'Website',
+              url: value,
+              icon: FaLink,
+            };
+          case 'linkedin':
+            return {
+              name: 'LinkedIn',
+              url: value,
+              icon: FaLinkedinIn,
+            };
+          case 'whatsapp':
+            return {
+              name: 'Whatsapp',
+              url: value,
+              icon: FaWhatsapp,
+            };
+          default:
+            return undefined;
+        }
+      })
+      .sort((a, b) => {
+        if (a && b) {
+          if (a.name > b.name) return 1;
+          return -1;
+        }
+        return 1;
+      });
+  }
+};
+
 export {
   dashboardActions,
   denounceReasons,
@@ -390,4 +442,5 @@ export {
   shareUrlPaths,
   states,
   payment_options,
+  formatSocialNetwork,
 };

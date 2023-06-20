@@ -36,12 +36,19 @@ export const FooterContainer = styled.footer`
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
+    @media screen and (max-width: 490px) {
+      gap: 12px;
+    }
 
     h3 {
       display: flex;
       align-items: center;
       font-weight: 500;
       font-size: 1.1rem;
+      @media screen and (max-width: 410px) {
+        font-size: 1rem;
+        line-height: 1.6rem;
+      }
       svg {
         width: 20px;
         height: 20px;
@@ -79,6 +86,8 @@ export const FooterContainer = styled.footer`
           font-weight: 500;
           font-size: 1.1rem;
           margin: 0 auto;
+      line-height: 1.6rem;
+
           svg {
             width: 20px;
             height: 20px;
@@ -92,8 +101,8 @@ export const FooterContainer = styled.footer`
         .elements {
           display: flex;
           flex-direction: column;
-          align-items: center;
           gap: 8px;
+          padding-left: 25px;
 
           a {
             font-size: 0.98rem;
@@ -134,8 +143,9 @@ export const FooterContainer = styled.footer`
 
       .logo {
         p {
-          line-height: 1.1rem;
+          line-height: 1.4rem;
           font-weight: 400;
+          text-align: center;
         }
       }
 

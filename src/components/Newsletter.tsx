@@ -82,7 +82,6 @@ export default function NewsLetter(): JSX.Element {
                   aria-label='Escreva o seu e-mail'
                   placeholder='Escreva o seu e-mail'
                   autoComplete='true'
-                  required={true}
                   value={state.newSubscriptorValue.subscriptor}
                   onChange={(e) =>
                     dispatch({

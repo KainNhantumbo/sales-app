@@ -26,7 +26,7 @@ import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
 import fetch from '../../../config/client';
 import ErrorPage from '@/pages/error-page';
-import { formatDate } from '@/lib/utils';
+import { formatCurrency, formatDate } from '@/lib/utils';
 import { FaCartPlus } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { Product } from '../../../../@types';
@@ -41,6 +41,7 @@ import ShareProducts from '@/components/modals/ShareProductModal';
 import Comments from '@/components/comments/Comments';
 import product_categories from '../../../data/product-categories.json';
 import { EcommerceProductContainer as Container } from '@/styles/common/ecommerce-product';
+import { VscVerifiedFilled } from 'react-icons/vsc';
 
 export default function Product({ product }: any): JSX.Element {
   const {
@@ -146,6 +147,7 @@ export default function Product({ product }: any): JSX.Element {
                 adress: '',
               },
               category: '',
+              verified_store: false,
             },
             promotion: { status: false, percentage: 0 },
             price: 0,
@@ -185,6 +187,11 @@ export default function Product({ product }: any): JSX.Element {
                   additionalClass='navigator'
                   autoPlay={false}
                   showPlayButton={false}
+                  showThumbnails={
+                    innerWidth < 445 ?( Object.values(state.publicProduct.images).length >= 2
+                      ? true
+                      : false):true
+                  }
                   thumbnailPosition={innerWidth > 445 ? 'left' : 'bottom'}
                   items={Object.values(state.publicProduct.images).map(
                     (image) => ({
@@ -243,10 +250,7 @@ export default function Product({ product }: any): JSX.Element {
                         <span>PROMO</span>
                       </p>{' '}
                       <span className='actual-price'>
-                        {new Intl.NumberFormat('pt-BR', {
-                          currency: 'MZN',
-                          style: 'currency',
-                        }).format(
+                        {formatCurrency(
                           state.publicProduct.price -
                             (state.publicProduct.price *
                               state.publicProduct.promotion.percentage) /
@@ -257,11 +261,7 @@ export default function Product({ product }: any): JSX.Element {
                   ) : (
                     <div className='price-container'>
                       <span className='actual-price'>
-                        {new Intl.NumberFormat('pt-BR', {
-                          currency: 'MZN',
-                          style: 'currency',
-                          useGrouping: true,
-                        }).format(state.publicProduct.price)}
+                        {formatCurrency(state.publicProduct.price)}
                       </span>
                     </div>
                   )}
@@ -688,10 +688,23 @@ export default function Product({ product }: any): JSX.Element {
                   </div>
                 </section>
                 <Link
-                  href={`/ecommerce/stores/${state.publicProduct.store._id}`}>
+                  href={`/community/store/${state.publicProduct.store._id}`}>
                   <IoPaperPlane />
                   <span>Visitar loja</span>
                 </Link>
+                <h5>
+                  {state.publicProduct.store.verified_store ? (
+                    <>
+                      <VscVerifiedFilled />
+                      <span>Loja verificada</span>
+                    </>
+                  ) : (
+                    <>
+                      <IoAlertCircle className='alert' />
+                      <span className='alert'>Loja não verificada</span>
+                    </>
+                  )}
+                </h5>
               </div>
             </section>
 

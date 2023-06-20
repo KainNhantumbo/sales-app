@@ -1,6 +1,6 @@
 [
   {
-    "country": "Afghanistan",
+    "country": "Afeganistão",
     "alpha2Code": "AF",
     "alpha3Code": "AFG",
     "numberCode": "004",
@@ -42,7 +42,7 @@
     ]
   },
   {
-    "country": "Albania",
+    "country": "Albânia",
     "alpha2Code": "AL",
     "alpha3Code": "ALB",
     "numberCode": "008",
@@ -62,7 +62,7 @@
     ]
   },
   {
-    "country": "Algeria",
+    "country": "Algéria",
     "alpha2Code": "DZ",
     "alpha3Code": "DZA",
     "numberCode": "012",
@@ -159,14 +159,14 @@
     ]
   },
   {
-    "country": "Antarctica",
+    "country": "Antártida",
     "alpha2Code": "AQ",
     "alpha3Code": "ATA",
     "numberCode": "010",
     "states": []
   },
   {
-    "country": "Antigua and Barbuda",
+    "country": "Antigua e Barbuda",
     "alpha2Code": "AG",
     "alpha3Code": "ATG",
     "numberCode": "028",
@@ -214,7 +214,7 @@
     ]
   },
   {
-    "country": "Armenia",
+    "country": "Armênia",
     "alpha2Code": "AM",
     "alpha3Code": "ARM",
     "numberCode": "051",
@@ -233,7 +233,7 @@
     ]
   },
   {
-    "country": "Australia",
+    "country": "Austrália",
     "alpha2Code": "AU",
     "alpha3Code": "AUS",
     "numberCode": "036",
@@ -249,7 +249,7 @@
     ]
   },
   {
-    "country": "Austria",
+    "country": "Áustria",
     "alpha2Code": "AT",
     "alpha3Code": "AUT",
     "numberCode": "040",
@@ -266,7 +266,7 @@
     ]
   },
   {
-    "country": "Azerbaijan",
+    "country": "Azerbaijão",
     "alpha2Code": "AZ",
     "alpha3Code": "AZE",
     "numberCode": "031",
@@ -374,7 +374,7 @@
     ]
   },
   {
-    "country": "Bahrain",
+    "country": "Bahrein",
     "alpha2Code": "BH",
     "alpha3Code": "BHR",
     "numberCode": "048",
@@ -420,7 +420,7 @@
     ]
   },
   {
-    "country": "Belarus",
+    "country": "Bielorrússia",
     "alpha2Code": "BY",
     "alpha3Code": "BLR",
     "numberCode": "112",
@@ -435,7 +435,7 @@
     ]
   },
   {
-    "country": "Belgium",
+    "country": "Bélgica",
     "alpha2Code": "BE",
     "alpha3Code": "BEL",
     "numberCode": "056",
@@ -509,7 +509,7 @@
     ]
   },
   {
-    "country": "Bhutan",
+    "country": "Butão",
     "alpha2Code": "BT",
     "alpha3Code": "BTN",
     "numberCode": "064",
@@ -537,7 +537,7 @@
     ]
   },
   {
-    "country": "Bolivia",
+    "country": "Bolívia",
     "alpha2Code": "BO",
     "alpha3Code": "BOL",
     "numberCode": "068",
@@ -554,7 +554,7 @@
     ]
   },
   {
-    "country": "Bosnia and Herzegovina",
+    "country": "Bósnia e Herzegovina",
     "alpha2Code": "BA",
     "alpha3Code": "BIH",
     "numberCode": "070",
@@ -596,7 +596,7 @@
     ]
   },
   {
-    "country": "Brazil",
+    "country": "Brasil",
     "alpha2Code": "BR",
     "alpha3Code": "BRA",
     "numberCode": "076",
@@ -638,7 +638,7 @@
     "states": ["Belait", "Brunei and Muara", "Temburong", "Tutong"]
   },
   {
-    "country": "Bulgaria",
+    "country": "Bulgária",
     "alpha2Code": "BG",
     "alpha3Code": "BGR",
     "numberCode": "100",
@@ -727,7 +727,7 @@
     ]
   },
   {
-    "country": "Myanmar",
+    "country": "Birmânia",
     "alpha2Code": "MM",
     "alpha3Code": "MMR",
     "numberCode": "104",
@@ -774,7 +774,7 @@
     ]
   },
   {
-    "country": "Cambodia",
+    "country": "Camboja",
     "alpha2Code": "KH",
     "alpha3Code": "KHM",
     "numberCode": "116",
@@ -806,7 +806,7 @@
     ]
   },
   {
-    "country": "Cameroon",
+    "country": "Camarões",
     "alpha2Code": "CM",
     "alpha3Code": "CMR",
     "numberCode": "120",
@@ -824,7 +824,7 @@
     ]
   },
   {
-    "country": "Canada",
+    "country": "Canadá",
     "alpha2Code": "CA",
     "alpha3Code": "CAN",
     "numberCode": "124",
@@ -845,7 +845,7 @@
     ]
   },
   {
-    "country": "Cape Verde",
+    "country": "Cabo Verde",
     "alpha2Code": "CV",
     "alpha3Code": "CPV",
     "numberCode": "132",
@@ -863,7 +863,7 @@
     ]
   },
   {
-    "country": "Central African Republic",
+    "country": "República Centro-Africana",
     "alpha2Code": "CF",
     "alpha3Code": "CAF",
     "numberCode": "140",
@@ -888,7 +888,7 @@
     ]
   },
   {
-    "country": "Chad",
+    "country": "Chade",
     "alpha2Code": "TD",
     "alpha3Code": "TCD",
     "numberCode": "148",
@@ -970,7 +970,7 @@
     ]
   },
   {
-    "country": "Colombia",
+    "country": "Colômbia",
     "alpha2Code": "CO",
     "alpha3Code": "COL",
     "numberCode": "170",
@@ -1011,14 +1011,14 @@
     ]
   },
   {
-    "country": "Comoros",
+    "country": "Comores",
     "alpha2Code": "KM",
     "alpha3Code": "COM",
     "numberCode": "174",
     "states": ["Grande Comore (Njazidja)", "Anjouan (Nzwani)", "Moheli (Mwali)"]
   },
   {
-    "country": "Congo, Democratic Republic",
+    "country": "Congo (DR)",
     "alpha2Code": "CD",
     "alpha3Code": "COD",
     "numberCode": "180",
@@ -1037,7 +1037,7 @@
     ]
   },
   {
-    "country": "Congo, Republic of the",
+    "country": "Congo",
     "alpha2Code": "CG",
     "alpha3Code": "COG",
     "numberCode": "178",
@@ -1071,7 +1071,7 @@
     ]
   },
   {
-    "country": "Cote d'Ivoire",
+    "country": "Costa do Marfim",
     "alpha2Code": "CI",
     "alpha3Code": "CIV",
     "numberCode": "384",
@@ -1093,7 +1093,7 @@
     ]
   },
   {
-    "country": "Croatia",
+    "country": "Croácia",
     "alpha2Code": "HR",
     "alpha3Code": "HRV",
     "numberCode": "191",
@@ -1145,7 +1145,7 @@
     ]
   },
   {
-    "country": "Cyprus",
+    "country": "Chipre",
     "alpha2Code": "CY",
     "alpha3Code": "CYP",
     "numberCode": "196",
@@ -1159,7 +1159,7 @@
     ]
   },
   {
-    "country": "Czech Republic",
+    "country": "República Tcheca",
     "alpha2Code": "CZ",
     "alpha3Code": "CZE",
     "numberCode": "203",
@@ -1181,7 +1181,7 @@
     ]
   },
   {
-    "country": "Denmark",
+    "country": "Dinamarca",
     "alpha2Code": "DK",
     "alpha3Code": "DNK",
     "numberCode": "208",
@@ -1205,7 +1205,7 @@
     ]
   },
   {
-    "country": "Djibouti",
+    "country": "Djibuti",
     "alpha2Code": "DJ",
     "alpha3Code": "DJI",
     "numberCode": "262",
@@ -1230,7 +1230,7 @@
     ]
   },
   {
-    "country": "Dominican Republic",
+    "country": "República Dominicana",
     "alpha2Code": "DO",
     "alpha3Code": "DOM",
     "numberCode": "214",
@@ -1270,7 +1270,7 @@
     ]
   },
   {
-    "country": "East Timor",
+    "country": "Timor-Leste",
     "alpha2Code": "TL",
     "alpha3Code": "TLS",
     "numberCode": "626",
@@ -1291,7 +1291,7 @@
     ]
   },
   {
-    "country": "Ecuador",
+    "country": "Equador",
     "alpha2Code": "EC",
     "alpha3Code": "ECU",
     "numberCode": "218",
@@ -1321,7 +1321,7 @@
     ]
   },
   {
-    "country": "Egypt",
+    "country": "Egito",
     "alpha2Code": "EG",
     "alpha3Code": "EGY",
     "numberCode": "818",
@@ -1377,7 +1377,7 @@
     ]
   },
   {
-    "country": "Equatorial Guinea",
+    "country": "Guiné Equatorial",
     "alpha2Code": "GQ",
     "alpha3Code": "GNQ",
     "numberCode": "226",
@@ -1392,7 +1392,7 @@
     ]
   },
   {
-    "country": "Eritrea",
+    "country": "Eritreia",
     "alpha2Code": "ER",
     "alpha3Code": "ERI",
     "numberCode": "232",
@@ -1406,7 +1406,7 @@
     ]
   },
   {
-    "country": "Estonia",
+    "country": "Estônia",
     "alpha2Code": "EE",
     "alpha3Code": "EST",
     "numberCode": "233",
@@ -1429,7 +1429,7 @@
     ]
   },
   {
-    "country": "Ethiopia",
+    "country": "Etiópia",
     "alpha2Code": "ET",
     "alpha3Code": "ETH",
     "numberCode": "231",
@@ -1461,7 +1461,7 @@
     ]
   },
   {
-    "country": "Finland",
+    "country": "Finlândia",
     "alpha2Code": "FI",
     "alpha3Code": "FIN",
     "numberCode": "246",
@@ -1475,7 +1475,7 @@
     ]
   },
   {
-    "country": "France",
+    "country": "França",
     "alpha2Code": "FR",
     "alpha3Code": "FRA",
     "numberCode": "250",
@@ -1505,7 +1505,7 @@
     ]
   },
   {
-    "country": "French Guiana",
+    "country": "Guiana Francesa",
     "alpha2Code": "GF",
     "alpha3Code": "GUF",
     "numberCode": "254",
@@ -1535,7 +1535,7 @@
     ]
   },
   {
-    "country": "French Polynesia",
+    "country": "Polinésia Francesa",
     "alpha2Code": "PF",
     "alpha3Code": "PYF",
     "numberCode": "258",
@@ -1548,7 +1548,7 @@
     ]
   },
   {
-    "country": "Gabon",
+    "country": "Gabão",
     "alpha2Code": "GA",
     "alpha3Code": "GAB",
     "numberCode": "266",
@@ -1565,7 +1565,7 @@
     ]
   },
   {
-    "country": "Gambia",
+    "country": "Gâmbia",
     "alpha2Code": "GM",
     "alpha3Code": "GMB",
     "numberCode": "270",
@@ -1579,7 +1579,7 @@
     ]
   },
   {
-    "country": "Georgia",
+    "country": "Gâmbia",
     "alpha2Code": "GM",
     "alpha3Code": "GMB",
     "numberCode": "270",
@@ -1599,7 +1599,7 @@
     ]
   },
   {
-    "country": "Germany",
+    "country": "Alemanha",
     "alpha2Code": "DE",
     "alpha3Code": "DEU",
     "numberCode": "276",
@@ -1623,7 +1623,7 @@
     ]
   },
   {
-    "country": "Ghana",
+    "country": "Gana",
     "alpha2Code": "GH",
     "alpha3Code": "GHA",
     "numberCode": "288",
@@ -1641,7 +1641,7 @@
     ]
   },
   {
-    "country": "Greece",
+    "country": "Grécia",
     "alpha2Code": "GR",
     "alpha3Code": "GRC",
     "numberCode": "300",
@@ -1701,7 +1701,7 @@
     ]
   },
   {
-    "country": "Greenland",
+    "country": "Groelândia",
     "alpha2Code": "GL",
     "alpha3Code": "GRL",
     "numberCode": "304",
@@ -1712,7 +1712,7 @@
     ]
   },
   {
-    "country": "Grenada",
+    "country": "Granada",
     "alpha2Code": "GD",
     "alpha3Code": "GRD",
     "numberCode": "308",
@@ -1757,7 +1757,7 @@
     ]
   },
   {
-    "country": "Guinea",
+    "country": "Guiné",
     "alpha2Code": "GN",
     "alpha3Code": "GIN",
     "numberCode": "324",
@@ -1799,7 +1799,7 @@
     ]
   },
   {
-    "country": "Guinea-Bissau",
+    "country": "Guiné-Bissau",
     "alpha2Code": "GW",
     "alpha3Code": "GNB",
     "numberCode": "624",
@@ -1816,7 +1816,7 @@
     ]
   },
   {
-    "country": "Guyana",
+    "country": "Guiana",
     "alpha2Code": "GY",
     "alpha3Code": "GUY",
     "numberCode": "328",
@@ -1903,7 +1903,7 @@
     ]
   },
   {
-    "country": "Hungary",
+    "country": "Hungria",
     "alpha2Code": "HU",
     "alpha3Code": "HUN",
     "numberCode": "348",
@@ -1930,7 +1930,7 @@
     ]
   },
   {
-    "country": "Iceland",
+    "country": "Islândia",
     "alpha2Code": "IS",
     "alpha3Code": "ISL",
     "numberCode": "352",
@@ -1946,7 +1946,7 @@
     ]
   },
   {
-    "country": "India",
+    "country": "Índia",
     "alpha2Code": "IN",
     "alpha3Code": "IND",
     "numberCode": "356",
@@ -1991,7 +1991,7 @@
     ]
   },
   {
-    "country": "Indonesia",
+    "country": "Indonésia",
     "alpha2Code": "ID",
     "alpha3Code": "IDN",
     "numberCode": "360",
@@ -2070,7 +2070,7 @@
     ]
   },
   {
-    "country": "Iraq",
+    "country": "Iraque",
     "alpha2Code": "IQ",
     "alpha3Code": "IRQ",
     "numberCode": "368",
@@ -2096,7 +2096,7 @@
     ]
   },
   {
-    "country": "Ireland",
+    "country": "Irlanda",
     "alpha2Code": "IE",
     "alpha3Code": "IRL",
     "numberCode": "372",
@@ -2144,7 +2144,7 @@
     ]
   },
   {
-    "country": "Italy",
+    "country": "Italia",
     "alpha2Code": "IT",
     "alpha3Code": "ITA",
     "numberCode": "380",
@@ -2194,7 +2194,7 @@
     ]
   },
   {
-    "country": "Japan",
+    "country": "Japão",
     "alpha2Code": "JP",
     "alpha3Code": "JPN",
     "numberCode": "392",
@@ -2249,7 +2249,7 @@
     ]
   },
   {
-    "country": "Jordan",
+    "country": "Jornânia",
     "alpha2Code": "JO",
     "alpha3Code": "JOR",
     "numberCode": "400",
@@ -2269,7 +2269,7 @@
     ]
   },
   {
-    "country": "Kazakhstan",
+    "country": "Cazaquistão",
     "alpha2Code": "KZ",
     "alpha3Code": "KAZ",
     "numberCode": "398",
@@ -2294,7 +2294,7 @@
     ]
   },
   {
-    "country": "Kenya",
+    "country": "Quênia",
     "alpha2Code": "KE",
     "alpha3Code": "KEN",
     "numberCode": "404",
@@ -2324,7 +2324,7 @@
     ]
   },
   {
-    "country": "Korea North",
+    "country": "Coreia do Norte",
     "alpha2Code": "KP",
     "alpha3Code": "PRK",
     "numberCode": "408",
@@ -2345,7 +2345,7 @@
     ]
   },
   {
-    "country": "Korea South",
+    "country": "Coreia do Sul",
     "alpha2Code": "KR",
     "alpha3Code": "KOR",
     "numberCode": "410",
@@ -2383,7 +2383,7 @@
     ]
   },
   {
-    "country": "Kyrgyzstan",
+    "country": "Quirguistão",
     "alpha2Code": "KG",
     "alpha3Code": "KGZ",
     "numberCode": "417",
@@ -2425,7 +2425,7 @@
     ]
   },
   {
-    "country": "Latvia",
+    "country": "Letônia",
     "alpha2Code": "LV",
     "alpha3Code": "LVA",
     "numberCode": "428",
@@ -2466,7 +2466,7 @@
     ]
   },
   {
-    "country": "Lebanon",
+    "country": "Líbano",
     "alpha2Code": "LB",
     "alpha3Code": "LBN",
     "numberCode": "422",
@@ -2480,7 +2480,7 @@
     ]
   },
   {
-    "country": "Lesotho",
+    "country": "Lesoto",
     "alpha2Code": "LS",
     "alpha3Code": "LSO",
     "numberCode": "426",
@@ -2498,7 +2498,7 @@
     ]
   },
   {
-    "country": "Liberia",
+    "country": "Libéria",
     "alpha2Code": "LR",
     "alpha3Code": "LBR",
     "numberCode": "430",
@@ -2521,7 +2521,7 @@
     ]
   },
   {
-    "country": "Libya",
+    "country": "Líbia",
     "alpha2Code": "LY",
     "alpha3Code": "LBY",
     "numberCode": "434",
@@ -2573,7 +2573,7 @@
     ]
   },
   {
-    "country": "Lithuania",
+    "country": "Lituânia",
     "alpha2Code": "LT",
     "alpha3Code": "LTU",
     "numberCode": "440",
@@ -2591,14 +2591,14 @@
     ]
   },
   {
-    "country": "Luxembourg",
+    "country": "Luxemburgo",
     "alpha2Code": "LU",
     "alpha3Code": "LUX",
     "numberCode": "442",
     "states": ["Diekirch", "Grevenmacher", "Luxembourg"]
   },
   {
-    "country": "Macedonia",
+    "country": "Macedônia",
     "alpha2Code": "MK",
     "alpha3Code": "MKD",
     "numberCode": "807",
@@ -2740,7 +2740,7 @@
     ]
   },
   {
-    "country": "Malaysia",
+    "country": "Malásia",
     "alpha2Code": "MY",
     "alpha3Code": "MYS",
     "numberCode": "458",
@@ -2763,7 +2763,7 @@
     ]
   },
   {
-    "country": "Maldives",
+    "country": "Maldivas",
     "alpha2Code": "MV",
     "alpha3Code": "MDV",
     "numberCode": "462",
@@ -2821,7 +2821,7 @@
     ]
   },
   {
-    "country": "Marshall Islands",
+    "country": "Ilhas Marshall",
     "alpha2Code": "MH",
     "alpha3Code": "MHL",
     "numberCode": "584",
@@ -2862,7 +2862,7 @@
     ]
   },
   {
-    "country": "Mauritania",
+    "country": "Mauritânia",
     "alpha2Code": "MR",
     "alpha3Code": "MRT",
     "numberCode": "478",
@@ -2883,7 +2883,7 @@
     ]
   },
   {
-    "country": "Mauritius",
+    "country": "Maurício",
     "alpha2Code": "MU",
     "alpha3Code": "MUS",
     "numberCode": "480",
@@ -2903,7 +2903,7 @@
     ]
   },
   {
-    "country": "Mexico",
+    "country": "México",
     "alpha2Code": "mx",
     "alpha3Code": "MEX",
     "numberCode": "484",
@@ -2943,7 +2943,7 @@
     ]
   },
   {
-    "country": "Micronesia",
+    "country": "Micronésia",
     "alpha2Code": "FM",
     "alpha3Code": "FSM",
     "numberCode": "583",
@@ -2995,14 +2995,14 @@
     ]
   },
   {
-    "country": "Monaco",
+    "country": "Mônaco",
     "alpha2Code": "MC",
     "alpha3Code": "MCO",
     "numberCode": "492",
     "states": ["Monaco-Ville", "La Condamine", "Monte Carlo", "Fontvieille"]
   },
   {
-    "country": "Mongolia",
+    "country": "Mongólia",
     "alpha2Code": "MN",
     "alpha3Code": "MNG",
     "numberCode": "496",
@@ -3032,7 +3032,7 @@
     ]
   },
   {
-    "country": "Morocco",
+    "country": "Marrocos",
     "alpha2Code": "MA",
     "alpha3Code": "MAR",
     "numberCode": "504",
@@ -3079,9 +3079,9 @@
     ]
   },
   {
-    "country": "Mozambique",
+    "country": "Moçambique",
     "alpha2Code": "MZ",
-    "alpha3Code": "MZ",
+    "alpha3Code": "MOZ",
     "numberCode": "508",
     "states": [
       "Cabo Delgado",
@@ -3098,7 +3098,7 @@
     ]
   },
   {
-    "country": "Namibia",
+    "country": "Namíbia",
     "alpha2Code": "NA",
     "alpha3Code": "NAM",
     "numberCode": "516",
@@ -3148,7 +3148,7 @@
     ]
   },
   {
-    "country": "Netherlands",
+    "country": "Holanda",
     "alpha2Code": "NL",
     "alpha3Code": "NLD",
     "numberCode": "528",
@@ -3168,7 +3168,7 @@
     ]
   },
   {
-    "country": "New Zealand",
+    "country": "Nova Zelândia",
     "alpha2Code": "NZ",
     "alpha3Code": "NZL",
     "numberCode": "554",
@@ -3193,7 +3193,7 @@
     ]
   },
   {
-    "country": "Nicaragua",
+    "country": "Nicarágua",
     "alpha2Code": "NI",
     "alpha3Code": "NIC",
     "numberCode": "558",
@@ -3234,7 +3234,7 @@
     ]
   },
   {
-    "country": "Nigeria",
+    "country": "Nigéria",
     "alpha2Code": "NG",
     "alpha3Code": "NGA",
     "numberCode": "566",
@@ -3279,7 +3279,7 @@
     ]
   },
   {
-    "country": "Norway",
+    "country": "Noruega",
     "alpha2Code": "NO",
     "alpha3Code": "NOR",
     "numberCode": "578",
@@ -3306,7 +3306,7 @@
     ]
   },
   {
-    "country": "Oman",
+    "country": "Omã",
     "alpha2Code": "OM",
     "alpha3Code": "OMN",
     "numberCode": "512",
@@ -3322,7 +3322,7 @@
     ]
   },
   {
-    "country": "Pakistan",
+    "country": "Paquistão",
     "alpha2Code": "PK",
     "alpha3Code": "PAK",
     "numberCode": "586",
@@ -3336,7 +3336,7 @@
     ]
   },
   {
-    "country": "Panama",
+    "country": "Panamá",
     "alpha2Code": "PA",
     "alpha3Code": "PAN",
     "numberCode": "591",
@@ -3354,7 +3354,7 @@
     ]
   },
   {
-    "country": "Papua New Guinea",
+    "country": "Papua-Nova Guiné",
     "alpha2Code": "PG",
     "alpha3Code": "PNG",
     "numberCode": "598",
@@ -3382,7 +3382,7 @@
     ]
   },
   {
-    "country": "Paraguay",
+    "country": "Paraguai",
     "alpha2Code": "PY",
     "alpha3Code": "PRY",
     "numberCode": "600",
@@ -3441,7 +3441,7 @@
     ]
   },
   {
-    "country": "Philippines",
+    "country": "Filipinas",
     "alpha2Code": "PH",
     "alpha3Code": "PHL",
     "numberCode": "608",
@@ -3528,7 +3528,7 @@
     ]
   },
   {
-    "country": "Poland",
+    "country": "Polônia",
     "alpha2Code": "PL",
     "alpha3Code": "POL",
     "numberCode": "616",
@@ -3580,7 +3580,7 @@
     ]
   },
   {
-    "country": "Qatar",
+    "country": "Catar",
     "alpha2Code": "QA",
     "alpha3Code": "QAT",
     "numberCode": "634",
@@ -3648,7 +3648,7 @@
     ]
   },
   {
-    "country": "Russia",
+    "country": "Rússia",
     "alpha2Code": "RU",
     "alpha3Code": "RUS",
     "numberCode": "643",
@@ -3745,7 +3745,7 @@
     ]
   },
   {
-    "country": "Rwanda",
+    "country": "Ruanda",
     "alpha2Code": "RW",
     "alpha3Code": "RWA",
     "numberCode": "646",
@@ -3784,7 +3784,7 @@
     ]
   },
   {
-    "country": "San Marino",
+    "country": "São Marino",
     "alpha2Code": "SM",
     "alpha3Code": "SMR",
     "numberCode": "674",
@@ -3801,7 +3801,7 @@
     ]
   },
   {
-    "country": "Sao Tome",
+    "country": "Sao Tomé e Príncipe",
     "alpha2Code": "ST",
     "alpha3Code": "STP",
     "numberCode": "678",
@@ -3816,7 +3816,7 @@
     ]
   },
   {
-    "country": "Saudi Arabia",
+    "country": "Arábia Saudita",
     "alpha2Code": "SA",
     "alpha3Code": "SAU",
     "numberCode": "682",
@@ -3856,7 +3856,7 @@
     ]
   },
   {
-    "country": "Serbia",
+    "country": "Sérvia e Montenegro",
     "alpha2Code": "RS",
     "alpha3Code": "SRB",
     "numberCode": "688",
@@ -3936,7 +3936,7 @@
     ]
   },
   {
-    "country": "Seychelles",
+    "country": "Seicheles",
     "alpha2Code": "SC",
     "alpha3Code": "SYC",
     "numberCode": "690",
@@ -3967,7 +3967,7 @@
     ]
   },
   {
-    "country": "Sierra Leone",
+    "country": "República da Serra Leoa",
     "alpha2Code": "SL",
     "alpha3Code": "SLE",
     "numberCode": "694",
@@ -3980,7 +3980,7 @@
     ]
   },
   {
-    "country": "Singapore",
+    "country": "Singapura",
     "alpha2Code": "SG",
     "alpha3Code": "SGP",
     "numberCode": "702",
@@ -4004,7 +4004,7 @@
     ]
   },
   {
-    "country": "Slovakia",
+    "country": "Eslováquia",
     "alpha2Code": "SK",
     "alpha3Code": "SVK",
     "numberCode": "703",
@@ -4020,7 +4020,7 @@
     ]
   },
   {
-    "country": "Slovenia",
+    "country": "Eslovênia",
     "alpha2Code": "SI",
     "alpha3Code": "SVN",
     "numberCode": "705",
@@ -4221,7 +4221,7 @@
     ]
   },
   {
-    "country": "Solomon Islands",
+    "country": "Ilhas Salomão",
     "alpha2Code": "SB",
     "alpha3Code": "SLB",
     "numberCode": "090",
@@ -4239,7 +4239,7 @@
     ]
   },
   {
-    "country": "Somalia",
+    "country": "Somália",
     "alpha2Code": "SO",
     "alpha3Code": "SOM",
     "numberCode": "706",
@@ -4265,7 +4265,7 @@
     ]
   },
   {
-    "country": "South Africa",
+    "country": "África do Sul",
     "alpha2Code": "ZA",
     "alpha3Code": "ZAF",
     "numberCode": "710",
@@ -4282,7 +4282,7 @@
     ]
   },
   {
-    "country": "Spain",
+    "country": "Espanha",
     "alpha2Code": "ES",
     "alpha3Code": "ESP",
     "numberCode": "724",
@@ -4326,7 +4326,7 @@
     ]
   },
   {
-    "country": "Sudan",
+    "country": "Sudão",
     "alpha2Code": "SD",
     "alpha3Code": "SDN",
     "numberCode": "729",
@@ -4378,14 +4378,14 @@
     ]
   },
   {
-    "country": "Swaziland",
+    "country": "Suazilândia",
     "alpha2Code": "SZ",
     "alpha3Code": "SWZ",
     "numberCode": "748",
     "states": ["Hhohho", "Lubombo", "Manzini", "Shiselweni"]
   },
   {
-    "country": "Sweden",
+    "country": "Suécia",
     "alpha2Code": "SE",
     "alpha3Code": "SWE",
     "numberCode": "752",
@@ -4414,7 +4414,7 @@
     ]
   },
   {
-    "country": "Switzerland",
+    "country": "Suiça",
     "alpha2Code": "CH",
     "alpha3Code": "CHE",
     "numberCode": "756",
@@ -4503,7 +4503,7 @@
     ]
   },
   {
-    "country": "Tajikistan",
+    "country": "Tajiquistão",
     "alpha2Code": "TJ",
     "alpha3Code": "TJK",
     "numberCode": "762",
@@ -4516,7 +4516,7 @@
     ]
   },
   {
-    "country": "Tanzania",
+    "country": "Tanzânia",
     "alpha2Code": "TZ",
     "alpha3Code": "TZA",
     "numberCode": "834",
@@ -4550,7 +4550,7 @@
     ]
   },
   {
-    "country": "Thailand",
+    "country": "Tailândia",
     "alpha2Code": "TH",
     "alpha3Code": "THA",
     "numberCode": "764",
@@ -4648,7 +4648,7 @@
     "states": ["Tongatapu", "Vavaʻu", "Haʻapai", "ʻEua", "Ongo Niua", "Tonga"]
   },
   {
-    "country": "Trinidad and Tobago",
+    "country": "Trinidad e Tobago",
     "alpha2Code": "TT",
     "alpha3Code": "TTO",
     "numberCode": "780",
@@ -4671,7 +4671,7 @@
     ]
   },
   {
-    "country": "Tunisia",
+    "country": "Tunísia",
     "alpha2Code": "TN",
     "alpha3Code": "TUN",
     "numberCode": "788",
@@ -4703,7 +4703,7 @@
     ]
   },
   {
-    "country": "Turkey",
+    "country": "Turquia",
     "alpha2Code": "TR",
     "alpha3Code": "TUR",
     "numberCode": "792",
@@ -4792,7 +4792,7 @@
     ]
   },
   {
-    "country": "Turkmenistan",
+    "country": "Turcomenistão",
     "alpha2Code": "TM",
     "alpha3Code": "TKM",
     "numberCode": "795",
@@ -4869,7 +4869,7 @@
     ]
   },
   {
-    "country": "Ukraine",
+    "country": "Ucrânia",
     "alpha2Code": "UA",
     "alpha3Code": "UKR",
     "numberCode": "804",
@@ -4904,7 +4904,7 @@
     ]
   },
   {
-    "country": "United Arab Emirates",
+    "country": "Emirados Árabes",
     "alpha2Code": "AE",
     "alpha3Code": "ARE",
     "numberCode": "784",
@@ -4919,7 +4919,7 @@
     ]
   },
   {
-    "country": "United Kingdom",
+    "country": "Reino Unido",
     "alpha2Code": "GB",
     "alpha3Code": "GBR",
     "numberCode": "826",
@@ -5073,7 +5073,7 @@
     ]
   },
   {
-    "country": "United States",
+    "country": "Estados Unidos",
     "alpha2Code": "US",
     "alpha3Code": "USA",
     "numberCode": "840",
@@ -5132,7 +5132,7 @@
     ]
   },
   {
-    "country": "Uruguay",
+    "country": "Uruguai",
     "alpha2Code": "UY",
     "alpha3Code": "URY",
     "numberCode": "858",
@@ -5159,7 +5159,7 @@
     ]
   },
   {
-    "country": "Uzbekistan",
+    "country": "Uzbequistão",
     "alpha2Code": "UZ",
     "alpha3Code": "UZB",
     "numberCode": "860",
@@ -5293,7 +5293,7 @@
     ]
   },
   {
-    "country": "Yemen",
+    "country": "Iêmen",
     "alpha2Code": "YE",
     "alpha3Code": "YEM",
     "numberCode": "887",
@@ -5320,7 +5320,7 @@
     ]
   },
   {
-    "country": "Zambia",
+    "country": "Zâmbia",
     "alpha2Code": "ZM",
     "alpha3Code": "ZMB",
     "numberCode": "894",
@@ -5337,7 +5337,7 @@
     ]
   },
   {
-    "country": "Zimbabwe",
+    "country": "Zimbábue",
     "alpha2Code": "ZW",
     "alpha3Code": "ZWE",
     "numberCode": "716",

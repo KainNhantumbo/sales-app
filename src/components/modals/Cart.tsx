@@ -14,6 +14,7 @@ import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CartContainer as Container } from '../../styles/modules/cart';
+import { formatCurrency } from '@/lib/utils';
 
 export default function Cart(): JSX.Element {
   const {
@@ -83,23 +84,12 @@ export default function Cart(): JSX.Element {
                             </span>
                           </h3>
                           <p>
-                            Preço:{' '}
-                            <span>
-                              {new Intl.NumberFormat('pt-BR', {
-                                currency: 'MZN',
-                                style: 'currency',
-                                useGrouping: true,
-                              }).format(product.price)}
-                            </span>
+                            Preço: <span>{formatCurrency(product.price)}</span>
                           </p>
                           <p>
                             <>Subtotal: </>
                             <span>
-                              {new Intl.NumberFormat('pt-BR', {
-                                currency: 'MZN',
-                                style: 'currency',
-                                useGrouping: true,
-                              }).format(product.price * product.quantity)}
+                              {formatCurrency(product.price * product.quantity)}
                             </span>
                           </p>
                         </div>
@@ -179,11 +169,7 @@ export default function Cart(): JSX.Element {
                     <span>Custo total</span>
                   </h3>
                   <p>
-                    {new Intl.NumberFormat('pt-BR', {
-                      currency: 'MZN',
-                      style: 'currency',
-                      useGrouping: true,
-                    }).format(
+                    {formatCurrency(
                       state.cart.reduce(
                         (accumulator, currentProduct) =>
                           (accumulator +=

@@ -158,7 +158,7 @@ export default function UrlCapturerBox(props: IProps): JSX.Element {
                           <span>Endereço do Portifólio Profissional</span>
                         </label>
                         <input
-                          type='text'
+                          type='url'
                           id='portfolio_url'
                           placeholder='Coloque o link (URL) do seu portifólio profissional'
                           aria-label='Coloque o link (URL) do seu portifólio profissional'

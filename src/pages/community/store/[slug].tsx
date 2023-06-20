@@ -4,44 +4,48 @@ import {
   TPublicStore,
 } from '../../../../@types';
 import {
+  IoAdd,
+  IoAlert,
+  IoAlertCircle,
   IoBagCheck,
   IoBagHandle,
+  IoBarcodeOutline,
   IoCart,
   IoCartOutline,
   IoDocuments,
+  IoEllipsisHorizontal,
   IoHeart,
   IoHeartOutline,
   IoLayers,
+  IoLibrary,
   IoLogoFacebook,
   IoLogoWhatsapp,
   IoStorefront,
 } from 'react-icons/io5';
 import Link from 'next/link';
+import Image from 'next/image';
+import { FaAd } from 'react-icons/fa';
 import Layout from '@/components/Layout';
 import fetch from '../../../config/client';
 import ErrorPage from '@/pages/error-page';
 import { NextRouter, useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { BiUser } from 'react-icons/bi';
 import { motion } from 'framer-motion';
 import { actions } from '@/data/actions';
 import { useAppContext } from '@/context/AppContext';
-import { FaInstagram, FaLink, FaLinkedinIn } from 'react-icons/fa';
-import { StoreContainer as Container } from '@/styles/common/community-store-profile';
 import { DefaultTheme, useTheme } from 'styled-components';
-import { blurDataUrlImage } from '@/data/app-data';
+import {
+  blurDataUrlImage,
+  complements,
+  formatSocialNetwork,
+} from '@/data/app-data';
+import { formatCurrency } from '@/lib/utils';
+import { useThemeContext } from '@/context/ThemeContext';
+import { StoreContainer as Container } from '@/styles/common/community-store-profile';
+import { VscVerified, VscVerifiedFilled } from 'react-icons/vsc';
 
 type TProps = { store: TPublicStore; products: TPublicProduct[] };
-type TSocialNetwork =
-  | {
-      website: string | undefined;
-      whatsapp: string | undefined;
-      instagram: string | undefined;
-      facebook: string | undefined;
-      linkedin: string | undefined;
-    }
-  | undefined;
 
 export default function StoreProfile({ store, products }: TProps): JSX.Element {
   const {
@@ -52,61 +56,13 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
     addProductToCart,
     removeProductFromCart,
   } = useAppContext();
+  const { slidePageUp } = useThemeContext();
   const router: NextRouter = useRouter();
   const theme: DefaultTheme = useTheme();
   const [tab, setTab] = useState<'docs' | 'products'>('docs');
   const [innerWidth, setInnerWidth] = useState(0);
 
   if (!store) return <ErrorPage retryFn={() => router.reload()} />;
-
-  function formatSocialNetwork(data: TSocialNetwork) {
-    if (data) {
-      return Object.entries(data)
-        .map(([key, value]) => {
-          switch (key) {
-            case 'facebook':
-              return {
-                name: 'Facebook',
-                url: value,
-                icon: IoLogoFacebook,
-              };
-            case 'instagram':
-              return {
-                name: 'Instagram',
-                url: value,
-                icon: FaInstagram,
-              };
-            case 'website':
-              return {
-                name: 'Website',
-                url: value,
-                icon: FaLink,
-              };
-            case 'linkedin':
-              return {
-                name: 'LinkedIn',
-                url: value,
-                icon: FaLinkedinIn,
-              };
-            case 'whatsapp':
-              return {
-                name: 'Whatsapp',
-                url: value,
-                icon: IoLogoWhatsapp,
-              };
-            default:
-              return undefined;
-          }
-        })
-        .sort((a, b) => {
-          if (a && b) {
-            if (a.name > b.name) return 1;
-            return -1;
-          }
-          return 1;
-        });
-    }
-  }
 
   async function handleFavoriteProduct(id: string): Promise<void> {
     try {
@@ -158,7 +114,7 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
     }
   }
 
-    function changeWidth(): void {
+  function changeWidth(): void {
     setInnerWidth(window.innerWidth);
     if (window.innerWidth > 830) {
       dispatch({
@@ -180,7 +136,6 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
   }
 
   useEffect((): (() => void) => {
-    console.info(store);
     setInnerWidth(window.innerWidth);
     window.addEventListener('resize', () => {
       setInnerWidth(window.innerWidth);
@@ -193,7 +148,12 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
   }, []);
 
   return (
-    <Layout>
+    <Layout
+      metadata={{
+        title: `${complements.defaultTitle} | Loja ${store.name}`,
+        createdAt: store.createdAt,
+        updatedAt: store.createdAt,
+      }}>
       <Container>
         <div className='wrapper-container '>
           <aside>
@@ -213,25 +173,49 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
               <h3 className='author-name'>
                 <span>{`${store.created_by.first_name} ${store.created_by.last_name}`}</span>
               </h3>
+              <h5 className='email'>
+                <span>{store.created_by.email}</span>
+              </h5>
               {store.created_by.social_network && (
                 <div className='network-buttons'>
-                  {formatSocialNetwork(store.created_by.social_network)?.map(
-                    (option, index) => (
-                      <motion.a
-                        whileHover={{ scale: 1.2 }}
-                        whileTap={{ scale: 0.8 }}
-                        href={option?.url}
-                        title={option?.name}
-                        aria-label={option?.name}
-                        target={'_blank'}
-                        rel={'noreferrer noopener'}
-                        key={String(index)}>
-                        {option?.icon && <option.icon />}
-                      </motion.a>
-                    )
-                  )}
+                  {formatSocialNetwork({
+                    ...store.created_by.social_network,
+                  })?.map((option, index) => (
+                    <motion.a
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.8 }}
+                      href={option?.url}
+                      title={option?.name}
+                      aria-label={option?.name}
+                      target={'_blank'}
+                      rel={'noreferrer noopener'}
+                      key={String(index)}>
+                      {option?.icon && <option.icon />}
+                    </motion.a>
+                  ))}
                 </div>
               )}
+              <motion.div
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.8 }}
+                className='profile-anchor'>
+                <Link
+                  href={`/community/profile/${store.created_by._id}`}
+                  className='profile-anchor'>
+                  <BiUser />
+                  <span>Visitar perfil</span>
+                </Link>
+              </motion.div>
+            </section>
+            <section className='no-ads'>
+              <FaAd className='ads-icon' />
+              <h3>
+                <span>Espaço reservado para anúncios</span>
+              </h3>
+              <Link href={``}>
+                <IoAdd />
+                <span>Criar anúncio</span>
+              </Link>
             </section>
           </aside>
           <article>
@@ -246,45 +230,68 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
                 />
               )}
               {!store.cover_image?.url && (
-                <IoStorefront className='camera-icon' />
+                <IoStorefront className='no-image-icon' />
               )}
+
+              <h5>
+                {store.verified_store ? (
+                  <>
+                    <VscVerifiedFilled />
+                    <span>Loja verificada</span>
+                  </>
+                ) : (
+                  <>
+                    <IoAlertCircle className='alert' />
+                    <span className='alert'>Loja não verificada</span>
+                  </>
+                )}
+              </h5>
             </div>
             <section className='store-data'>
               <section className='store-details'>
-                <div>
-                  <div className='title-slogan'>
-                    <h2 className='name'>
-                      <span>{store.name}</span>
-                    </h2>
-                    <h4>
-                      <span>"{store.slogan}"</span>
-                    </h4>
-                  </div>
-                  <p className='category'>
-                    Oferece serviços/produtos relacionados a{' '}
-                    <i>{store.category}</i>.
-                  </p>
+                <div className='title-slogan'>
+                  <h2 className='name'>
+                    <span>{store.name}</span>
+                  </h2>
+                  <h4>
+                    <span>"{store.slogan}"</span>
+                  </h4>
                 </div>
+                <p className='category'>
+                  Oferece serviços/produtos relacionados a{' '}
+                  <i>{store.category}</i>.
+                </p>
+                <p className='description'>
+                  <strong>Descrição:</strong> {store.description}
+                </p>
 
                 {store.location && (
-                  <div className='location'>
-                    <p>
-                      Localizada em <span>{store.location.country}</span> -
-                      {store.location?.state && (
-                        <span> {store.location.state}</span>
-                      )}{' '}
-                      <span>{store.location.adress}</span>
-                    </p>
-                  </div>
+                  <p className='location'>
+                    Localizada em <span>{store.location.country}</span> -
+                    {store.location?.state && (
+                      <span> {store.location.state}</span>
+                    )}{' '}
+                    <span>{store.location.adress}</span>
+                  </p>
                 )}
               </section>
 
               <div className='tab-buttons-container'>
-                <button className='docs' onClick={() => setTab('docs')}>
+                <button
+                  className='docs'
+                  onClick={() => {
+                    setTab('docs');
+                    slidePageUp();
+                  }}>
                   <IoDocuments />
                   <span>Documentação</span>
                 </button>
-                <button className='products' onClick={() => setTab('products')}>
+                <button
+                  className='products'
+                  onClick={() => {
+                    setTab('products');
+                    slidePageUp();
+                  }}>
                   <IoLayers />
                   <span>Produtos</span>
                 </button>
@@ -293,18 +300,75 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
               {tab === 'docs' && (
                 <section className='docs-container'>
                   {store.privacy_policy && (
-                    <section className='store-privacy-policy'>
-                      {store.privacy_policy.includes('\n') ? (
-                        store.privacy_policy
-                          .split('\n')
-                          .map((phrase, index) => (
-                            <p key={String(index)}>{phrase}</p>
-                          ))
-                      ) : (
-                        <p>{store.privacy_policy}</p>
-                      )}
+                    <section className='data-container'>
+                      <h3>
+                        <IoEllipsisHorizontal />
+                        <span>Política de Privacidade</span>
+                      </h3>
+                      <div className='content'>
+                        {store.privacy_policy.includes('\n') ? (
+                          store.privacy_policy
+                            .split('\n')
+                            .map((phrase, index) => (
+                              <p key={String(index)}>{phrase}</p>
+                            ))
+                        ) : (
+                          <p>{store.privacy_policy}</p>
+                        )}
+                      </div>
                     </section>
                   )}
+                  {store.terms_policy && (
+                    <section className='data-container'>
+                      <h3>
+                        <IoEllipsisHorizontal />
+                        <span>Termos e Condições</span>
+                      </h3>
+                      <div className='content'>
+                        {store.terms_policy.includes('\n') ? (
+                          store.terms_policy
+                            .split('\n')
+                            .map((phrase, index) => (
+                              <p key={String(index)}>{phrase}</p>
+                            ))
+                        ) : (
+                          <p>{store.terms_policy}</p>
+                        )}
+                      </div>
+                    </section>
+                  )}
+                  {store.delivery_policy && (
+                    <section className='data-container data-container_last'>
+                      <h3>
+                        <IoEllipsisHorizontal />
+                        <span>Política de Entrega de Produtos</span>
+                      </h3>
+                      <div className='content '>
+                        {store.delivery_policy.includes('\n') ? (
+                          store.delivery_policy
+                            .split('\n')
+                            .map((phrase, index) => (
+                              <p key={String(index)}>{phrase}</p>
+                            ))
+                        ) : (
+                          <p>{store.delivery_policy}</p>
+                        )}
+                      </div>
+                    </section>
+                  )}
+
+                  {!store.privacy_policy &&
+                    !store.delivery_policy &&
+                    !store.terms_policy && (
+                      <div className='empty-data_container'>
+                        <section className='content'>
+                          <IoLibrary />
+                          <h3>
+                            <span>Loja sem documentação.</span>
+                          </h3>
+                        </section>
+                      </div>
+                    )}
                 </section>
               )}
               {tab === 'products' && products && products.length > 0 && (
@@ -314,10 +378,14 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
                       key={item._id}
                       whileTap={{ scale: 0.98 }}
                       className='product-container'
-                      whileHover={{
-                        translateY: -8,
-                        boxShadow: `0px 12px 25px 10px rgba(${theme.accent}, 0.09)`,
-                      }}>
+                      whileHover={
+                        innerWidth > 445
+                          ? {
+                              translateY: -8,
+                              boxShadow: `0px 12px 25px 10px rgba(${theme.accent}, 0.09)`,
+                            }
+                          : undefined
+                      }>
                       <div className='product-image'>
                         {item.promotion.status && (
                           <span className='promotion'>
@@ -398,22 +466,16 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
                         className='product-details'>
                         <button className='buy-mobile-button'>
                           <IoBagCheck />
-                          <span>Comprar agora</span>
+                          <span>Ver os detalhes</span>
                         </button>
                         {item.promotion.status ? (
                           <div className='item promo-price'>
                             <h4>
                               <span className='old-price'>
-                                {new Intl.NumberFormat('pt-BR', {
-                                  currency: 'MZN',
-                                  style: 'currency',
-                                }).format(item.price)}
+                                {formatCurrency(item.price)}
                               </span>{' '}
                               <span className='actual-price'>
-                                {new Intl.NumberFormat('pt-BR', {
-                                  currency: 'MZN',
-                                  style: 'currency',
-                                }).format(
+                                {formatCurrency(
                                   item.price -
                                     (item.price * item.promotion.percentage) /
                                       100
@@ -424,11 +486,7 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
                         ) : (
                           <div className='item promo-price'>
                             <span className='actual-price'>
-                              {new Intl.NumberFormat('pt-BR', {
-                                currency: 'MZN',
-                                style: 'currency',
-                                useGrouping: true,
-                              }).format(item.price)}
+                              {formatCurrency(item.price)}
                             </span>
                           </div>
                         )}
@@ -444,6 +502,17 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
                     </motion.div>
                   ))}
                 </section>
+              )}
+
+              {tab === 'products' && products && products.length < 1 && (
+                <div className='empty-data_container'>
+                  <section className='content'>
+                    <IoBarcodeOutline />
+                    <h3>
+                      <span>Nenhum produto para mostrar</span>
+                    </h3>
+                  </section>
+                </div>
               )}
             </section>
           </article>

@@ -28,6 +28,7 @@ import RequestLogin from '@/components/modals/RequestLogin';
 import opening_store_png from '../../public/assets/opening.png';
 import { blurDataUrlImage, complements } from '@/data/app-data';
 import { HomeContainer as Container } from '@/styles/common/home';
+import { formatCurrency } from '@/lib/utils';
 
 export default function Home(): JSX.Element {
   const {
@@ -332,16 +333,10 @@ export default function Home(): JSX.Element {
                         <div className='item promo-price'>
                           <h4>
                             <span className='old-price'>
-                              {new Intl.NumberFormat('pt-BR', {
-                                currency: 'MZN',
-                                style: 'currency',
-                              }).format(item.price)}
+                              {formatCurrency(item.price)}
                             </span>{' '}
                             <span className='actual-price'>
-                              {new Intl.NumberFormat('pt-BR', {
-                                currency: 'MZN',
-                                style: 'currency',
-                              }).format(
+                              {formatCurrency(
                                 item.price -
                                   (item.price * item.promotion.percentage) / 100
                               )}
@@ -351,11 +346,7 @@ export default function Home(): JSX.Element {
                       ) : (
                         <div className='item promo-price'>
                           <span className='actual-price'>
-                            {new Intl.NumberFormat('pt-BR', {
-                              currency: 'MZN',
-                              style: 'currency',
-                              useGrouping: true,
-                            }).format(item.price)}
+                            {formatCurrency(item.price)}
                           </span>
                         </div>
                       )}

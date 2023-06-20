@@ -55,6 +55,7 @@ import user_skills from '../../../data/professional-skills.json';
 import DeleteAccountPrompt from '../../../components/modals/DeleteAccountPrompt';
 import { complements } from '@/data/app-data';
 import Image from 'next/image';
+import { json } from 'stream/consumers';
 
 export default function ProfileEditor(): JSX.Element {
   const theme = useTheme();
@@ -1055,7 +1056,7 @@ export default function ProfileEditor(): JSX.Element {
                           <span>Whatsapp</span>
                         </label>
                         <input
-                          type='text'
+                          type='url'
                           id='whatsapp'
                           placeholder='Contacto do Whatsapp'
                           aria-label='Whatsapp'
@@ -1083,7 +1084,7 @@ export default function ProfileEditor(): JSX.Element {
                           <span>Facebook</span>
                         </label>
                         <input
-                          type='text'
+                          type='url'
                           id='facebook'
                           placeholder='Link do perfil de facebook'
                           aria-label='facebook'
@@ -1114,7 +1115,7 @@ export default function ProfileEditor(): JSX.Element {
                           <span>Website</span>
                         </label>
                         <input
-                          type='text'
+                          type='url'
                           id='website'
                           placeholder='Link do website ou blog'
                           aria-label='website'
@@ -1142,7 +1143,7 @@ export default function ProfileEditor(): JSX.Element {
                           <span>Instagram</span>
                         </label>
                         <input
-                          type='text'
+                          type='url'
                           id='instagram'
                           placeholder='Link do perfil do instagram'
                           aria-label='instagram'
@@ -1207,8 +1208,8 @@ export default function ProfileEditor(): JSX.Element {
                     </h2>
                     <p>
                       Por favor, evite usar senhas fracas e já utilizadas
-                      anteriormente em outros sites para melhorar a segurança
-                      da sua conta.
+                      anteriormente em outros sites para melhorar a segurança da
+                      sua conta.
                     </p>
                   </div>
 

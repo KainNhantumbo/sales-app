@@ -30,6 +30,7 @@ import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import ShareProducts from '@/components/modals/ShareProductModal';
 import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
 import { ProductListContainer as Container } from '@/styles/common/products';
+import { formatCurrency } from '@/lib/utils';
 
 export default function Products(): JSX.Element {
   const theme: DefaultTheme = useTheme();
@@ -221,18 +222,18 @@ export default function Products(): JSX.Element {
                         <div className='item promo-price'>
                           <IoPricetagsOutline />
                           <span>
-                            MZN <i>{product.price}</i>{' '}
-                            {(
+                            <i>{formatCurrency(product.price)}</i>{' '}
+                            {formatCurrency(
                               product.price -
-                              (product.price * product.promotion.percentage) /
-                                100
-                            ).toFixed(2)}
+                                (product.price * product.promotion.percentage) /
+                                  100
+                            )}
                           </span>
                         </div>
                       ) : (
                         <div className='item promo-price'>
                           <IoPricetagsOutline />
-                          <span>MZN {product.price}</span>
+                          <span> {formatCurrency(product.price)}</span>
                         </div>
                       )}
                       <div className='item'>

@@ -74,13 +74,14 @@ export const NewsletterContainer = styled.section`
       line-height: 1.8rem;
     }
     form {
+      width: 100%;
       display: flex;
       flex-direction: row;
       gap: 10px;
       align-items: center;
       width: fit-content;
+
       ${StyledInputs}
-      width: 100%;
 
       @media screen and (max-width: 390px) {
         flex-direction: column;
