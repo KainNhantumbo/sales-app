@@ -142,15 +142,6 @@ export default function Products(): JSX.Element {
       <DeleteProductPrompt deleteFn={handleDeleteProduct} />
 
       <Container>
-        {isFetching && !isError && (
-          <section className='fetching-state'>
-            <div className='center'>
-              <DotLoader size={60} color={`rgb(${theme.primary})`} />
-              <span>Carregando...</span>
-            </div>
-          </section>
-        )}
-
         <SearchBox />
         <SortBox />
         <ToolBox />

@@ -20,7 +20,6 @@ import {
   IoMail,
   IoStorefrontOutline,
   IoFlash,
-  IoLogoWhatsapp,
 } from 'react-icons/io5';
 import {
   FaFacebook,
@@ -245,7 +244,7 @@ const dashboardActions = (props: {
       },
       {
         label: 'Produtos favoritos',
-        url: `/users/dashboard/profile/favorite-products`,
+        url: `/users/dashboard/profile/favorite-products?id=${props.userId}`,
         icon: IoBasket,
       },
     ],

@@ -17,26 +17,6 @@ export const ProductListContainer = styled.div`
     }
   }
 
-  .fetching-state {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 5000;
-    background: rgba(${({ theme }) => theme.foreground}, 0.5);
-    backdrop-filter: blur(10px);
-    width: 100%;
-    height: 100%;
-    div {
-      position: relative;
-      top: 300px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      font-size: 1.2rem;
-    }
-  }
-
   .stats-container {
     width: 100%;
     height: 100%;
