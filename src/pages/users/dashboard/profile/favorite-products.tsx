@@ -6,25 +6,25 @@ import {
   IoCart,
   IoCartOutline,
   IoHeart,
-  IoHeartOutline,
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import { FaAd } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
+import { useEffect, useState } from 'react';
 import { formatCurrency } from '@/lib/utils';
-import { blurDataUrlImage, complements } from '@/data/app-data';
 import fetch from '../../../../config/client';
-import { GetServerSidePropsContext } from 'next';
+import type { TPublicProducts } from '@/../@types';
 import { useAppContext } from '@/context/AppContext';
+import type { GetServerSidePropsContext } from 'next';
 import { DefaultTheme, useTheme } from 'styled-components';
-import type { PublicProducts as TPublicProducts } from '@/../@types';
+import { blurDataUrlImage, complements } from '@/data/app-data';
 import { FavoriteProductsContainer as Container } from '@/styles/common/user-favorite-products';
 
 type TProps = { products: TPublicProducts[] };
+
 export default function FavoriteProducts({ products }: TProps): JSX.Element {
   const {
     state,
@@ -39,48 +39,45 @@ export default function FavoriteProducts({ products }: TProps): JSX.Element {
 
   async function handleUnFavoriteProduct(id: string): Promise<void> {
     try {
-      const { data } = await fetchAPI({
+      await fetchAPI({
         method: 'patch',
         url: `/api/v1/users/favorites/products/${id}`,
       });
-      dispatch({
-        type: actions.PUBLIC_PRODUCTS_LIST_DATA,
-        payload: {
-          ...state,
-          publicProducts: [
-            ...state.publicProducts.map((product) => {
-              if (product._id === id) {
-                return { ...product, favorites: data };
-              }
-              return product;
-            }),
-          ],
-        },
-      });
+      refetchFavoriteProducts();
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
   }
 
+  async function refetchFavoriteProducts(): Promise<void> {
+    try {
+      const { data } = await fetch<TPublicProducts[]>({
+        method: 'get',
+        url: `/api/v1/users/products/public?favoritesId=${state.auth.id}`,
+      });
+      dispatch({
+        type: actions.PUBLIC_PRODUCTS_LIST_DATA,
+        payload: { ...state, publicProducts: data },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   useEffect((): (() => void) => {
+    setInnerWidth(window.innerWidth);
     dispatch({
       type: actions.PUBLIC_PRODUCTS_LIST_DATA,
       payload: { ...state, publicProducts: [...products] },
+    });
+    window.addEventListener('resize', () => {
+      setInnerWidth(window.innerWidth);
     });
     return () => {
       dispatch({
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
         payload: { ...state, publicProducts: [] },
       });
-    };
-  }, []);
-
-  useEffect((): (() => void) => {
-    setInnerWidth(window.innerWidth);
-    window.addEventListener('resize', () => {
-      setInnerWidth(window.innerWidth);
-    });
-    return () => {
       window.removeEventListener('resize', () => {
         setInnerWidth(window.innerWidth);
       });
@@ -103,7 +100,7 @@ export default function FavoriteProducts({ products }: TProps): JSX.Element {
               <h3>
                 <span>Espaço reservado para anúncios</span>
               </h3>
-              <Link href={``}>
+              <Link href={`/users/dashboard/create-ad`}>
                 <IoAdd />
                 <span>Criar anúncio</span>
               </Link>
@@ -123,7 +120,7 @@ export default function FavoriteProducts({ products }: TProps): JSX.Element {
 
             {state.publicProducts.length > 0 && (
               <section className='products-container'>
-                {products.map((item) => (
+                {state.publicProducts.map((item) => (
                   <motion.div
                     key={item._id}
                     whileTap={{ scale: 0.98 }}
@@ -170,12 +167,7 @@ export default function FavoriteProducts({ products }: TProps): JSX.Element {
                                       100
                                   : item.price,
                                 quantity: 1,
-                                previewImage: item.images
-                                  ? {
-                                      id: Object.values(item.images)[0]?.id,
-                                      url: Object.values(item.images)[0]?.url,
-                                    }
-                                  : undefined,
+                                previewImage: item.image,
                               });
                         }}>
                         {state.cart.some(
@@ -186,10 +178,10 @@ export default function FavoriteProducts({ products }: TProps): JSX.Element {
                           <IoCartOutline />
                         )}
                       </button>
-                      {item.images && Object.values(item.images)[0]?.url && (
+                      {item.image && (
                         <Link href={`/ecommerce/products/${item._id}`}>
                           <Image
-                            src={Object.values(item.images)[0]?.url}
+                            src={item.image.url}
                             width={250}
                             height={250}
                             blurDataURL={blurDataUrlImage}
@@ -198,7 +190,7 @@ export default function FavoriteProducts({ products }: TProps): JSX.Element {
                           />
                         </Link>
                       )}
-                      {!item.images && (
+                      {!item.image && (
                         <Link href={`/ecommerce/products/${item._id}`}>
                           <IoBagHandle className='no-image-icon' />
                         </Link>
@@ -272,7 +264,6 @@ export async function getServerSideProps(context: TContext) {
       method: 'get',
       url: `/api/v1/users/products/public?favoritesId=${context.query.id}`,
     });
-
     return { props: { products: [...data] } };
   } catch (error) {
     console.error(error);

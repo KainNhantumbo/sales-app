@@ -221,13 +221,13 @@ export interface Product extends ProductsList {
   allow_comments: boolean;
 }
 
-export type PublicProducts = {
+export type TPublicProducts = {
   _id: string;
   name: string;
   price: number;
   promotion: { status: boolean; percentage: number };
   favorites: string[];
-  images: { [x: string]: { id: string; url: string } } | undefined;
+  image: { id: string; url: string } | undefined;
 };
 
 export type TPublicProduct = {
@@ -297,22 +297,6 @@ export type TPublicStore = {
     state: string;
     adress: string | undefined;
   };
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type Job = {
-  _id: string;
-  title: string;
-  description: string;
-  job_type: string;
-  apply_url?: string;
-  experience_level: string;
-  expected_salary?: string;
-  favorites: { _id: string; first_name: string; last_name: string }[];
-  professional_skills: string[] | never[];
-  created_by: string;
-  location?: { country: string; state: string };
   createdAt: string;
   updatedAt: string;
 };
@@ -448,4 +432,45 @@ export type TPurchaseCheckOut = {
       expire_date: string;
     };
   };
+};
+
+export type TPublicUser = {
+  _id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  bio: string | undefined;
+  cover_image: { id: string; url: string };
+  profile_image: { id: string; url: string };
+  professional_skills: string[];
+  spoken_languages: string[];
+  store: string;
+  working_experience: {
+    id: string;
+    _id: string;
+    carrer: string;
+    end_date: string;
+    start_date: string;
+    description: string;
+    portfolio_url: string;
+    company_name: string;
+  }[];
+  location: {
+    country: string;
+    state: string;
+    adress: string;
+    zip_code: string;
+  };
+  social_network?:
+    | {
+        website: string | undefined;
+        whatsapp: string | undefined;
+        instagram: string | undefined;
+        facebook: string | undefined;
+        linkedin: string | undefined;
+      }
+    | undefined;
+
+  createdAt: string;
+  updatedAt: string;
 };

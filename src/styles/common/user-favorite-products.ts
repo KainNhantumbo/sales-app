@@ -173,11 +173,16 @@ export const FavoriteProductsContainer = styled.div`
             height: 100%;
             max-width: 230px;
             padding: 30px;
-            border-radius: 10px 10px 0 0;
-
-            @media screen and (max-width: 400px) {
+            border-radius: 20px;
+            background: rgba(${({ theme }) => theme.font}, 0.1);
+            width: 150px;
+            min-width: 150px;
+            @media screen and (max-width: 1130px) {
               width: 180px;
               min-width: 180px;
+            }
+            @media screen and (max-width: 445px) {
+              border-radius: 0;
             }
           }
         }

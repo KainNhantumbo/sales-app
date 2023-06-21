@@ -17,7 +17,7 @@ export default function ToolBox(): JSX.Element {
           whileTap={{ scale: 0.95 }}
           title='Adicionar novo produto'
           className='descripted'
-          onClick={() => router.push(`/users/dashboard/product-editor/new`)}>
+          onClick={() => router.push(`/users/dashboard/product-editor`)}>
           <HiPlus />
           <span>Novo Produto</span>
         </motion.button>

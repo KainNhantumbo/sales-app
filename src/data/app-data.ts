@@ -269,7 +269,7 @@ const dashboardActions = (props: {
       },
       {
         label: 'Adicionar produto',
-        url: '/users/dashboard/product-editor/new',
+        url: '/users/dashboard/product-editor',
         icon: IoAdd,
       },
       {

@@ -1,11 +1,5 @@
 import {
-  PublicProducts,
-  TPublicProduct,
-  TPublicStore,
-} from '../../../../@types';
-import {
   IoAdd,
-  IoAlert,
   IoAlertCircle,
   IoBagCheck,
   IoBagHandle,
@@ -18,34 +12,33 @@ import {
   IoHeartOutline,
   IoLayers,
   IoLibrary,
-  IoLogoFacebook,
-  IoLogoWhatsapp,
   IoStorefront,
 } from 'react-icons/io5';
-import Link from 'next/link';
-import Image from 'next/image';
-import { FaAd } from 'react-icons/fa';
-import Layout from '@/components/Layout';
-import fetch from '../../../config/client';
-import ErrorPage from '@/pages/error-page';
-import { NextRouter, useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { BiUser } from 'react-icons/bi';
-import { motion } from 'framer-motion';
-import { actions } from '@/data/actions';
-import { useAppContext } from '@/context/AppContext';
-import { DefaultTheme, useTheme } from 'styled-components';
 import {
   blurDataUrlImage,
   complements,
   formatSocialNetwork,
 } from '@/data/app-data';
+import Link from 'next/link';
+import Image from 'next/image';
+import { FaAd } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { BiUser } from 'react-icons/bi';
+import Layout from '@/components/Layout';
+import { actions } from '@/data/actions';
+import fetch from '../../../config/client';
+import ErrorPage from '@/pages/error-page';
+import { useEffect, useState } from 'react';
+import { VscVerifiedFilled } from 'react-icons/vsc';
+import { NextRouter, useRouter } from 'next/router';
+import { useAppContext } from '@/context/AppContext';
+import { DefaultTheme, useTheme } from 'styled-components';
 import { formatCurrency } from '@/lib/utils';
+import { TPublicProducts, TPublicProduct, TPublicStore } from '@/../@types';
 import { useThemeContext } from '@/context/ThemeContext';
 import { StoreContainer as Container } from '@/styles/common/community-store-profile';
-import { VscVerified, VscVerifiedFilled } from 'react-icons/vsc';
 
-type TProps = { store: TPublicStore; products: TPublicProduct[] };
+type TProps = { store: TPublicStore; products: TPublicProducts[] };
 
 export default function StoreProfile({ store, products }: TProps): JSX.Element {
   const {
@@ -114,33 +107,20 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
     }
   }
 
-  function changeWidth(): void {
-    setInnerWidth(window.innerWidth);
-    if (window.innerWidth > 830) {
-      dispatch({
-        type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
-        payload: {
-          ...state,
-          isPublicProductsFilters: true,
-        },
-      });
-    } else {
-      dispatch({
-        type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
-        payload: {
-          ...state,
-          isPublicProductsFilters: false,
-        },
-      });
-    }
-  }
-
   useEffect((): (() => void) => {
     setInnerWidth(window.innerWidth);
+    dispatch({
+      type: actions.PUBLIC_PRODUCTS_LIST_DATA,
+      payload: { ...state, publicProducts: [...products] },
+    });
     window.addEventListener('resize', () => {
       setInnerWidth(window.innerWidth);
     });
     return () => {
+      dispatch({
+        type: actions.PUBLIC_PRODUCTS_LIST_DATA,
+        payload: { ...state, publicProducts: [] },
+      });
       window.removeEventListener('resize', () => {
         setInnerWidth(window.innerWidth);
       });
@@ -226,6 +206,8 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
                   height={220}
                   className='cover-image'
                   src={store.cover_image.url}
+                  title={`Imagem de capa da loja ${store.name}`}
+                  aria-label={`Imagem de capa da loja ${store.name}`}
                   alt={`Imagem de capa da loja ${store.name}`}
                 />
               )}
@@ -371,9 +353,9 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
                     )}
                 </section>
               )}
-              {tab === 'products' && products && products.length > 0 && (
+              {tab === 'products' && state.publicProducts.length > 0 && (
                 <section className='products-container'>
-                  {products.map((item) => (
+                  {state.publicProducts.map((item) => (
                     <motion.div
                       key={item._id}
                       whileTap={{ scale: 0.98 }}
@@ -427,12 +409,7 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
                                         100
                                     : item.price,
                                   quantity: 1,
-                                  previewImage: item.images
-                                    ? {
-                                        id: Object.values(item.images)[0]?.id,
-                                        url: Object.values(item.images)[0]?.url,
-                                      }
-                                    : undefined,
+                                  previewImage: item.image,
                                 });
                           }}>
                           {state.cart.some(
@@ -443,10 +420,10 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
                             <IoCartOutline />
                           )}
                         </button>
-                        {item.images && Object.values(item.images)[0]?.url && (
+                        {item.image && (
                           <Link href={`/ecommerce/products/${item._id}`}>
                             <Image
-                              src={Object.values(item.images)[0]?.url}
+                              src={item.image.url}
                               width={250}
                               height={250}
                               blurDataURL={blurDataUrlImage}
@@ -455,7 +432,7 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
                             />
                           </Link>
                         )}
-                        {!item.images && (
+                        {!item.image && (
                           <Link href={`/ecommerce/products/${item._id}`}>
                             <IoBagHandle className='no-image-icon' />
                           </Link>
@@ -504,7 +481,7 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
                 </section>
               )}
 
-              {tab === 'products' && products && products.length < 1 && (
+              {tab === 'products' && state.publicProducts.length < 1 && (
                 <div className='empty-data_container'>
                   <section className='content'>
                     <IoBarcodeOutline />
@@ -538,7 +515,7 @@ export async function getStaticProps({ params: { slug } }: any) {
           method: 'get',
           url: `/api/v1/users/store/public/${slug}`,
         }),
-        fetch<PublicProducts[]>({
+        fetch<TPublicProducts[]>({
           method: 'get',
           url: `/api/v1/users/products/public?storeId=${slug}`,
         }),

@@ -26,22 +26,22 @@ import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
 import fetch from '../../../config/client';
 import ErrorPage from '@/pages/error-page';
-import { formatCurrency, formatDate } from '@/lib/utils';
 import { FaCartPlus } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { Product } from '../../../../@types';
-import { useTheme } from 'styled-components';
 import { complements } from '@/data/app-data';
 import NewsLetter from '@/components/Newsletter';
+import { VscVerifiedFilled } from 'react-icons/vsc';
 import ReactImageGallery from 'react-image-gallery';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import 'react-image-gallery/styles/css/image-gallery.css';
-import ShareProducts from '@/components/modals/ShareProductModal';
 import Comments from '@/components/comments/Comments';
-import product_categories from '../../../data/product-categories.json';
+import { formatCurrency, formatDate } from '@/lib/utils';
+import 'react-image-gallery/styles/css/image-gallery.css';
+import { DefaultTheme, useTheme } from 'styled-components';
+import product_categories from '@/data/product-categories.json';
+import ShareProducts from '@/components/modals/ShareProductModal';
 import { EcommerceProductContainer as Container } from '@/styles/common/ecommerce-product';
-import { VscVerifiedFilled } from 'react-icons/vsc';
 
 export default function Product({ product }: any): JSX.Element {
   const {
@@ -55,15 +55,13 @@ export default function Product({ product }: any): JSX.Element {
     updateCartProduct,
     getCartProduct,
   } = useAppContext();
-  const theme = useTheme();
-  const [innerWidth, setInnerWidth] = useState(0);
+  const theme: DefaultTheme = useTheme();
+  const [innerWidth, setInnerWidth] = useState<number>(0);
   const router: NextRouter = useRouter();
+  
+  if (!product) return <ErrorPage retryFn={router.reload} />;
 
-  if (!product) {
-    return <ErrorPage retryFn={router.reload} />;
-  }
-
-  async function handleFavoriteProduct(id: string) {
+  async function handleFavoriteProduct(id: string): Promise<void> {
     try {
       const { data } = await fetchAPI({
         method: 'post',
@@ -81,7 +79,7 @@ export default function Product({ product }: any): JSX.Element {
     }
   }
 
-  async function handleUnFavoriteProduct(id: string) {
+  async function handleUnFavoriteProduct(id: string): Promise<void> {
     try {
       const { data } = await fetchAPI({
         method: 'patch',
@@ -101,11 +99,6 @@ export default function Product({ product }: any): JSX.Element {
 
   function trackInnerWidth(): void {
     setInnerWidth(window.innerWidth);
-    if (window.innerWidth > 830) {
-      //  do something
-    } else {
-      //  do something
-    }
   }
 
   useEffect((): (() => void) => {
@@ -180,55 +173,59 @@ export default function Product({ product }: any): JSX.Element {
         <div className='wrapper-container'>
           <aside>
             <div className='images-container'>
-              {state.publicProduct.images && (
-                <ReactImageGallery
-                  lazyLoad={true}
-                  useBrowserFullscreen={true}
-                  additionalClass='navigator'
-                  autoPlay={false}
-                  showPlayButton={false}
-                  showThumbnails={
-                    innerWidth < 445 ?( Object.values(state.publicProduct.images).length >= 2
-                      ? true
-                      : false):true
-                  }
-                  thumbnailPosition={innerWidth > 445 ? 'left' : 'bottom'}
-                  items={Object.values(state.publicProduct.images).map(
-                    (image) => ({
-                      thumbnail: image.url,
-                      original: image.url,
-                    })
-                  )}
-                  renderRightNav={(onClick, disabled) => (
-                    <button
-                      className='nav-right'
-                      onClick={onClick}
-                      disabled={disabled}>
-                      <IoChevronForward />
-                    </button>
-                  )}
-                  renderLeftNav={(onClick, disabled) => (
-                    <button
-                      className='nav-left'
-                      onClick={onClick}
-                      disabled={disabled}>
-                      <IoChevronBack />
-                    </button>
-                  )}
-                  renderFullscreenButton={(onClick, isFullScreen) => (
-                    <button className='nav-fullscreen' onClick={onClick}>
-                      {isFullScreen ? <IoContract /> : <IoScan />}
-                    </button>
-                  )}
-                />
-              )}
+              {state.publicProduct.images &&
+                Object.values(product.images).length > 0 && (
+                  <ReactImageGallery
+                    lazyLoad={true}
+                    useBrowserFullscreen={true}
+                    additionalClass='navigator'
+                    autoPlay={false}
+                    showPlayButton={false}
+                    showThumbnails={
+                      innerWidth < 445
+                        ? Object.values(state.publicProduct.images).length >= 2
+                          ? true
+                          : false
+                        : true
+                    }
+                    thumbnailPosition={innerWidth > 445 ? 'left' : 'bottom'}
+                    items={Object.values(state.publicProduct.images).map(
+                      (image) => ({
+                        thumbnail: image.url,
+                        original: image.url,
+                      })
+                    )}
+                    renderRightNav={(onClick, disabled) => (
+                      <button
+                        className='nav-right'
+                        onClick={onClick}
+                        disabled={disabled}>
+                        <IoChevronForward />
+                      </button>
+                    )}
+                    renderLeftNav={(onClick, disabled) => (
+                      <button
+                        className='nav-left'
+                        onClick={onClick}
+                        disabled={disabled}>
+                        <IoChevronBack />
+                      </button>
+                    )}
+                    renderFullscreenButton={(onClick, isFullScreen) => (
+                      <button className='nav-fullscreen' onClick={onClick}>
+                        {isFullScreen ? <IoContract /> : <IoScan />}
+                      </button>
+                    )}
+                  />
+                )}
 
-              {!product.images && (
-                <IoBagHandle
-                  title='Produto sem imagem'
-                  className='no-image-icon'
-                />
-              )}
+              {!product.images ||
+                (Object.values(product.images).length < 1 && (
+                  <IoBagHandle
+                    title='Produto sem imagem'
+                    className='no-image-icon'
+                  />
+                ))}
             </div>
 
             <section className='product-container'>

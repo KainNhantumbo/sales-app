@@ -15,20 +15,20 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 import fetch from '../config/client';
 import { motion } from 'framer-motion';
-import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
+import { actions } from '@/data/actions';
+import { formatCurrency } from '@/lib/utils';
 import { PulseLoader } from 'react-spinners';
-import { PublicProducts } from '../../@types';
+import { TPublicProducts } from '@/../@types';
 import { useAppContext } from '@/context/AppContext';
 import SearchEngine from '@/components/SearchEngine';
-import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { DefaultTheme, useTheme } from 'styled-components';
 import RequestLogin from '@/components/modals/RequestLogin';
 import opening_store_png from '../../public/assets/opening.png';
 import { blurDataUrlImage, complements } from '@/data/app-data';
 import { HomeContainer as Container } from '@/styles/common/home';
-import { formatCurrency } from '@/lib/utils';
+import { InViewHookResponse, useInView } from 'react-intersection-observer';
 
 export default function Home(): JSX.Element {
   const {
@@ -107,7 +107,7 @@ export default function Home(): JSX.Element {
     const { category, price_range, promotion, query, sort } =
       state.queryPublicProducts;
 
-    const { data } = await fetch<PublicProducts[]>({
+    const { data } = await fetch<TPublicProducts[]>({
       method: 'get',
       url: `/api/v1/users/products/public?offset=${
         LIMIT * pageParam
@@ -258,8 +258,7 @@ export default function Home(): JSX.Element {
                         aria-label='Adicionar a lista de favoritos'
                         className='favorite-button'
                         onClick={() => {
-                          if (!state.auth?.token)
-                            return loginPromptController();
+                          if (!state.auth.token) return loginPromptController();
                           else if (item.favorites.includes(state.auth?.id))
                             return handleUnFavoriteProduct(item._id);
                           return handleFavoriteProduct(item._id);
@@ -288,12 +287,7 @@ export default function Home(): JSX.Element {
                                       100
                                   : item.price,
                                 quantity: 1,
-                                previewImage: item.images
-                                  ? {
-                                      id: Object.values(item.images)[0]?.id,
-                                      url: Object.values(item.images)[0]?.url,
-                                    }
-                                  : undefined,
+                                previewImage: item.image,
                               });
                         }}>
                         {state.cart.some(
@@ -304,10 +298,10 @@ export default function Home(): JSX.Element {
                           <IoCartOutline />
                         )}
                       </button>
-                      {item.images && Object.values(item.images)[0]?.url && (
+                      {item.image && (
                         <Link href={`/ecommerce/products/${item._id}`}>
                           <Image
-                            src={Object.values(item.images)[0]?.url}
+                            src={item.image.url}
                             width={250}
                             height={250}
                             blurDataURL={blurDataUrlImage}
@@ -316,7 +310,7 @@ export default function Home(): JSX.Element {
                           />
                         </Link>
                       )}
-                      {!item.images && (
+                      {!item.image && (
                         <Link href={`/ecommerce/products/${item._id}`}>
                           <IoBagHandle className='no-image-icon' />
                         </Link>

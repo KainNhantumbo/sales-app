@@ -10,13 +10,14 @@ import {
 } from 'react-icons/io5';
 import moment from 'moment';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { AxiosResponse } from 'axios';
 import Layout from '@/components/Layout';
 import { actions } from '@/data/actions';
-import { DotLoader, PulseLoader } from 'react-spinners';
-import { useEffect, useState } from 'react';
+import { formatCurrency } from '@/lib/utils';
 import { useTheme } from 'styled-components';
 import { complements } from '@/data/app-data';
+import { PulseLoader } from 'react-spinners';
 import AppStatus from '@/components/AppStatus';
 import { VscEmptyWindow } from 'react-icons/vsc';
 import { DefaultTheme } from 'styled-components';
@@ -30,7 +31,6 @@ import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import ShareProducts from '@/components/modals/ShareProductModal';
 import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
 import { ProductListContainer as Container } from '@/styles/common/products';
-import { formatCurrency } from '@/lib/utils';
 
 export default function Products(): JSX.Element {
   const theme: DefaultTheme = useTheme();
@@ -166,7 +166,7 @@ export default function Products(): JSX.Element {
           )}
 
           <section className='main-container'>
-            {state.productList.length < 1 && (
+            {!isFetching && !isError && state.productList.length < 1 && (
               <div className='empty-data_container'>
                 <section className='content'>
                   <div className='icon'>
@@ -251,7 +251,7 @@ export default function Products(): JSX.Element {
                   </div>
                   <div className='products-list_item_secondary'>
                     <Link
-                      href={`/users/dashboard/product-editor/${product._id}`}
+                      href={`/users/dashboard/product-editor?productId=${product._id}`}
                       title='Editar e atualizar informações do produto'>
                       <span>Editar produto</span>
                     </Link>

@@ -18,25 +18,25 @@ import {
   IoSyncOutline,
   IoTrashOutline,
 } from 'react-icons/io5';
-import { AxiosResponse } from 'axios';
 import Compressor from 'compressorjs';
+import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
-import { InputEvents, Product } from '@/../@types';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
-import { actions } from '@/data/actions';
+import { complements } from '@/data/app-data';
+import { InputEvents, Product } from '@/../@types';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import product_categories from '@/data/product-categories.json';
 import { ProductEditorContainer as Container } from '@/styles/common/product-editor';
-import { complements } from '@/data/app-data';
 
 export default function ProductEditor(): JSX.Element {
   const theme = useTheme();
   const router: NextRouter = useRouter();
   const { state, fetchAPI, dispatch } = useAppContext();
 
+  // --------------------states---------------------
   const [loading, setLoading] = useState<{
     status: boolean;
     key: 'product-data' | 'product-update';
@@ -47,7 +47,6 @@ export default function ProductEditor(): JSX.Element {
     key: 'product-data' | 'product-update';
   }>({ status: false, msg: '', key: 'product-data' });
 
-  // --------------------states---------------------
   const [imagesData, setImagesData] = useState({
     img_0: { id: '', data: '' },
     img_1: { id: '', data: '' },
@@ -96,16 +95,13 @@ export default function ProductEditor(): JSX.Element {
   }
 
   function deleteImage(id: string, index?: string): void {
-    if (id === '') {
+    if (!id) {
       if (index) {
-        setImagesData((data) => {
-          return {
-            ...data,
-            [index]: { id: '', data: '' },
-          };
-        });
+        return setImagesData((data) => ({
+          ...data,
+          [index]: { id: '', data: '' },
+        }));
       }
-      return;
     }
     fetchAPI({
       method: 'delete',
@@ -114,27 +110,16 @@ export default function ProductEditor(): JSX.Element {
     })
       .then(() => {
         if (index) {
-          setImagesData((data) => {
-            return {
-              ...data,
-              [index]: { id: '', data: '' },
-            };
-          });
+          setImagesData((data) => ({
+            ...data,
+            [index]: { id: '', data: '' },
+          }));
         }
-
         dispatch({
           type: actions.PRODUCT_DATA,
           payload: {
             ...state,
-            product: {
-              ...state.product,
-              images: {
-                img_0: { id: '', url: '' },
-                img_1: { id: '', url: '' },
-                img_2: { id: '', url: '' },
-                img_3: { id: '', url: '' },
-              },
-            },
+            product: { ...state.product, images: {} },
           },
         });
       })
@@ -143,34 +128,35 @@ export default function ProductEditor(): JSX.Element {
       });
   }
 
-  function handleGet(productId: string): void {
-    setLoading({ status: true, key: 'product-data' });
-    fetchAPI({
-      method: 'get',
-      url: `/api/v1/users/products/${productId}?fields=-created_by`,
-    })
-      .then(({ data }: AxiosResponse<Product>) => {
-        dispatch({
-          type: actions.PRODUCT_DATA,
-          payload: {
-            ...state,
-            product: { ...state.product, ...data },
-          },
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-        setError({
-          status: true,
-          msg:
-            error?.response?.data?.message ||
-            'Oops! Algo deu errado. Tente novamente.',
-          key: 'product-data',
-        });
-      })
-      .finally(() => {
-        setLoading({ status: false, key: 'product-data' });
+  async function fetchProduct(): Promise<void> {
+    try {
+      setLoading({ status: true, key: 'product-data' });
+      const productId: string = router.query.productId as string;
+      if (!productId) return;
+      const { data } = await fetchAPI({
+        method: 'get',
+        url: `/api/v1/users/products/${productId}?fields=-created_by,-favorites,-ivalidated`,
       });
+      dispatch({
+        type: actions.PRODUCT_DATA,
+        payload: {
+          ...state,
+          product: { ...state.product, ...data },
+        },
+      });
+    } catch (error: any) {
+      console.log(error?.response?.data?.message);
+      console.error(error);
+      setError({
+        status: true,
+        msg:
+          error?.response?.data?.message ||
+          'Oops! Algo deu errado. Tente novamente.',
+        key: 'product-data',
+      });
+    } finally {
+      setLoading({ status: false, key: 'product-data' });
+    }
   }
 
   async function handleUpdate(productId: string): Promise<void> {
@@ -232,7 +218,7 @@ export default function ProductEditor(): JSX.Element {
           delivery_tax: state.product.delivery_tax,
           quantity: state.product.quantity,
           promotion: state.product.promotion,
-          store: state.store._id,
+          store: state.auth.storeId,
           allow_comments: state.product.allow_comments,
           productImages: [
             ...Object.entries(imagesData).filter(([key, value]) =>
@@ -263,13 +249,11 @@ export default function ProductEditor(): JSX.Element {
 
   // fetch product
   useEffect((): (() => void) | void => {
-    const productId: string = router.query?.productId as string;
-    if (!productId || productId === 'new') return;
-    const fetch_data = setTimeout(() => {
-      handleGet(productId);
-    }, 100);
+    const fetchTimer = setTimeout(() => {
+      fetchProduct();
+    }, 500);
     return () => {
-      clearTimeout(fetch_data);
+      clearTimeout(fetchTimer);
       dispatch({
         type: actions.PRODUCT_DATA,
         payload: {
@@ -286,41 +270,15 @@ export default function ProductEditor(): JSX.Element {
             price: 0,
             delivery_tax: 0,
             quantity: 0,
-            images: {
-              img_0: { id: '', url: '' },
-              img_1: { id: '', url: '' },
-              img_2: { id: '', url: '' },
-              img_3: { id: '', url: '' },
-            },
+            images: {},
             createdAt: '',
             updatedAt: '',
-            invalidated: false,
             favorites: [],
             allow_comments: false,
           },
         },
       });
     };
-  }, []);
-
-  // fetch product store id
-  useEffect(() => {
-    fetchAPI({
-      method: 'get',
-      url: `/api/v1/users/store?fields=name`,
-    })
-      .then(({ data }) => {
-        dispatch({
-          type: actions.STORE_DATA,
-          payload: {
-            ...state,
-            store: { ...state.store, ...data },
-          },
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   }, []);
 
   // clear errors
@@ -343,8 +301,8 @@ export default function ProductEditor(): JSX.Element {
           <section className='fetching-state'>
             <div>
               <DotLoader size={50} color={`rgb(${theme.primary})`} />
+            <p>Carregando os dados do produto</p>
             </div>
-            <span>Carregando...</span>
           </section>
         )}
 

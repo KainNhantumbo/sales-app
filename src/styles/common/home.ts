@@ -296,7 +296,7 @@ export const HomeContainer = styled.div`
             max-width: 230px;
             padding: 30px;
             border-radius: 10px 10px 0 0;
-
+            background: rgba(${({ theme }) => theme.font}, 0.1);
             @media screen and (max-width: 500px) {
               width: 240px;
               min-width: 240px;

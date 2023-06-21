@@ -28,28 +28,8 @@ export const ProductEditorContainer = styled.div`
     top: 0;
     left: 0;
     z-index: 5000;
-    background: rgba(${({ theme }) => theme.foreground}, 0.5);
-    backdrop-filter: blur(10px);
-    width: 100%;
-    height: 100%;
-    .center {
-      position: relative;
-      top: 300px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      font-size: 1.2rem;
-    }
-  }
-
-  .fetching-state {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 5000;
-    background: rgba(${({ theme }) => theme.foreground}, 0.5);
-    backdrop-filter: blur(10px);
+    background: rgba(${({ theme }) => theme.foreground}, 0.8);
+    backdrop-filter: blur(20px);
     width: 100%;
     height: 100%;
     div {
@@ -60,11 +40,14 @@ export const ProductEditorContainer = styled.div`
       align-items: center;
       gap: 30px;
       font-size: 1.2rem;
+      padding: 60px 30px;
+      width: fit-content;
+      margin: 0 auto;
     }
     p {
-      color: rgb(${({ theme }) => theme.alert});
-      padding: 0 20px;
-      line-height: 1.6rem;
+      font-size: 1.2rem;
+      line-height: 2rem;
+      font-weight: 500;
       text-align: center;
     }
     button {
