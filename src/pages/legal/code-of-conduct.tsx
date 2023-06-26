@@ -7,7 +7,7 @@ export default function CodeOfConduct(): JSX.Element {
     <Layout
       metadata={{ title: complements.defaultTitle + ' | Código de Conduta' }}>
       <Container>
-        <article>
+        <article className='code-of-conduct-container'>
           <section>
             <h1>Código de Conduta</h1>
           </section>

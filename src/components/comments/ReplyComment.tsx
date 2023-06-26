@@ -4,38 +4,15 @@ import {
   IoEllipse,
   IoFlag,
   IoHeart,
-  IoHeartOutline
+  IoHeartOutline,
 } from 'react-icons/io5';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 import { BiUser } from 'react-icons/bi';
-import { IComment } from '../../../@types';
+import { complements } from '@/data/app-data';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useAppContext } from '@/context/AppContext';
-import { useRouter } from 'next/router';
-import { complements } from '@/data/app-data';
-
-type TComment = {
-  comment: IComment;
-  clearCommentData: () => void;
-  updateComment: (id: string) => Promise<void>;
-  handleUnFavoriteComment: (id: string) => Promise<void>;
-  handleFavoriteComment: (id: string) => Promise<void>;
-  handleReplyComment: (data: IComment) => void;
-  handleEditComment: (data: IComment) => void;
-  status: {
-    edit: boolean;
-    reply: boolean;
-    loading: {
-      status: boolean;
-      key: 'create-comment' | 'update-comment' | 'delete-comment';
-    };
-    error: {
-      status: boolean;
-      msg: string;
-      key: 'create-comment' | 'update-comment' | 'delete-comment';
-    };
-  };
-};
+import type { TComment } from '@/../@types/comments';
 
 export default function ReplyComment(props: TComment): JSX.Element {
   const { state, deleteCommentPromptController } = useAppContext();
@@ -55,8 +32,11 @@ export default function ReplyComment(props: TComment): JSX.Element {
           )}
 
           <h3>
-            @{props.comment.created_by.first_name.toLowerCase()}_
-            {props.comment.created_by.last_name.toLowerCase()}
+            {String.prototype.concat(
+              props.comment.created_by.first_name,
+              ' ',
+              props.comment.created_by.last_name
+            )}
           </h3>
 
           <span>
@@ -110,11 +90,13 @@ export default function ReplyComment(props: TComment): JSX.Element {
             <>
               <button
                 className='denounce'
-                onClick={() => router.push(
-                  `/denounce?url=${complements.websiteUrl.concat(
-                    router.asPath
-                  )}&type=comment&id=${props.comment._id}`
-                )}>
+                onClick={() =>
+                  router.push(
+                    `/denounce?url=${complements.websiteUrl.concat(
+                      router.asPath
+                    )}&type=comment&id=${props.comment._id}`
+                  )
+                }>
                 <IoFlag />
                 <span>Denunciar</span>
               </button>

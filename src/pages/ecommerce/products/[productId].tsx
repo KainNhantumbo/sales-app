@@ -27,7 +27,6 @@ import Layout from '@/components/Layout';
 import fetch from '../../../config/client';
 import ErrorPage from '@/pages/error-page';
 import { FaCartPlus } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
 import { Product } from '../../../../@types';
 import { complements } from '@/data/app-data';
 import NewsLetter from '@/components/Newsletter';
@@ -35,13 +34,16 @@ import { VscVerifiedFilled } from 'react-icons/vsc';
 import ReactImageGallery from 'react-image-gallery';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import Comments from '@/components/comments/Comments';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import { DefaultTheme, useTheme } from 'styled-components';
+import { useEffect, useState, lazy, Suspense, startTransition } from 'react';
 import product_categories from '@/data/product-categories.json';
 import ShareProducts from '@/components/modals/ShareProductModal';
 import { EcommerceProductContainer as Container } from '@/styles/common/ecommerce-product';
+
+// optimizations
+const Comments = lazy(() => import('@/components/comments/Comments'));
 
 export default function Product({ product }: any): JSX.Element {
   const {
@@ -58,7 +60,7 @@ export default function Product({ product }: any): JSX.Element {
   const theme: DefaultTheme = useTheme();
   const [innerWidth, setInnerWidth] = useState<number>(0);
   const router: NextRouter = useRouter();
-  
+
   if (!product) return <ErrorPage retryFn={router.reload} />;
 
   async function handleFavoriteProduct(id: string): Promise<void> {
@@ -706,7 +708,10 @@ export default function Product({ product }: any): JSX.Element {
             </section>
 
             {state.publicProduct.allow_comments ? (
-              <Comments contentId={state.publicProduct._id} />
+              <Suspense
+                fallback={<h3>Carregando o sistema de commentários...</h3>}>
+                <Comments contentId={state.publicProduct._id} />
+              </Suspense>
             ) : (
               <div className='no-comments-message'>
                 <h3>

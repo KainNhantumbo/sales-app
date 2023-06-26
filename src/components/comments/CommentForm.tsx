@@ -3,25 +3,9 @@ import { actions } from '@/data/actions';
 import { MoonLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
+import type { TMainCommentForm } from '../../../@types/comments';
 
-type TCommentForm = {
-  createComment: () => Promise<void>;
-  status: {
-    edit: boolean;
-    reply: boolean;
-    loading: {
-      status: boolean;
-      key: 'create-comment' | 'update-comment' | 'delete-comment';
-    };
-    error: {
-      status: boolean;
-      msg: string;
-      key: 'create-comment' | 'update-comment' | 'delete-comment';
-    };
-  };
-};
-
-export default function CommentForm(props: TCommentForm): JSX.Element {
+export default function CommentForm(props: TMainCommentForm): JSX.Element {
   const theme = useTheme();
   const { state, dispatch, loginPromptController } = useAppContext();
 
@@ -63,9 +47,9 @@ export default function CommentForm(props: TCommentForm): JSX.Element {
                     ...state,
                     comment: {
                       ...state.comment,
-                      content: e.target.value
-                    }
-                  }
+                      content: e.target.value,
+                    },
+                  },
                 });
               }}
             />
@@ -83,7 +67,7 @@ export default function CommentForm(props: TCommentForm): JSX.Element {
                 color={`rgb(${theme.primary_variant})`}
                 cssOverride={{
                   display: 'block',
-                  margin: '0 auto'
+                  margin: '0 auto',
                 }}
               />
             </div>

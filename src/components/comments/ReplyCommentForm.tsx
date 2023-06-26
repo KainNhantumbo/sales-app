@@ -2,26 +2,7 @@ import { actions } from '@/data/actions';
 import { MoonLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
-
-type TCommentForm = {
-  createComment: () => Promise<void>;
-  updateComment: (id: string) => Promise<void>;
-  replyComment: (id: string | null) => Promise<void>;
-  currentCommentId: string;
-  status: {
-    edit: boolean;
-    reply: boolean;
-    loading: {
-      status: boolean;
-      key: 'create-comment' | 'update-comment' | 'delete-comment';
-    };
-    error: {
-      status: boolean;
-      msg: string;
-      key: 'create-comment' | 'update-comment' | 'delete-comment';
-    };
-  };
-};
+import type { TCommentForm } from '@/../@types/comments';
 
 export default function ReplyCommentForm(props: TCommentForm): JSX.Element {
   const theme = useTheme();
@@ -88,7 +69,7 @@ export default function ReplyCommentForm(props: TCommentForm): JSX.Element {
               props.status.edit
                 ? props.updateComment(props.currentCommentId)
                 : props.status.reply
-                ? props.replyComment(props.currentCommentId || null)
+                ? props.replyComment()
                 : props.createComment()
             }>
             {props.status.edit ? (

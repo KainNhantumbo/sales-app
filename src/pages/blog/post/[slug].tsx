@@ -13,7 +13,7 @@ import {
 import moment from 'moment';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import editorJsHtml from 'editorjs-html';
@@ -21,11 +21,11 @@ import Layout from '@/components/Layout';
 import ErrorPage from '@/pages/error-page';
 import { formatDate } from '@/lib/utils';
 import { useTheme } from 'styled-components';
-import NewsLetter from '@/components/Newsletter';
 import { readingTime } from 'reading-time-estimator';
-import Comments from '@/components/comments/Comments';
 import { useAppContext } from '@/context/AppContext';
+import NewsLetter from '@/components/Newsletter';
 import { getPaths, getPost, getPosts } from '@/lib/queries';
+import { CommentCount, DiscussionEmbed } from 'disqus-react';
 import type { IBlogPost, IBlogPosts } from '@/../../@types/index';
 import { PostContainer as Container } from '@/styles/common/post';
 import EditorJsRenderer from '@/components/EditorJSRenderer';
@@ -153,7 +153,17 @@ export default function Post({
                 </div>
                 <div>
                   <IoChatbubblesOutline />
-                  <span>{state.commentsList.length} comentários</span>
+                  <span>
+                    <CommentCount
+                      shortname={'shopping-tree'}
+                      config={{
+                        identifier: post._id,
+                        url: router.asPath,
+                        title: post.title,
+                      }}
+                    />
+                    comentários
+                  </span>
                 </div>
                 <div>
                   <IoHeart />
@@ -229,7 +239,15 @@ export default function Post({
               </section>
             </section>
 
-            <Comments contentId={post._id} />
+            <DiscussionEmbed
+              shortname={'shopping-tree'}
+              config={{
+                identifier: post._id,
+                url: router.asPath,
+                title: post.title,
+                language: 'pt_BR',
+              }}
+            />
 
             <section className='featured-posts-container'>
               <h2>
@@ -276,7 +294,9 @@ export default function Post({
               </div>
             </section>
           </article>
-          <NewsLetter />
+          <Suspense>
+            <NewsLetter />
+          </Suspense>
         </div>
       </Container>
     </Layout>
@@ -296,7 +316,7 @@ export async function getStaticProps({ params: { slug } }: any) {
     const [post, latestPosts] = (
       await Promise.all([getPost(slug), getPosts({ limit: 3, offset: 0 })])
     ).map((res) => res.data);
-    return { props: { post, latestPosts }, revalidate: 10 };
+    return { props: { post, latestPosts }, revalidate: 30 };
   } catch (error) {
     console.error(error);
     return { props: {}, revalidate: 10 };

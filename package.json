@@ -18,12 +18,14 @@
   "dependencies": {
     "@editorjs/editorjs": "^2.27.0",
     "@emailjs/browser": "^3.11.0",
+    "@paypal/react-paypal-js": "^8.0.0",
     "@tanstack/react-query": "^4.29.12",
     "@types/node": "20.0.0",
     "@types/react": "18.2.5",
     "@types/react-dom": "18.2.3",
     "axios": "^1.4.0",
     "compressorjs": "^1.2.1",
+    "disqus-react": "^1.1.5",
     "editorjs-html": "^3.4.3",
     "framer-motion": "^10.12.7",
     "moment": "^2.29.4",
@@ -42,7 +44,8 @@
     "reading-time-estimator": "^1.8.1",
     "socket.io-client": "^4.6.1",
     "styled-components": "^5.3.10",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "uselocalstoragenextjs": "^1.2.2"
   },
   "devDependencies": {
     "@types/react-image-gallery": "^1.2.0",

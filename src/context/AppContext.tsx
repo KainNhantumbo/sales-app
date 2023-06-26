@@ -4,7 +4,7 @@ import {
   createContext,
   Dispatch,
   useReducer,
-  useLayoutEffect,
+  useLayoutEffect, useInsertionEffect,
 } from 'react';
 import fetch from '../config/client';
 import ThemeContext from './ThemeContext';
@@ -76,6 +76,7 @@ const context = createContext<IContext>({
 });
 
 export default function AppContext(props: AppContext) {
+  const CART_KEY = 'cart-items';
   const router: NextRouter = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -237,13 +238,11 @@ export default function AppContext(props: AppContext) {
     });
   }
 
-  function syncCartToLocalStorege(): void {
-    const CART_KEY = 'cart-items';
+  function syncCartToLocalStorage(): void {
     localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
   }
 
   function restoreCartFromLocalStorage(): void {
-    const CART_KEY = 'cart-items';
     const data: TCart[] = JSON.parse(localStorage.getItem(CART_KEY) || `[]`);
 
     if (data?.length > 0)
@@ -254,13 +253,14 @@ export default function AppContext(props: AppContext) {
   }
 
   useEffect(() => {
-    syncCartToLocalStorege();
+    syncCartToLocalStorage();
   }, [state.cart]);
 
-  useLayoutEffect(() => {
+  useInsertionEffect(() => {
     restoreCartFromLocalStorage();
   }, []);
-  // ----------------user authentication--------------------------
+
+  // -------------user authentication---------------
   async function validateAuth(): Promise<void> {
     try {
       const { data } = await fetch<TAuth>({

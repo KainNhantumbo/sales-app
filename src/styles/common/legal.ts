@@ -7,6 +7,10 @@ export const LegalContainer = styled.div`
   justify-items: center;
   background: rgb(${({ theme }) => theme.background});
 
+  .code-of-conduct-container {
+    text-align: start;
+  }
+
   article {
     font-size: 1rem;
     line-height: 1.6rem;

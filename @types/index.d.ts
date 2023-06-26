@@ -139,22 +139,6 @@ export type PostListProps = {
   category?: string;
 };
 
-export interface IComment {
-  _id: string;
-  source_id: string;
-  created_by: {
-    _id: string;
-    first_name: string;
-    last_name: string;
-    profile_image: { id: string; url: string };
-  };
-  content: string;
-  parent_id: string;
-  favorites: string[];
-  updatedAt: string;
-  createdAt: string;
-}
-
 export interface ISignInData {
   email: string;
   password: string;
@@ -417,19 +401,15 @@ export type TPurchaseCheckOut = {
   location: {
     country: string;
     state: string;
-    city: string;
     adress: string;
     zip_code: string;
   };
   payment: {
     type: TPaymentType;
     data: {
+      ponto24_account: number;
       emola_account: number;
       mpesa_account: number;
-      card_holder_name: string;
-      cvc_code: number;
-      card_number: number;
-      expire_date: string;
     };
   };
 };

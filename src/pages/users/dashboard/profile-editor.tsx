@@ -167,57 +167,23 @@ export default function ProfileEditor(): JSX.Element {
     }
   }
 
-  function deleteProfileImage(): void {
+  function deleteAsset(assetType: 'cover_image' | 'profile_image'): void {
     fetchAPI({
       method: 'delete',
       url: `/api/v1/users/account/assets`,
-      data: { image: state.user.profile_image?.id },
+      data: { type: assetType, assetId: state.user[assetType]?.id },
     })
       .then(() => {
-        setProfileImageData({
-          id: '',
-          data: '',
-        });
+        assetType === 'cover_image' && setCoverImageData({ id: '', data: '' });
+        assetType === 'profile_image' &&
+          setProfileImageData({ id: '', data: '' });
         dispatch({
           type: actions.USER_DATA,
           payload: {
             ...state,
             user: {
               ...state.user,
-              profile_image: {
-                id: '',
-                url: '',
-              },
-            },
-          },
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  function deleteCoverImage(): void {
-    fetchAPI({
-      method: 'delete',
-      url: `/api/v1/users/account/assets`,
-      data: { image: state.user.cover_image?.id },
-    })
-      .then(() => {
-        setCoverImageData({
-          id: '',
-          data: '',
-        });
-        dispatch({
-          type: actions.USER_DATA,
-          payload: {
-            ...state,
-            user: {
-              ...state.user,
-              cover_image: {
-                id: '',
-                url: '',
-              },
+              [assetType]: { id: '', url: '' },
             },
           },
         });
@@ -508,7 +474,7 @@ export default function ProfileEditor(): JSX.Element {
                     <button
                       title='Apagar imagem de capa'
                       className='clear-image'
-                      onClick={deleteCoverImage}>
+                      onClick={() => deleteAsset('cover_image')}>
                       <IoTrashOutline />
                     </button>
                     <input
@@ -551,7 +517,7 @@ export default function ProfileEditor(): JSX.Element {
                     <button
                       title='Apagar imagem de perfil'
                       className='clear-image'
-                      onClick={deleteProfileImage}>
+                      onClick={() => deleteAsset('profile_image')}>
                       <IoTrashOutline />
                     </button>
                     <input

@@ -167,10 +167,6 @@ export const PurchaseContainer = styled.div`
             width: 100%;
             gap: 10px;
 
-            @media screen and (max-width: 465px) {
-              flex-direction: column;
-            }
-
             .form-element {
               display: flex;
               flex-direction: column;

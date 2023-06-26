@@ -215,19 +215,15 @@ export const initialState: State = {
     location: {
       country: '',
       state: '',
-      city: '',
       adress: '',
       zip_code: '',
     },
     payment: {
       type: 'm-pesa',
       data: {
+        ponto24_account: NaN,
         emola_account: NaN,
         mpesa_account: NaN,
-        card_holder_name: '',
-        cvc_code: NaN,
-        card_number: NaN,
-        expire_date: '',
       },
     },
   },

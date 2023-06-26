@@ -24,7 +24,7 @@ import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
 import { complements } from '@/data/app-data';
-import { InputEvents, Product } from '@/../@types';
+import { InputEvents } from '@/../@types';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
@@ -94,27 +94,23 @@ export default function ProductEditor(): JSX.Element {
     });
   }
 
-  function deleteImage(id: string, index?: string): void {
+  function deleteImage(id: string, index: string): void {
     if (!id) {
-      if (index) {
-        return setImagesData((data) => ({
-          ...data,
-          [index]: { id: '', data: '' },
-        }));
-      }
+      return setImagesData((data) => ({
+        ...data,
+        [index]: { id: '', data: '' },
+      }));
     }
     fetchAPI({
       method: 'delete',
       url: `/api/v1/users/product/assets`,
-      data: { image: id },
+      data: { type: index, assetId: id },
     })
       .then(() => {
-        if (index) {
-          setImagesData((data) => ({
-            ...data,
-            [index]: { id: '', data: '' },
-          }));
-        }
+        setImagesData((data) => ({
+          ...data,
+          [index]: { id: '', data: '' },
+        }));
         dispatch({
           type: actions.PRODUCT_DATA,
           payload: {
@@ -301,7 +297,7 @@ export default function ProductEditor(): JSX.Element {
           <section className='fetching-state'>
             <div>
               <DotLoader size={50} color={`rgb(${theme.primary})`} />
-            <p>Carregando os dados do produto</p>
+              <p>Carregando os dados do produto</p>
             </div>
           </section>
         )}

@@ -15,6 +15,7 @@ const ShareLinksStyles = css`
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    flex-flow: row wrap;
     gap: 10px;
 
     a {
@@ -171,7 +172,9 @@ export const PostContainer = styled.div`
       }
 
       p {
+        width: 100%;
         margin-bottom: 16px;
+        word-wrap: break-word;
       }
 
       h3,

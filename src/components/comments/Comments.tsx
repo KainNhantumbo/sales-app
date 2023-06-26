@@ -1,22 +1,22 @@
 import Link from 'next/link';
 import Comment from './Comment';
 import { AxiosResponse } from 'axios';
+import { useRouter } from 'next/router';
 import CommentForm from './CommentForm';
 import { actions } from '@/data/actions';
 import ReplyComment from './ReplyComment';
-import { IComment } from '../../../@types';
 import ReplyCommentForm from './ReplyCommentForm';
+import type { IComment } from '@/../@types/comments';
 import { useState, useEffect, useMemo } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
 import { CommentsContainer as Container } from '@/styles/modules/comments';
 
-export default function Comments({
-  contentId,
-}: {
-  contentId: string;
-}): JSX.Element {
+type TProps = { contentId: string };
+
+export default function Comments({ contentId }: TProps): JSX.Element {
+  const router = useRouter();
   const { state, dispatch, fetchAPI, deleteCommentPromptController } =
     useAppContext();
 
@@ -49,7 +49,7 @@ export default function Comments({
     return formattedComments[parentId];
   }
 
-  function clearCommentData() {
+  function clearCommentData(): void {
     setActiveModes({ edit: false, reply: false });
     dispatch({
       type: actions.CREATE_COMMENT,
@@ -67,7 +67,6 @@ export default function Comments({
           content: '',
           parent_id: '',
           favorites: [],
-          invalidated: false,
           updatedAt: '',
           createdAt: '',
         },
@@ -79,7 +78,9 @@ export default function Comments({
     try {
       const { data } = await fetchAPI({
         method: 'get',
-        url: `/api/v1/users/comments/${contentId}`,
+        url: `/api/v1/users/comments/${
+          router.query.productId || router.query.slug
+        }`,
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
@@ -125,7 +126,7 @@ export default function Comments({
     }
   }
 
-  async function handleUpdateComment(id: string) {
+  async function handleUpdateComment(id: string): Promise<void> {
     try {
       const { data }: AxiosResponse<IComment> = await fetchAPI({
         method: 'patch',
@@ -134,7 +135,6 @@ export default function Comments({
           ...state.comment,
         },
       });
-
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
         payload: {
@@ -159,7 +159,7 @@ export default function Comments({
     }
   }
 
-  async function handleDeleteComment(id: string) {
+  async function handleDeleteComment(id: string): Promise<void> {
     clearCommentData();
     try {
       await fetchAPI({ method: 'delete', url: `/api/v1/users/comments/${id}` });
@@ -201,7 +201,7 @@ export default function Comments({
     });
   }
 
-  async function handleFavoriteComment(id: string) {
+  async function handleFavoriteComment(id: string): Promise<void> {
     try {
       const { data } = await fetchAPI({
         method: 'post',
@@ -223,7 +223,7 @@ export default function Comments({
     }
   }
 
-  async function handleUnFavoriteComment(id: string) {
+  async function handleUnFavoriteComment(id: string): Promise<void> {
     try {
       const { data } = await fetchAPI({
         method: 'patch',
@@ -245,7 +245,7 @@ export default function Comments({
     }
   }
 
-  async function handleSendReplyComment(id: string | null): Promise<void> {
+  async function handleSendReplyComment(): Promise<void> {
     setLoading({ status: true, key: 'create-comment' });
     try {
       await fetchAPI({
@@ -272,14 +272,23 @@ export default function Comments({
   }
 
   useEffect(() => {
-    if (contentId) {
-      getComments();
-    }
     return () => {
       setActiveModes({ reply: false, edit: false });
       clearCommentData();
     };
   }, []);
+
+  useEffect(() => {
+    const deferTimmer = setTimeout(() => {
+      const q = router.query;
+      if (q.productId || q.slug) {
+        getComments();
+      }
+    }, 500);
+    return () => {
+      clearTimeout(deferTimmer);
+    };
+  }, [router.query]);
 
   useEffect(() => {
     const desc = setTimeout(() => {
