@@ -1,6 +1,5 @@
 export const actions: { [x: string]: string } = {
   SEARCH: 'SEARCH',
-  APP_STATUS: 'APP_STATUS',
   LOGIN_PROMPT: 'LOGIN_PROMPT',
   LOGOUT_PROMPT: 'LOGOUT_PROMPT',
   CREATE_DENOUNCE: 'CREATE_DENOUNCE',

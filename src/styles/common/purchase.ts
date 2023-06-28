@@ -147,7 +147,6 @@ export const PurchaseContainer = styled.div`
           left: calc(50% - 110px);
         }
 
-        .credit-card,
         .paypal {
           height: 50px;
           width: 150px;
@@ -158,9 +157,7 @@ export const PurchaseContainer = styled.div`
       .payment-method-inputs {
         padding: 20px 0;
         border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
-        .m-pesa,
-        .e-mola,
-        .credit-card {
+        .m-pesa {
           .form-section {
             display: flex;
             flex-direction: row;

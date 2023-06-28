@@ -73,14 +73,6 @@ export type TSearchProducts = {
   promotion: boolean | undefined;
 };
 
-export type AppStatus = {
-  is_active: boolean;
-  icon: IconType;
-  err_message: string | undefined;
-  button_label: string | undefined;
-  action_function: (() => void) | undefined;
-};
-
 export type Theme = {
   primary: string;
   primary_variant: string;

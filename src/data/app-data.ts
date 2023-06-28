@@ -44,11 +44,8 @@ import Package from '../../package.json';
 import blurImageData from './blur-data-url-image.json';
 import { BiUser, BiUserCheck } from 'react-icons/bi';
 import authorPicture from '../../public/assets/author.jpg';
-import visa_logo from '../../public/trademarks/visa.png';
 import paypal_log from '../../public/trademarks/paypal.png';
-import emola_logo from '../../public/trademarks/emola logo.png';
 import mpesa_logo from '../../public/trademarks/mpesa logo.png';
-import ponto24_logo from '../../public/trademarks/ponto-24-logo.png';
 
 const blurDataUrlImage = blurImageData.data;
 
@@ -369,14 +366,7 @@ const states: Array<{ value: string; label: string }> = [
 
 const payment_options: TPaymentOptions = [
   { type: 'm-pesa', label: 'M-Pesa', image: mpesa_logo },
-  { type: 'e-mola', label: 'E-Mola', image: emola_logo },
-  { type: 'ponto-24', label: 'Conta Móvel', image: ponto24_logo },
   { type: 'paypal', label: 'Paypal', image: paypal_log },
-  {
-    type: 'credit-card',
-    label: 'Cartão de Crédito',
-    image: visa_logo,
-  },
 ];
 
 const formatSocialNetwork = (data: TSocialNetwork) => {

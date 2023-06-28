@@ -11,7 +11,7 @@ import Select from 'react-select';
 import { useEffect, useState } from 'react';
 import { actions } from '@/data/actions';
 import { BiSortAlt2 } from 'react-icons/bi';
-import { useTheme } from 'styled-components';
+import { DefaultTheme, useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
 import { renderReactSelectCSS } from '@/styles/select';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -20,7 +20,7 @@ import { SeachEngineContainer as Container } from '../styles/modules/search-engi
 import { useThemeContext } from '@/context/ThemeContext';
 
 export default function SearchEngine(): JSX.Element {
-  const theme = useTheme();
+  const theme: DefaultTheme = useTheme();
   const { state, dispatch } = useAppContext();
   const [innerWidth, setInnerWidth] = useState(0);
   const { slidePageUp } = useThemeContext();

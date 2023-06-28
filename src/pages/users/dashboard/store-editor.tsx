@@ -123,34 +123,32 @@ export default function StoreEditor(): JSX.Element {
       });
   }
 
-  function getStoreData(): void {
-    setLoading({ status: true, key: 'store-data' });
-    fetchAPI({
-      method: 'get',
-      url: `/api/v1/users/store`,
-    })
-      .then(({ data }) => {
-        dispatch({
-          type: actions.STORE_DATA,
-          payload: {
-            ...state,
-            store: { ...state.store, ...data },
-          },
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-        setError({
-          status: true,
-          msg:
-            error?.response?.data?.message ||
-            'Oops! Algo deu errado. Tente novamente.',
-          key: 'store-data',
-        });
-      })
-      .finally(() => {
-        setLoading({ status: false, key: 'store-data' });
+  async function getStoreData(): Promise<void> {
+    try {
+      setLoading({ status: true, key: 'store-data' });
+      const { data } = await fetchAPI({
+        method: 'get',
+        url: `/api/v1/users/store`,
       });
+      dispatch({
+        type: actions.STORE_DATA,
+        payload: {
+          ...state,
+          store: { ...state.store, ...data },
+        },
+      });
+    } catch (error: any) {
+      console.error(error);
+      setError({
+        status: true,
+        msg:
+          error?.response?.data?.message ||
+          'Oops! Algo deu errado. Tente novamente.',
+        key: 'store-data',
+      });
+    } finally {
+      setLoading({ status: false, key: 'store-data' });
+    }
   }
 
   async function handleSubmitUpdate(): Promise<void> {
@@ -196,7 +194,9 @@ export default function StoreEditor(): JSX.Element {
 
   useEffect((): (() => void) => {
     const fetch_data = setTimeout(() => {
-      getStoreData();
+      if (state.auth.storeId) {
+        getStoreData();
+      }
     }, 10);
     return () => clearTimeout(fetch_data);
   }, []);

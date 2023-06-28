@@ -1,5 +1,4 @@
 import {
-  AppStatus,
   IBlogPosts,
   IComment,
   ISignInData,
@@ -31,7 +30,6 @@ export type State = {
   isSearchActive: boolean;
   isSortActive: boolean;
   isFilterActive: boolean;
-  app_status: AppStatus;
   denounce: TDenounce;
   auth:TAuth;
   search: string;

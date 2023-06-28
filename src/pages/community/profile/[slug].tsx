@@ -7,6 +7,10 @@ import {
   IoPlanet,
   IoStorefront,
 } from 'react-icons/io5';
+import Image from 'next/image';
+import { BiUser } from 'react-icons/bi';
+import { motion } from 'framer-motion';
+import { formatDate } from '@/lib/utils';
 import { FaAd } from 'react-icons/fa';
 import Link from 'next/link';
 import { useEffect } from 'react';
@@ -16,18 +20,11 @@ import { TPublicUser } from '../../../../@types';
 import ErrorPage from '@/pages/error-page';
 import { complements, formatSocialNetwork } from '@/data/app-data';
 import { NextRouter, useRouter } from 'next/router';
-import { useAppContext } from '@/context/AppContext';
 import { ProfileContainer as Container } from '@/styles/common/community-user-profile';
-import Image from 'next/image';
-import { BiUser } from 'react-icons/bi';
-import { motion } from 'framer-motion';
-import moment from 'moment';
-import { formatDate } from '@/lib/utils';
 
 type TProps = { user: TPublicUser };
 
 export default function UserProfile({ user }: TProps): JSX.Element {
-  const { state } = useAppContext();
   const router: NextRouter = useRouter();
 
   if (!user) return <ErrorPage retryFn={() => router.reload()} />;
@@ -94,7 +91,7 @@ export default function UserProfile({ user }: TProps): JSX.Element {
                   />
                 )}
                 {!user.profile_image ||
-                  (!user.profile_image.url && (
+                  (!user.profile_image?.url && (
                     <BiUser className='no-image-icon' />
                   ))}
               </div>
@@ -128,7 +125,7 @@ export default function UserProfile({ user }: TProps): JSX.Element {
                   </div>
                 )}
               </div>
-              {/* 
+{/*               
               <motion.div
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.8 }}
@@ -137,9 +134,9 @@ export default function UserProfile({ user }: TProps): JSX.Element {
                     <IoStorefront />
                     <span>Visitar loja</span>
                   </Link>
-                </motion.div>
+                </motion.div> */}
               
-              */}
+             
             </section>
             <section className='description-container'>
               <p>
@@ -153,7 +150,7 @@ export default function UserProfile({ user }: TProps): JSX.Element {
                   Conta ativa desde <span>{formatDate(user.createdAt)}</span>
                 </i>
               </h5>
-              {user.location.country && user.location.state && (
+              {user.location?.country && user.location?.state && (
                 <h5>
                   <IoLocation />
                   <i>

@@ -31,13 +31,6 @@ export const initialState: State = {
     reson: '',
     content: '',
   },
-  app_status: {
-    icon: IoBag,
-    is_active: false,
-    button_label: '',
-    action_function: undefined,
-    err_message: undefined,
-  },
   auth: {
     id: '',
     name: '',
@@ -131,7 +124,7 @@ export const initialState: State = {
     terms_policy: '',
     delivery_policy: '',
     location: {
-      country: 'Mozambique',
+      country: 'Moçambique',
       state: 'Maputo',
       adress: '',
     },
@@ -258,8 +251,6 @@ export default function reducer(state: State, action: Action) {
         ...state,
         productsListQuery: action.payload.productsListQuery,
       };
-    case actions.APP_STATUS:
-      return { ...state, app_status: action.payload.app_status };
     case actions.LOGOUT_PROMPT:
       return { ...state, isLogoutPrompt: action.payload.isLogoutPrompt };
     case actions.LOGIN_PROMPT:
