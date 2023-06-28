@@ -84,6 +84,7 @@ export default function SignIn(): JSX.Element {
           width={1368}
           height={769}
           alt='background image'
+          priority={false}
         />
         <main>
           <article>

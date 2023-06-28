@@ -13,7 +13,7 @@ import {
 import moment from 'moment';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, lazy, Suspense } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import editorJsHtml from 'editorjs-html';
@@ -294,9 +294,8 @@ export default function Post({
               </div>
             </section>
           </article>
-          <Suspense>
-            <NewsLetter />
-          </Suspense>
+
+          <NewsLetter />
         </div>
       </Container>
     </Layout>
