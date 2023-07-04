@@ -18,7 +18,6 @@ import { formatCurrency } from '@/lib/utils';
 import { useTheme } from 'styled-components';
 import { complements } from '@/data/app-data';
 import { PulseLoader } from 'react-spinners';
-import AppStatus from '@/components/AppStatus';
 import { VscEmptyWindow } from 'react-icons/vsc';
 import { DefaultTheme } from 'styled-components';
 import { ProductsList } from '../../../../@types';
@@ -65,9 +64,9 @@ export default function Products(): JSX.Element {
     const { data }: AxiosResponse<ProductsList[]> = await fetchAPI({
       url: `/api/v1/users/products?offset=${
         LIMIT * pageParam
-      }&limit=${LIMIT}fields=name,price,quantity,promotion,category,favorites,createdAt,updatedAt${`&sort=${
+      }&limit=${LIMIT}fields=name,price,quantity,promotion,category,favorites,createdAt,updatedAt&sort=${
         state.productsListQuery.sort || 'updatedAt'
-      }`}${`&search=${state.productsListQuery.query || ''}`}`,
+      }&search=${state.productsListQuery.query || ''}`,
     });
     return { data, currentOffset: pageParam + 1 };
   }
@@ -145,12 +144,11 @@ export default function Products(): JSX.Element {
         <SearchBox />
         <SortBox />
         <ToolBox />
-        <AppStatus />
 
         <article>
           {!isFetching && isError && (
             <section className='error-message'>
-              <IoWarningOutline />
+              <IoWarningOutline className='icon' />
               <p>
                 {(error as any).response?.data?.message ??
                   'Erro ao carregar produtos'}
@@ -159,7 +157,7 @@ export default function Products(): JSX.Element {
                 onClick={() =>
                   refetch({ queryKey: ['private-store-products'] })
                 }>
-                <IoReload className='icon' />
+                <IoReload />
                 <span>Tentar novamente</span>
               </button>
             </section>

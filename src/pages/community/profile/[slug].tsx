@@ -90,10 +90,7 @@ export default function UserProfile({ user }: TProps): JSX.Element {
                     alt={`Imagem de perfil de ${user.first_name} ${user.last_name}`}
                   />
                 )}
-                {!user.profile_image ||
-                  (!user.profile_image?.url && (
-                    <BiUser className='no-image-icon' />
-                  ))}
+                {!user.profile_image && <BiUser className='no-image-icon' />}
               </div>
               <div className='details-container'>
                 <h3 className='author-name'>
@@ -125,7 +122,7 @@ export default function UserProfile({ user }: TProps): JSX.Element {
                   </div>
                 )}
               </div>
-{/*               
+              {/*               
               <motion.div
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.8 }}
@@ -135,8 +132,6 @@ export default function UserProfile({ user }: TProps): JSX.Element {
                     <span>Visitar loja</span>
                   </Link>
                 </motion.div> */}
-              
-             
             </section>
             <section className='description-container'>
               <p>

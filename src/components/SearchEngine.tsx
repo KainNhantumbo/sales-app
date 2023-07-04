@@ -70,14 +70,14 @@ export default function SearchEngine(): JSX.Element {
   }));
 
   const sortOptions = [
-    { value: '-createdAt', label: 'Adicionado Recentemente' },
-    { value: 'createdAt', label: 'Adicionado Antigamente' },
-    { value: 'name', label: 'Nome' },
-    { value: '-name', label: 'Nome (Invertido)' },
-    { value: 'category', label: 'Categoria' },
-    { value: '-category', label: 'Categoria (Invertido)' },
-    { value: '-price', label: 'Preço (Alto para Baixo)' },
-    { value: 'price', label: 'Preço (Baixo para Alto)' },
+    { value: 'createdAt', label: 'Adicionado Recentemente' },
+    { value: '-createdAt', label: 'Adicionado Antigamente' },
+    { value: '-name', label: 'Nome' },
+    { value: 'name', label: 'Nome (Invertido)' },
+    { value: '-category', label: 'Categoria' },
+    { value: 'category', label: 'Categoria (Invertido)' },
+    { value: 'price', label: 'Preço (Alto para Baixo)' },
+    { value: '-price', label: 'Preço (Baixo para Alto)' },
   ];
 
   const promotionOptions = [

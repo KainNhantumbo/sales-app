@@ -1,4 +1,3 @@
-import type {} from 'styled-components';
 import type { IconType } from 'react-icons';
 import type { StaticImageData } from 'next/image';
 import { OutputData } from '@editorjs/editorjs';
@@ -342,8 +341,6 @@ export type User = {
   bio?: string;
   cover_image: { id: string; url: string };
   profile_image: { id: string; url: string };
-  favorite_products_list: string[];
-  favorite_jobs_list: string[];
   professional_skills: string[];
   spoken_languages: string[];
   working_experience: {

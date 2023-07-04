@@ -1,7 +1,6 @@
 import { actions } from '@/data/actions';
 import type { State, Action } from '../../@types/reducer';
 import product_categories from '../data/product-categories.json';
-import { IoBag } from 'react-icons/io5';
 
 export const initialState: State = {
   isLogoutPrompt: false,
@@ -64,8 +63,6 @@ export const initialState: State = {
     bio: '',
     cover_image: { id: '', url: '' },
     profile_image: { id: '', url: '' },
-    favorite_products_list: [],
-    favorite_jobs_list: [],
     professional_skills: [],
     spoken_languages: [],
     working_experience: [
@@ -222,7 +219,7 @@ export const initialState: State = {
   },
 };
 
-export default function reducer(state: State, action: Action) {
+export function reducer(state: State, action: Action): State {
   switch (action.type) {
     case actions.SEARCH_BOX_CONTROL:
       return {
@@ -244,7 +241,6 @@ export default function reducer(state: State, action: Action) {
         isFilterActive: false,
         isSearchActive: false,
         isSortActive: false,
-        isPromptActive: false,
       };
     case actions.PRODUCTS_LIST_QUERY:
       return {

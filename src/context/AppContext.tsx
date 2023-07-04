@@ -4,7 +4,6 @@ import {
   createContext,
   Dispatch,
   useReducer,
-  useLayoutEffect, useInsertionEffect,
 } from 'react';
 import fetch from '../config/client';
 import ThemeContext from './ThemeContext';
@@ -13,11 +12,11 @@ import { actions } from '@/data/actions';
 import { NextRouter, useRouter } from 'next/router';
 import { Action, State } from '../../@types/reducer';
 import { AppContext, TAuth, TCart } from '../../@types/index';
-import reducer, { initialState } from '@/lib/reducer';
+import { reducer, initialState } from '@/lib/reducer';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
-const queryClient = new QueryClient({
+const queryClient: QueryClient = new QueryClient({
   defaultOptions: {
     queries: {
       networkMode: 'always',
@@ -62,6 +61,10 @@ const context = createContext<IContext>({
   deleteCommentPromptController: () => {},
   removeProductFromCart: () => {},
   updateCartProduct: () => {},
+  addProductToCart: () => {},
+  shareProductController: () => {},
+  loginPromptController: () => {},
+  userWorkingDataController: () => {},
   getCartProduct: () => ({
     productId: '',
     quantity: 1,
@@ -69,14 +72,10 @@ const context = createContext<IContext>({
     price: 0,
     previewImage: undefined,
   }),
-  addProductToCart: () => {},
-  shareProductController: () => {},
-  loginPromptController: () => {},
-  userWorkingDataController: () => {},
 });
 
-export default function AppContext(props: AppContext) {
-  const CART_KEY = 'cart-items';
+export default function AppContext(props: AppContext): JSX.Element {
+  const CART_KEY: string = 'cart-items';
   const router: NextRouter = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -209,6 +208,7 @@ export default function AppContext(props: AppContext) {
         ],
       },
     });
+    syncCartToLocalStorage();
   }
 
   function removeProductFromCart(currentProductId: string): void {
@@ -226,6 +226,7 @@ export default function AppContext(props: AppContext) {
               ],
       },
     });
+    syncCartToLocalStorage();
   }
 
   function addProductToCart(props: TCart): void {
@@ -236,6 +237,7 @@ export default function AppContext(props: AppContext) {
         cart: [...state.cart, { ...props }],
       },
     });
+    syncCartToLocalStorage();
   }
 
   function syncCartToLocalStorage(): void {
@@ -253,10 +255,6 @@ export default function AppContext(props: AppContext) {
   }
 
   useEffect(() => {
-    syncCartToLocalStorage();
-  }, [state.cart]);
-
-  useInsertionEffect(() => {
     restoreCartFromLocalStorage();
   }, []);
 
@@ -276,20 +274,11 @@ export default function AppContext(props: AppContext) {
         },
       });
     } catch (err: any) {
-      dispatch({
-        type: actions.USER_AUTH,
-        payload: {
-          ...state,
-          auth: { ...state.auth },
-        },
-      });
       console.error(err);
     }
   }
 
-  function fetchAPI<U extends AxiosRequestConfig>(
-    config: U
-  ): Promise<AxiosResponse<any, any>> {
+  function fetchAPI(config: AxiosRequestConfig): Promise<AxiosResponse> {
     fetch.interceptors.response.use(
       undefined,
       (err: AxiosError): Promise<never> => {

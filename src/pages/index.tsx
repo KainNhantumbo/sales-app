@@ -79,12 +79,9 @@ export default function Home(): JSX.Element {
         payload: {
           ...state,
           publicProducts: [
-            ...state.publicProducts.map((product) => {
-              if (product._id === id) {
-                return { ...product, favorites: data };
-              }
-              return product;
-            }),
+            ...state.publicProducts.map((product) =>
+              product._id === id ? { ...product, favorites: data } : product
+            ),
           ],
         },
       });

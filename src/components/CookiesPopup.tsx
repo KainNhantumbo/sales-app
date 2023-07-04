@@ -14,8 +14,7 @@ export default function CookiesPopup(): JSX.Element {
     localStorage.setItem('privacy_advisor', JSON.stringify('false'));
   };
 
-  useEffect(() => {
-    // advisor management
+  useEffect((): void => {
     const advisorState = JSON.parse(
       localStorage.getItem('privacy_advisor') || 'false'
     );

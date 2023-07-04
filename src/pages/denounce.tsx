@@ -34,7 +34,7 @@ export default function Denounce(): JSX.Element {
         data: {
           content: state.denounce.content,
           report_type: state.denounce.reson,
-          resource_type: type || 'Generic Denounce',
+          resource_type: type || 'generic',
           resource_url: url || '',
           resource_id: id || '',
         },

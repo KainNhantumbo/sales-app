@@ -78,16 +78,11 @@ export default function Comments({ contentId }: TProps): JSX.Element {
     try {
       const { data } = await fetchAPI({
         method: 'get',
-        url: `/api/v1/users/comments/${
-          router.query.productId || router.query.slug
-        }`,
+        url: `/api/v1/users/comments/${contentId}`,
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
-        payload: {
-          ...state,
-          commentsList: [...data],
-        },
+        payload: { ...state, commentsList: [...data] },
       });
     } catch (error) {
       console.error(error);
@@ -281,14 +276,14 @@ export default function Comments({ contentId }: TProps): JSX.Element {
   useEffect(() => {
     const deferTimmer = setTimeout(() => {
       const q = router.query;
-      if (q.productId || q.slug) {
+      if (q.productId || contentId) {
         getComments();
       }
     }, 500);
     return () => {
       clearTimeout(deferTimmer);
     };
-  }, [router.query]);
+  }, [router.query, router.asPath, router.route, contentId]);
 
   useEffect(() => {
     const desc = setTimeout(() => {

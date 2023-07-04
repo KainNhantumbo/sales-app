@@ -51,7 +51,8 @@ export const BaseButton = css`
   :disabled {
     box-shadow: none;
     background: rgba(${({ theme }) => theme.primary}, 0.4);
-    span {
+    span,
+    svg {
       color: rgb(${({ theme }) => theme.foreground});
     }
   }
@@ -200,5 +201,57 @@ export const StyledInputs = css`
 
   textarea {
     resize: vertical;
+  }
+`;
+
+export const statsContainerStyles = css`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-content: center;
+  place-items: center;
+  margin: 0 auto;
+  margin-top: 12px;
+
+  .fetch-error-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 20px 0;
+    color: rgb(${({ theme }) => theme.alert});
+    font-weight: 500;
+    font-size: 1.1rem;
+    line-height: 1.4rem;
+    align-self: flex-end;
+    padding-top: 3500px;
+
+    button {
+      ${BaseButton}
+    }
+  }
+  p {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.6rem;
+    color: rgb(${({ theme }) => theme.primary_variant});
+  }
+
+  .loading {
+    width: 100%;
+    height: 100%;
+    align-self: flex-end;
+    display: flex;
+
+    flex-direction: row;
+    align-items: center;
+    font-weight: 500;
+    font-size: 1.1rem;
+    gap: 10px;
+    padding: 20px;
+    margin: 0 auto;
+
+    color: rgb(${({ theme }) => theme.primary_variant});
   }
 `;

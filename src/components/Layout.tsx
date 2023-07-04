@@ -9,6 +9,7 @@ import { NextRouter, Router, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import RequestLogin from './modals/RequestLogin';
 import PushNotification from './PageLoader';
+import CookiesPopup from '@/components/CookiesPopup';
 
 interface IProps {
   children: ReactNode;
@@ -16,20 +17,20 @@ interface IProps {
 }
 
 export default function Layout({ children, metadata }: IProps) {
-  const router: NextRouter = useRouter();
   const { state } = useAppContext();
+  const router: NextRouter = useRouter();
 
   useEffect(() => {
-    const isUserAuthenticated = setTimeout(() => {
+    const isAuthenticated = setTimeout(() => {
       if (router.asPath.includes('dashboard') && !state.auth.id) {
         router.push('/auth/sign-in');
       }
-    }, 5000);
-    return () => clearTimeout(isUserAuthenticated);
+    }, 500);
+    return () => clearTimeout(isAuthenticated);
   }, [state.auth]);
 
+  // -------Used for page transition----------
   const [loadingPage, setLoadingPage] = useState(false);
-  // Used for page transition
   const startPageTransition = () => {
     setLoadingPage(true);
   };
@@ -55,6 +56,7 @@ export default function Layout({ children, metadata }: IProps) {
         <LogoutPrompt />
         <RequestLogin />
         <Cart />
+        <CookiesPopup/>
         <PushNotification isActive={loadingPage} />
         {children}
       </main>

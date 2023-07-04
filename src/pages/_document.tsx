@@ -20,10 +20,6 @@ export default function Document(): JSX.Element {
           rel='stylesheet'
         />
         <link
-          href='https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400;1,500&display=swap'
-          rel='stylesheet'
-        />
-        <link
           href='https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500&display=swap'
           rel='stylesheet'
         />
