@@ -55,7 +55,6 @@ import user_skills from '../../../data/professional-skills.json';
 import DeleteAccountPrompt from '../../../components/modals/DeleteAccountPrompt';
 import { complements } from '@/data/app-data';
 import Image from 'next/image';
-import { json } from 'stream/consumers';
 
 export default function ProfileEditor(): JSX.Element {
   const theme = useTheme();
@@ -233,26 +232,34 @@ export default function ProfileEditor(): JSX.Element {
 
     try {
       setLoading({ status: true, key: 'user-update' });
+      const {
+        updatedAt,
+        _id,
+        createdAt,
+        cover_image,
+        profile_image,
+        social_network,
+        ...user
+      } = state.user;
+
+      const serializedObj = Object.entries(social_network)
+        .map(([key, value]) => {
+          if (value) return { [key]: value };
+          return undefined;
+        })
+        .reduce((acc, value) => ({ ...acc, ...value }), {});
+
       const { data } = await fetchAPI({
         method: 'patch',
         url: `/api/v1/users/account`,
         data: {
-          first_name: state.user.first_name,
-          last_name: state.user.last_name,
-          main_phone_number: state.user.main_phone_number,
-          alternative_phone_number: state.user.alternative_phone_number,
-          gender: state.user.gender,
-          birth_date: state.user.birth_date,
-          bio: state.user.bio,
-          professional_skills: state.user.professional_skills,
-          spoken_languages: state.user.spoken_languages,
-          location: state.user.location,
-          social_network: state.user.social_network,
-          working_experience: state.user.working_experience,
+          ...user,
           coverImageData,
           profileImageData,
+          social_network: serializedObj,
         },
       });
+      
       dispatch({
         type: actions.USER_DATA,
         payload: {
@@ -1027,6 +1034,7 @@ export default function ProfileEditor(): JSX.Element {
                           placeholder='Contacto do Whatsapp'
                           aria-label='Whatsapp'
                           value={state.user.social_network?.whatsapp}
+                          autoComplete='off'
                           onChange={(e): void => {
                             dispatch({
                               type: actions.USER_DATA,
@@ -1053,6 +1061,7 @@ export default function ProfileEditor(): JSX.Element {
                           type='url'
                           id='facebook'
                           placeholder='Link do perfil de facebook'
+                          autoComplete='off'
                           aria-label='facebook'
                           value={state.user.social_network?.facebook}
                           onChange={(e): void => {
@@ -1082,6 +1091,7 @@ export default function ProfileEditor(): JSX.Element {
                         </label>
                         <input
                           type='url'
+                          autoComplete='off'
                           id='website'
                           placeholder='Link do website ou blog'
                           aria-label='website'
@@ -1111,6 +1121,7 @@ export default function ProfileEditor(): JSX.Element {
                         <input
                           type='url'
                           id='instagram'
+                          autoComplete='off'
                           placeholder='Link do perfil do instagram'
                           aria-label='instagram'
                           value={state.user.social_network?.instagram}
@@ -1143,6 +1154,7 @@ export default function ProfileEditor(): JSX.Element {
                           type='text'
                           id='linkedin'
                           placeholder='Link do perfil do linkedin'
+                          autoComplete='off'
                           aria-label='linkedin'
                           value={state.user.social_network?.linkedin}
                           onChange={(e): void => {
@@ -1192,6 +1204,7 @@ export default function ProfileEditor(): JSX.Element {
                           name='password'
                           minLength={8}
                           aria-hidden='true'
+                          autoComplete='off'
                           placeholder='Escreva a sua nova senha'
                           aria-label='Escreva a sua nova senha'
                           onChange={(e): void => handlePasswordsChange(e)}
@@ -1207,6 +1220,7 @@ export default function ProfileEditor(): JSX.Element {
                           id='confirm_password'
                           name='confirm_password'
                           aria-hidden='true'
+                          autoComplete='off'
                           minLength={8}
                           placeholder='Confirme a sua senha'
                           aria-label='Confirme a sua senha'

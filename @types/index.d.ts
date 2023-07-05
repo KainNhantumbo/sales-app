@@ -112,16 +112,24 @@ declare module 'styled-components' {
 }
 
 // --------------client data--------------------------
-export type UserPost = {
-  _id: string;
+export type TStory = {
   title: string;
   content: string;
-  created_by: string;
-  profile_image: { id: string; url: string };
+  cover_image: { id: string; url: string } | undefined;
   allow_comments: boolean;
-  updatedAt: string;
-  createdAt: string;
-};
+}
+
+export interface IPublicStory extends TStory {
+  _id: string;
+  created_by: {
+    _id: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    profile_image: {id: string, url: string}
+  };
+  favorites: string[];
+}
 
 export type PostListProps = {
   offset?: number;
@@ -143,7 +151,7 @@ export interface ISignUp {
   confirm_password: string;
 }
 
-// --------------server data--------------------------
+// ------------server data------------
 export type ChatType = Array<{
   _id: string;
   sender: string;
@@ -276,12 +284,17 @@ export type TPublicStore = {
   updatedAt: string;
 };
 
-export type Store = {
+export type TStore = {
   _id: string;
   name: string;
   active: boolean;
-  plan: { type: string; issued_date: string; exp_date: string };
-  verified_store: boolean;
+  description: string;
+  slogan?: string;
+  category: string;
+  cover_image?: { id: string; url: string };
+  privacy_policy?: string;
+  terms_policy?: string;
+  delivery_policy?: string;
   created_by: {
     profile_image: string;
     first_name: string;
@@ -297,13 +310,6 @@ export type Store = {
       linkedin: string;
     };
   };
-  description: string;
-  slogan?: string;
-  category: string;
-  cover_image?: { id: string; url: string };
-  privacy_policy?: string;
-  terms_policy?: string;
-  delivery_policy?: string;
   location: {
     country: string;
     state: string;
@@ -313,7 +319,7 @@ export type Store = {
   updatedAt: string;
 };
 
-export type Job = {
+export type TJob = {
   _id: string;
   title: string;
   description: string;

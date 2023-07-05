@@ -21,6 +21,7 @@ import ErrorPage from '@/pages/error-page';
 import { complements, formatSocialNetwork } from '@/data/app-data';
 import { NextRouter, useRouter } from 'next/router';
 import { ProfileContainer as Container } from '@/styles/common/community-user-profile';
+import Story from '@/components/modals/StoryModal';
 
 type TProps = { user: TPublicUser };
 
@@ -47,6 +48,9 @@ export default function UserProfile({ user }: TProps): JSX.Element {
         updatedAt: user.createdAt,
       }}>
       <Container>
+        {/* Story modal */}
+        <Story />
+
         <div className='wrapper-container'>
           <aside>
             <section className='no-ads'>

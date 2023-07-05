@@ -1,4 +1,4 @@
-export const actions: { [x: string]: string } = {
+export const actions = {
   SEARCH: 'SEARCH',
   LOGIN_PROMPT: 'LOGIN_PROMPT',
   LOGOUT_PROMPT: 'LOGOUT_PROMPT',
@@ -33,4 +33,7 @@ export const actions: { [x: string]: string } = {
   PUBLIC_PRODUCT_DATA: 'PUBLIC_PRODUCT_DATA',
   PRODUCTS_CART: 'PRODUCTS_CART',
   CART_MODAL: 'CART_MODAL',
+  USER_STORY: 'USER_STORY',
+  STORY_MODAL: 'STORY_MODAL',
+  PUBLIC_USER_STORIES: 'PUBLIC_USER_STORIES',
 };

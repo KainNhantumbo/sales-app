@@ -38,16 +38,12 @@ export default function CookiesPopup(): JSX.Element {
             animate={{
               opacity: 1,
               y: 0,
-              transition: {
-                duration: 1.2
-              }
+              transition: { duration: 1.2 },
             }}
             exit={{
               opacity: 0,
               y: 500,
-              transition: {
-                duration: 1.2
-              }
+              transition: { duration: 1.2 },
             }}
             className='advisor'>
             <div>

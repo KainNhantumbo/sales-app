@@ -96,8 +96,6 @@ export const initialState: State = {
     _id: '',
     name: '',
     active: false,
-    plan: { type: '', issued_date: '', exp_date: '' },
-    verified_store: false,
     created_by: {
       profile_image: '',
       first_name: '',
@@ -217,6 +215,14 @@ export const initialState: State = {
       },
     },
   },
+  story: {
+    title: '',
+    content: '',
+    allow_comments: true,
+    cover_image: { id: '', url: '' },
+  },
+  publicStories: [],
+  storyModal: { storyId: '', isActive: false },
 };
 
 export function reducer(state: State, action: Action): State {
@@ -366,6 +372,12 @@ export function reducer(state: State, action: Action): State {
       return { ...state, isCartModal: action.payload.isCartModal };
     case actions.PURCHASE_CHECKOUT_DATA:
       return { ...state, checkout: action.payload.checkout };
+    case actions.PUBLIC_USER_STORIES:
+      return { ...state, publicStories: action.payload.publicStories };
+    case actions.USER_STORY:
+      return { ...state, story: action.payload.story };
+    case actions.STORY_MODAL:
+      return { ...state, storyModal: action.payload.storyModal };
     default:
       return { ...state };
   }

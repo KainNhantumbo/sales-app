@@ -1,18 +1,20 @@
 import {
   IBlogPosts,
   IComment,
+  IPublicStory,
   ISignInData,
   ISignUp,
   Product,
   ProductsList,
   PublicProducts,
-  Store,
+  TStore,
   TAuth,
   TCart,
   TDenounce,
   TPublicProduct,
   TPurchaseCheckOut,
   TSearchProducts,
+  TStory,
   User,
 } from './index';
 
@@ -31,13 +33,13 @@ export type State = {
   isSortActive: boolean;
   isFilterActive: boolean;
   denounce: TDenounce;
-  auth:TAuth;
+  auth: TAuth;
   search: string;
   newSubscriptorValue: { subscriptor: string };
   signupData: ISignUp;
   signInData: ISignInData;
   user: User;
-  store: Store;
+  store: TStore;
   product: Product;
   publicProduct: TPublicProduct;
   productList: ProductsList[];
@@ -50,6 +52,9 @@ export type State = {
   isPublicProductsFilters: boolean;
   cart: TCart[];
   checkout: TPurchaseCheckOut;
+  story: TStory;
+  storyModal: { storyId: string | undefined; isActive: boolean };
+  publicStories: IPublicStory[];
 };
 
 export type Action = { type: string; payload: State };

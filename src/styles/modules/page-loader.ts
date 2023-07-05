@@ -1,17 +1,11 @@
 import styled from 'styled-components';
 
-export const PushNotificationContainer = styled.section`
-  position: fixed;
-  z-index: 15000;
-  display: flex;
-  justify-content: flex-end;
+export const PageLoaderContainer = styled.section`
   width: 100%;
-  height: 100%;
   position: fixed;
   right: 0;
   bottom: 0;
-  background: rgba(${({ theme }) => theme.background}, 0.1);
-  backdrop-filter: blur(2px);
+  z-index: 12000;
 
   .dialog-prompt {
     display: flex;
@@ -23,8 +17,8 @@ export const PushNotificationContainer = styled.section`
     border-radius: 12px;
     backdrop-filter: blur(10px);
     position: fixed;
-    top: calc(50% - 20px);
-    right: calc(50% - 120px);
+    bottom: calc(40px);
+    right: calc(20px);
     user-select: none;
     background: rgba(${({ theme }) => theme.foreground}, 0.8);
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);

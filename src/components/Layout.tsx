@@ -2,13 +2,13 @@ import Metadata from './Head';
 import Header from './Header';
 import Footer from './Footer';
 import Cart from './modals/Cart';
+import PageLoader from './PageLoader';
+import { ReactNode, useEffect } from 'react';
 import { HeadProps } from '../../@types/index';
 import LogoutPrompt from './modals/LogoutPrompt';
-import { ReactNode, useEffect, useState } from 'react';
-import { NextRouter, Router, useRouter } from 'next/router';
-import { useAppContext } from '@/context/AppContext';
 import RequestLogin from './modals/RequestLogin';
-import PushNotification from './PageLoader';
+import { NextRouter, useRouter } from 'next/router';
+import { useAppContext } from '@/context/AppContext';
 import CookiesPopup from '@/components/CookiesPopup';
 
 interface IProps {
@@ -29,25 +29,6 @@ export default function Layout({ children, metadata }: IProps) {
     return () => clearTimeout(isAuthenticated);
   }, [state.auth]);
 
-  // -------Used for page transition----------
-  const [loadingPage, setLoadingPage] = useState(false);
-  const startPageTransition = () => {
-    setLoadingPage(true);
-  };
-  const endPageTransition = () => {
-    setLoadingPage(false);
-  };
-  useEffect(() => {
-    Router.events.on('routeChangeStart', startPageTransition);
-    Router.events.on('routeChangeComplete', endPageTransition);
-    Router.events.on('routeChangeError', endPageTransition);
-    return () => {
-      Router.events.off('routeChangeStart', startPageTransition);
-      Router.events.off('routeChangeComplete', endPageTransition);
-      Router.events.off('routeChangeError', endPageTransition);
-    };
-  }, []);
-
   return (
     <>
       <Metadata {...metadata} />
@@ -56,8 +37,8 @@ export default function Layout({ children, metadata }: IProps) {
         <LogoutPrompt />
         <RequestLogin />
         <Cart />
-        <CookiesPopup/>
-        <PushNotification isActive={loadingPage} />
+        <CookiesPopup />
+        <PageLoader />
         {children}
       </main>
       <Footer />
