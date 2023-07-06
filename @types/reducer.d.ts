@@ -25,6 +25,7 @@ export type State = {
   isDeactivateStorePrompt: boolean;
   isDeleteProductPrompt: { status: boolean; productId: string };
   isDeleteCommentPrompt: { status: boolean; commentId: string };
+  isDeleteStoryPrompt: { status: boolean; storyId: string };
   isShareProductModal: boolean;
   isUserWorkingDataModal: boolean;
   isCartModal: boolean;

@@ -3,7 +3,6 @@ import {
   IoBalloonOutline,
   IoBriefcase,
   IoCreateOutline,
-  IoLeafOutline,
   IoLocation,
   IoLockClosed,
   IoOpenOutline,
@@ -11,26 +10,24 @@ import {
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect} from 'react';
+import fetch from '@/config/client';
 import { FaAd } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { BiUser } from 'react-icons/bi';
 import { formatDate } from '@/lib/utils';
 import Layout from '@/components/Layout';
-import { actions } from '@/data/actions';
-import fetch from '../../../config/client';
 import ErrorPage from '@/pages/error-page';
-import { useEffect, useState } from 'react';
-import { useAppContext } from '@/context/AppContext';
-import { IPublicStory, TPublicUser } from '@/../@types';
+import { TPublicUser } from '@/../@types';
 import { NextRouter, useRouter } from 'next/router';
 import { complements, formatSocialNetwork } from '@/data/app-data';
+import StoriesRenderer from '@/components/StoriesRenderer';
 import { ProfileContainer as Container } from '@/styles/common/community-user-profile';
 
 type TProps = { user: TPublicUser };
 
 export default function UserProfile({ user }: TProps): JSX.Element {
   const router: NextRouter = useRouter();
-  const { state, dispatch } = useAppContext();
 
   if (!user)
     return (
@@ -40,26 +37,8 @@ export default function UserProfile({ user }: TProps): JSX.Element {
       />
     );
 
-  async function getStories(): Promise<void> {
-    try {
-      const { data } = await fetch<IPublicStory[]>({
-        method: 'get',
-        url: `/api/v1/users/stories?userid=${user._id}`,
-      });
-      console.log(data);
-      dispatch({
-        type: actions.PUBLIC_USER_STORIES,
-        payload: { ...state, publicStories: [...data] },
-      });
-    } catch (error: any) {
-      console.error(error.response?.data?.message || error);
-    } finally {
-    }
-  }
-
   useEffect(() => {
     console.info(user);
-    getStories();
   }, []);
 
   return (
@@ -111,7 +90,7 @@ export default function UserProfile({ user }: TProps): JSX.Element {
                 <div className='profile-image-container'>
                   {user.profile_image && user.profile_image.url && (
                     <Image
-                      width={620}
+                      width={220}
                       height={220}
                       className='profile-image'
                       src={user.profile_image.url}
@@ -226,36 +205,8 @@ export default function UserProfile({ user }: TProps): JSX.Element {
                   </div>
                 )}
             </section>
-            <section className='stories-data-container'>
-              <section className='stories-container'>
-                {state.publicStories.length > 0 &&
-                  state.publicStories.filter(
-                    (story) => story.created_by._id === user._id
-                  ).length > 0 &&
-                  state.publicStories
-                    .filter((story) => story.created_by._id === user._id)
-                    .map((story) => (
-                      <div
-                        key={String(story._id)}
-                        className='story-container'></div>
-                    ))}
-              </section>
-
-              {state.publicStories.length < 1 &&
-                state.publicStories.filter(
-                  (story) => story.created_by._id === user._id
-                ).length < 1 && (
-                  <div className='empty-data_container'>
-                    <section className='content'>
-                      <IoLeafOutline />
-                      <h3>
-                        <span>Nenhuma história para mostrar</span>
-                      </h3>
-                      <p>Crie algumas histórias para começar.</p>
-                    </section>
-                  </div>
-                )}
-            </section>
+            {/* user stories */}
+            <StoriesRenderer userId={user._id} />
           </article>
         </div>
       </Container>

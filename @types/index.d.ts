@@ -126,7 +126,7 @@ export interface IPublicStory extends TStory {
     first_name: string;
     last_name: string;
     email: string;
-    profile_image: { id: string; url: string };
+    profile_image: { id: string; url: string } | undefined;
   };
   favorites: string[];
   createdAt: string;

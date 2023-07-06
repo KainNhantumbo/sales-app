@@ -20,6 +20,7 @@ export const initialState: State = {
   productsListQuery: { query: '', sort: '' },
   isDeleteAccountPrompt: false,
   isDeactivateStorePrompt: false,
+  isDeleteStoryPrompt: { status: false, storyId: '' },
   isDeleteCommentPrompt: { status: false, commentId: '' },
   isDeleteProductPrompt: { status: false, productId: '' },
   isShareProductModal: false,
@@ -280,6 +281,11 @@ export function reducer(state: State, action: Action): State {
       return {
         ...state,
         isDeleteCommentPrompt: action.payload.isDeleteCommentPrompt,
+      };
+    case actions.DELETE_STORY_PROMPT:
+      return {
+        ...state,
+        isDeleteStoryPrompt: action.payload.isDeleteStoryPrompt,
       };
     case actions.USER_WORKING_DATA_MODAL:
       return {

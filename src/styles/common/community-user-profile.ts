@@ -239,46 +239,6 @@ export const ProfileContainer = styled.div`
         }
       }
     }
-
-    .stories-data-container {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      padding: 0 20px;
-      padding-bottom: 20px;
-
-      .empty-data_container {
-        width: 100%;
-        min-height: 200px;
-        display: grid;
-        place-content: center;
-        user-select: none;
-
-        .content {
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          line-height: 1.6rem;
-          padding: 50px 30px;
-
-          svg {
-            width: 70px;
-            height: 70px;
-            color: rgb(${({ theme }) => theme.primary_variant});
-          }
-
-          h3 {
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-top: 20px;
-          }
-        }
-      }
-    }
   }
 
   aside {

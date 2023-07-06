@@ -29,6 +29,7 @@ interface IContext {
   dispatch: Dispatch<Action>;
   logoutPromptController: () => void;
   deleteCommentPromptController: (status: boolean, id: string) => void;
+  deleteStoryPromptController: (status: boolean, id: string) => void;
   deleteProductPromptController: (status: boolean, id: string) => void;
   shareProductController: () => void;
   loginPromptController: () => void;
@@ -59,6 +60,7 @@ const context = createContext<IContext>({
   deactivateStorePromptController: () => {},
   deleteProductPromptController: () => {},
   deleteCommentPromptController: () => {},
+  deleteStoryPromptController: () => {},
   removeProductFromCart: () => {},
   updateCartProduct: () => {},
   addProductToCart: () => {},
@@ -148,6 +150,16 @@ export default function AppContext(props: AppContext): JSX.Element {
       payload: {
         ...state,
         isDeleteCommentPrompt: { status, commentId: id ?? '' },
+      },
+    });
+  }
+
+  function deleteStoryPromptController(status: boolean, id?: string): void {
+    dispatch({
+      type: actions.DELETE_STORY_PROMPT,
+      payload: {
+        ...state,
+        isDeleteStoryPrompt: { status, storyId: id ?? '' },
       },
     });
   }
@@ -374,6 +386,7 @@ export default function AppContext(props: AppContext): JSX.Element {
             deleteProductPromptController,
             deleteAccountPromptController,
             deactivateStorePromptController,
+            deleteStoryPromptController,
             shareProductController,
             addProductToCart,
             removeProductFromCart,

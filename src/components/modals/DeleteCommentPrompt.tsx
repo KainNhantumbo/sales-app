@@ -6,6 +6,7 @@ import { useAppContext } from '@/context/AppContext';
 type Props = {
   deleteFn: any;
 };
+
 export default function DeleteCommentPrompt(props: Props): JSX.Element {
   const { state, deleteCommentPromptController } = useAppContext();
   return (

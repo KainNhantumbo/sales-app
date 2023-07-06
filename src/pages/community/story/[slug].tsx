@@ -1,30 +1,29 @@
 import {
   IoAdd,
-  IoCheckmark,
-  IoClose,
   IoDownloadOutline,
   IoEllipsisHorizontal,
   IoHeart,
   IoPushOutline,
   IoTrashOutline,
 } from 'react-icons/io5';
-import { BsChatSquareTextFill } from 'react-icons/bs';
+import Link from 'next/link';
 import Image from 'next/image';
 import fetch from '@/config/client';
-import { useEffect, useState } from 'react';
-import { IPublicStory, TStory } from '@/../@types';
+import { FaAd } from 'react-icons/fa';
+import Compressor from 'compressorjs';
 import { AxiosResponse } from 'axios';
 import { actions } from '@/data/actions';
-import { useAppContext } from '@/context/AppContext';
-import { motion, AnimatePresence } from 'framer-motion';
-import { GetServerSidePropsContext } from 'next';
-import { StoryContainer as Container } from '@/styles/modules/story';
+import { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
-import { complements } from '@/data/app-data';
-import Link from 'next/link';
-import { FaAd } from 'react-icons/fa';
 import { PulseLoader } from 'react-spinners';
+import { complements } from '@/data/app-data';
+import { GetServerSidePropsContext } from 'next';
+import { IPublicStory, TStory } from '@/../@types';
+import { NextRouter, useRouter } from 'next/router';
+import { useAppContext } from '@/context/AppContext';
+import { BsChatSquareTextFill } from 'react-icons/bs';
 import { DefaultTheme, useTheme } from 'styled-components';
+import { StoryContainer as Container } from '@/styles/modules/story';
 
 interface IProps {
   story: IPublicStory | undefined;
@@ -32,6 +31,7 @@ interface IProps {
 
 export default function Story(props: IProps): JSX.Element {
   const theme: DefaultTheme = useTheme();
+  const router: NextRouter = useRouter();
   const { state, dispatch, fetchAPI } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<{
@@ -111,7 +111,7 @@ export default function Story(props: IProps): JSX.Element {
       await fetchAPI({
         method: 'post',
         url: `/api/v1/users/stories`,
-        data: { ...state.story },
+        data: { ...state.story, coverImageData },
       });
       dispatch({
         type: actions.USER_STORY,
@@ -125,6 +125,9 @@ export default function Story(props: IProps): JSX.Element {
           },
         },
       });
+      setCoverImageData({ id: '', data: '' });
+      setCoverImageFile(null);
+      router.back();
     } catch (error: any) {
       console.error(error.response?.data?.message || error);
       setError({
@@ -196,6 +199,14 @@ export default function Story(props: IProps): JSX.Element {
   }, []);
 
   useEffect((): (() => void) => {
+    handleCoverImageFile();
+    return () => {
+      setCoverImageData({ id: '', data: '' });
+      setCoverImageFile(null);
+    };
+  }, [coverImageFile]);
+
+  useEffect((): (() => void) => {
     const timer = setTimeout(() => {
       if (error.status) {
         setError({ status: false, msg: '' });
@@ -256,7 +267,7 @@ export default function Story(props: IProps): JSX.Element {
                   <div className='form-element'>
                     <label htmlFor='title'>
                       <IoEllipsisHorizontal />
-                      <span>Título</span>
+                      <span>Título *</span>
                     </label>
                     <input
                       type='text'
@@ -290,7 +301,7 @@ export default function Story(props: IProps): JSX.Element {
                   <div className='form-element'>
                     <label htmlFor='description'>
                       <IoEllipsisHorizontal />
-                      <span>Conteúdo</span>
+                      <span>Conteúdo *</span>
                     </label>
                     <textarea
                       id='description'
@@ -319,6 +330,7 @@ export default function Story(props: IProps): JSX.Element {
                     } / 512`}</span>
                   </div>
                 </section>
+
                 <section className='form-section'>
                   <div className='form-element check-box'>
                     <label htmlFor='allow_comments'>
@@ -363,61 +375,68 @@ export default function Story(props: IProps): JSX.Element {
                         className='clear-image'
                         onClick={deleteCoverImage}>
                         <IoTrashOutline />
+                        <span>Remover imagem</span>
+                      </button>
+                    </>
+                  ) : state.story.cover_image && state.story.cover_image.url ? (
+                    <>
+                      <Image
+                        width={420}
+                        height={220}
+                        className='cover-image'
+                        src={state.story.cover_image.url}
+                        title={`Imagem de capa da história`}
+                        aria-label={`Imagem de capa da história`}
+                        alt={`Imagem de capa da história`}
+                      />
+                      <button
+                        title='Apagar imagem de capa'
+                        className='clear-image'
+                        onClick={deleteCoverImage}>
+                        <IoTrashOutline />
                       </button>
                     </>
                   ) : (
-                    state.story.cover_image &&
-                    state.story.cover_image.url && (
-                      <>
-                        <Image
-                          width={420}
-                          height={220}
-                          className='cover-image'
-                          src={state.story.cover_image.url}
-                          title={`Imagem de capa da história`}
-                          aria-label={`Imagem de capa da história`}
-                          alt={`Imagem de capa da história`}
-                        />
-                        <button
-                          title='Apagar imagem de capa'
-                          className='clear-image'
-                          onClick={deleteCoverImage}>
-                          <IoTrashOutline />
-                        </button>
-                      </>
-                    )
-                  )}
-                  {!state.story.cover_image ||
-                    (!state.story.cover_image?.url && (
-                      <div className='image-drop-container'>
-                        <div className='content'>
-                          <IoDownloadOutline className='download-icon' />
-                          <h3>
-                            <span>
-                              Carregue uma imagem ou arraste e solte aqui
-                            </span>
-                          </h3>
-                          <span className='description'>
-                            Dimensões: 420 x 220 pixels.
+                    <div
+                      className='image-drop-container'
+                      onDragOver={(e) => e.preventDefault()}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        console.log(e);
+                        const dataTypes = [
+                          'image/png',
+                          'image/jpeg',
+                          'image/jpg',
+                        ];
+                      }}>
+                      <div className='content'>
+                        <IoDownloadOutline className='download-icon' />
+                        <h3>
+                          <span>
+                            Carregue uma imagem ou arraste e solte aqui
                           </span>
+                        </h3>
+                        <span className='description'>
+                          Dimensões: 420 x 220 pixels.
+                        </span>
 
-                          <input
-                            type='file'
-                            id='cover'
-                            name='cover'
-                            accept='.jpg, .jpeg, .png'
-                            multiple={false}
-                            onChange={(e) => setCoverImageFile(e.target.files)}
-                          />
-                          <label
-                            htmlFor='cover'
-                            title='Selecionar imagem para a história'>
-                            <span>Carregar imagem</span>
-                            <IoAdd />
-                          </label>
-                        </div>
+                        <input
+                          type='file'
+                          id='cover'
+                          name='cover'
+                          accept='.jpg, .jpeg, .png'
+                          multiple={false}
+                          onChange={(e) => setCoverImageFile(e.target.files)}
+                        />
+                        <label
+                          htmlFor='cover'
+                          title='Selecionar imagem para a história'>
+                          <span>Carregar imagem</span>
+                          <IoAdd />
+                        </label>
                       </div>
-                    ))}
+                    </div>
+                  )}
                 </div>
 
                 <section className='actions-container'>

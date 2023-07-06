@@ -96,21 +96,23 @@ export const StoryContainer = styled.div`
 
     .form-container {
       padding: 12px 20px;
+      width: 100%;
 
       .cover-image-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
         img {
           width: 100%;
           border-radius: 12px;
           object-fit: cover;
         }
 
-        .camera-icon {
-          width: 150px;
-          height: 150px;
-          border-radius: 50%;
-          margin: 0 auto;
-          padding: 5px;
-          background: rgba(${({ theme }) => theme.font}, 0.1);
+        .clear-image {
+          ${BaseButton}
+          align-self: flex-end;
         }
       }
 
@@ -210,6 +212,7 @@ export const StoryContainer = styled.div`
           background: rgb(${({ theme }) => theme.background});
           border-radius: 12px;
           padding: 20px;
+          user-select: none;
 
           .content {
             display: flex;
