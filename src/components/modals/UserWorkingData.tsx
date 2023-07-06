@@ -63,7 +63,7 @@ export default function UrlCapturerBox(props: IProps): JSX.Element {
             exit={{ opacity: 0, scale: 0 }}>
             <div className='dialog-prompt'>
               <div className='prompt-info'>
-                <div className='prompt-info'>
+                <div className='prompt-header'>
                   <span className='prompt-title'>Experiência Profissional</span>
                   <p className='prompt-message'>
                     Coloque informações relevantes da sua experiência

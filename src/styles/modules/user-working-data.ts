@@ -3,7 +3,7 @@ import {
   BaseButton,
   BaseButtonOutline,
   StyledInputs,
-  StyledLabels
+  StyledLabels,
 } from '../defaults';
 
 export const CapturerContainer = styled.section`
@@ -39,7 +39,7 @@ export const CapturerContainer = styled.section`
       justify-content: flex-start;
       gap: 10px;
 
-      .prompt-info {
+      .prompt-header {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;

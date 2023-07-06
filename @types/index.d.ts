@@ -117,7 +117,7 @@ export type TStory = {
   content: string;
   cover_image: { id: string; url: string } | undefined;
   allow_comments: boolean;
-}
+};
 
 export interface IPublicStory extends TStory {
   _id: string;
@@ -126,9 +126,11 @@ export interface IPublicStory extends TStory {
     first_name: string;
     last_name: string;
     email: string;
-    profile_image: {id: string, url: string}
+    profile_image: { id: string; url: string };
   };
   favorites: string[];
+  createdAt: string;
+  updatedAt: string;
 }
 
 export type PostListProps = {

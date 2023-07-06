@@ -77,7 +77,7 @@ export const ProfileContainer = styled.div`
         }
       }
 
-      .no-image-icon {
+      .cover-image-icon {
         width: 100%;
         height: 200px;
         border-radius: 20px 20px 0 0;
@@ -90,69 +90,95 @@ export const ProfileContainer = styled.div`
     .user-details-container {
       width: 100%;
       display: flex;
+      justify-content: space-between;
       flex-direction: row;
       gap: 20px;
       padding: 0 20px;
       padding-bottom: 20px;
       border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
 
-      .profile-image-container {
-        img {
-          width: 100%;
-          max-width: 90px;
-          max-height: 90px;
-          border-radius: 12px;
-          margin: 0 auto;
-        }
-        .camera-icon {
-          width: 150px;
-          height: 150px;
-          border-radius: 50%;
-          margin: 0 auto;
-          padding: 5px;
-          background: rgba(${({ theme }) => theme.font}, 0.1);
-        }
+      @media screen and (max-width: 535px) {
+        flex-direction: column;
       }
 
-      .details-container {
+      .left-wrapper-container {
+        width: 100%;
         display: flex;
-        flex-direction: column;
-        gap: 8px;
-        .author-name {
-          font-size: 1.1rem;
-          font-weight: 500;
-          line-height: 1.6rem;
-          align-items: center;
+        flex-direction: row;
+        gap: 20px;
+
+        .profile-image-container {
+          img {
+            width: 100%;
+            max-width: 90px;
+            max-height: 90px;
+            border-radius: 12px;
+            margin: 0 auto;
+          }
+          .no-image-icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 12px;
+            margin: 0 auto;
+            padding: 5px;
+            background: rgba(${({ theme }) => theme.font}, 0.1);
+          }
         }
 
-        .email {
-          font-weight: 500;
-        }
-
-        .network-buttons {
+        .details-container {
           display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          gap: 10px;
+          flex-direction: column;
+          gap: 8px;
+          .author-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            line-height: 1.6rem;
+            align-items: center;
+          }
 
-          a {
-            width: 30px;
-            height: 30px;
-            display: grid;
-            place-items: center;
-            background: rgba(${({ theme }) => theme.primary}, 0.2);
-            border-radius: 10px;
+          .email {
+            font-weight: 500;
+          }
 
-            :hover {
-              color: rgb(${({ theme }) => theme.primary_variant});
+          .network-buttons {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 10px;
+
+            a {
+              width: 30px;
+              height: 30px;
+              display: grid;
+              place-items: center;
+              background: rgba(${({ theme }) => theme.primary}, 0.2);
+              border-radius: 10px;
+
+              :hover {
+                color: rgb(${({ theme }) => theme.primary_variant});
+              }
             }
           }
         }
       }
 
-      .store-anchor {
-        margin-top: 20px;
-        a {
+      .right-wrapper-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+
+        @media screen and (max-width: 535px) {
+          flex-direction: row;
+        }
+
+        .store-anchor {
+          a {
+            ${BaseButtonOutline}
+          }
+        }
+
+        .create-story-btn {
           ${BaseButton}
           background: rgba(${({ theme }) => theme.primary}, 0.2);
           color: rgb(${({ theme }) => theme.font});
@@ -210,6 +236,46 @@ export const ProfileContainer = styled.div`
           padding: 8px 12px;
           background: rgba(${({ theme }) => theme.primary}, 0.2);
           border-radius: 5px;
+        }
+      }
+    }
+
+    .stories-data-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 0 20px;
+      padding-bottom: 20px;
+
+      .empty-data_container {
+        width: 100%;
+        min-height: 200px;
+        display: grid;
+        place-content: center;
+        user-select: none;
+
+        .content {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          line-height: 1.6rem;
+          padding: 50px 30px;
+
+          svg {
+            width: 70px;
+            height: 70px;
+            color: rgb(${({ theme }) => theme.primary_variant});
+          }
+
+          h3 {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-top: 20px;
+          }
         }
       }
     }

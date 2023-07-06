@@ -1,7 +1,10 @@
 import { complements } from '@/data/app-data';
-import { errorPage as Container } from '../styles/common/error-page';
+import { errorPage as Container } from '@/styles/common/error-page';
 
 interface IProps {
+  title?: string | undefined;
+  message?: string | undefined;
+  button_message?: string | undefined;
   retryFn: () => void;
 }
 
@@ -14,12 +17,14 @@ export default function ErrorPage(props: IProps): JSX.Element {
         </div>
       </section>
       <section className='content-container'>
-        <h1>Opa! Isto é um erro.</h1>
+        <h1>{props.title ?? 'Opa! Isto é um erro'}</h1>
         <p>
-          Oops! Parece que algo ruim aconteceu, por enquanto, isso é tudo que
-          sabemos.
+          {props.message ??
+            'Oops! Parece que algo ruim aconteceu, por enquanto, isso é tudo que sabemos.'}
         </p>
-        <button onClick={props.retryFn}>Tentar novamente</button>
+        <button onClick={props.retryFn}>
+          {props.button_message ?? 'Tentar novamente'}
+        </button>
       </section>
     </Container>
   );

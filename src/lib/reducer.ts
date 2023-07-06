@@ -222,7 +222,6 @@ export const initialState: State = {
     cover_image: { id: '', url: '' },
   },
   publicStories: [],
-  storyModal: { storyId: '', isActive: false },
 };
 
 export function reducer(state: State, action: Action): State {
@@ -376,8 +375,6 @@ export function reducer(state: State, action: Action): State {
       return { ...state, publicStories: action.payload.publicStories };
     case actions.USER_STORY:
       return { ...state, story: action.payload.story };
-    case actions.STORY_MODAL:
-      return { ...state, storyModal: action.payload.storyModal };
     default:
       return { ...state };
   }

@@ -53,7 +53,6 @@ export type State = {
   cart: TCart[];
   checkout: TPurchaseCheckOut;
   story: TStory;
-  storyModal: { storyId: string | undefined; isActive: boolean };
   publicStories: IPublicStory[];
 };
 

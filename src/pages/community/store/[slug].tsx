@@ -29,16 +29,17 @@ import { actions } from '@/data/actions';
 import fetch from '../../../config/client';
 import ErrorPage from '@/pages/error-page';
 import { useEffect, useState } from 'react';
+import { formatCurrency } from '@/lib/utils';
+import { GetServerSidePropsContext } from 'next';
 import { VscVerifiedFilled } from 'react-icons/vsc';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DefaultTheme, useTheme } from 'styled-components';
-import { formatCurrency } from '@/lib/utils';
-import { TPublicProducts, TPublicProduct, TPublicStore } from '@/../@types';
+import { TPublicProducts, TPublicStore } from '@/../@types';
 import { useThemeContext } from '@/context/ThemeContext';
 import { StoreContainer as Container } from '@/styles/common/community-store-profile';
 
-type TProps = { store: TPublicStore; products: TPublicProducts[] };
+type TProps = { store?: TPublicStore | undefined; products: TPublicProducts[] };
 
 export default function StoreProfile({ store, products }: TProps): JSX.Element {
   const {
@@ -55,7 +56,15 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
   const [tab, setTab] = useState<'docs' | 'products'>('docs');
   const [innerWidth, setInnerWidth] = useState(0);
 
-  if (!store) return <ErrorPage retryFn={() => router.reload()} />;
+  if (!store || Object.values(store).length < 1)
+    return (
+      <ErrorPage
+        title='Loja Inativa'
+        message='A loja que procura pode estar atualmente indisponível. Peça ao proprietário para ativá-la.'
+        button_message='Voltar para página anterior'
+        retryFn={() => router.back()}
+      />
+    );
 
   async function handleFavoriteProduct(id: string): Promise<void> {
     try {
@@ -499,35 +508,28 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
   );
 }
 
-export async function getStaticPaths(): Promise<any> {
-  const slugs = await fetch<TPublicProduct[]>({
-    method: 'get',
-    url: '/api/v1/users/store/all?fields=name',
-  }).then((res) => res.data.map((item) => ({ params: { slug: item._id } })));
-  return { paths: slugs, fallback: false };
-}
+type TContext = GetServerSidePropsContext;
 
-export async function getStaticProps({ params: { slug } }: any) {
+export async function getServerSideProps(context: TContext) {
   try {
     const [storeData, storeProductsData] = (
       await Promise.all([
         fetch<TPublicStore>({
           method: 'get',
-          url: `/api/v1/users/store/public/${slug}`,
+          url: `/api/v1/users/store/public/${context.params?.slug}`,
         }),
         fetch<TPublicProducts[]>({
           method: 'get',
-          url: `/api/v1/users/products/public?storeId=${slug}`,
+          url: `/api/v1/users/products/public?storeId=${context.params?.slug}`,
         }),
       ])
     ).map((res) => res.data);
 
     return {
       props: { store: storeData, products: storeProductsData },
-      revalidate: 10,
     };
   } catch (error) {
     console.error(error);
-    return { props: {}, revalidate: 10 };
+    return { props: {} };
   }
 }

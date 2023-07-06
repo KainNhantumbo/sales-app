@@ -1,37 +1,65 @@
 import {
   IoAdd,
+  IoBalloonOutline,
   IoBriefcase,
-  IoLeaf,
+  IoCreateOutline,
+  IoLeafOutline,
   IoLocation,
   IoLockClosed,
+  IoOpenOutline,
   IoPlanet,
-  IoStorefront,
 } from 'react-icons/io5';
-import Image from 'next/image';
-import { BiUser } from 'react-icons/bi';
-import { motion } from 'framer-motion';
-import { formatDate } from '@/lib/utils';
-import { FaAd } from 'react-icons/fa';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import Image from 'next/image';
+import { FaAd } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { BiUser } from 'react-icons/bi';
+import { formatDate } from '@/lib/utils';
 import Layout from '@/components/Layout';
+import { actions } from '@/data/actions';
 import fetch from '../../../config/client';
-import { TPublicUser } from '../../../../@types';
 import ErrorPage from '@/pages/error-page';
-import { complements, formatSocialNetwork } from '@/data/app-data';
+import { useEffect, useState } from 'react';
+import { useAppContext } from '@/context/AppContext';
+import { IPublicStory, TPublicUser } from '@/../@types';
 import { NextRouter, useRouter } from 'next/router';
+import { complements, formatSocialNetwork } from '@/data/app-data';
 import { ProfileContainer as Container } from '@/styles/common/community-user-profile';
-import Story from '@/components/modals/StoryModal';
 
 type TProps = { user: TPublicUser };
 
 export default function UserProfile({ user }: TProps): JSX.Element {
   const router: NextRouter = useRouter();
+  const { state, dispatch } = useAppContext();
 
-  if (!user) return <ErrorPage retryFn={() => router.reload()} />;
+  if (!user)
+    return (
+      <ErrorPage
+        message='Conta de usuário indisponível.'
+        retryFn={() => router.reload()}
+      />
+    );
+
+  async function getStories(): Promise<void> {
+    try {
+      const { data } = await fetch<IPublicStory[]>({
+        method: 'get',
+        url: `/api/v1/users/stories?userid=${user._id}`,
+      });
+      console.log(data);
+      dispatch({
+        type: actions.PUBLIC_USER_STORIES,
+        payload: { ...state, publicStories: [...data] },
+      });
+    } catch (error: any) {
+      console.error(error.response?.data?.message || error);
+    } finally {
+    }
+  }
 
   useEffect(() => {
     console.info(user);
+    getStories();
   }, []);
 
   return (
@@ -48,9 +76,6 @@ export default function UserProfile({ user }: TProps): JSX.Element {
         updatedAt: user.createdAt,
       }}>
       <Container>
-        {/* Story modal */}
-        <Story />
-
         <div className='wrapper-container'>
           <aside>
             <section className='no-ads'>
@@ -66,7 +91,7 @@ export default function UserProfile({ user }: TProps): JSX.Element {
           </aside>
           <article>
             <div className='cover-image-container'>
-              {user.cover_image && user.cover_image.url && (
+              {user?.cover_image && user?.cover_image?.url ? (
                 <Image
                   width={620}
                   height={220}
@@ -76,66 +101,82 @@ export default function UserProfile({ user }: TProps): JSX.Element {
                   aria-label={`Imagem de capa de ${user.first_name} ${user.last_name}`}
                   alt={`Imagem de capa de ${user.first_name} ${user.last_name}`}
                 />
+              ) : (
+                <IoBalloonOutline className='cover-image-icon' />
               )}
-              {!user.cover_image ||
-                (!user.cover_image.url && <IoLeaf className='no-image-icon' />)}
             </div>
 
             <section className='user-details-container'>
-              <div className='profile-image-container'>
-                {user.profile_image && user.profile_image.url && (
-                  <Image
-                    width={620}
-                    height={220}
-                    className='profile-image'
-                    src={user.profile_image.url}
-                    title={`Imagem de perfil de ${user.first_name} ${user.last_name}`}
-                    aria-label={`Imagem de perfil de ${user.first_name} ${user.last_name}`}
-                    alt={`Imagem de perfil de ${user.first_name} ${user.last_name}`}
-                  />
-                )}
-                {!user.profile_image && <BiUser className='no-image-icon' />}
+              <div className='left-wrapper-container'>
+                <div className='profile-image-container'>
+                  {user.profile_image && user.profile_image.url && (
+                    <Image
+                      width={620}
+                      height={220}
+                      className='profile-image'
+                      src={user.profile_image.url}
+                      title={`Imagem de perfil de ${user.first_name} ${user.last_name}`}
+                      aria-label={`Imagem de perfil de ${user.first_name} ${user.last_name}`}
+                      alt={`Imagem de perfil de ${user.first_name} ${user.last_name}`}
+                    />
+                  )}
+                  {!user.profile_image && <BiUser className='no-image-icon' />}
+                </div>
+                <div className='details-container'>
+                  <h3 className='author-name'>
+                    <span>{`${user.first_name} ${user.last_name}`}</span>
+                  </h3>
+                  <h5 className='email'>
+                    <span>
+                      <strong>E-mail: </strong>
+                      {user.email}
+                    </span>
+                  </h5>
+                  {user.social_network && (
+                    <div className='network-buttons'>
+                      {formatSocialNetwork({
+                        ...user.social_network,
+                      })?.map((option, index) => (
+                        <motion.a
+                          whileHover={{ scale: 1.2 }}
+                          whileTap={{ scale: 0.8 }}
+                          href={option?.url}
+                          title={option?.name}
+                          aria-label={option?.name}
+                          target={'_blank'}
+                          rel={'noreferrer noopener'}
+                          key={String(index)}>
+                          {option?.icon && <option.icon />}
+                        </motion.a>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className='details-container'>
-                <h3 className='author-name'>
-                  <span>{`${user.first_name} ${user.last_name}`}</span>
-                </h3>
-                <h5 className='email'>
-                  <span>
-                    <strong>E-mail: </strong>
-                    {user.email}
-                  </span>
-                </h5>
-                {user.social_network && (
-                  <div className='network-buttons'>
-                    {formatSocialNetwork({
-                      ...user.social_network,
-                    })?.map((option, index) => (
-                      <motion.a
-                        whileHover={{ scale: 1.2 }}
-                        whileTap={{ scale: 0.8 }}
-                        href={option?.url}
-                        title={option?.name}
-                        aria-label={option?.name}
-                        target={'_blank'}
-                        rel={'noreferrer noopener'}
-                        key={String(index)}>
-                        {option?.icon && <option.icon />}
-                      </motion.a>
-                    ))}
-                  </div>
-                )}
-              </div>
-              {/*               
-              <motion.div
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.8 }}
-              className='store-anchor'>
-              <Link href={`/community/store/${user.store}`}>
-                    <IoStorefront />
+
+              <div className='right-wrapper-container'>
+                <motion.div
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.8 }}>
+                  <button
+                    className='create-story-btn'
+                    onClick={() =>
+                      router.push(`/community/story/create-story`)
+                    }>
+                    <IoCreateOutline />
+                    <span>Nova história</span>
+                  </button>
+                </motion.div>
+                <motion.div
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.8 }}
+                  className='store-anchor'>
+                  <Link href={`/community/store/${user.store}`}>
+                    <IoOpenOutline />
                     <span>Visitar loja</span>
                   </Link>
-                </motion.div> */}
+                </motion.div>
+              </div>
             </section>
             <section className='description-container'>
               <p>
@@ -185,6 +226,36 @@ export default function UserProfile({ user }: TProps): JSX.Element {
                   </div>
                 )}
             </section>
+            <section className='stories-data-container'>
+              <section className='stories-container'>
+                {state.publicStories.length > 0 &&
+                  state.publicStories.filter(
+                    (story) => story.created_by._id === user._id
+                  ).length > 0 &&
+                  state.publicStories
+                    .filter((story) => story.created_by._id === user._id)
+                    .map((story) => (
+                      <div
+                        key={String(story._id)}
+                        className='story-container'></div>
+                    ))}
+              </section>
+
+              {state.publicStories.length < 1 &&
+                state.publicStories.filter(
+                  (story) => story.created_by._id === user._id
+                ).length < 1 && (
+                  <div className='empty-data_container'>
+                    <section className='content'>
+                      <IoLeafOutline />
+                      <h3>
+                        <span>Nenhuma história para mostrar</span>
+                      </h3>
+                      <p>Crie algumas histórias para começar.</p>
+                    </section>
+                  </div>
+                )}
+            </section>
           </article>
         </div>
       </Container>
@@ -195,7 +266,7 @@ export default function UserProfile({ user }: TProps): JSX.Element {
 export async function getStaticPaths(): Promise<any> {
   const slugs = await fetch<TPublicUser[]>({
     method: 'get',
-    url: '/api/v1/users/account?fields=name',
+    url: '/api/v1/users/account/public',
   }).then((res) => res.data.map((item) => ({ params: { slug: item._id } })));
   return { paths: slugs, fallback: false };
 }
