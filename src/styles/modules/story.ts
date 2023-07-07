@@ -209,16 +209,20 @@ export const StoryContainer = styled.div`
 
         .image-drop-container {
           width: 100%;
+          min-height: 220px;
           background: rgb(${({ theme }) => theme.background});
           border-radius: 12px;
           padding: 20px;
           user-select: none;
+          border: 2px solid rgba(${({ theme }) => theme.primary}, 0.4);
+          border-style: dashed;
 
           .content {
             display: flex;
             justify-content: center;
             flex-direction: column;
             align-items: center;
+            text-align: center;
             gap: 20px;
 
             .download-icon {
@@ -226,8 +230,11 @@ export const StoryContainer = styled.div`
               height: 60px;
             }
 
+            .active-mode {
+              color: rgb(${({ theme }) => theme.primary_variant});
+            }
+
             h3 {
-              text-align: center;
               font-size: 1.1rem;
               padding: 0;
               margin: 0;
@@ -235,12 +242,8 @@ export const StoryContainer = styled.div`
               font-weight: 500;
             }
 
-            label {
-              ${BaseButton}
-            }
-
-            input {
-              display: none;
+            .description {
+              line-height: 1.6rem;
             }
           }
         }

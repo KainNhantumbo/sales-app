@@ -183,7 +183,10 @@ export default function Blog(): JSX.Element {
                 </div>
               )}
 
-              {!hasNextPage && !isFetching && !isError && <p>Chegou ao fim</p>}
+              {!hasNextPage &&
+                !isFetching &&
+                !isError &&
+                state.blogPostsList.length > 0 && <p>Chegou ao fim</p>}
             </div>
 
             {state.blogPostsList.length > 0 && (

@@ -12,9 +12,10 @@ import fetch from '@/config/client';
 import { FaAd } from 'react-icons/fa';
 import Compressor from 'compressorjs';
 import { AxiosResponse } from 'axios';
-import { actions } from '@/data/actions';
-import { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
+import { actions } from '@/data/actions';
+import { useCallback, useEffect, useState } from 'react';
+import { DropEvent, FileRejection, useDropzone } from 'react-dropzone';
 import { PulseLoader } from 'react-spinners';
 import { complements } from '@/data/app-data';
 import { GetServerSidePropsContext } from 'next';
@@ -24,7 +25,6 @@ import { useAppContext } from '@/context/AppContext';
 import { BsChatSquareTextFill } from 'react-icons/bs';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { StoryContainer as Container } from '@/styles/modules/story';
-
 interface IProps {
   story: IPublicStory | undefined;
 }
@@ -46,10 +46,15 @@ export default function Story(props: IProps): JSX.Element {
     data: '',
   });
 
-  function handleCoverImageFile(): void {
-    const imageData: File | null | undefined = coverImageFile?.item(0);
-    if (imageData) {
-      new Compressor(imageData, {
+  const acceptedMimeTypes: string[] = ['image/png', 'image/jpeg', 'image/jpg'];
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    maxFiles: 1,
+    onDrop: useCallback(<T extends File>(acceptedFiles: T[]) => {
+      const file = acceptedFiles[0];
+      if (!file || !acceptedMimeTypes.includes(String(file.type)))
+        return undefined;
+      new Compressor(file, {
         quality: 0.8,
         width: 420,
         height: 220,
@@ -66,8 +71,8 @@ export default function Story(props: IProps): JSX.Element {
           };
         },
       });
-    }
-  }
+    }, []),
+  });
 
   async function deleteCoverImage(): Promise<void> {
     if (!state.story.cover_image?.url)
@@ -199,7 +204,7 @@ export default function Story(props: IProps): JSX.Element {
   }, []);
 
   useEffect((): (() => void) => {
-    handleCoverImageFile();
+    // handleCoverImageFile();
     return () => {
       setCoverImageData({ id: '', data: '' });
       setCoverImageFile(null);
@@ -364,6 +369,7 @@ export default function Story(props: IProps): JSX.Element {
                       <Image
                         width={420}
                         height={220}
+                        priority
                         className='cover-image'
                         src={coverImageData.data}
                         title={`Imagem de capa da história`}
@@ -383,6 +389,7 @@ export default function Story(props: IProps): JSX.Element {
                       <Image
                         width={420}
                         height={220}
+                        priority
                         className='cover-image'
                         src={state.story.cover_image.url}
                         title={`Imagem de capa da história`}
@@ -397,43 +404,29 @@ export default function Story(props: IProps): JSX.Element {
                       </button>
                     </>
                   ) : (
-                    <div
-                      className='image-drop-container'
-                      onDragOver={(e) => e.preventDefault()}
-                      onDrop={(e) => {
-                        e.preventDefault();
-                        console.log(e);
-                        const dataTypes = [
-                          'image/png',
-                          'image/jpeg',
-                          'image/jpg',
-                        ];
-                      }}>
+                    <div {...getRootProps()} className='image-drop-container'>
                       <div className='content'>
-                        <IoDownloadOutline className='download-icon' />
+                        <IoDownloadOutline
+                          className={
+                            isDragActive
+                              ? 'download-icon active-mode'
+                              : 'download-icon'
+                          }
+                        />
                         <h3>
-                          <span>
-                            Carregue uma imagem ou arraste e solte aqui
-                          </span>
+                          {isDragActive ? (
+                            <span>Solte a imagem aqui</span>
+                          ) : (
+                            <span>
+                              Arraste e solte a imagem ou clique para carregar
+                            </span>
+                          )}
                         </h3>
                         <span className='description'>
-                          Dimensões: 420 x 220 pixels.
+                          Dimensões: 420 x 220 pixels [.JPEG, .JPG, .PNG].
                         </span>
 
-                        <input
-                          type='file'
-                          id='cover'
-                          name='cover'
-                          accept='.jpg, .jpeg, .png'
-                          multiple={false}
-                          onChange={(e) => setCoverImageFile(e.target.files)}
-                        />
-                        <label
-                          htmlFor='cover'
-                          title='Selecionar imagem para a história'>
-                          <span>Carregar imagem</span>
-                          <IoAdd />
-                        </label>
+                        <input {...getInputProps()} />
                       </div>
                     </div>
                   )}

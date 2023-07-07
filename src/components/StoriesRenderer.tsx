@@ -9,23 +9,25 @@ import { useAppContext } from '@/context/AppContext';
 import { IPublicStory } from '@/../@types';
 import { StoriesRenderContainer as Container } from '@/styles/modules/stories-renderer';
 import { NextRouter, useRouter } from 'next/router';
+import DeleteStoryPrompt from './modals/DeleteStoryPrompt';
 
 interface IProps {
   userId?: string | undefined;
   favoritesId?: string | undefined;
 }
 
-export default function StoriesRenderer(props: IProps) {
+const StoriesRenderer = (props: IProps): JSX.Element => {
   const router: NextRouter = useRouter();
-  const { state, dispatch, fetchAPI } = useAppContext();
+  const { state, dispatch, fetchAPI, deleteStoryPromptController } =
+    useAppContext();
 
-  async function getStories(): Promise<void> {
+  const getStories = async (): Promise<void> => {
     try {
       const { data } = await fetch<IPublicStory[]>({
         method: 'get',
         url: `/api/v1/users/stories${
-          props.userId && `?userId=${props.userId}`
-        }${props.favoritesId && `?favoritesId=${props.favoritesId}`}`,
+          props.userId ? `?userId=${props.userId}` : ''
+        }${props.favoritesId ? `?favoritesId=${props.favoritesId}` : ''}`,
       });
       console.log(data);
       dispatch({
@@ -35,17 +37,66 @@ export default function StoriesRenderer(props: IProps) {
     } catch (error: any) {
       console.error(error.response?.data?.message || error);
     }
-  }
+  };
 
-  async function handleDeleteStory(id: string): Promise<void> {
+  const handleDeleteStory = async (storeId: string): Promise<void> => {
     try {
-      await fetchAPI({ method: 'delete', url: `/api/v1/users/stories/${id}` });
-      deleteCommentPromptController(false, '');
+      await fetchAPI({
+        method: 'delete',
+        url: `/api/v1/users/stories/${storeId}`,
+      });
+      deleteStoryPromptController(false, '');
       getStories();
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
-  }
+  };
+
+  const handleEditStory = (storyId: string): Promise<boolean> =>
+    router.push(`/community/story/${storyId}`);
+
+  const handleFavoriteStory = async (storyId: string): Promise<void> => {
+    try {
+      const { data } = await fetchAPI({
+        method: 'post',
+        url: `/api/v1/users/favorites/stories/${storyId}`,
+      });
+      dispatch({
+        type: actions.PUBLIC_USER_STORIES,
+        payload: {
+          ...state,
+          publicStories: [
+            ...state.publicStories.map((story) =>
+              story._id === storyId ? { ...story, favorites: data } : story
+            ),
+          ],
+        },
+      });
+    } catch (err: any) {
+      console.error(err.response?.data?.message || err);
+    }
+  };
+  const handleUnFavoriteStory = async (storyId: string): Promise<void> => {
+    try {
+      const { data } = await fetchAPI({
+        method: 'patch',
+        url: `/api/v1/users/favorites/stories/${storyId}`,
+      });
+      dispatch({
+        type: actions.PUBLIC_USER_STORIES,
+        payload: {
+          ...state,
+          publicStories: [
+            ...state.publicStories.map((story) =>
+              story._id === storyId ? { ...story, favorites: data } : story
+            ),
+          ],
+        },
+      });
+    } catch (err: any) {
+      console.error(err.response?.data?.message || err);
+    }
+  };
 
   useEffect(() => {
     getStories();
@@ -59,6 +110,8 @@ export default function StoriesRenderer(props: IProps) {
 
   return (
     <Container>
+      <DeleteStoryPrompt deleteFn={handleDeleteStory} />
+
       <section className='stories-container'>
         {state.publicStories.length > 0 &&
           state.publicStories.map((story) => (
@@ -130,4 +183,6 @@ export default function StoriesRenderer(props: IProps) {
       )}
     </Container>
   );
-}
+};
+
+export default StoriesRenderer;
