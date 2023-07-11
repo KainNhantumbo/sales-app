@@ -1,6 +1,7 @@
 import {
   IoArrowForwardOutline,
   IoEllipsisHorizontal,
+  IoGridOutline,
   IoHeart,
   IoReload,
   IoStorefrontOutline,
@@ -114,6 +115,19 @@ export default function Blog(): JSX.Element {
           <section className='search-container'>
             <SearchComponent />
           </section>
+
+          {!isFetching && !isError && state.blogPostsList.length < 1 && (
+            <div className='empty-data_container'>
+              <section className='content'>
+                <div className='icon'>
+                  <IoGridOutline />
+                </div>
+                <div className='message'>
+                  <h3>Nenhuma postagem para mostrar.</h3>
+                </div>
+              </section>
+            </div>
+          )}
 
           <section className='posts-container'>
             {state.blogPostsList.map((post, index) => (

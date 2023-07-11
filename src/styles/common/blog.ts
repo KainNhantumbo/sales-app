@@ -4,7 +4,6 @@ import { BaseButton, Button_Mono_B, StyledInputs } from '../defaults';
 export const BlogContainer = styled.div`
   position: relative;
   width: 100%;
-  min-height: 50vh;
   display: flex;
   flex-direction: column;
   background: rgb(${({ theme }) => theme.background});
@@ -190,9 +189,40 @@ export const BlogContainer = styled.div`
       }
     }
 
+    .empty-data_container {
+      width: 100%;
+      background: rgb(${({ theme }) => theme.background});
+      display: grid;
+      place-content: center;
+      user-select: none;
+      padding: 80px 0;
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        line-height: 1.6rem;
+        margin: 0 10px;
+
+        svg {
+          width: 70px;
+          height: 70px;
+          color: rgb(${({ theme }) => theme.primary_variant});
+        }
+
+        h3 {
+          text-align: center;
+          font-size: 1.2rem;
+          font-weight: 500;
+          margin-top: 20px;
+        }
+      }
+    }
+
     .posts-container {
       display: flex;
-      min-height: 50vh;
       flex-direction: column;
       justify-content: flex-start;
       gap: 12px;
