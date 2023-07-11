@@ -20,6 +20,7 @@ import {
   IoMail,
   IoStorefrontOutline,
   IoFlash,
+  IoInformationCircleOutline,
 } from 'react-icons/io5';
 import {
   FaFacebook,
@@ -40,14 +41,15 @@ import type {
   TShareUrls,
   TSocialNetwork,
 } from '../../@types/index';
-import Package from '../../package.json';
-import blurImageData from './blur-data-url-image.json';
 import { BiUser, BiUserCheck } from 'react-icons/bi';
+import Package from '../../package.json';
+import denouces_data from './denounce-reasons.json';
+import blur_image_data from './blur-data-url-image.json';
 import authorPicture from '../../public/assets/author.jpg';
 import paypal_log from '../../public/trademarks/paypal.png';
 import mpesa_logo from '../../public/trademarks/mpesa logo.png';
 
-const blurDataUrlImage = blurImageData.data;
+const blurDataUrlImage = blur_image_data.data;
 
 const author: Author = {
   name: Package.author,
@@ -99,7 +101,7 @@ const app_metadata = {
 const urls = [
   { name: 'Início', url: '/', alias: '+' },
   { name: 'Descobrir', url: '/ecommerce/discover', alias: 'discover' },
-  { name: 'Lojas', url: '/stores', alias: 'stores' },
+  { name: 'Lojas', url: '/ecommerce/stores', alias: 'stores' },
   { name: 'Blog', url: '/blog', alias: 'blog' },
   { name: 'Feed', url: '/feed', alias: 'feed' },
 ];
@@ -157,30 +159,7 @@ const pricing_data = [
   },
 ];
 
-const denounceReasons = [
-  'Terrorismo',
-  'Discurso de incentivo ao ódio',
-  'Actividade sexual',
-  'Nudez',
-  'Spam',
-  'Violência',
-  'Vendas suspeitas ou não autorizadas',
-  'Disseminação de informações falsas',
-  'Assédio sexual',
-  'Suicídio ou automutilação',
-  'Bullyng',
-  'Agressão a pessoas ou animais',
-  'Abuso de menores',
-  'Promoção ao uso de drogas',
-  'Imagens íntimas não concensuais',
-  'Infrigimento de direitos autorais',
-  'Fraude',
-  'Ridicularização de vítimas',
-  'Linguagem pejorativa / insultuosa',
-  'Propagandas ilegais',
-  'Difamação',
-  'Outros',
-]
+const denounceReasons = denouces_data
   .sort((a, b) => (a > b ? 1 : -1))
   .map((reason) => ({ label: reason, value: reason }));
 
@@ -339,10 +318,16 @@ const dashboardActions = (props: {
         label: 'Código de conduta',
         url: '/legal/code-of-conduct',
         icon: BiUserCheck,
-      },{
+      },
+      {
         label: 'Verificação da loja',
         url: `/docs/store-verification`,
         icon: IoFingerPrint,
+      },
+      {
+        label: 'Perguntas Frequêntes',
+        url: `/docs/faq`,
+        icon: IoInformationCircleOutline,
       },
     ],
   },

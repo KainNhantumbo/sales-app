@@ -9,6 +9,7 @@ export const initialState: State = {
   isSearchActive: false,
   isSortActive: false,
   isCartModal: false,
+  searchStores: '',
   queryPublicProducts: {
     category: undefined,
     price_range: NaN,
@@ -223,6 +224,7 @@ export const initialState: State = {
     cover_image: { id: '', url: '' },
   },
   publicStories: [],
+  publicStoresList: [],
 };
 
 export function reducer(state: State, action: Action): State {
@@ -341,7 +343,11 @@ export function reducer(state: State, action: Action): State {
         ...state,
         search: action.payload.search,
       };
-
+    case actions.SEARCH_STORES:
+      return {
+        ...state,
+        searchStores: action.payload.searchStores,
+      };
     case actions.CREATE_COMMENT:
       return {
         ...state,
@@ -377,6 +383,8 @@ export function reducer(state: State, action: Action): State {
       return { ...state, isCartModal: action.payload.isCartModal };
     case actions.PURCHASE_CHECKOUT_DATA:
       return { ...state, checkout: action.payload.checkout };
+    case actions.PUBLIC_STORES_LIST_DATA:
+      return { ...state, publicStoresList: action.payload.publicStoresList };
     case actions.PUBLIC_USER_STORIES:
       return { ...state, publicStories: action.payload.publicStories };
     case actions.USER_STORY:

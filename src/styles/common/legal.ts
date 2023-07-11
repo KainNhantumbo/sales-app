@@ -11,10 +11,58 @@ export const LegalContainer = styled.div`
     text-align: start;
   }
 
+  .faq-container {
+    text-align: start;
+
+    .introdution-container {
+      padding: 20px;
+      border-radius: 12px;
+      width:100% ;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgb(${({ theme }) => theme.background_variant});
+
+      h1 {
+        text-align: center;
+      }
+      p {
+        text-align: center;
+        max-width: max(700px);
+      }
+    }
+
+    h2 {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-self: center;
+      gap: 12px;
+      text-transform: capitalize;
+      padding-top: 20px;
+      border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+
+      svg {
+        padding: 12px;
+        width: 60px;
+        height: 60px;
+        background: rgb(${({ theme }) => theme.background_variant});
+        border-radius: 12px;
+      }
+    }
+
+    .section-container {
+      padding: 12px 20px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+    }
+  }
+
   article {
     font-size: 1rem;
     line-height: 1.6rem;
-		text-align: justify;
+    text-align: justify;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -33,8 +81,8 @@ export const LegalContainer = styled.div`
 
     h2 {
       font-weight: 500;
-			line-height: 2rem;
-			margin-top: 5px;
+      line-height: 2rem;
+      margin-top: 5px;
       font-size: 1.4rem;
     }
 
@@ -70,28 +118,28 @@ export const LegalContainer = styled.div`
       list-style-position: inside;
     }
 
-		strong {
-			color: rgb(${({ theme }) => theme.primary_variant});
-		}
-		
-    a {
-			color: rgb(${({ theme }) => theme.secondary});
+    strong {
+      color: rgb(${({ theme }) => theme.primary_variant});
     }
 
-		em {
-			font-style: italic;
-		}
+    a {
+      color: rgb(${({ theme }) => theme.secondary});
+    }
 
-		.resumo {
-			font-style: italic;
-			padding: 10px;
-			border-radius: 12px;
-			background: rgb(${({ theme }) => theme.background_variant});
-		}
+    em {
+      font-style: italic;
+    }
 
-		.attribution {
-			font-size: .8rem;
-			line-height: 1.1rem;
-		}
+    .resumo {
+      font-style: italic;
+      padding: 10px;
+      border-radius: 12px;
+      background: rgb(${({ theme }) => theme.background_variant});
+    }
+
+    .attribution {
+      font-size: 0.8rem;
+      line-height: 1.1rem;
+    }
   }
 `;

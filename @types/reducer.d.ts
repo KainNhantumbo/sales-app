@@ -16,6 +16,7 @@ import {
   TSearchProducts,
   TStory,
   User,
+  TPublicStoreList,
 } from './index';
 
 export type State = {
@@ -36,6 +37,7 @@ export type State = {
   denounce: TDenounce;
   auth: TAuth;
   search: string;
+  searchStores: string;
   newSubscriptorValue: { subscriptor: string };
   signupData: ISignUp;
   signInData: ISignInData;
@@ -55,6 +57,7 @@ export type State = {
   checkout: TPurchaseCheckOut;
   story: TStory;
   publicStories: IPublicStory[];
+  publicStoresList: TPublicStoreList
 };
 
 export type Action = { type: string; payload: State };

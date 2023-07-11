@@ -1,30 +1,29 @@
 import { IoSearch } from 'react-icons/io5';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { actions } from '@/data/actions';
 
-export default function SearchComponent(): JSX.Element {
+const SearchComponent = (): JSX.Element => {
   const { state, dispatch } = useAppContext();
-  const router = useRouter();
+  const router: NextRouter = useRouter();
   return (
-    <form
-      onSubmit={(e): void => {
-        e.preventDefault();
-      }}>
+    <form onSubmit={(e): void => e.preventDefault()}>
       <div className='form-element' title='Search'>
         <input
           type='text'
           placeholder='Procurar postagens...'
+          title='Procurar postagens...'
+          aria-label='Procurar postagens...'
           value={state.search}
-          onChange={(e): void => {
+          onChange={(e): void =>
             dispatch({
               type: actions.SEARCH,
               payload: {
                 ...state,
-                search: e.target.value
-              }
-            });
-          }}
+                search: e.target.value,
+              },
+            })
+          }
         />
       </div>
 
@@ -37,4 +36,6 @@ export default function SearchComponent(): JSX.Element {
       </button>
     </form>
   );
-}
+};
+
+export default SearchComponent;

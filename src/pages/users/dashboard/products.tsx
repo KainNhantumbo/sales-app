@@ -33,6 +33,8 @@ import { ProductListContainer as Container } from '@/styles/common/products';
 
 export default function Products(): JSX.Element {
   const theme: DefaultTheme = useTheme();
+  const LIMIT: number = 12;
+  const { ref, inView }: InViewHookResponse = useInView();
   const {
     state,
     dispatch,
@@ -40,8 +42,19 @@ export default function Products(): JSX.Element {
     shareProductController,
     deleteProductPromptController,
   } = useAppContext();
-  const LIMIT: number = 12;
-  const { ref, inView }: InViewHookResponse = useInView();
+
+  const fetchProducts = async ({
+    pageParam = 0,
+  }): Promise<{ data: ProductsList[]; currentOffset: number }> => {
+    const { data } = await fetchAPI<ProductsList[]>({
+      url: `/api/v1/users/products?offset=${
+        LIMIT * pageParam
+      }&limit=${LIMIT}fields=name,price,quantity,promotion,category,favorites,createdAt,updatedAt&sort=${
+        state.productsListQuery.sort || 'updatedAt'
+      }&search=${state.productsListQuery.query || ''}`,
+    });
+    return { data, currentOffset: pageParam + 1 };
+  };
 
   const {
     data,
@@ -57,19 +70,6 @@ export default function Products(): JSX.Element {
     getNextPageParam: (lastPage) =>
       lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
   });
-
-  async function fetchProducts({
-    pageParam = 0,
-  }): Promise<{ data: any; currentOffset: number }> {
-    const { data }: AxiosResponse<ProductsList[]> = await fetchAPI({
-      url: `/api/v1/users/products?offset=${
-        LIMIT * pageParam
-      }&limit=${LIMIT}fields=name,price,quantity,promotion,category,favorites,createdAt,updatedAt&sort=${
-        state.productsListQuery.sort || 'updatedAt'
-      }&search=${state.productsListQuery.query || ''}`,
-    });
-    return { data, currentOffset: pageParam + 1 };
-  }
 
   async function handleDeleteProduct(productId: string): Promise<void> {
     try {

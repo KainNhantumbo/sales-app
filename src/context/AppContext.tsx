@@ -44,7 +44,7 @@ interface IContext {
   updateCartProduct: (props: { productId: string; quantity: number }) => void;
   getCartProduct: (currentProductId: string) => TCart;
   logoutUser: () => Promise<void>;
-  fetchAPI: (config: AxiosRequestConfig) => Promise<AxiosResponse<any, any>>;
+  fetchAPI: <T>(config: AxiosRequestConfig) => Promise<AxiosResponse<T, any>>;
 }
 
 const context = createContext<IContext>({
@@ -290,7 +290,7 @@ export default function AppContext(props: AppContext): JSX.Element {
     }
   }
 
-  function fetchAPI(config: AxiosRequestConfig): Promise<AxiosResponse> {
+  async function fetchAPI<T>(config: AxiosRequestConfig) {
     fetch.interceptors.response.use(
       undefined,
       (err: AxiosError): Promise<never> => {
@@ -304,7 +304,7 @@ export default function AppContext(props: AppContext): JSX.Element {
         return Promise.reject(err);
       }
     );
-    return fetch({
+    return await fetch<T>({
       ...config,
       headers: { authorization: `Bearer ${state.auth.token}` },
     });

@@ -133,11 +133,10 @@ export interface IPublicStory extends TStory {
   updatedAt: string;
 }
 
-export type PostListProps = {
+export type TQueryListProps = {
   offset?: number;
   limit?: number;
   search?: string;
-  category?: string;
 };
 
 export interface ISignInData {
@@ -168,6 +167,15 @@ export type MessageType = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type TPublicStoreList = Array<{
+  _id: string;
+  name: string;
+  slogan?: string;
+  description: string;
+  category: string;
+  createdAt: string;
+}>;
 
 export interface IBlogPosts {
   _id: string;

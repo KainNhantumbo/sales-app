@@ -103,7 +103,7 @@ export default function Footer(): JSX.Element {
               <Link href={'/contact'}>
                 <span>Contacto</span>
               </Link>
-              <Link href={'/faq'}>
+              <Link href={'/docs/faq'}>
                 <span>Perguntas frequêntes</span>
               </Link>
               <Link href={'/denounce'}>
