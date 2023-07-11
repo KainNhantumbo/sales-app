@@ -1,6 +1,6 @@
 {
   "name": "Rubymart",
-  "version": "0.15.0 (beta)",
+  "version": "0.16.0 (beta)",
   "private": true,
   "author": "Kain Nhantumbo",
   "url": "https://rubymart.vercel.app",
@@ -8,6 +8,7 @@
   "websiteName": "Rubymart - Sales Store of Mozambique",
   "email": "connectadevelops@gmail.com",
   "copyrightSentence": "© 2023 Rubymart | Todos os Direitos Reservados.",
+  "disqusName": "shopping-tree",
   "notice": "Notice: This product, logos, design and trademarks are propriety of Ruby Labs S.U.,Lda., witch is protected by the laws of Republic of Mozambique. Any kind of unauthorized copy of this product or its parts, will be considered infringement and its perpetrators will be persecuted until the last maximum penalty alowed by law.",
   "scripts": {
     "dev": "next dev",
@@ -27,7 +28,7 @@
     "compressorjs": "^1.2.1",
     "disqus-react": "^1.1.5",
     "editorjs-html": "^3.4.3",
-    "framer-motion": "^10.12.7",
+    "framer-motion": "^10.12.18",
     "moment": "^2.29.4",
     "next": "13.4.0",
     "next-pwa": "^5.6.0",

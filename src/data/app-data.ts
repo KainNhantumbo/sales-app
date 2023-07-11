@@ -62,6 +62,7 @@ const complements = {
   companyName: Package.companyName,
   websiteName: Package.websiteName,
   websiteUrl: Package.url,
+  disqusName: Package.disqusName,
   copyrightSentence: Package.copyrightSentence,
   description: `De moda a decoração de interiores, artigos artesanais, beleza e cosméticos, roupa, sapatos e mais, os produtos que você irá amar estão apenas a um toque. Você poderá sempre contar conosco para encontrar os produtos perfeitos para a vida que deseja.`,
   socialMedia: [
@@ -274,11 +275,6 @@ const dashboardActions = (props: {
         url: '/users/dashboard/store/orders',
         icon: IoBagCheck,
       },
-      {
-        label: 'Verificação da loja',
-        url: `/users/dashboard/store/verification`,
-        icon: IoFingerPrint,
-      },
     ],
   },
   transaction: {
@@ -343,6 +339,10 @@ const dashboardActions = (props: {
         label: 'Código de conduta',
         url: '/legal/code-of-conduct',
         icon: BiUserCheck,
+      },{
+        label: 'Verificação da loja',
+        url: `/docs/store-verification`,
+        icon: IoFingerPrint,
       },
     ],
   },

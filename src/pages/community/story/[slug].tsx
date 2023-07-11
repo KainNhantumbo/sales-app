@@ -1,10 +1,10 @@
 import {
   IoAdd,
-  IoDownloadOutline,
-  IoEllipsisHorizontal,
   IoHeart,
   IoPushOutline,
   IoTrashOutline,
+  IoDownloadOutline,
+  IoEllipsisHorizontal,
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -14,8 +14,7 @@ import Compressor from 'compressorjs';
 import { AxiosResponse } from 'axios';
 import Layout from '@/components/Layout';
 import { actions } from '@/data/actions';
-import { useCallback, useEffect, useState } from 'react';
-import { DropEvent, FileRejection, useDropzone } from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
 import { PulseLoader } from 'react-spinners';
 import { complements } from '@/data/app-data';
 import { GetServerSidePropsContext } from 'next';
@@ -23,8 +22,10 @@ import { IPublicStory, TStory } from '@/../@types';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { BsChatSquareTextFill } from 'react-icons/bs';
+import { useCallback, useEffect, useState } from 'react';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { StoryContainer as Container } from '@/styles/modules/story';
+
 interface IProps {
   story: IPublicStory | undefined;
 }
@@ -41,7 +42,10 @@ export default function Story(props: IProps): JSX.Element {
 
   const [coverImageFile, setCoverImageFile] = useState<FileList | null>(null);
 
-  const [coverImageData, setCoverImageData] = useState({
+  const [coverImageData, setCoverImageData] = useState<{
+    id: string;
+    data: string;
+  }>({
     id: '',
     data: '',
   });

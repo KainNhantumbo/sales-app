@@ -37,10 +37,7 @@ interface IPost {
   latestPosts: IBlogPosts[];
 }
 
-export default function Post({
-  post: initialPost,
-  latestPosts,
-}: IPost): JSX.Element {
+const Post = ({ post: initialPost, latestPosts }: IPost): JSX.Element => {
   const { state, fetchAPI, loginPromptController } = useAppContext();
   const [post, setPost] = useState(initialPost);
   const router = useRouter();
@@ -240,7 +237,7 @@ export default function Post({
             </section>
 
             <DiscussionEmbed
-              shortname={'shopping-tree'}
+              shortname={complements.disqusName}
               config={{
                 identifier: post._id,
                 url: router.asPath,
@@ -300,7 +297,9 @@ export default function Post({
       </Container>
     </Layout>
   );
-}
+};
+
+export default Post;
 
 export async function getStaticPaths(): Promise<any> {
   const slugs = await getPaths();

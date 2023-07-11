@@ -1,11 +1,9 @@
 import {
   createContext,
-  useState,
   useEffect,
   useContext,
   ReactNode
 } from 'react';
-import { Socket, io } from 'socket.io-client';
 import { useSocket } from '@/lib/socket';
 import { BASE_URL } from '@/config/client';
 import { useAppContext } from './AppContext';
