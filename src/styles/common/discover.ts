@@ -194,12 +194,13 @@ export const DiscoverContainer = styled.div`
       }
 
       .plans-container {
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        grid-gap: 25px;
-        align-items: center;
-        justify-items: center;
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        gap: 25px;
         margin-top: 20px;
+        user-select: none;
 
         div {
           display: flex;
@@ -223,6 +224,11 @@ export const DiscoverContainer = styled.div`
           h4 {
             font-weight: 500;
             color: rgb(${({ theme }) => theme.primary});
+          }
+          h5 {
+            font-size: 1.8rem;
+            line-height: 2rem;
+            color: rgb(${({ theme }) => theme.primary_variant});
           }
 
           ul {

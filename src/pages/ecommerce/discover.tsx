@@ -9,10 +9,11 @@ import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { useTheme } from 'styled-components';
 import NewsLetter from '@/components/Newsletter';
+import flying_paper from '@/../public/assets/flying paper.png';
+import africa_culture from '@/../public/assets/africa-culture.png';
 import { DiscoverContainer as Container } from '@/styles/common/discover';
-import flying_paper from '../../../public/assets/flying paper.png';
-import africa_culture from '../../../public/assets/africa-culture.png';
 import { store_features, pricing_data, complements } from '@/data/app-data';
+import { formatCurrency } from '@/lib/utils';
 
 export default function Discover(): JSX.Element {
   const theme = useTheme();
@@ -123,6 +124,11 @@ export default function Discover(): JSX.Element {
                       }}>
                       <h4>{plan.type}</h4>
                       <h3>{plan.title}</h3>
+
+                      <h5>
+                        <strong>{formatCurrency(plan.amount)}</strong>
+                      </h5>
+
                       <ul>
                         {plan.description.map((phrase, index) => (
                           <li key={index.toString()}>• {phrase};</li>

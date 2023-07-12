@@ -48,6 +48,7 @@ import blur_image_data from './blur-data-url-image.json';
 import authorPicture from '../../public/assets/author.jpg';
 import paypal_log from '../../public/trademarks/paypal.png';
 import mpesa_logo from '../../public/trademarks/mpesa logo.png';
+import { BsCurrencyExchange } from 'react-icons/bs';
 
 const blurDataUrlImage = blur_image_data.data;
 
@@ -101,9 +102,10 @@ const app_metadata = {
 const urls = [
   { name: 'Início', url: '/', alias: '+' },
   { name: 'Descobrir', url: '/ecommerce/discover', alias: 'discover' },
+  { name: 'Preçário', url: '/docs/pricing', alias: 'princing' },
   { name: 'Lojas', url: '/ecommerce/stores', alias: 'stores' },
-  { name: 'Blog', url: '/blog', alias: 'blog' },
   { name: 'Feed', url: '/feed', alias: 'feed' },
+  { name: 'Blog', url: '/blog', alias: 'blog' },
 ];
 
 const store_features = [
@@ -145,16 +147,58 @@ const store_features = [
   },
 ];
 
-const pricing_data = [
+type TPricingData = Array<{
+  title: string;
+  amount: number;
+  url: string;
+  label: string;
+  type: string;
+  description: string[];
+}>;
+
+const pricing_data: TPricingData = [
   {
     title: 'Gratuito (beta)',
-    type: 'Começo',
+    type: 'Trial',
     url: '/auth/sign-in',
     label: 'Criar loja grátis',
+    amount: 0.0,
     description: [
+      'Limitado',
+      'Faça parte da communidade',
       'Para quem vai começar a vender online',
-      'Desfrute de todas as funcionalidades do programa beta',
-      'Totalmente gratuito',
+      'Desfrute das funcionalidades do programa beta',
+      'Teste a plataforma por 15 dias',
+    ],
+  },
+  {
+    title: 'Padrão',
+    type: 'Standard',
+    url: '/auth/sign-in',
+    label: 'Vamos trabalhar',
+    amount: 94.99,
+    description: [
+      'Suporte em tempo real',
+      'Live chat com seus clientes',
+      'Acesso a criação de anúncios',
+      'Todas as funcionalidades padrão',
+      'Quantidade ilimitada de produtos, vendas e visitas',
+      'Ferramentas para auxiliar o seu negócio',
+      'Ajude o crescimento da plataforma',
+      'Renovável a cada 30 dias',
+    ],
+  },
+  {
+    title: 'Profissional',
+    type: 'Pro',
+    url: '/auth/sign-in',
+    label: 'Vamos trabalhar',
+    amount: 119.99,
+    description: [
+      'Todas as funcionalidades do plano padrão',
+      'Acesse a Secção de Biscatos e Empregos',
+      'Ajude o crescimento da plataforma',
+      'Renovável a cada 30 dias',
     ],
   },
 ];
@@ -328,6 +372,11 @@ const dashboardActions = (props: {
         label: 'Perguntas Frequêntes',
         url: `/docs/faq`,
         icon: IoInformationCircleOutline,
+      },
+      {
+        label: 'Preçário',
+        url: `/docs/pricing`,
+        icon: BsCurrencyExchange,
       },
     ],
   },
