@@ -1,16 +1,8 @@
-import Link from 'next/link';
-import Layout from '../../components/Layout';
+import { IoBulb, IoCogOutline, IoFootsteps } from 'react-icons/io5';
+import Layout from '@/components/Layout';
 import { complements } from '@/data/app-data';
+import { BsCreditCard2Front, BsTruck } from 'react-icons/bs';
 import { LegalContainer as Container } from '@/styles/common/legal';
-import {
-  IoBulb,
-  IoCard,
-  IoCogOutline,
-  IoDownloadOutline,
-  IoFootsteps,
-} from 'react-icons/io5';
-import { FaShippingFast } from 'react-icons/fa';
-import { BsCreditCard, BsCreditCard2Front, BsTruck } from 'react-icons/bs';
 
 const FAQ = (): JSX.Element => (
   <Layout
@@ -40,7 +32,7 @@ const FAQ = (): JSX.Element => (
 
         <p>
           Criar uma loja virtual com a {complements.defaultTitle} é como ter uma
-          loja física ou um showroom, mas na internet.
+          loja física ou um <em>showroom</em>, mas na internet.
         </p>
 
         <p>
@@ -309,10 +301,32 @@ const FAQ = (): JSX.Element => (
         <div className='section-container'>
           <h3>
             <strong>
-              <span></span>
+              <span>Como é a cobrança pela {complements.defaultTitle}?</span>
             </strong>
           </h3>
-          <p></p>
+          <p>
+            A {complements.defaultTitle} funciona de modo pré-pago, ou seja,
+            paga-se adiantado o tempo que se deseja utilizar. Uma vez que acaba
+            o crédito da sua loja, você pode realizar um novo pagamento para
+            continuar vendendo.
+          </p>
+          <p>
+            Para experimentar nosso serviço, você contrá com 15 dias de uso
+            gratuitos. Passado esse período, receberá um lembrete de pagamento e
+            poderá decidir se quer continuar ou não com sua loja.
+          </p>
+        </div>
+        <div className='section-container'>
+          <h3>
+            <strong>
+              <span>Como faço para cancelar as minhas subscrições?</span>
+            </strong>
+          </h3>
+          <p>
+            Não precisa cancelar: ao não pagar por um novo período em sua loja,
+            a mesma se desabilita (depois de alguns dias) e você não fica com
+            nenhuma dívida.
+          </p>
         </div>
 
         <h2>

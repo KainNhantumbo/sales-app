@@ -52,6 +52,7 @@ const Stores = (): JSX.Element => {
     });
 
   useEffect((): (() => void) => {
+    console.log(data);
     if (data) {
       const reducedData = data?.pages
         .map((page) => {
