@@ -112,9 +112,7 @@ export default function Blog(): JSX.Element {
           </div>
         </section>
         <article>
-          <section className='search-container'>
-            <SearchComponent />
-          </section>
+          <SearchComponent />
 
           {!isFetching && !isError && state.blogPostsList.length < 1 && (
             <div className='empty-data_container'>

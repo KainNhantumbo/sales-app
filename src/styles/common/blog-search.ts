@@ -17,7 +17,6 @@ export const BlogSeachContainer = styled.div`
     }
   }
 
-  
   .main-container {
     padding-top: 90px;
     .fetching-state {

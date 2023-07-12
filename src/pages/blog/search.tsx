@@ -81,9 +81,7 @@ const BlogSearch: NextPage = (): JSX.Element => {
       }}>
       <Container>
         <div className='main-container'>
-          <section className='search-container'>
-            <SearchComponent />
-          </section>
+          <SearchComponent />
 
           {loading.status && !error.status && (
             <section className='fetching-state'>

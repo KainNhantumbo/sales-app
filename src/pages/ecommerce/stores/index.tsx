@@ -116,9 +116,7 @@ const Stores: NextPage = (): JSX.Element => {
           </div>
         </section>
         <article>
-          <section className='search-container'>
-            <SearchStores />
-          </section>
+          <SearchStores />
 
           {!isFetching && !isError && state.publicStoresList.length < 1 && (
             <div className='empty-data_container'>
