@@ -1,5 +1,7 @@
 import {
+  IoArrowForwardOutline,
   IoEllipsisHorizontal,
+  IoGridOutline,
   IoHeart,
   IoLibraryOutline,
   IoOpenOutline,
@@ -95,6 +97,12 @@ const BlogSearch: NextPage = (): JSX.Element => {
     };
   }, [router.query]);
 
+  useEffect((): void => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage, hasNextPage]);
+
   return (
     <Layout
       metadata={{
@@ -135,13 +143,28 @@ const BlogSearch: NextPage = (): JSX.Element => {
                 </section>
               ))}
 
+            {!isFetching && !isError && state.blogPostsList.length < 1 && (
+              <div className='empty-data_container'>
+                <section className='content'>
+                  <div className='icon'>
+                    <IoGridOutline />
+                  </div>
+                  <div className='message'>
+                    <h3>Nenhuma postagem para mostrar.</h3>
+                  </div>
+                </section>
+              </div>
+            )}
             {state.blogPostsList.length > 0 && (
               <section className='posts-container'>
-                {state.blogPostsList.map((post) => (
+                {state.blogPostsList.map((post, index) => (
                   <Link
                     key={post._id}
                     className={'post'}
-                    href={`/blog/post/${post.slug}`}>
+                    href={`/blog/post/${post.slug}`}
+                    ref={
+                      state.blogPostsList.length === index + 1 ? ref : undefined
+                    }>
                     <>
                       <img
                         src={post.cover_image.url}
@@ -169,8 +192,10 @@ const BlogSearch: NextPage = (): JSX.Element => {
                           onClick={() =>
                             router.push(`/blog/post/${post.slug}`)
                           }>
-                          <IoOpenOutline />
-                          <span>Continuar leitura</span>
+                          <div>
+                            <IoArrowForwardOutline />
+                            <span>Continuar leitura</span>
+                          </div>
                         </button>
                       </div>
                     </>
@@ -180,7 +205,7 @@ const BlogSearch: NextPage = (): JSX.Element => {
                 <div className='stats-container'>
                   {isError && !isFetching && (
                     <div className=' fetch-error-message '>
-                      <h3>Erro ao carregar os dados.</h3>
+                      <h3>Erro ao carregar postagens</h3>
                       <button onClick={() => fetchNextPage()}>
                         <IoReload />
                         <span>Tentar novamente</span>
@@ -204,9 +229,7 @@ const BlogSearch: NextPage = (): JSX.Element => {
                   {!hasNextPage &&
                     !isFetching &&
                     !isError &&
-                    state.blogPostsList.length > 0 && (
-                      <p>Sem mais dados para mostrar</p>
-                    )}
+                    state.blogPostsList.length > 0 && <p>Chegou ao fim</p>}
                 </div>
 
                 {state.blogPostsList.length > 0 && (

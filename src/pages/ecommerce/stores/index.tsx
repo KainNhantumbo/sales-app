@@ -130,51 +130,55 @@ const Stores: NextPage = (): JSX.Element => {
               </section>
             </div>
           )}
+          
+          {state.publicStoresList.length > 0 && (
+            <section className='stores-container'>
+              {state.publicStoresList.map((store, index) => (
+                <Link
+                  key={store._id}
+                  className={'store'}
+                  href={`/community/store/${store._id}`}
+                  ref={
+                    state.publicStoresList.length === index + 1
+                      ? ref
+                      : undefined
+                  }>
+                  <>
+                    <h2 className='store-name'>
+                      <strong>{store.name}</strong>
+                    </h2>
+                    {store.slogan && (
+                      <h3 className='slogan'>
+                        <strong>{store.slogan}</strong>
+                      </h3>
+                    )}
 
-          <section className='stores-container'>
-            {state.publicStoresList.map((store, index) => (
-              <Link
-                key={store._id}
-                className={'store'}
-                href={`/community/store/${store._id}`}
-                ref={
-                  state.publicStoresList.length === index + 1 ? ref : undefined
-                }>
-                <>
-                  <h2 className='store-name'>
-                    <strong>{store.name}</strong>
-                  </h2>
-                  {store.slogan && (
-                    <h3 className='slogan'>
-                      <strong>{store.slogan}</strong>
-                    </h3>
-                  )}
+                    <div className='details'>
+                      <div>
+                        <IoAlbumsOutline />
+                        <span>{store.category}</span>
+                      </div>
+                      <div>
+                        <IoMdCalendar />
+                        <span>Ativa desde {formatDate(store.createdAt)}</span>
+                      </div>
+                    </div>
 
-                  <div className='details'>
-                    <div>
-                      <IoAlbumsOutline />
-                      <span>{store.category}</span>
-                    </div>
-                    <div>
-                      <IoMdCalendar />
-                      <span>Ativa desde {formatDate(store.createdAt)}</span>
-                    </div>
-                  </div>
-
-                  <p>{store.description}</p>
-                  <button
-                    onClick={() =>
-                      router.push(`/community/store/${store._id}`)
-                    }>
-                    <div>
-                      <IoArrowForwardOutline />
-                      <span>Visitar Loja</span>
-                    </div>
-                  </button>
-                </>
-              </Link>
-            ))}
-          </section>
+                    <p>{store.description}</p>
+                    <button
+                      onClick={() =>
+                        router.push(`/community/store/${store._id}`)
+                      }>
+                      <div>
+                        <IoArrowForwardOutline />
+                        <span>Visitar Loja</span>
+                      </div>
+                    </button>
+                  </>
+                </Link>
+              ))}
+            </section>
+          )}
           <div className='stats-container'>
             {isError && !isFetching && (
               <div className=' fetch-error-message '>

@@ -161,7 +161,7 @@ const pricing_data: TPricingData = [
     title: 'Gratuito (beta)',
     type: 'Trial',
     url: '/auth/sign-in',
-    label: 'Criar loja grátis',
+    label: 'Vamos começar!',
     amount: 0.0,
     description: [
       'Limitado',
@@ -175,13 +175,12 @@ const pricing_data: TPricingData = [
     title: 'Padrão',
     type: 'Standard',
     url: '/auth/sign-in',
-    label: 'Vamos trabalhar',
+    label: 'Vamos trabalhar!',
     amount: 94.99,
     description: [
       'Suporte em tempo real',
       'Live chat com seus clientes',
       'Acesso a criação de anúncios',
-      'Todas as funcionalidades padrão',
       'Quantidade ilimitada de produtos, vendas e visitas',
       'Ferramentas para auxiliar o seu negócio',
       'Ajude no crescimento da plataforma',
@@ -192,7 +191,7 @@ const pricing_data: TPricingData = [
     title: 'Profissional',
     type: 'Pro',
     url: '/auth/sign-in',
-    label: 'Vamos trabalhar',
+    label: 'Vamos conquistar!',
     amount: 119.99,
     description: [
       'Todas as funcionalidades do plano padrão',

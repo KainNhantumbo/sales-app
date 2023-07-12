@@ -128,86 +128,88 @@ const Blog: NextPage = (): JSX.Element => {
             </div>
           )}
 
-          <section className='posts-container'>
-            {state.blogPostsList.map((post, index) => (
-              <Link
-                key={post._id}
-                className={'post'}
-                href={`/blog/post/${post.slug}`}
-                ref={
-                  state.blogPostsList.length === index + 1 ? ref : undefined
-                }>
-                <>
-                  <img
-                    src={post.cover_image.url}
-                    alt={`Image of ${post.title} article.`}
-                  />
+          {state.blogPostsList.length > 0 && (
+            <section className='posts-container'>
+              {state.blogPostsList.map((post, index) => (
+                <Link
+                  key={post._id}
+                  className={'post'}
+                  href={`/blog/post/${post.slug}`}
+                  ref={
+                    state.blogPostsList.length === index + 1 ? ref : undefined
+                  }>
+                  <>
+                    <img
+                      src={post.cover_image.url}
+                      alt={`Image of ${post.title} article.`}
+                    />
 
-                  <div className='content-container'>
-                    <div className='details'>
-                      <div>
-                        <IoIosAlbums />
-                        <span>{post.category || 'Miscelânia'}</span>
+                    <div className='content-container'>
+                      <div className='details'>
+                        <div>
+                          <IoIosAlbums />
+                          <span>{post.category || 'Miscelânia'}</span>
+                        </div>
+                        <div>
+                          <IoMdCalendar />
+                          <span>{formatDate(post.updatedAt)}</span>
+                        </div>
+                        <div>
+                          <IoHeart />
+                          <span>{post.favorites.length} favoritos</span>
+                        </div>
                       </div>
-                      <div>
-                        <IoMdCalendar />
-                        <span>{formatDate(post.updatedAt)}</span>
-                      </div>
-                      <div>
-                        <IoHeart />
-                        <span>{post.favorites.length} favoritos</span>
-                      </div>
+                      <h3>{post.title}</h3>
+                      <p>{post.excerpt}</p>
+                      <button
+                        onClick={() => router.push(`/blog/post/${post.slug}`)}>
+                        <div>
+                          <IoArrowForwardOutline />
+                          <span>Continuar leitura</span>
+                        </div>
+                      </button>
                     </div>
-                    <h3>{post.title}</h3>
-                    <p>{post.excerpt}</p>
-                    <button
-                      onClick={() => router.push(`/blog/post/${post.slug}`)}>
-                      <div>
-                        <IoArrowForwardOutline />
-                        <span>Continuar leitura</span>
-                      </div>
+                  </>
+                </Link>
+              ))}
+
+              <div className='stats-container'>
+                {isError && !isFetching && (
+                  <div className=' fetch-error-message '>
+                    <h3>Erro ao carregar postagens</h3>
+                    <button onClick={() => fetchNextPage()}>
+                      <IoReload />
+                      <span>Tentar novamente</span>
                     </button>
                   </div>
-                </>
-              </Link>
-            ))}
+                )}
 
-            <div className='stats-container'>
-              {isError && !isFetching && (
-                <div className=' fetch-error-message '>
-                  <h3>Erro ao carregar postagens</h3>
-                  <button onClick={() => fetchNextPage()}>
-                    <IoReload />
-                    <span>Tentar novamente</span>
-                  </button>
-                </div>
-              )}
+                {isFetching && !isError && (
+                  <div className='loading'>
+                    <PulseLoader
+                      size={20}
+                      color={`rgb(${theme.primary_variant})`}
+                      aria-placeholder='Processando...'
+                      cssOverride={{
+                        display: 'block',
+                      }}
+                    />
+                  </div>
+                )}
 
-              {isFetching && !isError && (
-                <div className='loading'>
-                  <PulseLoader
-                    size={20}
-                    color={`rgb(${theme.primary_variant})`}
-                    aria-placeholder='Processando...'
-                    cssOverride={{
-                      display: 'block',
-                    }}
-                  />
-                </div>
-              )}
-
-              {!hasNextPage &&
-                !isFetching &&
-                !isError &&
-                state.blogPostsList.length > 0 && <p>Chegou ao fim</p>}
-            </div>
-
-            {state.blogPostsList.length > 0 && (
-              <div className='posts-container__end-mark'>
-                <IoEllipsisHorizontal />
+                {!hasNextPage &&
+                  !isFetching &&
+                  !isError &&
+                  state.blogPostsList.length > 0 && <p>Chegou ao fim</p>}
               </div>
-            )}
-          </section>
+
+              {state.blogPostsList.length > 0 && (
+                <div className='posts-container__end-mark'>
+                  <IoEllipsisHorizontal />
+                </div>
+              )}
+            </section>
+          )}
         </article>
         <NewsLetter />
       </Container>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BaseButton, Button_Mono_B, StyledInputs } from '../defaults';
+import { BaseButton } from '../defaults';
 
 export const BlogContainer = styled.div`
   position: relative;
@@ -97,7 +97,7 @@ export const BlogContainer = styled.div`
       }
     }
   }
-  
+
   .main-container {
     .fetching-state {
       position: absolute;
