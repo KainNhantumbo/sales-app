@@ -1,5 +1,6 @@
 import moment from 'moment';
 import Image from 'next/image';
+import { NextPage } from 'next';
 import fetch from '@/config/client';
 import { BiUser } from 'react-icons/bi';
 import { actions } from '@/data/actions';
@@ -7,16 +8,16 @@ import { useEffect } from 'react';
 import { IoLeafOutline } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
 import { IPublicStory } from '@/../@types';
-import { StoriesRenderContainer as Container } from '@/styles/modules/stories-renderer';
 import { NextRouter, useRouter } from 'next/router';
 import DeleteStoryPrompt from './modals/DeleteStoryPrompt';
+import { StoriesRenderContainer as Container } from '@/styles/modules/stories-renderer';
 
 interface IProps {
   userId?: string | undefined;
   favoritesId?: string | undefined;
 }
 
-const StoriesRenderer = (props: IProps): JSX.Element => {
+const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
   const router: NextRouter = useRouter();
   const { state, dispatch, fetchAPI, deleteStoryPromptController } =
     useAppContext();
@@ -57,7 +58,7 @@ const StoriesRenderer = (props: IProps): JSX.Element => {
 
   const handleFavoriteStory = async (storyId: string): Promise<void> => {
     try {
-      const { data } = await fetchAPI({
+      const { data } = await fetchAPI<string[]>({
         method: 'post',
         url: `/api/v1/users/favorites/stories/${storyId}`,
       });
@@ -78,7 +79,7 @@ const StoriesRenderer = (props: IProps): JSX.Element => {
   };
   const handleUnFavoriteStory = async (storyId: string): Promise<void> => {
     try {
-      const { data } = await fetchAPI({
+      const { data } = await fetchAPI<string[]>({
         method: 'patch',
         url: `/api/v1/users/favorites/stories/${storyId}`,
       });

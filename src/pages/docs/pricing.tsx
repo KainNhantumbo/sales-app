@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
+import { formatCurrency } from '@/lib/utils';
 import { IoBalloonOutline } from 'react-icons/io5';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { complements, pricing_data } from '@/data/app-data';
 import { PricingContainer as Container } from '@/styles/common/pricing';
-import { formatCurrency } from '@/lib/utils';
+import { NextPage } from 'next';
 
-const Pricing = (): JSX.Element => {
+const Pricing: NextPage = (): JSX.Element => {
   const theme: DefaultTheme = useTheme();
 
   return (
@@ -22,7 +23,7 @@ const Pricing = (): JSX.Element => {
               Quanto custa ter uma loja integrada na {complements.defaultTitle}?
             </h1>
             <p>
-              Confira nossos planos e preços e comece o seu negócio em poucos
+              Confira nossos planos e preços e, comece o seu negócio em poucos
               minutos.
             </p>
           </section>

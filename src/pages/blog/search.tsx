@@ -5,23 +5,24 @@ import {
   IoOpenOutline,
 } from 'react-icons/io5';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { getPosts } from '@/lib/queries';
+import { NextPage } from 'next';
+import { formatDate } from '@/lib/utils';
 import Layout from '@/components/Layout';
+import { getPosts } from '@/lib/queries';
 import { DotLoader } from 'react-spinners';
 import { useEffect, useState } from 'react';
-import { formatDate } from '@/lib/utils';
-import { useTheme } from 'styled-components';
 import { complements } from '@/data/app-data';
 import NewsLetter from '@/components/Newsletter';
 import SearchComponent from '@/components/Search';
 import { IBlogPosts } from '../../../@types/index';
+import { NextRouter, useRouter } from 'next/router';
+import { DefaultTheme, useTheme } from 'styled-components';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
 import { BlogSeachContainer as Container } from '@/styles/common/blog-search';
 
-export default function BlogSearch() {
-  const theme = useTheme();
-  const router = useRouter();
+const BlogSearch: NextPage = (): JSX.Element => {
+  const theme: DefaultTheme = useTheme();
+  const router: NextRouter = useRouter();
   const [posts, setPosts] = useState<IBlogPosts[]>([]);
   const [loading, setLoading] = useState<{ status: boolean }>({
     status: false,
@@ -35,7 +36,7 @@ export default function BlogSearch() {
     setError({ status: false, msg: '' });
     setLoading({ status: true });
     try {
-      const { data } = await getPosts({
+      const { data } = await getPosts<IBlogPosts[]>({
         search: router.query?.q as string,
       });
       setPosts(data);
@@ -110,54 +111,60 @@ export default function BlogSearch() {
               </section>
             )}
 
-            <section className='posts-container'>
-              {posts.map((post) => (
-                <Link
-                  key={post._id}
-                  className={'post'}
-                  href={`/blog/post/${post.slug}`}>
-                  <>
-                    <img
-                      src={post.cover_image.url}
-                      alt={`Image of ${post.title} article.`}
-                    />
+            {posts.length > 0 && (
+              <section className='posts-container'>
+                {posts.map((post) => (
+                  <Link
+                    key={post._id}
+                    className={'post'}
+                    href={`/blog/post/${post.slug}`}>
+                    <>
+                      <img
+                        src={post.cover_image.url}
+                        alt={`Image of ${post.title} article.`}
+                      />
 
-                    <div className='content-container'>
-                      <div className='details'>
-                        <div>
-                          <IoIosAlbums />
-                          <span>{post.category || 'Miscelânia'}</span>
+                      <div className='content-container'>
+                        <div className='details'>
+                          <div>
+                            <IoIosAlbums />
+                            <span>{post.category || 'Miscelânia'}</span>
+                          </div>
+                          <div>
+                            <IoMdCalendar />
+                            <span>{formatDate(post.updatedAt)}</span>
+                          </div>
+                          <div>
+                            <IoHeart />
+                            <span>{post.favorites.length} favoritos</span>
+                          </div>
                         </div>
-                        <div>
-                          <IoMdCalendar />
-                          <span>{formatDate(post.updatedAt)}</span>
-                        </div>
-                        <div>
-                          <IoHeart />
-                          <span>{post.favorites.length} favoritos</span>
-                        </div>
+                        <h3>{post.title}</h3>
+                        <p>{post.excerpt}</p>
+                        <button
+                          onClick={() =>
+                            router.push(`/blog/post/${post.slug}`)
+                          }>
+                          <IoOpenOutline />
+                          <span>Continuar leitura</span>
+                        </button>
                       </div>
-                      <h3>{post.title}</h3>
-                      <p>{post.excerpt}</p>
-                      <button
-                        onClick={() => router.push(`/blog/post/${post.slug}`)}>
-                        <IoOpenOutline />
-                        <span>Continuar leitura</span>
-                      </button>
-                    </div>
-                  </>
-                </Link>
-              ))}
-              {posts.length > 0 && (
-                <div className='posts-container__end-mark'>
-                  <IoEllipsisHorizontal />
-                </div>
-              )}
-            </section>
+                    </>
+                  </Link>
+                ))}
+                {posts.length > 0 && (
+                  <div className='posts-container__end-mark'>
+                    <IoEllipsisHorizontal />
+                  </div>
+                )}
+              </section>
+            )}
           </article>
           <NewsLetter />
         </div>
       </Container>
     </Layout>
   );
-}
+};
+
+export default BlogSearch;

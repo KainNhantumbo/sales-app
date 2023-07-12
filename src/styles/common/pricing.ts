@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BaseButton, Button_Mono_B, StyledInputs } from '../defaults';
+import { BaseButton } from '../defaults';
 
 export const PricingContainer = styled.div`
   position: relative;
@@ -120,8 +120,8 @@ export const PricingContainer = styled.div`
       padding: 30px 0;
       margin: 0 auto;
 
-        border-top: 3px solid rgb(${({ theme }) => theme.primary});
-        border-style: dashed;
+      border-top: 3px solid rgb(${({ theme }) => theme.primary});
+      border-style: dashed;
 
       h2 {
         font-weight: 500;

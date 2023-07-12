@@ -4,7 +4,7 @@ import { BaseButton, Button_Mono_B, StyledInputs } from '../defaults';
 export const BlogSeachContainer = styled.div`
   position: relative;
   width: 100%;
-  min-height: 50vh;
+  min-height: 40vh;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -17,44 +17,7 @@ export const BlogSeachContainer = styled.div`
     }
   }
 
-  .search-container {
-    width: 100%;
-    margin: 0 auto;
-    max-width: 980px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: row;
-    padding: 0 40px;
-
-    form {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      .form-element {
-        position: relative;
-        width: 100%;
-        ${StyledInputs}
-
-        svg {
-          position: absolute;
-          top: calc(50% - 10px);
-          left: 10px;
-          width: 20px;
-          height: 20px;
-          color: rgba(${({ theme }) => theme.font}, 0.5);
-        }
-      }
-
-      button {
-        ${Button_Mono_B}
-        width: 41px;
-        height: 41px;
-      }
-    }
-  }
-
+  
   .main-container {
     padding-top: 90px;
     .fetching-state {
@@ -94,7 +57,7 @@ export const BlogSeachContainer = styled.div`
     }
 
     .error-message {
-      height: 70vh;
+      height: 50vh;
       font-size: 1.6rem;
       text-align: center;
       line-height: 2.2rem;

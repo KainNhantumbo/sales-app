@@ -284,19 +284,18 @@ export default function Story(props: IProps): JSX.Element {
                       placeholder='Título da sua história'
                       aria-label='Título da sua história'
                       required={true}
+                      maxLength={64}
                       onChange={(e): void =>
-                        state.story.title.length > 64
-                          ? undefined
-                          : dispatch({
-                              type: actions.USER_STORY,
-                              payload: {
-                                ...state,
-                                story: {
-                                  ...state.story,
-                                  title: String(e.target.value),
-                                },
-                              },
-                            })
+                        dispatch({
+                          type: actions.USER_STORY,
+                          payload: {
+                            ...state,
+                            story: {
+                              ...state.story,
+                              title: String(e.target.value),
+                            },
+                          },
+                        })
                       }
                       value={state.story.title}
                     />
@@ -319,18 +318,16 @@ export default function Story(props: IProps): JSX.Element {
                       rows={6}
                       maxLength={512}
                       onChange={(e): void =>
-                        state.story.content.length > 512
-                          ? undefined
-                          : dispatch({
-                              type: actions.USER_STORY,
-                              payload: {
-                                ...state,
-                                story: {
-                                  ...state.story,
-                                  content: String(e.target.value),
-                                },
-                              },
-                            })
+                        dispatch({
+                          type: actions.USER_STORY,
+                          payload: {
+                            ...state,
+                            story: {
+                              ...state.story,
+                              content: String(e.target.value),
+                            },
+                          },
+                        })
                       }
                       value={state.story.content}
                     />

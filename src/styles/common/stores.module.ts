@@ -221,39 +221,30 @@ export const StoresContainer = styled.div`
       }
     }
 
-    .posts-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      gap: 12px;
+    .stores-container {
+      padding-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
 
-      .posts-container__end-mark {
-        display: grid;
-        justify-content: center;
-        align-items: center;
-        background: rgb(${({ theme }) => theme.foreground});
-        color: rgb(${({ theme }) => theme.primary_variant});
-        border-radius: 20px;
-        svg {
-          width: 25px;
-          height: 25px;
-        }
-
-        @media screen and (max-width: 1000px) {
-          border-radius: 10px;
-          margin-left: 10px;
-          margin-right: 10px;
-        }
+      @media screen and (max-width: 660px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 12px;
       }
 
-      .post {
+      .store {
         width: 100%;
         display: flex;
-        flex-flow: row nowrap;
+        flex-direction: column;
         border-radius: 10px;
         background: rgb(${({ theme }) => theme.foreground});
         font-size: 0.95rem;
         line-height: 1.2rem;
+        border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+        padding: 20px;
+        gap: 12px;
 
         :hover {
           cursor: pointer;
@@ -261,95 +252,73 @@ export const StoresContainer = styled.div`
           transition: all 200ms ease-in-out;
         }
 
-        @media screen and (max-width: 635px) {
-          flex-direction: column;
+        .store-name {
+          font-size: 1.2rem;
         }
 
-        img {
-          width: 100%;
-          height: 100%;
-          max-width: 280px;
-          object-fit: cover;
-          max-height: 250px;
-          border-radius: 10px 0 0 10px;
-          @media screen and (max-width: 635px) {
-            width: 100%;
-            height: 100%;
-            max-width: none;
-            height: 280px;
-            border-radius: 10px 10px 0 0;
-          }
-        }
-
-        .content-container {
+        .details {
           display: flex;
-          flex-direction: column;
-          gap: 10px;
-          padding: 20px;
-          .details {
+          justify-content: flex-start;
+          gap: 12px;
+          font-size: 0.9rem;
+          font-weight: 500;
+          align-items: center;
+          flex-flow: row wrap;
+
+          div {
             display: flex;
-            justify-content: flex-start;
-            gap: 12px;
-            font-size: 0.9rem;
-            font-weight: 500;
             align-items: center;
-            flex-flow: row wrap;
-
-            div {
-              display: flex;
-              align-items: center;
-              gap: 5px;
-              text-transform: uppercase;
-              position: relative;
-              svg {
-                position: absolute;
-                top: calc(50% - 11px);
-                left: 0;
-                width: 20px;
-                height: 20px;
-              }
-
-              span {
-                padding-left: 23px;
-              }
-            }
-          }
-
-          h3 {
-            font-weight: 500;
-            font-size: 1rem;
-            line-height: 1.4rem;
-            color: rgb(${({ theme }) => theme.primary_variant});
-          }
-
-          button {
-            border: none;
-            background: none;
-            border-radius: 10px;
+            gap: 5px;
+            text-transform: uppercase;
             position: relative;
-            padding: 10px 10px 10px 0;
-            color: rgb(${({ theme }) => theme.font});
-            width: fit-content;
-            cursor: pointer;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            :hover {
-              color: rgb(${({ theme }) => theme.primary_variant});
-            }
             svg {
+              position: absolute;
+              top: calc(50% - 11px);
+              left: 0;
               width: 20px;
               height: 20px;
-              position: absolute;
-              top: calc(50% - 10px);
-              right: 7px;
-              pointer-events: none;
             }
+
             span {
-              padding-right: 20px;
-              font-weight: 500;
-              pointer-events: none;
+              padding-left: 23px;
             }
+          }
+        }
+
+        h3 {
+          font-weight: 500;
+          font-size: 1rem;
+          line-height: 1.4rem;
+          color: rgb(${({ theme }) => theme.primary_variant});
+        }
+
+        button {
+          border: none;
+          background: none;
+          border-radius: 10px;
+          position: relative;
+          padding: 10px 10px 10px 0;
+          color: rgb(${({ theme }) => theme.font});
+          width: fit-content;
+          cursor: pointer;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          :hover {
+            color: rgb(${({ theme }) => theme.primary_variant});
+          }
+          svg {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: calc(50% - 10px);
+            right: 7px;
+            pointer-events: none;
+          }
+          span {
+            padding-right: 20px;
+            font-weight: 500;
+            pointer-events: none;
           }
         }
       }
@@ -402,6 +371,25 @@ export const StoresContainer = styled.div`
       margin: 0 auto;
 
       color: rgb(${({ theme }) => theme.primary_variant});
+    }
+  }
+
+  .stores-container__end-mark {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background: rgb(${({ theme }) => theme.foreground});
+    color: rgb(${({ theme }) => theme.primary_variant});
+    border-radius: 20px;
+    svg {
+      width: 25px;
+      height: 25px;
+    }
+
+    @media screen and (max-width: 1000px) {
+      border-radius: 10px;
+      margin-left: 10px;
+      margin-right: 10px;
     }
   }
 

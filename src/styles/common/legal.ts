@@ -17,7 +17,7 @@ export const LegalContainer = styled.div`
     .introdution-container {
       padding: 20px;
       border-radius: 12px;
-      width:100% ;
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;

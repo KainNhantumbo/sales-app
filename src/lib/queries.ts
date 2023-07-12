@@ -31,10 +31,10 @@ export async function getPosts<T>(props: TQueryListProps) {
 export async function getStoresData<T>(props: TQueryListProps) {
   return await fetch<T>({
     method: 'get',
-    url: `/api/v1/users/stores?fields=name,slogan,description,category,createdAt&sort=createdAt${
+    url: `/api/v1/users/store/public?${
+      props.offset ? `offset=${props.offset.toString()}` : ''
+    }${props.limit ? `&limit=${props.limit.toString()}` : ''}${
       props.search ? `&search=${props.search}` : ''
-    }${props.offset ? `&offset=${props.offset.toString()}` : ''}${
-      props.limit ? `&limit=${props.limit.toString()}` : ''
     }`,
   });
 }

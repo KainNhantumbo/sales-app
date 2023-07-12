@@ -1,4 +1,5 @@
 import {
+  IoAlbumsOutline,
   IoArrowForwardOutline,
   IoEllipsisHorizontal,
   IoGridOutline,
@@ -6,12 +7,14 @@ import {
   IoStorefrontOutline,
 } from 'react-icons/io5';
 import Link from 'next/link';
-import { useEffect } from 'react';
 import Image from 'next/image';
+import { NextPage } from 'next';
+import { useEffect } from 'react';
 import Layout from '@/components/Layout';
 import { actions } from '@/data/actions';
 import { formatDate } from '@/lib/utils';
 import { PulseLoader } from 'react-spinners';
+import { IoMdCalendar } from 'react-icons/io';
 import { getStoresData } from '@/lib/queries';
 import { TPublicStoreList } from '@/../@types';
 import NewsLetter from '@/components/Newsletter';
@@ -21,12 +24,11 @@ import { useAppContext } from '@/context/AppContext';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
 import { blurDataUrlImage, complements } from '@/data/app-data';
 import buyingWomenImg from '@/../public/assets/buying_women.png';
 import { StoresContainer as Container } from '@/styles/common/stores.module';
 
-const Stores = (): JSX.Element => {
+const Stores: NextPage = (): JSX.Element => {
   const LIMIT: number = 8;
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
@@ -84,7 +86,8 @@ const Stores = (): JSX.Element => {
   }, [inView, fetchNextPage, hasNextPage]);
 
   return (
-    <Layout metadata={{ title: complements.defaultTitle + ' | Lojas' }}>
+    <Layout
+      metadata={{ title: complements.defaultTitle + ' | Lojas Integradas' }}>
       <Container>
         <section className='banner-container'>
           <div className='wrapper'>
@@ -130,7 +133,7 @@ const Stores = (): JSX.Element => {
             </div>
           )}
 
-          <section className='posts-container'>
+          <section className='stores-container'>
             {state.publicStoresList.map((store, index) => (
               <Link
                 key={store._id}
@@ -140,78 +143,75 @@ const Stores = (): JSX.Element => {
                   state.publicStoresList.length === index + 1 ? ref : undefined
                 }>
                 <>
-                  <h2>
+                  <h2 className='store-name'>
                     <strong>{store.name}</strong>
                   </h2>
                   {store.slogan && (
-                    <h3>
+                    <h3 className='slogan'>
                       <strong>{store.slogan}</strong>
                     </h3>
                   )}
 
-                  <div className='content-container'>
-                    <div className='details'>
-                      <div>
-                        <IoIosAlbums />
-                        <span>{store.category}</span>
-                      </div>
-                      <div>
-                        <IoMdCalendar />
-                        <span>{formatDate(store.createdAt)}</span>
-                      </div>
+                  <div className='details'>
+                    <div>
+                      <IoAlbumsOutline />
+                      <span>{store.category}</span>
                     </div>
-
-                    <p>{store.description}</p>
-                    <button
-                      onClick={() =>
-                        router.push(`/community/store/${store._id}`)
-                      }>
-                      <div>
-                        <IoArrowForwardOutline />
-                        <span>Visitar Loja</span>
-                      </div>
-                    </button>
+                    <div>
+                      <IoMdCalendar />
+                      <span>Ativa desde {formatDate(store.createdAt)}</span>
+                    </div>
                   </div>
+
+                  <p>{store.description}</p>
+                  <button
+                    onClick={() =>
+                      router.push(`/community/store/${store._id}`)
+                    }>
+                    <div>
+                      <IoArrowForwardOutline />
+                      <span>Visitar Loja</span>
+                    </div>
+                  </button>
                 </>
               </Link>
             ))}
-
-            <div className='stats-container'>
-              {isError && !isFetching && (
-                <div className=' fetch-error-message '>
-                  <h3>Erro ao carregar dados</h3>
-                  <button onClick={() => fetchNextPage()}>
-                    <IoReload />
-                    <span>Tentar novamente</span>
-                  </button>
-                </div>
-              )}
-
-              {isFetching && !isError && (
-                <div className='loading'>
-                  <PulseLoader
-                    size={20}
-                    color={`rgb(${theme.primary_variant})`}
-                    aria-placeholder='Processando...'
-                    cssOverride={{
-                      display: 'block',
-                    }}
-                  />
-                </div>
-              )}
-
-              {!hasNextPage &&
-                !isFetching &&
-                !isError &&
-                state.publicStoresList.length > 0 && <p>Chegou ao fim</p>}
-            </div>
-
-            {state.publicStoresList.length > 0 && (
-              <div className='posts-container__end-mark'>
-                <IoEllipsisHorizontal />
+          </section>
+          <div className='stats-container'>
+            {isError && !isFetching && (
+              <div className=' fetch-error-message '>
+                <h3>Erro ao carregar dados</h3>
+                <button onClick={() => fetchNextPage()}>
+                  <IoReload />
+                  <span>Tentar novamente</span>
+                </button>
               </div>
             )}
-          </section>
+
+            {isFetching && !isError && (
+              <div className='loading'>
+                <PulseLoader
+                  size={20}
+                  color={`rgb(${theme.primary_variant})`}
+                  aria-placeholder='Processando...'
+                  cssOverride={{
+                    display: 'block',
+                  }}
+                />
+              </div>
+            )}
+
+            {!hasNextPage &&
+              !isFetching &&
+              !isError &&
+              state.publicStoresList.length > 0 && <p>Chegou ao fim</p>}
+          </div>
+
+          {state.publicStoresList.length > 0 && (
+            <div className='stores-container__end-mark'>
+              <IoEllipsisHorizontal />
+            </div>
+          )}
         </article>
         <NewsLetter />
       </Container>

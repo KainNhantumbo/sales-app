@@ -184,7 +184,7 @@ const pricing_data: TPricingData = [
       'Todas as funcionalidades padrão',
       'Quantidade ilimitada de produtos, vendas e visitas',
       'Ferramentas para auxiliar o seu negócio',
-      'Ajude o crescimento da plataforma',
+      'Ajude no crescimento da plataforma',
       'Renovável a cada 30 dias',
     ],
   },
@@ -197,7 +197,7 @@ const pricing_data: TPricingData = [
     description: [
       'Todas as funcionalidades do plano padrão',
       'Acesse a Secção de Biscatos e Empregos',
-      'Ajude o crescimento da plataforma',
+      'Ajude no crescimento da plataforma',
       'Renovável a cada 30 dias',
     ],
   },

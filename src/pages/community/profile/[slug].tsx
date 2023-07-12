@@ -1,6 +1,5 @@
 import {
   IoAdd,
-  IoBalloonOutline,
   IoBriefcase,
   IoCreateOutline,
   IoLocation,
@@ -10,10 +9,11 @@ import {
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect} from 'react';
+import { useEffect } from 'react';
 import fetch from '@/config/client';
 import { FaAd } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { BsWind } from 'react-icons/bs';
 import { BiUser } from 'react-icons/bi';
 import { formatDate } from '@/lib/utils';
 import Layout from '@/components/Layout';
@@ -23,10 +23,11 @@ import { NextRouter, useRouter } from 'next/router';
 import { complements, formatSocialNetwork } from '@/data/app-data';
 import StoriesRenderer from '@/components/StoriesRenderer';
 import { ProfileContainer as Container } from '@/styles/common/community-user-profile';
+import { NextPage } from 'next';
 
 type TProps = { user: TPublicUser };
 
-export default function UserProfile({ user }: TProps): JSX.Element {
+const UserProfile: NextPage<TProps> = ({ user }): JSX.Element => {
   const router: NextRouter = useRouter();
 
   if (!user)
@@ -81,7 +82,7 @@ export default function UserProfile({ user }: TProps): JSX.Element {
                   alt={`Imagem de capa de ${user.first_name} ${user.last_name}`}
                 />
               ) : (
-                <IoBalloonOutline className='cover-image-icon' />
+                <BsWind className='cover-image-icon' />
               )}
             </div>
 
@@ -206,13 +207,15 @@ export default function UserProfile({ user }: TProps): JSX.Element {
                 )}
             </section>
             {/* user stories */}
-            <StoriesRenderer userId={user._id} />
+            <StoriesRenderer key={user._id} userId={user._id} />
           </article>
         </div>
       </Container>
     </Layout>
   );
-}
+};
+
+export default UserProfile;
 
 export async function getStaticPaths(): Promise<any> {
   const slugs = await fetch<TPublicUser[]>({

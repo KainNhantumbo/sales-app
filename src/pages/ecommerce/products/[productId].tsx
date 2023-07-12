@@ -65,7 +65,7 @@ export default function Product({ product }: any): JSX.Element {
 
   async function handleFavoriteProduct(id: string): Promise<void> {
     try {
-      const { data } = await fetchAPI({
+      const { data } = await fetchAPI<string[]>({
         method: 'post',
         url: `/api/v1/users/favorites/products/${id}`,
       });
@@ -83,7 +83,7 @@ export default function Product({ product }: any): JSX.Element {
 
   async function handleUnFavoriteProduct(id: string): Promise<void> {
     try {
-      const { data } = await fetchAPI({
+      const { data } = await fetchAPI<string[]>({
         method: 'patch',
         url: `/api/v1/users/favorites/products/${id}`,
       });
@@ -710,7 +710,10 @@ export default function Product({ product }: any): JSX.Element {
             {state.publicProduct.allow_comments ? (
               <Suspense
                 fallback={<h3>Carregando o sistema de commentários...</h3>}>
-                <Comments contentId={state.publicProduct._id} />
+                <Comments
+                  key={state.publicProduct._id}
+                  contentId={state.publicProduct._id}
+                />
               </Suspense>
             ) : (
               <div className='no-comments-message'>
