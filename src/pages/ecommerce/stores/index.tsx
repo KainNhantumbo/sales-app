@@ -19,7 +19,7 @@ import { getStoresData } from '@/lib/queries';
 import { TPublicStoreList } from '@/../@types';
 import NewsLetter from '@/components/Newsletter';
 import { NextRouter, useRouter } from 'next/router';
-import SearchStores from '@/components/SearchStores';
+import SearchStores from '@/components/SearchPublicStores';
 import { useAppContext } from '@/context/AppContext';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';

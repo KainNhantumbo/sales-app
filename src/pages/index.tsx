@@ -29,8 +29,9 @@ import opening_store_png from '../../public/assets/opening.png';
 import { blurDataUrlImage, complements } from '@/data/app-data';
 import { HomeContainer as Container } from '@/styles/common/home';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
+import { NextPage } from 'next';
 
-export default function Home(): JSX.Element {
+const Home: NextPage = (): JSX.Element => {
   const {
     state,
     dispatch,
@@ -396,4 +397,6 @@ export default function Home(): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default Home;

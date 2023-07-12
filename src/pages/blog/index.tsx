@@ -7,8 +7,9 @@ import {
   IoStorefrontOutline,
 } from 'react-icons/io5';
 import Link from 'next/link';
-import { useEffect } from 'react';
 import Image from 'next/image';
+import { NextPage } from 'next';
+import { useEffect } from 'react';
 import { NextRouter, useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import { actions } from '@/data/actions';
@@ -17,16 +18,16 @@ import { formatDate } from '@/lib/utils';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { PulseLoader } from 'react-spinners';
 import NewsLetter from '@/components/Newsletter';
-import SearchComponent from '@/components/Search';
+import SearchComponent from '@/components/SearchBlogPosts';
 import { useAppContext } from '@/context/AppContext';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
 import { blurDataUrlImage, complements } from '@/data/app-data';
 import { BlogContainer as Container } from '@/styles/common/blog';
-import buyingWomenImg from '../../../public/assets/buying_women.png';
+import buyingWomenImg from '@/../public/assets/buying_women.png';
 
-export default function Blog(): JSX.Element {
+const Blog: NextPage = (): JSX.Element => {
   const LIMIT: number = 8;
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
@@ -212,4 +213,6 @@ export default function Blog(): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default Blog;

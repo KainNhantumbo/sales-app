@@ -205,6 +205,55 @@ export const BlogSeachContainer = styled.div`
     }
   }
 
+  .stats-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-content: center;
+    place-items: center;
+
+    .fetch-error-message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin: 20px 0;
+      color: rgb(${({ theme }) => theme.alert});
+      font-weight: 500;
+      font-size: 1.1rem;
+      line-height: 1.4rem;
+      align-self: flex-end;
+
+      button {
+        ${BaseButton}
+      }
+    }
+    p {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      font-weight: 500;
+      line-height: 1.6rem;
+      color: rgb(${({ theme }) => theme.primary_variant});
+    }
+
+    .loading {
+      width: 100%;
+      height: 100%;
+      align-self: flex-end;
+      display: flex;
+
+      flex-direction: row;
+      align-items: center;
+      font-weight: 500;
+      font-size: 1.1rem;
+      gap: 10px;
+      padding: 20px;
+      margin: 0 auto;
+
+      color: rgb(${({ theme }) => theme.primary_variant});
+    }
+  }
+
   .load-posts-container {
     margin: 20px auto;
 

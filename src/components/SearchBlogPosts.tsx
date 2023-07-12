@@ -1,38 +1,40 @@
-import { actions } from '@/data/actions';
+import { FC } from 'react';
 import { IoSearch } from 'react-icons/io5';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
+import { actions } from '@/data/actions';
 import { SearchContainer as Container } from '@/styles/modules/search-form';
 
-const SearchStores = (): JSX.Element => {
+const SearchComponent: FC = (): JSX.Element => {
   const { state, dispatch } = useAppContext();
   const router: NextRouter = useRouter();
+
   return (
     <Container>
       <form onSubmit={(e): void => e.preventDefault()}>
-        <div className='form-element' title='Procurar lojas'>
+        <div className='form-element' title='Search'>
           <input
             type='text'
-            placeholder='Procurar lojas...'
-            aria-label='Procurar lojas...'
-            title='Procurar lojas...'
-            value={state.searchStores}
-            onChange={(e): void => {
+            placeholder='Procurar postagens...'
+            title='Procurar postagens...'
+            aria-label='Procurar postagens...'
+            value={state.search}
+            onChange={(e): void =>
               dispatch({
-                type: actions.SEARCH_STORES,
+                type: actions.SEARCH,
                 payload: {
                   ...state,
-                  searchStores: e.target.value,
+                  search: e.target.value,
                 },
-              });
-            }}
+              })
+            }
           />
         </div>
 
         <button
           onClick={(): void => {
-            if (state.searchStores.length < 1) return;
-            router.push(`/ecommerce/stores/search?q=${state.searchStores}`);
+            if (state.search.length < 1) return;
+            router.push(`/blog/blog-search?q=${state.search}`);
           }}>
           <IoSearch />
         </button>
@@ -41,4 +43,4 @@ const SearchStores = (): JSX.Element => {
   );
 };
 
-export default SearchStores;
+export default SearchComponent;
