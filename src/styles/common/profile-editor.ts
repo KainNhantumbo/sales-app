@@ -5,7 +5,7 @@ import {
   Button_Mono_A,
   Button_Mono_B,
   StyledInputs,
-  StyledLabels
+  StyledLabels,
 } from '../defaults';
 
 export const UserProfileContainer = styled.div`
@@ -298,9 +298,6 @@ export const UserProfileContainer = styled.div`
               }
               ${StyledInputs}
 
-              input[type='date'] {
-                padding-top: 20px;
-              }
               .counter {
                 align-self: end;
                 font-size: 0.9rem;

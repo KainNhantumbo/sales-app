@@ -42,6 +42,7 @@ export const ProfileContainer = styled.div`
 
   article {
     width: 100%;
+    max-width: 720px;
     display: flex;
     flex-direction: column;
     gap: 20px;

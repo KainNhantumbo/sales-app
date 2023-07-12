@@ -42,21 +42,22 @@ import { BiUser, BiUserCheck, BiUserX } from 'react-icons/bi';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
 import { actions } from '@/data/actions';
-import { InputEvents } from '../../../../@types';
+import { InputEvents, User } from '@/../@types';
 import { NextRouter, useRouter } from 'next/router';
+import { complements } from '@/data/app-data';
+import Image from 'next/image';
 import { useAppContext } from '@/context/AppContext';
 import { FaBlog, FaLinkedinIn } from 'react-icons/fa';
 import { DotLoader, PulseLoader } from 'react-spinners';
-import countries from '../../../data/countries.json';
-import user_languages from '../../../data/languages.json';
-import UserWorkingData from '../../../components/modals/UserWorkingData';
+import countries from '@/data/countries.json';
+import user_languages from '@/data/languages.json';
+import UserWorkingData from '@/components/modals/UserWorkingData';
 import { UserProfileContainer as Container } from '@/styles/common/profile-editor';
-import user_skills from '../../../data/professional-skills.json';
-import DeleteAccountPrompt from '../../../components/modals/DeleteAccountPrompt';
-import { complements } from '@/data/app-data';
-import Image from 'next/image';
+import user_skills from '@/data/professional-skills.json';
+import DeleteAccountPrompt from '@/components/modals/DeleteAccountPrompt';
+import { NextPage } from 'next';
 
-export default function ProfileEditor(): JSX.Element {
+const ProfileEditor: NextPage = (): JSX.Element => {
   const theme = useTheme();
   const router: NextRouter = useRouter();
   const {
@@ -242,14 +243,11 @@ export default function ProfileEditor(): JSX.Element {
         ...user
       } = state.user;
 
-      const serializedObj = Object.entries(social_network)
-        .map(([key, value]) => {
-          if (value) return { [key]: value };
-          return undefined;
-        })
+      const serializedObj = Object.entries(social_network ?? {})
+        .map(([key, value]) => (value ? { [key]: value } : undefined))
         .reduce((acc, value) => ({ ...acc, ...value }), {});
 
-      const { data } = await fetchAPI({
+      const { data } = await fetchAPI<User>({
         method: 'patch',
         url: `/api/v1/users/account`,
         data: {
@@ -259,7 +257,7 @@ export default function ProfileEditor(): JSX.Element {
           social_network: serializedObj,
         },
       });
-      
+
       dispatch({
         type: actions.USER_DATA,
         payload: {
@@ -1424,4 +1422,6 @@ export default function ProfileEditor(): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default ProfileEditor;

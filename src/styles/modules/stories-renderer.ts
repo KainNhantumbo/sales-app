@@ -5,22 +5,24 @@ export const StoriesRenderContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  align-items: center;
   padding: 0 20px;
   padding-bottom: 20px;
+  margin: 0 auto;
 
   .stories-container {
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 12px;
 
     .story-container {
       width: 100%;
-      max-width: 620px;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      padding: 12px;
+      padding: 12px 12px 0 12px;
       border-radius: 12px;
       border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
       :hover {
@@ -83,8 +85,10 @@ export const StoriesRenderContainer = styled.div`
 
       .cover-image {
         width: 100%;
+        height: 100%;
         border-radius: 12px;
         object-fit: cover;
+
       }
     }
   }

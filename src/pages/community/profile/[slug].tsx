@@ -179,34 +179,37 @@ const UserProfile: NextPage<TProps> = ({ user }): JSX.Element => {
                 </h5>
               )}
             </section>
-            <section className='professional-data-container'>
-              {user.spoken_languages && user.spoken_languages.length > 0 && (
-                <div className='spoken-languages'>
-                  <h5>
-                    <IoPlanet />
-                    <span>Possui habilidades linguísticas em: </span>
-                  </h5>
-                  {user.spoken_languages.map((language, index) => (
-                    <p key={String(index)}>{language}</p>
-                  ))}
-                </div>
+            {user.spoken_languages.length > 0 &&
+              user.professional_skills.length > 0 && (
+                <section className='professional-data-container'>
+                  {user.spoken_languages.length > 0 && (
+                    <div className='spoken-languages'>
+                      <h5>
+                        <IoPlanet />
+                        <span>Possui habilidades linguísticas em: </span>
+                      </h5>
+                      {user.spoken_languages.map((language, index) => (
+                        <p key={String(index)}>{language}</p>
+                      ))}
+                    </div>
+                  )}
+                  {user.professional_skills.length > 0 && (
+                    <div className='spoken-languages'>
+                      <h5>
+                        <IoBriefcase />
+                        <span>
+                          Possui habilidades profissionais relacionadas a{' '}
+                        </span>
+                      </h5>
+                      {user.professional_skills.map((ability, index) => (
+                        <p key={String(index)}>#{ability}</p>
+                      ))}
+                    </div>
+                  )}
+                </section>
               )}
-              {user.professional_skills &&
-                user.professional_skills.length > 0 && (
-                  <div className='spoken-languages'>
-                    <h5>
-                      <IoBriefcase />
-                      <span>
-                        Possui habilidades profissionais relacionadas a{' '}
-                      </span>
-                    </h5>
-                    {user.professional_skills.map((ability, index) => (
-                      <p key={String(index)}>#{ability}</p>
-                    ))}
-                  </div>
-                )}
-            </section>
             {/* user stories */}
+            
             <StoriesRenderer key={user._id} userId={user._id} />
           </article>
         </div>
