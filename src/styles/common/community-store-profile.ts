@@ -561,33 +561,5 @@ export const StoreContainer = styled.div`
         }
       }
     }
-
-    .no-ads {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      padding: 12px 5px;
-      padding-bottom: 25px;
-      border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
-
-      .ads-icon {
-        width: 30px;
-        height: 30px;
-        color: rgb(${({ theme }) => theme.primary});
-      }
-
-      h3 {
-        text-align: center;
-        font-size: 1.2rem;
-        line-height: 1.6rem;
-        font-weight: 500;
-      }
-
-      a {
-        ${BaseButtonOutline}
-      }
-    }
   }
 `;

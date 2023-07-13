@@ -1,7 +1,5 @@
 import {
-  IoAdd,
   IoHeart,
-  IoPushOutline,
   IoTrashOutline,
   IoDownloadOutline,
   IoEllipsisHorizontal,
@@ -9,7 +7,6 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import fetch from '@/config/client';
-import { FaAd } from 'react-icons/fa';
 import Compressor from 'compressorjs';
 import { AxiosResponse } from 'axios';
 import Layout from '@/components/Layout';
@@ -17,20 +14,21 @@ import { actions } from '@/data/actions';
 import { useDropzone } from 'react-dropzone';
 import { PulseLoader } from 'react-spinners';
 import { complements } from '@/data/app-data';
-import { GetServerSidePropsContext } from 'next';
 import { IPublicStory, TStory } from '@/../@types';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { BsChatSquareTextFill } from 'react-icons/bs';
 import { useCallback, useEffect, useState } from 'react';
 import { DefaultTheme, useTheme } from 'styled-components';
-import { StoryContainer as Container } from '@/styles/modules/story';
+import { GetServerSidePropsContext, NextPage } from 'next';
+import { StoryContainer as Container } from '@/styles/common/story';
+import SideBarAds from '@/components/SidaBarAds';
 
 interface IProps {
   story: IPublicStory | undefined;
 }
 
-export default function Story(props: IProps): JSX.Element {
+const Story: NextPage<IProps> = (props): JSX.Element => {
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
   const { state, dispatch, fetchAPI } = useAppContext();
@@ -40,12 +38,7 @@ export default function Story(props: IProps): JSX.Element {
     msg: string;
   }>({ status: false, msg: '' });
 
-  const [coverImageFile, setCoverImageFile] = useState<FileList | null>(null);
-
-  const [coverImageData, setCoverImageData] = useState<{
-    id: string;
-    data: string;
-  }>({
+  const [coverImageData, setCoverImageData] = useState({
     id: '',
     data: '',
   });
@@ -122,20 +115,6 @@ export default function Story(props: IProps): JSX.Element {
         url: `/api/v1/users/stories`,
         data: { ...state.story, coverImageData },
       });
-      dispatch({
-        type: actions.USER_STORY,
-        payload: {
-          ...state,
-          story: {
-            title: '',
-            allow_comments: true,
-            content: '',
-            cover_image: { id: '', url: '' },
-          },
-        },
-      });
-      setCoverImageData({ id: '', data: '' });
-      setCoverImageFile(null);
       router.back();
     } catch (error: any) {
       console.error(error.response?.data?.message || error);
@@ -158,18 +137,7 @@ export default function Story(props: IProps): JSX.Element {
         url: `/api/v1/users/stories/${props.story?._id}`,
         data: { ...state.story },
       });
-      dispatch({
-        type: actions.USER_STORY,
-        payload: {
-          ...state,
-          story: {
-            title: '',
-            allow_comments: true,
-            content: '',
-            cover_image: { id: '', url: '' },
-          },
-        },
-      });
+      router.back();
     } catch (error: any) {
       console.error(error.response?.data?.message || error);
       setError({
@@ -198,22 +166,14 @@ export default function Story(props: IProps): JSX.Element {
           ...state,
           story: {
             title: '',
-            allow_comments: true,
             content: '',
             cover_image: { id: '', url: '' },
           },
         },
       });
+      setCoverImageData({ id: '', data: '' });
     };
   }, []);
-
-  useEffect((): (() => void) => {
-    // handleCoverImageFile();
-    return () => {
-      setCoverImageData({ id: '', data: '' });
-      setCoverImageFile(null);
-    };
-  }, [coverImageFile]);
 
   useEffect((): (() => void) => {
     const timer = setTimeout(() => {
@@ -230,18 +190,7 @@ export default function Story(props: IProps): JSX.Element {
     <Layout metadata={{ title: `${complements.defaultTitle} | Histórias` }}>
       <Container>
         <div className='wrapper-container'>
-          <aside>
-            <section className='no-ads'>
-              <FaAd className='ads-icon' />
-              <h3>
-                <span>Espaço reservado para anúncios</span>
-              </h3>
-              <Link href={`/users/dashboard/create-ad`}>
-                <IoAdd />
-                <span>Criar anúncio</span>
-              </Link>
-            </section>
-          </aside>
+          <SideBarAds key={'story'} />
 
           <article>
             <section className='header-container'>
@@ -337,33 +286,6 @@ export default function Story(props: IProps): JSX.Element {
                   </div>
                 </section>
 
-                <section className='form-section'>
-                  <div className='form-element check-box'>
-                    <label htmlFor='allow_comments'>
-                      <BsChatSquareTextFill />
-                      <span>Permitir comentários?</span>
-                    </label>
-                    <input
-                      type='checkbox'
-                      id='allow_comments'
-                      name='allow_comments'
-                      onChange={(e): void => {
-                        dispatch({
-                          type: actions.USER_STORY,
-                          payload: {
-                            ...state,
-                            story: {
-                              ...state.story,
-                              allow_comments: e.target.checked,
-                            },
-                          },
-                        });
-                      }}
-                      checked={state.story.allow_comments}
-                    />
-                  </div>
-                </section>
-
                 <div className='cover-image-container'>
                   {coverImageData.data ? (
                     <>
@@ -455,7 +377,6 @@ export default function Story(props: IProps): JSX.Element {
                     <div className='prompt-actions'>
                       {props.story?._id !== undefined ? (
                         <button onClick={updateStory} className='prompt-accept'>
-                          <IoPushOutline />
                           <span>Atualizar</span>
                         </button>
                       ) : (
@@ -475,18 +396,18 @@ export default function Story(props: IProps): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default Story;
 
 type TContext = GetServerSidePropsContext;
 
 export async function getServerSideProps(context: TContext) {
   try {
-    if (!context.params?.slug || context.params?.slug === 'create-story')
-      return { props: {} };
-
+    if (context.params?.slug === 'create-story') return { props: {} };
     const { data } = await fetch<AxiosResponse<TStory>>({
       method: 'get',
-      url: `/api/users/stories/${context.params.slug}`,
+      url: `/api/v1/users/stories/${context.params?.slug}`,
     });
     return { props: { story: { ...data } } };
   } catch (error) {

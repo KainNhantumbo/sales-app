@@ -15,7 +15,7 @@ module.exports = nextPWA({
   images: {
     domains: ['https://res.cloudinary.com/']
   },
-  // experimental: {
-  //   scrollRestoration: true
-  // }
+  experimental: {
+    scrollRestoration: true
+  }
 });

@@ -37,10 +37,12 @@ import type {
   Author,
   TDashboardActions,
   TPaymentOptions,
+  TPricingData,
   TShareUrlPaths,
   TShareUrls,
   TSocialNetwork,
-} from '../../@types/index';
+} from '@/../@types';
+import { BsBox, BsBox2, BsBox2Heart, BsCreditCard2Front, BsCurrencyExchange, BsPersonGear, BsPersonVideo3 } from 'react-icons/bs';
 import { BiUser, BiUserCheck } from 'react-icons/bi';
 import Package from '../../package.json';
 import denouces_data from './denounce-reasons.json';
@@ -48,7 +50,6 @@ import blur_image_data from './blur-data-url-image.json';
 import authorPicture from '../../public/assets/author.jpg';
 import paypal_log from '../../public/trademarks/paypal.png';
 import mpesa_logo from '../../public/trademarks/mpesa logo.png';
-import { BsCurrencyExchange } from 'react-icons/bs';
 
 const blurDataUrlImage = blur_image_data.data;
 
@@ -56,7 +57,7 @@ const author: Author = {
   name: Package.author,
   picture: authorPicture,
   description:
-    "It's my pleasure to introduce you to the exciting world of travel destinations, tips and affiliate marketing, providing you the knowledge to help you reach your full potential and make your dreams of earning while traveling come true.",
+    'É um prazer te apresentar ao excitante mundo dos negócios, transmitindo conhecimentos que ajudarão a alcançar todo o seu potencial em sua jornada, fazendo de cada passo dado, uma experiência inovadora. Vamos trilhar este caminho juntos?',
 };
 
 const complements = {
@@ -146,15 +147,6 @@ const store_features = [
     icon: IoChatbubbleEllipsesOutline,
   },
 ];
-
-type TPricingData = Array<{
-  title: string;
-  amount: number;
-  url: string;
-  label: string;
-  type: string;
-  description: string[];
-}>;
 
 const pricing_data: TPricingData = [
   {
@@ -252,22 +244,22 @@ const dashboardActions = (props: {
       {
         label: 'Configurações da conta',
         url: '/users/dashboard/profile-editor/',
-        icon: IoCog,
+        icon: BsPersonGear,
       },
       {
         label: 'Visualizar perfil',
         url: `/community/profile/${props.userId}`,
-        icon: IoEye,
+        icon: BsPersonVideo3,
       },
       {
         label: 'Minhas compras',
         url: `/users/dashboard/profile/shopping`,
-        icon: IoBasket,
+        icon: BsBox2,
       },
       {
         label: 'Produtos favoritos',
         url: `/users/dashboard/profile/favorite-products?id=${props.userId}`,
-        icon: IoBasket,
+        icon: BsBox2Heart,
       },
     ],
   },
@@ -312,7 +304,7 @@ const dashboardActions = (props: {
       {
         label: 'Pagamento de planos e subscrições',
         url: '/users/dashboard/transactions/subscription-payments',
-        icon: IoCard,
+        icon: BsCreditCard2Front,
       },
       {
         label: 'Pagamento de anúncios',

@@ -1,10 +1,5 @@
-import {
-  BaseButton,
-  BaseButtonOutline,
-  StyledInputs,
-  StyledLabels,
-} from '../defaults';
 import styled from 'styled-components';
+import { BaseButton, StyledInputs, StyledLabels } from '../defaults';
 
 export const StoryContainer = styled.div`
   position: relative;
@@ -142,67 +137,9 @@ export const StoryContainer = styled.div`
             }
             ${StyledInputs}
 
-            input[type='date'] {
-              padding-top: 20px;
-            }
             .counter {
               align-self: end;
               font-size: 0.9rem;
-            }
-          }
-
-          .check-box {
-            width: 100%;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 8px;
-            margin: 5px 0;
-            flex-flow: row wrap;
-
-            input[type='checkbox'] {
-              position: relative;
-              width: 50px;
-              height: 20px;
-              appearance: none;
-              left: 25px;
-              -moz-appearance: none;
-              outline: none;
-              border-radius: 15px;
-              box-shadow: inset 0 0 5px
-                rgba(${({ theme }) => theme.accent}, 0.2);
-              transition: 0.5s ease;
-              margin-top: 0.4em;
-              margin-right: 0.2em;
-              top: -2px;
-              cursor: pointer;
-
-              :checked {
-                background: rgba(${({ theme }) => theme.primary});
-              }
-
-              ::after {
-                content: '';
-                position: absolute;
-                width: 20px;
-                height: 20px;
-                transform: scale(1.1);
-                border-radius: 50%;
-                top: 0;
-                left: 0;
-                background: rgba(${({ theme }) => theme.font});
-                transition: all 0.2s ease;
-
-                :hover {
-                  box-shadow: 0 0 10px 5px
-                    rgba(${({ theme }) => theme.accent}, 0.5);
-                }
-              }
-
-              :checked::after {
-                transform: scale(1.1) translateX(25px);
-                background: rgba(${({ theme }) => theme.primary_variant});
-              }
             }
           }
         }
@@ -292,7 +229,7 @@ export const StoryContainer = styled.div`
             justify-content: flex-end;
             gap: 10px;
 
-            .prompt-accept-btn {
+            button {
               ${BaseButton}
               width: 100%;
               max-width: 380px;
@@ -303,62 +240,6 @@ export const StoryContainer = styled.div`
             }
           }
         }
-      }
-    }
-  }
-
-  aside {
-    width: 100%;
-    height: fit-content;
-    position: sticky;
-    top: 90px;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    width: 320px;
-    border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
-    padding: 20px;
-    border-radius: 20px;
-    background: rgb(${({ theme }) => theme.foreground});
-
-    @media screen and (max-width: 755px) {
-      width: 100%;
-      position: static;
-    }
-    @media screen and (max-width: 445px) {
-      border: none;
-      border-radius: 0;
-      padding-top: 40px;
-      border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
-    }
-
-    .no-ads {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      padding: 12px 5px;
-      padding-bottom: 25px;
-      border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
-
-      .ads-icon {
-        width: 30px;
-        height: 30px;
-        color: rgb(${({ theme }) => theme.primary});
-      }
-
-      h3 {
-        text-align: center;
-        font-size: 1.2rem;
-        line-height: 1.6rem;
-        font-weight: 500;
-      }
-
-      a {
-        ${BaseButtonOutline}
       }
     }
   }

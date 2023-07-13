@@ -1,5 +1,4 @@
 import {
-  IoAdd,
   IoBriefcase,
   IoCreateOutline,
   IoLocation,
@@ -9,9 +8,9 @@ import {
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
+import { NextPage } from 'next';
 import { useEffect } from 'react';
 import fetch from '@/config/client';
-import { FaAd } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { BsWind } from 'react-icons/bs';
 import { BiUser } from 'react-icons/bi';
@@ -19,12 +18,11 @@ import { formatDate } from '@/lib/utils';
 import Layout from '@/components/Layout';
 import ErrorPage from '@/pages/error-page';
 import { TPublicUser } from '@/../@types';
+import SideBarAds from '@/components/SidaBarAds';
 import { NextRouter, useRouter } from 'next/router';
 import { complements, formatSocialNetwork } from '@/data/app-data';
 import StoriesRenderer from '@/components/StoriesRenderer';
 import { ProfileContainer as Container } from '@/styles/common/community-user-profile';
-import { NextPage } from 'next';
-import React from 'react';
 
 type TProps = { user: TPublicUser };
 
@@ -58,18 +56,8 @@ const UserProfile: NextPage<TProps> = ({ user }): JSX.Element => {
       }}>
       <Container>
         <div className='wrapper-container'>
-          <aside>
-            <section className='no-ads'>
-              <FaAd className='ads-icon' />
-              <h3>
-                <span>Espaço reservado para anúncios</span>
-              </h3>
-              <Link href={`/users/dashboard/create-ad`}>
-                <IoAdd />
-                <span>Criar anúncio</span>
-              </Link>
-            </section>
-          </aside>
+          <SideBarAds key={'user-profile'} />
+
           <article>
             <div className='cover-image-container'>
               {user?.cover_image && user?.cover_image?.url ? (
@@ -210,7 +198,7 @@ const UserProfile: NextPage<TProps> = ({ user }): JSX.Element => {
                 </section>
               )}
             {/* user stories */}
-            
+
             <StoriesRenderer key={user._id} userId={user._id} />
           </article>
         </div>

@@ -1,6 +1,7 @@
+import { BsTrash } from 'react-icons/bs';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoArrowBackOutline, IoTrash } from 'react-icons/io5';
+import { IoArrowBackOutline } from 'react-icons/io5';
 import { PromptContainer as Container } from '../../styles/modules/logout-prompt';
 
 type Props = {
@@ -51,7 +52,7 @@ export default function DeleteStoryPrompt(props: Props): JSX.Element {
                   onClick={() =>
                     props.deleteFn(state.isDeleteStoryPrompt.storyId)
                   }>
-                  <IoTrash />
+                  <BsTrash />
                   <span>Comfirmar</span>
                 </button>
               </div>

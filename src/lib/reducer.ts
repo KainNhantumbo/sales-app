@@ -221,7 +221,6 @@ export const initialState: State = {
   story: {
     title: '',
     content: '',
-    allow_comments: true,
     cover_image: { id: '', url: '' },
   },
   publicStories: [],

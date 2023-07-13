@@ -9,7 +9,7 @@ const StoreVerification = (): JSX.Element => (
     <Container>
       <article className='code-of-conduct-container'>
         <section>
-          <h1>Verificação de Loja</h1>
+          <h1>Verificação de Loja Integrada</h1>
         </section>
 
         <h2>Obtenção do Selo de Verificação de Loja</h2>
@@ -24,10 +24,10 @@ const StoreVerification = (): JSX.Element => (
 
         <p>
           Prefirimos não restringir a publicação de anúncios de produtos sem que
-          haja a Verificação de Loja. Contudo, os usuários e potenciais verão um{' '}
+          haja a Verificação de Loja. Contudo, os usuários e potenciais clientes verão um{' '}
           <strong>
             grande alerta de inconfiabidade do proprietário da loja, por isso,
-            apelamos para que verifique a sua loja
+            apelamos para que verifique a sua loja o mais cedo possível
           </strong>
           .
         </p>
@@ -45,7 +45,7 @@ const StoreVerification = (): JSX.Element => (
             Passo 1: escreva um e-mail para <strong>{complements.email}</strong>{' '}
             com o assunto{' '}
             <strong>
-              "Pedido de Verificação de Loja da {complements.defaultTitle}"
+              "Pedido de Verificação de Loja Integrada da {complements.defaultTitle}"
             </strong>
             ;
           </li>
@@ -72,18 +72,18 @@ const StoreVerification = (): JSX.Element => (
         <h2>Notas complementares e importantes</h2>
         <ul>
           <li>
-            As requisições enviadas cujo conteúdo não obedeceça aos requisitos
-            abaixo, serão automaticamente ignoradas pelo sistema
+            Os e-mails enviados cujo conteúdo não obedeceça aos requisitos
+            abaixo, serão automaticamente ignorados pelo sistema;
           </li>
           <li>
             Os documentos de identificação aceites para cidadãos nacionais são
             BI, Passaporte, Carta de Condução e para cidadãos estrangeiros Dire.
-            Todos documentos devem estar dentro do prazo de validade.
+            Todos documentos devem estar dentro do prazo de validade;
           </li>
           <li>
             Todo anúncio de produto tem, por padrão, a validade de 6 meses. Após
             este período, o anúncio será automaticamente removido da plataforma,
-            sendo necessário atualizar regularmente a sua loja.
+            sendo necessário atualizar regularmente a sua loja;
           </li>
           <li>
             {' '}
@@ -99,7 +99,7 @@ const StoreVerification = (): JSX.Element => (
             excluidos. Isso inclui, mas não está limitado a: anúncios de
             produtos fora de qualidade, imagens defeituosas, erros no preçário,
             categorização errada, descrições falsas, duplicações do mesmo
-            anúncio, entre outros erros considerados danos a plataforma.
+            anúncio, entre outros erros considerados danosos a plataforma.
           </li>
         </ul>
 

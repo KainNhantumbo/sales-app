@@ -1,11 +1,10 @@
 import { NextPage } from 'next';
-import { FeedContainer as Container } from '@/styles/modules/feed';
+import { FeedContainer as Container } from '@/styles/common/feed';
 import Layout from '@/components/Layout';
 import { complements } from '@/data/app-data';
-import { FaAd } from 'react-icons/fa';
-import { IoAdd } from 'react-icons/io5';
-import Link from 'next/link';
 import StoriesRenderer from '@/components/StoriesRenderer';
+import SearchStories from '@/components/SearchStories';
+import SideBarAds from '@/components/SidaBarAds';
 
 const Feed: NextPage = (): JSX.Element => {
   return (
@@ -14,19 +13,11 @@ const Feed: NextPage = (): JSX.Element => {
         title: String.prototype.concat(complements.defaultTitle, ' | Feed'),
       }}>
       <Container>
+        <div className='searchbar-wrapper'>
+          <SearchStories key={'feed'} />
+        </div>
         <div className='wrapper-container'>
-          <aside>
-            <section className='no-ads'>
-              <FaAd className='ads-icon' />
-              <h3>
-                <span>Espaço reservado para anúncios</span>
-              </h3>
-              <Link href={`/users/dashboard/create-ad`}>
-                <IoAdd />
-                <span>Criar anúncio</span>
-              </Link>
-            </section>
-          </aside>
+          <SideBarAds key={'feed'} />
           <article>
             <StoriesRenderer key={'feed'} />
           </article>

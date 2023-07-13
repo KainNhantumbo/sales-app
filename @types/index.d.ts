@@ -5,6 +5,15 @@ import type { ReactNode, ChangeEvent, FormEvent } from 'react';
 
 // ========================================== //
 // -------------static types-------------------
+export type TPricingData = Array<{
+  title: string;
+  amount: number;
+  url: string;
+  label: string;
+  type: string;
+  description: string[];
+}>;
+
 export type TAuth = {
   id: string;
   storeId: string;
@@ -116,7 +125,6 @@ export type TStory = {
   title: string;
   content: string;
   cover_image: { id: string; url: string } | undefined;
-  allow_comments: boolean;
 };
 
 export interface IPublicStory extends TStory {

@@ -67,6 +67,7 @@ export const StoriesRenderContainer = styled.div`
     place-content: center;
     user-select: none;
     padding: 80px 0;
+    border-radius: 12px;
 
     .content {
       display: flex;

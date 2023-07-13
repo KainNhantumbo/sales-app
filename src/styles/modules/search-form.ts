@@ -39,5 +39,9 @@ export const SearchContainer = styled.div`
       width: 41px;
       height: 41px;
     }
+
+    .clear-btn {
+      color: rgb(${({ theme }) => theme.alert});
+    }
   }
 `;

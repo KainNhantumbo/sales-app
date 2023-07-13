@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Comment from './Comment';
+import { NextPage } from 'next';
 import { AxiosResponse } from 'axios';
 import CommentForm from './CommentForm';
 import { actions } from '@/data/actions';
@@ -12,7 +13,6 @@ import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 import type { IComment, TComment } from '@/../@types/comments';
 import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
 import { CommentsContainer as Container } from '@/styles/modules/comments';
-import { NextPage } from 'next';
 
 type TProps = { contentId: string };
 

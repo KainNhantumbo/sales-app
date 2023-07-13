@@ -1,5 +1,4 @@
 import {
-  IoAdd,
   IoAlertCircle,
   IoBagCheck,
   IoBagHandle,
@@ -21,7 +20,6 @@ import {
 } from '@/data/app-data';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaAd } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { BiUser } from 'react-icons/bi';
 import Layout from '@/components/Layout';
@@ -30,7 +28,7 @@ import fetch from '../../../config/client';
 import ErrorPage from '@/pages/error-page';
 import { useEffect, useState } from 'react';
 import { formatCurrency } from '@/lib/utils';
-import { GetServerSidePropsContext } from 'next';
+import { GetServerSidePropsContext, NextPage } from 'next';
 import { VscVerifiedFilled } from 'react-icons/vsc';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
@@ -38,10 +36,11 @@ import { DefaultTheme, useTheme } from 'styled-components';
 import { TPublicProducts, TPublicStore } from '@/../@types';
 import { useThemeContext } from '@/context/ThemeContext';
 import { StoreContainer as Container } from '@/styles/common/community-store-profile';
+import SideBarAds from '@/components/SidaBarAds';
 
 type TProps = { store?: TPublicStore | undefined; products: TPublicProducts[] };
 
-export default function StoreProfile({ store, products }: TProps): JSX.Element {
+const StoreProfile: NextPage<TProps> = ({ store, products }): JSX.Element => {
   const {
     state,
     dispatch,
@@ -148,7 +147,7 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
           <aside>
             <section className='profile-container'>
               <div className='image-container'>
-                {store.created_by.profile_image?.url && (
+                {store.created_by.profile_image?.url ? (
                   <Image
                     width={620}
                     height={220}
@@ -156,8 +155,9 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
                     src={store.created_by.profile_image.url}
                     alt={`Imagem de perfil do proprietário da ${store.name}`}
                   />
+                ) : (
+                  <BiUser className='camera-icon' />
                 )}
-                {!store.cover_image?.url && <BiUser className='camera-icon' />}
               </div>
               <h3 className='author-name'>
                 <span>{`${store.created_by.first_name} ${store.created_by.last_name}`}</span>
@@ -196,20 +196,11 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
                 </Link>
               </motion.div>
             </section>
-            <section className='no-ads'>
-              <FaAd className='ads-icon' />
-              <h3>
-                <span>Espaço reservado para anúncios</span>
-              </h3>
-              <Link href={``}>
-                <IoAdd />
-                <span>Criar anúncio</span>
-              </Link>
-            </section>
+            <SideBarAds key={'store-profile'} />
           </aside>
           <article>
             <div className='image-container'>
-              {store.cover_image?.url && (
+              {store.cover_image?.url ? (
                 <Image
                   width={620}
                   height={220}
@@ -219,8 +210,7 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
                   aria-label={`Imagem de capa da loja ${store.name}`}
                   alt={`Imagem de capa da loja ${store.name}`}
                 />
-              )}
-              {!store.cover_image?.url && (
+              ) : (
                 <IoStorefront className='no-image-icon' />
               )}
 
@@ -506,7 +496,9 @@ export default function StoreProfile({ store, products }: TProps): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default StoreProfile;
 
 type TContext = GetServerSidePropsContext;
 

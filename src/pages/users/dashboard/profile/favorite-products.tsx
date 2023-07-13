@@ -1,5 +1,4 @@
 import {
-  IoAdd,
   IoBagCheck,
   IoBagHandle,
   IoBarcodeOutline,
@@ -9,23 +8,23 @@ import {
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaAd } from 'react-icons/fa';
+import fetch from '@/config/client';
 import { motion } from 'framer-motion';
 import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
 import { useEffect, useState } from 'react';
 import { formatCurrency } from '@/lib/utils';
-import fetch from '../../../../config/client';
+import SideBarAds from '@/components/SidaBarAds';
 import type { TPublicProducts } from '@/../@types';
 import { useAppContext } from '@/context/AppContext';
-import type { GetServerSidePropsContext } from 'next';
+import type { GetServerSidePropsContext, NextPage } from 'next';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { blurDataUrlImage, complements } from '@/data/app-data';
 import { FavoriteProductsContainer as Container } from '@/styles/common/user-favorite-products';
 
 type TProps = { products: TPublicProducts[] };
 
-export default function FavoriteProducts({ products }: TProps): JSX.Element {
+const FavoriteProducts: NextPage<TProps> = ({ products }): JSX.Element => {
   const {
     state,
     dispatch,
@@ -94,18 +93,7 @@ export default function FavoriteProducts({ products }: TProps): JSX.Element {
       }}>
       <Container>
         <div className='wrapper-container'>
-          <aside>
-            <section className='no-ads'>
-              <FaAd className='ads-icon' />
-              <h3>
-                <span>Espaço reservado para anúncios</span>
-              </h3>
-              <Link href={`/users/dashboard/create-ad`}>
-                <IoAdd />
-                <span>Criar anúncio</span>
-              </Link>
-            </section>
-          </aside>
+          <SideBarAds key={'favorite-products'} />
           <article>
             <section className='header-container'>
               <h2>
@@ -254,7 +242,9 @@ export default function FavoriteProducts({ products }: TProps): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default FavoriteProducts;
 
 type TContext = GetServerSidePropsContext;
 

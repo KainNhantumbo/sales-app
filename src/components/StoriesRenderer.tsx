@@ -1,30 +1,30 @@
-import moment from 'moment';
-import Image from 'next/image';
-import { NextPage } from 'next';
-import fetch from '@/config/client';
-import { BiUser } from 'react-icons/bi';
-import { actions } from '@/data/actions';
-import { motion } from 'framer-motion';
-import { useEffect } from 'react';
-import { complements } from '@/data/app-data';
-import { FaEdit, FaTrash } from 'react-icons/fa';
 import {
   IoBanOutline,
-  IoGridOutline,
   IoHeart,
   IoHeartOutline,
   IoLeafOutline,
   IoReload,
 } from 'react-icons/io5';
+import moment from 'moment';
+import Image from 'next/image';
+import { NextPage } from 'next';
+import { useEffect } from 'react';
+import fetch from '@/config/client';
+import { motion } from 'framer-motion';
+import { BiUser } from 'react-icons/bi';
+import { FaEdit } from 'react-icons/fa';
+import { actions } from '@/data/actions';
+import { BsTrash } from 'react-icons/bs';
+import { complements } from '@/data/app-data';
 import { useAppContext } from '@/context/AppContext';
-import { IPublicStory, TPublicStoreList } from '@/../@types';
+import { IPublicStory } from '@/../@types';
 import { NextRouter, useRouter } from 'next/router';
-import DeleteStoryPrompt from './modals/DeleteStoryPrompt';
-import { StoriesRenderContainer as Container } from '@/styles/modules/stories-renderer';
-import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { PulseLoader } from 'react-spinners';
 import { DefaultTheme, useTheme } from 'styled-components';
+import DeleteStoryPrompt from './modals/DeleteStoryPrompt';
+import { StoriesRenderContainer as Container } from '@/styles/modules/stories-renderer';
+import { InViewHookResponse, useInView } from 'react-intersection-observer';
 
 interface IProps {
   userId?: string | undefined;
@@ -36,8 +36,13 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
   const router: NextRouter = useRouter();
   const theme: DefaultTheme = useTheme();
   const { ref, inView }: InViewHookResponse = useInView();
-  const { state, dispatch, fetchAPI, deleteStoryPromptController } =
-    useAppContext();
+  const {
+    state,
+    dispatch,
+    fetchAPI,
+    deleteStoryPromptController,
+    loginPromptController,
+  } = useAppContext();
 
   const getStories = async ({
     pageParam = 0,
@@ -46,7 +51,9 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
       method: 'get',
       url: `/api/v1/users/stories${
         props.userId ? `?userId=${props.userId}` : ''
-      }${props.favoritesId ? `?favoritesId=${props.favoritesId}` : ''}`,
+      }${props.favoritesId ? `?favoritesId=${props.favoritesId}` : ''}${
+        state.searchStories ? `?search=${state.searchStories}` : ''
+      }`,
     });
     return { data, currentOffset: pageParam + 1 };
   };
@@ -93,6 +100,7 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
       console.error(err.response?.data?.message || err);
     }
   };
+
   const handleUnFavoriteStory = async (storyId: string): Promise<void> => {
     try {
       const { data } = await fetchAPI<string[]>({
@@ -140,20 +148,18 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
     };
   }, [data]);
 
-  useEffect(() => {
-    return () => {
-      dispatch({
-        type: actions.PUBLIC_USER_STORIES,
-        payload: { ...state, publicStories: [] },
-      });
-    };
-  }, [router.query, router.asPath, router.route]);
-
   useEffect((): void => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
   }, [inView, fetchNextPage, hasNextPage]);
+
+  useEffect((): (() => void) => {
+    const debounceTime = setTimeout(() => {
+      refetch({ queryKey: ['user-stories'] });
+    }, 400);
+    return (): void => clearTimeout(debounceTime);
+  }, [state.searchStories]);
 
   return (
     <Container>
@@ -166,7 +172,13 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
             <h3>
               <span>Nenhuma história para mostrar</span>
             </h3>
-            <p>Crie algumas histórias para começar.</p>
+            {state.searchStories.length > 0 ? (
+              <p>
+                A sua pesquisa não teve resultados. Tente um termo diferente.
+              </p>
+            ) : (
+              <p>Crie algumas histórias para começar.</p>
+            )}
           </section>
         </div>
       )}
@@ -246,7 +258,8 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
                   {story.created_by._id === state.auth.id ? (
                     <>
                       <motion.button
-                        className='edit'
+                        whileHover={{ scale: 1.08 }}
+                        whileTap={{ scale: 0.8 }}
                         onClick={() =>
                           router.push(`/community/story/${story._id}`)
                         }>
@@ -255,21 +268,23 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
                       </motion.button>
 
                       <motion.button
-                        className='delete'
+                        whileHover={{ scale: 1.08 }}
+                        whileTap={{ scale: 0.8 }}
                         onClick={() =>
                           deleteStoryPromptController(true, story._id)
                         }>
-                        <FaTrash />
+                        <BsTrash />
                         <span>Apagar</span>
                       </motion.button>
                     </>
                   ) : (
                     <>
                       <motion.button
+                        whileHover={{ scale: 1.08 }}
+                        whileTap={{ scale: 0.8 }}
                         disabled={!state.auth.id && true}
-                        className='favorite'
                         onClick={() => {
-                          if (!state.auth.token) return;
+                          if (!state.auth.token) return loginPromptController();
                           story.favorites.includes(state.auth.id)
                             ? handleUnFavoriteStory(story._id)
                             : handleFavoriteStory(story._id);
@@ -288,7 +303,8 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
                       </motion.button>
 
                       <motion.button
-                        className='denounce'
+                        whileHover={{ scale: 1.08 }}
+                        whileTap={{ scale: 0.8 }}
                         onClick={() =>
                           router.push(
                             `/denounce?url=${complements.websiteUrl.concat(
