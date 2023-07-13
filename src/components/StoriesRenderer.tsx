@@ -5,12 +5,15 @@ import fetch from '@/config/client';
 import { BiUser } from 'react-icons/bi';
 import { actions } from '@/data/actions';
 import { useEffect } from 'react';
-import { IoLeafOutline } from 'react-icons/io5';
+import { IoBanOutline, IoHeart, IoLeafOutline } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
 import { IPublicStory } from '@/../@types';
 import { NextRouter, useRouter } from 'next/router';
 import DeleteStoryPrompt from './modals/DeleteStoryPrompt';
 import { StoriesRenderContainer as Container } from '@/styles/modules/stories-renderer';
+import { complements } from '@/data/app-data';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 interface IProps {
   userId?: string | undefined;
@@ -118,7 +121,12 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
           state.publicStories.map((story) => (
             <div key={String(story._id)} className='story-container'>
               <div className='header-container'>
-                <div className='profile-image-container'>
+                <div
+                  className='profile-image-container'
+                  onClick={() =>
+                    !router.asPath.includes(story.created_by._id) &&
+                    router.push(`/community/profile/${story.created_by._id}`)
+                  }>
                   {story.created_by.profile_image &&
                   story.created_by.profile_image?.url ? (
                     <Image
@@ -166,7 +174,43 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
                   alt={`Imagem de capa de ${story.title}`}
                 />
               )}
-              <div className='actions-container'></div>
+              <section className='actions-container'>
+                {story.created_by._id === state.auth.id ? (
+                  <>
+                    <motion.button
+                      className='edit'
+                      onClick={() =>
+                        router.push(`/community/story/${story._id}`)
+                      }>
+                        <FaEdit/>
+                      <span>Editar</span>
+                    </motion.button>
+                    <motion.button className='delete' onClick={() => {}}>
+                      <FaTrash/>
+                      <span>Apagar</span>
+                    </motion.button>
+                  </>
+                ) : (
+                  <>
+                    <motion.button className='favorite' onClick={() => {}}>
+                      <IoHeart/>
+                      <span>Apoiar</span>
+                    </motion.button>
+                    <motion.button
+                      className='denounce'
+                      onClick={() =>
+                        router.push(
+                          `/denounce?url=${complements.websiteUrl.concat(
+                            router.asPath
+                          )}&type=story&id=${story._id}`
+                        )
+                      }>
+                        <IoBanOutline/>
+                      <span>Denunciar</span>
+                    </motion.button>
+                  </>
+                )}
+              </section>
             </div>
           ))}
       </section>

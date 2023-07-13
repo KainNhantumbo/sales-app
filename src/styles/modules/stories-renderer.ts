@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BaseButton } from '../defaults';
 
 export const StoriesRenderContainer = styled.div`
   width: 100%;
@@ -43,6 +44,7 @@ export const StoriesRenderContainer = styled.div`
             height: 50px;
             border-radius: 50%;
             margin: 0 auto;
+            cursor: pointer;
           }
           .no-image-icon {
             width: 50px;
@@ -88,7 +90,40 @@ export const StoriesRenderContainer = styled.div`
         height: 100%;
         border-radius: 12px;
         object-fit: cover;
+      }
 
+      .actions-container {
+        border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        padding: 12px 0;
+        gap: 20px;
+
+        button {
+          width: 100%;
+          border: none;
+          outline: none;
+          user-select: none;
+          background: rgb(${({ theme }) => theme.foreground});
+          display: flex;
+          flex-direction: row;
+          gap: 8px;
+          align-items: center;
+          justify-content: center;
+          color: rgb(${({ theme }) => theme.primary_variant});
+          cursor: pointer;
+          font-weight: 500;
+          padding: 12px;
+          border-radius: 12px;
+
+          :hover {
+            color: rgb(${({ theme }) => theme.primary_variant});
+            background: rgba(${({ theme }) => theme.primary}, 0.2);
+            transition: all 200ms ease-in-out;
+          }
+        }
       }
     }
   }

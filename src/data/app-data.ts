@@ -169,6 +169,7 @@ const pricing_data: TPricingData = [
       'Para quem vai começar a vender online',
       'Desfrute das funcionalidades do programa beta',
       'Teste a plataforma por 15 dias',
+      'Não renovável',
     ],
   },
   {
@@ -195,6 +196,7 @@ const pricing_data: TPricingData = [
     amount: 119.99,
     description: [
       'Todas as funcionalidades do plano padrão',
+      'Mais destaque e relevância em seus produtos',
       'Acesse a Secção de Biscatos e Empregos',
       'Ajude no crescimento da plataforma',
       'Renovável a cada 30 dias',

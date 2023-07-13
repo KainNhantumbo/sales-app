@@ -1,22 +1,23 @@
 import Link from 'next/link';
 import Comment from './Comment';
 import { AxiosResponse } from 'axios';
-import { useRouter } from 'next/router';
 import CommentForm from './CommentForm';
 import { actions } from '@/data/actions';
 import ReplyComment from './ReplyComment';
 import ReplyCommentForm from './ReplyCommentForm';
-import type { IComment } from '@/../@types/comments';
+import { NextRouter, useRouter } from 'next/router';
 import { useState, useEffect, useMemo } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
+import type { IComment, TComment } from '@/../@types/comments';
 import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
 import { CommentsContainer as Container } from '@/styles/modules/comments';
+import { NextPage } from 'next';
 
 type TProps = { contentId: string };
 
-export default function Comments({ contentId }: TProps): JSX.Element {
-  const router = useRouter();
+const Comments: NextPage<TProps> = ({ contentId }): JSX.Element => {
+  const router: NextRouter = useRouter();
   const { state, dispatch, fetchAPI, deleteCommentPromptController } =
     useAppContext();
 
@@ -76,7 +77,7 @@ export default function Comments({ contentId }: TProps): JSX.Element {
 
   async function getComments(): Promise<void> {
     try {
-      const { data } = await fetchAPI({
+      const { data } = await fetchAPI<TComment[]>({
         method: 'get',
         url: `/api/v1/users/comments/${contentId}`,
       });
@@ -414,4 +415,6 @@ export default function Comments({ contentId }: TProps): JSX.Element {
       </section>
     </Container>
   );
-}
+};
+
+export default Comments;

@@ -24,6 +24,7 @@ import { complements, formatSocialNetwork } from '@/data/app-data';
 import StoriesRenderer from '@/components/StoriesRenderer';
 import { ProfileContainer as Container } from '@/styles/common/community-user-profile';
 import { NextPage } from 'next';
+import React from 'react';
 
 type TProps = { user: TPublicUser };
 
@@ -39,7 +40,7 @@ const UserProfile: NextPage<TProps> = ({ user }): JSX.Element => {
     );
 
   useEffect(() => {
-    console.info(user);
+    console.log(user);
   }, []);
 
   return (

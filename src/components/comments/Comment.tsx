@@ -62,7 +62,7 @@ export default function Comment(props: TComment): JSX.Element {
               <IoHeartOutline />
             )}
           </button>
-          {props.comment.created_by._id === state.auth?.id ? (
+          {props.comment.created_by._id === state.auth.id ? (
             <>
               {!props.status.edit || props.comment._id !== state.comment._id ? (
                 <button
