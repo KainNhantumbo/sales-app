@@ -28,7 +28,7 @@ const Feed: NextPage = (): JSX.Element => {
             </section>
           </aside>
           <article>
-            <StoriesRenderer />
+            <StoriesRenderer key={'feed'} />
           </article>
         </div>
       </Container>

@@ -10,6 +10,87 @@ export const StoriesRenderContainer = styled.div`
   padding: 0 20px;
   padding-bottom: 20px;
   margin: 0 auto;
+  
+  .stats-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-content: center;
+    place-items: center;
+
+    .fetch-error-message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin: 20px 0;
+      color: rgb(${({ theme }) => theme.alert});
+      font-weight: 500;
+      font-size: 1.1rem;
+      line-height: 1.4rem;
+      align-self: flex-end;
+
+      button {
+        ${BaseButton}
+      }
+    }
+    p {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      font-weight: 500;
+      line-height: 1.6rem;
+      color: rgb(${({ theme }) => theme.primary_variant});
+    }
+
+    .loading {
+      width: 100%;
+      height: 100%;
+      align-self: flex-end;
+      display: flex;
+
+      flex-direction: row;
+      align-items: center;
+      font-weight: 500;
+      font-size: 1.1rem;
+      gap: 10px;
+      padding: 20px;
+      margin: 0 auto;
+
+      color: rgb(${({ theme }) => theme.primary_variant});
+    }
+  }
+
+  .empty-data_container {
+    width: 100%;
+    background: rgb(${({ theme }) => theme.background});
+    display: grid;
+    place-content: center;
+    user-select: none;
+    padding: 80px 0;
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      line-height: 1.6rem;
+      margin: 0 10px;
+
+      svg {
+        width: 70px;
+        height: 70px;
+        color: rgb(${({ theme }) => theme.primary_variant});
+      }
+
+      h3 {
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-top: 20px;
+      }
+    }
+  }
 
   .stories-container {
     width: 100%;
@@ -90,6 +171,17 @@ export const StoriesRenderContainer = styled.div`
         height: 100%;
         border-radius: 12px;
         object-fit: cover;
+      }
+
+      .information-container {
+        border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+        padding: 0 12px;
+        padding-top: 12px;
+        color: rgb(${({ theme }) => theme.primary_variant});
+
+        p {
+          font-weight: 500;
+        }
       }
 
       .actions-container {

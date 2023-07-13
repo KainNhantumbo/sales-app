@@ -38,6 +38,7 @@ export type State = {
   auth: TAuth;
   search: string;
   searchStores: string;
+  searchStories: string;
   newSubscriptorValue: { subscriptor: string };
   signupData: ISignUp;
   signInData: ISignInData;

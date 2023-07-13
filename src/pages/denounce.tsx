@@ -18,14 +18,15 @@ import { denounceReasons } from '@/data/app-data';
 import { useEffect, useState } from 'react';
 import RequestLogin from '@/components/modals/RequestLogin';
 import { DenounceContainer as Container } from '../styles/common/denounce';
+import { NextPage } from 'next';
 
-export default function Denounce(): JSX.Element {
+const Denounce: NextPage = (): JSX.Element => {
   const theme = useTheme();
   const router = useRouter();
   const [msg, setMsg] = useState('');
   const { state, dispatch, fetchAPI, loginPromptController } = useAppContext();
 
-  async function handleCreateDenounce(): Promise<void> {
+  const handleCreateDenounce = async (): Promise<void> => {
     try {
       const { url, type, id } = router.query;
       await fetchAPI({
@@ -51,7 +52,7 @@ export default function Denounce(): JSX.Element {
       setMsg(err.response?.data?.message);
       console.error(err.response?.data?.message || err);
     }
-  }
+  };
 
   useEffect(() => {
     return () => {
@@ -149,22 +150,18 @@ export default function Denounce(): JSX.Element {
                           loginPromptController();
                         }
                       }}
-                      onChange={(e): void => {
-                        console.info(state.denounce);
-
-                        e.target.value.length > 1024
-                          ? undefined
-                          : dispatch({
-                              type: actions.CREATE_DENOUNCE,
-                              payload: {
-                                ...state,
-                                denounce: {
-                                  ...state.denounce,
-                                  content: e.target.value,
-                                },
-                              },
-                            });
-                      }}
+                      onChange={(e): void =>
+                        dispatch({
+                          type: actions.CREATE_DENOUNCE,
+                          payload: {
+                            ...state,
+                            denounce: {
+                              ...state.denounce,
+                              content: e.target.value,
+                            },
+                          },
+                        })
+                      }
                       value={state.denounce.content}
                       maxLength={1024}
                       rows={10}
@@ -212,4 +209,6 @@ export default function Denounce(): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default Denounce;

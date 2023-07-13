@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { BaseButton, BaseButtonOutline } from '../defaults';
+import { BaseButtonOutline } from '../defaults';
 
 export const FeedContainer = styled.div`
- position: relative;
+  position: relative;
   width: 100%;
   min-height: 90vh;
   position: relative;
@@ -52,9 +52,6 @@ export const FeedContainer = styled.div`
       border-radius: 0;
       padding-bottom: 40px;
     }
-
-
-
   }
 
   aside {

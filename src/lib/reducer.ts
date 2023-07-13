@@ -10,6 +10,7 @@ export const initialState: State = {
   isSortActive: false,
   isCartModal: false,
   searchStores: '',
+  searchStories: '',
   queryPublicProducts: {
     category: undefined,
     price_range: NaN,
@@ -347,6 +348,11 @@ export function reducer(state: State, action: Action): State {
       return {
         ...state,
         searchStores: action.payload.searchStores,
+      };
+    case actions.SEARCH_USER_STORIES:
+      return {
+        ...state,
+        searchStories: action.payload.searchStories,
       };
     case actions.CREATE_COMMENT:
       return {

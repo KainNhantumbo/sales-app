@@ -26,6 +26,7 @@ import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
 import { blurDataUrlImage, complements } from '@/data/app-data';
 import { BlogContainer as Container } from '@/styles/common/blog';
 import buyingWomenImg from '@/../public/assets/buying_women.png';
+import { IBlogPosts } from '../../../@types';
 
 const Blog: NextPage = (): JSX.Element => {
   const LIMIT: number = 8;
@@ -34,6 +35,16 @@ const Blog: NextPage = (): JSX.Element => {
   const { state, dispatch } = useAppContext();
   const { ref, inView }: InViewHookResponse = useInView();
 
+  const fetchPosts = async ({
+    pageParam = 0,
+  }): Promise<{ data: IBlogPosts[]; currentOffset: number }> => {
+    const { data } = await getPosts<IBlogPosts[]>({
+      offset: pageParam * LIMIT,
+      limit: LIMIT,
+    });
+    return { data, currentOffset: pageParam + 1 };
+  };
+
   const { data, fetchNextPage, hasNextPage, isFetching, isError } =
     useInfiniteQuery({
       queryKey: ['blog-posts'],
@@ -41,16 +52,6 @@ const Blog: NextPage = (): JSX.Element => {
       getNextPageParam: (lastPage) =>
         lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
     });
-
-  async function fetchPosts({
-    pageParam = 0,
-  }): Promise<{ data: any; currentOffset: number }> {
-    const { data } = await getPosts({
-      offset: pageParam * LIMIT,
-      limit: LIMIT,
-    });
-    return { data, currentOffset: pageParam + 1 };
-  }
 
   useEffect((): (() => void) => {
     if (data) {
