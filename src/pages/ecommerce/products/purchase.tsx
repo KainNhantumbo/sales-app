@@ -1,6 +1,5 @@
 import {
   IoBagHandle,
-  IoBicycle,
   IoBookmarkOutline,
   IoCard,
   IoCreateOutline,
@@ -18,13 +17,14 @@ import {
   states,
 } from '@/data/app-data';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { actions } from '@/data/actions';
+import { InputEvents } from '@/../@types';
+import { formatCurrency } from '@/lib/utils';
 import { FaDollarSign } from 'react-icons/fa';
-import { InputEvents } from '../../../../@types';
 import NewsLetter from '@/components/Newsletter';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
@@ -32,16 +32,15 @@ import { renderReactSelectCSS } from '@/styles/select';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { PurchaseContainer as Container } from '@/styles/common/purchase';
 import renderPaymentInputs from '@/components/RenderPaymentMethodInputs';
-import { formatCurrency } from '@/lib/utils';
 
 const Select = dynamic(import('react-select'), { ssr: false });
 
-export default function Purchase(): JSX.Element {
+const Purchase: NextPage = (): JSX.Element => {
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
   const { state, dispatch, fetchAPI, cartModalController } = useAppContext();
 
-  function handleChange(e: InputEvents): void {
+  const handleChange = (e: InputEvents): void => {
     dispatch({
       type: actions.PURCHASE_CHECKOUT_DATA,
       payload: {
@@ -52,9 +51,34 @@ export default function Purchase(): JSX.Element {
         },
       },
     });
-  }
+  };
 
-  useEffect((): void => {}, []);
+  const handlePayment = async (): Promise<void> => {
+    try {
+      const {
+        data: { order_code, order_id },
+      } = await fetchAPI<{ order_id: string; order_code: string }>({
+        method: 'post',
+        url: `/api/v1/users/`,
+        data: {
+          order_notes: state.checkout.order_notes,
+          main_phone_number: state.checkout.main_phone_number,
+          alternative_phone_number: state.checkout.alternative_phone_number,
+          cart: state.checkout.cart,
+          location: state.checkout.location,
+          payment: {
+            type: state.checkout.payment.type,
+            account: state.checkout.payment.data.mpesa_account,
+          },
+        },
+      });
+      router.push(
+        `/ecommerce/products/purchase-finalization/order=${order_id}&code=${order_code}`
+      );
+    } catch (error: any) {
+      console.error(error.response?.data?.message || error);
+    }
+  };
 
   return (
     <Layout
@@ -165,10 +189,9 @@ export default function Purchase(): JSX.Element {
                       aria-label='Número de telemóvel'
                       inputMode='numeric'
                       min={0}
+                      maxLength={9}
                       value={state.checkout.main_phone_number}
-                      onChange={(e): void =>
-                        e.target.value.length > 9 ? undefined : handleChange(e)
-                      }
+                      onChange={(e): void => handleChange(e)}
                     />
                     <span className='counter'>{`${
                       state.checkout.main_phone_number.length || 0
@@ -188,9 +211,8 @@ export default function Purchase(): JSX.Element {
                       inputMode='numeric'
                       aria-label='Número de telemóvel alternativo'
                       value={state.checkout.alternative_phone_number}
-                      onChange={(e): void =>
-                        e.target.value.length > 9 ? undefined : handleChange(e)
-                      }
+                      maxLength={9}
+                      onChange={(e): void => handleChange(e)}
                     />
                     <span className='counter'>{`${
                       state.checkout.alternative_phone_number.length || 0
@@ -212,7 +234,7 @@ export default function Purchase(): JSX.Element {
                   <div className='form-element'>
                     <label htmlFor='state'>
                       <IoStar />
-                      <span>Provícia / Estado *</span>
+                      <span>Província / Estado *</span>
                     </label>
 
                     <Select
@@ -250,22 +272,21 @@ export default function Purchase(): JSX.Element {
                       placeholder='Escreva o seu código postal'
                       aria-label='Escreva o seu código postal'
                       value={state.checkout.location.zip_code}
+                      maxLength={3}
                       onChange={(e): void =>
-                        e.target.value.length > 3
-                          ? undefined
-                          : dispatch({
-                              type: actions.PURCHASE_CHECKOUT_DATA,
-                              payload: {
-                                ...state,
-                                checkout: {
-                                  ...state.checkout,
-                                  location: {
-                                    ...state.checkout.location,
-                                    zip_code: e.target.value,
-                                  },
-                                },
+                        dispatch({
+                          type: actions.PURCHASE_CHECKOUT_DATA,
+                          payload: {
+                            ...state,
+                            checkout: {
+                              ...state.checkout,
+                              location: {
+                                ...state.checkout.location,
+                                zip_code: e.target.value,
                               },
-                            })
+                            },
+                          },
+                        })
                       }
                     />
                     <span className='counter'>{`${
@@ -285,22 +306,21 @@ export default function Purchase(): JSX.Element {
                       placeholder='Escreva detalhes como o bairro, avenida/rua, quarteirão, número da casa, referências, etc.'
                       aria-label='Escreva detalhes como o bairro, avenida/rua, quarteirão, número da casa, referências, etc.'
                       value={state.checkout.location.adress}
+                      maxLength={128}
                       onChange={(e): void =>
-                        e.target.value.length > 128
-                          ? undefined
-                          : dispatch({
-                              type: actions.PURCHASE_CHECKOUT_DATA,
-                              payload: {
-                                ...state,
-                                checkout: {
-                                  ...state.checkout,
-                                  location: {
-                                    ...state.checkout.location,
-                                    adress: e.target.value,
-                                  },
-                                },
+                        dispatch({
+                          type: actions.PURCHASE_CHECKOUT_DATA,
+                          payload: {
+                            ...state,
+                            checkout: {
+                              ...state.checkout,
+                              location: {
+                                ...state.checkout.location,
+                                adress: e.target.value,
                               },
-                            })
+                            },
+                          },
+                        })
                       }
                     />
                     <span className='counter'>{`${
@@ -321,11 +341,7 @@ export default function Purchase(): JSX.Element {
                       autoComplete='off'
                       placeholder='Quaisquer informações complementares ou relativas a sua encomenda'
                       aria-label='Quaisquer informações complementares ou relativas a sua encomenda'
-                      onChange={(e): void =>
-                        e.target.value.length > 512
-                          ? undefined
-                          : handleChange(e)
-                      }
+                      onChange={(e): void => handleChange(e)}
                       value={state.checkout.order_notes}
                       maxLength={512}
                       rows={8}
@@ -416,7 +432,7 @@ export default function Purchase(): JSX.Element {
                       whileTap={{ scale: 0.8 }}
                       whileHover={{ scale: 1.05 }}
                       className='pay-button'
-                      onClick={() => {}}>
+                      onClick={handlePayment}>
                       <span>Processeguir</span>
                     </motion.button>
                   </div>
@@ -429,4 +445,6 @@ export default function Purchase(): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default Purchase;

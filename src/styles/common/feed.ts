@@ -50,6 +50,11 @@ export const FeedContainer = styled.div`
     }
   }
 
+
+  aside {
+    top: 150px;
+  }
+
   article {
     width: 100%;
     max-width: 720px;

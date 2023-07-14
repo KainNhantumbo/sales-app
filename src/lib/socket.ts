@@ -1,19 +1,19 @@
 import { useEffect, useRef } from 'react';
 import io, { Socket, ManagerOptions, SocketOptions } from 'socket.io-client';
 
-export type Props = {
+type TProps = {
   uri: string;
   opts?: Partial<ManagerOptions & SocketOptions> | undefined;
 };
 
-export function useSocket({ uri, opts }: Props): Socket {
+export const useSocket = ({ uri, opts }: TProps): Socket => {
   const { current: socket } = useRef(io(uri, opts));
   useEffect((): (() => void) => {
-    return () => {
+    return (): void => {
       if (socket) {
         socket.close();
       }
     };
   }, []);
   return socket;
-}
+};

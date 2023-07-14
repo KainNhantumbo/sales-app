@@ -4,6 +4,7 @@ import {
   createContext,
   Dispatch,
   useReducer,
+  useLayoutEffect,
 } from 'react';
 import fetch from '../config/client';
 import ThemeContext from './ThemeContext';
@@ -39,7 +40,7 @@ interface IContext {
   deleteAccountPromptController: () => void;
   deactivateStorePromptController: () => void;
   userWorkingDataController: () => void;
-  addProductToCart: (props: TCart) => void;
+  addProductToCart: (product: TCart) => void;
   removeProductFromCart: (currentProductId: string) => void;
   updateCartProduct: (props: { productId: string; quantity: number }) => void;
   getCartProduct: (currentProductId: string) => TCart;
@@ -220,7 +221,6 @@ export default function AppContext(props: AppContext): JSX.Element {
         ],
       },
     });
-    syncCartToLocalStorage();
   }
 
   function removeProductFromCart(currentProductId: string): void {
@@ -238,23 +238,29 @@ export default function AppContext(props: AppContext): JSX.Element {
               ],
       },
     });
-    syncCartToLocalStorage();
   }
 
-  function addProductToCart(props: TCart): void {
+  function addProductToCart(product: TCart): void {
     dispatch({
       type: actions.PRODUCTS_CART,
       payload: {
         ...state,
-        cart: [...state.cart, { ...props }],
+        cart: [...state.cart, { ...product }],
       },
     });
-    syncCartToLocalStorage();
   }
 
-  function syncCartToLocalStorage(): void {
+  const syncCartToLocalStorage = (): void => {
     localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
-  }
+  };
+
+  useEffect(() => {
+    syncCartToLocalStorage();
+  }, [state.cart]);
+
+  useLayoutEffect(() => {
+    restoreCartFromLocalStorage();
+  }, []);
 
   function restoreCartFromLocalStorage(): void {
     const data: TCart[] = JSON.parse(localStorage.getItem(CART_KEY) || `[]`);
@@ -265,10 +271,6 @@ export default function AppContext(props: AppContext): JSX.Element {
         payload: { ...state, cart: data },
       });
   }
-
-  useEffect(() => {
-    restoreCartFromLocalStorage();
-  }, []);
 
   // -------------user authentication---------------
   async function validateAuth(): Promise<void> {
@@ -290,7 +292,9 @@ export default function AppContext(props: AppContext): JSX.Element {
     }
   }
 
-  async function fetchAPI<T>(config: AxiosRequestConfig) {
+  async function fetchAPI<T>(
+    config: AxiosRequestConfig
+  ): Promise<AxiosResponse<T, any>> {
     fetch.interceptors.response.use(
       undefined,
       (err: AxiosError): Promise<never> => {
@@ -338,7 +342,7 @@ export default function AppContext(props: AppContext): JSX.Element {
     }
   };
 
-  async function authenticateUser(): Promise<void> {
+  const authenticateUser = async (): Promise<void> => {
     try {
       const { data } = await fetch<TAuth>({
         method: 'get',
@@ -355,7 +359,7 @@ export default function AppContext(props: AppContext): JSX.Element {
     } catch (err: any) {
       console.error(err);
     }
-  }
+  };
 
   useEffect((): void => {
     authenticateUser();
@@ -365,7 +369,7 @@ export default function AppContext(props: AppContext): JSX.Element {
     const timer = setTimeout((): void => {
       validateAuth();
     }, 1000 * 60 * 4);
-    return () => clearTimeout(timer);
+    return (): void => clearTimeout(timer);
   }, [state.auth]);
 
   return (

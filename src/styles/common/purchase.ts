@@ -29,6 +29,7 @@ export const PurchaseContainer = styled.div`
     margin: 0 auto;
     padding: 110px 20px;
     gap: 20px;
+    position: relative;
 
     @media screen and (max-width: 1080px) {
       flex-direction: column;
@@ -41,11 +42,15 @@ export const PurchaseContainer = styled.div`
   }
 
   aside {
+    position: sticky;
+    top: 110px;
+    right: 0;
     width: 100%;
+    max-width: 410px;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     gap: 30px;
-    max-width: 420px;
 
     @media screen and (max-width: 1080px) {
       max-width: 620px;
@@ -439,7 +444,6 @@ export const PurchaseContainer = styled.div`
             }
           }
         }
-        
       }
     }
   }

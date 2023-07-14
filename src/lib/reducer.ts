@@ -212,9 +212,7 @@ export const initialState: State = {
     payment: {
       type: 'm-pesa',
       data: {
-        ponto24_account: NaN,
-        emola_account: NaN,
-        mpesa_account: NaN,
+        mpesa_account: '',
       },
     },
   },

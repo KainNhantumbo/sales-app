@@ -196,6 +196,7 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
                 <div className='header-container'>
                   <div
                     className='profile-image-container'
+                    title={`Visitar o perfil de ${story.created_by.first_name} ${story.created_by.last_name}`}
                     onClick={() =>
                       !router.asPath.includes(story.created_by._id) &&
                       router.push(`/community/profile/${story.created_by._id}`)
@@ -207,7 +208,6 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
                         height={220}
                         className='profile-image'
                         src={story.created_by.profile_image.url}
-                        title={`Imagem de perfil de ${story.created_by.first_name} ${story.created_by.last_name}`}
                         aria-label={`Imagem de perfil de ${story.created_by.first_name} ${story.created_by.last_name}`}
                         alt={`Imagem de perfil de ${story.created_by.first_name} ${story.created_by.last_name}`}
                       />

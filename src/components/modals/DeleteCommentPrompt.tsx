@@ -1,13 +1,13 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { IoArrowBackOutline, IoTrash } from 'react-icons/io5';
-import { PromptContainer as Container } from '../../styles/modules/logout-prompt';
+import { FC } from 'react';
+import { BsTrash } from 'react-icons/bs';
+import { IoArrowBackOutline } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
+import { motion, AnimatePresence } from 'framer-motion';
+import { PromptContainer as Container } from '@/styles/modules/logout-prompt';
 
-type Props = {
-  deleteFn: any;
-};
+type TProps = { deleteFn: any };
 
-export default function DeleteCommentPrompt(props: Props): JSX.Element {
+const DeleteCommentPrompt: FC<TProps> = (props): JSX.Element => {
   const { state, deleteCommentPromptController } = useAppContext();
   return (
     <AnimatePresence>
@@ -51,7 +51,7 @@ export default function DeleteCommentPrompt(props: Props): JSX.Element {
                   onClick={() =>
                     props.deleteFn(state.isDeleteCommentPrompt.commentId)
                   }>
-                  <IoTrash />
+                  <BsTrash />
                   <span>Comfirmar</span>
                 </button>
               </div>
@@ -61,4 +61,6 @@ export default function DeleteCommentPrompt(props: Props): JSX.Element {
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default DeleteCommentPrompt;

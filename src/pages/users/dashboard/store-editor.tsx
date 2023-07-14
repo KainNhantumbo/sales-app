@@ -19,23 +19,24 @@ import {
   IoSyncOutline,
   IoTrashOutline,
 } from 'react-icons/io5';
+import Image from 'next/image';
+import { NextPage } from 'next';
 import Compressor from 'compressorjs';
 import Layout from '@/components/Layout';
+import { actions } from '@/data/actions';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
-import { actions } from '@/data/actions';
+import { complements } from '@/data/app-data';
+import countries from '@/data/countries.json';
+import { InputEvents, TStore } from '@/../@types';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
-import countries from '../../../data/countries.json';
-import { InputEvents } from '../../../../@types';
-import product_categories from '../../../data/product-categories.json';
-import { StoreEditorContainer as Container } from '@/styles/common/store-editor';
-import { complements } from '@/data/app-data';
-import Image from 'next/image';
+import product_categories from '@/data/product-categories.json';
 import DeactivatePrompt from '@/components/modals/DeativateStorePrompt';
+import { StoreEditorContainer as Container } from '@/styles/common/store-editor';
 
-export default function StoreEditor(): JSX.Element {
+const StoreEditor: NextPage = (): JSX.Element => {
   const theme = useTheme();
   const router: NextRouter = useRouter();
   const { state, fetchAPI, dispatch, deactivateStorePromptController } =
@@ -126,7 +127,7 @@ export default function StoreEditor(): JSX.Element {
   async function getStoreData(): Promise<void> {
     try {
       setLoading({ status: true, key: 'store-data' });
-      const { data } = await fetchAPI({
+      const { data } = await fetchAPI<TStore>({
         method: 'get',
         url: `/api/v1/users/store`,
       });
@@ -761,4 +762,6 @@ export default function StoreEditor(): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default StoreEditor;

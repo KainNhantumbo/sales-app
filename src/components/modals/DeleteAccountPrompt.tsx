@@ -2,25 +2,25 @@ import {
   IoArrowBackOutline,
   IoLockClosedOutline,
   IoMailOutline,
-  IoTrash,
 } from 'react-icons/io5';
-import fetch from '../../config/client';
+import fetch from '@/config/client';
 import { actions } from '@/data/actions';
-import { useState, useEffect } from 'react';
-import { InputEvents } from '../../../@types';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useAppContext } from '@/context/AppContext';
+import { BsTrash } from 'react-icons/bs';
+import { InputEvents } from '@/../@types';
+import { useState, useEffect, FC } from 'react';
 import { useRouter, NextRouter } from 'next/router';
-import { DeleteAccountContainer as Container } from '../../styles/modules/delete-account-prompt';
+import { useAppContext } from '@/context/AppContext';
+import { motion, AnimatePresence } from 'framer-motion';
+import { DeleteAccountContainer as Container } from '@/styles/modules/delete-account-prompt';
 
-export default function DeleteCommentPrompt(): JSX.Element {
+const DeleteAccountPrompt: FC = (): JSX.Element => {
   const { state, fetchAPI, dispatch, deleteAccountPromptController } =
     useAppContext();
   const router: NextRouter = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ status: false, message: '' });
 
-  function handleChange({ e }: { e: InputEvents }): void {
+  const handleChange = ({ e }: { e: InputEvents }): void => {
     dispatch({
       type: actions.SIGNIN_DATA,
       payload: {
@@ -31,9 +31,9 @@ export default function DeleteCommentPrompt(): JSX.Element {
         },
       },
     });
-  }
+  };
 
-  async function deleteUserAccount(): Promise<void> {
+  const deleteUserAccount = async (): Promise<void> => {
     try {
       await fetchAPI({
         method: 'delete',
@@ -64,9 +64,9 @@ export default function DeleteCommentPrompt(): JSX.Element {
           'Erro ao eliminar os dados da conta.',
       });
     }
-  }
+  };
 
-  async function handleSubmit(): Promise<void> {
+  const handleSubmit = async (): Promise<void> => {
     if (state.signInData.password.length < 8) {
       setError({
         status: true,
@@ -102,7 +102,7 @@ export default function DeleteCommentPrompt(): JSX.Element {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect((): (() => void) => {
     const desc = setTimeout(() => {
@@ -198,7 +198,7 @@ export default function DeleteCommentPrompt(): JSX.Element {
                   className='prompt-accept'
                   disabled={loading || error.status ? true : false}
                   onClick={(): Promise<void> => handleSubmit()}>
-                  <IoTrash />
+                  <BsTrash />
                   <span>Sim, eliminar conta.</span>
                 </button>
               </div>
@@ -208,4 +208,6 @@ export default function DeleteCommentPrompt(): JSX.Element {
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default DeleteAccountPrompt;

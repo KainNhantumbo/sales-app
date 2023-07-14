@@ -1,14 +1,15 @@
+import { FC } from 'react';
+import { IoIosTrash } from 'react-icons/io';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoArrowBackOutline } from 'react-icons/io5';
-import { PromptContainer as Container } from '../../styles/modules/logout-prompt';
-import { IoIosTrash } from 'react-icons/io';
+import { PromptContainer as Container } from '@/styles/modules/logout-prompt';
 
-type Props = {
+type TProps = {
   deleteFn: (productId: string) => Promise<void>;
 };
 
-export default function DeleteProductPrompt(props: Props): JSX.Element {
+const DeleteProductPrompt: FC<TProps> = (props): JSX.Element => {
   const { state, deleteProductPromptController } = useAppContext();
 
   return (
@@ -29,8 +30,8 @@ export default function DeleteProductPrompt(props: Props): JSX.Element {
               opacity: 1,
               scale: 1,
               transition: {
-                duration: 0.3
-              }
+                duration: 0.3,
+              },
             }}
             exit={{ opacity: 0, scale: 0 }}>
             <div className='dialog-prompt'>
@@ -66,4 +67,6 @@ export default function DeleteProductPrompt(props: Props): JSX.Element {
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default DeleteProductPrompt;

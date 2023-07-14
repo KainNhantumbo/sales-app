@@ -420,11 +420,44 @@ export type TPurchaseCheckOut = {
   payment: {
     type: TPaymentType;
     data: {
-      ponto24_account: number;
-      emola_account: number;
-      mpesa_account: number;
+      mpesa_account: string;
     };
   };
+};
+
+export type TOrder = {
+  _id: string;
+  order_code: string;
+  order_transation: string;
+  order_status:
+    | 'aknowledged'
+    | 'delivered'
+    | 'returned'
+    | 'cancelled'
+    | 'pending-payment';
+  order_payment_type: {
+    type: string;
+    account: string;
+  };
+  order_custumer: {
+    user_id: string;
+    user_name: string;
+    user_phone_0: string;
+    user_phone_1: string;
+    user_notes: string;
+    user_location: {
+      country: string;
+      state: string;
+      adress: string;
+      zip_code: string;
+    };
+  };
+  order_items: Array<{
+    product_id: string;
+    product_name: string;
+    product_price: number;
+    product_quantity: string;
+  }>;
 };
 
 export type TPublicUser = {

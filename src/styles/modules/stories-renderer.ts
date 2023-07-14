@@ -120,13 +120,13 @@ export const StoriesRenderContainer = styled.div`
         gap: 20px;
 
         .profile-image-container {
+          cursor: pointer;
           img {
             width: 100%;
             width: 50px;
             height: 50px;
             border-radius: 50%;
             margin: 0 auto;
-            cursor: pointer;
           }
           .no-image-icon {
             width: 50px;
@@ -217,38 +217,6 @@ export const StoriesRenderContainer = styled.div`
             transition: all 200ms ease-in-out;
           }
         }
-      }
-    }
-  }
-
-  .empty-data_container {
-    width: 100%;
-    min-height: 200px;
-    display: grid;
-    place-content: center;
-    user-select: none;
-
-    .content {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      line-height: 1.6rem;
-      padding: 50px 30px;
-
-      svg {
-        width: 70px;
-        height: 70px;
-        color: rgb(${({ theme }) => theme.primary_variant});
-      }
-
-      h3 {
-        text-align: center;
-        font-size: 1.2rem;
-        font-weight: 500;
-        margin-top: 20px;
       }
     }
   }

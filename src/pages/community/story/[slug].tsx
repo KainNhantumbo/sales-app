@@ -14,21 +14,18 @@ import { actions } from '@/data/actions';
 import { useDropzone } from 'react-dropzone';
 import { PulseLoader } from 'react-spinners';
 import { complements } from '@/data/app-data';
+import SideBarAds from '@/components/SidaBarAds';
 import { IPublicStory, TStory } from '@/../@types';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { BsChatSquareTextFill } from 'react-icons/bs';
 import { useCallback, useEffect, useState } from 'react';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import { StoryContainer as Container } from '@/styles/common/story';
-import SideBarAds from '@/components/SidaBarAds';
 
-interface IProps {
-  story: IPublicStory | undefined;
-}
+type TProps = { story: IPublicStory | undefined };
 
-const Story: NextPage<IProps> = (props): JSX.Element => {
+const Story: NextPage<TProps> = (props): JSX.Element => {
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
   const { state, dispatch, fetchAPI } = useAppContext();

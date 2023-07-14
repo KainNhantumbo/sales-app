@@ -20,32 +20,31 @@ import {
   IoStorefront,
 } from 'react-icons/io5';
 import Link from 'next/link';
+import { NextPage } from 'next';
 import QRCode from 'react-qr-code';
 import { motion } from 'framer-motion';
 import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
-import fetch from '../../../config/client';
+import fetch from '@/config/client';
 import ErrorPage from '@/pages/error-page';
 import { FaCartPlus } from 'react-icons/fa';
-import { Product } from '../../../../@types';
+import { Product } from '@/../@types';
+import { useEffect, useState } from 'react';
 import { complements } from '@/data/app-data';
 import NewsLetter from '@/components/Newsletter';
 import { VscVerifiedFilled } from 'react-icons/vsc';
 import ReactImageGallery from 'react-image-gallery';
+import Comments from '@/components/comments/Comments';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import { DefaultTheme, useTheme } from 'styled-components';
-import { useEffect, useState, lazy, Suspense, startTransition } from 'react';
 import product_categories from '@/data/product-categories.json';
 import ShareProducts from '@/components/modals/ShareProductModal';
 import { EcommerceProductContainer as Container } from '@/styles/common/ecommerce-product';
 
-// optimizations
-const Comments = lazy(() => import('@/components/comments/Comments'));
-
-export default function Product({ product }: any): JSX.Element {
+const Product: NextPage<any> = ({ product }): JSX.Element => {
   const {
     state,
     dispatch,
@@ -63,7 +62,7 @@ export default function Product({ product }: any): JSX.Element {
 
   if (!product) return <ErrorPage retryFn={router.reload} />;
 
-  async function handleFavoriteProduct(id: string): Promise<void> {
+  const handleFavoriteProduct = async (id: string): Promise<void> => {
     try {
       const { data } = await fetchAPI<string[]>({
         method: 'post',
@@ -79,9 +78,9 @@ export default function Product({ product }: any): JSX.Element {
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
-  }
+  };
 
-  async function handleUnFavoriteProduct(id: string): Promise<void> {
+  const handleUnFavoriteProduct = async (id: string): Promise<void> => {
     try {
       const { data } = await fetchAPI<string[]>({
         method: 'patch',
@@ -97,21 +96,19 @@ export default function Product({ product }: any): JSX.Element {
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
-  }
+  };
 
-  function trackInnerWidth(): void {
-    setInnerWidth(window.innerWidth);
-  }
+  const trackInnerWidth = (): void => setInnerWidth(window.innerWidth);
 
   useEffect((): (() => void) => {
     trackInnerWidth();
     window.addEventListener('resize', trackInnerWidth);
-    return () => {
+    return (): void => {
       window.removeEventListener('resize', trackInnerWidth);
     };
   }, []);
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     if (product) {
       dispatch({
         type: actions.PUBLIC_PRODUCT_DATA,
@@ -121,7 +118,7 @@ export default function Product({ product }: any): JSX.Element {
         },
       });
     }
-    return () => {
+    return (): void => {
       dispatch({
         type: actions.PUBLIC_PRODUCT_DATA,
         payload: {
@@ -525,9 +522,22 @@ export default function Product({ product }: any): JSX.Element {
                 <div className='qr-code-container'>
                   <div className='description'>
                     <h3>
-                      <span>Código do Produto</span>
-                      <i>(Endereço do produto)</i>
+                      <span>
+                        Código QR do Produto <i>(endereço do produto)</i>
+                      </span>
                     </h3>
+
+                    {state.publicProduct.store.verified_store ? (
+                      <h5>
+                        <VscVerifiedFilled />
+                        <span>Produto de Loja verificada</span>
+                      </h5>
+                    ) : (
+                      <h5 className='alert'>
+                        <IoAlertCircle />
+                        <span>Produto de Loja não verificada</span>
+                      </h5>
+                    )}
                   </div>
                   <QRCode
                     size={10}
@@ -540,9 +550,7 @@ export default function Product({ product }: any): JSX.Element {
                       background: '#fff',
                       border: `3px solid rgba(${theme.primary}, 0.9)`,
                     }}
-                    value={complements.websiteUrl.concat(
-                      `/ecommerce/products/${product._id}`
-                    )}
+                    value={`${complements.websiteUrl}/ecommerce/products/${product._id}`}
                   />
                 </div>
               </section>
@@ -708,13 +716,10 @@ export default function Product({ product }: any): JSX.Element {
             </section>
 
             {state.publicProduct.allow_comments ? (
-              <Suspense
-                fallback={<h3>Carregando o sistema de commentários...</h3>}>
-                <Comments
-                  key={state.publicProduct._id}
-                  contentId={state.publicProduct._id}
-                />
-              </Suspense>
+              <Comments
+                key={state.publicProduct._id}
+                contentId={state.publicProduct._id}
+              />
             ) : (
               <div className='no-comments-message'>
                 <h3>
@@ -731,7 +736,9 @@ export default function Product({ product }: any): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default Product;
 
 export async function getStaticPaths(): Promise<{
   paths: any;

@@ -101,7 +101,7 @@ const ProfileEditor: NextPage = (): JSX.Element => {
   });
 
   // --------------------functions------------------
-  function handleChange(e: InputEvents): void {
+  const handleChange = (e: InputEvents): void => {
     dispatch({
       type: actions.USER_DATA,
       payload: {
@@ -112,16 +112,16 @@ const ProfileEditor: NextPage = (): JSX.Element => {
         },
       },
     });
-  }
+  };
 
-  function handlePasswordsChange(e: InputEvents): void {
+  const handlePasswordsChange = (e: InputEvents): void => {
     setPasswords((state) => ({
       ...state,
       [e.target.name]: e.target.value,
     }));
-  }
+  };
 
-  function handleCoverImageFile(): void {
+  const handleCoverImageFile = (): void => {
     const imageData: File | null | undefined = coverImageFile?.item(0);
     if (imageData) {
       new Compressor(imageData, {
@@ -142,9 +142,9 @@ const ProfileEditor: NextPage = (): JSX.Element => {
         },
       });
     }
-  }
+  };
 
-  function handleProfileImageFile(): void {
+  const handleProfileImageFile = (): void => {
     const imageData: File | null | undefined = profileImageFile?.item(0);
     if (imageData) {
       new Compressor(imageData, {
@@ -165,9 +165,9 @@ const ProfileEditor: NextPage = (): JSX.Element => {
         },
       });
     }
-  }
+  };
 
-  function deleteAsset(assetType: 'cover_image' | 'profile_image'): void {
+  const deleteAsset = (assetType: 'cover_image' | 'profile_image'): void => {
     fetchAPI({
       method: 'delete',
       url: `/api/v1/users/account/assets`,
@@ -191,9 +191,9 @@ const ProfileEditor: NextPage = (): JSX.Element => {
       .catch((error) => {
         console.error(error);
       });
-  }
+  };
 
-  function getUserData(): void {
+  const getUserData = (): void => {
     setLoading({ status: true, key: 'user-data' });
     fetchAPI({
       method: 'get',
@@ -219,9 +219,9 @@ const ProfileEditor: NextPage = (): JSX.Element => {
       .finally(() => {
         setLoading({ status: false, key: 'user-data' });
       });
-  }
+  };
 
-  async function handleSubmitUpdate(): Promise<void> {
+  const handleSubmitUpdate = async (): Promise<void> => {
     if (passwords.confirm_password !== '') {
       if (passwords.password !== passwords.confirm_password)
         return setError({
@@ -277,7 +277,7 @@ const ProfileEditor: NextPage = (): JSX.Element => {
     } finally {
       setLoading({ status: false, key: 'user-update' });
     }
-  }
+  };
 
   useEffect((): (() => void) => {
     handleCoverImageFile();
@@ -324,7 +324,7 @@ const ProfileEditor: NextPage = (): JSX.Element => {
     company_name: '',
   });
 
-  function createWorkingData(): void {
+  const createWorkingData = (): void => {
     const generatedId = crypto.randomUUID();
     dispatch({
       type: actions.USER_DATA,
@@ -349,9 +349,9 @@ const ProfileEditor: NextPage = (): JSX.Element => {
       company_name: '',
     });
     userWorkingDataController();
-  }
+  };
 
-  function updateWorkingData(id: string): void {
+  const updateWorkingData = (id: string): void => {
     dispatch({
       type: actions.USER_DATA,
       payload: {
@@ -374,18 +374,18 @@ const ProfileEditor: NextPage = (): JSX.Element => {
       portfolio_url: '',
       company_name: '',
     });
-  }
+  };
 
-  function editWorkingData(id: string): void {
+  const editWorkingData = (id: string): void => {
     setWorkingExperienceData(() => {
       return state.user.working_experience.filter((item) => {
         if (item.id === id) return item;
       })[0];
     });
     userWorkingDataController();
-  }
+  };
 
-  function removeWorkingData(id: string) {
+  const removeWorkingData = (id: string) => {
     dispatch({
       type: actions.USER_DATA,
       payload: {
@@ -398,7 +398,7 @@ const ProfileEditor: NextPage = (): JSX.Element => {
         },
       },
     });
-  }
+  };
 
   return (
     <Layout

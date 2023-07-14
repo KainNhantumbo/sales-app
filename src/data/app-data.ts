@@ -12,10 +12,8 @@ import {
   IoAnalytics,
   IoChatboxEllipses,
   IoCog,
-  IoEye,
   IoFingerPrint,
   IoCardOutline,
-  IoBasket,
   IoDocument,
   IoMail,
   IoStorefrontOutline,
@@ -42,14 +40,20 @@ import type {
   TShareUrls,
   TSocialNetwork,
 } from '@/../@types';
-import { BsBox, BsBox2, BsBox2Heart, BsCreditCard2Front, BsCurrencyExchange, BsPersonGear, BsPersonVideo3 } from 'react-icons/bs';
+import {
+  BsBox2,
+  BsBox2Heart,
+  BsCreditCard2Front,
+  BsCurrencyExchange,
+  BsPersonGear,
+  BsPersonVideo3,
+} from 'react-icons/bs';
 import { BiUser, BiUserCheck } from 'react-icons/bi';
-import Package from '../../package.json';
+import Package from '@/../package.json';
 import denouces_data from './denounce-reasons.json';
 import blur_image_data from './blur-data-url-image.json';
-import authorPicture from '../../public/assets/author.jpg';
-import paypal_log from '../../public/trademarks/paypal.png';
-import mpesa_logo from '../../public/trademarks/mpesa logo.png';
+import authorPicture from '@/../public/assets/author.jpg';
+import mpesa_logo from '@/../public/trademarks/mpesa logo.png';
 
 const blurDataUrlImage = blur_image_data.data;
 
@@ -68,7 +72,7 @@ const complements = {
   websiteUrl: Package.url,
   disqusName: Package.disqusName,
   copyrightSentence: Package.copyrightSentence,
-  description: `De moda a decoração de interiores, artigos artesanais, beleza e cosméticos, roupa, sapatos e mais, os produtos que você irá amar estão apenas a um toque. Você poderá sempre contar conosco para encontrar os produtos perfeitos para a vida que deseja.`,
+  description: `De moda a decoração de interiores, artigos artesanais, beleza e cosméticos, roupa, sapatos e mais, os produtos que você irá amar estão apenas a um toque. Você poderá sempre contar conosco para encontrar os produtos perfeitos para a satisfazer as suas necessidades.`,
   socialMedia: [
     {
       name: 'Encontre-nos no Facebook',
@@ -393,7 +397,6 @@ const states: Array<{ value: string; label: string }> = [
 
 const payment_options: TPaymentOptions = [
   { type: 'm-pesa', label: 'M-Pesa', image: mpesa_logo },
-  { type: 'paypal', label: 'Paypal', image: paypal_log },
 ];
 
 const formatSocialNetwork = (data: TSocialNetwork) => {

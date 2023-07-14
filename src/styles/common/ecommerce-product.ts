@@ -256,12 +256,16 @@ export const EcommerceProductContainer = styled.div`
           justify-content: space-between;
           align-items: center;
 
+          @media screen and (max-width: 455px) {
+            flex-direction: column-reverse;
+            gap: 20px;
+          }
+
           .description {
             display: flex;
-            flex-direction: row;
-            gap: 18px;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+
             h3 {
               font-weight: 500;
               display: flex;
@@ -272,6 +276,30 @@ export const EcommerceProductContainer = styled.div`
                 font-weight: 400;
                 font-size: 0.9rem;
               }
+            }
+
+            h5 {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              padding: 5px 12px;
+              width: fit-content;
+              gap: 5px;
+              border-radius: 8px;
+              background: rgb(${({ theme }) => theme.foreground});
+              color: rgb(${({ theme }) => theme.primary_variant});
+              font-size: 1rem;
+              line-height: 1.6rem;
+              font-weight: 500;
+
+              svg {
+                width: 22px;
+                height: 22px;
+              }
+            }
+            .alert {
+              border: 2px solid rgb(${({ theme }) => theme.alert});
+              color: rgb(${({ theme }) => theme.secondary});
             }
           }
         }
@@ -463,6 +491,11 @@ export const EcommerceProductContainer = styled.div`
           background: rgba(${({ theme }) => theme.primary}, 0.2);
           text-overflow: clip;
           overflow: visible;
+
+          :hover {
+            transition: all 200ms ease;
+            color: rgb(${({ theme }) => theme.alert});
+          }
         }
       }
     }
