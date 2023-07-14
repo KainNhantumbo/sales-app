@@ -27,23 +27,25 @@ const renderPaymentInputs = (option: TPaymentType): JSX.Element => {
                 maxLength={9}
                 value={state.checkout.payment.data.mpesa_account}
                 onChange={(e): void =>
-                  dispatch({
-                    type: actions.PURCHASE_CHECKOUT_DATA,
-                    payload: {
-                      ...state,
-                      checkout: {
-                        ...state.checkout,
-                        payment: {
-                          ...state.checkout.payment,
-                          type: option,
-                          data: {
-                            ...state.checkout.payment.data,
-                            mpesa_account: e.target.value,
+                  e.target.value.length > 9
+                    ? undefined
+                    : dispatch({
+                        type: actions.PURCHASE_CHECKOUT_DATA,
+                        payload: {
+                          ...state,
+                          checkout: {
+                            ...state.checkout,
+                            payment: {
+                              ...state.checkout.payment,
+                              type: option,
+                              data: {
+                                ...state.checkout.payment.data,
+                                mpesa_account: e.target.value,
+                              },
+                            },
                           },
                         },
-                      },
-                    },
-                  })
+                      })
                 }
               />
               <span className='counter'>{`${

@@ -20,14 +20,12 @@ export const errorPage = styled.article`
       font-size: 2.4rem;
       line-height: 2.8rem;
       color: rgb(${({ theme }) => theme.alert});
-
     }
 
     button {
-      margin-top: 20px;
       ${BaseButtonOutline}
+      margin-top: 20px;
       font-weight: 500;
-      color: rgb(${({ theme }) => theme.font});
     }
   }
 

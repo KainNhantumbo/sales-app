@@ -59,13 +59,16 @@ const Purchase: NextPage = (): JSX.Element => {
         data: { order_code, order_id },
       } = await fetchAPI<{ order_id: string; order_code: string }>({
         method: 'post',
-        url: `/api/v1/users/`,
+        url: `/api/v1/checkout/orders`,
         data: {
           order_notes: state.checkout.order_notes,
           main_phone_number: state.checkout.main_phone_number,
           alternative_phone_number: state.checkout.alternative_phone_number,
-          cart: state.checkout.cart,
           location: state.checkout.location,
+          cart: state.cart.map((product) => ({
+            product_id: product.productId,
+            quantity: product.quantity,
+          })),
           payment: {
             type: state.checkout.payment.type,
             account: state.checkout.payment.data.mpesa_account,
@@ -73,7 +76,7 @@ const Purchase: NextPage = (): JSX.Element => {
         },
       });
       router.push(
-        `/ecommerce/products/purchase-finalization/order=${order_id}&code=${order_code}`
+        `/ecommerce/products/purchase-finalization?order=${order_id}&code=${order_code}`
       );
     } catch (error: any) {
       console.error(error.response?.data?.message || error);
@@ -188,10 +191,11 @@ const Purchase: NextPage = (): JSX.Element => {
                       placeholder='Número de telemóvel'
                       aria-label='Número de telemóvel'
                       inputMode='numeric'
-                      min={0}
                       maxLength={9}
                       value={state.checkout.main_phone_number}
-                      onChange={(e): void => handleChange(e)}
+                      onChange={(e): void =>
+                        e.target.value.length > 9 ? undefined : handleChange(e)
+                      }
                     />
                     <span className='counter'>{`${
                       state.checkout.main_phone_number.length || 0
@@ -206,13 +210,14 @@ const Purchase: NextPage = (): JSX.Element => {
                       type='number'
                       id='alternative_phone_number'
                       name='alternative_phone_number'
-                      min={0}
                       placeholder='Número de telemóvel alternativo'
                       inputMode='numeric'
                       aria-label='Número de telemóvel alternativo'
                       value={state.checkout.alternative_phone_number}
                       maxLength={9}
-                      onChange={(e): void => handleChange(e)}
+                      onChange={(e): void =>
+                        e.target.value.length > 9 ? undefined : handleChange(e)
+                      }
                     />
                     <span className='counter'>{`${
                       state.checkout.alternative_phone_number.length || 0
@@ -274,19 +279,21 @@ const Purchase: NextPage = (): JSX.Element => {
                       value={state.checkout.location.zip_code}
                       maxLength={3}
                       onChange={(e): void =>
-                        dispatch({
-                          type: actions.PURCHASE_CHECKOUT_DATA,
-                          payload: {
-                            ...state,
-                            checkout: {
-                              ...state.checkout,
-                              location: {
-                                ...state.checkout.location,
-                                zip_code: e.target.value,
+                        e.target.value.length > 3
+                          ? undefined
+                          : dispatch({
+                              type: actions.PURCHASE_CHECKOUT_DATA,
+                              payload: {
+                                ...state,
+                                checkout: {
+                                  ...state.checkout,
+                                  location: {
+                                    ...state.checkout.location,
+                                    zip_code: e.target.value,
+                                  },
+                                },
                               },
-                            },
-                          },
-                        })
+                            })
                       }
                     />
                     <span className='counter'>{`${
@@ -308,19 +315,21 @@ const Purchase: NextPage = (): JSX.Element => {
                       value={state.checkout.location.adress}
                       maxLength={128}
                       onChange={(e): void =>
-                        dispatch({
-                          type: actions.PURCHASE_CHECKOUT_DATA,
-                          payload: {
-                            ...state,
-                            checkout: {
-                              ...state.checkout,
-                              location: {
-                                ...state.checkout.location,
-                                adress: e.target.value,
+                        e.target.value.length > 128
+                          ? undefined
+                          : dispatch({
+                              type: actions.PURCHASE_CHECKOUT_DATA,
+                              payload: {
+                                ...state,
+                                checkout: {
+                                  ...state.checkout,
+                                  location: {
+                                    ...state.checkout.location,
+                                    adress: e.target.value,
+                                  },
+                                },
                               },
-                            },
-                          },
-                        })
+                            })
                       }
                     />
                     <span className='counter'>{`${
@@ -341,7 +350,11 @@ const Purchase: NextPage = (): JSX.Element => {
                       autoComplete='off'
                       placeholder='Quaisquer informações complementares ou relativas a sua encomenda'
                       aria-label='Quaisquer informações complementares ou relativas a sua encomenda'
-                      onChange={(e): void => handleChange(e)}
+                      onChange={(e): void =>
+                        e.target.value.length > 512
+                          ? undefined
+                          : handleChange(e)
+                      }
                       value={state.checkout.order_notes}
                       maxLength={512}
                       rows={8}

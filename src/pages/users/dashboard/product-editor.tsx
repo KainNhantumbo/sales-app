@@ -5,6 +5,7 @@ import {
   IoCarOutline,
   IoCashOutline,
   IoChatbubblesOutline,
+  IoChevronBack,
   IoEllipsisHorizontal,
   IoGiftOutline,
   IoImageOutline,
@@ -24,7 +25,7 @@ import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
 import { complements } from '@/data/app-data';
-import { InputEvents } from '@/../@types';
+import { InputEvents, Product } from '@/../@types';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
@@ -124,14 +125,14 @@ export default function ProductEditor(): JSX.Element {
       });
   }
 
-  async function fetchProduct(): Promise<void> {
+  const fetchProduct = async (): Promise<void> => {
+    setLoading({ status: true, key: 'product-data' });
+    const productId: string = String(router.query.productId);
     try {
-      setLoading({ status: true, key: 'product-data' });
-      const productId: string = router.query.productId as string;
-      if (!productId) return;
-      const { data } = await fetchAPI({
+      if (!productId) throw new Error('No product id given for the query');
+      const { data } = await fetchAPI<Product>({
         method: 'get',
-        url: `/api/v1/users/products/${productId}?fields=-created_by,-favorites,-ivalidated`,
+        url: `/api/v1/users/products/${productId}?fields=-created_by,-favorites`,
       });
       dispatch({
         type: actions.PRODUCT_DATA,
@@ -153,7 +154,7 @@ export default function ProductEditor(): JSX.Element {
     } finally {
       setLoading({ status: false, key: 'product-data' });
     }
-  }
+  };
 
   async function handleUpdate(productId: string): Promise<void> {
     if (!productId) return;
@@ -307,10 +308,14 @@ export default function ProductEditor(): JSX.Element {
           error.status &&
           error.key === 'product-data' && (
             <section className='fetching-state'>
-              <p>{error.msg}</p>
+              <h3>{error.msg}</h3>
               <button onClick={() => router.reload()}>
                 <IoReload />
                 <span>Recarregar a página</span>
+              </button>
+              <button onClick={() => router.back()}>
+                <IoChevronBack />
+                <span>Voltar a página anterior</span>
               </button>
             </section>
           )}

@@ -410,7 +410,6 @@ export type TPurchaseCheckOut = {
   order_notes: string;
   main_phone_number: string;
   alternative_phone_number: string;
-  cart: Array<{ product_id: string; quantity: number }>;
   location: {
     country: string;
     state: string;

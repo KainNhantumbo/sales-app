@@ -27,14 +27,16 @@ export const ProductEditorContainer = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 5000;
+    z-index: 12000;
     background: rgba(${({ theme }) => theme.foreground}, 0.8);
     backdrop-filter: blur(20px);
     width: 100%;
     height: 100%;
+    display: grid;
+    place-content: center center;
+    place-items: center center;
+
     div {
-      position: relative;
-      top: 300px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -44,8 +46,9 @@ export const ProductEditorContainer = styled.div`
       width: fit-content;
       margin: 0 auto;
     }
-    p {
-      font-size: 1.2rem;
+    p,
+    h3 {
+      font-size: 1.4rem;
       line-height: 2rem;
       font-weight: 500;
       text-align: center;

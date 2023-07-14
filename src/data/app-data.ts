@@ -448,6 +448,14 @@ const formatSocialNetwork = (data: TSocialNetwork) => {
   }
 };
 
+const order_status_labels: Array<{ label: string; data: string }> = [
+  { label: 'Submetido', data: 'aknowledged' },
+  { label: 'Entregue', data: 'delivered' },
+  { label: 'Retornado', data: 'returned' },
+  { label: 'Cancelado', data: 'cancelled' },
+  { label: 'Aguardando Pagamento', data: 'pending-payment' },
+];
+
 export {
   dashboardActions,
   denounceReasons,
@@ -462,4 +470,5 @@ export {
   states,
   payment_options,
   formatSocialNetwork,
+  order_status_labels,
 };

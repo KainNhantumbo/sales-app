@@ -202,9 +202,8 @@ export const initialState: State = {
     order_notes: '',
     main_phone_number: '',
     alternative_phone_number: '',
-    cart: [],
     location: {
-      country: '',
+      country: 'Moçambique',
       state: '',
       adress: '',
       zip_code: '',

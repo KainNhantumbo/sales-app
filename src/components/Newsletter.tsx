@@ -1,39 +1,43 @@
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
 import fetch from '../config/client';
-import { PulseLoader } from 'react-spinners';
-import { useTheme } from 'styled-components';
 import { actions } from '@/data/actions';
-import { IoMailOpen, IoPaperPlaneOutline } from 'react-icons/io5';
+import { BsMailbox2 } from 'react-icons/bs';
+import { PulseLoader } from 'react-spinners';
+import { useState, useEffect, FC } from 'react';
+import { blurDataUrlImage } from '@/data/app-data';
 import { useAppContext } from '@/context/AppContext';
+import { IoPaperPlaneOutline } from 'react-icons/io5';
+import { DefaultTheme, useTheme } from 'styled-components';
 import newsletter_image from '../../public/assets/newsletter.png';
 import { NewsletterContainer as Container } from '../styles/modules/newsletter';
-import { blurDataUrlImage } from '@/data/app-data';
 
-export default function NewsLetter(): JSX.Element {
-  const theme = useTheme();
+const NewsLetter: FC = (): JSX.Element => {
+  const theme: DefaultTheme = useTheme();
   const { state, dispatch } = useAppContext();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState({ status: false, message: '' });
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<{ status: boolean; message: string }>({
+    status: false,
+    message: '',
+  });
 
-  async function handleEmailSubmition(): Promise<void> {
+  const handleEmailSubmition = async (): Promise<void> => {
     try {
       setLoading(true);
       await fetch({
         method: 'post',
         url: '/api/v1/users/newsletter',
-        data: state.newSubscriptorValue
+        data: state.newSubscriptorValue,
       });
       dispatch({
         type: actions.NEW_SUBSCRIPTOR_VALUE,
         payload: {
           ...state,
-          newSubscriptorValue: { subscriptor: '' }
-        }
+          newSubscriptorValue: { subscriptor: '' },
+        },
       });
       setError({
         status: true,
-        message: 'Inscreveu-se a newsletter com sucesso.'
+        message: 'Inscreveu-se a newsletter com sucesso.',
       });
     } catch (error: any) {
       console.error(error);
@@ -41,14 +45,14 @@ export default function NewsLetter(): JSX.Element {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
-  useEffect(() => {
-    const desc = setTimeout(() => {
+  useEffect((): (() => void) => {
+    const debounceTime = setTimeout(() => {
       setError({ status: false, message: '' });
     }, 5000);
-    return () => {
-      clearTimeout(desc);
+    return (): void => {
+      clearTimeout(debounceTime);
     };
   }, [error.status]);
 
@@ -58,7 +62,7 @@ export default function NewsLetter(): JSX.Element {
         <span>Conteúdos exclusivos no seu e-mail</span>
       </h3>
       <section>
-        <IoMailOpen />
+        <BsMailbox2 />
         <Image
           width={800}
           height={800}
@@ -88,8 +92,8 @@ export default function NewsLetter(): JSX.Element {
                       type: actions.NEW_SUBSCRIPTOR_VALUE,
                       payload: {
                         ...state,
-                        newSubscriptorValue: { subscriptor: e.target.value }
-                      }
+                        newSubscriptorValue: { subscriptor: e.target.value },
+                      },
                     })
                   }
                 />
@@ -111,7 +115,7 @@ export default function NewsLetter(): JSX.Element {
                   aria-placeholder='Processando...'
                   cssOverride={{
                     display: 'block',
-                    margin: '0 auto'
+                    margin: '0 auto',
                   }}
                 />
               </>
@@ -121,4 +125,6 @@ export default function NewsLetter(): JSX.Element {
       </section>
     </Container>
   );
-}
+};
+
+export default NewsLetter;

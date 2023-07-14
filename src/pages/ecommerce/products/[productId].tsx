@@ -60,7 +60,13 @@ const Product: NextPage<any> = ({ product }): JSX.Element => {
   const [innerWidth, setInnerWidth] = useState<number>(0);
   const router: NextRouter = useRouter();
 
-  if (!product) return <ErrorPage retryFn={router.reload} />;
+  if (!product)
+    return (
+      <ErrorPage
+        message='Não foi possívbel carregar os dados do produto'
+        retryFn={router.reload}
+      />
+    );
 
   const handleFavoriteProduct = async (id: string): Promise<void> => {
     try {
