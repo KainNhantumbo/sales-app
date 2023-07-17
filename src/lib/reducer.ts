@@ -220,8 +220,10 @@ export const initialState: State = {
     content: '',
     cover_image: { id: '', url: '' },
   },
+  ordersQuery: { search: '', sort: '', status: '' },
   publicStories: [],
   publicStoresList: [],
+  orders: [],
 };
 
 export function reducer(state: State, action: Action): State {
@@ -391,6 +393,10 @@ export function reducer(state: State, action: Action): State {
       return { ...state, publicStories: action.payload.publicStories };
     case actions.USER_STORY:
       return { ...state, story: action.payload.story };
+    case actions.ORDERS:
+      return { ...state, orders: action.payload.orders };
+    case actions.QUERY_ORDERS:
+      return { ...state, ordersQuery: action.payload.ordersQuery };
     default:
       return { ...state };
   }

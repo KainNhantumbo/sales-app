@@ -427,12 +427,13 @@ export type TPurchaseCheckOut = {
 export type TOrder = {
   _id: string;
   order_code: string;
-  order_transation: string;
+  order_transation: string | undefined;
   order_status:
     | 'aknowledged'
     | 'delivered'
     | 'returned'
     | 'cancelled'
+    | 'progress'
     | 'pending-payment';
   order_payment_type: {
     type: string;

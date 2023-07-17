@@ -256,8 +256,8 @@ const dashboardActions = (props: {
         icon: BsPersonVideo3,
       },
       {
-        label: 'Minhas compras',
-        url: `/users/dashboard/profile/shopping`,
+        label: 'Minhas Encomendas',
+        url: `/users/dashboard/profile/my-orders`,
         icon: BsBox2,
       },
       {
@@ -292,7 +292,7 @@ const dashboardActions = (props: {
       },
       {
         label: 'Vendas de produtos',
-        url: '/users/dashboard/store/orders',
+        url: '/users/dashboard/store/customer-orders',
         icon: IoBagCheck,
       },
     ],
@@ -300,6 +300,11 @@ const dashboardActions = (props: {
   transaction: {
     header: { label: 'Transações', icon: FaDollarSign },
     paths: [
+      {
+        label: 'Minhas Transações',
+        url: '/users/dashboard/my-transactions',
+        icon: IoAnalytics,
+      },
       {
         label: 'Transações de clientes',
         url: '/users/dashboard/customer-transactions',
@@ -448,13 +453,27 @@ const formatSocialNetwork = (data: TSocialNetwork) => {
   }
 };
 
-const order_status_labels: Array<{ label: string; data: string }> = [
-  { label: 'Submetido', data: 'aknowledged' },
-  { label: 'Entregue', data: 'delivered' },
-  { label: 'Retornado', data: 'returned' },
-  { label: 'Cancelado', data: 'cancelled' },
-  { label: 'Aguardando Pagamento', data: 'pending-payment' },
+const order_status_labels: Array<{ label: string; value: string }> = [
+  { label: 'Submetido', value: 'aknowledged' },
+  { label: 'Entregue', value: 'delivered' },
+  { label: 'Retornado', value: 'returned' },
+  { label: 'Em progresso', value: 'progress' },
+  { label: 'Cancelado', value: 'cancelled' },
+  { label: 'Aguardando Pagamento', value: 'pending-payment' },
 ];
+
+const orderSortOptions = [
+  { value: 'createdAt', label: 'Data de Criação (Invertido)' },
+  { value: '-createdAt', label: 'Data de Criação' },
+  { value: 'updatedAt', label: 'Data de Atualização (Invertido)' },
+  { value: '-updatedAt', label: 'Data de Atualização' },
+  { value: '-invalidated', label: 'Revisão' },
+  { value: 'invalidated', label: 'Revisão (Invertido)' },
+].sort((a, b) => (a.label > b.label ? 1 : -1));
+
+const orderStatusOptions = order_status_labels.sort((a, b) =>
+  a.label > b.label ? 1 : -1
+);
 
 export {
   dashboardActions,
@@ -470,5 +489,7 @@ export {
   states,
   payment_options,
   formatSocialNetwork,
+  orderSortOptions,
+  orderStatusOptions,
   order_status_labels,
 };

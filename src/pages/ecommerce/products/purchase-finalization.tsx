@@ -2,17 +2,17 @@ import Link from 'next/link';
 import { NextPage } from 'next';
 import { TOrder } from '@/../@types';
 import Layout from '@/components/Layout';
-import { IoArrowBack, IoCart, IoChevronBack, IoReload } from 'react-icons/io5';
-import { complements, order_status_labels } from '@/data/app-data';
-import { useAppContext } from '@/context/AppContext';
-import { useQuery } from '@tanstack/react-query';
-import { NextRouter, useRouter } from 'next/router';
-import { PurchaseFinalizationContainer as Container } from '@/styles/common/purchase-finalization';
-import { formatCurrency } from '@/lib/utils';
-import { useEffect, useState } from 'react';
-import { DefaultTheme, useTheme } from 'styled-components';
 import { DotLoader } from 'react-spinners';
-import { BsBank2, BsCreditCard2Front } from 'react-icons/bs';
+import { useEffect, useState } from 'react';
+import { formatCurrency } from '@/lib/utils';
+import { useQuery } from '@tanstack/react-query';
+import { BsCreditCard2Front } from 'react-icons/bs';
+import { NextRouter, useRouter } from 'next/router';
+import { useAppContext } from '@/context/AppContext';
+import { DefaultTheme, useTheme } from 'styled-components';
+import { IoCart, IoChevronBack, IoReload } from 'react-icons/io5';
+import { complements, order_status_labels } from '@/data/app-data';
+import { PurchaseFinalizationContainer as Container } from '@/styles/common/purchase-finalization';
 
 type TOrderSummary = {
   order_code: string;
@@ -22,6 +22,7 @@ type TOrderSummary = {
     | 'aknowledged'
     | 'delivered'
     | 'returned'
+    | 'progress'
     | 'cancelled'
     | 'pending-payment';
   user_name: string;
@@ -63,6 +64,11 @@ const OrderFinalization: NextPage = (): JSX.Element => {
     queryKey: ['purchase-finalization'],
     queryFn: getOrder,
   });
+
+  const serialiseOrderStatus = (status: string): string => {
+    const option = order_status_labels.find(({ value }) => value === status);
+    return option?.label ?? '';
+  };
 
   useEffect((): (() => void) => {
     if (!isLoading && data) {
@@ -138,13 +144,7 @@ const OrderFinalization: NextPage = (): JSX.Element => {
                   </p>
                   <p>
                     Estado do Processo:{' '}
-                    <i>
-                      {
-                        order_status_labels.filter(
-                          (status) => status.data === order.order_status
-                        )[0].label
-                      }
-                    </i>
+                    <i>{serialiseOrderStatus(order.order_status)}</i>
                   </p>
                   <p>Total a pagar: {formatCurrency(order.order_amount)}</p>
                 </div>

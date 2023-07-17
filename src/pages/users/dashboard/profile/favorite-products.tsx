@@ -20,7 +20,7 @@ import { useAppContext } from '@/context/AppContext';
 import type { GetServerSidePropsContext, NextPage } from 'next';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { blurDataUrlImage, complements } from '@/data/app-data';
-import { FavoriteProductsContainer as Container } from '@/styles/common/user-favorite-products';
+import { FavoriteProductsContainer as Container } from '@/styles/common/favorite-products';
 
 type TProps = { products: TPublicProducts[] };
 
@@ -34,9 +34,9 @@ const FavoriteProducts: NextPage<TProps> = ({ products }): JSX.Element => {
     loginPromptController,
   } = useAppContext();
   const theme: DefaultTheme = useTheme();
-  const [innerWidth, setInnerWidth] = useState(0);
+  const [innerWidth, setInnerWidth] = useState<number>(0);
 
-  async function handleUnFavoriteProduct(id: string): Promise<void> {
+  const handleUnFavoriteProduct = async (id: string): Promise<void> => {
     try {
       await fetchAPI({
         method: 'patch',
@@ -46,9 +46,9 @@ const FavoriteProducts: NextPage<TProps> = ({ products }): JSX.Element => {
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
-  }
+  };
 
-  async function refetchFavoriteProducts(): Promise<void> {
+  const refetchFavoriteProducts = async (): Promise<void> => {
     try {
       const { data } = await fetch<TPublicProducts[]>({
         method: 'get',
@@ -61,7 +61,7 @@ const FavoriteProducts: NextPage<TProps> = ({ products }): JSX.Element => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   useEffect((): (() => void) => {
     setInnerWidth(window.innerWidth);
@@ -72,7 +72,7 @@ const FavoriteProducts: NextPage<TProps> = ({ products }): JSX.Element => {
     window.addEventListener('resize', () => {
       setInnerWidth(window.innerWidth);
     });
-    return () => {
+    return (): void => {
       dispatch({
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
         payload: { ...state, publicProducts: [] },
@@ -226,11 +226,11 @@ const FavoriteProducts: NextPage<TProps> = ({ products }): JSX.Element => {
               </section>
             )}
 
-            {state.publicProducts.length < 1 && (
-              <div className='empty-data_container'>
-                <section className='content'>
-                  <IoBarcodeOutline />
-                  <h3>
+              {state.publicProducts.length < 1 && (
+                <div className='empty-data_container'>
+                  <section className='content'>
+                    <IoBarcodeOutline />
+                    <h3>
                     <span>Sem produtos para mostrar</span>
                     <p>Adicione alguns produtos a sua lista de favoritos</p>
                   </h3>
