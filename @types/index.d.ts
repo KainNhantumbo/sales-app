@@ -458,6 +458,8 @@ export type TOrder = {
     product_price: number;
     product_quantity: string;
   }>;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type TPublicUser = {

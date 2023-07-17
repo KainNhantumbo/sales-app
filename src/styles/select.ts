@@ -1,7 +1,7 @@
-import { StylesConfig } from 'react-select';
+import type { StylesConfig } from 'react-select';
 import { DefaultTheme } from 'styled-components';
 
-export function renderReactSelectCSS(theme: DefaultTheme): StylesConfig {
+export const renderReactSelectCSS = (theme: DefaultTheme): StylesConfig => {
   return {
     singleValue: (base) => ({
       ...base,
@@ -87,4 +87,4 @@ export function renderReactSelectCSS(theme: DefaultTheme): StylesConfig {
       },
     }),
   };
-}
+};

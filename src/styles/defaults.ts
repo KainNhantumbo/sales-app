@@ -255,3 +255,4 @@ export const statsContainerStyles = css`
     color: rgb(${({ theme }) => theme.primary_variant});
   }
 `;
+

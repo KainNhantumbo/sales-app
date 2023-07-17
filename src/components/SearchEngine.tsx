@@ -8,24 +8,24 @@ import {
 } from 'react-icons/io5';
 import Slider from 'rc-slider';
 import Select from 'react-select';
-import { useEffect, useState } from 'react';
 import { actions } from '@/data/actions';
 import { BiSortAlt2 } from 'react-icons/bi';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { FC, useEffect, useState } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { renderReactSelectCSS } from '@/styles/select';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useThemeContext } from '@/context/ThemeContext';
+import { DefaultTheme, useTheme } from 'styled-components';
 import product_categories from '../data/product-categories.json';
 import { SeachEngineContainer as Container } from '../styles/modules/search-engine';
-import { useThemeContext } from '@/context/ThemeContext';
 
-export default function SearchEngine(): JSX.Element {
+const SearchEngine: FC = (): JSX.Element => {
   const theme: DefaultTheme = useTheme();
-  const { state, dispatch } = useAppContext();
-  const [innerWidth, setInnerWidth] = useState(0);
   const { slidePageUp } = useThemeContext();
+  const { state, dispatch } = useAppContext();
+  const [innerWidth, setInnerWidth] = useState<number>(0);
 
-  function toggleMenu(): void {
+  const toggleMenu = (): void => {
     dispatch({
       type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
       payload: {
@@ -33,9 +33,9 @@ export default function SearchEngine(): JSX.Element {
         isPublicProductsFilters: !state.isPublicProductsFilters,
       },
     });
-  }
+  };
 
-  function changeWidth(): void {
+  const changeWidth = (): void => {
     setInnerWidth(window.innerWidth);
     if (window.innerWidth > 830) {
       dispatch({
@@ -54,12 +54,12 @@ export default function SearchEngine(): JSX.Element {
         },
       });
     }
-  }
+  };
 
   useEffect((): (() => void) => {
     changeWidth();
     window.addEventListener('resize', changeWidth);
-    return () => {
+    return (): void => {
       window.removeEventListener('resize', changeWidth);
     };
   }, []);
@@ -86,7 +86,7 @@ export default function SearchEngine(): JSX.Element {
     { value: 'false', label: 'Somente produtos sem promoção' },
   ];
 
-  const renderClearButton = () => (
+  const renderClearButton = (): JSX.Element => (
     <button
       onClick={() => {
         dispatch({
@@ -209,7 +209,7 @@ export default function SearchEngine(): JSX.Element {
             <div className='caret-container'>
               <h3>
                 <IoLayersOutline />
-                <span>Filtrar por categoria</span>
+                <span>Filtrar por</span>
               </h3>
               <Select
                 options={categoryOptions}
@@ -233,7 +233,7 @@ export default function SearchEngine(): JSX.Element {
             <div className='caret-container'>
               <h3>
                 <BiSortAlt2 />
-                <span>Organizar por</span>
+                <span>Ordenar por</span>
               </h3>
               <Select
                 options={sortOptions}
@@ -370,4 +370,6 @@ export default function SearchEngine(): JSX.Element {
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default SearchEngine;

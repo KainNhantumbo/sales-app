@@ -1,16 +1,31 @@
-import Layout from '@/components/Layout';
+import {
+  complements,
+  orderSortOptions,
+  orderStatusOptions,
+  order_status_labels,
+} from '@/data/app-data';
 import { NextPage } from 'next';
-import { complements, order_status_labels } from '@/data/app-data';
+import { useEffect } from 'react';
+import Select from 'react-select';
+import { TOrder } from '@/../@types';
+import { actions } from '@/data/actions';
+import Layout from '@/components/Layout';
 import SideBarAds from '@/components/SidaBarAds';
 import { BsBox2, BsBox2Fill } from 'react-icons/bs';
+import { renderReactSelectCSS } from '@/styles/select';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import { MyOrdersContainer as Container } from '@/styles/common/my-orders';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { TOrder } from '@/../@types';
-import { useEffect } from 'react';
-import { actions } from '@/data/actions';
+import {
+  IoClose,
+  IoEllipsisHorizontal,
+  IoReload,
+  IoSearch,
+} from 'react-icons/io5';
+import { formatDate } from '@/lib/utils';
+import { PulseLoader } from 'react-spinners';
 
 const MyOrders: NextPage = (): JSX.Element => {
   const QUERY_LIMIT: number = 10;
@@ -39,7 +54,7 @@ const MyOrders: NextPage = (): JSX.Element => {
     error,
     refetch,
     isError,
-    isFetching,
+    isLoading,
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery({
@@ -149,6 +164,212 @@ const MyOrders: NextPage = (): JSX.Element => {
                 processamento dos mesmos.
               </p>
             </section>
+            <section className='query-container'>
+              <div className='search'>
+                <input
+                  type='search'
+                  placeholder='Pesquisar...'
+                  value={state.ordersQuery.search}
+                  onChange={(e) =>
+                    dispatch({
+                      type: actions.QUERY_ORDERS,
+                      payload: {
+                        ...state,
+                        ordersQuery: {
+                          ...state.ordersQuery,
+                          search: e.target.value,
+                        },
+                      },
+                    })
+                  }
+                />
+                <IoSearch />
+              </div>
+              <div className='seletor'>
+                <Select
+                  placeholder='Ordenar por ...'
+                  styles={renderReactSelectCSS(theme)}
+                  options={orderSortOptions}
+                  onChange={(option: any) =>
+                    dispatch({
+                      type: actions.QUERY_ORDERS,
+                      payload: {
+                        ...state,
+                        ordersQuery: {
+                          ...state.ordersQuery,
+                          sort: String(option?.value),
+                        },
+                      },
+                    })
+                  }
+                />
+              </div>
+              <div className='seletor'>
+                <Select
+                  placeholder='Exibir por estado'
+                  styles={renderReactSelectCSS(theme)}
+                  options={orderStatusOptions}
+                  onChange={(option: any) =>
+                    dispatch({
+                      type: actions.QUERY_ORDERS,
+                      payload: {
+                        ...state,
+                        ordersQuery: {
+                          ...state.ordersQuery,
+                          status: String(option?.value),
+                        },
+                      },
+                    })
+                  }
+                />
+              </div>
+
+              {isAnFilterActive() && (
+                <button
+                  className='clear-filters'
+                  onClick={(): void =>
+                    dispatch({
+                      type: actions.QUERY_ORDERS,
+                      payload: {
+                        ...state,
+                        ordersQuery: {
+                          search: '',
+                          status: '',
+                          sort: '',
+                        },
+                      },
+                    })
+                  }>
+                  <IoClose />
+                  <span>Limpar filtros</span>
+                </button>
+              )}
+            </section>
+
+            {!isLoading && !isError && state.orders.length > 0 && (
+              <section className='main-container'>
+                {state.orders.map((order, index) => (
+                  <div
+                    key={order._id}
+                    ref={state.orders.length === index + 1 ? ref : undefined}
+                    className='order-container'>
+                    <section className='top-container'>
+                      <div className='header'>
+                        <h2>
+                          <span>Encomenda</span>
+                        </h2>
+                        <p>{serialiseOrderStatus(order.order_status)}</p>
+                        <h3>ID-#{order._id}</h3>
+                      </div>
+                      <div className='identity-container'>
+                        <h3>
+                          <span>Dados do Cliente</span>
+                        </h3>
+                        <div>
+                          <h3 className='author-name'>
+                            <span>{order.order_custumer.user_name}</span>
+                          </h3>
+                        </div>
+                      </div>
+                      <div className='details-container'>
+                        <p>
+                          País:{' '}
+                          <span>
+                            {order.order_custumer.user_location.country}
+                          </span>
+                        </p>
+                        <p>
+                          Província / Estado:{' '}
+                          <span>
+                            {order.order_custumer.user_location.state}
+                          </span>
+                        </p>
+                        <p>
+                          Código Postal:{' '}
+                          <span>
+                            {order.order_custumer.user_location.zip_code}
+                          </span>
+                        </p>
+                        <p>
+                          Endereço:{' '}
+                          <span>
+                            {order.order_custumer.user_location.adress}
+                          </span>
+                        </p>
+                        {order.order_custumer.user_notes &&
+                        order.order_custumer.user_notes.includes('\n') ? (
+                          <div className='content'>
+                            <h3>
+                              <span>Conteúdo</span>
+                            </h3>
+                            {order.order_custumer.user_notes
+                              .split('\n')
+                              .map((pharase, index) => (
+                                <p key={String(index)}>{pharase}</p>
+                              ))}
+                          </div>
+                        ) : (
+                          <>
+                            <div className='content'>
+                              <h3>
+                                <span>Conteúdo</span>
+                              </h3>
+                              <p>{order.order_custumer.user_notes}</p>
+                            </div>
+                          </>
+                        )}
+
+                        <div className='time-stamps'>
+                          <p>Criada: {formatDate(order.createdAt)}</p>
+                          <p>Atualizada: {formatDate(order.updatedAt)}</p>
+                        </div>
+                      </div>
+                    </section>
+                    <section className='base-container'>
+                      <button onClick={() => {}}></button>
+                      <button onClick={() => deleteOrder(order._id)}>
+                        Eliminar encomenda
+                      </button>
+                    </section>
+                  </div>
+                ))}
+              </section>
+            )}
+
+            <div className='stats-container'>
+              {isError && !isLoading && state.orders.length > 0 && (
+                <div className=' fetch-error-message '>
+                  <h3>Erro ao carregar os dados</h3>
+                  <button onClick={() => fetchNextPage()}>
+                    <IoReload />
+                    <span>Tentar novamente</span>
+                  </button>
+                </div>
+              )}
+
+              {isLoading && !isError && (
+                <div className='loading'>
+                  <PulseLoader
+                    size={20}
+                    color={`rgb(${theme.primary})`}
+                    aria-placeholder='Processando...'
+                    cssOverride={{
+                      display: 'block',
+                    }}
+                  />
+                </div>
+              )}
+
+              {!hasNextPage &&
+                !isLoading &&
+                !isError &&
+                state.orders.length > 0 && <p>Sem mais dados para mostrar</p>}
+            </div>
+            {state.orders.length > 0 && (
+              <div className='container-items__end-mark'>
+                <IoEllipsisHorizontal />
+              </div>
+            )}
 
             {state.orders.length < 1 && (
               <div className='empty-data_container'>

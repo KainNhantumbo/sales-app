@@ -1,5 +1,9 @@
+import {
+  BaseButtonOutline,
+  StyledInputs,
+  statsContainerStyles,
+} from '../defaults';
 import styled from 'styled-components';
-import { BaseButton, StyledCornerButton } from '../defaults';
 
 export const MyOrdersContainer = styled.div`
   position: relative;
@@ -55,6 +59,161 @@ export const MyOrdersContainer = styled.div`
       padding-bottom: 40px;
     }
 
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      padding: 25px 10px;
+      gap: 10px;
+
+      .order-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+        background: rgb(${({ theme }) => theme.foreground});
+        border-radius: 12px;
+        border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+
+        .top-container {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+          border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+          padding-bottom: 15px;
+
+          .header {
+            display: flex;
+            flex-flow: row wrap;
+            gap: 10px;
+            align-items: center;
+            h2 {
+              font-weight: 500;
+              line-height: 2rem;
+              font-size: 1.6rem;
+            }
+
+            h3 {
+              text-transform: uppercase;
+            }
+
+            .invalidated {
+              padding: 5px 8px;
+              border-radius: 12px;
+              color: rgb(${({ theme }) => theme.neutral});
+              background: rgb(${({ theme }) => theme.accent});
+            }
+            .validated {
+              padding: 5px 8px;
+              border-radius: 12px;
+              color: rgb(${({ theme }) => theme.neutral});
+              background: rgb(${({ theme }) => theme.primary});
+            }
+          }
+
+          .identity-container {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            padding: 0 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+
+            img {
+              width: 100%;
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+            }
+            .no-image-icon {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              padding: 5px;
+              background: rgba(${({ theme }) => theme.font}, 0.1);
+            }
+
+            div {
+              display: flex;
+              flex-direction: column;
+              gap: 3px;
+              .author-name {
+                font-size: 1.1rem;
+                font-weight: 500;
+                line-height: 1.6rem;
+              }
+
+              .email {
+                font-weight: 500;
+              }
+            }
+          }
+
+          .details-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 0 20px;
+
+            a {
+              max-width: 80%;
+              word-wrap: break-word;
+            }
+
+            .content {
+              width: 100%;
+              padding: 12px 20px;
+              background: rgb(${({ theme }) => theme.background});
+              border-radius: 12px;
+              line-height: 1.6rem;
+
+              h3 {
+                font-weight: 500;
+                margin-bottom: 10px;
+                font-size: 1.1rem;
+              }
+            }
+
+            .time-stamps {
+              display: flex;
+              flex-flow: row wrap;
+              gap: 12px;
+              line-height: 1.2rem;
+              font-size: 0.9rem;
+              text-transform: uppercase;
+              color: rgb(${({ theme }) => theme.secondary});
+            }
+
+            p {
+              display: flex;
+              flex-direction: row;
+              gap: 8px;
+              align-items: center;
+              span {
+                color: rgb(${({ theme }) => theme.primary});
+              }
+            }
+          }
+        }
+        .base-container {
+          display: flex;
+          flex-flow: row wrap;
+          gap: 12px;
+
+          button,
+          a {
+            ${BaseButtonOutline}
+            border: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
+            border-radius: 25px;
+            padding: 5px 12px;
+            span {
+              padding: 0;
+            }
+          }
+        }
+      }
+    }
+
     .header-container {
       display: flex;
       flex-direction: column;
@@ -85,160 +244,37 @@ export const MyOrdersContainer = styled.div`
       }
     }
 
-    .products-container {
-      padding: 12px;
+    .query-container {
+      display: flex;
+      flex-flow: row wrap;
+      gap: 12px;
+      align-items: center;
       width: 100%;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      place-content: center center;
-      place-items: center center;
+      justify-self: center;
+      padding: 20px;
+      padding-top: 0;
+      border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
 
-      @media screen and (max-width: 1130px) {
-        grid-template-columns: 1fr;
+      .clear-filters {
+        ${BaseButtonOutline}
       }
-      @media screen and (max-width: 445px) {
-        padding: 0;
-      }
+      .search {
+        position: relative;
+        ${StyledInputs}
 
-      .product-container {
-        width: 100%;
-        display: flex;
-        border-radius: 10px;
-        background: rgb(${({ theme }) => theme.foreground});
-        height: 200px;
-        flex-direction: row;
-        border-radius: 20px;
-        padding: 12px;
-        gap: 5px;
-        border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
-
-        @media screen and (max-width: 445px) {
-          padding: 0;
-          border: none;
-          border-radius: 0;
-          border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
-          border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+        input {
+          padding: 14px;
+          padding-left: 40px;
+          background: rgba(${({ theme }) => theme.background}, 0.7);
         }
 
-        .product-image {
-          position: relative;
-
-          .promotion {
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            border-radius: 12px;
-            background: rgba(${({ theme }) => theme.neutral}, 0.9);
-            border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
-            padding: 3px 8px;
-            color: rgb(${({ theme }) => theme.secondary});
-          }
-
-          .favorite-button,
-          .cart-button {
-            ${StyledCornerButton}
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-            background: rgba(${({ theme }) => theme.neutral}, 0.9);
-            border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
-
-            svg {
-              color: rgb(${({ theme }) => theme.secondary});
-            }
-          }
-
-          .cart-button {
-            left: 8px;
-          }
-
-          img {
-            object-fit: cover;
-            height: 100%;
-            border-radius: 20px;
-            width: 150px;
-            min-width: 150px;
-            @media screen and (max-width: 1130px) {
-              width: 180px;
-              min-width: 180px;
-            }
-            @media screen and (max-width: 445px) {
-              border-radius: 0;
-            }
-          }
-
-          .no-image-icon {
-            width: 100%;
-            height: 100%;
-            max-width: 230px;
-            padding: 30px;
-            border-radius: 20px;
-            background: rgba(${({ theme }) => theme.font}, 0.1);
-            width: 150px;
-            min-width: 150px;
-            @media screen and (max-width: 1130px) {
-              width: 180px;
-              min-width: 180px;
-            }
-            @media screen and (max-width: 445px) {
-              border-radius: 0;
-            }
-          }
-        }
-
-        .product-details {
-          width: 100%;
-          display: flex;
-          gap: 8px;
-          padding: 12px;
-          height: 100%;
-          cursor: pointer;
-          flex-direction: column-reverse;
-          justify-content: space-between;
-
-          @media screen and (max-width: 445px) {
-            align-items: center;
-          }
-
-          h3 {
-            line-height: 1.3rem;
-            font-size: 0.98rem;
-
-            @media screen and (max-width: 445px) {
-              text-align: center;
-            }
-          }
-
-          .item {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 3px;
-            line-height: 1.2rem;
-            @media screen and (max-width: 445px) {
-              text-align: center;
-            }
-
-            .actual-price {
-              font-weight: 500;
-              color: rgb(${({ theme }) => theme.primary_variant});
-            }
-          }
-
-          .buy-mobile-button {
-            ${BaseButton}
-            overflow: visible;
-            pointer-events: none;
-          }
-
-          .promo-price {
-            .old-price {
-              font-weight: 500;
-              text-decoration: line-through;
-              color: rgb(${({ theme }) => theme.alert});
-            }
-          }
+        svg {
+          position: absolute;
+          top: calc(50% - 10px);
+          left: 10px;
+          width: 20px;
+          height: 20px;
+          color: rgba(${({ theme }) => theme.font}, 0.5);
         }
       }
     }
@@ -273,6 +309,30 @@ export const MyOrdersContainer = styled.div`
           margin-top: 20px;
         }
       }
+    }
+
+    .container-items__end-mark {
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      background: rgb(${({ theme }) => theme.foreground});
+      color: rgb(${({ theme }) => theme.primary});
+      border-radius: 20px;
+      margin-top: 5px;
+      svg {
+        width: 25px;
+        height: 25px;
+      }
+
+      @media screen and (max-width: 1000px) {
+        border-radius: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    }
+
+    .stats-container {
+      ${statsContainerStyles}
     }
   }
 `;
