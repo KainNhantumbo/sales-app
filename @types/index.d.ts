@@ -1,6 +1,6 @@
 import type { IconType } from 'react-icons';
 import type { StaticImageData } from 'next/image';
-import { OutputData } from '@editorjs/editorjs';
+import type { OutputData } from '@editorjs/editorjs';
 import type { ReactNode, ChangeEvent, FormEvent } from 'react';
 
 // ========================================== //
@@ -161,13 +161,13 @@ export interface ISignUp {
 }
 
 // ------------server data------------
-export type ChatType = Array<{
+export type TChat = Array<{
   _id: string;
   sender: string;
   receiver: string;
 }>;
 
-export type MessageType = {
+export type TMessage = {
   _id: string;
   chat_id: string;
   sender: string;
@@ -196,6 +196,7 @@ export interface IBlogPosts {
   updatedAt: string;
   favorites: string[];
 }
+
 export interface IBlogPost extends IBlogPosts {
   content: OutputData;
 }

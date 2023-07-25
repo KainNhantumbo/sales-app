@@ -51,14 +51,18 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
       method: 'get',
       url: `/api/v1/users/stories${
         props.userId ? `?userId=${props.userId}` : ''
-      }${props.favoritesId ? `?favoritesId=${props.favoritesId}` : ''}${
-        state.searchStories ? `?search=${state.searchStories}` : ''
-      }`,
+      }${
+        props.favoritesId
+          ? props.userId
+            ? `&favoritesId=${props.favoritesId}`
+            : `?favoritesId=${props.favoritesId}`
+          : ''
+      }${state.searchStories ? `?search=${state.searchStories}` : ''}`,
     });
     return { data, currentOffset: pageParam + 1 };
   };
 
-  const { data, fetchNextPage, hasNextPage, refetch, isFetching, isError } =
+  const { data, fetchNextPage, hasNextPage, refetch, isLoading, isError } =
     useInfiniteQuery({
       queryKey: ['user-stories'],
       queryFn: getStories,
@@ -324,7 +328,7 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
       )}
 
       <div className='stats-container'>
-        {isError && !isFetching && (
+        {isError && !isLoading && (
           <div className=' fetch-error-message '>
             <h3>Erro ao carregar dados.</h3>
             <button onClick={() => fetchNextPage()}>
@@ -334,7 +338,7 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
           </div>
         )}
 
-        {isFetching && !isError && (
+        {isLoading && !isError && (
           <div className='loading'>
             <PulseLoader
               size={20}
@@ -348,7 +352,7 @@ const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
         )}
 
         {!hasNextPage &&
-          !isFetching &&
+          !isLoading &&
           !isError &&
           state.publicStories.length > 0 && <p>Chegou ao fim</p>}
       </div>

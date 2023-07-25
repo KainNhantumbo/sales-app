@@ -11,7 +11,6 @@ import {
 import moment from 'moment';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import { AxiosResponse } from 'axios';
 import Layout from '@/components/Layout';
 import { actions } from '@/data/actions';
 import { formatCurrency } from '@/lib/utils';
@@ -30,11 +29,9 @@ import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import ShareProducts from '@/components/modals/ShareProductModal';
 import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
 import { ProductListContainer as Container } from '@/styles/common/products';
+import { NextPage } from 'next';
 
-export default function Products(): JSX.Element {
-  const theme: DefaultTheme = useTheme();
-  const LIMIT: number = 12;
-  const { ref, inView }: InViewHookResponse = useInView();
+const Products: NextPage = (): JSX.Element => {
   const {
     state,
     dispatch,
@@ -42,6 +39,9 @@ export default function Products(): JSX.Element {
     shareProductController,
     deleteProductPromptController,
   } = useAppContext();
+  const LIMIT: number = 12;
+  const theme: DefaultTheme = useTheme();
+  const { ref, inView }: InViewHookResponse = useInView();
 
   const fetchProducts = async ({
     pageParam = 0,
@@ -61,7 +61,7 @@ export default function Products(): JSX.Element {
     fetchNextPage,
     refetch,
     hasNextPage,
-    isFetching,
+    isLoading,
     isError,
     error,
   } = useInfiniteQuery({
@@ -146,7 +146,7 @@ export default function Products(): JSX.Element {
         <ToolBox />
 
         <article>
-          {!isFetching && isError && (
+          {!isLoading && isError && (
             <section className='error-message'>
               <IoWarningOutline className='icon' />
               <p>
@@ -164,7 +164,7 @@ export default function Products(): JSX.Element {
           )}
 
           <section className='main-container'>
-            {!isFetching && !isError && state.productList.length < 1 && (
+            {!isLoading && !isError && state.productList.length < 1 && (
               <div className='empty-data_container'>
                 <section className='content'>
                   <div className='icon'>
@@ -275,7 +275,7 @@ export default function Products(): JSX.Element {
               ))}
 
               <div className='stats-container'>
-                {isError && !isFetching && state.productList.length > 0 && (
+                {isError && !isLoading && state.productList.length > 0 && (
                   <div className=' fetch-error-message '>
                     <h3>Erro ao carregar produtos</h3>
                     <button onClick={() => fetchNextPage()}>
@@ -285,7 +285,7 @@ export default function Products(): JSX.Element {
                   </div>
                 )}
 
-                {isFetching && !isError && (
+                {isLoading && !isError && (
                   <div className='loading'>
                     <PulseLoader
                       size={20}
@@ -299,7 +299,7 @@ export default function Products(): JSX.Element {
                 )}
 
                 {!hasNextPage &&
-                  !isFetching &&
+                  !isLoading &&
                   !isError &&
                   state.productList.length > 0 && (
                     <p>Sem mais produtos para mostrar</p>
@@ -316,4 +316,6 @@ export default function Products(): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default Products;

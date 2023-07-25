@@ -1,4 +1,10 @@
 import {
+  IoClose,
+  IoEllipsisHorizontal,
+  IoReload,
+  IoSearch,
+} from 'react-icons/io5';
+import {
   complements,
   orderSortOptions,
   orderStatusOptions,
@@ -8,8 +14,10 @@ import { NextPage } from 'next';
 import { useEffect } from 'react';
 import Select from 'react-select';
 import { TOrder } from '@/../@types';
+import { formatDate } from '@/lib/utils';
 import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
+import { PulseLoader } from 'react-spinners';
 import SideBarAds from '@/components/SidaBarAds';
 import { BsBox2, BsBox2Fill } from 'react-icons/bs';
 import { renderReactSelectCSS } from '@/styles/select';
@@ -18,14 +26,6 @@ import { DefaultTheme, useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import { MyOrdersContainer as Container } from '@/styles/common/my-orders';
-import {
-  IoClose,
-  IoEllipsisHorizontal,
-  IoReload,
-  IoSearch,
-} from 'react-icons/io5';
-import { formatDate } from '@/lib/utils';
-import { PulseLoader } from 'react-spinners';
 
 const MyOrders: NextPage = (): JSX.Element => {
   const QUERY_LIMIT: number = 10;
@@ -168,7 +168,7 @@ const MyOrders: NextPage = (): JSX.Element => {
               <div className='search'>
                 <input
                   type='search'
-                  placeholder='Pesquisar...'
+                  placeholder='Pesquisar por código...'
                   value={state.ordersQuery.search}
                   onChange={(e) =>
                     dispatch({
@@ -339,7 +339,10 @@ const MyOrders: NextPage = (): JSX.Element => {
             <div className='stats-container'>
               {isError && !isLoading && state.orders.length > 0 && (
                 <div className=' fetch-error-message '>
-                  <h3>Erro ao carregar os dados</h3>
+                  <h3>
+                    {(error as any)?.response?.data?.message ??
+                      'Erro ao carregar os dados'}
+                  </h3>
                   <button onClick={() => fetchNextPage()}>
                     <IoReload />
                     <span>Tentar novamente</span>

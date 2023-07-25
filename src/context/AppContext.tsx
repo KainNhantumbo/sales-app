@@ -8,11 +8,10 @@ import {
 } from 'react';
 import fetch from '../config/client';
 import ThemeContext from './ThemeContext';
-import SocketContext from './SocketContext';
 import { actions } from '@/data/actions';
 import { NextRouter, useRouter } from 'next/router';
-import { Action, State } from '../../@types/reducer';
-import { AppContext, TAuth, TCart } from '../../@types/index';
+import { Action, State } from '@/../@types/reducer';
+import { AppContext, TAuth, TCart } from '@/../@types/index';
 import { reducer, initialState } from '@/lib/reducer';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
@@ -398,7 +397,7 @@ export default function AppContext(props: AppContext): JSX.Element {
             getCartProduct,
             cartModalController,
           }}>
-          <SocketContext>{props.children}</SocketContext>
+          {props.children}
         </context.Provider>
       </QueryClientProvider>
     </ThemeContext>

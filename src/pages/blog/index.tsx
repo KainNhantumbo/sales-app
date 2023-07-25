@@ -45,7 +45,7 @@ const Blog: NextPage = (): JSX.Element => {
     return { data, currentOffset: pageParam + 1 };
   };
 
-  const { data, fetchNextPage, hasNextPage, isFetching, isError } =
+  const { data, fetchNextPage, hasNextPage, isLoading, isError } =
     useInfiniteQuery({
       queryKey: ['blog-posts'],
       queryFn: fetchPosts,
@@ -116,7 +116,7 @@ const Blog: NextPage = (): JSX.Element => {
         <article>
           <SearchComponent />
 
-          {!isFetching && !isError && state.blogPostsList.length < 1 && (
+          {!isLoading && !isError && state.blogPostsList.length < 1 && (
             <div className='empty-data_container'>
               <section className='content'>
                 <div className='icon'>
@@ -175,7 +175,7 @@ const Blog: NextPage = (): JSX.Element => {
               ))}
 
               <div className='stats-container'>
-                {isError && !isFetching && (
+                {isError && !isLoading && (
                   <div className=' fetch-error-message '>
                     <h3>Erro ao carregar postagens</h3>
                     <button onClick={() => fetchNextPage()}>
@@ -185,7 +185,7 @@ const Blog: NextPage = (): JSX.Element => {
                   </div>
                 )}
 
-                {isFetching && !isError && (
+                {isLoading && !isError && (
                   <div className='loading'>
                     <PulseLoader
                       size={20}
@@ -199,7 +199,7 @@ const Blog: NextPage = (): JSX.Element => {
                 )}
 
                 {!hasNextPage &&
-                  !isFetching &&
+                  !isLoading &&
                   !isError &&
                   state.blogPostsList.length > 0 && <p>Chegou ao fim</p>}
               </div>
