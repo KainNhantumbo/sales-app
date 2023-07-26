@@ -4,28 +4,27 @@ import {
   IoGridOutline,
   IoHeart,
   IoLibraryOutline,
-  IoOpenOutline,
   IoReload,
 } from 'react-icons/io5';
 import Link from 'next/link';
 import { NextPage } from 'next';
+import { useEffect } from 'react';
+import { actions } from '@/data/actions';
 import { IBlogPosts } from '@/../@types';
 import { formatDate } from '@/lib/utils';
 import Layout from '@/components/Layout';
 import { getPosts } from '@/lib/queries';
-import { DotLoader, PulseLoader } from 'react-spinners';
-import { useEffect, useState } from 'react';
 import { complements } from '@/data/app-data';
 import NewsLetter from '@/components/Newsletter';
-import SearchComponent from '@/components/SearchBlogPosts';
 import { NextRouter, useRouter } from 'next/router';
+import { useAppContext } from '@/context/AppContext';
+import { DotLoader, PulseLoader } from 'react-spinners';
+import SearchComponent from '@/components/SearchBlogPosts';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
-import { BlogSeachContainer as Container } from '@/styles/common/blog-search';
-import { useAppContext } from '@/context/AppContext';
+import { _blogSeach as Container } from '@/styles/common/blog-search';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { actions } from '@/data/actions';
 
 const BlogSearch: NextPage = (): JSX.Element => {
   const LIMIT: number = 8;

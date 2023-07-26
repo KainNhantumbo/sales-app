@@ -1,12 +1,12 @@
 import Link from 'next/link';
+import { NextPage } from 'next';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { formatCurrency } from '@/lib/utils';
 import { IoBalloonOutline } from 'react-icons/io5';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { complements, pricing_data } from '@/data/app-data';
-import { PricingContainer as Container } from '@/styles/common/pricing';
-import { NextPage } from 'next';
+import { _pricing as Container } from '@/styles/common/pricing';
 
 const Pricing: NextPage = (): JSX.Element => {
   const theme: DefaultTheme = useTheme();

@@ -33,7 +33,7 @@ const ShareLinksStyles = css`
   }
 `;
 
-export const PostContainer = styled.div`
+export const _post = styled.div`
   position: relative;
   background: rgb(${({ theme }) => theme.background});
   width: 100%;

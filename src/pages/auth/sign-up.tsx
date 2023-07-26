@@ -233,3 +233,5 @@ const SignUp: NextPage = (): JSX.Element => {
     </Layout>
   );
 };
+
+export default SignUp;

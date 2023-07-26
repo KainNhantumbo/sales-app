@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton } from '../defaults';
 
-export const BlogSeachContainer = styled.div`
+export const _blogSeach = styled.div`
   position: relative;
   width: 100%;
   min-height: 40vh;

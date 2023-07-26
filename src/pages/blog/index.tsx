@@ -10,23 +10,23 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { NextPage } from 'next';
 import { useEffect } from 'react';
-import { NextRouter, useRouter } from 'next/router';
+import { IBlogPosts } from '@/../@types';
 import Layout from '@/components/Layout';
 import { actions } from '@/data/actions';
 import { getPosts } from '@/lib/queries';
 import { formatDate } from '@/lib/utils';
-import { DefaultTheme, useTheme } from 'styled-components';
 import { PulseLoader } from 'react-spinners';
 import NewsLetter from '@/components/Newsletter';
-import SearchComponent from '@/components/SearchBlogPosts';
+import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { _blog as Container } from '@/styles/common/blog';
+import SearchComponent from '@/components/SearchBlogPosts';
+import { DefaultTheme, useTheme } from 'styled-components';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
 import { blurDataUrlImage, complements } from '@/data/app-data';
-import { BlogContainer as Container } from '@/styles/common/blog';
 import buyingWomenImg from '@/../public/assets/buying_women.png';
-import { IBlogPosts } from '../../../@types';
 
 const Blog: NextPage = (): JSX.Element => {
   const LIMIT: number = 8;

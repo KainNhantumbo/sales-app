@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton } from '../defaults';
 
-export const BlogContainer = styled.div`
+export const _blog = styled.div`
   position: relative;
   width: 100%;
   display: flex;

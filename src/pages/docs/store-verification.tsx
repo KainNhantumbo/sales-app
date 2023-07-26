@@ -1,9 +1,10 @@
 import Link from 'next/link';
+import { NextPage } from 'next';
 import Layout from '../../components/Layout';
 import { complements } from '@/data/app-data';
-import { LegalContainer as Container } from '@/styles/common/legal';
+import { _legal as Container } from '@/styles/common/legal';
 
-const StoreVerification = (): JSX.Element => (
+const StoreVerification:NextPage = (): JSX.Element => (
   <Layout
     metadata={{ title: complements.defaultTitle + ' | Verificação de Loja' }}>
     <Container>

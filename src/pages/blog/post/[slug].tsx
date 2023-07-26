@@ -14,20 +14,21 @@ import moment from 'moment';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
+import { NextPage } from 'next';
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/router';
+import { formatDate } from '@/lib/utils';
 import editorJsHtml from 'editorjs-html';
 import Layout from '@/components/Layout';
 import ErrorPage from '@/pages/error-page';
-import { formatDate } from '@/lib/utils';
-import { useTheme } from 'styled-components';
+import NewsLetter from '@/components/Newsletter';
+import { NextRouter, useRouter } from 'next/router';
 import { readingTime } from 'reading-time-estimator';
 import { useAppContext } from '@/context/AppContext';
-import NewsLetter from '@/components/Newsletter';
+import { DefaultTheme, useTheme } from 'styled-components';
 import { getPaths, getPost, getPosts } from '@/lib/queries';
 import { CommentCount, DiscussionEmbed } from 'disqus-react';
 import type { IBlogPost, IBlogPosts } from '@/../../@types/index';
-import { PostContainer as Container } from '@/styles/common/post';
+import { _post as Container } from '@/styles/common/post';
 import EditorJsRenderer from '@/components/EditorJSRenderer';
 import type { TParsedContent } from '@/components/EditorJSRenderer';
 import { author, complements, shareUrlPaths } from '@/data/app-data';
@@ -37,15 +38,19 @@ interface IPost {
   latestPosts: IBlogPosts[];
 }
 
-const Post = ({ post: initialPost, latestPosts }: IPost): JSX.Element => {
+const Post: NextPage<IPost> = ({
+  post: initialPost,
+  latestPosts,
+}): JSX.Element => {
   const { state, fetchAPI, loginPromptController } = useAppContext();
   const [post, setPost] = useState(initialPost);
-  const router = useRouter();
-  const theme = useTheme();
+  const router: NextRouter = useRouter();
+  const theme: DefaultTheme = useTheme();
 
   if (!initialPost) {
     return <ErrorPage retryFn={router.reload} />;
   }
+
   const EditorJsToHtml = editorJsHtml();
   const postContent = EditorJsToHtml.parse(post.content) as TParsedContent[];
 
@@ -62,9 +67,9 @@ const Post = ({ post: initialPost, latestPosts }: IPost): JSX.Element => {
     hostname: complements.websiteUrl,
   });
 
-  async function handleFavoritePost(): Promise<void> {
+  const handleFavoritePost = async (): Promise<void> => {
     try {
-      const { data } = await fetchAPI({
+      const { data } = await fetchAPI<string[]>({
         method: 'post',
         url: `/api/v1/users/favorites/blog-posts/${post._id}`,
       });
@@ -72,11 +77,11 @@ const Post = ({ post: initialPost, latestPosts }: IPost): JSX.Element => {
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
-  }
+  };
 
-  async function handleUnFavoritePost(): Promise<void> {
+  const handleUnFavoritePost = async (): Promise<void> => {
     try {
-      const { data } = await fetchAPI({
+      const { data } = await fetchAPI<string[]>({
         method: 'patch',
         url: `/api/v1/users/favorites/blog-posts/${post._id}`,
       });
@@ -84,7 +89,7 @@ const Post = ({ post: initialPost, latestPosts }: IPost): JSX.Element => {
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
-  }
+  };
 
   return (
     <Layout
