@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { NextPage } from 'next';
 import fetch from '../../config/client';
 import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
@@ -8,25 +9,24 @@ import { complements } from '@/data/app-data';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import { NextRouter, useRouter } from 'next/router';
-import { PasswordReseterContainer as Container } from '../../styles/common/pasword-reseter';
+import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
 
-export default function ResetPassword(): JSX.Element {
-  const [loading, setLoading] = useState(false);
+const ResetPassword: NextPage = (): JSX.Element => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });
   const [email, setEmail] = useState<string>('');
   const theme = useTheme();
   const router: NextRouter = useRouter();
 
-  async function handleSubmit(e: SubmitEvent): Promise<void> {
+  const handleSubmit = async (e: SubmitEvent): Promise<void> => {
     e.preventDefault();
-
     try {
       setLoading(true);
       await fetch({
         method: 'post',
         url: '/api/v1/users/auth/request-new-password',
         data: email,
-        withCredentials: true
+        withCredentials: true,
       });
       router.push('/auth/reset-password-confirmation');
     } catch (error: any) {
@@ -35,21 +35,19 @@ export default function ResetPassword(): JSX.Element {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
-  useEffect(() => {
-    const desc = setTimeout(() => {
+  useEffect((): (() => void) => {
+    const debounceTimer = setTimeout(() => {
       setError({ status: false, message: '' });
     }, 5000);
-    return () => {
-      clearTimeout(desc);
-    };
+    return () => clearTimeout(debounceTimer);
   }, [error.status]);
 
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Atualização de Senha`
+        title: `${complements.defaultTitle} | Atualização de Senha`,
       }}>
       <Container>
         <main>
@@ -89,7 +87,7 @@ export default function ResetPassword(): JSX.Element {
                       aria-placeholder='Processando...'
                       cssOverride={{
                         display: 'block',
-                        margin: '0 auto'
+                        margin: '0 auto',
                       }}
                     />
                   </>
@@ -123,4 +121,6 @@ export default function ResetPassword(): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default ResetPassword;

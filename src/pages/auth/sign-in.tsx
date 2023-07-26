@@ -1,24 +1,25 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import fetch from '../../config/client';
+import { NextPage } from 'next';
+import fetch from '@/config/client';
 import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
-import { actions } from '../../data/actions';
+import { actions } from '@/data/actions';
 import { complements } from '@/data/app-data';
 import { NextRouter, useRouter } from 'next/router';
-import { useAppContext } from '../../context/AppContext';
-import { InputEvents, SubmitEvent, TAuth } from '../../../@types';
+import { useAppContext } from '@/context/AppContext';
+import { InputEvents, SubmitEvent, TAuth } from '@/../@types';
+import { _signIn as Container } from '@/styles/common/sign-in';
 import { IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
-import { SignInContainer as Container } from '../../styles/common/sign-in';
-import backgroundImage from '../../../public/assets/africa-unveiled.png';
+import backgroundImage from '@/../public/assets/africa-unveiled.png';
 
-export default function SignIn(): JSX.Element {
+const SignIn: NextPage = (): JSX.Element => {
   const { state, dispatch } = useAppContext();
   const router: NextRouter = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });
 
-  function handleChange({ e }: { e: InputEvents }): void {
+  const handleChange = ({ e }: { e: InputEvents }): void => {
     dispatch({
       type: actions.SIGNIN_DATA,
       payload: {
@@ -29,9 +30,9 @@ export default function SignIn(): JSX.Element {
         },
       },
     });
-  }
+  };
 
-  async function handleSubmit(e: SubmitEvent): Promise<void> {
+  const handleSubmit = async (e: SubmitEvent): Promise<void> => {
     e.preventDefault();
     if (state.signInData.password.length < 8) {
       setError({
@@ -62,15 +63,13 @@ export default function SignIn(): JSX.Element {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect((): (() => void) => {
-    const desc = setTimeout(() => {
+    const debounceTimer = setTimeout(() => {
       setError({ status: false, message: '' });
     }, 5000);
-    return () => {
-      clearTimeout(desc);
-    };
+    return (): void => clearTimeout(debounceTimer);
   }, [error.status]);
 
   return (
@@ -176,4 +175,6 @@ export default function SignIn(): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default SignIn;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const FeedContainer = styled.div`
+export const _feed = styled.div`
   position: relative;
   width: 100%;
   position: relative;

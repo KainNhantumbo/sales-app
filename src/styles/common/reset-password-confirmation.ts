@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton } from '../defaults';
 
-export const ResetPassordConfirmation = styled.div`
+export const _resetConfirmation = styled.div`
   position: relative;
   padding: 60px 0;
   width: 100%;
@@ -72,30 +72,29 @@ export const ResetPassordConfirmation = styled.div`
         place-items: center;
         place-content: center;
         border-radius: 10px;
-        background: rgba(${({ theme }) => theme.primary}, .2);
+        background: rgba(${({ theme }) => theme.primary}, 0.2);
 
         svg {
           width: 60px;
           height: 60px;
           color: rgb(${({ theme }) => theme.primary_variant});
         }
-
       }
 
       .a-open-mail {
-       ${BaseButton}
+        ${BaseButton}
       }
 
       .a-back {
         color: rgb(${({ theme }) => theme.primary_variant});
-          cursor: pointer;
-          :hover {
-            color: rgb(${({ theme }) => theme.accent});
-          }
+        cursor: pointer;
+        :hover {
+          color: rgb(${({ theme }) => theme.accent});
+        }
 
-          span {
-            pointer-events: none;
-          }
+        span {
+          pointer-events: none;
+        }
       }
     }
   }

@@ -1,12 +1,12 @@
-import styled from 'styled-components';
 import {
   BaseButton,
   BaseButtonOutline,
   StyledInputs,
-  StyledLabels
+  StyledLabels,
 } from '../defaults';
+import styled from 'styled-components';
 
-export const SignInContainer = styled.div`
+export const _signIn = styled.div`
   position: relative;
   padding: 60px 0;
   width: 100%;
@@ -164,7 +164,7 @@ export const SignInContainer = styled.div`
     font-size: 0.92rem;
     font-weight: 500;
     line-height: 1.4rem;
-    background:rgba(${({ theme }) => theme.foreground}, .6) ;
+    background: rgba(${({ theme }) => theme.foreground}, 0.6);
     padding: 5px 10px;
     border-radius: 20px;
   }

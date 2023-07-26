@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton, StyledInputs, StyledLabels } from '../defaults';
 
-export const SignUpContainer = styled.div`
+export const _signUp = styled.div`
   width: 100%;
   min-height: 100vh;
   padding: 60px 0;
@@ -135,7 +135,7 @@ export const SignUpContainer = styled.div`
     font-size: 0.92rem;
     font-weight: 500;
     line-height: 1.4rem;
-    background:rgba(${({ theme }) => theme.foreground}, .6) ;
+    background: rgba(${({ theme }) => theme.foreground}, 0.6);
     padding: 5px 10px;
     border-radius: 20px;
   }

@@ -3,8 +3,8 @@ import Layout from '@/components/Layout';
 import { complements } from '@/data/app-data';
 import SideBarAds from '@/components/SidaBarAds';
 import SearchStories from '@/components/SearchStories';
+import { _feed as Container } from '@/styles/common/feed';
 import StoriesRenderer from '@/components/StoriesRenderer';
-import { FeedContainer as Container } from '@/styles/common/feed';
 
 const Feed: NextPage = (): JSX.Element => (
   <Layout

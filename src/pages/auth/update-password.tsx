@@ -1,36 +1,37 @@
 import Link from 'next/link';
-import fetch from '../../config/client';
-import { useState, useEffect } from 'react';
-import { complements } from '@/data/app-data';
+import { NextPage } from 'next';
+import fetch from '@/config/client';
 import Layout from '@/components/Layout';
+import { useState, useEffect } from 'react';
 import { PulseLoader } from 'react-spinners';
-import { useTheme } from 'styled-components';
-import { InputEvents, SubmitEvent } from '../../../@types';
+import { DefaultTheme, useTheme } from 'styled-components';
+import { complements } from '@/data/app-data';
+import { InputEvents, SubmitEvent } from '@/../@types';
 import { IoLockClosedOutline, IoLockOpenOutline } from 'react-icons/io5';
-import { PasswordReseterContainer as Container } from '../../styles/common/pasword-reseter';
+import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
 
-export default function UpdatePassword(): JSX.Element {
-  const theme = useTheme();
-  const [loading, setLoading] = useState(false);
+const UpdatePassword: NextPage = (): JSX.Element => {
+  const theme: DefaultTheme = useTheme();
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });
   const [passwords, setPasswords] = useState({
     password: '',
-    confirm_password: ''
+    confirm_password: '',
   });
 
-  function handleChange(e: InputEvents): void {
+  const handleChange = (e: InputEvents): void => {
     setPasswords((state) => ({
       ...state,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
-  }
+  };
 
-  async function handleSubmit(e: SubmitEvent): Promise<void> {
+  const handleSubmit = async (e: SubmitEvent): Promise<void> => {
     e.preventDefault();
     if (passwords.password !== passwords.confirm_password)
       return setError({
         status: true,
-        message: 'A as senhas devem ser iguais e maiores que 8 carácteres.'
+        message: 'A as senhas devem ser iguais e maiores que 8 carácteres.',
       });
 
     try {
@@ -39,7 +40,7 @@ export default function UpdatePassword(): JSX.Element {
         method: 'post',
         url: '/api/v1/users/auth/update-password',
         data: passwords.password,
-        withCredentials: true
+        withCredentials: true,
       });
     } catch (error: any) {
       console.error(error);
@@ -47,21 +48,19 @@ export default function UpdatePassword(): JSX.Element {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect((): (() => void) => {
-    const desc = setTimeout(() => {
+    const debounceTimer = setTimeout(() => {
       setError({ status: false, message: '' });
     }, 5000);
-    return () => {
-      clearTimeout(desc);
-    };
+    return (): void => clearTimeout(debounceTimer);
   }, [error.status]);
 
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Atualização de Senha`
+        title: `${complements.defaultTitle} | Atualização de Senha`,
       }}>
       <Container>
         <main>
@@ -117,7 +116,7 @@ export default function UpdatePassword(): JSX.Element {
                       aria-placeholder='Processando...'
                       cssOverride={{
                         display: 'block',
-                        margin: '0 auto'
+                        margin: '0 auto',
                       }}
                     />
                   </>
@@ -142,4 +141,6 @@ export default function UpdatePassword(): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default UpdatePassword;

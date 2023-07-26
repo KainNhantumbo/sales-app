@@ -1,12 +1,12 @@
-import styled from 'styled-components';
 import {
   BaseButton,
   BaseButtonOutline,
   StyledInputs,
   StyledLabels,
 } from '../defaults';
+import styled from 'styled-components';
 
-export const PasswordReseterContainer = styled.div`
+export const _resetPassword = styled.div`
   position: relative;
   padding: 60px 0;
   width: 100%;

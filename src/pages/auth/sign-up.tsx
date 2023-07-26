@@ -6,27 +6,28 @@ import {
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
-import fetch from '../../config/client';
+import fetch from '@/config/client';
 import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
 import { PulseLoader } from 'react-spinners';
-import { useTheme } from 'styled-components';
+import { DefaultTheme, useTheme } from 'styled-components';
 import { complements } from '@/data/app-data';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { InputEvents, SubmitEvent } from '../../../@types';
-import backgroundImage from '../../../public/assets/africa-unveiled.png';
-import { SignUpContainer as Container } from '../../styles/common/sign-up';
+import { InputEvents, SubmitEvent } from '@/../@types';
+import { _signUp as Container } from '@/styles/common/sign-up';
+import backgroundImage from '@/../public/assets/africa-unveiled.png';
+import { NextPage } from 'next';
 
-export default function SignUp(): JSX.Element {
+const SignUp: NextPage = (): JSX.Element => {
   const router: NextRouter = useRouter();
-  const theme = useTheme();
+  const theme: DefaultTheme = useTheme();
   const { state, dispatch } = useAppContext();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });
 
-  function handleChange(e: InputEvents): void {
+  const handleChange = (e: InputEvents): void => {
     dispatch({
       type: actions.SIGNUP_DATA,
       payload: {
@@ -37,9 +38,9 @@ export default function SignUp(): JSX.Element {
         },
       },
     });
-  }
+  };
 
-  async function handleSubmit(e: SubmitEvent): Promise<void> {
+  const handleSubmit = async (e: SubmitEvent): Promise<void> => {
     e.preventDefault();
     if (state.signupData.password !== state.signupData.confirm_password)
       return setError({
@@ -72,15 +73,13 @@ export default function SignUp(): JSX.Element {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect((): (() => void) => {
-    const desc = setTimeout(() => {
+    const debounceTimer = setTimeout(() => {
       setError({ status: false, message: '' });
     }, 5000);
-    return () => {
-      clearTimeout(desc);
-    };
+    return (): void => clearTimeout(debounceTimer);
   }, [error.status]);
 
   return (
@@ -233,4 +232,4 @@ export default function SignUp(): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
