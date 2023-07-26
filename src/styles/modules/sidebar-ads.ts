@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButtonOutline } from '../defaults';
 
-export const SideBarAdsContainer = styled.aside`
+export const _sidebarAds = styled.aside`
   width: 100%;
   height: fit-content;
   position: sticky;

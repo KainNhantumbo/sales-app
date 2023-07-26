@@ -1,5 +1,5 @@
 import fetch from '@/config/client';
-import type { TQueryListProps } from '../../@types';
+import type { TQueryListProps } from '@/../@types';
 
 export async function getPost<T>(slug: string) {
   return await fetch<T>({

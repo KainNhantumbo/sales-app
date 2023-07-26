@@ -5,13 +5,15 @@ import {
   Dispatch,
   useReducer,
   useLayoutEffect,
+  ReactNode,
+  FC,
 } from 'react';
 import fetch from '../config/client';
 import ThemeContext from './ThemeContext';
 import { actions } from '@/data/actions';
 import { NextRouter, useRouter } from 'next/router';
 import { Action, State } from '@/../@types/reducer';
-import { AppContext, TAuth, TCart } from '@/../@types/index';
+import { TAuth, TCart } from '@/../@types/index';
 import { reducer, initialState } from '@/lib/reducer';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
@@ -23,6 +25,8 @@ const queryClient: QueryClient = new QueryClient({
     },
   },
 });
+
+type TProps = { children: ReactNode };
 
 interface IContext {
   state: State;
@@ -76,19 +80,19 @@ const context = createContext<IContext>({
   }),
 });
 
-export default function AppContext(props: AppContext): JSX.Element {
+const AppContext: FC<TProps> = (props): JSX.Element => {
   const CART_KEY: string = 'cart-items';
   const router: NextRouter = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // ============= modal controllers =================== //
-  function cartModalController(): void {
+  const cartModalController = (): void => {
     dispatch({
       type: actions.CART_MODAL,
       payload: { ...state, isCartModal: !state.isCartModal },
     });
-  }
-  function userWorkingDataController(): void {
+  };
+  const userWorkingDataController = (): void => {
     dispatch({
       type: actions.USER_WORKING_DATA_MODAL,
       payload: {
@@ -96,8 +100,8 @@ export default function AppContext(props: AppContext): JSX.Element {
         isUserWorkingDataModal: !state.isUserWorkingDataModal,
       },
     });
-  }
-  function deleteAccountPromptController(): void {
+  };
+  const deleteAccountPromptController = (): void => {
     dispatch({
       type: actions.DELETE_ACCOUNT_PROMPT,
       payload: {
@@ -105,8 +109,8 @@ export default function AppContext(props: AppContext): JSX.Element {
         isDeleteAccountPrompt: !state.isDeleteAccountPrompt,
       },
     });
-  }
-  function deactivateStorePromptController(): void {
+  };
+  const deactivateStorePromptController = (): void => {
     dispatch({
       type: actions.DEACTIVATE_STORE_PROMPT,
       payload: {
@@ -114,37 +118,40 @@ export default function AppContext(props: AppContext): JSX.Element {
         isDeactivateStorePrompt: !state.isDeactivateStorePrompt,
       },
     });
-  }
+  };
 
-  function logoutPromptController(): void {
+  const logoutPromptController = (): void => {
     dispatch({
       type: actions.LOGOUT_PROMPT,
       payload: { ...state, isLogoutPrompt: !state.isLogoutPrompt },
     });
-  }
+  };
 
-  function loginPromptController(): void {
+  const loginPromptController = (): void => {
     dispatch({
       type: actions.LOGIN_PROMPT,
       payload: { ...state, isLoginPrompt: !state.isLoginPrompt },
     });
-  }
+  };
 
-  function searchBoxController(): void {
+  const searchBoxController = (): void => {
     dispatch({
       type: actions.SEARCH_BOX_CONTROL,
       payload: { ...state, isSearchActive: !state.isSearchActive },
     });
-  }
+  };
 
-  function sortBoxController(): void {
+  const sortBoxController = (): void => {
     dispatch({
       type: actions.SORT_BOX_CONTROL,
       payload: { ...state, isSortActive: !state.isSortActive },
     });
-  }
+  };
 
-  function deleteCommentPromptController(status: boolean, id?: string): void {
+  const deleteCommentPromptController = (
+    status: boolean,
+    id?: string
+  ): void => {
     dispatch({
       type: actions.DELETE_COMMENT_PROMPT,
       payload: {
@@ -152,9 +159,9 @@ export default function AppContext(props: AppContext): JSX.Element {
         isDeleteCommentPrompt: { status, commentId: id ?? '' },
       },
     });
-  }
+  };
 
-  function deleteStoryPromptController(status: boolean, id?: string): void {
+  const deleteStoryPromptController = (status: boolean, id?: string): void => {
     dispatch({
       type: actions.DELETE_STORY_PROMPT,
       payload: {
@@ -162,9 +169,12 @@ export default function AppContext(props: AppContext): JSX.Element {
         isDeleteStoryPrompt: { status, storyId: id ?? '' },
       },
     });
-  }
+  };
 
-  function deleteProductPromptController(status: boolean, id?: string): void {
+  const deleteProductPromptController = (
+    status: boolean,
+    id?: string
+  ): void => {
     dispatch({
       type: actions.DELETE_PRODUCT_PROMPT,
       payload: {
@@ -172,9 +182,9 @@ export default function AppContext(props: AppContext): JSX.Element {
         isDeleteProductPrompt: { status, productId: id ?? '' },
       },
     });
-  }
+  };
 
-  function shareProductController(): void {
+  const shareProductController = (): void => {
     dispatch({
       type: actions.SHARE_PRODUCT_MODAL,
       payload: {
@@ -182,10 +192,10 @@ export default function AppContext(props: AppContext): JSX.Element {
         isShareProductModal: !state.isShareProductModal,
       },
     });
-  }
+  };
 
   // ----------------product cart--------------------------
-  function getCartProduct(currentProductId: string): TCart {
+  const getCartProduct = (currentProductId: string): TCart => {
     const foundProduct = state.cart.some(
       (product) => product.productId === currentProductId
     );
@@ -201,12 +211,12 @@ export default function AppContext(props: AppContext): JSX.Element {
       previewImage: undefined,
       price: 0,
     };
-  }
+  };
 
-  function updateCartProduct(props: {
+  const updateCartProduct = (props: {
     productId: string;
     quantity: number;
-  }): void {
+  }): void => {
     dispatch({
       type: actions.PRODUCTS_CART,
       payload: {
@@ -220,9 +230,9 @@ export default function AppContext(props: AppContext): JSX.Element {
         ],
       },
     });
-  }
+  };
 
-  function removeProductFromCart(currentProductId: string): void {
+  const removeProductFromCart = (currentProductId: string): void => {
     dispatch({
       type: actions.PRODUCTS_CART,
       payload: {
@@ -237,9 +247,9 @@ export default function AppContext(props: AppContext): JSX.Element {
               ],
       },
     });
-  }
+  };
 
-  function addProductToCart(product: TCart): void {
+  const addProductToCart = (product: TCart): void => {
     dispatch({
       type: actions.PRODUCTS_CART,
       payload: {
@@ -247,7 +257,7 @@ export default function AppContext(props: AppContext): JSX.Element {
         cart: [...state.cart, { ...product }],
       },
     });
-  }
+  };
 
   const syncCartToLocalStorage = (): void => {
     localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
@@ -261,7 +271,7 @@ export default function AppContext(props: AppContext): JSX.Element {
     restoreCartFromLocalStorage();
   }, []);
 
-  function restoreCartFromLocalStorage(): void {
+  const restoreCartFromLocalStorage = (): void => {
     const data: TCart[] = JSON.parse(localStorage.getItem(CART_KEY) || `[]`);
 
     if (data?.length > 0)
@@ -269,10 +279,10 @@ export default function AppContext(props: AppContext): JSX.Element {
         type: actions.PRODUCTS_CART,
         payload: { ...state, cart: data },
       });
-  }
+  };
 
   // -------------user authentication---------------
-  async function validateAuth(): Promise<void> {
+  const validateAuth = async (): Promise<void> => {
     try {
       const { data } = await fetch<TAuth>({
         method: 'get',
@@ -281,15 +291,12 @@ export default function AppContext(props: AppContext): JSX.Element {
       });
       dispatch({
         type: actions.USER_AUTH,
-        payload: {
-          ...state,
-          auth: { ...data },
-        },
+        payload: { ...state, auth: { ...data } },
       });
     } catch (err: any) {
       console.error(err);
     }
-  }
+  };
 
   async function fetchAPI<T>(
     config: AxiosRequestConfig
@@ -402,8 +409,7 @@ export default function AppContext(props: AppContext): JSX.Element {
       </QueryClientProvider>
     </ThemeContext>
   );
-}
+};
 
-export function useAppContext(): IContext {
-  return useContext(context);
-}
+export default AppContext;
+export const useAppContext = (): IContext => useContext(context);

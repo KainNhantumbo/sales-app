@@ -7,9 +7,8 @@ import {
 } from 'react-icons/io5';
 import moment from 'moment';
 import Image from 'next/image';
-import { NextPage } from 'next';
-import { useEffect } from 'react';
 import fetch from '@/config/client';
+import { FC, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BiUser } from 'react-icons/bi';
 import { FaEdit } from 'react-icons/fa';
@@ -23,7 +22,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { PulseLoader } from 'react-spinners';
 import { DefaultTheme, useTheme } from 'styled-components';
 import DeleteStoryPrompt from './modals/DeleteStoryPrompt';
-import { StoriesRenderContainer as Container } from '@/styles/modules/stories-renderer';
+import { _storiesRender as Container } from '@/styles/modules/stories-renderer';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
 
 interface IProps {
@@ -31,7 +30,7 @@ interface IProps {
   favoritesId?: string | undefined;
 }
 
-const StoriesRenderer: NextPage<IProps> = (props): JSX.Element => {
+const StoriesRenderer: FC<IProps> = (props): JSX.Element => {
   const LIMIT: number = 8;
   const router: NextRouter = useRouter();
   const theme: DefaultTheme = useTheme();

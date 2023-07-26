@@ -1,12 +1,13 @@
+import type { FC } from 'react';
 import { BiUser } from 'react-icons/bi';
 import { actions } from '@/data/actions';
 import { MoonLoader } from 'react-spinners';
-import { useTheme } from 'styled-components';
+import { DefaultTheme, useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
-import type { TMainCommentForm } from '../../../@types/comments';
+import type { TMainCommentForm } from '@/../@types/comments';
 
-export default function CommentForm(props: TMainCommentForm): JSX.Element {
-  const theme = useTheme();
+const CommentForm: FC<TMainCommentForm> = (props): JSX.Element => {
+  const theme: DefaultTheme = useTheme();
   const { state, dispatch, loginPromptController } = useAppContext();
 
   return (
@@ -87,4 +88,6 @@ export default function CommentForm(props: TMainCommentForm): JSX.Element {
       )}
     </>
   );
-}
+};
+
+export default CommentForm;

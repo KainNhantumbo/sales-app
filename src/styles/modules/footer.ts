@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const FooterContainer = styled.footer`
+export const _footer = styled.footer`
   width: 100%;
   font-weight: 500;
   font-size: 1rem;

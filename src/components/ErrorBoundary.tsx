@@ -6,7 +6,7 @@ interface IState extends Readonly<{}> {
   hasError: boolean;
 }
 
-export default class ErrorBoundary extends Component {
+class ErrorBoundary extends Component {
   public props!: PropsWithChildren;
   public state: IState;
 
@@ -32,3 +32,5 @@ export default class ErrorBoundary extends Component {
     return this.props.children;
   }
 }
+
+export default ErrorBoundary;

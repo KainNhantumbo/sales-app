@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { actions } from '@/data/actions';
 import { IoSearch } from 'react-icons/io5';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { SearchContainer as Container } from '@/styles/modules/search-form';
+import { _search as Container } from '@/styles/modules/search-form';
 
 const SearchStores: FC = (): JSX.Element => {
   const { state, dispatch } = useAppContext();

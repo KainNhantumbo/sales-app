@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
 import { IoCheckmark } from 'react-icons/io5';
 import { complements } from '@/data/app-data';
+import { useState, useEffect, FC } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { CookiesPopupContainer as Container } from '../styles/common/cookies-popup';
+import { _cookies as Container } from '../styles/modules/cookies-popup';
 
-export default function CookiesPopup(): JSX.Element {
+const CookiesPopup: FC = (): JSX.Element => {
   const [privacyAdvisor, setprivacyAdvisor] = useState<boolean>();
 
   // controls the life cicle of the component
@@ -66,4 +66,6 @@ export default function CookiesPopup(): JSX.Element {
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default CookiesPopup;

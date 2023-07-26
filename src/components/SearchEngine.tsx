@@ -17,7 +17,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useThemeContext } from '@/context/ThemeContext';
 import { DefaultTheme, useTheme } from 'styled-components';
 import product_categories from '../data/product-categories.json';
-import { SeachEngineContainer as Container } from '../styles/modules/search-engine';
+import { _seachEngine as Container } from '../styles/modules/search-engine';
 
 const SearchEngine: FC = (): JSX.Element => {
   const theme: DefaultTheme = useTheme();

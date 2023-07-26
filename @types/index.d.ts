@@ -106,10 +106,6 @@ export type HeadProps =
     }
   | undefined;
 
-export type AppContext = {
-  children: ReactNode;
-};
-
 export type Author = {
   name: string;
   picture: StaticImageData | string;

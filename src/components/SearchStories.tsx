@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { actions } from '@/data/actions';
 import { IoClose } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
-import { SearchContainer as Container } from '@/styles/modules/search-form';
+import { _search as Container } from '@/styles/modules/search-form';
 
 const SearchStories: FC = (): JSX.Element => {
   const { state, dispatch } = useAppContext();

@@ -3,7 +3,7 @@ import { IoIosTrash } from 'react-icons/io';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoArrowBackOutline } from 'react-icons/io5';
-import { PromptContainer as Container } from '@/styles/modules/logout-prompt';
+import { _prompt as Container } from '@/styles/modules/logout-prompt';
 
 type TProps = {
   deleteFn: (productId: string) => Promise<void>;

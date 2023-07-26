@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton, StyledInputs } from '../defaults';
 
-export const NewsletterContainer = styled.section`
+export const _newsletter = styled.section`
   display: flex;
   flex-direction: column;
   gap: 10px;

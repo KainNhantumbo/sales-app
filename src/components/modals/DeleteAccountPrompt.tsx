@@ -11,7 +11,7 @@ import { useState, useEffect, FC } from 'react';
 import { useRouter, NextRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DeleteAccountContainer as Container } from '@/styles/modules/delete-account-prompt';
+import { _deleteAccount as Container } from '@/styles/modules/delete-account-prompt';
 
 const DeleteAccountPrompt: FC = (): JSX.Element => {
   const { state, fetchAPI, dispatch, deleteAccountPromptController } =

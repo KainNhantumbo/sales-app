@@ -1,16 +1,17 @@
-import { useTheme } from 'styled-components';
+import { FC } from 'react';
+import Link from 'next/link';
 import { complements } from '@/data/app-data';
 import { NextRouter, useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
+import { DefaultTheme, useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
 import { IoArrowBackOutline, IoExitOutline } from 'react-icons/io5';
-import { PromptContainer as Container } from '../../styles/modules/logout-prompt';
-import Link from 'next/link';
+import { _prompt as Container } from '@/styles/modules/logout-prompt';
 
-export default function LogoutPrompt(): JSX.Element {
-  const { state, loginPromptController } = useAppContext();
-  const theme = useTheme();
+const RequestLogin: FC = (): JSX.Element => {
+  const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
+  const { state, loginPromptController } = useAppContext();
 
   return (
     <AnimatePresence>
@@ -75,4 +76,6 @@ export default function LogoutPrompt(): JSX.Element {
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default RequestLogin;

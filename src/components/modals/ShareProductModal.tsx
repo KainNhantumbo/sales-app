@@ -4,11 +4,12 @@ import {
   FaPinterest,
   FaTwitter,
 } from 'react-icons/fa';
+import { FC } from 'react';
 import { complements } from '@/data/app-data';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoClose, IoShareSocial } from 'react-icons/io5';
-import { ShareProductContainer as Container } from '../../styles/modules/share-product-modal';
+import { _shareProduct as Container } from '@/styles/modules/share-product-modal';
 
 type TProps = {
   name: string;
@@ -16,11 +17,11 @@ type TProps = {
   productId: string;
 };
 
-export default function ShareProducts({
+const ShareProducts: FC<TProps> = ({
   name,
   category,
   productId,
-}: TProps): JSX.Element {
+}): JSX.Element => {
   const { state, shareProductController } = useAppContext();
 
   const options = [
@@ -104,4 +105,6 @@ export default function ShareProducts({
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default ShareProducts;

@@ -10,14 +10,15 @@ import {
   IoSpeedometerOutline,
   IoSunnyOutline,
 } from 'react-icons/io5';
+import { FC } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { complements, urls } from '@/data/app-data';
 import { useAppContext } from '@/context/AppContext';
 import { useThemeContext } from '@/context/ThemeContext';
-import { FooterContainer as Container } from '../styles/common/footer';
+import { _footer as Container } from '../styles/modules/footer';
 
-export default function Footer(): JSX.Element {
+const Footer: FC = (): JSX.Element => {
   const { state } = useAppContext();
   const { setDarkMode, darkmode, setLightMode, matchMediaTheme } =
     useThemeContext();
@@ -158,4 +159,6 @@ export default function Footer(): JSX.Element {
       </div>
     </Container>
   );
-}
+};
+
+export default Footer;

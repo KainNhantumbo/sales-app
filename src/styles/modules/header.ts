@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton, BaseButtonOutline } from '../defaults';
 
-export const HeaderContainer = styled.header`
+export const _header = styled.header`
   width: 100%;
   height: 70px;
   position: fixed;

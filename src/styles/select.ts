@@ -1,5 +1,5 @@
 import type { StylesConfig } from 'react-select';
-import { DefaultTheme } from 'styled-components';
+import type { DefaultTheme } from 'styled-components';
 
 export const renderReactSelectCSS = (theme: DefaultTheme): StylesConfig => {
   return {

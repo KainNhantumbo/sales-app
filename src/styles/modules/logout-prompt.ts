@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton, BaseButtonOutline } from '../defaults';
 
-export const PromptContainer = styled.section`
+export const _prompt = styled.section`
   position: fixed;
   width: 100vw;
   height: 100vh;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton, BaseButtonOutline, StyledInputs } from '../defaults';
 
-export const CommentsContainer = styled.div`
+export const _comments = styled.div`
   .comments-section {
     display: flex;
     flex-direction: column;

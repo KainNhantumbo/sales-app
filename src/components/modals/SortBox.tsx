@@ -1,10 +1,11 @@
+import type { FC } from 'react';
 import { FiX } from 'react-icons/fi';
+import { actions } from '@/data/actions';
 import { BiSortAlt2 } from 'react-icons/bi';
 import { HiSelector } from 'react-icons/hi';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SortBoxContainer as Container } from '../../styles/modules/sort-box';
-import { actions } from '@/data/actions';
+import { _sortBox as Container } from '@/styles/modules/sort-box';
 
 const SortOptions = [
   { code: 'name', name: 'Nome' },
@@ -14,10 +15,10 @@ const SortOptions = [
   { code: 'price', name: 'Preço' },
   { code: '-price', name: 'Preço (desc.)' },
   { code: 'createdAt', name: 'Data de criação' },
-  { code: '-createdAt', name: 'Data de criação (desc.)' }
+  { code: '-createdAt', name: 'Data de criação (desc.)' },
 ];
 
-export default function SortBox(): JSX.Element {
+const SortBox: FC = (): JSX.Element => {
   const { state, dispatch, sortBoxController } = useAppContext();
   return (
     <AnimatePresence>
@@ -62,9 +63,9 @@ export default function SortBox(): JSX.Element {
                           ...state,
                           productsListQuery: {
                             ...state.productsListQuery,
-                            sort: option.code
-                          }
-                        }
+                            sort: option.code,
+                          },
+                        },
                       });
                     }}>
                     <HiSelector />
@@ -78,4 +79,6 @@ export default function SortBox(): JSX.Element {
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default SortBox;

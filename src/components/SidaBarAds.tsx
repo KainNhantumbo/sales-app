@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { FC } from 'react';
 import { FaAd } from 'react-icons/fa';
 import { IoAdd } from 'react-icons/io5';
-import { SideBarAdsContainer as Container } from '@/styles/modules/sidebar-ads';
+import { _sidebarAds as Container } from '@/styles/modules/sidebar-ads';
 
 const SideBarAds: FC = (): JSX.Element => {
   return (

@@ -1,41 +1,52 @@
 import Link from 'next/link';
 import Comment from './Comment';
-import { NextPage } from 'next';
 import { AxiosResponse } from 'axios';
 import CommentForm from './CommentForm';
 import { actions } from '@/data/actions';
 import ReplyComment from './ReplyComment';
 import ReplyCommentForm from './ReplyCommentForm';
 import { NextRouter, useRouter } from 'next/router';
-import { useState, useEffect, useMemo } from 'react';
 import { useAppContext } from '@/context/AppContext';
+import { useState, useEffect, useMemo, FC } from 'react';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 import type { IComment, TComment } from '@/../@types/comments';
 import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
-import { CommentsContainer as Container } from '@/styles/modules/comments';
+import { _comments as Container } from '@/styles/modules/comments';
 
 type TProps = { contentId: string };
 
-const Comments: NextPage<TProps> = ({ contentId }): JSX.Element => {
+type TError = {
+  status: boolean;
+  msg: string;
+  key: 'create-comment' | 'update-comment' | 'delete-comment';
+};
+
+type TLoading = {
+  status: boolean;
+  key: 'create-comment' | 'update-comment' | 'delete-comment';
+};
+
+const Comments: FC<TProps> = ({ contentId }): JSX.Element => {
   const router: NextRouter = useRouter();
   const { state, dispatch, fetchAPI, deleteCommentPromptController } =
     useAppContext();
 
-  const [loading, setLoading] = useState<{
-    status: boolean;
-    key: 'create-comment' | 'update-comment' | 'delete-comment';
-  }>({ status: false, key: 'create-comment' });
+  const [loading, setLoading] = useState<TLoading>({
+    status: false,
+    key: 'create-comment',
+  });
 
-  const [error, setError] = useState<{
-    status: boolean;
-    msg: string;
-    key: 'create-comment' | 'update-comment' | 'delete-comment';
-  }>({ status: false, msg: '', key: 'create-comment' });
+  const [error, setError] = useState<TError>({
+    status: false,
+    msg: '',
+    key: 'create-comment',
+  });
 
   const [activeModes, setActiveModes] = useState({
     edit: false,
     reply: false,
   });
+  
   // ---------------functions----------------
   const formattedComments = useMemo(() => {
     const group: { [index: string]: IComment[] } = {};
@@ -46,11 +57,9 @@ const Comments: NextPage<TProps> = ({ contentId }): JSX.Element => {
     return group;
   }, [state.commentsList]);
 
-  function getCommentReplies(parentId: string) {
-    return formattedComments[parentId];
-  }
+  const getCommentReplies = (parentId: string) => formattedComments[parentId];
 
-  function clearCommentData(): void {
+  const clearCommentData = (): void => {
     setActiveModes({ edit: false, reply: false });
     dispatch({
       type: actions.CREATE_COMMENT,
@@ -73,9 +82,9 @@ const Comments: NextPage<TProps> = ({ contentId }): JSX.Element => {
         },
       },
     });
-  }
+  };
 
-  async function getComments(): Promise<void> {
+  const getComments = async (): Promise<void> => {
     try {
       const { data } = await fetchAPI<TComment[]>({
         method: 'get',
@@ -88,9 +97,9 @@ const Comments: NextPage<TProps> = ({ contentId }): JSX.Element => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
-  async function handleCreateComment(): Promise<void> {
+  const handleCreateComment = async (): Promise<void> => {
     setLoading({ status: true, key: 'create-comment' });
     try {
       const { data } = await fetchAPI({
@@ -120,9 +129,9 @@ const Comments: NextPage<TProps> = ({ contentId }): JSX.Element => {
     } finally {
       setLoading({ status: false, key: 'create-comment' });
     }
-  }
+  };
 
-  async function handleUpdateComment(id: string): Promise<void> {
+  const handleUpdateComment = async (id: string): Promise<void> => {
     try {
       const { data }: AxiosResponse<IComment> = await fetchAPI({
         method: 'patch',
@@ -153,9 +162,9 @@ const Comments: NextPage<TProps> = ({ contentId }): JSX.Element => {
     } finally {
       setLoading({ status: false, key: 'create-comment' });
     }
-  }
+  };
 
-  async function handleDeleteComment(id: string): Promise<void> {
+  const handleDeleteComment = async (id: string): Promise<void> => {
     clearCommentData();
     try {
       await fetchAPI({ method: 'delete', url: `/api/v1/users/comments/${id}` });
@@ -164,9 +173,9 @@ const Comments: NextPage<TProps> = ({ contentId }): JSX.Element => {
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
-  }
+  };
 
-  function handleReplyComment(data: IComment): void {
+  const handleReplyComment = (data: IComment): void => {
     clearCommentData();
     setActiveModes({ edit: false, reply: true });
     dispatch({
@@ -180,9 +189,9 @@ const Comments: NextPage<TProps> = ({ contentId }): JSX.Element => {
         },
       },
     });
-  }
+  };
 
-  function handleEditComment(data: IComment): void {
+  const handleEditComment = (data: IComment): void => {
     clearCommentData();
     setActiveModes({ edit: true, reply: false });
     dispatch({
@@ -195,9 +204,9 @@ const Comments: NextPage<TProps> = ({ contentId }): JSX.Element => {
         },
       },
     });
-  }
+  };
 
-  async function handleFavoriteComment(id: string): Promise<void> {
+  const handleFavoriteComment = async (id: string): Promise<void> => {
     try {
       const { data } = await fetchAPI({
         method: 'post',
@@ -217,9 +226,9 @@ const Comments: NextPage<TProps> = ({ contentId }): JSX.Element => {
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
-  }
+  };
 
-  async function handleUnFavoriteComment(id: string): Promise<void> {
+  const handleUnFavoriteComment = async (id: string): Promise<void> => {
     try {
       const { data } = await fetchAPI({
         method: 'patch',
@@ -239,9 +248,9 @@ const Comments: NextPage<TProps> = ({ contentId }): JSX.Element => {
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
-  }
+  };
 
-  async function handleSendReplyComment(): Promise<void> {
+  const handleSendReplyComment = async (): Promise<void> => {
     setLoading({ status: true, key: 'create-comment' });
     try {
       await fetchAPI({
@@ -265,34 +274,30 @@ const Comments: NextPage<TProps> = ({ contentId }): JSX.Element => {
     } finally {
       setLoading({ status: false, key: 'create-comment' });
     }
-  }
+  };
 
-  useEffect(() => {
-    return () => {
+  useEffect((): (() => void) => {
+    return (): void => {
       setActiveModes({ reply: false, edit: false });
       clearCommentData();
     };
   }, []);
 
-  useEffect(() => {
-    const deferTimmer = setTimeout(() => {
+  useEffect((): (() => void) => {
+    const debounceTime = setTimeout(() => {
       const q = router.query;
       if (q.productId || contentId) {
         getComments();
       }
     }, 500);
-    return () => {
-      clearTimeout(deferTimmer);
-    };
+    return (): void => clearTimeout(debounceTime);
   }, [router.query, router.asPath, router.route, contentId]);
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     const desc = setTimeout(() => {
       setError({ status: false, msg: '', key: 'create-comment' });
     }, 5000);
-    return () => {
-      clearTimeout(desc);
-    };
+    return (): void => clearTimeout(desc);
   }, [error.status]);
 
   return (

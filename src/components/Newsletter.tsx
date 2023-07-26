@@ -9,7 +9,7 @@ import { useAppContext } from '@/context/AppContext';
 import { IoPaperPlaneOutline } from 'react-icons/io5';
 import { DefaultTheme, useTheme } from 'styled-components';
 import newsletter_image from '../../public/assets/newsletter.png';
-import { NewsletterContainer as Container } from '../styles/modules/newsletter';
+import { _newsletter as Container } from '../styles/modules/newsletter';
 
 const NewsLetter: FC = (): JSX.Element => {
   const theme: DefaultTheme = useTheme();

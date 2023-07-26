@@ -36,26 +36,26 @@ import {
   IoWatchOutline,
 } from 'react-icons/io5';
 import moment from 'moment';
+import Image from 'next/image';
+import { NextPage } from 'next';
 import Compressor from 'compressorjs';
 import Layout from '@/components/Layout';
-import { BiUser, BiUserCheck, BiUserX } from 'react-icons/bi';
+import { actions } from '@/data/actions';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
-import { actions } from '@/data/actions';
-import { InputEvents, User } from '@/../@types';
-import { NextRouter, useRouter } from 'next/router';
+import countries from '@/data/countries.json';
 import { complements } from '@/data/app-data';
-import Image from 'next/image';
+import { InputEvents, User } from '@/../@types';
+import user_languages from '@/data/languages.json';
+import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { FaBlog, FaLinkedinIn } from 'react-icons/fa';
 import { DotLoader, PulseLoader } from 'react-spinners';
-import countries from '@/data/countries.json';
-import user_languages from '@/data/languages.json';
-import UserWorkingData from '@/components/modals/UserWorkingData';
-import { UserProfileContainer as Container } from '@/styles/common/profile-editor';
 import user_skills from '@/data/professional-skills.json';
+import WorkCapturer from '@/components/modals/WorkCapturer';
+import { BiUser, BiUserCheck, BiUserX } from 'react-icons/bi';
 import DeleteAccountPrompt from '@/components/modals/DeleteAccountPrompt';
-import { NextPage } from 'next';
+import { UserProfileContainer as Container } from '@/styles/common/profile-editor';
 
 const ProfileEditor: NextPage = (): JSX.Element => {
   const theme = useTheme();
@@ -432,7 +432,7 @@ const ProfileEditor: NextPage = (): JSX.Element => {
             </section>
           )}
 
-        <UserWorkingData
+        <WorkCapturer
           setStateFn={setWorkingExperienceData}
           initialData={workingExperienceData}
           updateFn={updateWorkingData}

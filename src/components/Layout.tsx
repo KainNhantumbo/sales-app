@@ -3,7 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Cart from './modals/Cart';
 import PageLoader from './PageLoader';
-import { ReactNode, useEffect } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
 import { HeadProps } from '../../@types/index';
 import LogoutPrompt from './modals/LogoutPrompt';
 import RequestLogin from './modals/RequestLogin';
@@ -16,17 +16,17 @@ interface IProps {
   metadata: HeadProps | undefined;
 }
 
-export default function Layout({ children, metadata }: IProps) {
+const Layout: FC<IProps> = ({ children, metadata }) => {
   const { state } = useAppContext();
   const router: NextRouter = useRouter();
 
   useEffect(() => {
-    const isAuthenticated = setTimeout(() => {
+    const debounceTimer = setTimeout(() => {
       if (router.asPath.includes('dashboard') && !state.auth.id) {
         router.push('/auth/sign-in');
       }
     }, 500);
-    return () => clearTimeout(isAuthenticated);
+    return () => clearTimeout(debounceTimer);
   }, [state.auth]);
 
   return (
@@ -44,4 +44,6 @@ export default function Layout({ children, metadata }: IProps) {
       <Footer />
     </>
   );
-}
+};
+
+export default Layout;

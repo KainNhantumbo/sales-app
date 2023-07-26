@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton } from '../defaults';
 
-export const StoriesRenderContainer = styled.div`
+export const _storiesRender = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -10,7 +10,7 @@ export const StoriesRenderContainer = styled.div`
   padding: 0 20px;
   padding-bottom: 20px;
   margin: 0 auto;
-  
+
   .stats-container {
     width: 100%;
     height: 100%;

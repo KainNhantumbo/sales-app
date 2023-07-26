@@ -1,11 +1,12 @@
+import { FC } from 'react';
 import { motion } from 'framer-motion';
 import { HiPlus } from 'react-icons/hi';
 import { useAppContext } from '@/context/AppContext';
 import { BiSortAlt2, BiSearch } from 'react-icons/bi';
 import { NextRouter, useRouter } from 'next/router';
-import { ToolbarContainer as Container } from '../../styles/modules/tool-bar';
+import { _toolbar as Container } from '@/styles/modules/tool-bar';
 
-export default function ToolBox(): JSX.Element {
+const ToolBox: FC = (): JSX.Element => {
   const router: NextRouter = useRouter();
   const { state, sortBoxController, searchBoxController } = useAppContext();
 
@@ -50,4 +51,6 @@ export default function ToolBox(): JSX.Element {
       </section>
     </Container>
   );
-}
+};
+
+export default ToolBox;

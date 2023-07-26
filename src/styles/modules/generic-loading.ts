@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const GenericLoading = styled.section`
+export const _loading = styled.section`
   display: grid;
   place-content: center;
   place-items: center;

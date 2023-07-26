@@ -1,14 +1,14 @@
-import { actions } from '@/data/actions';
 import { FiX } from 'react-icons/fi';
+import { actions } from '@/data/actions';
 import { BiSearch } from 'react-icons/bi';
+import { FC, useEffect, useState } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SearchBoxContainer as Container } from '../../styles/modules/search-box';
-import { useEffect, useState } from 'react';
+import { _searchBox as Container } from '@/styles/modules/search-box';
 
-export default function SearchBox(): JSX.Element {
-  const { state, dispatch, searchBoxController } = useAppContext();
+const SearchBox: FC = (): JSX.Element => {
   const [inputValue, setInputValue] = useState<string>('');
+  const { state, dispatch, searchBoxController } = useAppContext();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -18,9 +18,9 @@ export default function SearchBox(): JSX.Element {
           ...state,
           productsListQuery: {
             ...state.productsListQuery,
-            query: inputValue
-          }
-        }
+            query: inputValue,
+          },
+        },
       });
       if (inputValue.length < 1) {
         dispatch({
@@ -29,9 +29,9 @@ export default function SearchBox(): JSX.Element {
             ...state,
             productsListQuery: {
               ...state.productsListQuery,
-              query: ''
-            }
-          }
+              query: '',
+            },
+          },
         });
       }
     }, 300);
@@ -87,4 +87,6 @@ export default function SearchBox(): JSX.Element {
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default SearchBox;

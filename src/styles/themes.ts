@@ -1,4 +1,4 @@
-import type { Theme } from '../../@types/index';
+import type { Theme } from '@/../@types';
 
 export const light_default: Theme = {
   alert: '253, 56, 79',

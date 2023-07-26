@@ -10,29 +10,23 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { urls } from '@/data/app-data';
 import { BiUser } from 'react-icons/bi';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import rubymart_logo from '../../public/rubymart_logo.png';
-import { HeaderContainer as Container } from '../styles/common/header';
+import { _header as Container } from '../styles/modules/header';
 
-export default function Header(): JSX.Element {
+const Header: FC = (): JSX.Element => {
   const [isMenu, setIsMenu] = useState<boolean>(false);
   const { asPath, push }: NextRouter = useRouter();
-  const { state, cartModalController, logoutPromptController } = useAppContext();
+  const { state, cartModalController, logoutPromptController } =
+    useAppContext();
 
-  function toggleMenu(): void {
-    setIsMenu(!isMenu);
-  }
+  const toggleMenu = (): void => setIsMenu(!isMenu);
 
-  function changeWidth(): void {
-    if (window.innerWidth > 770) {
-      setIsMenu(true);
-    } else {
-      setIsMenu(false);
-    }
-  }
+  const changeWidth = (): void =>
+    window.innerWidth > 770 ? setIsMenu(true) : setIsMenu(false);
 
   useEffect((): (() => void) => {
     changeWidth();
@@ -90,7 +84,7 @@ export default function Header(): JSX.Element {
                     if (window.innerWidth < 770) {
                       toggleMenu();
                     }
-                    cartModalController()
+                    cartModalController();
                   }}>
                   <IoCartOutline />
                   <span>
@@ -151,4 +145,6 @@ export default function Header(): JSX.Element {
       </div>
     </Container>
   );
-}
+};
+
+export default Header;

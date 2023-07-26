@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton } from '../defaults';
 
-export const CookiesPopupContainer = styled.div`
+export const _cookies = styled.div`
   width: 100%;
   position: fixed;
   right: 0;

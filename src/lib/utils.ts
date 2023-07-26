@@ -1,12 +1,9 @@
 import moment from 'moment';
 
-export function formatDate(date: string): string {
-  return moment(date).format('LL');
-}
+export const formatDate = (date: string): string => moment(date).format('LL');
 
-export function formatCurrency(currency: number) {
-  return Intl.NumberFormat('pt-BR', {
+export const formatCurrency = (currency: number): string =>
+  Intl.NumberFormat('pt-BR', {
     currency: 'MZN',
     style: 'currency',
   }).format(currency);
-}

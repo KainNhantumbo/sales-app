@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { StyledInputs, Button_Mono_B } from '../defaults';
 
-export const SearchContainer = styled.div`
+export const _search = styled.div`
   width: 100%;
   margin: 0 auto;
   max-width: 980px;

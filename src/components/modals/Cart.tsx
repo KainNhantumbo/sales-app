@@ -8,15 +8,16 @@ import {
   IoRemove,
 } from 'react-icons/io5';
 import Image from 'next/image';
+import type { FC } from 'react';
+import { formatCurrency } from '@/lib/utils';
 import { FaDollarSign } from 'react-icons/fa';
 import { blurDataUrlImage } from '@/data/app-data';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
-import { CartContainer as Container } from '../../styles/modules/cart';
-import { formatCurrency } from '@/lib/utils';
+import { _cart as Container } from '../../styles/modules/cart';
 
-export default function Cart(): JSX.Element {
+const Cart: FC = (): JSX.Element => {
   const {
     state,
     cartModalController,
@@ -216,4 +217,6 @@ export default function Cart(): JSX.Element {
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default Cart;

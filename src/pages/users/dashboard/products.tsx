@@ -10,16 +10,17 @@ import {
 } from 'react-icons/io5';
 import moment from 'moment';
 import Link from 'next/link';
+import { NextPage } from 'next';
 import { useEffect } from 'react';
 import Layout from '@/components/Layout';
 import { actions } from '@/data/actions';
+import { ProductsList } from '@/../@types';
 import { formatCurrency } from '@/lib/utils';
 import { useTheme } from 'styled-components';
 import { complements } from '@/data/app-data';
 import { PulseLoader } from 'react-spinners';
 import { VscEmptyWindow } from 'react-icons/vsc';
 import { DefaultTheme } from 'styled-components';
-import { ProductsList } from '../../../../@types';
 import ToolBox from '@/components/modals/ToolBox';
 import SortBox from '@/components/modals/SortBox';
 import { useAppContext } from '@/context/AppContext';
@@ -29,7 +30,6 @@ import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import ShareProducts from '@/components/modals/ShareProductModal';
 import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
 import { ProductListContainer as Container } from '@/styles/common/products';
-import { NextPage } from 'next';
 
 const Products: NextPage = (): JSX.Element => {
   const {

@@ -10,7 +10,6 @@ import {
   IoAdd,
   IoBagCheck,
   IoAnalytics,
-  IoChatboxEllipses,
   IoCog,
   IoFingerPrint,
   IoCardOutline,
@@ -176,7 +175,6 @@ const pricing_data: TPricingData = [
     amount: 94.99,
     description: [
       'Suporte em tempo real',
-      'Live chat com seus clientes',
       'Acesso a criação de anúncios',
       'Quantidade ilimitada de produtos, vendas e visitas',
       'Ferramentas para auxiliar o seu negócio',
@@ -339,21 +337,6 @@ const dashboardActions = (props: {
         label: 'Destacar produtos da loja',
         url: '/users/dashboard/ads/products',
         icon: IoFlash,
-      },
-    ],
-  },
-  message: {
-    header: { label: 'Mensagens', icon: IoChatboxEllipses },
-    paths: [
-      {
-        label: 'Criar mensagem',
-        url: '/users/dashboard/create-message',
-        icon: IoAdd,
-      },
-      {
-        label: 'Gerir mensagens',
-        url: '/users/dashboard/messages',
-        icon: IoCog,
       },
     ],
   },

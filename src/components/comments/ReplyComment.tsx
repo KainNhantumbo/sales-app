@@ -7,6 +7,7 @@ import {
   IoHeartOutline,
 } from 'react-icons/io5';
 import moment from 'moment';
+import type { FC } from 'react';
 import { useRouter } from 'next/router';
 import { BiUser } from 'react-icons/bi';
 import { complements } from '@/data/app-data';
@@ -14,7 +15,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useAppContext } from '@/context/AppContext';
 import type { TComment } from '@/../@types/comments';
 
-export default function ReplyComment(props: TComment): JSX.Element {
+const ReplyComment: FC<TComment> = (props): JSX.Element => {
   const { state, deleteCommentPromptController } = useAppContext();
   const router = useRouter();
 
@@ -148,4 +149,6 @@ export default function ReplyComment(props: TComment): JSX.Element {
       </div>
     </>
   );
-}
+};
+
+export default ReplyComment;

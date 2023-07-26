@@ -1,13 +1,13 @@
 import { Router } from 'next/router';
 import { PuffLoader } from 'react-spinners';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PageLoaderContainer as Container } from '@/styles/modules/page-loader';
+import { _pageLoader as Container } from '@/styles/modules/page-loader';
 
-export default function PageLoader(): JSX.Element {
+const PageLoader: FC = (): JSX.Element => {
   const theme: DefaultTheme = useTheme();
-  const [loadingPage, setLoadingPage] = useState(false);
+  const [loadingPage, setLoadingPage] = useState<boolean>(false);
 
   const startPageTransition = () => setLoadingPage(true);
   const endPageTransition = () => setLoadingPage(false);
@@ -51,4 +51,6 @@ export default function PageLoader(): JSX.Element {
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default PageLoader;

@@ -6,10 +6,10 @@ import {
   IoLinkOutline,
   IoPushOutline,
 } from 'react-icons/io5';
-import { Dispatch, SetStateAction } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { CapturerContainer as Container } from '../../styles/modules/user-working-data';
+import { Dispatch, FC, SetStateAction } from 'react';
 import { useAppContext } from '@/context/AppContext';
+import { motion, AnimatePresence } from 'framer-motion';
+import { _capturer as Container } from '@/styles/modules/working-capturer';
 
 interface IProps {
   setStateFn: Dispatch<
@@ -36,7 +36,7 @@ interface IProps {
   updateFn: (id: string) => void;
 }
 
-export default function UrlCapturerBox(props: IProps): JSX.Element {
+const WorkCapturer: FC<IProps> = (props): JSX.Element => {
   const { state, userWorkingDataController } = useAppContext();
 
   return (
@@ -242,4 +242,6 @@ export default function UrlCapturerBox(props: IProps): JSX.Element {
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default WorkCapturer;

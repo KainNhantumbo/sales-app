@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const PageLoaderContainer = styled.section`
+export const _pageLoader = styled.section`
   width: 100%;
   position: fixed;
   right: 0;

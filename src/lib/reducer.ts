@@ -1,5 +1,5 @@
 import { actions } from '@/data/actions';
-import type { State, Action } from '../../@types/reducer';
+import type { State, Action } from '@/../@types/reducer';
 import product_categories from '../data/product-categories.json';
 
 export const initialState: State = {

@@ -1,9 +1,10 @@
+import { FC } from 'react';
+import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoArrowBackOutline, IoExitOutline } from 'react-icons/io5';
-import { PromptContainer as Container } from '../../styles/modules/logout-prompt';
-import { useAppContext } from '@/context/AppContext';
+import { _prompt as Container } from '@/styles/modules/logout-prompt';
 
-export default function LogoutPrompt(): JSX.Element {
+const LogoutPrompt: FC = (): JSX.Element => {
   const { state, logoutUser, logoutPromptController } = useAppContext();
   return (
     <AnimatePresence>
@@ -52,4 +53,6 @@ export default function LogoutPrompt(): JSX.Element {
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default LogoutPrompt;

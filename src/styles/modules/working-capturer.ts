@@ -1,12 +1,12 @@
-import styled from 'styled-components';
 import {
   BaseButton,
   BaseButtonOutline,
   StyledInputs,
   StyledLabels,
 } from '../defaults';
+import styled from 'styled-components';
 
-export const CapturerContainer = styled.section`
+export const _capturer = styled.section`
   position: fixed;
   width: 100vw;
   height: 100vh;

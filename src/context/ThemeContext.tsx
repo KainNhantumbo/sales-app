@@ -3,12 +3,13 @@ import {
   useContext,
   ReactNode,
   useState,
-  useEffect
+  useEffect,
+  FC,
 } from 'react';
+import { Theme } from '@/../@types';
 import { GlobalStyles } from '../styles/global';
 import { ThemeProvider } from 'styled-components';
 import { dark_default, light_default } from '../styles/themes';
-import { Theme } from '../../@types';
 
 interface IContext {
   slidePageUp: () => void;
@@ -17,9 +18,11 @@ interface IContext {
   setDarkMode: () => void;
   darkmode: boolean;
 }
+
 interface IProps {
   children: ReactNode;
 }
+
 interface ITheme {
   darkMode: boolean;
 }
@@ -29,26 +32,26 @@ const context = createContext<IContext>({
   setLightMode: () => {},
   setDarkMode: () => {},
   slidePageUp: () => {},
-  darkmode: false
+  darkmode: false,
 });
 
-export default function ThemeContext({ children }: IProps): JSX.Element {
+const ThemeContext: FC<IProps> = ({ children }): JSX.Element => {
   const [themeSettings, setThemeSettings] = useState<ITheme>({
-    darkMode: false
+    darkMode: false,
   });
   const [currentTheme, setCurrentTheme] = useState<Theme>(light_default);
 
-  function setDarkMode(): void {
+  const setDarkMode = (): void => {
     setCurrentTheme(dark_default);
     setThemeSettings({ darkMode: true });
-  }
+  };
 
-  function setLightMode(): void {
+  const setLightMode = (): void => {
     setCurrentTheme(light_default);
     setThemeSettings({ darkMode: false });
-  }
+  };
 
-  function matchMediaTheme() {
+  const matchMediaTheme = (): void => {
     const currentMode = window.matchMedia(
       '(prefers-color-scheme: dark)'
     ).matches;
@@ -58,18 +61,17 @@ export default function ThemeContext({ children }: IProps): JSX.Element {
     } else {
       setLightMode();
     }
-  }
+  };
 
   // slides the page to the top
-  function slidePageUp(): void {
-    return window.scrollTo({
+  const slidePageUp = (): void =>
+    window.scrollTo({
       left: 0,
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
-  }
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     matchMediaTheme();
 
     window
@@ -77,13 +79,12 @@ export default function ThemeContext({ children }: IProps): JSX.Element {
       .addEventListener('change', (e) =>
         e.matches ? setDarkMode() : setLightMode()
       );
-    return () => {
+    return (): void =>
       window
         .matchMedia('(prefers-color-scheme: dark)')
         .removeEventListener('change', (e) =>
           e.matches ? setDarkMode() : setLightMode()
         );
-    };
   }, []);
 
   return (
@@ -95,12 +96,13 @@ export default function ThemeContext({ children }: IProps): JSX.Element {
           darkmode: themeSettings.darkMode,
           setDarkMode,
           setLightMode,
-          matchMediaTheme
+          matchMediaTheme,
         }}>
         {children}
       </context.Provider>
     </ThemeProvider>
   );
-}
+};
 
+export default ThemeContext;
 export const useThemeContext = (): IContext => useContext(context);

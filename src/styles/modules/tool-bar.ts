@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButtonOutline, Button_Mono_B } from '../defaults';
 
-export const ToolbarContainer = styled.section`
+export const _toolbar = styled.section`
   position: fixed;
   left: 0;
   top: 70px;

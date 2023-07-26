@@ -3,9 +3,10 @@ import { FaStoreSlash } from 'react-icons/fa';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PromptContainer as Container } from '../../styles/modules/logout-prompt';
+import { _prompt as Container } from '@/styles/modules/logout-prompt';
+import { FC } from 'react';
 
-export default function DeactivatePrompt(): JSX.Element {
+const DeactivatePrompt: FC = (): JSX.Element => {
   const { state, dispatch, deactivateStorePromptController } = useAppContext();
 
   return (
@@ -26,8 +27,8 @@ export default function DeactivatePrompt(): JSX.Element {
               opacity: 1,
               scale: 1,
               transition: {
-                duration: 0.3
-              }
+                duration: 0.3,
+              },
             }}
             exit={{ opacity: 0, scale: 0 }}>
             <div className='dialog-prompt'>
@@ -56,9 +57,9 @@ export default function DeactivatePrompt(): JSX.Element {
                         ...state,
                         store: {
                           ...state.store,
-                          active: !state.store.active
-                        }
-                      }
+                          active: !state.store.active,
+                        },
+                      },
                     });
                     deactivateStorePromptController();
                   }}>
@@ -72,4 +73,6 @@ export default function DeactivatePrompt(): JSX.Element {
       )}
     </AnimatePresence>
   );
-}
+};
+
+export default DeactivatePrompt;

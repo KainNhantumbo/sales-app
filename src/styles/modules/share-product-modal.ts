@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton, BaseButtonOutline, StyledCornerButton } from '../defaults';
 
-export const ShareProductContainer = styled.section`
+export const _shareProduct = styled.section`
   position: fixed;
   width: 100vw;
   height: 100vh;

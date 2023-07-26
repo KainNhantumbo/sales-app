@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { StyledCornerButton, StyledInputs } from '../defaults';
 
-export const SearchBoxContainer = styled.section`
+export const _searchBox = styled.section`
   position: fixed;
   width: 100vw;
   height: 100vh;
