@@ -1,11 +1,10 @@
-import { NextPage } from 'next';
+import { IoBulb, IoCogOutline, IoFootsteps } from 'react-icons/io5';
 import Layout from '@/components/Layout';
 import { complements } from '@/data/app-data';
-import { _legal as Container } from '@/styles/common/legal';
 import { BsCreditCard2Front, BsTruck } from 'react-icons/bs';
-import { IoBulb, IoCogOutline, IoFootsteps } from 'react-icons/io5';
+import { LegalContainer as Container } from '@/styles/common/legal';
 
-const FAQ: NextPage = (): JSX.Element => (
+const FAQ = (): JSX.Element => (
   <Layout
     metadata={{ title: complements.defaultTitle + ' | Perguntas Frequêntes' }}>
     <Container>

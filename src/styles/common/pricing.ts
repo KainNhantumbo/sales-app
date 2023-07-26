@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton } from '../defaults';
 
-export const _pricing = styled.div`
+export const PricingContainer = styled.div`
   position: relative;
   width: 100%;
   display: flex;

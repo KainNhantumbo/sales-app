@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton, StyledCornerButton } from '../defaults';
 
-export const _home = styled.div`
+export const HomeContainer = styled.div`
   position: relative;
   width: 100%;
   position: relative;
