@@ -1,43 +1,44 @@
 import Link from 'next/link';
-import Layout from '@/components/Layout';
-import { complements } from '@/data/app-data';
+import { NextPage } from 'next';
 import { motion } from 'framer-motion';
-import { useTheme } from 'styled-components';
+import Layout from '@/components/Layout';
 import { IoIosQuote } from 'react-icons/io';
+import { complements } from '@/data/app-data';
 import NewsLetter from '@/components/Newsletter';
 import { IoStorefrontOutline } from 'react-icons/io5';
-import { AboutContainer as Container } from '../../styles/common/about';
+import { DefaultTheme, useTheme } from 'styled-components';
+import { _about as Container } from '@/styles/common/about';
 
-export default function About(): JSX.Element {
-  const theme = useTheme();
-  const core_habits = [
-    {
-      phrase:
-        'Entregar o melhor período de experiência aos usuários e clientes.',
-      paragraph: 'Detalhes importam, adicione valor a cada interação.',
-    },
-    {
-      phrase: 'A normalidade é tediosa e irritante.',
-      paragraph: 'Procure novos desafios a cada momento.',
-    },
-    {
-      phrase: 'Sem políticas burocráticas.',
-      paragraph: 'Seja direto. Vá direto.',
-    },
-    {
-      phrase: 'Faça as tarefas de uma vez e vá se divertir aos montes.',
-      paragraph: 'Trabalhe seriamente nas coisas certas com urgência.',
-    },
-    {
-      phrase: 'Cresça 1% todos os dias.',
-      paragraph:
-        'Interaja e faça progresso almejando a perfeição. Adote uma mentalidade de sucesso.',
-    },
-    {
-      phrase: 'Actos aleatórios de bondade',
-      paragraph: 'Seja um líquido positivo.',
-    },
-  ];
+const core_habits: Array<{ phrase: string; paragraph: string }> = [
+  {
+    phrase: 'Entregar o melhor período de experiência aos usuários e clientes.',
+    paragraph: 'Detalhes importam, adicione valor a cada interação.',
+  },
+  {
+    phrase: 'A normalidade é tediosa e irritante.',
+    paragraph: 'Procure novos desafios a cada momento.',
+  },
+  {
+    phrase: 'Sem políticas burocráticas.',
+    paragraph: 'Seja direto. Vá direto.',
+  },
+  {
+    phrase: 'Faça as tarefas de uma vez e vá se divertir aos montes.',
+    paragraph: 'Trabalhe seriamente nas coisas certas com urgência.',
+  },
+  {
+    phrase: 'Cresça 1% todos os dias.',
+    paragraph:
+      'Interaja e faça progresso almejando a perfeição. Adote uma mentalidade de sucesso.',
+  },
+  {
+    phrase: 'Actos aleatórios de bondade',
+    paragraph: 'Seja um líquido positivo.',
+  },
+];
+
+const About: NextPage = (): JSX.Element => {
+  const theme: DefaultTheme = useTheme();
   return (
     <Layout metadata={{ title: complements.defaultTitle + ' | Sobre nós' }}>
       <Container>
@@ -180,4 +181,6 @@ export default function About(): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default About;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const LegalContainer = styled.div`
+export const _legal = styled.div`
   margin-top: 50px;
   display: grid;
   align-items: center;

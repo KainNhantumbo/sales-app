@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton } from '../defaults';
 
-export const AboutContainer = styled.div`
+export const _about = styled.div`
   position: relative;
   width: 100%;
   min-height: 90vh;
