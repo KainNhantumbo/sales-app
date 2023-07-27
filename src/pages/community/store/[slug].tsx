@@ -20,11 +20,11 @@ import {
 } from '@/data/app-data';
 import Link from 'next/link';
 import Image from 'next/image';
+import fetch from '@/config/client';
 import { motion } from 'framer-motion';
 import { BiUser } from 'react-icons/bi';
 import Layout from '@/components/Layout';
 import { actions } from '@/data/actions';
-import fetch from '../../../config/client';
 import ErrorPage from '@/pages/error-page';
 import { useEffect, useState } from 'react';
 import { formatCurrency } from '@/lib/utils';
@@ -35,7 +35,7 @@ import { useAppContext } from '@/context/AppContext';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { TPublicProducts, TPublicStore } from '@/../@types';
 import { useThemeContext } from '@/context/ThemeContext';
-import { StoreContainer as Container } from '@/styles/common/community-store-profile';
+import { _store as Container } from '@/styles/common/community-store-profile';
 import SideBarAds from '@/components/SidaBarAds';
 
 type TProps = { store?: TPublicStore | undefined; products: TPublicProducts[] };

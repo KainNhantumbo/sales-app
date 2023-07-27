@@ -20,9 +20,9 @@ import ErrorPage from '@/pages/error-page';
 import { TPublicUser } from '@/../@types';
 import SideBarAds from '@/components/SidaBarAds';
 import { NextRouter, useRouter } from 'next/router';
-import { complements, formatSocialNetwork } from '@/data/app-data';
 import StoriesRenderer from '@/components/StoriesRenderer';
-import { ProfileContainer as Container } from '@/styles/common/community-user-profile';
+import { complements, formatSocialNetwork } from '@/data/app-data';
+import { _profile as Container } from '@/styles/common/community-user-profile';
 
 type TProps = { user: TPublicUser };
 
@@ -37,7 +37,7 @@ const UserProfile: NextPage<TProps> = ({ user }): JSX.Element => {
       />
     );
 
-  useEffect(() => {
+  useEffect((): void => {
     console.log(user);
   }, []);
 

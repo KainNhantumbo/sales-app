@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton, StyledInputs, StyledLabels } from '../defaults';
 
-export const StoryContainer = styled.div`
+export const _story = styled.div`
   position: relative;
   width: 100%;
   min-height: 90vh;

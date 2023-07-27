@@ -30,7 +30,7 @@ import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { renderReactSelectCSS } from '@/styles/select';
 import { DefaultTheme, useTheme } from 'styled-components';
-import { PurchaseContainer as Container } from '@/styles/common/purchase';
+import { _purchase as Container } from '@/styles/common/purchase';
 import renderPaymentInputs from '@/components/RenderPaymentMethodInputs';
 
 const Select = dynamic(import('react-select'), { ssr: false });

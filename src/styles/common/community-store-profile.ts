@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton, BaseButtonOutline, StyledCornerButton } from '../defaults';
 
-export const StoreContainer = styled.div`
+export const _store = styled.div`
   position: relative;
   width: 100%;
   min-height: 90vh;

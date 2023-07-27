@@ -23,7 +23,7 @@ import { DotLoader, PulseLoader } from 'react-spinners';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import SearchComponent from '@/components/SearchBlogPosts';
 import { DefaultTheme, useTheme } from 'styled-components';
-import { StoreSeachContainer as Container } from '@/styles/common/store-search';
+import { _storeSeach as Container } from '@/styles/common/store-search';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
 
 const StoresSearch: NextPage = (): JSX.Element => {

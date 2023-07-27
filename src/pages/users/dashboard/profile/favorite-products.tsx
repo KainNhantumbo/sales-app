@@ -20,7 +20,7 @@ import { useAppContext } from '@/context/AppContext';
 import type { GetServerSidePropsContext, NextPage } from 'next';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { blurDataUrlImage, complements } from '@/data/app-data';
-import { FavoriteProductsContainer as Container } from '@/styles/common/favorite-products';
+import { _favoriteProducts as Container } from '@/styles/common/favorite-products';
 
 type TProps = { products: TPublicProducts[] };
 

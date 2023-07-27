@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import {
   BaseButton,
   BaseButtonOutline,
@@ -7,8 +6,9 @@ import {
   StyledInputs,
   StyledLabels,
 } from '../defaults';
+import styled from 'styled-components';
 
-export const UserProfileContainer = styled.div`
+export const _userProfile = styled.div`
   position: relative;
   width: 100%;
   min-height: 90vh;

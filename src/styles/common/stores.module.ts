@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton, Button_Mono_B, StyledInputs } from '../defaults';
 
-export const StoresContainer = styled.div`
+export const _stores = styled.div`
   position: relative;
   width: 100%;
   display: flex;

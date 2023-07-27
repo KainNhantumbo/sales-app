@@ -42,7 +42,7 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import { DefaultTheme, useTheme } from 'styled-components';
 import product_categories from '@/data/product-categories.json';
 import ShareProducts from '@/components/modals/ShareProductModal';
-import { EcommerceProductContainer as Container } from '@/styles/common/ecommerce-product';
+import { _commerceProduct as Container } from '@/styles/common/ecommerce-product';
 
 const Product: NextPage<any> = ({ product }): JSX.Element => {
   const {
@@ -57,8 +57,8 @@ const Product: NextPage<any> = ({ product }): JSX.Element => {
     getCartProduct,
   } = useAppContext();
   const theme: DefaultTheme = useTheme();
-  const [innerWidth, setInnerWidth] = useState<number>(0);
   const router: NextRouter = useRouter();
+  const [innerWidth, setInnerWidth] = useState<number>(0);
 
   if (!product)
     return (

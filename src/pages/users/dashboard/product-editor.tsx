@@ -19,6 +19,7 @@ import {
   IoSyncOutline,
   IoTrashOutline,
 } from 'react-icons/io5';
+import { NextPage } from 'next';
 import Compressor from 'compressorjs';
 import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
@@ -30,23 +31,35 @@ import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import product_categories from '@/data/product-categories.json';
-import { ProductEditorContainer as Container } from '@/styles/common/product-editor';
+import { _productEditor as Container } from '@/styles/common/product-editor';
 
-export default function ProductEditor(): JSX.Element {
+type TLoading = {
+  status: boolean;
+  key: 'product-data' | 'product-update';
+};
+
+type TError = {
+  status: boolean;
+  msg: string;
+  key: 'product-data' | 'product-update';
+};
+
+const ProductEditor: NextPage = (): JSX.Element => {
   const theme = useTheme();
   const router: NextRouter = useRouter();
   const { state, fetchAPI, dispatch } = useAppContext();
 
   // --------------------states---------------------
-  const [loading, setLoading] = useState<{
-    status: boolean;
-    key: 'product-data' | 'product-update';
-  }>({ status: false, key: 'product-data' });
-  const [error, setError] = useState<{
-    status: boolean;
-    msg: string;
-    key: 'product-data' | 'product-update';
-  }>({ status: false, msg: '', key: 'product-data' });
+  const [loading, setLoading] = useState<TLoading>({
+    status: false,
+    key: 'product-data',
+  });
+  
+  const [error, setError] = useState<TError>({
+    status: false,
+    msg: '',
+    key: 'product-data',
+  });
 
   const [imagesData, setImagesData] = useState({
     img_0: { id: '', data: '' },
@@ -56,7 +69,7 @@ export default function ProductEditor(): JSX.Element {
   });
 
   // --------------------functions--------------------
-  function handleFiles(index: string, value: FileList | null): void {
+  const handleFiles = (index: string, value: FileList | null): void => {
     const file: File | null | undefined = value?.item(0);
     if (file) {
       new Compressor(file, {
@@ -80,9 +93,9 @@ export default function ProductEditor(): JSX.Element {
         },
       });
     }
-  }
+  };
 
-  function handleChange(e: InputEvents): void {
+  const handleChange = (e: InputEvents): void =>
     dispatch({
       type: actions.PRODUCT_DATA,
       payload: {
@@ -93,9 +106,8 @@ export default function ProductEditor(): JSX.Element {
         },
       },
     });
-  }
 
-  function deleteImage(id: string, index: string): void {
+  const deleteImage = (id: string, index: string): void => {
     if (!id) {
       return setImagesData((data) => ({
         ...data,
@@ -123,7 +135,7 @@ export default function ProductEditor(): JSX.Element {
       .catch((error) => {
         console.error(error);
       });
-  }
+  };
 
   const fetchProduct = async (): Promise<void> => {
     setLoading({ status: true, key: 'product-data' });
@@ -156,7 +168,7 @@ export default function ProductEditor(): JSX.Element {
     }
   };
 
-  async function handleUpdate(productId: string): Promise<void> {
+  const handleUpdate = async (productId: string): Promise<void> => {
     if (!productId) return;
     try {
       setLoading({ status: true, key: 'product-update' });
@@ -198,9 +210,9 @@ export default function ProductEditor(): JSX.Element {
     } finally {
       setLoading({ status: false, key: 'product-update' });
     }
-  }
+  };
 
-  async function handleCreate(): Promise<void> {
+  const handleCreate = async (): Promise<void> => {
     try {
       setLoading({ status: true, key: 'product-update' });
       await fetchAPI({
@@ -242,7 +254,7 @@ export default function ProductEditor(): JSX.Element {
     } finally {
       setLoading({ status: false, key: 'product-update' });
     }
-  }
+  };
 
   // fetch product
   useEffect((): (() => void) | void => {
@@ -280,14 +292,12 @@ export default function ProductEditor(): JSX.Element {
 
   // clear errors
   useEffect((): (() => void) => {
-    const desc = setTimeout(() => {
+    const debounceTimer = setTimeout(() => {
       if (error.status && error.key === 'product-update') {
         setError({ status: false, msg: '', key: 'product-data' });
       }
     }, 8000);
-    return () => {
-      clearTimeout(desc);
-    };
+    return (): void => clearTimeout(debounceTimer);
   }, [error.status]);
 
   return (
@@ -750,4 +760,6 @@ export default function ProductEditor(): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default ProductEditor;

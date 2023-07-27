@@ -34,7 +34,18 @@ import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import product_categories from '@/data/product-categories.json';
 import DeactivatePrompt from '@/components/modals/DeativateStorePrompt';
-import { StoreEditorContainer as Container } from '@/styles/common/store-editor';
+import { _storeEditor as Container } from '@/styles/common/store-editor';
+
+type TLoading = {
+  status: boolean;
+  key: 'store-data' | 'store-update';
+};
+
+type TError = {
+  status: boolean;
+  msg: string;
+  key: 'store-data' | 'store-update';
+};
 
 const StoreEditor: NextPage = (): JSX.Element => {
   const theme = useTheme();
@@ -42,15 +53,15 @@ const StoreEditor: NextPage = (): JSX.Element => {
   const { state, fetchAPI, dispatch, deactivateStorePromptController } =
     useAppContext();
 
-  const [loading, setLoading] = useState<{
-    status: boolean;
-    key: 'store-data' | 'store-update';
-  }>({ status: false, key: 'store-data' });
-  const [error, setError] = useState<{
-    status: boolean;
-    msg: string;
-    key: 'store-data' | 'store-update';
-  }>({ status: false, msg: '', key: 'store-data' });
+  const [loading, setLoading] = useState<TLoading>({
+    status: false,
+    key: 'store-data',
+  });
+  const [error, setError] = useState<TError>({
+    status: false,
+    msg: '',
+    key: 'store-data',
+  });
 
   // --------------------states---------------------
   const [countryStates, setCountryStates] = useState<string[]>([
@@ -64,7 +75,7 @@ const StoreEditor: NextPage = (): JSX.Element => {
   });
 
   // --------------------functions------------------
-  function handleChange(e: InputEvents): void {
+  const handleChange = (e: InputEvents): void => {
     dispatch({
       type: actions.STORE_DATA,
       payload: {
@@ -75,9 +86,9 @@ const StoreEditor: NextPage = (): JSX.Element => {
         },
       },
     });
-  }
+  };
 
-  function handleCoverImageFile(): void {
+  const handleCoverImageFile = (): void => {
     const imageData: File | null | undefined = coverImageFile?.item(0);
     if (imageData) {
       new Compressor(imageData, {
@@ -98,9 +109,9 @@ const StoreEditor: NextPage = (): JSX.Element => {
         },
       });
     }
-  }
+  };
 
-  function deleteCoverImage(): void {
+  const deleteCoverImage = (): void => {
     fetchAPI({
       method: 'delete',
       url: `/api/v1/users/store/assets`,
@@ -122,9 +133,9 @@ const StoreEditor: NextPage = (): JSX.Element => {
       .catch((error) => {
         console.error(error);
       });
-  }
+  };
 
-  async function getStoreData(): Promise<void> {
+  const getStoreData = async (): Promise<void> => {
     try {
       setLoading({ status: true, key: 'store-data' });
       const { data } = await fetchAPI<TStore>({
@@ -150,9 +161,9 @@ const StoreEditor: NextPage = (): JSX.Element => {
     } finally {
       setLoading({ status: false, key: 'store-data' });
     }
-  }
+  };
 
-  async function handleSubmitUpdate(): Promise<void> {
+  const handleSubmitUpdate = async (): Promise<void> => {
     try {
       setLoading({ status: true, key: 'store-update' });
       await fetchAPI({
@@ -183,11 +194,11 @@ const StoreEditor: NextPage = (): JSX.Element => {
     } finally {
       setLoading({ status: false, key: 'store-update' });
     }
-  }
+  };
 
   useEffect((): (() => void) => {
     handleCoverImageFile();
-    return () => {
+    return (): void => {
       setCoverImageData({ id: '', data: '' });
       setCoverImageFile(null);
     };
@@ -199,18 +210,16 @@ const StoreEditor: NextPage = (): JSX.Element => {
         getStoreData();
       }
     }, 10);
-    return () => clearTimeout(fetch_data);
+    return (): void => clearTimeout(fetch_data);
   }, []);
 
   useEffect((): (() => void) => {
-    const desc = setTimeout(() => {
+    const debounceTimer = setTimeout(() => {
       if (error.status && error.key === 'store-update') {
         setError({ status: false, msg: '', key: 'store-data' });
       }
     }, 5000);
-    return () => {
-      clearTimeout(desc);
-    };
+    return (): void => clearTimeout(debounceTimer);
   }, [error.status]);
 
   return (

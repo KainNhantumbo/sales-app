@@ -1,18 +1,19 @@
 import Link from 'next/link';
+import { NextPage } from 'next';
 import { motion } from 'framer-motion';
 import { BiUser } from 'react-icons/bi';
-import { IoApps, IoConstruct } from 'react-icons/io5';
 import Layout from '@/components/Layout';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { TDashboardActions } from '@/../@types';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
+import { IoApps, IoConstruct } from 'react-icons/io5';
+import { DefaultTheme, useTheme } from 'styled-components';
+import { _dashboard as Container } from '@/styles/common/dashbord';
 import { app_metadata, complements, dashboardActions } from '@/data/app-data';
-import { DashboardContainer as Container } from '@/styles/common/dashbord';
-import { TDashboardActions } from '../../../../@types';
 
-export default function Dashboard(): JSX.Element {
-  const theme: DefaultTheme = useTheme();
+const Dashboard: NextPage = (): JSX.Element => {
   const { state } = useAppContext();
+  const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
   const actionRoutes: TDashboardActions = dashboardActions({
     storeId: state.auth.storeId,
@@ -73,7 +74,7 @@ export default function Dashboard(): JSX.Element {
                               initial={{ scale: 0 }}
                               drag={true}
                               dragElastic={0.3}
-                              whileTap={{ scale: 0.90 }}
+                              whileTap={{ scale: 0.9 }}
                               dragConstraints={{
                                 top: 0,
                                 left: 0,
@@ -112,4 +113,6 @@ export default function Dashboard(): JSX.Element {
       </Container>
     </Layout>
   );
-}
+};
+
+export default Dashboard;

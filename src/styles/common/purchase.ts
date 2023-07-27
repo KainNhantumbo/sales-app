@@ -6,7 +6,7 @@ import {
 } from '../defaults';
 import styled from 'styled-components';
 
-export const PurchaseContainer = styled.div`
+export const _purchase = styled.div`
   position: relative;
   width: 100%;
   height: 100%;

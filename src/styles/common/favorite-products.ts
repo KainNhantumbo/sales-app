@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton, StyledCornerButton } from '../defaults';
 
-export const FavoriteProductsContainer = styled.div`
+export const _favoriteProducts = styled.div`
   position: relative;
   width: 100%;
   min-height: 90vh;

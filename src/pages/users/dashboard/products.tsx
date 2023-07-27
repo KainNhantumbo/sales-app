@@ -29,7 +29,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import ShareProducts from '@/components/modals/ShareProductModal';
 import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
-import { ProductListContainer as Container } from '@/styles/common/products';
+import { _productList as Container } from '@/styles/common/products';
 
 const Products: NextPage = (): JSX.Element => {
   const {
@@ -71,7 +71,7 @@ const Products: NextPage = (): JSX.Element => {
       lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
   });
 
-  async function handleDeleteProduct(productId: string): Promise<void> {
+  const handleDeleteProduct = async (productId: string): Promise<void> => {
     try {
       await fetchAPI({
         method: 'delete',
@@ -82,7 +82,7 @@ const Products: NextPage = (): JSX.Element => {
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
-  }
+  };
 
   useEffect((): (() => void) => {
     if (data) {
@@ -101,21 +101,18 @@ const Products: NextPage = (): JSX.Element => {
       });
     }
 
-    return (): void => {
+    return (): void =>
       dispatch({
         type: actions.PRODUCTS_LIST_DATA,
         payload: { ...state, productList: [] },
       });
-    };
   }, [data]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const debounceTimer = setTimeout(() => {
       refetch({ queryKey: ['private-store-products'] });
     }, 500);
-    return () => {
-      clearTimeout(timer);
-    };
+    return () => clearTimeout(debounceTimer);
   }, [state.productsListQuery]);
 
   useEffect(() => {
@@ -124,15 +121,14 @@ const Products: NextPage = (): JSX.Element => {
     }
   }, [inView, fetchNextPage, hasNextPage]);
 
-  useEffect(() => {
-    return () => {
+  useEffect((): (() => void) => {
+    return (): void =>
       dispatch({
         type: actions.CLEAN_UP_MODALS,
         payload: {
           ...state,
         },
       });
-    };
   }, []);
 
   return (

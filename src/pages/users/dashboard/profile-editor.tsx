@@ -55,7 +55,18 @@ import user_skills from '@/data/professional-skills.json';
 import WorkCapturer from '@/components/modals/WorkCapturer';
 import { BiUser, BiUserCheck, BiUserX } from 'react-icons/bi';
 import DeleteAccountPrompt from '@/components/modals/DeleteAccountPrompt';
-import { UserProfileContainer as Container } from '@/styles/common/profile-editor';
+import { _userProfile as Container } from '@/styles/common/profile-editor';
+
+type TError = {
+  status: boolean;
+  msg: string;
+  key: 'user-data' | 'user-update';
+};
+
+type TLoading = {
+  status: boolean;
+  key: 'user-data' | 'user-update';
+};
 
 const ProfileEditor: NextPage = (): JSX.Element => {
   const theme = useTheme();
@@ -68,15 +79,16 @@ const ProfileEditor: NextPage = (): JSX.Element => {
     deleteAccountPromptController,
   } = useAppContext();
 
-  const [loading, setLoading] = useState<{
-    status: boolean;
-    key: 'user-data' | 'user-update';
-  }>({ status: false, key: 'user-data' });
-  const [error, setError] = useState<{
-    status: boolean;
-    msg: string;
-    key: 'user-data' | 'user-update';
-  }>({ status: false, msg: '', key: 'user-data' });
+  const [loading, setLoading] = useState<TLoading>({
+    status: false,
+    key: 'user-data',
+  });
+
+  const [error, setError] = useState<TError>({
+    status: false,
+    msg: '',
+    key: 'user-data',
+  });
 
   // --------------------states---------------------
   const [countryStates, setCountryStates] = useState<string[]>([
@@ -299,21 +311,19 @@ const ProfileEditor: NextPage = (): JSX.Element => {
     const fetch_data = setTimeout(() => {
       getUserData();
     }, 10);
-    return () => clearTimeout(fetch_data);
+    return (): void => clearTimeout(fetch_data);
   }, []);
 
   useEffect((): (() => void) => {
-    const desc = setTimeout(() => {
+    const debounceTimer = setTimeout(() => {
       if (error.status && error.key === 'user-update') {
         setError({ status: false, msg: '', key: 'user-data' });
       }
     }, 5000);
-    return () => {
-      clearTimeout(desc);
-    };
+    return (): void => clearTimeout(debounceTimer);
   }, [error.status]);
 
-  // -------------working experience functions----------------
+  // -------working capturer functions--------
   const [workingExperienceData, setWorkingExperienceData] = useState({
     id: '',
     carrer: '',

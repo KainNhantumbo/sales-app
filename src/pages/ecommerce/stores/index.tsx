@@ -26,7 +26,7 @@ import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { blurDataUrlImage, complements } from '@/data/app-data';
 import buyingWomenImg from '@/../public/assets/buying_women.png';
-import { StoresContainer as Container } from '@/styles/common/stores.module';
+import { _stores as Container } from '@/styles/common/stores.module';
 
 const Stores: NextPage = (): JSX.Element => {
   const LIMIT: number = 8;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButtonOutline } from '../defaults';
 
-export const DashboardContainer = styled.div`
+export const _dashboard = styled.div`
   position: relative;
   width: 100%;
   height: 100%;

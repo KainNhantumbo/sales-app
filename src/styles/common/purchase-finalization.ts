@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton, BaseButtonOutline } from '../defaults';
 
-export const PurchaseFinalizationContainer = styled.div`
+export const _purchaseFinalization = styled.div`
   position: relative;
   padding: 60px 0;
   width: 100%;

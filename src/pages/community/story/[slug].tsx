@@ -21,7 +21,7 @@ import { useAppContext } from '@/context/AppContext';
 import { useCallback, useEffect, useState } from 'react';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { GetServerSidePropsContext, NextPage } from 'next';
-import { StoryContainer as Container } from '@/styles/common/story';
+import { _story as Container } from '@/styles/common/story';
 
 type TProps = { story: IPublicStory | undefined };
 

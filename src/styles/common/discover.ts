@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton } from '../defaults';
 
-export const DiscoverContainer = styled.div`
+export const _discover = styled.div`
   position: relative;
   width: 100%;
   position: relative;

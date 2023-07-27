@@ -4,7 +4,7 @@ import Layout from '../../components/Layout';
 import { complements } from '@/data/app-data';
 import { _legal as Container } from '@/styles/common/legal';
 
-const StoreVerification:NextPage = (): JSX.Element => (
+const StoreVerification: NextPage = (): JSX.Element => (
   <Layout
     metadata={{ title: complements.defaultTitle + ' | Verificação de Loja' }}>
     <Container>
@@ -25,7 +25,8 @@ const StoreVerification:NextPage = (): JSX.Element => (
 
         <p>
           Prefirimos não restringir a publicação de anúncios de produtos sem que
-          haja a Verificação de Loja. Contudo, os usuários e potenciais clientes verão um{' '}
+          haja a Verificação de Loja. Contudo, os usuários e potenciais clientes
+          verão um{' '}
           <strong>
             grande alerta de inconfiabidade do proprietário da loja, por isso,
             apelamos para que verifique a sua loja o mais cedo possível
@@ -46,7 +47,8 @@ const StoreVerification:NextPage = (): JSX.Element => (
             Passo 1: escreva um e-mail para <strong>{complements.email}</strong>{' '}
             com o assunto{' '}
             <strong>
-              "Pedido de Verificação de Loja Integrada da {complements.defaultTitle}"
+              "Pedido de Verificação de Loja Integrada da{' '}
+              {complements.defaultTitle}"
             </strong>
             ;
           </li>

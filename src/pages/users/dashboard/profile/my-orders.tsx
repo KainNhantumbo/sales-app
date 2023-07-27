@@ -20,12 +20,12 @@ import Layout from '@/components/Layout';
 import { PulseLoader } from 'react-spinners';
 import SideBarAds from '@/components/SidaBarAds';
 import { BsBox2, BsBox2Fill } from 'react-icons/bs';
+import { useAppContext } from '@/context/AppContext';
 import { renderReactSelectCSS } from '@/styles/select';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { _myOrders as Container } from '@/styles/common/my-orders';
 import { DefaultTheme, useTheme } from 'styled-components';
-import { useAppContext } from '@/context/AppContext';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
-import { MyOrdersContainer as Container } from '@/styles/common/my-orders';
 
 const MyOrders: NextPage = (): JSX.Element => {
   const QUERY_LIMIT: number = 10;

@@ -12,7 +12,7 @@ import { useAppContext } from '@/context/AppContext';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { IoCart, IoChevronBack, IoReload } from 'react-icons/io5';
 import { complements, order_status_labels } from '@/data/app-data';
-import { PurchaseFinalizationContainer as Container } from '@/styles/common/purchase-finalization';
+import { _purchaseFinalization as Container } from '@/styles/common/purchase-finalization';
 
 type TOrderSummary = {
   order_code: string;

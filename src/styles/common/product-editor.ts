@@ -7,7 +7,7 @@ import {
   StyledLabels,
 } from '../defaults';
 
-export const ProductEditorContainer = styled.div`
+export const _productEditor = styled.div`
   position: relative;
   width: 100%;
   min-height: 90vh;

@@ -7,7 +7,7 @@ import {
   StyledLabels
 } from '../defaults';
 
-export const StoreEditorContainer = styled.div`
+export const _storeEditor = styled.div`
   position: relative;
   width: 100%;
   min-height: 90vh;

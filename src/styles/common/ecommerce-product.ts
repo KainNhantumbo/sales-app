@@ -6,7 +6,7 @@ import {
 } from '../defaults';
 import styled from 'styled-components';
 
-export const EcommerceProductContainer = styled.div`
+export const _commerceProduct = styled.div`
   position: relative;
   background: rgb(${({ theme }) => theme.background});
   width: 100%;

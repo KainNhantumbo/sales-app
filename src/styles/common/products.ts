@@ -1,11 +1,11 @@
-import styled from 'styled-components';
 import {
   BaseButton,
   BaseButtonOutline,
   statsContainerStyles,
 } from '../defaults';
+import styled from 'styled-components';
 
-export const ProductListContainer = styled.div`
+export const _productList = styled.div`
   position: relative;
   width: 100%;
   min-height: 90vh;

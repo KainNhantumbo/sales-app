@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton, BaseButtonOutline } from '../defaults';
 
-export const ProfileContainer = styled.div`
+export const _profile = styled.div`
   position: relative;
   width: 100%;
   min-height: 90vh;
