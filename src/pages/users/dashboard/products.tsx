@@ -80,7 +80,7 @@ const Products: NextPage = (): JSX.Element => {
       deleteProductPromptController(false, '');
       refetch({ queryKey: ['private-store-products'] });
     } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+      console.error(err?.response?.data?.message ?? err);
     }
   };
 

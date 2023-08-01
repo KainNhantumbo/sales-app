@@ -24,7 +24,7 @@ import Compressor from 'compressorjs';
 import { actions } from '@/data/actions';
 import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
-import { useTheme } from 'styled-components';
+import { DefaultTheme, useTheme } from 'styled-components';
 import { complements } from '@/data/app-data';
 import { InputEvents, Product } from '@/../@types';
 import { NextRouter, useRouter } from 'next/router';
@@ -32,33 +32,30 @@ import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import product_categories from '@/data/product-categories.json';
 import { _productEditor as Container } from '@/styles/common/product-editor';
+import { useQuery } from '@tanstack/react-query';
 
 type TLoading = {
   status: boolean;
-  key: 'product-data' | 'product-update';
 };
 
 type TError = {
   status: boolean;
   msg: string;
-  key: 'product-data' | 'product-update';
 };
 
 const ProductEditor: NextPage = (): JSX.Element => {
-  const theme = useTheme();
+  const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
   const { state, fetchAPI, dispatch } = useAppContext();
 
   // --------------------states---------------------
   const [loading, setLoading] = useState<TLoading>({
     status: false,
-    key: 'product-data',
   });
-  
+
   const [error, setError] = useState<TError>({
     status: false,
     msg: '',
-    key: 'product-data',
   });
 
   const [imagesData, setImagesData] = useState({
@@ -69,6 +66,43 @@ const ProductEditor: NextPage = (): JSX.Element => {
   });
 
   // --------------------functions--------------------
+  const fetchProduct = async (): Promise<Product | unknown> => {
+    try {
+      const productId = router.query['productId'];
+      if (!productId) throw new Error('Sem chave ID');
+      console.log('data');
+      const { data } = await fetchAPI<Product>({
+        method: 'get',
+        url: `/api/v1/users/products/${productId}?fields=-created_by,-favorites`,
+      });
+      return data;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  const {
+    isLoading,
+    isError,
+    data: productData,
+    error: queryError,
+  } = useQuery({
+    queryKey: [`product-${router.query['productId'] ?? ''}`],
+    queryFn: fetchProduct,
+  });
+
+  useEffect(() => {
+    if (productData) {
+      dispatch({
+        type: actions.PRODUCT_DATA,
+        payload: {
+          ...state,
+          product: { ...state.product, ...productData },
+        },
+      });
+    }
+  }, [productData]);
+
   const handleFiles = (index: string, value: FileList | null): void => {
     const file: File | null | undefined = value?.item(0);
     if (file) {
@@ -108,12 +142,12 @@ const ProductEditor: NextPage = (): JSX.Element => {
     });
 
   const deleteImage = (id: string, index: string): void => {
-    if (!id) {
+    if (!id)
       return setImagesData((data) => ({
         ...data,
         [index]: { id: '', data: '' },
       }));
-    }
+
     fetchAPI({
       method: 'delete',
       url: `/api/v1/users/product/assets`,
@@ -137,41 +171,10 @@ const ProductEditor: NextPage = (): JSX.Element => {
       });
   };
 
-  const fetchProduct = async (): Promise<void> => {
-    setLoading({ status: true, key: 'product-data' });
-    const productId: string = String(router.query.productId);
-    try {
-      if (!productId) throw new Error('No product id given for the query');
-      const { data } = await fetchAPI<Product>({
-        method: 'get',
-        url: `/api/v1/users/products/${productId}?fields=-created_by,-favorites`,
-      });
-      dispatch({
-        type: actions.PRODUCT_DATA,
-        payload: {
-          ...state,
-          product: { ...state.product, ...data },
-        },
-      });
-    } catch (error: any) {
-      console.log(error?.response?.data?.message);
-      console.error(error);
-      setError({
-        status: true,
-        msg:
-          error?.response?.data?.message ||
-          'Oops! Algo deu errado. Tente novamente.',
-        key: 'product-data',
-      });
-    } finally {
-      setLoading({ status: false, key: 'product-data' });
-    }
-  };
-
   const handleUpdate = async (productId: string): Promise<void> => {
     if (!productId) return;
     try {
-      setLoading({ status: true, key: 'product-update' });
+      setLoading({ status: true });
       await fetchAPI({
         method: 'patch',
         url: `/api/v1/users/products/${productId}`,
@@ -203,18 +206,17 @@ const ProductEditor: NextPage = (): JSX.Element => {
       setError({
         status: true,
         msg:
-          error?.response?.data?.message ||
+          error?.response?.data?.message ??
           'Oops! Algo deu errado. Tente novamente.',
-        key: 'product-update',
       });
     } finally {
-      setLoading({ status: false, key: 'product-update' });
+      setLoading({ status: false });
     }
   };
 
   const handleCreate = async (): Promise<void> => {
     try {
-      setLoading({ status: true, key: 'product-update' });
+      setLoading({ status: true });
       await fetchAPI({
         method: 'post',
         url: `/api/v1/users/products`,
@@ -247,22 +249,17 @@ const ProductEditor: NextPage = (): JSX.Element => {
       setError({
         status: true,
         msg:
-          error?.response?.data?.message ||
+          error?.response?.data?.message ??
           'Oops! Algo deu errado. Tente novamente.',
-        key: 'product-update',
       });
     } finally {
-      setLoading({ status: false, key: 'product-update' });
+      setLoading({ status: false });
     }
   };
 
   // fetch product
-  useEffect((): (() => void) | void => {
-    const fetchTimer = setTimeout(() => {
-      fetchProduct();
-    }, 500);
-    return () => {
-      clearTimeout(fetchTimer);
+  useEffect((): (() => void) => {
+    return (): void =>
       dispatch({
         type: actions.PRODUCT_DATA,
         payload: {
@@ -287,14 +284,13 @@ const ProductEditor: NextPage = (): JSX.Element => {
           },
         },
       });
-    };
   }, []);
 
   // clear errors
   useEffect((): (() => void) => {
     const debounceTimer = setTimeout(() => {
-      if (error.status && error.key === 'product-update') {
-        setError({ status: false, msg: '', key: 'product-data' });
+      if (error.status) {
+        setError({ status: false, msg: '' });
       }
     }, 8000);
     return (): void => clearTimeout(debounceTimer);
@@ -304,31 +300,37 @@ const ProductEditor: NextPage = (): JSX.Element => {
     <Layout
       metadata={{ title: `${complements.defaultTitle} | Editor de Produto` }}>
       <Container>
-        {loading.status && loading.key === 'product-data' && (
-          <section className='fetching-state'>
-            <div>
-              <DotLoader size={50} color={`rgb(${theme.primary})`} />
-              <p>Carregando os dados do produto</p>
-            </div>
+        {!isError && isLoading && (
+          <section className='loading-spinner'>
+            <section className='wrapper'>
+              <div className='center'>
+                <DotLoader size={50} color={`rgb(${theme.primary})`} />
+                <p>Carregando os dados do produto</p>
+              </div>
+            </section>
           </section>
         )}
 
-        {!loading.status &&
-          loading.key === 'product-data' &&
-          error.status &&
-          error.key === 'product-data' && (
-            <section className='fetching-state'>
-              <h3>{error.msg}</h3>
-              <button onClick={() => router.reload()}>
-                <IoReload />
-                <span>Recarregar a página</span>
-              </button>
-              <button onClick={() => router.back()}>
-                <IoChevronBack />
-                <span>Voltar a página anterior</span>
-              </button>
+        {!isLoading && isError && (
+          <section className='fetching-state'>
+            <section className='wrapper'>
+              <h3>
+                {(queryError as any)?.response?.data?.message ??
+                  'Erro ao carregar dados do servidor'}
+              </h3>
+              <div>
+                <button onClick={() => router.reload()}>
+                  <IoReload />
+                  <span>Recarregar a página</span>
+                </button>
+                <button onClick={() => router.back()}>
+                  <IoChevronBack />
+                  <span>Voltar a página anterior</span>
+                </button>
+              </div>
             </section>
-          )}
+          </section>
+        )}
 
         <article>
           <section className='header'>
@@ -696,10 +698,7 @@ const ProductEditor: NextPage = (): JSX.Element => {
                   </>
                 )}
 
-                {error.status &&
-                error.key === 'product-update' &&
-                !loading.status &&
-                error.msg.includes('.') ? (
+                {error.status && !loading.status && error.msg.includes('.') ? (
                   error.msg
                     .split('.')
                     .map((phrase) => (
@@ -709,20 +708,18 @@ const ProductEditor: NextPage = (): JSX.Element => {
                   <div className='error-message'>{error.msg}</div>
                 )}
 
-                {loading.status &&
-                  loading.key === 'product-update' &&
-                  !error.status && (
-                    <div className='loading'>
-                      <PulseLoader
-                        color={`rgb(${theme.primary})`}
-                        aria-placeholder='Processando...'
-                        cssOverride={{
-                          display: 'block',
-                        }}
-                      />
-                      <span>Processando...</span>
-                    </div>
-                  )}
+                {loading.status && !error.status && (
+                  <div className='loading'>
+                    <PulseLoader
+                      color={`rgb(${theme.primary})`}
+                      aria-placeholder='Processando...'
+                      cssOverride={{
+                        display: 'block',
+                      }}
+                    />
+                    <span>Processando...</span>
+                  </div>
+                )}
               </div>
 
               <div className='btns-container'>

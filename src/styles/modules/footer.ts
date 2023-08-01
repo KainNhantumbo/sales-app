@@ -25,6 +25,13 @@ export const _footer = styled.footer`
     box-shadow: 0 0 100px 60px rgba(${({ theme }) => theme.primary}, 0.8);
   }
 
+  * {
+    ::selection {
+      background: rgb(${({ theme }) => theme.background_variant});
+      color: rgb(${({ theme }) => theme.primary_variant});
+    }
+  }
+
   .featured-container {
     padding: 0 20px;
     display: flex;
@@ -86,7 +93,7 @@ export const _footer = styled.footer`
           font-weight: 500;
           font-size: 1.1rem;
           margin: 0 auto;
-      line-height: 1.6rem;
+          line-height: 1.6rem;
 
           svg {
             width: 20px;

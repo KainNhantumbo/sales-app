@@ -8,10 +8,10 @@ import Link from 'next/link';
 import Select from 'react-select';
 import Layout from '@/components/Layout';
 import { useAppContext } from '@/context/AppContext';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import { complements } from '@/data/app-data';
 import { renderReactSelectCSS } from '@/styles/select';
-import { useTheme } from 'styled-components';
+import { DefaultTheme, useTheme } from 'styled-components';
 import { motion } from 'framer-motion';
 import { actions } from '@/data/actions';
 import { denounceReasons } from '@/data/app-data';
@@ -21,9 +21,9 @@ import { DenounceContainer as Container } from '../styles/common/denounce';
 import { NextPage } from 'next';
 
 const Denounce: NextPage = (): JSX.Element => {
-  const theme = useTheme();
-  const router = useRouter();
-  const [msg, setMsg] = useState('');
+  const theme: DefaultTheme = useTheme();
+  const router: NextRouter = useRouter();
+  const [msg, setMsg] = useState<string>('');
   const { state, dispatch, fetchAPI, loginPromptController } = useAppContext();
 
   const handleCreateDenounce = async (): Promise<void> => {
@@ -49,13 +49,13 @@ const Denounce: NextPage = (): JSX.Element => {
       });
       setMsg('Denúncia enviada com sucesso.');
     } catch (err: any) {
-      setMsg(err.response?.data?.message);
-      console.error(err.response?.data?.message || err);
+      setMsg(err?.response?.data?.message);
+      console.error(err?.response?.data?.message ?? err);
     }
   };
 
-  useEffect(() => {
-    return () => {
+  useEffect((): (() => void) => {
+    return (): void => {
       dispatch({
         type: actions.CREATE_DENOUNCE,
         payload: {
@@ -66,11 +66,11 @@ const Denounce: NextPage = (): JSX.Element => {
     };
   }, []);
 
-  useEffect(() => {
-    const desc = setTimeout(() => {
+  useEffect((): (() => void) => {
+    const debounceTimer = setTimeout(() => {
       setMsg(' ');
     }, 5000);
-    return () => clearTimeout(desc);
+    return (): void => clearTimeout(debounceTimer);
   }, [msg]);
 
   return (

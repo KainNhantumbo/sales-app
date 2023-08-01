@@ -14,6 +14,13 @@ export const _header = styled.header`
   font-size: 1.1rem;
   z-index: 20000;
 
+  * {
+    ::selection {
+      background: rgb(${({ theme }) => theme.background_variant});
+      color: rgb(${({ theme }) => theme.primary_variant});
+    }
+  }
+
   .wrapper {
     margin: 0 auto;
     @media screen and (min-width: 1200px) {

@@ -4,6 +4,7 @@ import {
   IoBookmarkOutline,
   IoBriefcase,
   IoCalendarNumberOutline,
+  IoChevronBack,
   IoClipboardOutline,
   IoCloseCircle,
   IoConstructOutline,
@@ -54,8 +55,8 @@ import { DotLoader, PulseLoader } from 'react-spinners';
 import user_skills from '@/data/professional-skills.json';
 import WorkCapturer from '@/components/modals/WorkCapturer';
 import { BiUser, BiUserCheck, BiUserX } from 'react-icons/bi';
-import DeleteAccountPrompt from '@/components/modals/DeleteAccountPrompt';
 import { _userProfile as Container } from '@/styles/common/profile-editor';
+import DeleteAccountPrompt from '@/components/modals/DeleteAccountPrompt';
 
 type TError = {
   status: boolean;
@@ -201,7 +202,7 @@ const ProfileEditor: NextPage = (): JSX.Element => {
         });
       })
       .catch((error) => {
-        console.error(error);
+        console.error(error?.response?.data?.message ?? error);
       });
   };
 
@@ -219,7 +220,7 @@ const ProfileEditor: NextPage = (): JSX.Element => {
         });
       })
       .catch((error) => {
-        console.error(error);
+        console.error(error?.response?.data?.message ?? error);
         setError({
           status: true,
           msg:
@@ -434,11 +435,19 @@ const ProfileEditor: NextPage = (): JSX.Element => {
           error.status &&
           error.key === 'user-data' && (
             <section className='fetching-state'>
-              <p>{error.msg}</p>
-              <button onClick={() => router.reload()}>
-                <IoReload />
-                <span>Recarregar a página</span>
-              </button>
+              <section className='wrapper'>
+                <h3>{error.msg}</h3>
+                <div>
+                  <button onClick={() => router.reload()}>
+                    <IoReload />
+                    <span>Recarregar a página</span>
+                  </button>
+                  <button onClick={() => router.back()}>
+                    <IoChevronBack />
+                    <span>Voltar a página anterior</span>
+                  </button>
+                </div>
+              </section>
             </section>
           )}
 

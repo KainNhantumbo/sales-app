@@ -28,24 +28,29 @@ export const _userProfile = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 5000;
-    background: rgba(${({ theme }) => theme.foreground}, 0.5);
-    backdrop-filter: blur(10px);
+    z-index: 12000;
+    background: rgba(${({ theme }) => theme.foreground}, 0.8);
+    backdrop-filter: blur(20px);
     width: 100%;
     height: 100%;
-    div {
+    .wrapper {
       position: relative;
       top: 300px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      font-size: 1.2rem;
     }
-    p {
-      color: rgb(${({ theme }) => theme.alert});
-      padding: 0 20px;
-      line-height: 1.6rem;
+
+    div {
+      padding-top: 20px;
+      width: 100%;
+      display: flex;
+      flex-flow: row-reverse wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    p,
+    h3 {
+      font-size: 1.4rem;
+      line-height: 2rem;
+      font-weight: 500;
       text-align: center;
     }
     button {
@@ -355,17 +360,20 @@ export const _userProfile = styled.div`
                 right: 32px;
                 width: 30px;
                 height: 30px;
-                border-radius: 50%;
+                border-radius: 12px;
                 background: rgba(${({ theme }) => theme.primary}, 0.8);
                 :hover {
                   background: rgba(${({ theme }) => theme.alert}, 0.6);
+                  svg {
+                    color: rgb(${({ theme }) => theme.neutral});
+                  }
                 }
               }
             }
 
             .profile-image {
               img {
-                border-radius: 50%;
+                border-radius: 12px;
                 max-width: 220px;
                 max-height: 220px;
                 object-fit: none;
@@ -374,9 +382,9 @@ export const _userProfile = styled.div`
               .camera-icon {
                 width: 150px;
                 height: 150px;
-                border-radius: 50%;
+                border-radius: 12px;
                 margin: 0 auto;
-                padding: 5px;
+                padding: 20px;
                 background: rgba(${({ theme }) => theme.font}, 0.1);
               }
               label {
@@ -392,10 +400,13 @@ export const _userProfile = styled.div`
                 right: calc(50% - 120px);
                 width: 30px;
                 height: 30px;
-                border-radius: 50%;
+                border-radius: 12px;
                 background: rgba(${({ theme }) => theme.primary}, 0.8);
                 :hover {
                   background: rgba(${({ theme }) => theme.alert}, 0.6);
+                  svg {
+                    color: rgb(${({ theme }) => theme.neutral});
+                  }
                 }
               }
             }

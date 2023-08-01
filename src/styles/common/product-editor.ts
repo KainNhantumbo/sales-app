@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import {
   BaseButton,
   BaseButtonOutline,
@@ -6,6 +5,7 @@ import {
   StyledInputs,
   StyledLabels,
 } from '../defaults';
+import styled from 'styled-components';
 
 export const _productEditor = styled.div`
   position: relative;
@@ -23,6 +23,39 @@ export const _productEditor = styled.div`
     }
   }
 
+  .loading-spinner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 12000;
+    background: rgba(${({ theme }) => theme.foreground}, 0.8);
+    backdrop-filter: blur(20px);
+    width: 100%;
+    height: 100%;
+
+    .wrapper {
+      position: relative;
+      top: 300px;
+    }
+
+    .center {
+      padding-top: 20px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    p {
+      padding-top: 40px;
+      font-size: 1.1rem;
+      line-height: 1.6rem;
+      font-weight: 500;
+      text-align: center;
+    }
+  }
+
   .fetching-state {
     position: absolute;
     top: 0;
@@ -32,19 +65,18 @@ export const _productEditor = styled.div`
     backdrop-filter: blur(20px);
     width: 100%;
     height: 100%;
-    display: grid;
-    place-content: center center;
-    place-items: center center;
+    .wrapper {
+      position: relative;
+      top: 300px;
+    }
 
     div {
+      padding-top: 20px;
+      width: 100%;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      font-size: 1.2rem;
-      padding: 60px 30px;
-      width: fit-content;
-      margin: 0 auto;
+      flex-flow: row-reverse wrap;
+      gap: 12px;
+      justify-content: center;
     }
     p,
     h3 {
@@ -302,13 +334,16 @@ export const _productEditor = styled.div`
                   width: 30px;
                   height: 30px;
                   position: absolute;
-                  border-radius: 50%;
+                  border-radius: 12px;
                   top: 5px;
                   left: calc(0% + 5px);
                   background: rgba(${({ theme }) => theme.primary}, 0.8);
                   padding: 8px;
                   :hover {
                     background: rgba(${({ theme }) => theme.primary}, 0.6);
+                    svg {
+                      color: rgb(${({ theme }) => theme.neutral});
+                    }
                   }
                 }
 
@@ -319,10 +354,14 @@ export const _productEditor = styled.div`
                   right: 5px;
                   width: 30px;
                   height: 30px;
-                  border-radius: 50%;
+                  border-radius: 12px;
                   background: rgba(${({ theme }) => theme.primary}, 0.8);
                   :hover {
                     background: rgba(${({ theme }) => theme.alert}, 0.6);
+
+                    svg {
+                      color: rgb(${({ theme }) => theme.neutral});
+                    }
                   }
                 }
               }
