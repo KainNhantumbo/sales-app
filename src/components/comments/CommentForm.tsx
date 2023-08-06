@@ -80,7 +80,10 @@ const CommentForm: FC<TMainCommentForm> = (props): JSX.Element => {
                 props.status.error.status ||
                 (state.comment.content.length < 2 && true)
               }
-              onClick={props.createComment}>
+              onClick={(): void => {
+                if (!state.auth.token) return loginPromptController();
+                props.createComment();
+              }}>
               <span>Enviar</span>
             </button>
           )}

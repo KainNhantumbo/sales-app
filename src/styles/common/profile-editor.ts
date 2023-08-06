@@ -426,7 +426,7 @@ export const _userProfile = styled.div`
                 justify-content: space-between;
                 align-items: center;
                 padding: 10px;
-                border-radius: 3px;
+                border-radius: 8px;
                 gap: 10px;
                 background: rgb(${({ theme }) => theme.foreground});
                 box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);

@@ -499,3 +499,33 @@ export type TPublicUser = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type TUserMetrics = {
+  products: {
+    count: number;
+    blocked: number;
+    total_price_amount_value: number;
+    total_promotional_products: number;
+  };
+  orders: {
+    count: number;
+    status: {
+      aknowledged: number;
+      delivered: number;
+      returned: number;
+      cancelled: number;
+      progress: number;
+      pending_payment: number;
+    };
+  };
+  store: {
+    blocked: boolean | undefined;
+    active_status: boolean | undefined;
+    verified_status: boolean | undefined;
+  };
+  user: {
+    name: string;
+    email: string | undefined;
+    profile_image: string;
+  };
+};

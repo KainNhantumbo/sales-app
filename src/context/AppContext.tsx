@@ -4,7 +4,6 @@ import {
   createContext,
   Dispatch,
   useReducer,
-  useLayoutEffect,
   ReactNode,
   FC,
 } from 'react';
@@ -15,6 +14,7 @@ import { NextRouter, useRouter } from 'next/router';
 import { Action, State } from '@/../@types/reducer';
 import { TAuth, TCart } from '@/../@types/index';
 import { reducer, initialState } from '@/lib/reducer';
+import useIsomorphicLayoutEffect from '../hooks/custom-layout-efffect';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
@@ -267,7 +267,7 @@ const AppContext: FC<TProps> = (props): JSX.Element => {
     syncCartToLocalStorage();
   }, [state.cart]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     restoreCartFromLocalStorage();
   }, []);
 

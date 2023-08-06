@@ -197,7 +197,12 @@ const Denounce: NextPage = (): JSX.Element => {
                     whileHover={{ scale: 1.05 }}
                     disabled={msg.length < 1 && true}
                     className='prompt-accept'
-                    onClick={handleCreateDenounce}>
+                    onClick={(): void => {
+                      if (!state.auth.token) {
+                        return loginPromptController();
+                      }
+                      handleCreateDenounce();
+                    }}>
                     <IoCheckmark />
                     <span>Enviar denúncia</span>
                   </motion.button>

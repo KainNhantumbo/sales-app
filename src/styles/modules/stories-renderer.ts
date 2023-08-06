@@ -10,6 +10,7 @@ export const _storiesRender = styled.div`
   padding: 0 20px;
   padding-bottom: 20px;
   margin: 0 auto;
+  position: relative;
 
   .stats-container {
     width: 100%;
@@ -99,6 +100,7 @@ export const _storiesRender = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 12px;
+    position: relative;
 
     .story-container {
       width: 100%;
@@ -214,7 +216,6 @@ export const _storiesRender = styled.div`
           :hover {
             color: rgb(${({ theme }) => theme.primary_variant});
             background: rgba(${({ theme }) => theme.primary}, 0.2);
-            transition: all 200ms ease-in-out;
           }
         }
       }

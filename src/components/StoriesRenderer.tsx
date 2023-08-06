@@ -24,6 +24,7 @@ import { DefaultTheme, useTheme } from 'styled-components';
 import DeleteStoryPrompt from './modals/DeleteStoryPrompt';
 import { _storiesRender as Container } from '@/styles/modules/stories-renderer';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
+import RequestLogin from './modals/RequestLogin';
 
 interface IProps {
   userId?: string | undefined;
@@ -31,10 +32,6 @@ interface IProps {
 }
 
 const StoriesRenderer: FC<IProps> = (props): JSX.Element => {
-  const LIMIT: number = 8;
-  const router: NextRouter = useRouter();
-  const theme: DefaultTheme = useTheme();
-  const { ref, inView }: InViewHookResponse = useInView();
   const {
     state,
     dispatch,
@@ -42,6 +39,10 @@ const StoriesRenderer: FC<IProps> = (props): JSX.Element => {
     deleteStoryPromptController,
     loginPromptController,
   } = useAppContext();
+  const LIMIT: number = 8;
+  const router: NextRouter = useRouter();
+  const theme: DefaultTheme = useTheme();
+  const { ref, inView }: InViewHookResponse = useInView();
 
   const getStories = async ({
     pageParam = 0,
@@ -167,8 +168,9 @@ const StoriesRenderer: FC<IProps> = (props): JSX.Element => {
   return (
     <Container>
       <DeleteStoryPrompt deleteFn={handleDeleteStory} />
+      <RequestLogin key={'stories-renderer'} />
 
-      {state.publicStories.length < 1 && (
+      {state.publicStories.length < 1 && !isLoading && !isError ? (
         <div className='empty-data_container'>
           <section className='content'>
             <IoLeafOutline />
@@ -184,9 +186,9 @@ const StoriesRenderer: FC<IProps> = (props): JSX.Element => {
             )}
           </section>
         </div>
-      )}
+      ) : null}
 
-      {state.publicStories.length > 0 && (
+      {state.publicStories.length > 0 ? (
         <section className='stories-container'>
           {state.publicStories.length > 0 &&
             state.publicStories.map((story, index) => (
@@ -261,7 +263,7 @@ const StoriesRenderer: FC<IProps> = (props): JSX.Element => {
                   {story.created_by._id === state.auth.id ? (
                     <>
                       <motion.button
-                        whileHover={{ scale: 1.08 }}
+                        whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.8 }}
                         onClick={() =>
                           router.push(`/community/story/${story._id}`)
@@ -271,7 +273,7 @@ const StoriesRenderer: FC<IProps> = (props): JSX.Element => {
                       </motion.button>
 
                       <motion.button
-                        whileHover={{ scale: 1.08 }}
+                        whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.8 }}
                         onClick={() =>
                           deleteStoryPromptController(true, story._id)
@@ -283,11 +285,13 @@ const StoriesRenderer: FC<IProps> = (props): JSX.Element => {
                   ) : (
                     <>
                       <motion.button
-                        whileHover={{ scale: 1.08 }}
+                        whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.8 }}
                         disabled={!state.auth.id && true}
-                        onClick={() => {
-                          if (!state.auth.token) return loginPromptController();
+                        onClick={(): void => {
+                          if (!state.auth.token) {
+                            return loginPromptController();
+                          }
                           story.favorites.includes(state.auth.id)
                             ? handleUnFavoriteStory(story._id)
                             : handleFavoriteStory(story._id);
@@ -306,7 +310,7 @@ const StoriesRenderer: FC<IProps> = (props): JSX.Element => {
                       </motion.button>
 
                       <motion.button
-                        whileHover={{ scale: 1.08 }}
+                        whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.8 }}
                         onClick={() =>
                           router.push(
@@ -324,10 +328,10 @@ const StoriesRenderer: FC<IProps> = (props): JSX.Element => {
               </div>
             ))}
         </section>
-      )}
+      ) : null}
 
       <div className='stats-container'>
-        {isError && !isLoading && (
+        {isError && !isLoading ? (
           <div className=' fetch-error-message '>
             <h3>Erro ao carregar dados.</h3>
             <button onClick={() => fetchNextPage()}>
@@ -335,9 +339,9 @@ const StoriesRenderer: FC<IProps> = (props): JSX.Element => {
               <span>Tentar novamente</span>
             </button>
           </div>
-        )}
+        ) : null}
 
-        {isLoading && !isError && (
+        {isLoading && !isError ? (
           <div className='loading'>
             <PulseLoader
               size={20}
@@ -348,7 +352,7 @@ const StoriesRenderer: FC<IProps> = (props): JSX.Element => {
               }}
             />
           </div>
-        )}
+        ) : null}
 
         {!hasNextPage &&
           !isLoading &&

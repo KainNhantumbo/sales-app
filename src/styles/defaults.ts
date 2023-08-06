@@ -125,7 +125,7 @@ export const Button_Mono_B = css`
 `;
 
 export const StyledCornerButton = css`
-  border-radius: 8px;
+  border-radius: 50%;
   background: rgba(${({ theme }) => theme.primary}, 0.4);
   color: rgb(${({ theme }) => theme.accent});
   border: none;

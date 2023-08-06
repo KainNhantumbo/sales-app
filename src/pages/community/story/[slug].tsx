@@ -1,6 +1,5 @@
 import {
   IoHeart,
-  IoTrashOutline,
   IoDownloadOutline,
   IoEllipsisHorizontal,
 } from 'react-icons/io5';
@@ -16,28 +15,27 @@ import { PulseLoader } from 'react-spinners';
 import { complements } from '@/data/app-data';
 import SideBarAds from '@/components/SidaBarAds';
 import { IPublicStory, TStory } from '@/../@types';
-import { NextRouter, useRouter } from 'next/router';
+import { NextRouter, Router, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { useCallback, useEffect, useState } from 'react';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import { _story as Container } from '@/styles/common/story';
+import { BsTrash } from 'react-icons/bs';
 
 type TProps = { story: IPublicStory | undefined };
+type TError = { status: boolean; msg: string };
 
 const Story: NextPage<TProps> = (props): JSX.Element => {
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
   const { state, dispatch, fetchAPI } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<{
-    status: boolean;
-    msg: string;
-  }>({ status: false, msg: '' });
+  const [error, setError] = useState<TError>({ status: false, msg: '' });
 
   const [coverImageData, setCoverImageData] = useState({
-    id: '',
-    data: '',
+    id: state.story.cover_image?.id || '',
+    data: state.story.cover_image?.url || '',
   });
 
   const acceptedMimeTypes: string[] = ['image/png', 'image/jpeg', 'image/jpg'];
@@ -132,7 +130,7 @@ const Story: NextPage<TProps> = (props): JSX.Element => {
       await fetchAPI({
         method: 'patch',
         url: `/api/v1/users/stories/${props.story?._id}`,
-        data: { ...state.story },
+        data: { ...state.story, coverImageData },
       });
       router.back();
     } catch (error: any) {
@@ -156,7 +154,20 @@ const Story: NextPage<TProps> = (props): JSX.Element => {
       });
     }
 
+    Router.events.on('routeChangeStart', function () {
+      setLoading(true);
+    });
+    Router.events.on('routeChangeComplete', function () {
+      setLoading(false);
+    });
+
     return () => {
+      Router.events.off('routeChangeStart', function () {
+        setLoading(false);
+      });
+      Router.events.off('routeChangeComplete', function () {
+        setLoading(false);
+      });
       dispatch({
         type: actions.USER_STORY,
         payload: {
@@ -300,7 +311,7 @@ const Story: NextPage<TProps> = (props): JSX.Element => {
                         title='Apagar imagem de capa'
                         className='clear-image'
                         onClick={deleteCoverImage}>
-                        <IoTrashOutline />
+                        <BsTrash />
                         <span>Remover imagem</span>
                       </button>
                     </>
@@ -320,7 +331,8 @@ const Story: NextPage<TProps> = (props): JSX.Element => {
                         title='Apagar imagem de capa'
                         className='clear-image'
                         onClick={deleteCoverImage}>
-                        <IoTrashOutline />
+                        <BsTrash />
+                        <span>Remover imagem</span>
                       </button>
                     </>
                   ) : (
@@ -373,12 +385,16 @@ const Story: NextPage<TProps> = (props): JSX.Element => {
                   {!loading && !error.status && (
                     <div className='prompt-actions'>
                       {props.story?._id !== undefined ? (
-                        <button onClick={updateStory} className='prompt-accept'>
+                        <button
+                          onClick={updateStory}
+                          disabled={loading}
+                          className='prompt-accept'>
                           <span>Atualizar</span>
                         </button>
                       ) : (
                         <button
                           className='prompt-accept-btn'
+                          disabled={loading}
                           onClick={createStory}>
                           <span>Publicar</span>
                         </button>

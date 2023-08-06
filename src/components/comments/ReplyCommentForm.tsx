@@ -66,13 +66,18 @@ const ReplyCommentForm: FC<TCommentForm> = (props): JSX.Element => {
               props.status.error.status ||
               (state.comment.content.length < 2 && true)
             }
-            onClick={() =>
-              props.status.edit
-                ? props.updateComment(props.currentCommentId)
-                : props.status.reply
-                ? props.replyComment()
-                : props.createComment()
-            }>
+            onClick={() => {
+              if (!state.auth.token) {
+                return loginPromptController();
+              }
+              if (props.status.edit) {
+                return props.updateComment(props.currentCommentId);
+              }
+              if (props.status.reply) {
+                return props.replyComment();
+              }
+              return props.createComment();
+            }}>
             {props.status.edit ? (
               <span>Atualizar</span>
             ) : props.status.reply ? (

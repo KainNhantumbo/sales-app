@@ -44,7 +44,7 @@ import product_categories from '@/data/product-categories.json';
 import ShareProducts from '@/components/modals/ShareProductModal';
 import { _commerceProduct as Container } from '@/styles/common/ecommerce-product';
 
-const Product: NextPage<any> = ({ product }): JSX.Element => {
+const Product: NextPage<any> = ({ product, error_message }): JSX.Element => {
   const {
     state,
     dispatch,
@@ -63,7 +63,9 @@ const Product: NextPage<any> = ({ product }): JSX.Element => {
   if (!product)
     return (
       <ErrorPage
-        message='Não foi possívbel carregar os dados do produto'
+        message={
+          error_message || 'Não foi possível carregar os dados do produto'
+        }
         retryFn={router.reload}
       />
     );
@@ -766,8 +768,11 @@ export async function getStaticProps({ params: { productId } }: any) {
       url: `/api/v1/users/products/public/${productId}`,
     });
     return { props: { product: { ...data } }, revalidate: 10 };
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
-    return { props: {}, revalidate: 10 };
+    return {
+      props: { error_message: error?.response?.data?.message },
+      revalidate: 10,
+    };
   }
 }
