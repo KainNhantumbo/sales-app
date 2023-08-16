@@ -10,6 +10,7 @@ import { IoApps, IoConstruct } from 'react-icons/io5';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { _dashboard as Container } from '@/styles/common/dashbord';
 import { app_metadata, complements, dashboardActions } from '@/data/app-data';
+import Metrics from '@/components/Metrics';
 
 const Dashboard: NextPage = (): JSX.Element => {
   const { state } = useAppContext();

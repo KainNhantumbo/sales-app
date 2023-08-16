@@ -545,3 +545,28 @@ export type TUserMetrics = {
     profile_image: string;
   };
 };
+
+export type TMetrics = {
+  products: {
+    count: number;
+    blocked: number;
+    total_price_amount_value: number;
+    total_promotional_products: number;
+  };
+  orders: {
+    count: number;
+    status: {
+      aknowledged: number;
+      delivered: number;
+      returned: number;
+      cancelled: number;
+      progress: number;
+      pending_payment: number;
+    };
+  };
+  store: {
+    blocked: boolean;
+    active_status: boolean;
+    verified_status: boolean;
+  };
+};

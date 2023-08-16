@@ -95,6 +95,30 @@ export const initialState: State = {
     createdAt: '',
     updatedAt: '',
   },
+  metrics: {
+    products: {
+      blocked: 0,
+      count: 0,
+      total_price_amount_value: 0,
+      total_promotional_products: 0,
+    },
+    orders: {
+      count: 0,
+      status: {
+        aknowledged: 0,
+        cancelled: 0,
+        delivered: 0,
+        pending_payment: 0,
+        progress: 0,
+        returned: 0,
+      },
+    },
+    store: {
+      active_status: false,
+      blocked: false,
+      verified_status: false,
+    },
+  },
   store: {
     _id: '',
     name: '',
@@ -397,6 +421,8 @@ export function reducer(state: State, action: Action): State {
       return { ...state, orders: action.payload.orders };
     case actions.QUERY_ORDERS:
       return { ...state, ordersQuery: action.payload.ordersQuery };
+    case actions.METRICS_DATA:
+      return { ...state, metrics: action.payload.metrics };
     default:
       return { ...state };
   }
