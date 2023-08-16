@@ -108,7 +108,7 @@ export const _dashboard = styled.div`
           overflow: hidden;
           width: 40px;
           height: 40px;
-          border-radius: 50%;
+          border-radius: 8px;
           position: absolute;
           top: calc(50% - 20px);
           display: grid;

@@ -570,3 +570,15 @@ export type TMetrics = {
     verified_status: boolean;
   };
 };
+
+export type TBannerAds = {
+  name: string;
+  owner: string;
+  notes: string;
+  phone: string;
+  image: { id: string; url: string };
+  expires_in: Date;
+  invalidated: boolean;
+  createdAt: string;
+  updatedAt: string;
+};

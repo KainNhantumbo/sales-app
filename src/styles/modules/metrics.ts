@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BaseButton } from '../defaults';
 
 export const _metrics = styled.div`
   width: 100%;
@@ -22,6 +23,31 @@ export const _metrics = styled.div`
     font-weight: 500;
     padding-top: 12px;
     color: rgb(${({ theme }) => theme.font});
+  }
+
+  .error-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-content: center;
+    place-items: center;
+
+    .fetch-error-message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin: 20px 0;
+      color: rgb(${({ theme }) => theme.alert});
+      font-weight: 500;
+      font-size: 1.1rem;
+      line-height: 1.4rem;
+      align-self: flex-end;
+
+      button {
+        ${BaseButton}
+      }
+    }
   }
 
   .metrics-container {

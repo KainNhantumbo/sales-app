@@ -25,7 +25,6 @@ import SearchEngine from '@/components/SearchEngine';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { DefaultTheme, useTheme } from 'styled-components';
 import RequestLogin from '@/components/modals/RequestLogin';
-import opening_store_png from '../../public/assets/opening.png';
 import { blurDataUrlImage, complements } from '@/data/app-data';
 import { HomeContainer as Container } from '@/styles/common/home';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
@@ -44,7 +43,7 @@ const Home: NextPage = (): JSX.Element => {
   const LIMIT: number = 12;
   const { ref, inView }: InViewHookResponse = useInView();
 
-  async function handleFavoriteProduct(id: string): Promise<void> {
+  const handleFavoriteProduct = async (id: string): Promise<void> => {
     try {
       const { data } = await fetchAPI({
         method: 'post',
@@ -67,9 +66,9 @@ const Home: NextPage = (): JSX.Element => {
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
-  }
+  };
 
-  async function handleUnFavoriteProduct(id: string): Promise<void> {
+  const handleUnFavoriteProduct = async (id: string): Promise<void> => {
     try {
       const { data } = await fetchAPI({
         method: 'patch',
@@ -89,19 +88,11 @@ const Home: NextPage = (): JSX.Element => {
     } catch (err: any) {
       console.error(err.response?.data?.message || err);
     }
-  }
+  };
 
-  const { data, refetch, fetchNextPage, hasNextPage, isFetching, isError } =
-    useInfiniteQuery({
-      queryKey: ['public-products'],
-      queryFn: fetchPublicProducts,
-      getNextPageParam: (lastPage) =>
-        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
-    });
-
-  async function fetchPublicProducts({
+  const fetchPublicProducts = async ({
     pageParam = 0,
-  }): Promise<{ data: any; currentOffset: number }> {
+  }): Promise<{ data: any; currentOffset: number }> => {
     const { category, price_range, promotion, query, sort } =
       state.queryPublicProducts;
 
@@ -116,7 +107,15 @@ const Home: NextPage = (): JSX.Element => {
       }${sort ? `&sort=${sort}` : ''}`,
     });
     return { data, currentOffset: pageParam + 1 };
-  }
+  };
+
+  const { data, refetch, fetchNextPage, hasNextPage, isFetching, isError } =
+    useInfiniteQuery({
+      queryKey: ['public-products'],
+      queryFn: fetchPublicProducts,
+      getNextPageParam: (lastPage) =>
+        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
+    });
 
   useEffect((): (() => void) => {
     if (data) {
@@ -167,29 +166,7 @@ const Home: NextPage = (): JSX.Element => {
 
       <Container>
         <section className='banner-container'>
-          <div className='wrapper'>
-            <div className='banner-title'>
-              <h1>
-                <IoCart />
-                <span>Bem-vindo a nossa loja!</span>
-              </h1>
-              <h3>
-                <span>
-                  Use a nossa mágica e encontre tudo que procura e precisa como
-                  um foguete...🚀
-                </span>
-              </h3>
-            </div>
-
-            <Image
-              width={600}
-              height={400}
-              placeholder='blur'
-              blurDataURL={blurDataUrlImage}
-              src={opening_store_png}
-              alt='Openning store art - designed by freepick.com'
-            />
-          </div>
+          <div className='wrapper'></div>
         </section>
 
         <div className='content-wrapper'>

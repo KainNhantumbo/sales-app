@@ -3,6 +3,7 @@ import type { State, Action } from '@/../@types/reducer';
 import product_categories from '../data/product-categories.json';
 
 export const initialState: State = {
+  banner_ads: [],
   isLogoutPrompt: false,
   isLoginPrompt: false,
   isFilterActive: false,
@@ -423,6 +424,8 @@ export function reducer(state: State, action: Action): State {
       return { ...state, ordersQuery: action.payload.ordersQuery };
     case actions.METRICS_DATA:
       return { ...state, metrics: action.payload.metrics };
+    case actions.BANNER_ADS:
+      return { ...state, banner_ads: action.payload.banner_ads };
     default:
       return { ...state };
   }

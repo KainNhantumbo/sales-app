@@ -19,6 +19,7 @@ import {
   TPublicStoreList,
   TOrder,
   TMetrics,
+  TBannerAds,
 } from './index';
 
 export type State = {
@@ -64,6 +65,7 @@ export type State = {
   publicStories: IPublicStory[];
   publicStoresList: TPublicStoreList;
   metrics: TMetrics;
+  banner_ads: TBannerAds[];
 };
 
 export type Action = { type: string; payload: State };

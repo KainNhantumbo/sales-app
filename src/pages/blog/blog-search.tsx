@@ -50,7 +50,6 @@ const BlogSearch: NextPage = (): JSX.Element => {
     fetchNextPage,
     error,
     hasNextPage,
-    isFetching,
     isLoading,
     isError,
   } = useInfiniteQuery({
@@ -111,15 +110,14 @@ const BlogSearch: NextPage = (): JSX.Element => {
         <div className='main-container'>
           <SearchComponent />
 
-          {isFetching ||
-            (isLoading && !isError && (
-              <section className='fetching-state'>
-                <div className='center'>
-                  <DotLoader size={60} color={`rgb(${theme.primary})`} />
-                  <span>Pesquisando...</span>
-                </div>
-              </section>
-            ))}
+          {isLoading && !isError && (
+            <section className='fetching-state'>
+              <div className='center'>
+                <DotLoader size={60} color={`rgb(${theme.primary})`} />
+                <span>Pesquisando...</span>
+              </div>
+            </section>
+          )}
 
           <article>
             <section
@@ -132,7 +130,7 @@ const BlogSearch: NextPage = (): JSX.Element => {
             </section>
 
             {!isLoading ||
-              (!isFetching && isError && (
+              (isLoading && isError && (
                 <section className='error-message'>
                   <IoLibraryOutline />
                   <p>
@@ -142,7 +140,7 @@ const BlogSearch: NextPage = (): JSX.Element => {
                 </section>
               ))}
 
-            {!isFetching && !isError && state.blogPostsList.length < 1 && (
+            {isLoading && !isError && state.blogPostsList.length < 1 && (
               <div className='empty-data_container'>
                 <section className='content'>
                   <div className='icon'>
@@ -202,17 +200,17 @@ const BlogSearch: NextPage = (): JSX.Element => {
                 ))}
 
                 <div className='stats-container'>
-                  {isError && !isFetching && (
-                    <div className=' fetch-error-message '>
+                  {isError && isLoading && (
+                    <div className='fetch-error-message '>
                       <h3>Erro ao carregar postagens</h3>
-                      <button onClick={() => fetchNextPage()}>
+                      <button onClick={fetchNextPage}>
                         <IoReload />
                         <span>Tentar novamente</span>
                       </button>
                     </div>
                   )}
 
-                  {isFetching && !isError && (
+                  {isLoading && !isError && (
                     <div className='loading'>
                       <PulseLoader
                         size={20}
@@ -226,7 +224,7 @@ const BlogSearch: NextPage = (): JSX.Element => {
                   )}
 
                   {!hasNextPage &&
-                    !isFetching &&
+                    isLoading &&
                     !isError &&
                     state.blogPostsList.length > 0 && <p>Chegou ao fim</p>}
                 </div>
