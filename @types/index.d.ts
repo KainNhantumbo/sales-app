@@ -572,13 +572,7 @@ export type TMetrics = {
 };
 
 export type TBannerAds = {
+  _id: string;
   name: string;
-  owner: string;
-  notes: string;
-  phone: string;
   image: { id: string; url: string };
-  expires_in: Date;
-  invalidated: boolean;
-  createdAt: string;
-  updatedAt: string;
 };

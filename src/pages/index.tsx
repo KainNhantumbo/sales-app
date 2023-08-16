@@ -4,10 +4,14 @@ import {
   IoBarcodeOutline,
   IoCart,
   IoCartOutline,
+  IoChevronBack,
+  IoChevronForward,
+  IoContract,
   IoEllipsisHorizontal,
   IoHeart,
   IoHeartOutline,
   IoReload,
+  IoScan,
   IoSearch,
 } from 'react-icons/io5';
 import Link from 'next/link';
@@ -19,18 +23,23 @@ import Layout from '@/components/Layout';
 import { actions } from '@/data/actions';
 import { formatCurrency } from '@/lib/utils';
 import { PulseLoader } from 'react-spinners';
-import { TPublicProducts } from '@/../@types';
+import { TBannerAds, TPublicProducts } from '@/../@types';
 import { useAppContext } from '@/context/AppContext';
 import SearchEngine from '@/components/SearchEngine';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { DefaultTheme, useTheme } from 'styled-components';
 import RequestLogin from '@/components/modals/RequestLogin';
 import { blurDataUrlImage, complements } from '@/data/app-data';
-import { HomeContainer as Container } from '@/styles/common/home';
-import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import { NextPage } from 'next';
+import ReactImageGallery from 'react-image-gallery';
+import { _home as Container } from '@/styles/common/home';
+import { InViewHookResponse, useInView } from 'react-intersection-observer';
 
-const Home: NextPage = (): JSX.Element => {
+interface IProps {
+  ads_data: TBannerAds[];
+}
+
+const Home: NextPage<IProps> = ({ ads_data }): JSX.Element => {
   const {
     state,
     dispatch,
@@ -109,7 +118,7 @@ const Home: NextPage = (): JSX.Element => {
     return { data, currentOffset: pageParam + 1 };
   };
 
-  const { data, refetch, fetchNextPage, hasNextPage, isFetching, isError } =
+  const { data, refetch, fetchNextPage, hasNextPage, isLoading, isError } =
     useInfiniteQuery({
       queryKey: ['public-products'],
       queryFn: fetchPublicProducts,
@@ -157,6 +166,15 @@ const Home: NextPage = (): JSX.Element => {
     };
   }, [state.queryPublicProducts]);
 
+  useEffect((): void => {
+    if (Array.isArray(ads_data)) {
+      dispatch({
+        type: actions.BANNER_ADS,
+        payload: { ...state, banner_ads: [...ads_data] },
+      });
+    }
+  }, []);
+
   return (
     <Layout
       metadata={{
@@ -165,9 +183,42 @@ const Home: NextPage = (): JSX.Element => {
       <RequestLogin />
 
       <Container>
-        <section className='banner-container'>
-          <div className='wrapper'></div>
-        </section>
+        {state.banner_ads.length > 0 ? (
+          <section className='banner-container'>
+            <ReactImageGallery
+              lazyLoad={true}
+              useBrowserFullscreen={true}
+              additionalClass='navigator'
+              autoPlay={false}
+              showPlayButton={false}
+              showThumbnails={false}
+              items={state.banner_ads.map((asset) => ({
+                original: asset.image.url,
+              }))}
+              renderRightNav={(onClick, disabled) => (
+                <button
+                  className='nav-right'
+                  onClick={onClick}
+                  disabled={disabled}>
+                  <IoChevronForward />
+                </button>
+              )}
+              renderLeftNav={(onClick, disabled) => (
+                <button
+                  className='nav-left'
+                  onClick={onClick}
+                  disabled={disabled}>
+                  <IoChevronBack />
+                </button>
+              )}
+              renderFullscreenButton={(onClick, isFullScreen) => (
+                <button className='nav-fullscreen' onClick={onClick}>
+                  {isFullScreen ? <IoContract /> : <IoScan />}
+                </button>
+              )}
+            />
+          </section>
+        ) : null}
 
         <div className='content-wrapper'>
           <motion.button
@@ -188,7 +239,7 @@ const Home: NextPage = (): JSX.Element => {
           </motion.button>
           <SearchEngine />
           <article>
-            {state.publicProducts.length < 1 && !isFetching && !isError && (
+            {state.publicProducts.length < 1 && !isLoading && !isError && (
               <div className='empty-data_container'>
                 <section className='content'>
                   <div className='icon'>
@@ -333,7 +384,7 @@ const Home: NextPage = (): JSX.Element => {
             </section>
 
             <div className='stats-container'>
-              {isError && !isFetching && (
+              {isError && !isLoading && (
                 <div className=' fetch-error-message '>
                   <h3>Erro ao carregar produtos</h3>
                   <button onClick={() => fetchNextPage()}>
@@ -343,7 +394,7 @@ const Home: NextPage = (): JSX.Element => {
                 </div>
               )}
 
-              {isFetching && !isError && (
+              {isLoading && !isError && (
                 <div className='loading'>
                   <PulseLoader
                     size={20}
@@ -357,7 +408,7 @@ const Home: NextPage = (): JSX.Element => {
               )}
 
               {!hasNextPage &&
-                !isFetching &&
+                !isLoading &&
                 !isError &&
                 state.publicProducts.length > 0 && (
                   <p>Sem mais produtos para mostrar</p>
@@ -377,3 +428,16 @@ const Home: NextPage = (): JSX.Element => {
 };
 
 export default Home;
+
+export async function getServerSideProps() {
+  try {
+    const { data } = await fetch<TBannerAds[]>({
+      method: 'get',
+      url: '/api/v1/default/ads/public',
+    });
+    return { props: { ads_data: data } };
+  } catch (error: any) {
+    console.error(error?.response?.data?.message ?? error);
+    return { props: { ads_data: [] } };
+  }
+}

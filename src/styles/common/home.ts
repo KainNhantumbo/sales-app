@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton, StyledCornerButton } from '../defaults';
 
-export const HomeContainer = styled.div`
+export const _home = styled.div`
   position: relative;
   width: 100%;
   position: relative;
@@ -18,96 +18,97 @@ export const HomeContainer = styled.div`
   }
 
   .banner-container {
+    width: fit-content;
     width: 100%;
-    background: rgba(${({ theme }) => theme.foreground}, 0.8);
-    backdrop-filter: blur(10px);
-    padding: 0 20px;
-    padding-top: 100px;
-    padding-bottom: 40px;
-    margin-bottom: 20px;
-    border-radius: 0 0 20px 20px;
 
-    .wrapper {
-      width: 100%;
-      max-width: 1080px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 50px;
-      justify-content: center;
-      margin: 0 auto;
+    @media screen and (max-width: 990px) {
+      max-width: 480px;
     }
 
-    .banner-title {
-      display: flex;
-      flex-direction: column;
+    @media screen and (max-width: 990px) {
+      width: fit-content;
+    }
+
+    @media screen and (max-width: 445px) {
+      padding: 0;
+    }
+
+    .no-image-icon {
       width: 100%;
-      margin: 0 auto;
+      max-width: 380px;
+      height: 420px;
+      padding: 20px;
+      border-radius: 20px;
+      background: rgba(${({ theme }) => theme.primary}, 0.1);
+    }
+
+    .navigator {
       position: relative;
-      gap: 10px;
-      h1 {
-        font-size: 2.8rem;
-        font-weight: 500;
-        line-height: 3.2rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 10px;
-      }
-      h3 {
-        font-size: 1.4rem;
-        line-height: 2rem;
-        font-weight: 400;
+
+      @media screen and (max-width: 445px) {
+        width: 100%;
+        margin: 0;
+        padding: 0;
       }
 
-      ::before {
-        content: '';
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        left: 40px;
-        top: 60px;
-        border-radius: 50%;
-        z-index: -999;
-        transform: rotate(180);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 0 100px 60px rgba(${({ theme }) => theme.primary}, 0.8);
-      }
-
-      @media screen and (max-width: 900px) {
-        h1 {
-          font-size: 1.8rem;
-          font-weight: 500;
-          line-height: 2rem;
+      .image-gallery-image {
+        border-radius: 12px;
+        border: 3px solid transparent;
+        :hover {
+          border: 3px solid rgba(${({ theme }) => theme.primary}, 0.9);
+          transition: all 500ms ease;
         }
       }
 
-      @media screen and (max-width: 420px) {
-        h1,
-        h3 {
-          line-height: 1.6rem;
-          font-size: 1.3rem;
-          svg {
-            display: none;
+      .image-gallery-thumbnail {
+        border-radius: 12px;
+        border: 3px solid transparent;
+        cursor: pointer;
+
+        :hover {
+          border: 3px solid rgba(${({ theme }) => theme.primary}, 0.9);
+        }
+        .image-gallery-thumbnail-image {
+          border-radius: 10px;
+          color: rgba(${({ theme }) => theme.accent}, 0.6);
+          :hover {
+            border: none;
+          }
+          :active {
+            border: none;
           }
         }
+      }
 
-        h3 {
-          font-size: 1rem;
-          line-height: 1.4rem;
+      .nav-left,
+      .nav-right,
+      .nav-fullscreen {
+        ${StyledCornerButton}
+        position: absolute;
+        right: 10px;
+        top: calc(50% - 25px);
+        z-index: 300;
+        backdrop-filter: blur(10px);
+        padding: 5px;
+        outline: none;
+
+        :hover {
+          background: rgba(${({ theme }) => theme.accent}, 0.6);
+        }
+        svg {
+          width: 25px;
+          height: 25px;
+          color: rgb(${({ theme }) => theme.neutral});
         }
       }
-    }
 
-    img {
-      width: 100%;
-      height: 100%;
-      max-width: 200px;
-      max-height: 300px;
-      object-fit: cover;
+      .nav-left {
+        left: 10px;
+      }
 
-      @media screen and (max-width: 650px) {
-        display: none;
+      .nav-fullscreen {
+        left: 12px;
+        top: calc(50% + 165px);
       }
     }
   }
@@ -365,6 +366,7 @@ export const HomeContainer = styled.div`
       }
     }
   }
+
   .stats-container {
     width: 100%;
     height: 100%;
