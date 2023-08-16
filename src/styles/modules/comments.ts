@@ -41,6 +41,11 @@ export const _comments = styled.div`
       justify-content: flex-start;
       gap: 20px;
 
+      .counter {
+        align-self: end;
+        font-size: 0.9rem;
+      }
+
       .current-comment,
       .sub-coment {
         display: flex;
@@ -59,6 +64,15 @@ export const _comments = styled.div`
           flex-flow: row nowrap;
           gap: 20px;
           width: 100%;
+
+          .text-area {
+            width: 100%;
+            .counter {
+              justify-self: end;
+              font-size: 0.9rem;
+              line-height: 1.6rem;
+            }
+          }
         }
 
         img,

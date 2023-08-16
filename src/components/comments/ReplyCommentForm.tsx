@@ -13,33 +13,39 @@ const ReplyCommentForm: FC<TCommentForm> = (props): JSX.Element => {
     <>
       <section className='sub-coment'>
         <div className='comment-swapper'>
-          <textarea
-            placeholder={
-              state.commentsList.length < 1
-                ? 'Seja o primeiro a adicionar um comentário...'
-                : 'Adicionar um novo comentário...'
-            }
-            name='current-commet'
-            value={state.comment.content}
-            rows={5}
-            onMouseDown={() => {
-              if (!state.auth.token) {
-                loginPromptController();
+          <div className='text-area'>
+            <textarea
+              placeholder={
+                state.commentsList.length < 1
+                  ? 'Seja o primeiro a adicionar um comentário...'
+                  : 'Adicionar um novo comentário...'
               }
-            }}
-            onChange={(e): void => {
-              dispatch({
-                type: actions.CREATE_COMMENT,
-                payload: {
-                  ...state,
-                  comment: {
-                    ...state.comment,
-                    content: e.target.value,
+              name='current-commet'
+              value={state.comment.content}
+              rows={5}
+              maxLength={512}
+              onMouseDown={() => {
+                if (!state.auth.token) {
+                  loginPromptController();
+                }
+              }}
+              onChange={(e): void => {
+                dispatch({
+                  type: actions.CREATE_COMMENT,
+                  payload: {
+                    ...state,
+                    comment: {
+                      ...state.comment,
+                      content: e.target.value,
+                    },
                   },
-                },
-              });
-            }}
-          />
+                });
+              }}
+            />
+            <span className='counter'>{`${
+              state.comment.content.length || 0
+            } / 512`}</span>
+          </div>
         </div>
 
         {!props.status.loading.status &&

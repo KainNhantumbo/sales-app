@@ -211,7 +211,7 @@ export const _storiesRender = styled.div`
           cursor: pointer;
           font-weight: 500;
           padding: 12px;
-          border-radius: 12px;
+          border-radius: 8px;
 
           :hover {
             color: rgb(${({ theme }) => theme.primary_variant});

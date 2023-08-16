@@ -163,6 +163,22 @@ export type TChat = Array<{
   receiver: string;
 }>;
 
+export interface IComment {
+  _id: string;
+  source_id: string;
+  created_by: {
+    _id: string;
+    first_name: string;
+    last_name: string;
+    profile_image: { id: string; url: string };
+  };
+  content: string;
+  parent_id: string;
+  favorites: string[];
+  updatedAt: string;
+  createdAt: string;
+}
+
 export type TMessage = {
   _id: string;
   chat_id: string;

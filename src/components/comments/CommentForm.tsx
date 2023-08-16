@@ -22,45 +22,52 @@ const CommentForm: FC<TMainCommentForm> = (props): JSX.Element => {
               />
             )}
             {!state.auth.profile_image && <BiUser />}
-            <textarea
-              placeholder={
-                state.commentsList.length < 1
-                  ? 'Seja o primeiro a adicionar um comentário...'
-                  : 'Adicionar um novo comentário...'
-              }
-              name='current-commet'
-              value={state.comment.content}
-              rows={5}
-              onMouseDown={() => {
-                if (!state.auth.token) {
-                  loginPromptController();
+
+            <div className='text-area'>
+              <textarea
+                placeholder={
+                  state.commentsList.length < 1
+                    ? 'Seja o primeiro a adicionar um comentário...'
+                    : 'Adicionar um novo comentário...'
                 }
-              }}
-              onTouchEnd={() => {
-                if (!state.auth.token) {
-                  loginPromptController();
-                }
-              }}
-              onChange={(e): void => {
-                dispatch({
-                  type: actions.CREATE_COMMENT,
-                  payload: {
-                    ...state,
-                    comment: {
-                      ...state.comment,
-                      content: e.target.value,
+                name='current-commet'
+                value={state.comment.content}
+                rows={5}
+                maxLength={512}
+                onMouseDown={() => {
+                  if (!state.auth.token) {
+                    loginPromptController();
+                  }
+                }}
+                onTouchEnd={() => {
+                  if (!state.auth.token) {
+                    loginPromptController();
+                  }
+                }}
+                onChange={(e): void => {
+                  dispatch({
+                    type: actions.CREATE_COMMENT,
+                    payload: {
+                      ...state,
+                      comment: {
+                        ...state.comment,
+                        content: e.target.value,
+                      },
                     },
-                  },
-                });
-              }}
-            />
+                  });
+                }}
+              />
+              <span className='counter'>{`${
+                state.comment.content.length || 0
+              } / 512`}</span>
+            </div>
           </div>
 
           {!props.status.loading.status &&
-            props.status.error.status &&
-            props.status.error.key === 'create-comment' && (
-              <span className='error-message'>{props.status.error.msg}</span>
-            )}
+          props.status.error.status &&
+          props.status.error.key === 'create-comment' ? (
+            <span className='error-message'>{props.status.error.msg}</span>
+          ) : null}
           {props.status.loading.status && !props.status.error.status && (
             <div className='loader'>
               <MoonLoader

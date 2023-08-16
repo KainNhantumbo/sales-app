@@ -697,8 +697,12 @@ const Product: NextPage<any> = ({ product, error_message }): JSX.Element => {
                     <p>
                       Localizada em{' '}
                       <span>{state.publicProduct.store.location.country}</span>{' '}
-                      - <span>{state.publicProduct.store.location.state}</span>,{' '}
-                      <span>{state.publicProduct.store.location.adress}</span>
+                      - <span>{state.publicProduct.store.location.state}</span>
+                      <span>
+                        {state.publicProduct.store.location.adress
+                          ? `, ${state.publicProduct.store.location.adress}`
+                          : '.'}
+                      </span>
                     </p>
                   </div>
                 </section>
