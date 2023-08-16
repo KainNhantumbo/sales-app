@@ -293,8 +293,8 @@ const AppContext: FC<TProps> = (props): JSX.Element => {
         type: actions.USER_AUTH,
         payload: { ...state, auth: { ...data } },
       });
-    } catch (err: any) {
-      console.error(err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message ?? error);
     }
   };
 
@@ -303,15 +303,15 @@ const AppContext: FC<TProps> = (props): JSX.Element => {
   ): Promise<AxiosResponse<T, any>> {
     fetch.interceptors.response.use(
       undefined,
-      (err: AxiosError): Promise<never> => {
-        const status = Number(err.response?.status);
+      (error: AxiosError): Promise<never> => {
+        const status = Number(error.response?.status);
         if (status > 400 && status < 404) {
-          validateAuth().catch((err) => {
-            console.error(err);
+          validateAuth().catch((error) => {
+            console.error(error?.response?.data?.message ?? error);
             router.push('/auth/sign-in');
           });
         }
-        return Promise.reject(err);
+        return Promise.reject(error);
       }
     );
     return await fetch<T>({
@@ -343,8 +343,8 @@ const AppContext: FC<TProps> = (props): JSX.Element => {
       });
       logoutPromptController();
       router.push('/auth/sign-in');
-    } catch (err: any) {
-      console.error(err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message ?? error);
     }
   };
 
@@ -362,8 +362,8 @@ const AppContext: FC<TProps> = (props): JSX.Element => {
           auth: { ...data },
         },
       });
-    } catch (err: any) {
-      console.error(err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message ?? error);
     }
   };
 

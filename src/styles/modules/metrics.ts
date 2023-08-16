@@ -3,9 +3,6 @@ import styled from 'styled-components';
 export const _metrics = styled.div`
   width: 100%;
   position: relative;
-  border-top: 3px solid rgba(${({ theme }) => theme.primary}, 0.5);
-  border-style: dashed;
-  padding: 20px;
 
   * {
     ::selection {
@@ -15,6 +12,7 @@ export const _metrics = styled.div`
   }
 
   h2 {
+    align-self: start;
     display: flex;
     flex-direction: row;
     gap: 8px;
@@ -22,8 +20,8 @@ export const _metrics = styled.div`
     line-height: 1.8rem;
     align-items: center;
     font-weight: 500;
-    padding: 0 20px;
-    color: rgb(${({ theme }) => theme.primary});
+    padding-top: 12px;
+    color: rgb(${({ theme }) => theme.font});
   }
 
   .metrics-container {
@@ -40,10 +38,10 @@ export const _metrics = styled.div`
       gap: 20px;
       border-style: dashed;
 
-      @media screen and (max-width: 500px){
-        width: 100%; 
+      @media screen and (max-width: 500px) {
+        width: 100%;
       }
-      
+
       h3 {
         display: flex;
         flex-direction: row;
@@ -53,7 +51,7 @@ export const _metrics = styled.div`
         font-weight: 500;
         color: rgb(${({ theme }) => theme.primary});
       }
-      
+
       .element {
         display: flex;
         flex-direction: row;

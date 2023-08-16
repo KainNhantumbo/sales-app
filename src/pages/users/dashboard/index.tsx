@@ -102,6 +102,12 @@ const Dashboard: NextPage = (): JSX.Element => {
               </div>
             </div>
           </section>
+
+          <section className='metrics-data'>
+            <div className='wrapper'>
+              <Metrics key={'user-metrics'} />
+            </div>
+          </section>
         </article>
 
         <section className='app-meta'>

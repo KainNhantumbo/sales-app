@@ -220,6 +220,23 @@ export const _dashboard = styled.div`
     }
   }
 
+  .metrics-data {
+    width: 100%;
+    padding-bottom: 20px;
+    user-select: none;
+
+    .wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 20px;
+      border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+    }
+  }
+
   .app-meta {
     align-self: flex-end;
     display: flex;
