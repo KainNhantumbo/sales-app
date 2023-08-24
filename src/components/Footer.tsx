@@ -12,7 +12,7 @@ import {
 } from 'react-icons/io5';
 import { FC } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import { complements, urls } from '@/data/app-data';
 import { useAppContext } from '@/context/AppContext';
 import { useThemeContext } from '@/context/ThemeContext';
@@ -22,6 +22,7 @@ const Footer: FC = (): JSX.Element => {
   const { state } = useAppContext();
   const { setDarkMode, darkmode, setLightMode, matchMediaTheme } =
     useThemeContext();
+    
   return (
     <Container>
       <section className='featured-container'>

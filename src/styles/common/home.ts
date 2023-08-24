@@ -17,102 +17,6 @@ export const _home = styled.div`
     }
   }
 
-  .banner-container {
-    width: fit-content;
-    width: 100%;
-
-    @media screen and (max-width: 990px) {
-      max-width: 480px;
-    }
-
-    @media screen and (max-width: 990px) {
-      width: fit-content;
-    }
-
-    @media screen and (max-width: 445px) {
-      padding: 0;
-    }
-
-    .no-image-icon {
-      width: 100%;
-      max-width: 380px;
-      height: 420px;
-      padding: 20px;
-      border-radius: 20px;
-      background: rgba(${({ theme }) => theme.primary}, 0.1);
-    }
-
-    .navigator {
-      position: relative;
-
-      @media screen and (max-width: 445px) {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-      }
-
-      .image-gallery-image {
-        border-radius: 12px;
-        border: 3px solid transparent;
-        :hover {
-          border: 3px solid rgba(${({ theme }) => theme.primary}, 0.9);
-          transition: all 500ms ease;
-        }
-      }
-
-      .image-gallery-thumbnail {
-        border-radius: 12px;
-        border: 3px solid transparent;
-        cursor: pointer;
-
-        :hover {
-          border: 3px solid rgba(${({ theme }) => theme.primary}, 0.9);
-        }
-        .image-gallery-thumbnail-image {
-          border-radius: 10px;
-          color: rgba(${({ theme }) => theme.accent}, 0.6);
-          :hover {
-            border: none;
-          }
-          :active {
-            border: none;
-          }
-        }
-      }
-
-      .nav-left,
-      .nav-right,
-      .nav-fullscreen {
-        ${StyledCornerButton}
-        position: absolute;
-        right: 10px;
-        top: calc(50% - 25px);
-        z-index: 300;
-        backdrop-filter: blur(10px);
-        padding: 5px;
-        outline: none;
-
-        :hover {
-          background: rgba(${({ theme }) => theme.accent}, 0.6);
-        }
-        svg {
-          width: 25px;
-          height: 25px;
-          color: rgb(${({ theme }) => theme.neutral});
-        }
-      }
-
-      .nav-left {
-        left: 10px;
-      }
-
-      .nav-fullscreen {
-        left: 12px;
-        top: calc(50% + 165px);
-      }
-    }
-  }
-
   .content-wrapper {
     width: 100%;
     max-width: 1440px;
@@ -122,6 +26,7 @@ export const _home = styled.div`
     gap: 30px;
     padding: 0 10px;
     padding-bottom: 50px;
+    padding-top: 100px;
     margin: 0 auto;
 
     .openFluentFilters {
@@ -186,6 +91,68 @@ export const _home = styled.div`
         p {
           text-align: center;
           line-height: 1.2rem;
+        }
+      }
+    }
+
+    .banner-container {
+      width: 100%;
+      max-width: 100%;
+
+      @media screen and (max-width: 990px) {
+        max-width: 480px;
+      }
+
+      @media screen and (max-width: 990px) {
+        width: fit-content;
+      }
+
+      @media screen and (max-width: 445px) {
+        padding: 0;
+      }
+
+      .navigator {
+        position: relative;
+
+        @media screen and (max-width: 445px) {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+
+        .image-gallery-image {
+          border-radius: 12px;
+          border: 3px solid transparent;
+          object-fit: cover;
+          :hover {
+            border: 3px solid rgba(${({ theme }) => theme.primary}, 0.9);
+            transition: all 500ms ease;
+          }
+        }
+
+        .nav-left,
+        .nav-right {
+          ${StyledCornerButton}
+          position: absolute;
+          right: 10px;
+          top: calc(50% - 25px);
+          z-index: 300;
+          backdrop-filter: blur(10px);
+          padding: 5px;
+          outline: none;
+
+          :hover {
+            background: rgba(${({ theme }) => theme.accent}, 0.6);
+          }
+          svg {
+            width: 25px;
+            height: 25px;
+            color: rgb(${({ theme }) => theme.neutral});
+          }
+        }
+
+        .nav-left {
+          left: 10px;
         }
       }
     }

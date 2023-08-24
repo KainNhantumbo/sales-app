@@ -62,6 +62,7 @@ export const _post = styled.div`
     @media screen and (max-width: 620px) {
       padding: 30px 20px;
     }
+      
 
     .article-header-container {
       display: flex;

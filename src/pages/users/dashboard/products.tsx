@@ -125,9 +125,7 @@ const Products: NextPage = (): JSX.Element => {
     return (): void =>
       dispatch({
         type: actions.CLEAN_UP_MODALS,
-        payload: {
-          ...state,
-        },
+        payload: { ...state },
       });
   }, []);
 

@@ -61,6 +61,8 @@ const UpdatePassword: NextPage = (): JSX.Element => {
     <Layout
       metadata={{
         title: `${complements.defaultTitle} | Atualização de Senha`,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       }}>
       <Container>
         <main>
@@ -132,12 +134,12 @@ const UpdatePassword: NextPage = (): JSX.Element => {
             </div>
           </article>
         </main>
-        <footer>
+        <section className='base-container'>
           &copy; {complements.defaultTitle} |{' '}
           <Link href={'/legal/privacy-policy'}>
             <span>Política de Privacidade</span>
           </Link>
-        </footer>
+        </section>
       </Container>
     </Layout>
   );

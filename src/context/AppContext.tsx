@@ -304,7 +304,7 @@ const AppContext: FC<TProps> = (props): JSX.Element => {
     fetch.interceptors.response.use(
       undefined,
       (error: AxiosError): Promise<never> => {
-        const status = Number(error.response?.status);
+        const status = Number(error?.response?.status);
         if (status > 400 && status < 404) {
           validateAuth().catch((error) => {
             console.error(error?.response?.data?.message ?? error);

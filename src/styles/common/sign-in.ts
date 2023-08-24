@@ -158,7 +158,7 @@ export const _signIn = styled.div`
     }
   }
 
-  footer {
+  .base-container {
     justify-self: flex-end;
     margin: 0 auto;
     font-size: 0.92rem;

@@ -6,12 +6,10 @@ import {
   IoCartOutline,
   IoChevronBack,
   IoChevronForward,
-  IoContract,
   IoEllipsisHorizontal,
   IoHeart,
   IoHeartOutline,
   IoReload,
-  IoScan,
   IoSearch,
 } from 'react-icons/io5';
 import Link from 'next/link';
@@ -34,6 +32,7 @@ import { NextPage } from 'next';
 import ReactImageGallery from 'react-image-gallery';
 import { _home as Container } from '@/styles/common/home';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
+import Slider from 'rc-slider'
 
 interface IProps {
   ads_data: TBannerAds[];
@@ -183,43 +182,6 @@ const Home: NextPage<IProps> = ({ ads_data }): JSX.Element => {
       <RequestLogin />
 
       <Container>
-        {state.banner_ads.length > 0 ? (
-          <section className='banner-container'>
-            <ReactImageGallery
-              lazyLoad={true}
-              useBrowserFullscreen={true}
-              additionalClass='navigator'
-              autoPlay={false}
-              showPlayButton={false}
-              showThumbnails={false}
-              items={state.banner_ads.map((asset) => ({
-                original: asset.image.url,
-              }))}
-              renderRightNav={(onClick, disabled) => (
-                <button
-                  className='nav-right'
-                  onClick={onClick}
-                  disabled={disabled}>
-                  <IoChevronForward />
-                </button>
-              )}
-              renderLeftNav={(onClick, disabled) => (
-                <button
-                  className='nav-left'
-                  onClick={onClick}
-                  disabled={disabled}>
-                  <IoChevronBack />
-                </button>
-              )}
-              renderFullscreenButton={(onClick, isFullScreen) => (
-                <button className='nav-fullscreen' onClick={onClick}>
-                  {isFullScreen ? <IoContract /> : <IoScan />}
-                </button>
-              )}
-            />
-          </section>
-        ) : null}
-
         <div className='content-wrapper'>
           <motion.button
             whileTap={{ scale: 0.8 }}
@@ -237,9 +199,55 @@ const Home: NextPage<IProps> = ({ ads_data }): JSX.Element => {
             <IoSearch />
             <span>Pesquisar e filtrar produtos</span>
           </motion.button>
+
           <SearchEngine />
+
           <article>
-            {state.publicProducts.length < 1 && !isLoading && !isError && (
+            {/* {state.banner_ads.length > 0 ? (
+              <section className='banner-container'>
+                <ReactImageGallery
+                  lazyLoad={true}
+                  useBrowserFullscreen={true}
+                  additionalClass='navigator'
+                  autoPlay={true}
+                  showPlayButton={false}
+                  showThumbnails={false}
+                  showFullscreenButton={false}
+                  items={state.banner_ads.map((asset) => ({
+                    original: asset.image.url,
+                    originalWidth: 1080,
+                    originalHeight: 300,
+
+                    originalAlt: `Imagem de ${asset.name}`,
+                  }))}
+                  renderRightNav={(onClick, disabled) => (
+                    <button
+                      className='nav-right'
+                      onClick={onClick}
+                      disabled={disabled}>
+                      <IoChevronForward />
+                    </button>
+                  )}
+                  renderLeftNav={(onClick, disabled) => (
+                    <button
+                      className='nav-left'
+                      onClick={onClick}
+                      disabled={disabled}>
+                      <IoChevronBack />
+                    </button>
+                  )}
+                />
+              </section>
+            ) : null} */}
+
+            {state.banner_ads.length > 0 ? (
+              <>
+              
+              <Slider />
+              </>
+            ): null}
+
+            {state.publicProducts.length < 1 && !isLoading && !isError ? (
               <div className='empty-data_container'>
                 <section className='content'>
                   <div className='icon'>
@@ -255,136 +263,139 @@ const Home: NextPage<IProps> = ({ ads_data }): JSX.Element => {
                   </div>
                 </section>
               </div>
-            )}
+            ) : null}
 
             <section className='products-container'>
-              {state.publicProducts.length > 0 &&
-                state.publicProducts.map((item, index) => (
-                  <motion.div
-                    key={item._id}
-                    whileTap={{ scale: 0.98 }}
-                    className='product-container'
-                    whileHover={{
-                      translateY: -8,
-                      boxShadow: `0px 12px 25px 10px rgba(${theme.accent}, 0.09)`,
-                    }}
-                    ref={
-                      state.publicProducts.length === index + 1
-                        ? ref
-                        : undefined
-                    }>
-                    <div className='product-image'>
-                      {item.promotion.status && (
-                        <span className='promotion'>
-                          Promoção {item.promotion.percentage}%{' '}
-                        </span>
-                      )}
-                      <button
-                        title='Adicionar a lista de favoritos'
-                        aria-label='Adicionar a lista de favoritos'
-                        className='favorite-button'
-                        onClick={() => {
-                          if (!state.auth.token) return loginPromptController();
-                          else if (item.favorites.includes(state.auth?.id))
-                            return handleUnFavoriteProduct(item._id);
-                          return handleFavoriteProduct(item._id);
-                        }}>
-                        {item.favorites.includes(state.auth.id) ? (
-                          <IoHeart />
-                        ) : (
-                          <IoHeartOutline />
+              {state.publicProducts.length > 0
+                ? state.publicProducts.map((item, index) => (
+                    <motion.div
+                      key={item._id}
+                      whileTap={{ scale: 0.98 }}
+                      className='product-container'
+                      whileHover={{
+                        translateY: -8,
+                        boxShadow: `0px 12px 25px 10px rgba(${theme.accent}, 0.09)`,
+                      }}
+                      ref={
+                        state.publicProducts.length === index + 1
+                          ? ref
+                          : undefined
+                      }>
+                      <div className='product-image'>
+                        {item.promotion.status && (
+                          <span className='promotion'>
+                            Promoção {item.promotion.percentage}%{' '}
+                          </span>
                         )}
-                      </button>
-                      <button
-                        title='Adicionar ao carrinho'
-                        aria-label='Adicionar ao carrinho'
-                        className='cart-button'
-                        onClick={() => {
-                          state.cart.some(
+                        <button
+                          title='Adicionar a lista de favoritos'
+                          aria-label='Adicionar a lista de favoritos'
+                          className='favorite-button'
+                          onClick={() => {
+                            if (!state.auth.token)
+                              return loginPromptController();
+                            else if (item.favorites.includes(state.auth?.id))
+                              return handleUnFavoriteProduct(item._id);
+                            return handleFavoriteProduct(item._id);
+                          }}>
+                          {item.favorites.includes(state.auth.id) ? (
+                            <IoHeart />
+                          ) : (
+                            <IoHeartOutline />
+                          )}
+                        </button>
+                        <button
+                          title='Adicionar ao carrinho'
+                          aria-label='Adicionar ao carrinho'
+                          className='cart-button'
+                          onClick={() => {
+                            state.cart.some(
+                              (product) => product.productId === item._id
+                            )
+                              ? removeProductFromCart(item._id)
+                              : addProductToCart({
+                                  productId: item._id,
+                                  productName: item.name,
+                                  price: item.promotion.status
+                                    ? item.price -
+                                      (item.price * item.promotion.percentage) /
+                                        100
+                                    : item.price,
+                                  quantity: 1,
+                                  previewImage: item.image,
+                                });
+                          }}>
+                          {state.cart.some(
                             (product) => product.productId === item._id
-                          )
-                            ? removeProductFromCart(item._id)
-                            : addProductToCart({
-                                productId: item._id,
-                                productName: item.name,
-                                price: item.promotion.status
-                                  ? item.price -
+                          ) ? (
+                            <IoCart />
+                          ) : (
+                            <IoCartOutline />
+                          )}
+                        </button>
+                        {item.image && (
+                          <Link href={`/ecommerce/products/${item._id}`}>
+                            <Image
+                              src={item.image.url}
+                              width={250}
+                              height={250}
+                              blurDataURL={blurDataUrlImage}
+                              placeholder='blur'
+                              alt={`Imagem de ${item.name}`}
+                            />
+                          </Link>
+                        )}
+                        {!item.image && (
+                          <Link href={`/ecommerce/products/${item._id}`}>
+                            <IoBagHandle className='no-image-icon' />
+                          </Link>
+                        )}
+                      </div>
+                      <Link
+                        href={`/ecommerce/products/${item._id}`}
+                        className='product-details'>
+                        <button className='buy-mobile-button'>
+                          <IoBagCheck />
+                          <span>Comprar agora</span>
+                        </button>
+                        {item.promotion.status ? (
+                          <div className='item promo-price'>
+                            <h4>
+                              <span className='old-price'>
+                                {formatCurrency(item.price)}
+                              </span>{' '}
+                              <span className='actual-price'>
+                                {formatCurrency(
+                                  item.price -
                                     (item.price * item.promotion.percentage) /
                                       100
-                                  : item.price,
-                                quantity: 1,
-                                previewImage: item.image,
-                              });
-                        }}>
-                        {state.cart.some(
-                          (product) => product.productId === item._id
-                        ) ? (
-                          <IoCart />
+                                )}
+                              </span>
+                            </h4>
+                          </div>
                         ) : (
-                          <IoCartOutline />
-                        )}
-                      </button>
-                      {item.image && (
-                        <Link href={`/ecommerce/products/${item._id}`}>
-                          <Image
-                            src={item.image.url}
-                            width={250}
-                            height={250}
-                            blurDataURL={blurDataUrlImage}
-                            placeholder='blur'
-                            alt={`Imagem de ${item.name}`}
-                          />
-                        </Link>
-                      )}
-                      {!item.image && (
-                        <Link href={`/ecommerce/products/${item._id}`}>
-                          <IoBagHandle className='no-image-icon' />
-                        </Link>
-                      )}
-                    </div>
-                    <Link
-                      href={`/ecommerce/products/${item._id}`}
-                      className='product-details'>
-                      <button className='buy-mobile-button'>
-                        <IoBagCheck />
-                        <span>Comprar agora</span>
-                      </button>
-                      {item.promotion.status ? (
-                        <div className='item promo-price'>
-                          <h4>
-                            <span className='old-price'>
-                              {formatCurrency(item.price)}
-                            </span>{' '}
+                          <div className='item promo-price'>
                             <span className='actual-price'>
-                              {formatCurrency(
-                                item.price -
-                                  (item.price * item.promotion.percentage) / 100
-                              )}
+                              {formatCurrency(item.price)}
                             </span>
-                          </h4>
-                        </div>
-                      ) : (
-                        <div className='item promo-price'>
-                          <span className='actual-price'>
-                            {formatCurrency(item.price)}
-                          </span>
-                        </div>
-                      )}
+                          </div>
+                        )}
 
-                      <h3>
-                        <span>
-                          {item.name.length > 40
-                            ? item.name.slice(0, 40) + '...'
-                            : item.name}{' '}
-                        </span>
-                      </h3>
-                    </Link>
-                  </motion.div>
-                ))}
+                        <h3>
+                          <span>
+                            {item.name.length > 40
+                              ? item.name.slice(0, 40) + '...'
+                              : item.name}{' '}
+                          </span>
+                        </h3>
+                      </Link>
+                    </motion.div>
+                  ))
+                : null}
             </section>
 
             <div className='stats-container'>
-              {isError && !isLoading && (
+              {isError && !isLoading ? (
                 <div className=' fetch-error-message '>
                   <h3>Erro ao carregar produtos</h3>
                   <button onClick={() => fetchNextPage()}>
@@ -392,9 +403,9 @@ const Home: NextPage<IProps> = ({ ads_data }): JSX.Element => {
                     <span>Tentar novamente</span>
                   </button>
                 </div>
-              )}
+              ) : null}
 
-              {isLoading && !isError && (
+              {isLoading && !isError ? (
                 <div className='loading'>
                   <PulseLoader
                     size={20}
@@ -405,13 +416,13 @@ const Home: NextPage<IProps> = ({ ads_data }): JSX.Element => {
                     }}
                   />
                 </div>
-              )}
+              ) : null}
 
               {!hasNextPage &&
                 !isLoading &&
                 !isError &&
                 state.publicProducts.length > 0 && (
-                  <p>Sem mais produtos para mostrar</p>
+                  <p>Sem mais produtos para mostrar.</p>
                 )}
             </div>
 

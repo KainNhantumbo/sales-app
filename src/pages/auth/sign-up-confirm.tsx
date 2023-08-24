@@ -10,6 +10,8 @@ const SignUpConfirmation: NextPage = (): JSX.Element => (
   <Layout
     metadata={{
       title: `${complements.defaultTitle} | Confirmação de Nova Conta`,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     }}>
     <Container>
       <main>

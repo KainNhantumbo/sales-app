@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { IoCheckmark } from 'react-icons/io5';
 import { complements } from '@/data/app-data';
 import { useState, useEffect, FC } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m as motion } from 'framer-motion';
 import { _cookies as Container } from '../styles/modules/cookies-popup';
 
 const CookiesPopup: FC = (): JSX.Element => {

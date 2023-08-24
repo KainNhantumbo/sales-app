@@ -13,7 +13,7 @@ import { BiUser } from 'react-icons/bi';
 import { useState, useEffect, FC } from 'react';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m as motion, AnimatePresence } from 'framer-motion';
 import rubymart_logo from '../../public/rubymart_logo.png';
 import { _header as Container } from '../styles/modules/header';
 

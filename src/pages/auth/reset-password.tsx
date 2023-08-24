@@ -7,16 +7,16 @@ import { SubmitEvent } from '../../../@types';
 import { IoMailOutline } from 'react-icons/io5';
 import { complements } from '@/data/app-data';
 import { PulseLoader } from 'react-spinners';
-import { useTheme } from 'styled-components';
+import { DefaultTheme, useTheme } from 'styled-components';
 import { NextRouter, useRouter } from 'next/router';
 import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
 
 const ResetPassword: NextPage = (): JSX.Element => {
+  const theme: DefaultTheme = useTheme();
+  const router: NextRouter = useRouter();
+  const [email, setEmail] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });
-  const [email, setEmail] = useState<string>('');
-  const theme = useTheme();
-  const router: NextRouter = useRouter();
 
   const handleSubmit = async (e: SubmitEvent): Promise<void> => {
     e.preventDefault();
@@ -48,6 +48,8 @@ const ResetPassword: NextPage = (): JSX.Element => {
     <Layout
       metadata={{
         title: `${complements.defaultTitle} | Atualização de Senha`,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       }}>
       <Container>
         <main>
@@ -112,12 +114,12 @@ const ResetPassword: NextPage = (): JSX.Element => {
             </div>
           </article>
         </main>
-        <footer>
+        <section className='base-container'>
           &copy; {complements.defaultTitle} |{' '}
           <Link href={'/legal/privacy-policy'}>
             <span>Política de Privacidade</span>
           </Link>
-        </footer>
+        </section>
       </Container>
     </Layout>
   );

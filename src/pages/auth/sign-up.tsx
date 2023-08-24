@@ -86,6 +86,8 @@ const SignUp: NextPage = (): JSX.Element => {
     <Layout
       metadata={{
         title: `${complements.defaultTitle} | Nova Conta de Usuário`,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       }}>
       <Container>
         <Image
@@ -223,12 +225,12 @@ const SignUp: NextPage = (): JSX.Element => {
             </div>
           </article>
         </main>
-        <footer>
+        <section className='base-container'>
           &copy; {complements.defaultTitle} |{' '}
           <Link href={'/legal/privacy-policy'}>
             <span>Política de Privacidade</span>
           </Link>
-        </footer>
+        </section>
       </Container>
     </Layout>
   );
