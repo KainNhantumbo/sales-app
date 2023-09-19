@@ -104,7 +104,7 @@ const ProductEditor: NextPage = (): JSX.Element => {
   }, [productData]);
 
   const handleFiles = (index: string, value: FileList | null): void => {
-    const file: File | null | undefined = value?.item(0);
+    const file = value?.item(0);
     if (file) {
       new Compressor(file, {
         quality: 0.8,
@@ -118,10 +118,7 @@ const ProductEditor: NextPage = (): JSX.Element => {
             const encodedImage: string = e.target?.result as string;
             setImagesData((obj) => ({
               ...obj,
-              [`img_${index}`]: {
-                id: state.user.cover_image?.id || '',
-                data: encodedImage,
-              },
+              [`img_${index}`]: { id: '', data: encodedImage },
             }));
           };
         },

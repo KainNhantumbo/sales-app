@@ -32,7 +32,8 @@ import { NextPage } from 'next';
 import ReactImageGallery from 'react-image-gallery';
 import { _home as Container } from '@/styles/common/home';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
-import Slider from 'rc-slider'
+import 'react-image-gallery/styles/css/image-gallery.css';
+import Slider from 'rc-slider';
 
 interface IProps {
   ads_data: TBannerAds[];
@@ -203,7 +204,7 @@ const Home: NextPage<IProps> = ({ ads_data }): JSX.Element => {
           <SearchEngine />
 
           <article>
-            {/* {state.banner_ads.length > 0 ? (
+            {state.banner_ads.length > 0 ? (
               <section className='banner-container'>
                 <ReactImageGallery
                   lazyLoad={true}
@@ -238,14 +239,13 @@ const Home: NextPage<IProps> = ({ ads_data }): JSX.Element => {
                   )}
                 />
               </section>
-            ) : null} */}
+            ) : null}
 
             {state.banner_ads.length > 0 ? (
               <>
-              
-              <Slider />
+                <Slider />
               </>
-            ): null}
+            ) : null}
 
             {state.publicProducts.length < 1 && !isLoading && !isError ? (
               <div className='empty-data_container'>

@@ -19,7 +19,7 @@ const SignIn: NextPage = (): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });
 
-  const handleChange = ({ e }: { e: InputEvents }): void => {
+  const handleChange = (e: InputEvents): void => {
     dispatch({
       type: actions.SIGNIN_DATA,
       payload: {
@@ -35,11 +35,10 @@ const SignIn: NextPage = (): JSX.Element => {
   const handleSubmit = async (e: SubmitEvent): Promise<void> => {
     e.preventDefault();
     if (state.signInData.password.length < 8) {
-      setError({
+      return setError({
         status: true,
         message: 'A senha deve conter pelo menos 8 carácteres',
       });
-      return;
     }
     try {
       setLoading(true);
@@ -47,19 +46,18 @@ const SignIn: NextPage = (): JSX.Element => {
         method: 'post',
         url: '/api/v1/auth/default/login',
         data: state.signInData,
-        withCredentials: true,
       });
       dispatch({
         type: actions.USER_AUTH,
-        payload: {
-          ...state,
-          auth: { ...data },
-        },
+        payload: { ...state, auth: { ...data } },
       });
       router.push(`/users/dashboard`);
     } catch (error: any) {
-      console.error(error);
-      setError({ status: true, message: error?.response?.data?.message });
+      console.error(error?.response?.data?.message ?? error);
+      setError({
+        status: true,
+        message: error?.response?.data?.message ?? error?.code,
+      });
     } finally {
       setLoading(false);
     }
@@ -108,7 +106,7 @@ const SignIn: NextPage = (): JSX.Element => {
                     placeholder='Escreva o seu e-mail'
                     aria-label='Escreva o seu e-mail'
                     required
-                    onChange={(e): void => handleChange({ e })}
+                    onChange={(e): void => handleChange(e)}
                   />
                 </section>
 
@@ -124,7 +122,7 @@ const SignIn: NextPage = (): JSX.Element => {
                     aria-hidden='true'
                     placeholder='Escreva a sua senha'
                     aria-label='Escreva a sua senha'
-                    onChange={(e): void => handleChange({ e })}
+                    onChange={(e): void => handleChange(e)}
                   />
                 </section>
                 <div className='password-reset'>

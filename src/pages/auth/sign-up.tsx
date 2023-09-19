@@ -68,8 +68,11 @@ const SignUp: NextPage = (): JSX.Element => {
       });
       router.push('/auth/sign-up-confirm');
     } catch (error: any) {
-      console.error(error);
-      setError({ status: true, message: error?.response?.data?.message });
+      console.error(error?.response?.data?.message ?? error);
+      setError({
+        status: true,
+        message: error?.response?.data?.message ?? error?.code,
+      });
     } finally {
       setLoading(false);
     }

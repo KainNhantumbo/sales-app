@@ -43,8 +43,11 @@ const UpdatePassword: NextPage = (): JSX.Element => {
         withCredentials: true,
       });
     } catch (error: any) {
-      console.error(error);
-      setError({ status: true, message: error?.response?.data?.message });
+      console.error(error?.response?.data?.message ?? error);
+      setError({
+        status: true,
+        message: error?.response?.data?.message ?? error?.code,
+      });
     } finally {
       setLoading(false);
     }
