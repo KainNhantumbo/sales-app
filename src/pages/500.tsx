@@ -2,7 +2,7 @@ import { complements } from '@/shared/data';
 import { useRouter } from 'next/router';
 import { errorPage as Container } from '../styles/common/error-page';
 
-export default function InternalServerError(): JSX.Element {
+export default function InternalServerError() {
   const router = useRouter();
   return (
     <Container>

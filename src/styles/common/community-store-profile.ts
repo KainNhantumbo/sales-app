@@ -13,7 +13,7 @@ export const _store = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.2);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -94,7 +94,7 @@ export const _store = styled.div`
         gap: 5px;
         border-radius: 8px;
         background: rgb(${({ theme }) => theme.foreground});
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
         font-size: 1.1rem;
         line-height: 1.6rem;
         font-weight: 500;
@@ -108,7 +108,7 @@ export const _store = styled.div`
           height: 22px;
         }
 
-        .alert {
+        .error {
           color: rgb(${({ theme }) => theme.secondary});
         }
       }
@@ -174,7 +174,7 @@ export const _store = styled.div`
           text-align: center;
 
           i {
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
           }
         }
 
@@ -209,13 +209,13 @@ export const _store = styled.div`
           gap: 8px;
           align-items: center;
           justify-content: center;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
           cursor: pointer;
           font-weight: 500;
           padding: 12px;
 
           :hover {
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
             background: rgba(${({ theme }) => theme.primary}, 0.2);
             transition: all 200ms ease-in-out;
           }
@@ -309,7 +309,7 @@ export const _store = styled.div`
             top: 8px;
             left: 8px;
             border-radius: 12px;
-            background: rgba(${({ theme }) => theme.neutral}, 0.9);
+            background: rgba(${({ theme }) => theme.white}, 0.9);
             border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
             padding: 3px 8px;
             color: rgb(${({ theme }) => theme.secondary});
@@ -321,7 +321,7 @@ export const _store = styled.div`
             position: absolute;
             bottom: 8px;
             right: 8px;
-            background: rgba(${({ theme }) => theme.neutral}, 0.9);
+            background: rgba(${({ theme }) => theme.white}, 0.9);
             border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
 
             svg {
@@ -402,7 +402,7 @@ export const _store = styled.div`
 
             .actual-price {
               font-weight: 500;
-              color: rgb(${({ theme }) => theme.primary_variant});
+              color: rgb(${({ theme }) => theme.primary_shade});
             }
           }
 
@@ -416,7 +416,7 @@ export const _store = styled.div`
             .old-price {
               font-weight: 500;
               text-decoration: line-through;
-              color: rgb(${({ theme }) => theme.alert});
+              color: rgb(${({ theme }) => theme.error});
             }
           }
         }
@@ -443,7 +443,7 @@ export const _store = styled.div`
         svg {
           width: 70px;
           height: 70px;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
 
         h3 {
@@ -525,7 +525,7 @@ export const _store = styled.div`
 
       .email {
         font-weight: 500;
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
       }
 
       .network-buttons {
@@ -543,7 +543,7 @@ export const _store = styled.div`
           border-radius: 10px;
 
           :hover {
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
           }
         }
       }
@@ -556,7 +556,7 @@ export const _store = styled.div`
           color: rgb(${({ theme }) => theme.font});
           :hover {
             box-shadow: none;
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
           }
         }
       }

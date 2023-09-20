@@ -31,7 +31,7 @@ export const _capturer = styled.section`
     background: rgb(${({ theme }) => theme.foreground});
     max-width: 500px;
     margin: 25px;
-    box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);
+    box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.1);
 
     .prompt-info {
       display: flex;
@@ -46,7 +46,7 @@ export const _capturer = styled.section`
         gap: 10px;
         span {
           font-weight: 500;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
         p {
           line-height: 1.6rem;

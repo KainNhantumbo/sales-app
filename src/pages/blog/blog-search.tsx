@@ -9,7 +9,7 @@ import {
 import Link from 'next/link';
 import { NextPage } from 'next';
 import { useEffect } from 'react';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { IBlogPosts } from '../../types';
 import { formatDate } from '@/lib/utils';
 import Layout from '@/components/Layout';
@@ -26,7 +26,7 @@ import { _blogSeach as Container } from '@/styles/common/blog-search';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-const BlogSearch: NextPage = (): JSX.Element => {
+const BlogSearch: NextPage = () => {
   const LIMIT: number = 8;
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
@@ -214,7 +214,7 @@ const BlogSearch: NextPage = (): JSX.Element => {
                     <div className='loading'>
                       <PulseLoader
                         size={20}
-                        color={`rgb(${theme.primary_variant})`}
+                        color={`rgb(${theme.primary_shade})`}
                         aria-placeholder='Processando...'
                         cssOverride={{
                           display: 'block',

@@ -36,7 +36,7 @@ interface IProps {
   updateFn: (id: string) => void;
 }
 
-const WorkCapturer: FC<IProps> = (props): JSX.Element => {
+const WorkCapturer: FC<IProps> = (props) => {
   const { state, userWorkingDataController } = useAppContext();
 
   return (

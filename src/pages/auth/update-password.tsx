@@ -10,7 +10,7 @@ import { InputEvents, SubmitEvent } from '../../types';
 import { IoLockClosedOutline, IoLockOpenOutline } from 'react-icons/io5';
 import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
 
-const UpdatePassword: NextPage = (): JSX.Element => {
+const UpdatePassword: NextPage = () => {
   const theme: DefaultTheme = useTheme();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });

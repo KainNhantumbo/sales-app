@@ -18,8 +18,8 @@ export const _resetPassword = styled.div`
 
   * {
     ::selection {
-      background: rgb(${({ theme }) => theme.background_variant});
-      color: rgb(${({ theme }) => theme.primary_variant});
+      background: rgb(${({ theme }) => theme.background_shade});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -79,7 +79,7 @@ export const _resetPassword = styled.div`
         }
 
         .error-message {
-          color: rgb(${({ theme }) => theme.alert});
+          color: rgb(${({ theme }) => theme.error});
           font-weight: 500;
           font-size: 0.96rem;
           max-width: 320px;
@@ -95,14 +95,14 @@ export const _resetPassword = styled.div`
 
       .password-reset {
         a {
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
           font-size: 0.9rem;
           font-weight: 500;
           line-height: 1.2rem;
           cursor: pointer;
 
           :hover {
-            color: rgb(${({ theme }) => theme.accent});
+            color: rgb(${({ theme }) => theme.black});
             transition: all 200ms ease;
           }
         }
@@ -133,10 +133,10 @@ export const _resetPassword = styled.div`
         line-height: 1.4rem;
 
         a {
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
           cursor: pointer;
           :hover {
-            color: rgb(${({ theme }) => theme.accent});
+            color: rgb(${({ theme }) => theme.black});
           }
 
           span {

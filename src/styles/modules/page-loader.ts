@@ -21,7 +21,7 @@ export const _pageLoader = styled.section`
     right: calc(20px);
     user-select: none;
     background: rgba(${({ theme }) => theme.foreground}, 0.8);
-    box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);
+    box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.1);
     z-index: 10;
 
     ::before {

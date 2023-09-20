@@ -38,7 +38,7 @@ export const _metrics = styled.div`
       align-items: center;
       gap: 20px;
       margin: 20px 0;
-      color: rgb(${({ theme }) => theme.alert});
+      color: rgb(${({ theme }) => theme.error});
       font-weight: 500;
       font-size: 1.1rem;
       line-height: 1.4rem;

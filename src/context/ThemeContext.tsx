@@ -35,7 +35,7 @@ const context = createContext<IContext>({
   darkmode: false,
 });
 
-const ThemeContext: FC<IProps> = ({ children }): JSX.Element => {
+const ThemeContext: FC<IProps> = ({ children }) => {
   const [themeSettings, setThemeSettings] = useState<ITheme>({
     darkMode: false,
   });

@@ -64,7 +64,7 @@ export const _toolbar = styled.section`
       padding-left: 20px;
       @media screen and (max-width: 350px) {
         padding: 0;
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
       }
     }
 
@@ -73,7 +73,7 @@ export const _toolbar = styled.section`
       height: 18px;
       left: 0;
       top: calc(50% - 9px);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
 
       @media screen and (max-width: 350px) {
         top: calc(50% - 9px);

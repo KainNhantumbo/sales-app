@@ -21,7 +21,7 @@ export const _legal = styled.div`
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: rgb(${({ theme }) => theme.background_variant});
+      background: rgb(${({ theme }) => theme.background_shade});
 
       h1 {
         text-align: center;
@@ -47,7 +47,7 @@ export const _legal = styled.div`
         padding: 12px;
         width: 60px;
         height: 60px;
-        background: rgb(${({ theme }) => theme.background_variant});
+        background: rgb(${({ theme }) => theme.background_shade});
         border-radius: 12px;
       }
     }
@@ -119,7 +119,7 @@ export const _legal = styled.div`
     }
 
     strong {
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
 
     a {
@@ -134,7 +134,7 @@ export const _legal = styled.div`
       font-style: italic;
       padding: 10px;
       border-radius: 12px;
-      background: rgb(${({ theme }) => theme.background_variant});
+      background: rgb(${({ theme }) => theme.background_shade});
     }
 
     .attribution {

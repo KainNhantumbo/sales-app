@@ -23,7 +23,7 @@ import Image from 'next/image';
 import { NextPage } from 'next';
 import Compressor from 'compressorjs';
 import Layout from '@/components/Layout';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
 import { complements } from '@/shared/data';
@@ -47,7 +47,7 @@ type TError = {
   key: 'store-data' | 'store-update';
 };
 
-const StoreEditor: NextPage = (): JSX.Element => {
+const StoreEditor: NextPage = () => {
   const theme = useTheme();
   const router: NextRouter = useRouter();
   const { state, fetchAPI, dispatch, deactivateStorePromptController } =

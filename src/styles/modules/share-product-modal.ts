@@ -31,7 +31,7 @@ export const _shareProduct = styled.section`
       display: flex;
       align-items: center;
       gap: 5px;
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -46,7 +46,7 @@ export const _shareProduct = styled.section`
     max-width: 500px;
     margin: 5px;
     background: rgb(${({ theme }) => theme.foreground});
-    box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);
+    box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.1);
 
     .prompt-info {
       display: flex;
@@ -66,9 +66,9 @@ export const _shareProduct = styled.section`
         cursor: pointer;
 
         :hover {
-          background: rgba(${({ theme }) => theme.accent}, 0.9);
+          background: rgba(${({ theme }) => theme.black}, 0.9);
           border: 1px solid transparent;
-          color: rgb(${({ theme }) => theme.neutral});
+          color: rgb(${({ theme }) => theme.white});
         }
 
         svg {
@@ -97,8 +97,8 @@ export const _shareProduct = styled.section`
       }
       .prompt-accept {
         ${BaseButton}
-        background: rgb(${({ theme }) => theme.alert});
-        color: rgb(${({ theme }) => theme.neutral});
+        background: rgb(${({ theme }) => theme.error});
+        color: rgb(${({ theme }) => theme.white});
       }
     }
   }

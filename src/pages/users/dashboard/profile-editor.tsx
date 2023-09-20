@@ -41,7 +41,7 @@ import Image from 'next/image';
 import { NextPage } from 'next';
 import Compressor from 'compressorjs';
 import Layout from '@/components/Layout';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
 import countries from '@/shared/countries.json';
@@ -69,7 +69,7 @@ type TLoading = {
   key: 'user-data' | 'user-update';
 };
 
-const ProfileEditor: NextPage = (): JSX.Element => {
+const ProfileEditor: NextPage = () => {
   const theme = useTheme();
   const router: NextRouter = useRouter();
   const {

@@ -2,7 +2,7 @@ import { complements } from '@/shared/data';
 import { useRouter } from 'next/router';
 import { errorPage as Container } from '../styles/common/error-page';
 
-export default function NotFoundError(): JSX.Element {
+export default function NotFoundError() {
   const router = useRouter();
   return (
     <Container>

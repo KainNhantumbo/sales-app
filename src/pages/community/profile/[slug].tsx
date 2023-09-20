@@ -26,7 +26,7 @@ import { _profile as Container } from '@/styles/common/community-user-profile';
 
 type TProps = { user: TPublicUser };
 
-const UserProfile: NextPage<TProps> = ({ user }): JSX.Element => {
+const UserProfile: NextPage<TProps> = ({ user }) => {
   const router: NextRouter = useRouter();
 
   if (!user)

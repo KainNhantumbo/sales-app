@@ -7,7 +7,7 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import fetch from '@/config/client';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
 import { PulseLoader } from 'react-spinners';
@@ -20,7 +20,7 @@ import { _signUp as Container } from '@/styles/common/sign-up';
 import backgroundImage from '@/../public/assets/africa-unveiled.png';
 import { NextPage } from 'next';
 
-const SignUp: NextPage = (): JSX.Element => {
+const SignUp: NextPage = () => {
   const router: NextRouter = useRouter();
   const theme: DefaultTheme = useTheme();
   const { state, dispatch } = useAppContext();

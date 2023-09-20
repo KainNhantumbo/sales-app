@@ -38,10 +38,7 @@ interface IPost {
   latestPosts: IBlogPosts[];
 }
 
-const Post: NextPage<IPost> = ({
-  post: initialPost,
-  latestPosts,
-}): JSX.Element => {
+const Post: NextPage<IPost> = ({ post: initialPost, latestPosts }) => {
   const { state, fetchAPI, loginPromptController } = useAppContext();
   const [post, setPost] = useState(initialPost);
   const router: NextRouter = useRouter();
@@ -137,7 +134,7 @@ const Post: NextPage<IPost> = ({
               <section className='reading-props'>
                 <div>
                   <IoIosAlbums />
-                  <span style={{ color: `rgb(${theme.primary_variant})` }}>
+                  <span style={{ color: `rgb(${theme.primary_shade})` }}>
                     {post.category || 'Miscelânia'}
                   </span>
                 </div>

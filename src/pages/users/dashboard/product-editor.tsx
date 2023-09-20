@@ -21,7 +21,7 @@ import {
 } from 'react-icons/io5';
 import { NextPage } from 'next';
 import Compressor from 'compressorjs';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
 import { DefaultTheme, useTheme } from 'styled-components';
@@ -43,7 +43,7 @@ type TError = {
   msg: string;
 };
 
-const ProductEditor: NextPage = (): JSX.Element => {
+const ProductEditor: NextPage = () => {
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
   const { state, fetchAPI, dispatch } = useAppContext();

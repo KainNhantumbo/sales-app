@@ -8,7 +8,7 @@ interface IProps {
   retryFn: () => void;
 }
 
-export default function ErrorPage(props: IProps): JSX.Element {
+export default function ErrorPage(props: IProps) {
   return (
     <Container>
       <section className='logo-container'>

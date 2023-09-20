@@ -18,7 +18,7 @@ import { useEffect } from 'react';
 import fetch from '../config/client';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { formatCurrency } from '@/lib/utils';
 import { PulseLoader } from 'react-spinners';
 import { TBannerAds, TPublicProducts } from '../types';
@@ -39,7 +39,7 @@ interface IProps {
   ads_data: TBannerAds[];
 }
 
-const Home: NextPage<IProps> = ({ ads_data }): JSX.Element => {
+const Home: NextPage<IProps> = ({ ads_data }) => {
   const {
     state,
     dispatch,
@@ -274,7 +274,7 @@ const Home: NextPage<IProps> = ({ ads_data }): JSX.Element => {
                       className='product-container'
                       whileHover={{
                         translateY: -8,
-                        boxShadow: `0px 12px 25px 10px rgba(${theme.accent}, 0.09)`,
+                        boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`,
                       }}
                       ref={
                         state.publicProducts.length === index + 1
@@ -409,7 +409,7 @@ const Home: NextPage<IProps> = ({ ads_data }): JSX.Element => {
                 <div className='loading'>
                   <PulseLoader
                     size={20}
-                    color={`rgb(${theme.primary_variant})`}
+                    color={`rgb(${theme.primary_shade})`}
                     aria-placeholder='Processando...'
                     cssOverride={{
                       display: 'block',

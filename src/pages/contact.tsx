@@ -7,7 +7,7 @@ import { complements } from '@/shared/data';
 import { BiEnvelope, BiMailSend } from 'react-icons/bi';
 import { ContactContainer as Container } from '@/styles/common/contact';
 
-export default function Contact(): JSX.Element {
+export default function Contact() {
   const [messageStatus, setMessageStatus] = useState(
     'Receberá a resposta para o seu e-mail assim que possível.'
   );

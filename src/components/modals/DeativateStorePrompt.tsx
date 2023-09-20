@@ -1,4 +1,4 @@
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { FaStoreSlash } from 'react-icons/fa';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { _prompt as Container } from '@/styles/modules/logout-prompt';
 import { FC } from 'react';
 
-const DeactivatePrompt: FC = (): JSX.Element => {
+const DeactivatePrompt: FC = () => {
   const { state, dispatch, deactivateStorePromptController } = useAppContext();
 
   return (

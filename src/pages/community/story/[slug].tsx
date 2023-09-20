@@ -9,7 +9,7 @@ import fetch from '@/config/client';
 import Compressor from 'compressorjs';
 import { AxiosResponse } from 'axios';
 import Layout from '@/components/Layout';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { useDropzone } from 'react-dropzone';
 import { PulseLoader } from 'react-spinners';
 import { complements } from '@/shared/data';
@@ -26,7 +26,7 @@ import { BsTrash } from 'react-icons/bs';
 type TProps = { story: IPublicStory | undefined };
 type TError = { status: boolean; msg: string };
 
-const Story: NextPage<TProps> = (props): JSX.Element => {
+const Story: NextPage<TProps> = (props) => {
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
   const { state, dispatch, fetchAPI } = useAppContext();

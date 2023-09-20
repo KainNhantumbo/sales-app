@@ -15,7 +15,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useAppContext } from '@/context/AppContext';
 import type { TComment } from '../../types/comments';
 
-const ReplyComment: FC<TComment> = (props): JSX.Element => {
+const ReplyComment: FC<TComment> = (props) => {
   const { state, deleteCommentPromptController } = useAppContext();
   const router = useRouter();
 

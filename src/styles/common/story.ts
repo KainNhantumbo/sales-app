@@ -13,7 +13,7 @@ export const _story = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.2);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -84,7 +84,7 @@ export const _story = styled.div`
       p {
         line-height: 1.6rem;
         a {
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
       }
     }
@@ -168,7 +168,7 @@ export const _story = styled.div`
             }
 
             .active-mode {
-              color: rgb(${({ theme }) => theme.primary_variant});
+              color: rgb(${({ theme }) => theme.primary_shade});
             }
 
             h3 {
@@ -197,7 +197,7 @@ export const _story = styled.div`
           line-height: 1.4rem;
 
           .error-message {
-            color: rgb(${({ theme }) => theme.alert});
+            color: rgb(${({ theme }) => theme.error});
             font-weight: 500;
             font-size: 1.1rem;
             line-height: 1.4rem;
@@ -219,7 +219,7 @@ export const _story = styled.div`
             font-size: 1.1rem;
             gap: 10px;
             padding: 20px;
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
           }
 
           .prompt-actions {

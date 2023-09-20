@@ -48,7 +48,7 @@ export const _sortBox = styled.section`
         display: flex;
         align-items: center;
         gap: 5px;
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
       }
     }
 
@@ -73,9 +73,9 @@ export const _sortBox = styled.section`
         cursor: pointer;
 
         :hover {
-          background: rgba(${({ theme }) => theme.accent}, 0.9);
+          background: rgba(${({ theme }) => theme.black}, 0.9);
           border: 1px solid transparent;
-          color: rgb(${({ theme }) => theme.neutral});
+          color: rgb(${({ theme }) => theme.white});
         }
 
         svg {

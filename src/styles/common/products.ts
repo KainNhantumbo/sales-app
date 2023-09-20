@@ -17,7 +17,7 @@ export const _productList = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.2);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -30,7 +30,7 @@ export const _productList = styled.div`
     justify-content: center;
     align-items: center;
     background: rgb(${({ theme }) => theme.foreground});
-    color: rgb(${({ theme }) => theme.primary_variant});
+    color: rgb(${({ theme }) => theme.primary_shade});
     border-radius: 20px;
     margin-top: 5px;
     svg {
@@ -104,7 +104,7 @@ export const _productList = styled.div`
           svg {
             width: 70px;
             height: 70px;
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
           }
 
           h3 {
@@ -149,7 +149,7 @@ export const _productList = styled.div`
             .top-side {
               font-weight: 500;
               .name {
-                color: rgb(${({ theme }) => theme.primary_variant});
+                color: rgb(${({ theme }) => theme.primary_shade});
               }
               .id {
                 text-transform: uppercase;
@@ -177,7 +177,7 @@ export const _productList = styled.div`
                 i {
                   font-weight: 500;
                   text-decoration: line-through;
-                  color: rgb(${({ theme }) => theme.alert});
+                  color: rgb(${({ theme }) => theme.error});
                 }
               }
 

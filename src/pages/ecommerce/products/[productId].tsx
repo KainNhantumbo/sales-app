@@ -23,7 +23,7 @@ import Link from 'next/link';
 import { NextPage } from 'next';
 import QRCode from 'react-qr-code';
 import { motion } from 'framer-motion';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import Layout from '@/components/Layout';
 import fetch from '@/config/client';
 import ErrorPage from '@/pages/error-page';
@@ -44,7 +44,7 @@ import product_categories from '@/shared/product-categories.json';
 import ShareProducts from '@/components/modals/ShareProductModal';
 import { _commerceProduct as Container } from '@/styles/common/ecommerce-product';
 
-const Product: NextPage<any> = ({ product, error_message }): JSX.Element => {
+const Product: NextPage<any> = ({ product, error_message }) => {
   const {
     state,
     dispatch,

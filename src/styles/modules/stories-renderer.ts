@@ -25,7 +25,7 @@ export const _storiesRender = styled.div`
       align-items: center;
       gap: 20px;
       margin: 20px 0;
-      color: rgb(${({ theme }) => theme.alert});
+      color: rgb(${({ theme }) => theme.error});
       font-weight: 500;
       font-size: 1.1rem;
       line-height: 1.4rem;
@@ -40,7 +40,7 @@ export const _storiesRender = styled.div`
       font-size: 1.2rem;
       font-weight: 500;
       line-height: 1.6rem;
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
 
     .loading {
@@ -57,7 +57,7 @@ export const _storiesRender = styled.div`
       padding: 20px;
       margin: 0 auto;
 
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -82,7 +82,7 @@ export const _storiesRender = styled.div`
       svg {
         width: 70px;
         height: 70px;
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
       }
 
       h3 {
@@ -180,7 +180,7 @@ export const _storiesRender = styled.div`
         border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
         padding: 0 12px;
         padding-top: 12px;
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
 
         p {
           font-weight: 500;
@@ -207,14 +207,14 @@ export const _storiesRender = styled.div`
           gap: 8px;
           align-items: center;
           justify-content: center;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
           cursor: pointer;
           font-weight: 500;
           padding: 12px;
           border-radius: 8px;
 
           :hover {
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
             background: rgba(${({ theme }) => theme.primary}, 0.2);
           }
         }

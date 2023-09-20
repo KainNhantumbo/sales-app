@@ -4,7 +4,7 @@ import { FaAd } from 'react-icons/fa';
 import { IoAdd } from 'react-icons/io5';
 import { _sidebarAds as Container } from '@/styles/modules/sidebar-ads';
 
-const SideBarAds: FC = (): JSX.Element => {
+const SideBarAds: FC = () => {
   return (
     <Container>
       <section className='no-ads'>

@@ -17,7 +17,7 @@ import { useAppContext } from '@/context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
 import { _cart as Container } from '../../styles/modules/cart';
 
-const Cart: FC = (): JSX.Element => {
+const Cart: FC = () => {
   const {
     state,
     cartModalController,

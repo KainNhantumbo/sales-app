@@ -10,6 +10,7 @@ import RequestLogin from './modals/RequestLogin';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import CookiesPopup from '@/components/CookiesPopup';
+import { PromptModal } from './modals/Prompt';
 
 interface IProps {
   children: ReactNode;
@@ -34,6 +35,9 @@ const Layout: FC<IProps> = ({ children, metadata }) => {
       <Metadata {...metadata} />
       <Header />
       <main>
+        <PromptModal
+          key={state.prompt.title.split(' ').join('') || undefined}
+        />
         <LogoutPrompt />
         <RequestLogin />
         <Cart />

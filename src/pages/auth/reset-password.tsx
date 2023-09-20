@@ -11,7 +11,7 @@ import { DefaultTheme, useTheme } from 'styled-components';
 import { NextRouter, useRouter } from 'next/router';
 import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
 
-const ResetPassword: NextPage = (): JSX.Element => {
+const ResetPassword: NextPage = () => {
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
   const [email, setEmail] = useState<string>('');

@@ -10,17 +10,17 @@ import Layout from '@/components/Layout';
 import { useAppContext } from '@/context/AppContext';
 import { NextRouter, useRouter } from 'next/router';
 import { complements } from '@/shared/data';
-import { renderReactSelectCSS } from '@/styles/select';
+import { renderReactSelectCSS } from '@/styles/modules/select';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { motion } from 'framer-motion';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { denounceReasons } from '@/shared/data';
 import { useEffect, useState } from 'react';
 import RequestLogin from '@/components/modals/RequestLogin';
 import { DenounceContainer as Container } from '../styles/common/denounce';
 import { NextPage } from 'next';
 
-const Denounce: NextPage = (): JSX.Element => {
+const Denounce: NextPage = () => {
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
   const [msg, setMsg] = useState<string>('');

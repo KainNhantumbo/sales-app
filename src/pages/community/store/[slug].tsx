@@ -24,7 +24,7 @@ import fetch from '@/config/client';
 import { motion } from 'framer-motion';
 import { BiUser } from 'react-icons/bi';
 import Layout from '@/components/Layout';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import ErrorPage from '@/pages/error-page';
 import { useEffect, useState } from 'react';
 import { formatCurrency } from '@/lib/utils';
@@ -40,7 +40,7 @@ import SideBarAds from '@/components/SidaBarAds';
 
 type TProps = { store?: TPublicStore | undefined; products: TPublicProducts[] };
 
-const StoreProfile: NextPage<TProps> = ({ store, products }): JSX.Element => {
+const StoreProfile: NextPage<TProps> = ({ store, products }) => {
   const {
     state,
     dispatch,
@@ -363,7 +363,7 @@ const StoreProfile: NextPage<TProps> = ({ store, products }): JSX.Element => {
                         innerWidth > 445
                           ? {
                               translateY: -8,
-                              boxShadow: `0px 12px 25px 10px rgba(${theme.accent}, 0.09)`,
+                              boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`,
                             }
                           : undefined
                       }>

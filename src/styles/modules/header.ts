@@ -16,8 +16,8 @@ export const _header = styled.header`
 
   * {
     ::selection {
-      background: rgb(${({ theme }) => theme.background_variant});
-      color: rgb(${({ theme }) => theme.primary_variant});
+      background: rgb(${({ theme }) => theme.background_shade});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -68,7 +68,7 @@ export const _header = styled.header`
     gap: 20px;
 
     .active {
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
 
     section {
@@ -86,7 +86,7 @@ export const _header = styled.header`
         padding: 5px;
         :hover {
           cursor: pointer;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
       }
     }
@@ -116,7 +116,7 @@ export const _header = styled.header`
           padding: 5px;
           :hover {
             cursor: pointer;
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
           }
         }
       }
@@ -153,8 +153,8 @@ export const _header = styled.header`
 
           :hover {
             cursor: pointer;
-            background-color: rgb(${({ theme }) => theme.primary_variant});
-            color: rgb(${({ theme }) => theme.neutral});
+            background-color: rgb(${({ theme }) => theme.primary_shade});
+            color: rgb(${({ theme }) => theme.white});
             transition: all 200ms ease-in-out;
           }
         }
@@ -187,7 +187,7 @@ export const _header = styled.header`
       place-content: center;
       padding: 10px;
       outline: none;
-      border: 1px solid rgba(${({ theme }) => theme.accent}, 0.07);
+      border: 1px solid rgba(${({ theme }) => theme.black}, 0.07);
 
       span {
         width: 22px;
@@ -196,14 +196,14 @@ export const _header = styled.header`
         right: -5px;
         bottom: -5px;
         border-radius: 50%;
-        background: rgb(${({ theme }) => theme.primary_variant});
-        color: rgb(${({ theme }) => theme.neutral});
+        background: rgb(${({ theme }) => theme.primary_shade});
+        color: rgb(${({ theme }) => theme.white});
         display: grid;
         font-size: 0.98rem;
         place-content: center;
       }
       :hover {
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
       }
 
       svg {
@@ -278,7 +278,7 @@ export const _header = styled.header`
     border-radius: 12px;
     background: none;
     color: rgb(${({ theme }) => theme.font});
-    border: 1px solid rgba(${({ theme }) => theme.accent}, 0.07);
+    border: 1px solid rgba(${({ theme }) => theme.black}, 0.07);
     width: fit-content;
     cursor: pointer;
     display: grid;
@@ -287,7 +287,7 @@ export const _header = styled.header`
     outline: none;
 
     :hover {
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
 
     svg {

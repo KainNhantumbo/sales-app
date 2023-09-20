@@ -1,9 +1,9 @@
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import type { TPaymentType } from '../types';
 import { useAppContext } from '@/context/AppContext';
 import { IoPhonePortraitOutline } from 'react-icons/io5';
 
-const renderPaymentInputs = (option: TPaymentType): JSX.Element => {
+const renderPaymentInputs = (option: TPaymentType) => {
   const { state, dispatch } = useAppContext();
   switch (option) {
     case 'm-pesa':

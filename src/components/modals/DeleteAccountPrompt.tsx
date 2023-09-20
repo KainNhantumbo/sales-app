@@ -4,7 +4,7 @@ import {
   IoMailOutline,
 } from 'react-icons/io5';
 import fetch from '@/config/client';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { BsTrash } from 'react-icons/bs';
 import { InputEvents } from '../../types';
 import { useState, useEffect, FC } from 'react';
@@ -13,7 +13,7 @@ import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { _deleteAccount as Container } from '@/styles/modules/delete-account-prompt';
 
-const DeleteAccountPrompt: FC = (): JSX.Element => {
+const DeleteAccountPrompt: FC = () => {
   const { state, fetchAPI, dispatch, deleteAccountPromptController } =
     useAppContext();
   const router: NextRouter = useRouter();

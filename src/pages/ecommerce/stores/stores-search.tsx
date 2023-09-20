@@ -11,7 +11,7 @@ import { NextPage } from 'next';
 import { useEffect } from 'react';
 import { formatDate } from '@/lib/utils';
 import Layout from '@/components/Layout';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { getStoresData } from '@/lib/queries';
 import { IoMdCalendar } from 'react-icons/io';
 import { complements } from '@/shared/data';
@@ -26,7 +26,7 @@ import { DefaultTheme, useTheme } from 'styled-components';
 import { _storeSeach as Container } from '@/styles/common/store-search';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
 
-const StoresSearch: NextPage = (): JSX.Element => {
+const StoresSearch: NextPage = () => {
   const LIMIT: number = 8;
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
@@ -219,7 +219,7 @@ const StoresSearch: NextPage = (): JSX.Element => {
                 <div className='loading'>
                   <PulseLoader
                     size={20}
-                    color={`rgb(${theme.primary_variant})`}
+                    color={`rgb(${theme.primary_shade})`}
                     aria-placeholder='Processando...'
                     cssOverride={{
                       display: 'block',

@@ -7,7 +7,7 @@ const EditorJsToHtml = editorJsHtml();
 export type TParsedContent = string | JSX.Element;
 type TProps = { data: OutputData };
 
-const EditorJsRenderer: FC<TProps> = ({ data }): JSX.Element => {
+const EditorJsRenderer: FC<TProps> = ({ data }) => {
   const html = EditorJsToHtml.parse(data) as TParsedContent[];
   return (
     <>

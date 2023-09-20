@@ -9,7 +9,7 @@ type TProps = {
   deleteFn: (productId: string) => Promise<void>;
 };
 
-const DeleteProductPrompt: FC<TProps> = (props): JSX.Element => {
+const DeleteProductPrompt: FC<TProps> = (props) => {
   const { state, deleteProductPromptController } = useAppContext();
 
   return (

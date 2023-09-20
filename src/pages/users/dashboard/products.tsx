@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { NextPage } from 'next';
 import { useEffect } from 'react';
 import Layout from '@/components/Layout';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { ProductsList } from '../../../types';
 import { formatCurrency } from '@/lib/utils';
 import { useTheme } from 'styled-components';
@@ -31,7 +31,7 @@ import ShareProducts from '@/components/modals/ShareProductModal';
 import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
 import { _productList as Container } from '@/styles/common/products';
 
-const Products: NextPage = (): JSX.Element => {
+const Products: NextPage = () => {
   const {
     state,
     dispatch,
@@ -283,7 +283,7 @@ const Products: NextPage = (): JSX.Element => {
                   <div className='loading'>
                     <PulseLoader
                       size={20}
-                      color={`rgb(${theme.primary_variant})`}
+                      color={`rgb(${theme.primary_shade})`}
                       aria-placeholder='Processando...'
                       cssOverride={{
                         display: 'block',

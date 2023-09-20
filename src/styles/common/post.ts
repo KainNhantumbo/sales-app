@@ -27,7 +27,7 @@ const ShareLinksStyles = css`
       border-radius: 10px;
 
       :hover {
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
       }
     }
   }
@@ -41,7 +41,7 @@ export const _post = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.1);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -62,7 +62,6 @@ export const _post = styled.div`
     @media screen and (max-width: 620px) {
       padding: 30px 20px;
     }
-      
 
     .article-header-container {
       display: flex;
@@ -148,7 +147,7 @@ export const _post = styled.div`
         object-fit: cover;
         border-radius: 10px;
         margin: 10px auto;
-        box-shadow: 0 12px 35px rgba(${({ theme }) => theme.accent}, 0.2);
+        box-shadow: 0 12px 35px rgba(${({ theme }) => theme.black}, 0.2);
       }
 
       h4 {
@@ -188,7 +187,7 @@ export const _post = styled.div`
       h2 {
         font-size: 1.4rem;
         line-height: 2rem;
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
       }
 
       ul,
@@ -208,7 +207,7 @@ export const _post = styled.div`
         object-fit: cover;
         border-radius: 5px;
         margin: 10px auto;
-        box-shadow: 0 12px 35px rgba(${({ theme }) => theme.accent}, 0.3);
+        box-shadow: 0 12px 35px rgba(${({ theme }) => theme.black}, 0.3);
       }
 
       blockquote {
@@ -223,8 +222,8 @@ export const _post = styled.div`
 
       mark,
       .cdx-marker {
-        background: rgba(${({ theme }) => theme.alert}, 0.08);
-        color: rgb(${({ theme }) => theme.primary_variant});
+        background: rgba(${({ theme }) => theme.error}, 0.08);
+        color: rgb(${({ theme }) => theme.primary_shade});
       }
 
       u,
@@ -342,7 +341,7 @@ export const _post = styled.div`
 
         :hover {
           cursor: pointer;
-          box-shadow: 0 0 20px rgba(${({ theme }) => theme.accent}, 0.09);
+          box-shadow: 0 0 20px rgba(${({ theme }) => theme.black}, 0.09);
           transition: all 200ms ease-in-out;
         }
 
@@ -382,7 +381,7 @@ export const _post = styled.div`
             font-weight: 500;
             font-size: 1rem;
             line-height: 1.4rem;
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
           }
 
           button {
@@ -399,7 +398,7 @@ export const _post = styled.div`
             overflow: hidden;
             justify-self: flex-end;
             :hover {
-              color: rgb(${({ theme }) => theme.primary_variant});
+              color: rgb(${({ theme }) => theme.primary_shade});
             }
             svg {
               width: 20px;

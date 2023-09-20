@@ -31,7 +31,7 @@ export const _cart = styled.section`
     background: rgb(${({ theme }) => theme.foreground});
     width: 100%;
     max-width: 500px;
-    box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);
+    box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.1);
     margin: 0 auto;
 
     @media screen and (max-width: 465px) {
@@ -48,7 +48,7 @@ export const _cart = styled.section`
         flex-direction: row;
         align-items: center;
         gap: 8px;
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
         font-weight: 500;
 
         svg {
@@ -99,7 +99,7 @@ export const _cart = styled.section`
             ${BaseButtonOutline}
 
             :hover {
-              color: rgb(${({ theme }) => theme.alert});
+              color: rgb(${({ theme }) => theme.error});
             }
           }
         }
@@ -131,7 +131,7 @@ export const _cart = styled.section`
           max-width: 220px;
         }
         p {
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
           span {
             color: rgb(${({ theme }) => theme.font});
           }
@@ -152,7 +152,7 @@ export const _cart = styled.section`
 
         button {
           ${StyledCornerButton}
-          background: rgb(${({ theme }) => theme.primary_variant});
+          background: rgb(${({ theme }) => theme.primary_shade});
           padding: 2px;
           :hover {
             background: rgb(${({ theme }) => theme.secondary});
@@ -160,7 +160,7 @@ export const _cart = styled.section`
           svg {
             width: 20px;
             height: 20px;
-            color: rgb(${({ theme }) => theme.neutral});
+            color: rgb(${({ theme }) => theme.white});
           }
         }
       }
@@ -204,7 +204,7 @@ export const _cart = styled.section`
         svg {
           width: 50px;
           height: 50px;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
       }
     }

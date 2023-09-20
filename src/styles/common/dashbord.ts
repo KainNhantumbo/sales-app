@@ -14,8 +14,8 @@ export const _dashboard = styled.div`
 
   * {
     ::selection {
-      background: rgb(${({ theme }) => theme.background_variant});
-      color: rgb(${({ theme }) => theme.primary_variant});
+      background: rgb(${({ theme }) => theme.background_shade});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -29,7 +29,7 @@ export const _dashboard = styled.div`
     margin: auto 0;
     font-size: 1.2rem;
     p {
-      color: rgb(${({ theme }) => theme.alert});
+      color: rgb(${({ theme }) => theme.error});
     }
     button {
       ${BaseButtonOutline}
@@ -183,7 +183,7 @@ export const _dashboard = styled.div`
             gap: 8px;
             align-items: center;
             font-weight: 500;
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
             font-size: 1.2rem;
             line-height: 1.6rem;
           }
@@ -210,7 +210,7 @@ export const _dashboard = styled.div`
                 line-height: 1.4rem;
 
                 :hover {
-                  color: rgb(${({ theme }) => theme.primary_variant});
+                  color: rgb(${({ theme }) => theme.primary_shade});
                 }
               }
             }

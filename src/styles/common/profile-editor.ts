@@ -20,7 +20,7 @@ export const _userProfile = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.2);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -247,8 +247,7 @@ export const _userProfile = styled.div`
 
                 :hover {
                   border: 1px solid transparent;
-                  box-shadow: 0 0 25px
-                    rgba(${({ theme }) => theme.accent}, 0.09);
+                  box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.09);
                   transition: all 300ms ease-in-out;
                 }
 
@@ -276,7 +275,7 @@ export const _userProfile = styled.div`
                   }
                   .delete-btn {
                     :hover {
-                      color: rgb(${({ theme }) => theme.alert});
+                      color: rgb(${({ theme }) => theme.error});
                     }
                   }
                 }
@@ -363,9 +362,9 @@ export const _userProfile = styled.div`
                 border-radius: 12px;
                 background: rgba(${({ theme }) => theme.primary}, 0.8);
                 :hover {
-                  background: rgba(${({ theme }) => theme.alert}, 0.6);
+                  background: rgba(${({ theme }) => theme.error}, 0.6);
                   svg {
-                    color: rgb(${({ theme }) => theme.neutral});
+                    color: rgb(${({ theme }) => theme.white});
                   }
                 }
               }
@@ -403,9 +402,9 @@ export const _userProfile = styled.div`
                 border-radius: 12px;
                 background: rgba(${({ theme }) => theme.primary}, 0.8);
                 :hover {
-                  background: rgba(${({ theme }) => theme.alert}, 0.6);
+                  background: rgba(${({ theme }) => theme.error}, 0.6);
                   svg {
-                    color: rgb(${({ theme }) => theme.neutral});
+                    color: rgb(${({ theme }) => theme.white});
                   }
                 }
               }
@@ -429,13 +428,13 @@ export const _userProfile = styled.div`
                 border-radius: 8px;
                 gap: 10px;
                 background: rgb(${({ theme }) => theme.foreground});
-                box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);
+                box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.1);
 
                 button {
                   ${Button_Mono_B}
                   border: none;
                   :hover {
-                    color: rgb(${({ theme }) => theme.alert});
+                    color: rgb(${({ theme }) => theme.error});
                   }
                 }
               }
@@ -462,7 +461,7 @@ export const _userProfile = styled.div`
         line-height: 1.4rem;
 
         .error-message {
-          color: rgb(${({ theme }) => theme.alert});
+          color: rgb(${({ theme }) => theme.error});
           font-weight: 500;
           font-size: 1.1rem;
           line-height: 1.4rem;
@@ -484,7 +483,7 @@ export const _userProfile = styled.div`
           font-size: 1.1rem;
           gap: 10px;
           padding: 20px;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
 
         .btns-container {
@@ -518,7 +517,7 @@ export const _userProfile = styled.div`
         section {
           span {
             line-height: 1.8rem;
-            color: rgb(${({ theme }) => theme.alert});
+            color: rgb(${({ theme }) => theme.error});
           }
         }
 

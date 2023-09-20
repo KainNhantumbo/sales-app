@@ -1,11 +1,10 @@
-import type { FC } from 'react';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { MoonLoader } from 'react-spinners';
 import { useAppContext } from '@/context/AppContext';
-import type { TCommentForm } from '../../types/comments';
+import type { TCommentForm } from '@/types/comments';
 import { DefaultTheme, useTheme } from 'styled-components';
 
-const ReplyCommentForm: FC<TCommentForm> = (props): JSX.Element => {
+export default function ReplyCommentForm(props: TCommentForm) {
   const theme: DefaultTheme = useTheme();
   const { state, dispatch, loginPromptController } = useAppContext();
 
@@ -57,7 +56,7 @@ const ReplyCommentForm: FC<TCommentForm> = (props): JSX.Element => {
           <div className='loader'>
             <MoonLoader
               size={30}
-              color={`rgb(${theme.primary_variant})`}
+              color={`rgb(${theme.primary_shade})`}
               cssOverride={{
                 display: 'block',
                 margin: '0 auto',
@@ -96,6 +95,4 @@ const ReplyCommentForm: FC<TCommentForm> = (props): JSX.Element => {
       </section>
     </>
   );
-};
-
-export default ReplyCommentForm;
+}

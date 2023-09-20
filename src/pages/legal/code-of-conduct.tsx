@@ -3,7 +3,7 @@ import Layout from '@/components/Layout';
 import { complements } from '@/shared/data';
 import { _legal as Container } from '@/styles/common/legal';
 
-const CodeOfConduct: NextPage = (): JSX.Element => (
+const CodeOfConduct: NextPage = () => (
   <Layout
     metadata={{ title: complements.defaultTitle + ' | Código de Conduta' }}>
     <Container>

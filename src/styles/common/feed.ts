@@ -12,7 +12,7 @@ export const _feed = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.2);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -49,7 +49,6 @@ export const _feed = styled.div`
       gap: 0;
     }
   }
-
 
   aside {
     top: 150px;

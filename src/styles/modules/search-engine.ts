@@ -41,7 +41,7 @@ export const _seachEngine = styled.aside`
     @media screen and (max-width: 830px) {
       position: relative;
       width: 400px;
-      box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.08);
+      box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.08);
       border-radius: 12px;
       margin-bottom: -30px;
       padding-bottom: 40px;
@@ -53,8 +53,8 @@ export const _seachEngine = styled.aside`
 
     * {
       ::selection {
-        background: rgb(${({ theme }) => theme.background_variant});
-        color: rgb(${({ theme }) => theme.primary_variant});
+        background: rgb(${({ theme }) => theme.background_shade});
+        color: rgb(${({ theme }) => theme.primary_shade});
       }
     }
 
@@ -78,8 +78,8 @@ export const _seachEngine = styled.aside`
 
     .show-results-btn {
       ${BaseButton}
-      background: rgb(${({ theme }) => theme.accent});
-      color: rgb(${({ theme }) => theme.neutral});
+      background: rgb(${({ theme }) => theme.black});
+      color: rgb(${({ theme }) => theme.white});
       width: 280px;
       margin: 0 auto;
       border-radius: 30px;
@@ -108,7 +108,7 @@ export const _seachEngine = styled.aside`
         gap: 5px;
         flex-wrap: nowrap;
         align-items: center;
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
         span {
           padding-left: 3px;
           font-size: 1.1rem;
@@ -214,7 +214,7 @@ export const _seachEngine = styled.aside`
       .rc-slider-track {
         position: absolute;
         height: 10px;
-        background-color: rgb(${({ theme }) => theme.primary_variant});
+        background-color: rgb(${({ theme }) => theme.primary_shade});
         border-radius: 10px;
       }
       .rc-slider-track-draggable {
@@ -231,7 +231,7 @@ export const _seachEngine = styled.aside`
         height: 20px;
         margin-top: -5px;
         background-color: rgb(${({ theme }) => theme.foreground});
-        border: solid 2px rgb(${({ theme }) => theme.primary_variant});
+        border: solid 2px rgb(${({ theme }) => theme.primary_shade});
         border-radius: 50%;
         cursor: -webkit-grab;
         cursor: grab;

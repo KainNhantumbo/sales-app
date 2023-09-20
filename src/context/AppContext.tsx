@@ -9,7 +9,7 @@ import {
 } from 'react';
 import fetch from '../config/client';
 import ThemeContext from './ThemeContext';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { NextRouter, useRouter } from 'next/router';
 import { Action, State } from '../types/reducer';
 import { TAuth, TCart } from '../types/index';
@@ -80,7 +80,7 @@ const context = createContext<IContext>({
   }),
 });
 
-const AppContext: FC<TProps> = (props): JSX.Element => {
+const AppContext: FC<TProps> = (props) => {
   const CART_KEY: string = 'cart-items';
   const router: NextRouter = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);

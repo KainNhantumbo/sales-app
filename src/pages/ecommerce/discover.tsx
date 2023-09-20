@@ -16,7 +16,7 @@ import { _discover as Container } from '@/styles/common/discover';
 import africa_culture from '@/../public/assets/africa-culture.png';
 import { store_features, pricing_data, complements } from '@/shared/data';
 
-const Discover: NextPage = (): JSX.Element => {
+const Discover: NextPage = () => {
   const theme: DefaultTheme = useTheme();
 
   return (
@@ -64,7 +64,7 @@ const Discover: NextPage = (): JSX.Element => {
                     dragElastic={0.2}
                     whileHover={{
                       translateY: -8,
-                      boxShadow: `0px 20px 25px rgba(${theme.accent}, 0.09)`,
+                      boxShadow: `0px 20px 25px rgba(${theme.black}, 0.09)`,
                     }}>
                     <card.icon />
                     <h3>{card.title}</h3>
@@ -120,7 +120,7 @@ const Discover: NextPage = (): JSX.Element => {
                     <motion.div
                       key={index.toString()}
                       whileHover={{
-                        boxShadow: `0 0 25px rgba(${theme.accent}, 0.09)`,
+                        boxShadow: `0 0 25px rgba(${theme.black}, 0.09)`,
                         border: '1px solid transparent',
                       }}>
                       <h4>{plan.type}</h4>

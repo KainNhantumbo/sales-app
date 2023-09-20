@@ -5,7 +5,7 @@ import { DefaultTheme, useTheme } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { _pageLoader as Container } from '@/styles/modules/page-loader';
 
-const PageLoader: FC = (): JSX.Element => {
+const PageLoader: FC = () => {
   const theme: DefaultTheme = useTheme();
   const [loadingPage, setLoadingPage] = useState<boolean>(false);
 
@@ -44,7 +44,7 @@ const PageLoader: FC = (): JSX.Element => {
               <div className='prompt-info'>
                 <p>Carregando a página</p>
               </div>
-              <PuffLoader size={25} color={`rgb(${theme.primary_variant})`} />
+              <PuffLoader size={25} color={`rgb(${theme.primary_shade})`} />
             </div>
           </motion.section>
         </Container>

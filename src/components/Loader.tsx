@@ -7,7 +7,7 @@ interface IProps {
   message: string;
 }
 
-const Loader: FC<IProps> = ({ message }): JSX.Element => (
+const Loader: FC<IProps> = ({ message }) => (
   <Container>
     <div>
       <motion.span

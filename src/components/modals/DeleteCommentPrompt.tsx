@@ -7,7 +7,7 @@ import { _prompt as Container } from '@/styles/modules/logout-prompt';
 
 type TProps = { deleteFn: any };
 
-const DeleteCommentPrompt: FC<TProps> = (props): JSX.Element => {
+const DeleteCommentPrompt: FC<TProps> = (props) => {
   const { state, deleteCommentPromptController } = useAppContext();
   return (
     <AnimatePresence>

@@ -13,9 +13,9 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useAppContext } from '@/context/AppContext';
 import { NextRouter, useRouter } from 'next/router';
 import { complements } from '@/shared/data';
-import type { TComment } from '../../types/comments';
+import type { TComment } from '@/types/comments';
 
-const Comment: FC<TComment> = (props): JSX.Element => {
+const Comment: FC<TComment> = (props) => {
   const router: NextRouter = useRouter();
   const { state, deleteCommentPromptController } = useAppContext();
 
@@ -84,7 +84,7 @@ const Comment: FC<TComment> = (props): JSX.Element => {
                   deleteCommentPromptController(true, props.comment._id)
                 }>
                 <FaTrash />
-                <span>Deletar</span>
+                <span>Apagar</span>
               </button>
             </>
           ) : (

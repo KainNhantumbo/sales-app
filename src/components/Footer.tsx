@@ -18,7 +18,7 @@ import { useAppContext } from '@/context/AppContext';
 import { useThemeContext } from '@/context/ThemeContext';
 import { _footer as Container } from '../styles/modules/footer';
 
-const Footer: FC = (): JSX.Element => {
+const Footer: FC = () => {
   const { state } = useAppContext();
   const { setDarkMode, darkmode, setLightMode, matchMediaTheme } =
     useThemeContext();

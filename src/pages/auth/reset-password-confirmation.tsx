@@ -6,7 +6,7 @@ import { complements } from '@/shared/data';
 import { FaEnvelopeOpenText } from 'react-icons/fa';
 import { _resetConfirmation as Container } from '@/styles/common/reset-password-confirmation';
 
-const ResetConfirmation: NextPage = (): JSX.Element => (
+const ResetConfirmation: NextPage = () => (
   <Layout
     metadata={{
       title: `${complements.defaultTitle} | Confirmação de Atualização de Senha`,

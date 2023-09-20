@@ -9,7 +9,7 @@ export const _newsletter = styled.section`
   background: rgb(${({ theme }) => theme.foreground});
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.09);
+  box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.09);
   position: relative;
   width: 100%;
   max-width: 800px;
@@ -20,7 +20,7 @@ export const _newsletter = styled.section`
   }
 
   .error-message {
-    color: rgb(${({ theme }) => theme.alert});
+    color: rgb(${({ theme }) => theme.error});
     font-weight: 500;
     font-size: 0.96rem;
     max-width: 320px;

@@ -11,7 +11,7 @@ import Image from 'next/image';
 import { NextPage } from 'next';
 import { useEffect } from 'react';
 import Layout from '@/components/Layout';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { formatDate } from '@/lib/utils';
 import { PulseLoader } from 'react-spinners';
 import { IoMdCalendar } from 'react-icons/io';
@@ -26,9 +26,9 @@ import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { blurDataUrlImage, complements } from '@/shared/data';
 import buyingWomenImg from '@/../public/assets/buying_women.png';
-import { _stores as Container } from '@/styles/common/stores.module';
+import { _stores as Container } from '@/styles/common/stores';
 
-const Stores: NextPage = (): JSX.Element => {
+const Stores: NextPage = () => {
   const LIMIT: number = 8;
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
@@ -194,7 +194,7 @@ const Stores: NextPage = (): JSX.Element => {
               <div className='loading'>
                 <PulseLoader
                   size={20}
-                  color={`rgb(${theme.primary_variant})`}
+                  color={`rgb(${theme.primary_shade})`}
                   aria-placeholder='Processando...'
                   cssOverride={{
                     display: 'block',

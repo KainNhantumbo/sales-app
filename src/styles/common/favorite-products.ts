@@ -13,7 +13,7 @@ export const _favoriteProducts = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.2);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -129,7 +129,7 @@ export const _favoriteProducts = styled.div`
             top: 8px;
             left: 8px;
             border-radius: 12px;
-            background: rgba(${({ theme }) => theme.neutral}, 0.9);
+            background: rgba(${({ theme }) => theme.white}, 0.9);
             border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
             padding: 3px 8px;
             color: rgb(${({ theme }) => theme.secondary});
@@ -141,7 +141,7 @@ export const _favoriteProducts = styled.div`
             position: absolute;
             bottom: 8px;
             right: 8px;
-            background: rgba(${({ theme }) => theme.neutral}, 0.9);
+            background: rgba(${({ theme }) => theme.white}, 0.9);
             border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
 
             svg {
@@ -222,7 +222,7 @@ export const _favoriteProducts = styled.div`
 
             .actual-price {
               font-weight: 500;
-              color: rgb(${({ theme }) => theme.primary_variant});
+              color: rgb(${({ theme }) => theme.primary_shade});
             }
           }
 
@@ -236,7 +236,7 @@ export const _favoriteProducts = styled.div`
             .old-price {
               font-weight: 500;
               text-decoration: line-through;
-              color: rgb(${({ theme }) => theme.alert});
+              color: rgb(${({ theme }) => theme.error});
             }
           }
         }
@@ -263,7 +263,7 @@ export const _favoriteProducts = styled.div`
         svg {
           width: 70px;
           height: 70px;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
 
         h3 {

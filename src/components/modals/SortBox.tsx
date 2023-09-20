@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { FiX } from 'react-icons/fi';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { BiSortAlt2 } from 'react-icons/bi';
 import { HiSelector } from 'react-icons/hi';
 import { useAppContext } from '@/context/AppContext';
@@ -18,7 +18,7 @@ const SortOptions = [
   { code: '-createdAt', name: 'Data de criação (desc.)' },
 ];
 
-const SortBox: FC = (): JSX.Element => {
+const SortBox: FC = () => {
   const { state, dispatch, sortBoxController } = useAppContext();
   return (
     <AnimatePresence>

@@ -48,7 +48,7 @@ export const _searchBox = styled.section`
         display: flex;
         align-items: center;
         gap: 5px;
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
       }
     }
 

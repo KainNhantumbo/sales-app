@@ -13,7 +13,7 @@ export const _home = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.1);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -39,7 +39,7 @@ export const _home = styled.div`
       z-index: 12000;
       backdrop-filter: blur(10px);
       background: rgba(${({ theme }) => theme.primary}, 0.8);
-      box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);
+      box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.1);
 
       @media screen and (min-width: 830px) {
         display: none;
@@ -78,7 +78,7 @@ export const _home = styled.div`
         svg {
           width: 70px;
           height: 70px;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
 
         h3 {
@@ -142,12 +142,12 @@ export const _home = styled.div`
           outline: none;
 
           :hover {
-            background: rgba(${({ theme }) => theme.accent}, 0.6);
+            background: rgba(${({ theme }) => theme.black}, 0.6);
           }
           svg {
             width: 25px;
             height: 25px;
-            color: rgb(${({ theme }) => theme.neutral});
+            color: rgb(${({ theme }) => theme.white});
           }
         }
 
@@ -211,7 +211,7 @@ export const _home = styled.div`
             left: 8px;
 
             border-radius: 12px;
-            background: rgba(${({ theme }) => theme.neutral}, 0.9);
+            background: rgba(${({ theme }) => theme.white}, 0.9);
             border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
             padding: 3px 8px;
             color: rgb(${({ theme }) => theme.secondary});
@@ -223,7 +223,7 @@ export const _home = styled.div`
             position: absolute;
             bottom: 8px;
             right: 8px;
-            background: rgba(${({ theme }) => theme.neutral}, 0.9);
+            background: rgba(${({ theme }) => theme.white}, 0.9);
             border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
 
             svg {
@@ -308,7 +308,7 @@ export const _home = styled.div`
 
             .actual-price {
               font-weight: 500;
-              color: rgb(${({ theme }) => theme.primary_variant});
+              color: rgb(${({ theme }) => theme.primary_shade});
             }
           }
 
@@ -326,7 +326,7 @@ export const _home = styled.div`
             .old-price {
               font-weight: 500;
               text-decoration: line-through;
-              color: rgb(${({ theme }) => theme.alert});
+              color: rgb(${({ theme }) => theme.error});
             }
           }
         }
@@ -349,7 +349,7 @@ export const _home = styled.div`
       align-items: center;
       gap: 20px;
       margin: 20px 0;
-      color: rgb(${({ theme }) => theme.alert});
+      color: rgb(${({ theme }) => theme.error});
       font-weight: 500;
       font-size: 1.1rem;
       line-height: 1.4rem;
@@ -365,7 +365,7 @@ export const _home = styled.div`
       font-size: 1.2rem;
       font-weight: 500;
       line-height: 1.6rem;
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
 
     .loading {
@@ -382,7 +382,7 @@ export const _home = styled.div`
       padding: 20px;
       margin: 0 auto;
 
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
   .posts-container__end-mark {
@@ -391,7 +391,7 @@ export const _home = styled.div`
     justify-content: center;
     align-items: center;
     background: rgb(${({ theme }) => theme.foreground});
-    color: rgb(${({ theme }) => theme.primary_variant});
+    color: rgb(${({ theme }) => theme.primary_shade});
     border-radius: 20px;
     svg {
       width: 25px;

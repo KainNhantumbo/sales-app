@@ -4,7 +4,7 @@ import { NextPage } from 'next';
 import fetch from '@/config/client';
 import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { complements } from '@/shared/data';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
@@ -13,7 +13,7 @@ import { _signIn as Container } from '@/styles/common/sign-in';
 import { IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
 import backgroundImage from '@/../public/assets/africa-unveiled.png';
 
-const SignIn: NextPage = (): JSX.Element => {
+const SignIn: NextPage = () => {
   const { state, dispatch } = useAppContext();
   const router: NextRouter = useRouter();
   const [loading, setLoading] = useState<boolean>(false);

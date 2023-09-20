@@ -16,7 +16,7 @@ export const _commerceProduct = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.1);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -83,7 +83,7 @@ export const _commerceProduct = styled.div`
           font-size: 0.9rem;
 
           i {
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
           }
         }
       }
@@ -106,7 +106,7 @@ export const _commerceProduct = styled.div`
 
             .promo-alert {
               font-weight: 500;
-              color: rgb(${({ theme }) => theme.alert});
+              color: rgb(${({ theme }) => theme.error});
               display: flex;
               flex-direction: row;
               gap: 3px;
@@ -125,7 +125,7 @@ export const _commerceProduct = styled.div`
               font-size: 1.4rem;
               line-height: 1.2rem;
               font-weight: 500;
-              color: rgb(${({ theme }) => theme.primary_variant});
+              color: rgb(${({ theme }) => theme.primary_shade});
             }
           }
         }
@@ -144,9 +144,9 @@ export const _commerceProduct = styled.div`
 
           .favorite-button {
             ${BaseButtonOutline}
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
             :hover {
-              color: rgb(${({ theme }) => theme.primary_variant});
+              color: rgb(${({ theme }) => theme.primary_shade});
               background: rgba(${({ theme }) => theme.primary}, 0.2);
             }
           }
@@ -209,14 +209,14 @@ export const _commerceProduct = styled.div`
             button {
               ${StyledCornerButton}
               padding: 5px;
-              background: rgb(${({ theme }) => theme.primary_variant});
+              background: rgb(${({ theme }) => theme.primary_shade});
               :hover {
                 background: rgb(${({ theme }) => theme.secondary});
               }
               svg {
                 width: 25px;
                 height: 25px;
-                color: rgb(${({ theme }) => theme.neutral});
+                color: rgb(${({ theme }) => theme.white});
               }
             }
           }
@@ -236,9 +236,9 @@ export const _commerceProduct = styled.div`
             .add-to-cart_button {
               ${BaseButtonOutline}
               padding: 12px;
-              color: rgb(${({ theme }) => theme.primary_variant});
+              color: rgb(${({ theme }) => theme.primary_shade});
               :hover {
-                color: rgb(${({ theme }) => theme.primary_variant});
+                color: rgb(${({ theme }) => theme.primary_shade});
                 background: rgba(${({ theme }) => theme.primary}, 0.2);
                 transition: all 200ms ease-in-out;
               }
@@ -287,7 +287,7 @@ export const _commerceProduct = styled.div`
               gap: 5px;
               border-radius: 8px;
               background: rgb(${({ theme }) => theme.foreground});
-              color: rgb(${({ theme }) => theme.primary_variant});
+              color: rgb(${({ theme }) => theme.primary_shade});
               font-size: 1rem;
               line-height: 1.6rem;
               font-weight: 500;
@@ -297,8 +297,8 @@ export const _commerceProduct = styled.div`
                 height: 22px;
               }
             }
-            .alert {
-              border: 2px solid rgb(${({ theme }) => theme.alert});
+            .error {
+              border: 2px solid rgb(${({ theme }) => theme.error});
               color: rgb(${({ theme }) => theme.secondary});
             }
           }
@@ -359,7 +359,7 @@ export const _commerceProduct = styled.div`
           }
           .image-gallery-thumbnail-image {
             border-radius: 10px;
-            color: rgba(${({ theme }) => theme.accent}, 0.6);
+            color: rgba(${({ theme }) => theme.black}, 0.6);
             :hover {
               border: none;
             }
@@ -382,12 +382,12 @@ export const _commerceProduct = styled.div`
           outline: none;
 
           :hover {
-            background: rgba(${({ theme }) => theme.accent}, 0.6);
+            background: rgba(${({ theme }) => theme.black}, 0.6);
           }
           svg {
             width: 25px;
             height: 25px;
-            color: rgb(${({ theme }) => theme.neutral});
+            color: rgb(${({ theme }) => theme.white});
           }
         }
 
@@ -487,14 +487,14 @@ export const _commerceProduct = styled.div`
 
         .denounce-anchor {
           ${BaseButtonOutline}
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
           background: rgba(${({ theme }) => theme.primary}, 0.2);
           text-overflow: clip;
           overflow: visible;
 
           :hover {
             transition: all 200ms ease;
-            color: rgb(${({ theme }) => theme.alert});
+            color: rgb(${({ theme }) => theme.error});
           }
         }
       }
@@ -521,7 +521,7 @@ export const _commerceProduct = styled.div`
         width: 100%;
         gap: 12px;
 
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
         svg {
           width: 25px;
           height: 25px;
@@ -560,7 +560,7 @@ export const _commerceProduct = styled.div`
         gap: 5px;
         border-radius: 8px;
         background: rgb(${({ theme }) => theme.foreground});
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
         font-size: 1rem;
         line-height: 1.6rem;
         font-weight: 500;
@@ -579,7 +579,7 @@ export const _commerceProduct = styled.div`
           height: 22px;
         }
 
-        .alert {
+        .error {
           color: rgb(${({ theme }) => theme.secondary});
         }
       }

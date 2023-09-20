@@ -30,7 +30,7 @@ export const _comments = styled.div`
         margin-top: 10px;
         line-height: 1.6rem;
         a {
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
       }
     }
@@ -90,7 +90,7 @@ export const _comments = styled.div`
         svg {
           border-radius: 50%;
           padding: 5px;
-          border: 1px solid rgba(${({ theme }) => theme.accent}, 0.09);
+          border: 1px solid rgba(${({ theme }) => theme.black}, 0.09);
         }
 
         ${StyledInputs}
@@ -110,7 +110,7 @@ export const _comments = styled.div`
 
       .reply-comment {
         margin-top: 10px;
-        border-left: 3px solid rgb(${({ theme }) => theme.primary_variant});
+        border-left: 3px solid rgb(${({ theme }) => theme.primary_shade});
       }
 
       .sub-coment {
@@ -163,7 +163,7 @@ export const _comments = styled.div`
 
               .user-icon {
                 padding: 5px;
-                border: 1px solid rgba(${({ theme }) => theme.accent}, 0.09);
+                border: 1px solid rgba(${({ theme }) => theme.black}, 0.09);
               }
 
               h3 {
@@ -198,7 +198,7 @@ export const _comments = styled.div`
               }
 
               .delete:hover {
-                color: rgb(${({ theme }) => theme.alert});
+                color: rgb(${({ theme }) => theme.error});
               }
 
               @media screen and (max-width: 700px) {

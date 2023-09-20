@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { IoArrowBackOutline, IoExitOutline } from 'react-icons/io5';
 import { _prompt as Container } from '@/styles/modules/logout-prompt';
 
-const LogoutPrompt: FC = (): JSX.Element => {
+const LogoutPrompt: FC = () => {
   const { state, logoutUser, logoutPromptController } = useAppContext();
   return (
     <AnimatePresence>

@@ -15,7 +15,7 @@ export const _purchase = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.1);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -262,9 +262,9 @@ export const _purchase = styled.div`
         .open-cart-button {
           ${BaseButtonOutline}
           padding: 12px;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
           :hover {
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
             background: rgba(${({ theme }) => theme.primary}, 0.2);
             transition: all 200ms ease-in-out;
           }
@@ -325,11 +325,11 @@ export const _purchase = styled.div`
           }
           p {
             text-align: end;
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
             span {
               color: rgb(${({ theme }) => theme.font});
               @media screen and (max-width: 640px) {
-                color: rgb(${({ theme }) => theme.neutral});
+                color: rgb(${({ theme }) => theme.white});
               }
             }
           }
@@ -347,8 +347,8 @@ export const _purchase = styled.div`
               min-width: 200px;
               border-radius: 12px;
               flex-direction: column;
-              background: rgba(${({ theme }) => theme.accent}, 0.5);
-              color: rgb(${({ theme }) => theme.neutral});
+              background: rgba(${({ theme }) => theme.black}, 0.5);
+              color: rgb(${({ theme }) => theme.white});
               padding: 20px;
               backdrop-filter: blur(20px);
             }

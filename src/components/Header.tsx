@@ -17,7 +17,7 @@ import { m as motion, AnimatePresence } from 'framer-motion';
 import rubymart_logo from '../../public/rubymart_logo.png';
 import { _header as Container } from '../styles/modules/header';
 
-const Header: FC = (): JSX.Element => {
+const Header: FC = () => {
   const [isMenu, setIsMenu] = useState<boolean>(false);
   const { asPath, push }: NextRouter = useRouter();
   const { state, cartModalController, logoutPromptController } =

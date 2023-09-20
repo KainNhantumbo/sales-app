@@ -1,12 +1,12 @@
 import type { FC } from 'react';
 import { BiUser } from 'react-icons/bi';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { MoonLoader } from 'react-spinners';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
 import type { TMainCommentForm } from '../../types/comments';
 
-const CommentForm: FC<TMainCommentForm> = (props): JSX.Element => {
+const CommentForm: FC<TMainCommentForm> = (props) => {
   const theme: DefaultTheme = useTheme();
   const { state, dispatch, loginPromptController } = useAppContext();
 
@@ -72,7 +72,7 @@ const CommentForm: FC<TMainCommentForm> = (props): JSX.Element => {
             <div className='loader'>
               <MoonLoader
                 size={30}
-                color={`rgb(${theme.primary_variant})`}
+                color={`rgb(${theme.primary_shade})`}
                 cssOverride={{
                   display: 'block',
                   margin: '0 auto',

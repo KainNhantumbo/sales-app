@@ -4,7 +4,7 @@ import Layout from '../../components/Layout';
 import { complements } from '@/shared/data';
 import { _legal as Container } from '@/styles/common/legal';
 
-const StoreVerification: NextPage = (): JSX.Element => (
+const StoreVerification: NextPage = () => (
   <Layout
     metadata={{ title: complements.defaultTitle + ' | Verificação de Loja' }}>
     <Container>

@@ -11,7 +11,7 @@ import { DefaultTheme, useTheme } from 'styled-components';
 import { _dashboard as Container } from '@/styles/common/dashbord';
 import { app_metadata, complements, dashboardActions } from '@/shared/data';
 
-const Dashboard: NextPage = (): JSX.Element => {
+const Dashboard: NextPage = () => {
   const { state } = useAppContext();
   const theme: DefaultTheme = useTheme();
   const actionRoutes: TDashboardActions = dashboardActions({
@@ -86,7 +86,7 @@ const Dashboard: NextPage = (): JSX.Element => {
                               }}
                               whileHover={{
                                 translateY: -8,
-                                boxShadow: `0px 12px 25px 10px rgba(${theme.accent}, 0.09)`,
+                                boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`,
                               }}>
                               <Link href={path.url}>
                                 <path.icon />

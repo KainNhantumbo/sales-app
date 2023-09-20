@@ -17,11 +17,7 @@ type TProps = {
   productId: string;
 };
 
-const ShareProducts: FC<TProps> = ({
-  name,
-  category,
-  productId,
-}): JSX.Element => {
+const ShareProducts: FC<TProps> = ({ name, category, productId }) => {
   const { state, shareProductController } = useAppContext();
 
   const options = [

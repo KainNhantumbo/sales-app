@@ -8,7 +8,7 @@ import { useAppContext } from '@/context/AppContext';
 import { IoArrowBackOutline, IoExitOutline } from 'react-icons/io5';
 import { _prompt as Container } from '@/styles/modules/logout-prompt';
 
-const RequestLogin: FC = (): JSX.Element => {
+const RequestLogin: FC = () => {
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
   const { state, loginPromptController } = useAppContext();
@@ -61,7 +61,7 @@ const RequestLogin: FC = (): JSX.Element => {
                 </button>
                 <button
                   className='prompt-accept'
-                  style={{ background: `rgb(${theme.primary_variant})` }}
+                  style={{ background: `rgb(${theme.primary_shade})` }}
                   onClick={() => {
                     loginPromptController();
                     router.push('/auth/sign-in');

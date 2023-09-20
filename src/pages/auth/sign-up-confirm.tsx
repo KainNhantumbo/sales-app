@@ -6,7 +6,7 @@ import { complements } from '@/shared/data';
 import { IoLogInOutline } from 'react-icons/io5';
 import { _resetConfirmation as Container } from '@/styles/common/reset-password-confirmation';
 
-const SignUpConfirmation: NextPage = (): JSX.Element => (
+const SignUpConfirmation: NextPage = () => (
   <Layout
     metadata={{
       title: `${complements.defaultTitle} | Confirmação de Nova Conta`,

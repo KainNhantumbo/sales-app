@@ -8,7 +8,7 @@ export const _footer = styled.footer`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background: rgba(${({ theme }) => theme.foreground_variant}, 0.5);
+  background: rgba(${({ theme }) => theme.foreground_shade}, 0.5);
   backdrop-filter: blur(10px);
   position: relative;
 
@@ -27,8 +27,8 @@ export const _footer = styled.footer`
 
   * {
     ::selection {
-      background: rgb(${({ theme }) => theme.background_variant});
-      color: rgb(${({ theme }) => theme.primary_variant});
+      background: rgb(${({ theme }) => theme.background_shade});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -59,7 +59,7 @@ export const _footer = styled.footer`
       svg {
         width: 20px;
         height: 20px;
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
       }
       span {
         padding-left: 5px;
@@ -98,7 +98,7 @@ export const _footer = styled.footer`
           svg {
             width: 20px;
             height: 20px;
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
           }
           span {
             padding-left: 5px;
@@ -117,7 +117,7 @@ export const _footer = styled.footer`
               line-height: 1.2rem;
               :hover {
                 cursor: pointer;
-                color: rgb(${({ theme }) => theme.primary_variant});
+                color: rgb(${({ theme }) => theme.primary_shade});
               }
             }
           }
@@ -175,7 +175,7 @@ export const _footer = styled.footer`
           border-radius: 10px;
 
           :hover {
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
           }
 
           svg {

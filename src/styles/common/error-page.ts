@@ -19,7 +19,7 @@ export const errorPage = styled.article`
       font-weight: 500;
       font-size: 2.4rem;
       line-height: 2.8rem;
-      color: rgb(${({ theme }) => theme.alert});
+      color: rgb(${({ theme }) => theme.error});
     }
 
     button {

@@ -19,7 +19,7 @@ export const _productEditor = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.2);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -110,7 +110,7 @@ export const _productEditor = styled.div`
     }
 
     .p-bottom {
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
       margin-top: 5px;
     }
   }
@@ -244,7 +244,7 @@ export const _productEditor = styled.div`
                 outline: none;
                 border-radius: 15px;
                 box-shadow: inset 0 0 5px
-                  rgba(${({ theme }) => theme.accent}, 0.2);
+                  rgba(${({ theme }) => theme.black}, 0.2);
                 transition: 0.5s ease;
                 margin-top: 0.4em;
                 margin-right: 0.2em;
@@ -263,13 +263,13 @@ export const _productEditor = styled.div`
                   top: -2px;
                   left: 0;
                   background: rgba(${({ theme }) => theme.font});
-                  box-shadow: 0 0 20px rgba(${({ theme }) => theme.accent}, 0.5);
+                  box-shadow: 0 0 20px rgba(${({ theme }) => theme.black}, 0.5);
                   transition: all 0.2s ease;
                 }
 
                 :checked::after {
                   transform: scale(1.1) translateX(35px);
-                  background: rgba(${({ theme }) => theme.primary_variant});
+                  background: rgba(${({ theme }) => theme.primary_shade});
                 }
               }
             }
@@ -342,7 +342,7 @@ export const _productEditor = styled.div`
                   :hover {
                     background: rgba(${({ theme }) => theme.primary}, 0.6);
                     svg {
-                      color: rgb(${({ theme }) => theme.neutral});
+                      color: rgb(${({ theme }) => theme.white});
                     }
                   }
                 }
@@ -357,10 +357,10 @@ export const _productEditor = styled.div`
                   border-radius: 12px;
                   background: rgba(${({ theme }) => theme.primary}, 0.8);
                   :hover {
-                    background: rgba(${({ theme }) => theme.alert}, 0.6);
+                    background: rgba(${({ theme }) => theme.error}, 0.6);
 
                     svg {
-                      color: rgb(${({ theme }) => theme.neutral});
+                      color: rgb(${({ theme }) => theme.white});
                     }
                   }
                 }
@@ -388,7 +388,7 @@ export const _productEditor = styled.div`
         line-height: 1.4rem;
 
         .error-message {
-          color: rgb(${({ theme }) => theme.alert});
+          color: rgb(${({ theme }) => theme.error});
           font-weight: 500;
           font-size: 1.1rem;
           line-height: 1.4rem;
@@ -410,7 +410,7 @@ export const _productEditor = styled.div`
           font-size: 1.1rem;
           gap: 10px;
           padding: 20px;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
 
         .btns-container {

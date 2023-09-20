@@ -4,7 +4,7 @@ import {
   BaseButtonOutline,
   Button_Mono_A,
   StyledInputs,
-  StyledLabels
+  StyledLabels,
 } from '../defaults';
 
 export const _storeEditor = styled.div`
@@ -19,7 +19,7 @@ export const _storeEditor = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.2);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -42,7 +42,7 @@ export const _storeEditor = styled.div`
       font-size: 1.2rem;
     }
     p {
-      color: rgb(${({ theme }) => theme.alert});
+      color: rgb(${({ theme }) => theme.error});
       padding: 0 20px;
       line-height: 1.6rem;
       text-align: center;
@@ -72,7 +72,7 @@ export const _storeEditor = styled.div`
     }
 
     .p-bottom {
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
       margin-top: 5px;
     }
   }
@@ -244,7 +244,7 @@ export const _storeEditor = styled.div`
                 border-radius: 50%;
                 background: rgba(${({ theme }) => theme.primary}, 0.8);
                 :hover {
-                  background: rgba(${({ theme }) => theme.alert}, 0.6);
+                  background: rgba(${({ theme }) => theme.error}, 0.6);
                 }
               }
             }
@@ -270,7 +270,7 @@ export const _storeEditor = styled.div`
         line-height: 1.4rem;
 
         .error-message {
-          color: rgb(${({ theme }) => theme.alert});
+          color: rgb(${({ theme }) => theme.error});
           font-weight: 500;
           font-size: 1.1rem;
           line-height: 1.4rem;
@@ -292,7 +292,7 @@ export const _storeEditor = styled.div`
           font-size: 1.1rem;
           gap: 10px;
           padding: 20px;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
 
         .btns-container {
@@ -326,7 +326,7 @@ export const _storeEditor = styled.div`
         section {
           span {
             line-height: 1.8rem;
-            color: rgb(${({ theme }) => theme.alert});
+            color: rgb(${({ theme }) => theme.error});
           }
         }
 

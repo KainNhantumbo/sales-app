@@ -12,7 +12,7 @@ import { FC, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BiUser } from 'react-icons/bi';
 import { FaEdit } from 'react-icons/fa';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { BsTrash } from 'react-icons/bs';
 import { complements } from '@/shared/data';
 import { useAppContext } from '@/context/AppContext';
@@ -31,7 +31,7 @@ interface IProps {
   favoritesId?: string | undefined;
 }
 
-const StoriesRenderer: FC<IProps> = (props): JSX.Element => {
+const StoriesRenderer: FC<IProps> = (props) => {
   const {
     state,
     dispatch,
@@ -345,7 +345,7 @@ const StoriesRenderer: FC<IProps> = (props): JSX.Element => {
           <div className='loading'>
             <PulseLoader
               size={20}
-              color={`rgb(${theme.primary_variant})`}
+              color={`rgb(${theme.primary_shade})`}
               aria-placeholder='Processando...'
               cssOverride={{
                 display: 'block',

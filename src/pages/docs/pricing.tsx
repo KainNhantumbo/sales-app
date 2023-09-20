@@ -8,7 +8,7 @@ import { DefaultTheme, useTheme } from 'styled-components';
 import { complements, pricing_data } from '@/shared/data';
 import { _pricing as Container } from '@/styles/common/pricing';
 
-const Pricing: NextPage = (): JSX.Element => {
+const Pricing: NextPage = () => {
   const theme: DefaultTheme = useTheme();
 
   return (
@@ -36,7 +36,7 @@ const Pricing: NextPage = (): JSX.Element => {
                     <motion.div
                       key={index.toString()}
                       whileHover={{
-                        boxShadow: `0 0 25px rgba(${theme.accent}, 0.09)`,
+                        boxShadow: `0 0 25px rgba(${theme.black}, 0.09)`,
                         border: '1px solid transparent',
                       }}>
                       <h4>{plan.type}</h4>

@@ -3,7 +3,7 @@ import Layout from '@/components/Layout';
 import { complements } from '@/shared/data';
 import { _legal as Container } from '@/styles/common/legal';
 
-const PrivacyPolicy: NextPage = (): JSX.Element => (
+const PrivacyPolicy: NextPage = () => (
   <Layout
     metadata={{
       title: complements.defaultTitle + ' | Política de Privacidade',

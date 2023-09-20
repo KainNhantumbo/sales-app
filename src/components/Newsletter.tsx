@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import fetch from '../config/client';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { BsMailbox2 } from 'react-icons/bs';
 import { PulseLoader } from 'react-spinners';
 import { useState, useEffect, FC } from 'react';
@@ -11,7 +11,7 @@ import { DefaultTheme, useTheme } from 'styled-components';
 import newsletter_image from '../../public/assets/newsletter.png';
 import { _newsletter as Container } from '../styles/modules/newsletter';
 
-const NewsLetter: FC = (): JSX.Element => {
+const NewsLetter: FC = () => {
   const theme: DefaultTheme = useTheme();
   const { state, dispatch } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);

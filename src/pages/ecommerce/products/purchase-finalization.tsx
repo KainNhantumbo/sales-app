@@ -28,7 +28,7 @@ type TOrderSummary = {
   user_name: string;
 };
 
-const OrderFinalization: NextPage = (): JSX.Element => {
+const OrderFinalization: NextPage = () => {
   const { fetchAPI } = useAppContext();
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();

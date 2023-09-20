@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Comment from './Comment';
 import { AxiosResponse } from 'axios';
 import CommentForm from './CommentForm';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import ReplyComment from './ReplyComment';
 import ReplyCommentForm from './ReplyCommentForm';
 import { NextRouter, useRouter } from 'next/router';
@@ -26,7 +26,7 @@ type TLoading = {
   key: 'create-comment' | 'update-comment' | 'delete-comment';
 };
 
-const Comments: FC<TProps> = ({ contentId }): JSX.Element => {
+const Comments: FC<TProps> = ({ contentId }) => {
   const router: NextRouter = useRouter();
   const { state, dispatch, fetchAPI, deleteCommentPromptController } =
     useAppContext();

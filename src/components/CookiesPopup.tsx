@@ -5,7 +5,7 @@ import { useState, useEffect, FC } from 'react';
 import { AnimatePresence, m as motion } from 'framer-motion';
 import { _cookies as Container } from '../styles/modules/cookies-popup';
 
-const CookiesPopup: FC = (): JSX.Element => {
+const CookiesPopup: FC = () => {
   const [privacyAdvisor, setprivacyAdvisor] = useState<boolean>();
 
   // controls the life cicle of the component

@@ -25,7 +25,7 @@ export const _prompt = styled.section`
     background: rgb(${({ theme }) => theme.foreground});
     max-width: 500px;
     margin: 25px;
-    box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.1);
+    box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.1);
 
     .prompt-info {
       display: flex;
@@ -34,7 +34,7 @@ export const _prompt = styled.section`
       gap: 10px;
       span {
         font-weight: 500;
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
       }
       p {
         line-height: 1.6rem;
@@ -42,7 +42,7 @@ export const _prompt = styled.section`
       }
 
       a {
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
       }
     }
 
@@ -57,8 +57,8 @@ export const _prompt = styled.section`
       }
       .prompt-accept {
         ${BaseButton}
-        background: rgb(${({ theme }) => theme.alert});
-        color: rgb(${({ theme }) => theme.neutral});
+        background: rgb(${({ theme }) => theme.error});
+        color: rgb(${({ theme }) => theme.white});
       }
     }
   }

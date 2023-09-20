@@ -13,7 +13,7 @@ export const _profile = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.2);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -156,7 +156,7 @@ export const _profile = styled.div`
               border-radius: 10px;
 
               :hover {
-                color: rgb(${({ theme }) => theme.primary_variant});
+                color: rgb(${({ theme }) => theme.primary_shade});
               }
             }
           }
@@ -185,7 +185,7 @@ export const _profile = styled.div`
           color: rgb(${({ theme }) => theme.font});
           :hover {
             box-shadow: none;
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
           }
         }
       }

@@ -5,7 +5,7 @@ import { BsCreditCard2Front, BsTruck } from 'react-icons/bs';
 import { _legal as Container } from '@/styles/common/legal';
 import { IoBulb, IoCogOutline, IoFootsteps } from 'react-icons/io5';
 
-const FAQ: NextPage = (): JSX.Element => (
+const FAQ: NextPage = () => (
   <Layout
     metadata={{ title: complements.defaultTitle + ' | Perguntas Frequêntes' }}>
     <Container>

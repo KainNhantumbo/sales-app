@@ -37,7 +37,7 @@ const core_habits: Array<{ phrase: string; paragraph: string }> = [
   },
 ];
 
-const About: NextPage = (): JSX.Element => {
+const About: NextPage = () => {
   const theme: DefaultTheme = useTheme();
   return (
     <Layout metadata={{ title: complements.defaultTitle + ' | Sobre nós' }}>
@@ -144,7 +144,7 @@ const About: NextPage = (): JSX.Element => {
                   }}
                   whileHover={{
                     translateY: -8,
-                    boxShadow: `0px 20px 30px 10px rgba(${theme.accent}, 0.09)`,
+                    boxShadow: `0px 20px 30px 10px rgba(${theme.black}, 0.09)`,
                   }}
                   className={`core-habit ${'item' + index.toString()}`}>
                   <h3>{'0'.concat(Number(index + 1).toString())}</h3>

@@ -3,7 +3,7 @@ import type { FC } from 'react';
 import type { HeadProps } from '../types';
 import { complements } from '@/shared/data';
 
-const CustomHead: FC<HeadProps> = (props): JSX.Element => (
+const CustomHead: FC<HeadProps> = (props) => (
   <Head>
     <meta
       name='apple-mobile-web-app-title'

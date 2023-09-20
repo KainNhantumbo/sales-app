@@ -15,19 +15,19 @@ import { useEffect } from 'react';
 import Select from 'react-select';
 import { TOrder } from '../../../../types';
 import { formatDate } from '@/lib/utils';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import Layout from '@/components/Layout';
 import { PulseLoader } from 'react-spinners';
 import SideBarAds from '@/components/SidaBarAds';
 import { BsBox2, BsBox2Fill } from 'react-icons/bs';
 import { useAppContext } from '@/context/AppContext';
-import { renderReactSelectCSS } from '@/styles/select';
+import { renderReactSelectCSS } from '@/styles/modules/select';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { _myOrders as Container } from '@/styles/common/my-orders';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
 
-const MyOrders: NextPage = (): JSX.Element => {
+const MyOrders: NextPage = () => {
   const QUERY_LIMIT: number = 10;
   const theme: DefaultTheme = useTheme();
   const { state, dispatch, fetchAPI } = useAppContext();

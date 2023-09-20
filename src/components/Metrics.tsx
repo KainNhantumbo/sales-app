@@ -3,12 +3,12 @@ import { _metrics as Container } from '@/styles/modules/metrics';
 import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from '@/context/AppContext';
 import { TMetrics } from '../types';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { BiStats } from 'react-icons/bi';
 import { formatCurrency } from '@/lib/utils';
 import { IoReload } from 'react-icons/io5';
 
-const Metrics: FC = (): JSX.Element => {
+const Metrics: FC = () => {
   const { state, dispatch, fetchAPI } = useAppContext();
 
   const getMetrics = async (): Promise<TMetrics> => {

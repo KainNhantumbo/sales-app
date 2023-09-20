@@ -21,21 +21,21 @@ import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { InputEvents } from '../../../types';
 import { formatCurrency } from '@/lib/utils';
 import { FaDollarSign } from 'react-icons/fa';
 import NewsLetter from '@/components/Newsletter';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { renderReactSelectCSS } from '@/styles/select';
+import { renderReactSelectCSS } from '@/styles/modules/select';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { _purchase as Container } from '@/styles/common/purchase';
 import renderPaymentInputs from '@/components/RenderPaymentMethodInputs';
 
 const Select = dynamic(import('react-select'), { ssr: false });
 
-const Purchase: NextPage = (): JSX.Element => {
+const Purchase: NextPage = () => {
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
   const { state, dispatch, fetchAPI, cartModalController } = useAppContext();
@@ -381,7 +381,7 @@ const Purchase: NextPage = (): JSX.Element => {
                       className='payment-option'
                       whileTap={{ scale: 0.98 }}
                       whileHover={{
-                        boxShadow: `0px 12px 25px 10px rgba(${theme.accent}, 0.09)`,
+                        boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`,
                       }}>
                       <label htmlFor={String(index)}>
                         <span>Pagar com {option.label}</span>

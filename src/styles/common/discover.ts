@@ -11,8 +11,8 @@ export const _discover = styled.div`
 
   * {
     ::selection {
-      background: rgb(${({ theme }) => theme.background_variant});
-      color: rgb(${({ theme }) => theme.primary_variant});
+      background: rgb(${({ theme }) => theme.background_shade});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -86,7 +86,7 @@ export const _discover = styled.div`
 
     .features {
       width: 100%;
-      background: rgb(${({ theme }) => theme.background_variant});
+      background: rgb(${({ theme }) => theme.background_shade});
       user-select: none;
 
       .wrapper {
@@ -108,7 +108,7 @@ export const _discover = styled.div`
         align-self: flex-start;
 
         i {
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
           display: block;
           padding-left: 30px;
         }
@@ -228,7 +228,7 @@ export const _discover = styled.div`
           h5 {
             font-size: 1.8rem;
             line-height: 2rem;
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
           }
 
           ul {

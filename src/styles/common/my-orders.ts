@@ -17,7 +17,7 @@ export const _myOrders = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.2);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -99,13 +99,13 @@ export const _myOrders = styled.div`
             .invalidated {
               padding: 5px 8px;
               border-radius: 12px;
-              color: rgb(${({ theme }) => theme.neutral});
-              background: rgb(${({ theme }) => theme.accent});
+              color: rgb(${({ theme }) => theme.white});
+              background: rgb(${({ theme }) => theme.black});
             }
             .validated {
               padding: 5px 8px;
               border-radius: 12px;
-              color: rgb(${({ theme }) => theme.neutral});
+              color: rgb(${({ theme }) => theme.white});
               background: rgb(${({ theme }) => theme.primary});
             }
           }
@@ -299,7 +299,7 @@ export const _myOrders = styled.div`
         svg {
           width: 70px;
           height: 70px;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
 
         h3 {

@@ -14,7 +14,7 @@ export const DenounceContainer = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.1);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -49,17 +49,17 @@ export const DenounceContainer = styled.div`
     }
 
     a {
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
 
     p {
       max-width: 800px;
       line-height: 1.6rem;
-        font-size: 1rem;
+      font-size: 1rem;
     }
 
     .error-message {
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
       font-weight: 500;
     }
 

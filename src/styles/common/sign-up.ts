@@ -9,12 +9,12 @@ export const _signUp = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: flex-start;
-  background: rgba(${({ theme }) => theme.background_variant}, 0.3);
+  background: rgba(${({ theme }) => theme.background_shade}, 0.3);
 
   * {
     ::selection {
-      background: rgb(${({ theme }) => theme.background_variant});
-      color: rgb(${({ theme }) => theme.primary_variant});
+      background: rgb(${({ theme }) => theme.background_shade});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -47,7 +47,7 @@ export const _signUp = styled.div`
       padding: 30px 25px;
       margin: 25px;
       background: rgb(${({ theme }) => theme.foreground});
-      box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.09);
+      box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.09);
 
       @media screen and (min-width: 440px) {
         min-width: 400px;
@@ -95,7 +95,7 @@ export const _signUp = styled.div`
         }
 
         .error-message {
-          color: rgb(${({ theme }) => theme.alert});
+          color: rgb(${({ theme }) => theme.error});
           font-weight: 500;
           font-size: 0.8rem;
           line-height: 1.4rem;
@@ -115,10 +115,10 @@ export const _signUp = styled.div`
         line-height: 1.4rem;
 
         a {
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
           cursor: pointer;
           :hover {
-            color: rgb(${({ theme }) => theme.accent});
+            color: rgb(${({ theme }) => theme.black});
           }
 
           span {

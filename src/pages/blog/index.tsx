@@ -12,7 +12,7 @@ import { NextPage } from 'next';
 import { useEffect } from 'react';
 import { IBlogPosts } from '../../types';
 import Layout from '@/components/Layout';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import { getPosts } from '@/lib/queries';
 import { formatDate } from '@/lib/utils';
 import { PulseLoader } from 'react-spinners';
@@ -28,7 +28,7 @@ import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
 import { blurDataUrlImage, complements } from '@/shared/data';
 import buyingWomenImg from '@/../public/assets/buying_women.png';
 
-const Blog: NextPage = (): JSX.Element => {
+const Blog: NextPage = () => {
   const LIMIT: number = 8;
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
@@ -189,7 +189,7 @@ const Blog: NextPage = (): JSX.Element => {
                   <div className='loading'>
                     <PulseLoader
                       size={20}
-                      color={`rgb(${theme.primary_variant})`}
+                      color={`rgb(${theme.primary_shade})`}
                       aria-placeholder='Processando...'
                       cssOverride={{
                         display: 'block',

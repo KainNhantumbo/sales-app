@@ -41,7 +41,7 @@ export const _search = styled.div`
     }
 
     .clear-btn {
-      color: rgb(${({ theme }) => theme.alert});
+      color: rgb(${({ theme }) => theme.error});
     }
   }
 `;

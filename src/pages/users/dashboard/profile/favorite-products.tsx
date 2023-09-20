@@ -10,7 +10,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import fetch from '@/config/client';
 import { motion } from 'framer-motion';
-import { actions } from '@/shared/actions';
+import actions from '@/shared/actions';
 import Layout from '@/components/Layout';
 import { useEffect, useState } from 'react';
 import { formatCurrency } from '@/lib/utils';
@@ -24,7 +24,7 @@ import { _favoriteProducts as Container } from '@/styles/common/favorite-product
 
 type TProps = { products: TPublicProducts[] };
 
-const FavoriteProducts: NextPage<TProps> = ({ products }): JSX.Element => {
+const FavoriteProducts: NextPage<TProps> = ({ products }) => {
   const {
     state,
     dispatch,
@@ -117,7 +117,7 @@ const FavoriteProducts: NextPage<TProps> = ({ products }): JSX.Element => {
                       innerWidth > 445
                         ? {
                             translateY: -8,
-                            boxShadow: `0px 12px 25px 10px rgba(${theme.accent}, 0.09)`,
+                            boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`,
                           }
                         : undefined
                     }>

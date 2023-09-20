@@ -6,7 +6,7 @@ import SearchStories from '@/components/SearchStories';
 import { _feed as Container } from '@/styles/common/feed';
 import StoriesRenderer from '@/components/StoriesRenderer';
 
-const Feed: NextPage = (): JSX.Element => (
+const Feed: NextPage = () => (
   <Layout
     metadata={{
       title: String.prototype.concat(complements.defaultTitle, ' | Feed'),

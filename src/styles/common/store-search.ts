@@ -12,8 +12,8 @@ export const _storeSeach = styled.div`
 
   * {
     ::selection {
-      background: rgb(${({ theme }) => theme.background_variant});
-      color: rgb(${({ theme }) => theme.primary_variant});
+      background: rgb(${({ theme }) => theme.background_shade});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -59,7 +59,7 @@ export const _storeSeach = styled.div`
         svg {
           width: 70px;
           height: 70px;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
 
         h3 {
@@ -130,7 +130,7 @@ export const _storeSeach = styled.div`
 
         :hover {
           cursor: pointer;
-          box-shadow: 0 0 20px rgba(${({ theme }) => theme.accent}, 0.09);
+          box-shadow: 0 0 20px rgba(${({ theme }) => theme.black}, 0.09);
           transition: all 200ms ease-in-out;
         }
 
@@ -171,7 +171,7 @@ export const _storeSeach = styled.div`
           font-weight: 500;
           font-size: 1rem;
           line-height: 1.4rem;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
 
         button {
@@ -187,7 +187,7 @@ export const _storeSeach = styled.div`
           text-overflow: ellipsis;
           overflow: hidden;
           :hover {
-            color: rgb(${({ theme }) => theme.primary_variant});
+            color: rgb(${({ theme }) => theme.primary_shade});
           }
           svg {
             width: 20px;
@@ -212,19 +212,19 @@ export const _storeSeach = styled.div`
       display: grid;
       place-content: center;
       place-items: center;
-  
+
       .fetch-error-message {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 20px;
         margin: 20px 0;
-        color: rgb(${({ theme }) => theme.alert});
+        color: rgb(${({ theme }) => theme.error});
         font-weight: 500;
         font-size: 1.1rem;
         line-height: 1.4rem;
         align-self: flex-end;
-  
+
         button {
           ${BaseButton}
         }
@@ -234,9 +234,9 @@ export const _storeSeach = styled.div`
         font-size: 1.2rem;
         font-weight: 500;
         line-height: 1.6rem;
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
       }
-  
+
       .loading {
         width: 100%;
         height: 100%;
@@ -249,7 +249,7 @@ export const _storeSeach = styled.div`
         gap: 10px;
         padding: 20px;
         margin: 0 auto;
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
       }
     }
   }
@@ -259,7 +259,7 @@ export const _storeSeach = styled.div`
     justify-content: center;
     align-items: center;
     background: rgb(${({ theme }) => theme.foreground});
-    color: rgb(${({ theme }) => theme.primary_variant});
+    color: rgb(${({ theme }) => theme.primary_shade});
     border-radius: 20px;
     svg {
       width: 25px;

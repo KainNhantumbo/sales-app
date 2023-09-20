@@ -14,12 +14,12 @@ export const _about = styled.div`
   * {
     ::selection {
       background: rgba(${({ theme }) => theme.font}, 0.1);
-      color: rgb(${({ theme }) => theme.primary_variant});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
   a {
-    color: rgb(${({ theme }) => theme.secondary_variant});
+    color: rgb(${({ theme }) => theme.secondary_shade});
     font-weight: 500;
   }
 
@@ -158,7 +158,7 @@ export const _about = styled.div`
         min-width: 435px;
 
         i {
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
 
         @media screen and (max-width: 400px) {
@@ -210,7 +210,7 @@ export const _about = styled.div`
         border-radius: 20px;
         width: fit-content;
         background: rgb(${({ theme }) => theme.background});
-        box-shadow: 0 0 30px 10px rgba(${({ theme }) => theme.accent}, 0.1);
+        box-shadow: 0 0 30px 10px rgba(${({ theme }) => theme.black}, 0.1);
         border-right: 4px solid transparent;
         cursor: grab;
         h3 {
@@ -237,9 +237,9 @@ export const _about = styled.div`
           }
         }
         :nth-child(2n + 2) {
-          border-right: 4px solid rgb(${({ theme }) => theme.secondary_variant});
+          border-right: 4px solid rgb(${({ theme }) => theme.secondary_shade});
           strong {
-            color: rgb(${({ theme }) => theme.secondary_variant});
+            color: rgb(${({ theme }) => theme.secondary_shade});
           }
         }
         :nth-child(3n + 1) {

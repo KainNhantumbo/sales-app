@@ -13,8 +13,8 @@ export const _resetConfirmation = styled.div`
 
   * {
     ::selection {
-      background: rgb(${({ theme }) => theme.background_variant});
-      color: rgb(${({ theme }) => theme.primary_variant});
+      background: rgb(${({ theme }) => theme.background_shade});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
   }
 
@@ -77,7 +77,7 @@ export const _resetConfirmation = styled.div`
         svg {
           width: 60px;
           height: 60px;
-          color: rgb(${({ theme }) => theme.primary_variant});
+          color: rgb(${({ theme }) => theme.primary_shade});
         }
       }
 
@@ -86,10 +86,10 @@ export const _resetConfirmation = styled.div`
       }
 
       .a-back {
-        color: rgb(${({ theme }) => theme.primary_variant});
+        color: rgb(${({ theme }) => theme.primary_shade});
         cursor: pointer;
         :hover {
-          color: rgb(${({ theme }) => theme.accent});
+          color: rgb(${({ theme }) => theme.black});
         }
 
         span {

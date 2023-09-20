@@ -9,14 +9,13 @@ export const ContactContainer = styled.div`
   line-height: 1.6rem;
   background: rgb(${({ theme }) => theme.background});
 
-
   h2,
   h3 {
     font-weight: 500;
   }
 
   a {
-    color: rgb(${({ theme }) => theme.secondary_variant});
+    color: rgb(${({ theme }) => theme.secondary_shade});
     font-weight: 500;
   }
 
@@ -47,7 +46,6 @@ export const ContactContainer = styled.div`
     }
   }
 
-
   .container {
     background: rgb(${({ theme }) => theme.background});
     display: flex;
@@ -74,7 +72,7 @@ export const ContactContainer = styled.div`
     padding: 20px;
     border-radius: 20px;
     background: rgb(${({ theme }) => theme.foreground});
-    box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.09);
+    box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.09);
 
     .form-control {
       display: flex;
@@ -103,7 +101,7 @@ export const ContactContainer = styled.div`
     }
 
     .errorMessage {
-      color: rgb(${({ theme }) => theme.alert});
+      color: rgb(${({ theme }) => theme.error});
       font-size: 0.9rem;
       font-weight: 500;
     }
