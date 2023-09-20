@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { NextPage } from 'next';
 import Layout from '@/components/Layout';
 import { BiUserPlus } from 'react-icons/bi';
-import { complements } from '@/data/app-data';
+import { complements } from '@/shared/data';
 import { IoLogInOutline } from 'react-icons/io5';
 import { _resetConfirmation as Container } from '@/styles/common/reset-password-confirmation';
 

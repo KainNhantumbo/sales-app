@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import { IoClose } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
 import { _search as Container } from '@/styles/modules/search-form';
@@ -29,7 +29,8 @@ const SearchStories: FC = (): JSX.Element => {
         </div>
 
         {state.searchStories.length > 0 && (
-          <button className='clear-btn'
+          <button
+            className='clear-btn'
             onClick={(): void =>
               dispatch({
                 type: actions.SEARCH_USER_STORIES,

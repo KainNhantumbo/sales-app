@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { NextPage } from 'next';
 import Layout from '../../components/Layout';
-import { complements } from '@/data/app-data';
+import { complements } from '@/shared/data';
 import { _legal as Container } from '@/styles/common/legal';
 
 const StoreVerification: NextPage = (): JSX.Element => (

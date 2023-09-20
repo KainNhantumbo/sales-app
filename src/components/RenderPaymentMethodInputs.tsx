@@ -1,5 +1,5 @@
-import { actions } from '@/data/actions';
-import type { TPaymentType } from '@/../@types';
+import { actions } from '@/shared/actions';
+import type { TPaymentType } from '../types';
 import { useAppContext } from '@/context/AppContext';
 import { IoPhonePortraitOutline } from 'react-icons/io5';
 

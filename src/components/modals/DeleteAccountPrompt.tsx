@@ -4,9 +4,9 @@ import {
   IoMailOutline,
 } from 'react-icons/io5';
 import fetch from '@/config/client';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import { BsTrash } from 'react-icons/bs';
-import { InputEvents } from '@/../@types';
+import { InputEvents } from '../../types';
 import { useState, useEffect, FC } from 'react';
 import { useRouter, NextRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';

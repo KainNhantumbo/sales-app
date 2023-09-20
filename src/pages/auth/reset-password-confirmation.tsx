@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { NextPage } from 'next';
 import Layout from '@/components/Layout';
 import { IoMailOpen } from 'react-icons/io5';
-import { complements } from '@/data/app-data';
+import { complements } from '@/shared/data';
 import { FaEnvelopeOpenText } from 'react-icons/fa';
 import { _resetConfirmation as Container } from '@/styles/common/reset-password-confirmation';
 

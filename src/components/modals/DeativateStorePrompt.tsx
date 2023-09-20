@@ -1,4 +1,4 @@
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import { FaStoreSlash } from 'react-icons/fa';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';

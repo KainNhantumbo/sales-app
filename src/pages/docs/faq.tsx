@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import Layout from '@/components/Layout';
-import { complements } from '@/data/app-data';
+import { complements } from '@/shared/data';
 import { BsCreditCard2Front, BsTruck } from 'react-icons/bs';
 import { _legal as Container } from '@/styles/common/legal';
 import { IoBulb, IoCogOutline, IoFootsteps } from 'react-icons/io5';

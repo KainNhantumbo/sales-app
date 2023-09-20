@@ -5,7 +5,7 @@ import {
   FaTwitter,
 } from 'react-icons/fa';
 import { FC } from 'react';
-import { complements } from '@/data/app-data';
+import { complements } from '@/shared/data';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoClose, IoShareSocial } from 'react-icons/io5';

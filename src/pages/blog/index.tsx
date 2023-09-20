@@ -10,9 +10,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { NextPage } from 'next';
 import { useEffect } from 'react';
-import { IBlogPosts } from '@/../@types';
+import { IBlogPosts } from '../../types';
 import Layout from '@/components/Layout';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import { getPosts } from '@/lib/queries';
 import { formatDate } from '@/lib/utils';
 import { PulseLoader } from 'react-spinners';
@@ -25,7 +25,7 @@ import { _blog as Container } from '@/styles/common/blog';
 import SearchComponent from '@/components/SearchBlogPosts';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
-import { blurDataUrlImage, complements } from '@/data/app-data';
+import { blurDataUrlImage, complements } from '@/shared/data';
 import buyingWomenImg from '@/../public/assets/buying_women.png';
 
 const Blog: NextPage = (): JSX.Element => {

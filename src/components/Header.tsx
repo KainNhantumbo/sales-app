@@ -8,7 +8,7 @@ import {
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
-import { urls } from '@/data/app-data';
+import { urls } from '@/shared/data';
 import { BiUser } from 'react-icons/bi';
 import { useState, useEffect, FC } from 'react';
 import { NextRouter, useRouter } from 'next/router';

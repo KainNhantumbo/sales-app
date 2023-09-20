@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import type { FC } from 'react';
-import type { HeadProps } from '@/../@types';
-import { complements } from '@/data/app-data';
+import type { HeadProps } from '../types';
+import { complements } from '@/shared/data';
 
 const CustomHead: FC<HeadProps> = (props): JSX.Element => (
   <Head>

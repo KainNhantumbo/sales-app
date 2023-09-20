@@ -4,7 +4,7 @@ import Footer from './Footer';
 import Cart from './modals/Cart';
 import PageLoader from './PageLoader';
 import { FC, ReactNode, useEffect } from 'react';
-import { HeadProps } from '../../@types/index';
+import { HeadProps } from '../types/index';
 import LogoutPrompt from './modals/LogoutPrompt';
 import RequestLogin from './modals/RequestLogin';
 import { NextRouter, useRouter } from 'next/router';

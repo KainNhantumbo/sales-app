@@ -1,5 +1,5 @@
 import { FiX } from 'react-icons/fi';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import { BiSearch } from 'react-icons/bi';
 import { FC, useEffect, useState } from 'react';
 import { useAppContext } from '@/context/AppContext';

@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { IoIosQuote } from 'react-icons/io';
-import { complements } from '@/data/app-data';
+import { complements } from '@/shared/data';
 import NewsLetter from '@/components/Newsletter';
 import { IoStorefrontOutline } from 'react-icons/io5';
 import { DefaultTheme, useTheme } from 'styled-components';

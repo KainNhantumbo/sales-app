@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { NextPage } from 'next';
-import { TOrder } from '@/../@types';
+import { TOrder } from '../../../types';
 import Layout from '@/components/Layout';
 import { DotLoader } from 'react-spinners';
 import { useEffect, useState } from 'react';
@@ -11,7 +11,7 @@ import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { IoCart, IoChevronBack, IoReload } from 'react-icons/io5';
-import { complements, order_status_labels } from '@/data/app-data';
+import { complements, order_status_labels } from '@/shared/data';
 import { _purchaseFinalization as Container } from '@/styles/common/purchase-finalization';
 
 type TOrderSummary = {

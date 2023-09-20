@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import fetch from '../config/client';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import { BsMailbox2 } from 'react-icons/bs';
 import { PulseLoader } from 'react-spinners';
 import { useState, useEffect, FC } from 'react';
-import { blurDataUrlImage } from '@/data/app-data';
+import { blurDataUrlImage } from '@/shared/data';
 import { useAppContext } from '@/context/AppContext';
 import { IoPaperPlaneOutline } from 'react-icons/io5';
 import { DefaultTheme, useTheme } from 'styled-components';

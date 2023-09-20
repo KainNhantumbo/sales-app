@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import { complements } from '@/data/app-data';
+import { complements } from '@/shared/data';
 import { NextRouter, useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DefaultTheme, useTheme } from 'styled-components';

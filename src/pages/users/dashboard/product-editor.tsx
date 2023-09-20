@@ -21,16 +21,16 @@ import {
 } from 'react-icons/io5';
 import { NextPage } from 'next';
 import Compressor from 'compressorjs';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
 import { DefaultTheme, useTheme } from 'styled-components';
-import { complements } from '@/data/app-data';
-import { InputEvents, Product } from '@/../@types';
+import { complements } from '@/shared/data';
+import { InputEvents, Product } from '../../../types';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
-import product_categories from '@/data/product-categories.json';
+import product_categories from '@/shared/product-categories.json';
 import { _productEditor as Container } from '@/styles/common/product-editor';
 import { useQuery } from '@tanstack/react-query';
 

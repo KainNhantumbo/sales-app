@@ -1,10 +1,10 @@
 import type { FC } from 'react';
 import { BiUser } from 'react-icons/bi';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import { MoonLoader } from 'react-spinners';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
-import type { TMainCommentForm } from '@/../@types/comments';
+import type { TMainCommentForm } from '../../types/comments';
 
 const CommentForm: FC<TMainCommentForm> = (props): JSX.Element => {
   const theme: DefaultTheme = useTheme();

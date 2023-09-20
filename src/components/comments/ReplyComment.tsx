@@ -10,10 +10,10 @@ import moment from 'moment';
 import type { FC } from 'react';
 import { useRouter } from 'next/router';
 import { BiUser } from 'react-icons/bi';
-import { complements } from '@/data/app-data';
+import { complements } from '@/shared/data';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useAppContext } from '@/context/AppContext';
-import type { TComment } from '@/../@types/comments';
+import type { TComment } from '../../types/comments';
 
 const ReplyComment: FC<TComment> = (props): JSX.Element => {
   const { state, deleteCommentPromptController } = useAppContext();

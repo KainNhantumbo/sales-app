@@ -27,11 +27,11 @@ import { useAppContext } from '@/context/AppContext';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { getPaths, getPost, getPosts } from '@/lib/queries';
 import { CommentCount, DiscussionEmbed } from 'disqus-react';
-import type { IBlogPost, IBlogPosts } from '@/../../@types/index';
+import type { IBlogPost, IBlogPosts } from '../../../types/index';
 import { _post as Container } from '@/styles/common/post';
 import EditorJsRenderer from '@/components/EditorJSRenderer';
 import type { TParsedContent } from '@/components/EditorJSRenderer';
-import { author, complements, shareUrlPaths } from '@/data/app-data';
+import { author, complements, shareUrlPaths } from '@/shared/data';
 
 interface IPost {
   post: IBlogPost;

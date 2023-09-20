@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { FiX } from 'react-icons/fi';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import { BiSortAlt2 } from 'react-icons/bi';
 import { HiSelector } from 'react-icons/hi';
 import { useAppContext } from '@/context/AppContext';

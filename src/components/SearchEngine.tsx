@@ -8,7 +8,7 @@ import {
 } from 'react-icons/io5';
 import Slider from 'rc-slider';
 import Select from 'react-select';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import { BiSortAlt2 } from 'react-icons/bi';
 import { FC, useEffect, useState } from 'react';
 import { useAppContext } from '@/context/AppContext';
@@ -16,7 +16,7 @@ import { renderReactSelectCSS } from '@/styles/select';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useThemeContext } from '@/context/ThemeContext';
 import { DefaultTheme, useTheme } from 'styled-components';
-import product_categories from '../data/product-categories.json';
+import product_categories from '../shared/product-categories.json';
 import { _seachEngine as Container } from '../styles/modules/search-engine';
 
 const SearchEngine: FC = (): JSX.Element => {

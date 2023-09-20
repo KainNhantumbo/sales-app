@@ -12,8 +12,8 @@ import { BiUser } from 'react-icons/bi';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useAppContext } from '@/context/AppContext';
 import { NextRouter, useRouter } from 'next/router';
-import { complements } from '@/data/app-data';
-import type { TComment } from '@/../@types/comments';
+import { complements } from '@/shared/data';
+import type { TComment } from '../../types/comments';
 
 const Comment: FC<TComment> = (props): JSX.Element => {
   const router: NextRouter = useRouter();

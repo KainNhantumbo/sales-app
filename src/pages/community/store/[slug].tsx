@@ -17,14 +17,14 @@ import {
   blurDataUrlImage,
   complements,
   formatSocialNetwork,
-} from '@/data/app-data';
+} from '@/shared/data';
 import Link from 'next/link';
 import Image from 'next/image';
 import fetch from '@/config/client';
 import { motion } from 'framer-motion';
 import { BiUser } from 'react-icons/bi';
 import Layout from '@/components/Layout';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import ErrorPage from '@/pages/error-page';
 import { useEffect, useState } from 'react';
 import { formatCurrency } from '@/lib/utils';
@@ -33,7 +33,7 @@ import { VscVerifiedFilled } from 'react-icons/vsc';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DefaultTheme, useTheme } from 'styled-components';
-import { TPublicProducts, TPublicStore } from '@/../@types';
+import { TPublicProducts, TPublicStore } from '../../../types';
 import { useThemeContext } from '@/context/ThemeContext';
 import { _store as Container } from '@/styles/common/community-store-profile';
 import SideBarAds from '@/components/SidaBarAds';

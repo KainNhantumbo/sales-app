@@ -3,9 +3,7 @@ import { css } from 'styled-components';
 export const BaseButtonOutline = css`
   border: none;
   background: none;
-  border-radius: 10px;
-  position: relative;
-  padding: 10px;
+  padding: 7px 10px;
   color: rgb(${({ theme }) => theme.font});
   width: fit-content;
   cursor: pointer;
@@ -14,61 +12,40 @@ export const BaseButtonOutline = css`
   overflow: hidden;
   outline: none;
   :hover {
-    color: rgb(${({ theme }) => theme.primary_variant});
-  }
-  svg {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top: calc(50% - 10px);
-    left: 7px;
-    pointer-events: none;
+    color: rgb(${({ theme }) => theme.primary_shade});
   }
   span {
-    padding-left: 20px;
     font-weight: 500;
     pointer-events: none;
   }
 `;
 
 export const BaseButton = css`
-  border: none;
-  border-radius: 10px;
-  position: relative;
-  padding: 10px;
+  all: unset;
+  border-radius: 5px;
+  padding: 7px 10px;
   width: fit-content;
   cursor: pointer;
-  background: rgb(${({ theme }) => theme.primary});
-  color: rgb(${({ theme }) => theme.text});
-  border: 1px solid transparent;
+  background: rgba(${({ theme }) => theme.primary}, 0.5);
+  color: rgb(${({ theme }) => theme.font});
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  outline: none;
+  border: 1px solid rgba(${({ theme }) => theme.font}, 0.15);
+  text-align: center;
+  
   :hover {
-    box-shadow: 0 0 25px rgba(${({ theme }) => theme.accent}, 0.09);
+    background: rgba(${({ theme }) => theme.primary}, 0.9);
+    border: 1px solid rgba(${({ theme }) => theme.font}, 0.3);
   }
   :disabled {
     box-shadow: none;
     background: rgba(${({ theme }) => theme.primary}, 0.4);
-    span,
-    svg {
+    span {
       color: rgb(${({ theme }) => theme.foreground});
     }
   }
-
-  svg {
-    color: inherit;
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top: calc(50% - 10px);
-    left: 7px;
-    pointer-events: none;
-  }
-
   span {
-    padding-left: 20px;
     font-weight: 500;
     pointer-events: none;
   }
@@ -78,7 +55,7 @@ export const Button_Mono_A = css`
   border: none;
   border-radius: 8px;
   background: rgb(${({ theme }) => theme.primary});
-  color: rgb(${({ theme }) => theme.text});
+  color: rgb(${({ theme }) => theme.font_dimmed});
   padding: 10px;
   width: fit-content;
   cursor: pointer;
@@ -102,7 +79,7 @@ export const Button_Mono_B = css`
   border-radius: 8px;
   background: none;
   color: rgb(${({ theme }) => theme.font});
-  border: 1px solid rgba(${({ theme }) => theme.accent}, 0.07);
+  border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
   position: relative;
   width: fit-content;
   cursor: pointer;
@@ -111,7 +88,7 @@ export const Button_Mono_B = css`
   outline: none;
 
   :hover {
-    color: rgb(${({ theme }) => theme.primary_variant});
+    color: rgb(${({ theme }) => theme.primary_shade});
   }
 
   svg {
@@ -125,10 +102,10 @@ export const Button_Mono_B = css`
 `;
 
 export const StyledCornerButton = css`
-  border-radius: 50%;
-  background: rgba(${({ theme }) => theme.primary}, 0.4);
-  color: rgb(${({ theme }) => theme.accent});
-  border: none;
+  border-radius: 5px;
+  background: none;
+  color: rgb(${({ theme }) => theme.font});
+  border: 1px solid rgba(${({ theme }) => theme.black}, 0.07);
   width: fit-content;
   cursor: pointer;
   display: grid;
@@ -137,19 +114,17 @@ export const StyledCornerButton = css`
   outline: none;
 
   :hover {
-    background: rgb(${({ theme }) => theme.alert});
-    transition: all 200ms ease;
-    svg {
-      color: #fff;
-    }
+    color: rgb(${({ theme }) => theme.primary_shade});
   }
+
   svg {
     pointer-events: none;
+    width: 20px;
+    height: 20px;
   }
 `;
 
 export const StyledLabels = css`
-  font-weight: 500;
   position: relative;
   line-height: 1.4rem;
 
@@ -178,13 +153,13 @@ export const StyledInputs = css`
     line-height: 1.2rem;
     font-weight: 400;
     outline: none;
-    border-radius: 10px;
+    border-radius: 5px;
     background: rgba(${({ theme }) => theme.background}, 0.7);
-    border: 1px solid rgba(${({ theme }) => theme.accent}, 0.05);
+    border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
     color: rgb(${({ theme }) => theme.font});
     :focus {
-      border: 1px solid rgba(${({ theme }) => theme.accent}, 0.15);
-      box-shadow: 0 0 20px rgba(${({ theme }) => theme.accent}, 0.06);
+      border: 1px solid rgba(${({ theme }) => theme.black}, 0.15);
+      box-shadow: 0 0 20px rgba(${({ theme }) => theme.black}, 0.06);
     }
     ::placeholder {
       color: rgba(${({ theme }) => theme.font}, 0.8);
@@ -219,7 +194,7 @@ export const statsContainerStyles = css`
     align-items: center;
     gap: 20px;
     margin: 20px 0;
-    color: rgb(${({ theme }) => theme.alert});
+    color: rgb(${({ theme }) => theme.error});
     font-weight: 500;
     font-size: 1.1rem;
     line-height: 1.4rem;
@@ -235,7 +210,7 @@ export const statsContainerStyles = css`
     font-size: 1.2rem;
     font-weight: 500;
     line-height: 1.6rem;
-    color: rgb(${({ theme }) => theme.primary_variant});
+    color: rgb(${({ theme }) => theme.primary_shade});
   }
 
   .loading {
@@ -252,6 +227,6 @@ export const statsContainerStyles = css`
     padding: 20px;
     margin: 0 auto;
 
-    color: rgb(${({ theme }) => theme.primary_variant});
+    color: rgb(${({ theme }) => theme.primary_shade});
   }
 `;

@@ -4,12 +4,12 @@ import { motion } from 'framer-motion';
 import { BiUser } from 'react-icons/bi';
 import Layout from '@/components/Layout';
 import Metrics from '@/components/Metrics';
-import { TDashboardActions } from '@/../@types';
+import { TDashboardActions } from '../../../types';
 import { useAppContext } from '@/context/AppContext';
 import { IoApps, IoConstruct } from 'react-icons/io5';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { _dashboard as Container } from '@/styles/common/dashbord';
-import { app_metadata, complements, dashboardActions } from '@/data/app-data';
+import { app_metadata, complements, dashboardActions } from '@/shared/data';
 
 const Dashboard: NextPage = (): JSX.Element => {
   const { state } = useAppContext();

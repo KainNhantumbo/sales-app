@@ -9,10 +9,10 @@ import {
 } from 'react';
 import fetch from '../config/client';
 import ThemeContext from './ThemeContext';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import { NextRouter, useRouter } from 'next/router';
-import { Action, State } from '@/../@types/reducer';
-import { TAuth, TCart } from '@/../@types/index';
+import { Action, State } from '../types/reducer';
+import { TAuth, TCart } from '../types/index';
 import { reducer, initialState } from '@/lib/reducer';
 import useIsomorphicLayoutEffect from '../hooks/custom-layout-efffect';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';

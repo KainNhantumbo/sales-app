@@ -10,16 +10,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import fetch from '@/config/client';
 import { motion } from 'framer-motion';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import Layout from '@/components/Layout';
 import { useEffect, useState } from 'react';
 import { formatCurrency } from '@/lib/utils';
 import SideBarAds from '@/components/SidaBarAds';
-import type { TPublicProducts } from '@/../@types';
+import type { TPublicProducts } from '../../../../types';
 import { useAppContext } from '@/context/AppContext';
 import type { GetServerSidePropsContext, NextPage } from 'next';
 import { DefaultTheme, useTheme } from 'styled-components';
-import { blurDataUrlImage, complements } from '@/data/app-data';
+import { blurDataUrlImage, complements } from '@/shared/data';
 import { _favoriteProducts as Container } from '@/styles/common/favorite-products';
 
 type TProps = { products: TPublicProducts[] };
@@ -226,11 +226,11 @@ const FavoriteProducts: NextPage<TProps> = ({ products }): JSX.Element => {
               </section>
             )}
 
-              {state.publicProducts.length < 1 && (
-                <div className='empty-data_container'>
-                  <section className='content'>
-                    <IoBarcodeOutline />
-                    <h3>
+            {state.publicProducts.length < 1 && (
+              <div className='empty-data_container'>
+                <section className='content'>
+                  <IoBarcodeOutline />
+                  <h3>
                     <span>Sem produtos para mostrar</span>
                     <p>Adicione alguns produtos a sua lista de favoritos</p>
                   </h3>

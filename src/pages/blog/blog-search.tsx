@@ -9,12 +9,12 @@ import {
 import Link from 'next/link';
 import { NextPage } from 'next';
 import { useEffect } from 'react';
-import { actions } from '@/data/actions';
-import { IBlogPosts } from '@/../@types';
+import { actions } from '@/shared/actions';
+import { IBlogPosts } from '../../types';
 import { formatDate } from '@/lib/utils';
 import Layout from '@/components/Layout';
 import { getPosts } from '@/lib/queries';
-import { complements } from '@/data/app-data';
+import { complements } from '@/shared/data';
 import NewsLetter from '@/components/Newsletter';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';

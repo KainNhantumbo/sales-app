@@ -2,8 +2,8 @@ import { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { motion } from 'framer-motion';
 import Layout from '../components/Layout';
-import { InputEvents, SubmitEvent } from '../../@types';
-import { complements } from '@/data/app-data';
+import { InputEvents, SubmitEvent } from '../types';
+import { complements } from '@/shared/data';
 import { BiEnvelope, BiMailSend } from 'react-icons/bi';
 import { ContactContainer as Container } from '@/styles/common/contact';
 
@@ -17,14 +17,14 @@ export default function Contact(): JSX.Element {
     email: complements.email,
     subject: '',
     message: '',
-    from_email: ''
+    from_email: '',
   });
 
   // picks form data
   function formDataPicker(e: InputEvents): void {
     setFormData((prevData) => ({
       ...prevData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   }
 

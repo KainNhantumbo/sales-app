@@ -1,8 +1,8 @@
 import type { FC } from 'react';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import { MoonLoader } from 'react-spinners';
 import { useAppContext } from '@/context/AppContext';
-import type { TCommentForm } from '@/../@types/comments';
+import type { TCommentForm } from '../../types/comments';
 import { DefaultTheme, useTheme } from 'styled-components';
 
 const ReplyCommentForm: FC<TCommentForm> = (props): JSX.Element => {

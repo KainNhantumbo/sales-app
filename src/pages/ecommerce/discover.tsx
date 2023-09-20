@@ -14,7 +14,7 @@ import { DefaultTheme, useTheme } from 'styled-components';
 import flying_paper from '@/../public/assets/flying paper.png';
 import { _discover as Container } from '@/styles/common/discover';
 import africa_culture from '@/../public/assets/africa-culture.png';
-import { store_features, pricing_data, complements } from '@/data/app-data';
+import { store_features, pricing_data, complements } from '@/shared/data';
 
 const Discover: NextPage = (): JSX.Element => {
   const theme: DefaultTheme = useTheme();

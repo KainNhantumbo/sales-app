@@ -11,12 +11,12 @@ import Image from 'next/image';
 import { NextPage } from 'next';
 import { useEffect } from 'react';
 import Layout from '@/components/Layout';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import { formatDate } from '@/lib/utils';
 import { PulseLoader } from 'react-spinners';
 import { IoMdCalendar } from 'react-icons/io';
 import { getStoresData } from '@/lib/queries';
-import { TPublicStoreList } from '@/../@types';
+import { TPublicStoreList } from '../../../types';
 import NewsLetter from '@/components/Newsletter';
 import { NextRouter, useRouter } from 'next/router';
 import SearchStores from '@/components/SearchPublicStores';
@@ -24,7 +24,7 @@ import { useAppContext } from '@/context/AppContext';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { blurDataUrlImage, complements } from '@/data/app-data';
+import { blurDataUrlImage, complements } from '@/shared/data';
 import buyingWomenImg from '@/../public/assets/buying_women.png';
 import { _stores as Container } from '@/styles/common/stores.module';
 
@@ -130,7 +130,7 @@ const Stores: NextPage = (): JSX.Element => {
               </section>
             </div>
           )}
-          
+
           {state.publicStoresList.length > 0 && (
             <section className='stores-container'>
               {state.publicStoresList.map((store, index) => (

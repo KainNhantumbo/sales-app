@@ -2,14 +2,14 @@ import Link from 'next/link';
 import Comment from './Comment';
 import { AxiosResponse } from 'axios';
 import CommentForm from './CommentForm';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import ReplyComment from './ReplyComment';
 import ReplyCommentForm from './ReplyCommentForm';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { useState, useEffect, useMemo, FC } from 'react';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
-import type { IComment, TComment } from '@/../@types/comments';
+import type { IComment, TComment } from '../../types/comments';
 import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
 import { _comments as Container } from '@/styles/modules/comments';
 
@@ -46,7 +46,7 @@ const Comments: FC<TProps> = ({ contentId }): JSX.Element => {
     edit: false,
     reply: false,
   });
-  
+
   // ---------------functions----------------
   const formattedComments = useMemo(() => {
     const group: { [index: string]: IComment[] } = {};

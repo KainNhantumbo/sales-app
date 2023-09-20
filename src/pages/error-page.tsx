@@ -1,4 +1,4 @@
-import { complements } from '@/data/app-data';
+import { complements } from '@/shared/data';
 import { errorPage as Container } from '@/styles/common/error-page';
 
 interface IProps {

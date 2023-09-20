@@ -5,8 +5,8 @@ import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
 import { PulseLoader } from 'react-spinners';
 import { DefaultTheme, useTheme } from 'styled-components';
-import { complements } from '@/data/app-data';
-import { InputEvents, SubmitEvent } from '@/../@types';
+import { complements } from '@/shared/data';
+import { InputEvents, SubmitEvent } from '../../types';
 import { IoLockClosedOutline, IoLockOpenOutline } from 'react-icons/io5';
 import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
 

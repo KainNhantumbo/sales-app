@@ -5,7 +5,7 @@ import Layout from '@/components/Layout';
 import { formatCurrency } from '@/lib/utils';
 import { IoBalloonOutline } from 'react-icons/io5';
 import { DefaultTheme, useTheme } from 'styled-components';
-import { complements, pricing_data } from '@/data/app-data';
+import { complements, pricing_data } from '@/shared/data';
 import { _pricing as Container } from '@/styles/common/pricing';
 
 const Pricing: NextPage = (): JSX.Element => {

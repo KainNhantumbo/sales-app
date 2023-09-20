@@ -6,7 +6,7 @@ import {
   useEffect,
   FC,
 } from 'react';
-import { Theme } from '@/../@types';
+import { Theme } from '../types';
 import { GlobalStyles } from '../styles/global';
 import { ThemeProvider } from 'styled-components';
 import { dark_default, light_default } from '../styles/themes';

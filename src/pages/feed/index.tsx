@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import Layout from '@/components/Layout';
-import { complements } from '@/data/app-data';
+import { complements } from '@/shared/data';
 import SideBarAds from '@/components/SidaBarAds';
 import SearchStories from '@/components/SearchStories';
 import { _feed as Container } from '@/styles/common/feed';

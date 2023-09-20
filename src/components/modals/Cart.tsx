@@ -11,7 +11,7 @@ import Image from 'next/image';
 import type { FC } from 'react';
 import { formatCurrency } from '@/lib/utils';
 import { FaDollarSign } from 'react-icons/fa';
-import { blurDataUrlImage } from '@/data/app-data';
+import { blurDataUrlImage } from '@/shared/data';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';

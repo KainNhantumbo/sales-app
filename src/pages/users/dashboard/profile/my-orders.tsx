@@ -9,13 +9,13 @@ import {
   orderSortOptions,
   orderStatusOptions,
   order_status_labels,
-} from '@/data/app-data';
+} from '@/shared/data';
 import { NextPage } from 'next';
 import { useEffect } from 'react';
 import Select from 'react-select';
-import { TOrder } from '@/../@types';
+import { TOrder } from '../../../../types';
 import { formatDate } from '@/lib/utils';
-import { actions } from '@/data/actions';
+import { actions } from '@/shared/actions';
 import Layout from '@/components/Layout';
 import { PulseLoader } from 'react-spinners';
 import SideBarAds from '@/components/SidaBarAds';

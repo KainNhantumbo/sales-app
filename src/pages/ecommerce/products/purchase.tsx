@@ -15,14 +15,14 @@ import {
   complements,
   payment_options,
   states,
-} from '@/data/app-data';
+} from '@/shared/data';
 import Image from 'next/image';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
-import { actions } from '@/data/actions';
-import { InputEvents } from '@/../@types';
+import { actions } from '@/shared/actions';
+import { InputEvents } from '../../../types';
 import { formatCurrency } from '@/lib/utils';
 import { FaDollarSign } from 'react-icons/fa';
 import NewsLetter from '@/components/Newsletter';

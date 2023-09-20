@@ -1,4 +1,4 @@
-import { complements } from '@/data/app-data';
+import { complements } from '@/shared/data';
 import { useRouter } from 'next/router';
 import { errorPage as Container } from '../styles/common/error-page';
 
