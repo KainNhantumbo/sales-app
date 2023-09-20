@@ -9,19 +9,20 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import { urls } from '@/shared/data';
+import { useRouter } from 'next/router';
 import { BiUser } from 'react-icons/bi';
-import { useState, useEffect, FC } from 'react';
-import { NextRouter, useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 import { useAppContext } from '@/context/AppContext';
+import { useModulesContext } from '@/context/Modules';
+import rubymart_logo from '@/../public/rubymart_logo.png';
 import { m as motion, AnimatePresence } from 'framer-motion';
-import rubymart_logo from '../../public/rubymart_logo.png';
-import { _header as Container } from '../styles/modules/header';
+import { _header as Container } from '@/styles/modules/header';
 
-const Header: FC = () => {
-  const [isMenu, setIsMenu] = useState<boolean>(false);
+export default function Header() {
   const { asPath, push } = useRouter();
-  const { state, cartModalController, logoutPromptController } =
-    useAppContext();
+  const { logoutUser } = useModulesContext();
+  const [isMenu, setIsMenu] = useState<boolean>(false);
+  const { state, cartModalController } = useAppContext();
 
   const toggleMenu = () => setIsMenu(!isMenu);
 
@@ -124,7 +125,7 @@ const Header: FC = () => {
                   <button
                     title='Sair'
                     className='user-logout'
-                    onClick={logoutPromptController}>
+                    onClick={logoutUser}>
                     <IoLogOutOutline />
                     <span>Terminar sessão</span>
                   </button>
@@ -145,6 +146,4 @@ const Header: FC = () => {
       </div>
     </Container>
   );
-};
-
-export default Header;
+}

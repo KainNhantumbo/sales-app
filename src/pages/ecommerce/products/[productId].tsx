@@ -35,7 +35,7 @@ import NewsLetter from '@/components/Newsletter';
 import { VscVerifiedFilled } from 'react-icons/vsc';
 import ReactImageGallery from 'react-image-gallery';
 import Comments from '@/components/comments/Comments';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import 'react-image-gallery/styles/css/image-gallery.css';

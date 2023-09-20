@@ -57,7 +57,6 @@ const CookiesPopup: FC = () => {
                 .
               </p>
               <button onClick={advisorController}>
-                <IoCheckmark />
                 <span>Sim, compreendo.</span>
               </button>
             </div>

@@ -5,8 +5,7 @@ import Cart from './modals/Cart';
 import PageLoader from './PageLoader';
 import { FC, ReactNode, useEffect } from 'react';
 import { HeadProps } from '../types/index';
-import RequestLogin from './modals/RequestLogin';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import CookiesPopup from '@/components/CookiesPopup';
 import { PromptModal } from './modals/Prompt';
@@ -37,7 +36,6 @@ const Layout: FC<IProps> = ({ children, metadata }) => {
         <PromptModal
           key={state.prompt.title.split(' ').join('') || undefined}
         />
-        <RequestLogin />
         <Cart />
         <CookiesPopup />
         <PageLoader />

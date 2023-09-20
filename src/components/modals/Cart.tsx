@@ -12,7 +12,7 @@ import type { FC } from 'react';
 import { formatCurrency } from '@/lib/utils';
 import { FaDollarSign } from 'react-icons/fa';
 import { blurDataUrlImage } from '@/shared/data';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
 import { _cart as Container } from '../../styles/modules/cart';

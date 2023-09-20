@@ -29,7 +29,7 @@ import { useTheme } from 'styled-components';
 import { complements } from '@/shared/data';
 import countries from '@/shared/countries.json';
 import { InputEvents, TStore } from '../../../types';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import product_categories from '@/shared/product-categories.json';

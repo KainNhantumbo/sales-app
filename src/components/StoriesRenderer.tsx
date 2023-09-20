@@ -17,7 +17,7 @@ import { BsTrash } from 'react-icons/bs';
 import { complements } from '@/shared/data';
 import { useAppContext } from '@/context/AppContext';
 import { IPublicStory } from '../types';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { PulseLoader } from 'react-spinners';
 import { DefaultTheme, useTheme } from 'styled-components';

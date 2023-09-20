@@ -6,7 +6,7 @@ import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
 import actions from '@/shared/actions';
 import { complements } from '@/shared/data';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { InputEvents, SubmitEvent, TAuth } from '../../types';
 import { _signIn as Container } from '@/styles/common/sign-in';

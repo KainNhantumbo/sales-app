@@ -30,7 +30,7 @@ import { useEffect, useState } from 'react';
 import { formatCurrency } from '@/lib/utils';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import { VscVerifiedFilled } from 'react-icons/vsc';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { TPublicProducts, TPublicStore } from '../../../types';

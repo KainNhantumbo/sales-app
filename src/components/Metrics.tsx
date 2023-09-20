@@ -49,7 +49,6 @@ const Metrics: FC = () => {
           <div className='fetch-error-message '>
             <h3>Erro ao carregar estatísticas.</h3>
             <button onClick={() => refetch({ queryKey: ['metrics'] })}>
-              <IoReload />
               <span>Tentar novamente</span>
             </button>
           </div>

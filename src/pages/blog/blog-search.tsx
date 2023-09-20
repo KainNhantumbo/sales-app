@@ -16,7 +16,7 @@ import Layout from '@/components/Layout';
 import { getPosts } from '@/lib/queries';
 import { complements } from '@/shared/data';
 import NewsLetter from '@/components/Newsletter';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import SearchComponent from '@/components/SearchBlogPosts';

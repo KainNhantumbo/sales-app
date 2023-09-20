@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { HiPlus } from 'react-icons/hi';
 import { useAppContext } from '@/context/AppContext';
 import { BiSortAlt2, BiSearch } from 'react-icons/bi';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { _toolbar as Container } from '@/styles/modules/tool-bar';
 
 const ToolBox: FC = () => {

@@ -98,7 +98,6 @@ const NewsLetter: FC = () => {
                   }
                 />
                 <button type='submit' onClick={handleEmailSubmition}>
-                  <IoPaperPlaneOutline />
                   <span>Inscrever-se</span>
                 </button>
               </>

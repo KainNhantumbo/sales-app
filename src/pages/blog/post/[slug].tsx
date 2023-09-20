@@ -21,7 +21,7 @@ import editorJsHtml from 'editorjs-html';
 import Layout from '@/components/Layout';
 import ErrorPage from '@/pages/error-page';
 import NewsLetter from '@/components/Newsletter';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { readingTime } from 'reading-time-estimator';
 import { useAppContext } from '@/context/AppContext';
 import { DefaultTheme, useTheme } from 'styled-components';

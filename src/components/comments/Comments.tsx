@@ -5,7 +5,7 @@ import CommentForm from './CommentForm';
 import actions from '@/shared/actions';
 import ReplyComment from './ReplyComment';
 import ReplyCommentForm from './ReplyCommentForm';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { useState, useEffect, useMemo, FC } from 'react';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';

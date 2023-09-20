@@ -18,7 +18,7 @@ import { IoMdCalendar } from 'react-icons/io';
 import { getStoresData } from '@/lib/queries';
 import { TPublicStoreList } from '../../../types';
 import NewsLetter from '@/components/Newsletter';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import SearchStores from '@/components/SearchPublicStores';
 import { useAppContext } from '@/context/AppContext';
 import { DefaultTheme, useTheme } from 'styled-components';

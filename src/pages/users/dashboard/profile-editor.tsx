@@ -48,7 +48,7 @@ import countries from '@/shared/countries.json';
 import { complements } from '@/shared/data';
 import { InputEvents, User } from '../../../types';
 import user_languages from '@/shared/languages.json';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { FaBlog, FaLinkedinIn } from 'react-icons/fa';
 import { DotLoader, PulseLoader } from 'react-spinners';

@@ -19,7 +19,7 @@ import Layout from '@/components/Layout';
 import ErrorPage from '@/pages/error-page';
 import { TPublicUser } from '../../../types';
 import SideBarAds from '@/components/SidaBarAds';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import StoriesRenderer from '@/components/StoriesRenderer';
 import { complements, formatSocialNetwork } from '@/shared/data';
 import { _profile as Container } from '@/styles/common/community-user-profile';

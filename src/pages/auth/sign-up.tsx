@@ -13,7 +13,7 @@ import { useState, useEffect } from 'react';
 import { PulseLoader } from 'react-spinners';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { complements } from '@/shared/data';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { InputEvents, SubmitEvent } from '../../types';
 import { _signUp as Container } from '@/styles/common/sign-up';

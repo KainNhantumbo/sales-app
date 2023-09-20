@@ -11,7 +11,7 @@ import moment from 'moment';
 import { BiUser } from 'react-icons/bi';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useAppContext } from '@/context/AppContext';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { complements } from '@/shared/data';
 import type { TComment } from '@/types/comments';
 

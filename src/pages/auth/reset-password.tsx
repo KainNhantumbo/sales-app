@@ -8,7 +8,7 @@ import { IoMailOutline } from 'react-icons/io5';
 import { complements } from '@/shared/data';
 import { PulseLoader } from 'react-spinners';
 import { DefaultTheme, useTheme } from 'styled-components';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
 
 const ResetPassword: NextPage = () => {

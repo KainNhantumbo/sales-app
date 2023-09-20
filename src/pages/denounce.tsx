@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { complements } from '@/shared/data';
 import { denounceReasons } from '@/shared/data';
 import SelectContainer from '@/components/Select';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import RequestLogin from '@/components/modals/RequestLogin';
 import { DenounceContainer as Container } from '@/styles/common/denounce';

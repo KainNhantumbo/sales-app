@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { formatCurrency } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { BsCreditCard2Front } from 'react-icons/bs';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { IoCart, IoChevronBack, IoReload } from 'react-icons/io5';

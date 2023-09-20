@@ -15,7 +15,7 @@ import { PulseLoader } from 'react-spinners';
 import { complements } from '@/shared/data';
 import SideBarAds from '@/components/SidaBarAds';
 import { IPublicStory, TStory } from '../../../types';
-import { NextRouter, Router, useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { useCallback, useEffect, useState } from 'react';
 import { DefaultTheme, useTheme } from 'styled-components';

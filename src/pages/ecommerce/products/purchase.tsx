@@ -24,7 +24,7 @@ import Layout from '@/components/Layout';
 import { formatCurrency } from '@/lib/utils';
 import { FaDollarSign } from 'react-icons/fa';
 import NewsLetter from '@/components/Newsletter';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { _purchase as Container } from '@/styles/common/purchase';

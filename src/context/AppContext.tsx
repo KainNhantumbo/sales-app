@@ -9,7 +9,7 @@ import {
 import fetch from '@/config/client';
 import ThemeContext from './ThemeContext';
 import actions from '@/shared/actions';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { Action, State } from '@/types/reducer';
 import { TAuth, TCart } from '@/types/index';
 import { reducer, initialState } from '@/lib/reducer';
@@ -115,7 +115,6 @@ export default function AppContext(props: TProps) {
       },
     });
   };
-
 
   const searchBoxController = () => {
     dispatch({

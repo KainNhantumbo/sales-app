@@ -17,7 +17,7 @@ import { IoMdCalendar } from 'react-icons/io';
 import { complements } from '@/shared/data';
 import { TPublicStoreList } from '../../../types';
 import NewsLetter from '@/components/Newsletter';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import { useInfiniteQuery } from '@tanstack/react-query';
