@@ -27,7 +27,7 @@ import { _profile as Container } from '@/styles/common/community-user-profile';
 type TProps = { user: TPublicUser };
 
 const UserProfile: NextPage<TProps> = ({ user }) => {
-  const router: NextRouter = useRouter();
+  const router = useRouter();
 
   if (!user)
     return (

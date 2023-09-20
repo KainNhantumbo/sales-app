@@ -7,7 +7,7 @@ import { _search as Container } from '@/styles/modules/search-form';
 
 const SearchComponent: FC = () => {
   const { state, dispatch } = useAppContext();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
 
   return (
     <Container>

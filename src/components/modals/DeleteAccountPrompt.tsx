@@ -16,7 +16,7 @@ import { _deleteAccount as Container } from '@/styles/modules/delete-account-pro
 const DeleteAccountPrompt: FC = () => {
   const { state, useFetchAPI, dispatch, deleteAccountPromptController } =
     useAppContext();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ status: false, message: '' });
 

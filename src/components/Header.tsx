@@ -19,7 +19,7 @@ import { _header as Container } from '../styles/modules/header';
 
 const Header: FC = () => {
   const [isMenu, setIsMenu] = useState<boolean>(false);
-  const { asPath, push }: NextRouter = useRouter();
+  const { asPath, push } = useRouter();
   const { state, cartModalController, logoutPromptController } =
     useAppContext();
 

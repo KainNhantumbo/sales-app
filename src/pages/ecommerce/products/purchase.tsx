@@ -33,7 +33,7 @@ import SelectContainer from '@/components/Select';
 
 export default function Purchase() {
   const theme: DefaultTheme = useTheme();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const { state, dispatch, useFetchAPI, cartModalController } = useAppContext();
 
   const handleChange = (e: InputEvents) => {

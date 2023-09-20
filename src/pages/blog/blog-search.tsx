@@ -29,7 +29,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 const BlogSearch: NextPage = () => {
   const LIMIT: number = 8;
   const theme: DefaultTheme = useTheme();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const { state, dispatch } = useAppContext();
   const { ref, inView }: InViewHookResponse = useInView();
 

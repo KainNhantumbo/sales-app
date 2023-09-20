@@ -21,7 +21,7 @@ import backgroundImage from '@/../public/assets/africa-unveiled.png';
 import { NextPage } from 'next';
 
 const SignUp: NextPage = () => {
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const theme: DefaultTheme = useTheme();
   const { state, dispatch } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);

@@ -13,7 +13,7 @@ import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
 
 const ResetPassword: NextPage = () => {
   const theme: DefaultTheme = useTheme();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const [email, setEmail] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });

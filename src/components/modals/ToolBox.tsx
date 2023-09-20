@@ -7,7 +7,7 @@ import { NextRouter, useRouter } from 'next/router';
 import { _toolbar as Container } from '@/styles/modules/tool-bar';
 
 const ToolBox: FC = () => {
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const { state, sortBoxController, searchBoxController } = useAppContext();
 
   return (

@@ -50,7 +50,7 @@ const StoreProfile: NextPage<TProps> = ({ store, products }) => {
     removeProductFromCart,
   } = useAppContext();
   const { slidePageUp } = useThemeContext();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const theme: DefaultTheme = useTheme();
   const [tab, setTab] = useState<'docs' | 'products'>('docs');
   const [innerWidth, setInnerWidth] = useState(0);

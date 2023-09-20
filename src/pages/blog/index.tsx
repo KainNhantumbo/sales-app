@@ -31,7 +31,7 @@ import buyingWomenImg from '@/../public/assets/buying_women.png';
 const Blog: NextPage = () => {
   const LIMIT: number = 8;
   const theme: DefaultTheme = useTheme();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const { state, dispatch } = useAppContext();
   const { ref, inView }: InViewHookResponse = useInView();
 

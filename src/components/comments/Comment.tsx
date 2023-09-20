@@ -16,7 +16,7 @@ import { complements } from '@/shared/data';
 import type { TComment } from '@/types/comments';
 
 const Comment: FC<TComment> = (props) => {
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const { state, deleteCommentPromptController } = useAppContext();
 
   return (

@@ -27,7 +27,7 @@ type TLoading = {
 };
 
 const Comments: FC<TProps> = ({ contentId }) => {
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const { state, dispatch, useFetchAPI, deleteCommentPromptController } =
     useAppContext();
 

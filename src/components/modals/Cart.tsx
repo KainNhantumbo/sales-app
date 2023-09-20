@@ -26,7 +26,7 @@ const Cart: FC = () => {
     updateCartProduct,
     loginPromptController,
   } = useAppContext();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
 
   return (
     <AnimatePresence>

@@ -29,7 +29,7 @@ import { InViewHookResponse, useInView } from 'react-intersection-observer';
 const StoresSearch: NextPage = () => {
   const LIMIT: number = 8;
   const theme: DefaultTheme = useTheme();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const { state, dispatch } = useAppContext();
   const { ref, inView }: InViewHookResponse = useInView();
 

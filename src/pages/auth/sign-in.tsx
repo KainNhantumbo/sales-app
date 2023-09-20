@@ -15,7 +15,7 @@ import backgroundImage from '@/../public/assets/africa-unveiled.png';
 
 const SignIn: NextPage = () => {
   const { state, dispatch } = useAppContext();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });
 

@@ -71,7 +71,7 @@ type TLoading = {
 
 const ProfileEditor: NextPage = () => {
   const theme = useTheme();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const {
     state,
     useFetchAPI,

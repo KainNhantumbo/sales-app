@@ -31,7 +31,7 @@ type TOrderSummary = {
 const OrderFinalization: NextPage = () => {
   const { useFetchAPI } = useAppContext();
   const theme: DefaultTheme = useTheme();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const [order, setOrder] = useState<TOrderSummary>({
     order_code: '',
     order_id: '',

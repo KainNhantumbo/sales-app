@@ -4,8 +4,6 @@ import product_categories from '../shared/product-categories.json';
 
 export const initialState: State = {
   banner_ads: [],
-  isLogoutPrompt: false,
-  isLoginPrompt: false,
   isFilterActive: false,
   isSearchActive: false,
   isSortActive: false,
@@ -289,12 +287,6 @@ export function reducer(state: State, action: Action): State {
         ...state,
         productsListQuery: action.payload.productsListQuery,
       };
-
-    case actions.LOGOUT_PROMPT:
-      return { ...state, isLogoutPrompt: action.payload.isLogoutPrompt };
-
-    case actions.LOGIN_PROMPT:
-      return { ...state, isLoginPrompt: action.payload.isLoginPrompt };
 
     case actions.DELETE_ACCOUNT_PROMPT:
       return {

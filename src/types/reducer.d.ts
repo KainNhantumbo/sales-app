@@ -24,8 +24,6 @@ import {
 } from './index';
 
 export type State = {
-  isLogoutPrompt: boolean;
-  isLoginPrompt: boolean;
   isDeleteAccountPrompt: boolean;
   isDeactivateStorePrompt: boolean;
   ordersQuery: { status: string; sort: string; search: string };

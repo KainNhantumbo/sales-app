@@ -40,7 +40,7 @@ const StoriesRenderer: FC<IProps> = (props) => {
     loginPromptController,
   } = useAppContext();
   const LIMIT: number = 8;
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const theme: DefaultTheme = useTheme();
   const { ref, inView }: InViewHookResponse = useInView();
 

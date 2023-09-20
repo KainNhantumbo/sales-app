@@ -18,7 +18,7 @@ import RequestLogin from '@/components/modals/RequestLogin';
 import { DenounceContainer as Container } from '@/styles/common/denounce';
 
 export default function Denounce() {
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const [msg, setMsg] = useState<string>('');
   const { state, dispatch, useFetchAPI, loginPromptController } =
     useAppContext();

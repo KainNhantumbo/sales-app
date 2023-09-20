@@ -16,6 +16,7 @@ import { reducer, initialState } from '@/lib/reducer';
 import useIsomorphicLayoutEffect from '@/hooks/custom-layout-efffect';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import ModulesContext from './Modules';
 
 const queryClient: QueryClient = new QueryClient({
   defaultOptions: {
@@ -30,12 +31,10 @@ type TProps = { children: ReactNode };
 interface IContext {
   state: State;
   dispatch: Dispatch<Action>;
-  logoutPromptController: () => void;
   deleteCommentPromptController: (status: boolean, id: string) => void;
   deleteStoryPromptController: (status: boolean, id: string) => void;
   deleteProductPromptController: (status: boolean, id: string) => void;
   shareProductController: () => void;
-  loginPromptController: () => void;
   sortBoxController: () => void;
   cartModalController: () => void;
   searchBoxController: () => void;
@@ -46,7 +45,6 @@ interface IContext {
   removeProductFromCart: (currentProductId: string) => void;
   updateCartProduct: (props: { productId: string; quantity: number }) => void;
   getCartProduct: (currentProductId: string) => TCart;
-  logoutUser: () => void;
   useFetchAPI: <T>(
     config: AxiosRequestConfig
   ) => Promise<AxiosResponse<T, any>>;
@@ -55,9 +53,7 @@ interface IContext {
 const context = createContext<IContext>({
   state: initialState,
   dispatch: () => {},
-  logoutUser: () => {},
   useFetchAPI: (): any => {},
-  logoutPromptController: () => {},
   searchBoxController: () => {},
   cartModalController: () => {},
   sortBoxController: () => {},
@@ -70,7 +66,6 @@ const context = createContext<IContext>({
   updateCartProduct: () => {},
   addProductToCart: () => {},
   shareProductController: () => {},
-  loginPromptController: () => {},
   userWorkingDataController: () => {},
   getCartProduct: () => ({
     productId: '',
@@ -83,7 +78,7 @@ const context = createContext<IContext>({
 
 export default function AppContext(props: TProps) {
   const CART_KEY: string = 'cart-items';
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // ============= modal controllers =================== //
@@ -121,19 +116,6 @@ export default function AppContext(props: TProps) {
     });
   };
 
-  const logoutPromptController = () => {
-    dispatch({
-      type: actions.LOGOUT_PROMPT,
-      payload: { ...state, isLogoutPrompt: !state.isLogoutPrompt },
-    });
-  };
-
-  const loginPromptController = () => {
-    dispatch({
-      type: actions.LOGIN_PROMPT,
-      payload: { ...state, isLoginPrompt: !state.isLoginPrompt },
-    });
-  };
 
   const searchBoxController = () => {
     dispatch({
@@ -313,56 +295,6 @@ export default function AppContext(props: TProps) {
     });
   }
 
-  function logoutUser() {
-    dispatch({
-      type: actions.PROMPT,
-      payload: {
-        ...state,
-        prompt: {
-          status: true,
-          title: 'Terminar sessão',
-          message: ' Você realmente gostaria de terminar esta sessão e sair?',
-          actionButtonMessage: 'Confirmar',
-          handleFunction: async () => {
-            try {
-              await useFetchAPI({
-                method: 'post',
-                url: '/api/v1/auth/default/logout',
-                withCredentials: true,
-              });
-              dispatch({
-                type: actions.USER_AUTH,
-                payload: {
-                  ...state,
-                  auth: {
-                    id: '',
-                    name: '',
-                    storeId: '',
-                    token: '',
-                    email: '',
-                    profile_image: '',
-                  },
-                },
-              });
-
-              router.push('/auth/sign-in');
-            } catch (error: any) {
-              console.error(error?.response?.data?.message || error);
-            } finally {
-              dispatch({
-                type: actions.PROMPT,
-                payload: {
-                  ...state,
-                  prompt: { ...state.prompt, status: false },
-                },
-              });
-            }
-          },
-        },
-      },
-    });
-  }
-
   const authenticateUser = async () => {
     try {
       const { data } = await fetch<TAuth>({
@@ -398,11 +330,8 @@ export default function AppContext(props: TProps) {
             state,
             useFetchAPI,
             dispatch,
-            logoutUser,
             sortBoxController,
             searchBoxController,
-            loginPromptController,
-            logoutPromptController,
             userWorkingDataController,
             deleteCommentPromptController,
             deleteProductPromptController,
@@ -416,7 +345,7 @@ export default function AppContext(props: TProps) {
             getCartProduct,
             cartModalController,
           }}>
-          {props.children}
+          <ModulesContext>{props.children}</ModulesContext>
         </context.Provider>
       </QueryClientProvider>
     </ThemeContext>

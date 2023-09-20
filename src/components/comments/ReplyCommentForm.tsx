@@ -3,10 +3,12 @@ import { MoonLoader } from 'react-spinners';
 import { useAppContext } from '@/context/AppContext';
 import type { TCommentForm } from '@/types/comments';
 import { DefaultTheme, useTheme } from 'styled-components';
+import { useModulesContext } from '@/context/Modules';
 
 export default function ReplyCommentForm(props: TCommentForm) {
   const theme: DefaultTheme = useTheme();
-  const { state, dispatch, loginPromptController } = useAppContext();
+  const { state, dispatch } = useAppContext();
+  const { logoutUser } = useModulesContext();
 
   return (
     <>
@@ -24,9 +26,7 @@ export default function ReplyCommentForm(props: TCommentForm) {
               rows={5}
               maxLength={512}
               onMouseDown={() => {
-                if (!state.auth.token) {
-                  loginPromptController();
-                }
+                if (!state.auth.token) logoutUser();
               }}
               onChange={(e) => {
                 dispatch({
@@ -72,15 +72,13 @@ export default function ReplyCommentForm(props: TCommentForm) {
               (state.comment.content.length < 2 && true)
             }
             onClick={() => {
-              if (!state.auth.token) {
-                return loginPromptController();
-              }
-              if (props.status.edit) {
+              if (!state.auth.token) return logoutUser();
+
+              if (props.status.edit)
                 return props.updateComment(props.currentCommentId);
-              }
-              if (props.status.reply) {
-                return props.replyComment();
-              }
+
+              if (props.status.reply) return props.replyComment();
+
               return props.createComment();
             }}>
             {props.status.edit ? (

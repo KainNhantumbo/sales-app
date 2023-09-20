@@ -49,7 +49,7 @@ type TError = {
 
 const StoreEditor: NextPage = () => {
   const theme = useTheme();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const { state, useFetchAPI, dispatch, deactivateStorePromptController } =
     useAppContext();
 

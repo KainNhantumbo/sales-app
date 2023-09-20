@@ -41,7 +41,7 @@ interface IPost {
 const Post: NextPage<IPost> = ({ post: initialPost, latestPosts }) => {
   const { state, useFetchAPI, loginPromptController } = useAppContext();
   const [post, setPost] = useState(initialPost);
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const theme: DefaultTheme = useTheme();
 
   if (!initialPost) {

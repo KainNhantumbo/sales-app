@@ -45,7 +45,7 @@ type TError = {
 
 const ProductEditor: NextPage = () => {
   const theme: DefaultTheme = useTheme();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const { state, useFetchAPI, dispatch } = useAppContext();
 
   // --------------------states---------------------

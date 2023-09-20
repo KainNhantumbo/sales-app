@@ -57,7 +57,7 @@ const Product: NextPage<any> = ({ product, error_message }) => {
     getCartProduct,
   } = useAppContext();
   const theme: DefaultTheme = useTheme();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const [innerWidth, setInnerWidth] = useState<number>(0);
 
   if (!product)

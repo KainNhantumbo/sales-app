@@ -31,7 +31,7 @@ import { _stores as Container } from '@/styles/common/stores';
 const Stores: NextPage = () => {
   const LIMIT: number = 8;
   const theme: DefaultTheme = useTheme();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const { state, dispatch } = useAppContext();
   const { ref, inView }: InViewHookResponse = useInView();
 

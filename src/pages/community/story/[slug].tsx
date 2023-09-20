@@ -28,7 +28,7 @@ type TError = { status: boolean; msg: string };
 
 const Story: NextPage<TProps> = (props) => {
   const theme: DefaultTheme = useTheme();
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const { state, dispatch, useFetchAPI } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<TError>({ status: false, msg: '' });
