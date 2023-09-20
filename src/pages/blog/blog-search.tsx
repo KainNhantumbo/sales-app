@@ -59,7 +59,7 @@ const BlogSearch: NextPage = () => {
       lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
   });
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     if (data) {
       const reducedPosts = data?.pages
         .map((page) => {
@@ -76,7 +76,7 @@ const BlogSearch: NextPage = () => {
       });
     }
 
-    return (): void => {
+    return () => {
       dispatch({
         type: actions.BLOG_POSTS_LIST_QUERY,
         payload: { ...state, blogPostsList: [] },
@@ -84,18 +84,18 @@ const BlogSearch: NextPage = () => {
     };
   }, [data]);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const fetchTimer = setTimeout(() => {
       if (router.query['q']) {
         refetch({ queryKey: ['blog-posts-search'] });
       }
     }, 500);
-    return (): void => {
+    return () => {
       clearTimeout(fetchTimer);
     };
   }, [router.query]);
 
-  useEffect((): void => {
+  useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }

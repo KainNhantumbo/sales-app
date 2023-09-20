@@ -29,7 +29,7 @@ type TError = { status: boolean; msg: string };
 const Story: NextPage<TProps> = (props) => {
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
-  const { state, dispatch, fetchAPI } = useAppContext();
+  const { state, dispatch, useFetchAPI } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<TError>({ status: false, msg: '' });
 
@@ -51,10 +51,10 @@ const Story: NextPage<TProps> = (props) => {
         width: 420,
         height: 220,
         resize: 'cover',
-        success: (compressedImge: File | Blob): void => {
+        success: (compressedImge: File | Blob) => {
           const reader = new FileReader();
           reader.readAsDataURL(compressedImge);
-          reader.onloadend = function (e: ProgressEvent<FileReader>): void {
+          reader.onloadend = function (e: ProgressEvent<FileReader>) {
             const encodedImage: string = e.target?.result as string;
             setCoverImageData({
               id: state.story.cover_image?.id || '',
@@ -66,13 +66,13 @@ const Story: NextPage<TProps> = (props) => {
     }, []),
   });
 
-  async function deleteCoverImage(): Promise<void> {
+  async function deleteCoverImage() {
     if (!state.story.cover_image?.url)
       return setCoverImageData({ id: '', data: '' });
 
     try {
       setLoading(true);
-      await fetchAPI({
+      await useFetchAPI({
         method: 'delete',
         url: `/api/v1/users/stories/assets/${props.story?._id}`,
         data: { assetId: props.story?.cover_image?.id },
@@ -102,10 +102,10 @@ const Story: NextPage<TProps> = (props) => {
     }
   }
 
-  async function createStory(): Promise<void> {
+  async function createStory() {
     setLoading(true);
     try {
-      await fetchAPI({
+      await useFetchAPI({
         method: 'post',
         url: `/api/v1/users/stories`,
         data: { ...state.story, coverImageData },
@@ -124,10 +124,10 @@ const Story: NextPage<TProps> = (props) => {
     }
   }
 
-  async function updateStory(): Promise<void> {
+  async function updateStory() {
     setLoading(true);
     try {
-      await fetchAPI({
+      await useFetchAPI({
         method: 'patch',
         url: `/api/v1/users/stories/${props.story?._id}`,
         data: { ...state.story, coverImageData },
@@ -183,7 +183,7 @@ const Story: NextPage<TProps> = (props) => {
     };
   }, []);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       if (error.status) {
         setError({ status: false, msg: '' });
@@ -242,7 +242,7 @@ const Story: NextPage<TProps> = (props) => {
                       aria-label='Título da sua história'
                       required={true}
                       maxLength={64}
-                      onChange={(e): void =>
+                      onChange={(e) =>
                         dispatch({
                           type: actions.USER_STORY,
                           payload: {
@@ -274,7 +274,7 @@ const Story: NextPage<TProps> = (props) => {
                       aria-label='Conteúdo da história'
                       rows={6}
                       maxLength={512}
-                      onChange={(e): void =>
+                      onChange={(e) =>
                         dispatch({
                           type: actions.USER_STORY,
                           payload: {

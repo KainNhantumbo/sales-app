@@ -50,7 +50,7 @@ type TError = {
 const StoreEditor: NextPage = () => {
   const theme = useTheme();
   const router: NextRouter = useRouter();
-  const { state, fetchAPI, dispatch, deactivateStorePromptController } =
+  const { state, useFetchAPI, dispatch, deactivateStorePromptController } =
     useAppContext();
 
   const [loading, setLoading] = useState<TLoading>({
@@ -75,7 +75,7 @@ const StoreEditor: NextPage = () => {
   });
 
   // --------------------functions------------------
-  const handleChange = (e: InputEvents): void => {
+  const handleChange = (e: InputEvents) => {
     dispatch({
       type: actions.STORE_DATA,
       payload: {
@@ -88,7 +88,7 @@ const StoreEditor: NextPage = () => {
     });
   };
 
-  const handleCoverImageFile = (): void => {
+  const handleCoverImageFile = () => {
     const imageData: File | null | undefined = coverImageFile?.item(0);
     if (imageData) {
       new Compressor(imageData, {
@@ -96,10 +96,10 @@ const StoreEditor: NextPage = () => {
         width: 620,
         height: 220,
         resize: 'cover',
-        success: (compressedImge: File | Blob): void => {
+        success: (compressedImge: File | Blob) => {
           const reader = new FileReader();
           reader.readAsDataURL(compressedImge);
-          reader.onloadend = function (e: ProgressEvent<FileReader>): void {
+          reader.onloadend = function (e: ProgressEvent<FileReader>) {
             const encodedImage: string = e.target?.result as string;
             setCoverImageData({
               id: state.user.cover_image?.id || '',
@@ -111,8 +111,8 @@ const StoreEditor: NextPage = () => {
     }
   };
 
-  const deleteCoverImage = (): void => {
-    fetchAPI({
+  const deleteCoverImage = () => {
+    useFetchAPI({
       method: 'delete',
       url: `/api/v1/users/store/assets`,
       data: { assetId: state.store.cover_image?.id },
@@ -135,10 +135,10 @@ const StoreEditor: NextPage = () => {
       });
   };
 
-  const getStoreData = async (): Promise<void> => {
+  const getStoreData = async () => {
     try {
       setLoading({ status: true, key: 'store-data' });
-      const { data } = await fetchAPI<TStore>({
+      const { data } = await useFetchAPI<TStore>({
         method: 'get',
         url: `/api/v1/users/store`,
       });
@@ -163,10 +163,10 @@ const StoreEditor: NextPage = () => {
     }
   };
 
-  const handleSubmitUpdate = async (): Promise<void> => {
+  const handleSubmitUpdate = async () => {
     try {
       setLoading({ status: true, key: 'store-update' });
-      await fetchAPI({
+      await useFetchAPI({
         method: 'patch',
         url: `/api/v1/users/store/${state.store._id}`,
         data: {
@@ -196,30 +196,30 @@ const StoreEditor: NextPage = () => {
     }
   };
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     handleCoverImageFile();
-    return (): void => {
+    return () => {
       setCoverImageData({ id: '', data: '' });
       setCoverImageFile(null);
     };
   }, [coverImageFile]);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const fetch_data = setTimeout(() => {
       if (state.auth.storeId) {
         getStoreData();
       }
     }, 10);
-    return (): void => clearTimeout(fetch_data);
+    return () => clearTimeout(fetch_data);
   }, []);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const debounceTimer = setTimeout(() => {
       if (error.status && error.key === 'store-update') {
         setError({ status: false, msg: '', key: 'store-data' });
       }
     }, 5000);
-    return (): void => clearTimeout(debounceTimer);
+    return () => clearTimeout(debounceTimer);
   }, [error.status]);
 
   return (
@@ -337,7 +337,7 @@ const StoreEditor: NextPage = () => {
                           autoComplete='off'
                           placeholder='Escreva o nome da loja'
                           aria-label='Escreva o nome da loja'
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 64
                               ? undefined
                               : handleChange(e)
@@ -392,7 +392,7 @@ const StoreEditor: NextPage = () => {
                           autoComplete='off'
                           placeholder='Escreva o slogan de sua loja'
                           aria-label='Escreva o slogan de sua loja'
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 64
                               ? undefined
                               : handleChange(e)
@@ -419,7 +419,7 @@ const StoreEditor: NextPage = () => {
                           autoComplete='off'
                           placeholder='Escreva a descrição de sua loja'
                           aria-label='Escreva a descrição de sua loja'
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 256
                               ? undefined
                               : handleChange(e)
@@ -460,7 +460,7 @@ const StoreEditor: NextPage = () => {
                           name='country'
                           id='country'
                           value={state.store.location?.country}
-                          onChange={(e): void => {
+                          onChange={(e) => {
                             countries.forEach((obj) => {
                               if (obj.country === e.target.value) {
                                 setCountryStates([...obj.states]);
@@ -499,7 +499,7 @@ const StoreEditor: NextPage = () => {
                           name='state'
                           id='state'
                           value={state.store.location?.state}
-                          onChange={(e): void => {
+                          onChange={(e) => {
                             dispatch({
                               type: actions.STORE_DATA,
                               payload: {
@@ -537,7 +537,7 @@ const StoreEditor: NextPage = () => {
                           aria-label='Localidade, bairro, rua, quarteirão, número da casa, etc.'
                           maxLength={256}
                           value={state.store.location?.adress}
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 256
                               ? undefined
                               : dispatch({
@@ -590,7 +590,7 @@ const StoreEditor: NextPage = () => {
                           placeholder='Escreva os termos e condições da sua loja'
                           aria-label='Escreva os termos e condições da sua loja'
                           rows={12}
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 2048
                               ? undefined
                               : handleChange(e)
@@ -615,7 +615,7 @@ const StoreEditor: NextPage = () => {
                           placeholder='Escreva a política de privacidade da sua loja'
                           aria-label='Escreva a política de privacidade da sua loja'
                           rows={12}
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 2048
                               ? undefined
                               : handleChange(e)
@@ -640,7 +640,7 @@ const StoreEditor: NextPage = () => {
                           placeholder='Escreva a política de entrega de encomendas ao cliente da sua loja'
                           aria-label='Escreva a política de entrega de encomendas ao cliente da sua loja'
                           rows={12}
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 1024
                               ? undefined
                               : handleChange(e)
@@ -750,15 +750,13 @@ const StoreEditor: NextPage = () => {
               <div className='btns-container'>
                 {!loading.status && !error.status && (
                   <>
-                    <button
-                      className='back'
-                      onClick={(e): void => router.back()}>
+                    <button className='back' onClick={(e) => router.back()}>
                       <IoArrowUndoOutline />
                       <span>Descartar e voltar</span>
                     </button>
                     <button
                       className='save'
-                      onClick={(): Promise<void> => handleSubmitUpdate()}>
+                      onClick={() => handleSubmitUpdate()}>
                       <IoSyncOutline />
                       <span>Salvar alterações</span>
                     </button>

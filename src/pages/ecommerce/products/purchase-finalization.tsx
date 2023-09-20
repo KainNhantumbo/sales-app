@@ -29,7 +29,7 @@ type TOrderSummary = {
 };
 
 const OrderFinalization: NextPage = () => {
-  const { fetchAPI } = useAppContext();
+  const { useFetchAPI } = useAppContext();
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
   const [order, setOrder] = useState<TOrderSummary>({
@@ -41,7 +41,7 @@ const OrderFinalization: NextPage = () => {
   });
 
   const getOrder = async () => {
-    const { data } = await fetchAPI<TOrder>({
+    const { data } = await useFetchAPI<TOrder>({
       method: 'get',
       url: `/api/v1/checkout/orders/${router.query['order']}`,
     });
@@ -70,11 +70,11 @@ const OrderFinalization: NextPage = () => {
     return option?.label ?? '';
   };
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     if (!isLoading && data) {
       setOrder(data);
     }
-    return (): void => {
+    return () => {
       setOrder({
         order_code: '',
         order_id: '',

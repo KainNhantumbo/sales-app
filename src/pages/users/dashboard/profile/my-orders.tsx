@@ -10,33 +10,31 @@ import {
   orderStatusOptions,
   order_status_labels,
 } from '@/shared/data';
-import { NextPage } from 'next';
 import { useEffect } from 'react';
-import Select from 'react-select';
-import { TOrder } from '../../../../types';
+import { TOrder } from '@/types';
 import { formatDate } from '@/lib/utils';
 import actions from '@/shared/actions';
 import Layout from '@/components/Layout';
 import { PulseLoader } from 'react-spinners';
 import SideBarAds from '@/components/SidaBarAds';
+import SelectContainer from '@/components/Select';
 import { BsBox2, BsBox2Fill } from 'react-icons/bs';
 import { useAppContext } from '@/context/AppContext';
-import { renderReactSelectCSS } from '@/styles/modules/select';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { _myOrders as Container } from '@/styles/common/my-orders';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { InViewHookResponse, useInView } from 'react-intersection-observer';
 
-const MyOrders: NextPage = () => {
+export default function MyOrders() {
   const QUERY_LIMIT: number = 10;
   const theme: DefaultTheme = useTheme();
-  const { state, dispatch, fetchAPI } = useAppContext();
+  const { state, dispatch, useFetchAPI } = useAppContext();
   const { inView, ref }: InViewHookResponse = useInView();
 
   const fetchOrders = async ({
     pageParam = 0,
   }): Promise<{ data: TOrder[]; currentOffset: number }> => {
-    const { data } = await fetchAPI<TOrder[]>({
+    const { data } = await useFetchAPI<TOrder[]>({
       method: 'get',
       url: `/api/v1/checkout/orders?offset=${
         pageParam * QUERY_LIMIT
@@ -66,9 +64,9 @@ const MyOrders: NextPage = () => {
         : undefined,
   });
 
-  const updateOrder = async (id: string, data: any): Promise<void> => {
+  const updateOrder = async (id: string, data: any) => {
     try {
-      await fetchAPI({
+      await useFetchAPI({
         method: 'patch',
         url: `/api/v1/checkout/orders/${id}`,
         data: { ...data },
@@ -79,9 +77,9 @@ const MyOrders: NextPage = () => {
     }
   };
 
-  const deleteOrder = async (id: string): Promise<void> => {
+  const deleteOrder = async (id: string) => {
     try {
-      await fetchAPI({
+      await useFetchAPI({
         method: 'delete',
         url: `/api/v1/checkout/orders/${id}`,
       });
@@ -102,7 +100,7 @@ const MyOrders: NextPage = () => {
     return option?.label ?? '';
   };
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     if (data) {
       const formattedData = data?.pages
         .map((page) => {
@@ -119,7 +117,7 @@ const MyOrders: NextPage = () => {
       });
     }
 
-    return (): void => {
+    return () => {
       dispatch({
         type: actions.ORDERS,
         payload: { ...state, orders: [] },
@@ -127,17 +125,17 @@ const MyOrders: NextPage = () => {
     };
   }, [data]);
 
-  useEffect((): void => {
+  useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
   }, [inView, fetchNextPage, hasNextPage]);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const debounceTime = setTimeout(() => {
       refetch({ queryKey: ['user-orders'] });
     }, 500);
-    return (): void => {
+    return () => {
       clearTimeout(debounceTime);
     };
   }, [state.ordersQuery]);
@@ -186,9 +184,8 @@ const MyOrders: NextPage = () => {
                 <IoSearch />
               </div>
               <div className='seletor'>
-                <Select
+                <SelectContainer
                   placeholder='Ordenar por ...'
-                  styles={renderReactSelectCSS(theme)}
                   options={orderSortOptions}
                   onChange={(option: any) =>
                     dispatch({
@@ -205,9 +202,8 @@ const MyOrders: NextPage = () => {
                 />
               </div>
               <div className='seletor'>
-                <Select
+                <SelectContainer
                   placeholder='Exibir por estado'
-                  styles={renderReactSelectCSS(theme)}
                   options={orderStatusOptions}
                   onChange={(option: any) =>
                     dispatch({
@@ -227,7 +223,7 @@ const MyOrders: NextPage = () => {
               {isAnFilterActive() && (
                 <button
                   className='clear-filters'
-                  onClick={(): void =>
+                  onClick={() =>
                     dispatch({
                       type: actions.QUERY_ORDERS,
                       payload: {
@@ -340,7 +336,7 @@ const MyOrders: NextPage = () => {
               {isError && !isLoading && state.orders.length > 0 && (
                 <div className=' fetch-error-message '>
                   <h3>
-                    {(error as any)?.response?.data?.message ??
+                    {(error as any)?.response?.data?.message ||
                       'Erro ao carregar os dados'}
                   </h3>
                   <button onClick={() => fetchNextPage()}>
@@ -390,6 +386,4 @@ const MyOrders: NextPage = () => {
       </Container>
     </Layout>
   );
-};
-
-export default MyOrders;
+}

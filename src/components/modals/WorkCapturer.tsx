@@ -44,7 +44,7 @@ const WorkCapturer: FC<IProps> = (props) => {
       {state.isUserWorkingDataModal && (
         <Container
           className='main'
-          onClick={(e): void => {
+          onClick={(e) => {
             const target = (e as any).target.classList;
             if (target.contains('main')) {
               userWorkingDataController();
@@ -85,7 +85,7 @@ const WorkCapturer: FC<IProps> = (props) => {
                           placeholder='Carreira Profissional'
                           aria-label='Carreira Profissional'
                           required={true}
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             props.setStateFn(({ carrer, ...data }) => ({
                               ...data,
                               carrer: e.target.value,
@@ -106,7 +106,7 @@ const WorkCapturer: FC<IProps> = (props) => {
                           aria-label='Empresa (ou entidade empregadora)'
                           value={props.initialData.company_name}
                           required={true}
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             props.setStateFn(({ company_name, ...data }) => ({
                               ...data,
                               company_name: e.target.value,
@@ -125,7 +125,7 @@ const WorkCapturer: FC<IProps> = (props) => {
                         <input
                           type='date'
                           id='start_date'
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             props.setStateFn(({ start_date, ...data }) => ({
                               ...data,
                               start_date: e.target.value,
@@ -141,7 +141,7 @@ const WorkCapturer: FC<IProps> = (props) => {
                         <input
                           type='date'
                           id='end_date'
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             props.setStateFn(({ end_date, ...data }) => ({
                               ...data,
                               end_date: e.target.value,
@@ -163,7 +163,7 @@ const WorkCapturer: FC<IProps> = (props) => {
                           placeholder='Coloque o link (URL) do seu portifólio profissional'
                           aria-label='Coloque o link (URL) do seu portifólio profissional'
                           maxLength={100}
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             props.setStateFn(({ portfolio_url, ...data }) => ({
                               ...data,
                               portfolio_url: e.target.value,
@@ -185,7 +185,7 @@ const WorkCapturer: FC<IProps> = (props) => {
                           aria-label='Anotações relevantes a carreira'
                           rows={3}
                           maxLength={256}
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             props.setStateFn(({ description, ...data }) => ({
                               ...data,
                               description: e.target.value,

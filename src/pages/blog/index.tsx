@@ -53,7 +53,7 @@ const Blog: NextPage = () => {
         lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
     });
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     if (data) {
       const reducedPosts = data?.pages
         .map((page) => {
@@ -70,7 +70,7 @@ const Blog: NextPage = () => {
       });
     }
 
-    return (): void => {
+    return () => {
       dispatch({
         type: actions.BLOG_POSTS_LIST_QUERY,
         payload: { ...state, blogPostsList: [] },
@@ -78,7 +78,7 @@ const Blog: NextPage = () => {
     };
   }, [data]);
 
-  useEffect((): void => {
+  useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }

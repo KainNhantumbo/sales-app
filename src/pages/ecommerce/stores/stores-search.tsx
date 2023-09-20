@@ -60,7 +60,7 @@ const StoresSearch: NextPage = () => {
       lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
   });
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     if (data) {
       const reducedPosts = data?.pages
         .map((page) => {
@@ -77,7 +77,7 @@ const StoresSearch: NextPage = () => {
       });
     }
 
-    return (): void => {
+    return () => {
       dispatch({
         type: actions.PUBLIC_STORES_LIST_DATA,
         payload: { ...state, publicStoresList: [] },
@@ -85,18 +85,18 @@ const StoresSearch: NextPage = () => {
     };
   }, [data]);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const fetchTimer = setTimeout(() => {
       if (router.query['q']) {
         refetch({ queryKey: ['public-stores-search'] });
       }
     }, 500);
-    return (): void => {
+    return () => {
       clearTimeout(fetchTimer);
     };
   }, [router.query]);
 
-  useEffect((): void => {
+  useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }

@@ -19,7 +19,7 @@ const SignIn: NextPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });
 
-  const handleChange = (e: InputEvents): void => {
+  const handleChange = (e: InputEvents) => {
     dispatch({
       type: actions.SIGNIN_DATA,
       payload: {
@@ -32,7 +32,7 @@ const SignIn: NextPage = () => {
     });
   };
 
-  const handleSubmit = async (e: SubmitEvent): Promise<void> => {
+  const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
     if (state.signInData.password.length < 8) {
       return setError({
@@ -53,21 +53,21 @@ const SignIn: NextPage = () => {
       });
       router.push(`/users/dashboard`);
     } catch (error: any) {
-      console.error(error?.response?.data?.message ?? error);
+      console.error(error?.response?.data?.message || error);
       setError({
         status: true,
-        message: error?.response?.data?.message ?? error?.code,
+        message: error?.response?.data?.message || error?.code,
       });
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const debounceTimer = setTimeout(() => {
       setError({ status: false, message: '' });
     }, 5000);
-    return (): void => clearTimeout(debounceTimer);
+    return () => clearTimeout(debounceTimer);
   }, [error.status]);
 
   return (
@@ -106,7 +106,7 @@ const SignIn: NextPage = () => {
                     placeholder='Escreva o seu e-mail'
                     aria-label='Escreva o seu e-mail'
                     required
-                    onChange={(e): void => handleChange(e)}
+                    onChange={(e) => handleChange(e)}
                   />
                 </section>
 
@@ -122,7 +122,7 @@ const SignIn: NextPage = () => {
                     aria-hidden='true'
                     placeholder='Escreva a sua senha'
                     aria-label='Escreva a sua senha'
-                    onChange={(e): void => handleChange(e)}
+                    onChange={(e) => handleChange(e)}
                   />
                 </section>
                 <div className='password-reset'>

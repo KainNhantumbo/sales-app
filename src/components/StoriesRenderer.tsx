@@ -35,7 +35,7 @@ const StoriesRenderer: FC<IProps> = (props) => {
   const {
     state,
     dispatch,
-    fetchAPI,
+    useFetchAPI,
     deleteStoryPromptController,
     loginPromptController,
   } = useAppContext();
@@ -70,9 +70,9 @@ const StoriesRenderer: FC<IProps> = (props) => {
         lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
     });
 
-  const handleDeleteStory = async (storeId: string): Promise<void> => {
+  const handleDeleteStory = async (storeId: string) => {
     try {
-      await fetchAPI({
+      await useFetchAPI({
         method: 'delete',
         url: `/api/v1/users/stories/${storeId}`,
       });
@@ -83,9 +83,9 @@ const StoriesRenderer: FC<IProps> = (props) => {
     }
   };
 
-  const handleFavoriteStory = async (storyId: string): Promise<void> => {
+  const handleFavoriteStory = async (storyId: string) => {
     try {
-      const { data } = await fetchAPI<string[]>({
+      const { data } = await useFetchAPI<string[]>({
         method: 'post',
         url: `/api/v1/users/favorites/stories/${storyId}`,
       });
@@ -105,9 +105,9 @@ const StoriesRenderer: FC<IProps> = (props) => {
     }
   };
 
-  const handleUnFavoriteStory = async (storyId: string): Promise<void> => {
+  const handleUnFavoriteStory = async (storyId: string) => {
     try {
-      const { data } = await fetchAPI<string[]>({
+      const { data } = await useFetchAPI<string[]>({
         method: 'patch',
         url: `/api/v1/users/favorites/stories/${storyId}`,
       });
@@ -127,7 +127,7 @@ const StoriesRenderer: FC<IProps> = (props) => {
     }
   };
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     if (data) {
       const reducedStories = data?.pages
         .map((page) => {
@@ -144,7 +144,7 @@ const StoriesRenderer: FC<IProps> = (props) => {
       });
     }
 
-    return (): void => {
+    return () => {
       dispatch({
         type: actions.PUBLIC_USER_STORIES,
         payload: { ...state, publicStories: [] },
@@ -152,17 +152,17 @@ const StoriesRenderer: FC<IProps> = (props) => {
     };
   }, [data]);
 
-  useEffect((): void => {
+  useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
   }, [inView, fetchNextPage, hasNextPage]);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const debounceTime = setTimeout(() => {
       refetch({ queryKey: ['user-stories'] });
     }, 400);
-    return (): void => clearTimeout(debounceTime);
+    return () => clearTimeout(debounceTime);
   }, [state.searchStories]);
 
   return (
@@ -288,7 +288,7 @@ const StoriesRenderer: FC<IProps> = (props) => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.8 }}
                         disabled={!state.auth.id && true}
-                        onClick={(): void => {
+                        onClick={() => {
                           if (!state.auth.token) {
                             return loginPromptController();
                           }

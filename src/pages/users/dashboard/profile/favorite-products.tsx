@@ -30,15 +30,15 @@ const FavoriteProducts: NextPage<TProps> = ({ products }) => {
     dispatch,
     addProductToCart,
     removeProductFromCart,
-    fetchAPI,
+    useFetchAPI,
     loginPromptController,
   } = useAppContext();
   const theme: DefaultTheme = useTheme();
   const [innerWidth, setInnerWidth] = useState<number>(0);
 
-  const handleUnFavoriteProduct = async (id: string): Promise<void> => {
+  const handleUnFavoriteProduct = async (id: string) => {
     try {
-      await fetchAPI({
+      await useFetchAPI({
         method: 'patch',
         url: `/api/v1/users/favorites/products/${id}`,
       });
@@ -48,7 +48,7 @@ const FavoriteProducts: NextPage<TProps> = ({ products }) => {
     }
   };
 
-  const refetchFavoriteProducts = async (): Promise<void> => {
+  const refetchFavoriteProducts = async () => {
     try {
       const { data } = await fetch<TPublicProducts[]>({
         method: 'get',
@@ -63,7 +63,7 @@ const FavoriteProducts: NextPage<TProps> = ({ products }) => {
     }
   };
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     setInnerWidth(window.innerWidth);
     dispatch({
       type: actions.PUBLIC_PRODUCTS_LIST_DATA,
@@ -72,7 +72,7 @@ const FavoriteProducts: NextPage<TProps> = ({ products }) => {
     window.addEventListener('resize', () => {
       setInnerWidth(window.innerWidth);
     });
-    return (): void => {
+    return () => {
       dispatch({
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
         payload: { ...state, publicProducts: [] },

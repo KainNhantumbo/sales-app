@@ -23,12 +23,12 @@ const Header: FC = () => {
   const { state, cartModalController, logoutPromptController } =
     useAppContext();
 
-  const toggleMenu = (): void => setIsMenu(!isMenu);
+  const toggleMenu = () => setIsMenu(!isMenu);
 
-  const changeWidth = (): void =>
+  const changeWidth = () =>
     window.innerWidth > 770 ? setIsMenu(true) : setIsMenu(false);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     changeWidth();
     window.addEventListener('resize', changeWidth);
     return () => {

@@ -9,10 +9,10 @@ import { formatCurrency } from '@/lib/utils';
 import { IoReload } from 'react-icons/io5';
 
 const Metrics: FC = () => {
-  const { state, dispatch, fetchAPI } = useAppContext();
+  const { state, dispatch, useFetchAPI } = useAppContext();
 
   const getMetrics = async (): Promise<TMetrics> => {
-    const { data } = await fetchAPI<TMetrics>({
+    const { data } = await useFetchAPI<TMetrics>({
       method: 'get',
       url: `/api/v1/metrics/public`,
     });

@@ -14,7 +14,7 @@ const CookiesPopup: FC = () => {
     localStorage.setItem('privacy_advisor', JSON.stringify('false'));
   };
 
-  useEffect((): void => {
+  useEffect(() => {
     const advisorState = JSON.parse(
       localStorage.getItem('privacy_advisor') || 'false'
     );

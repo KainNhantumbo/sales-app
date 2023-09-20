@@ -48,7 +48,7 @@ const Product: NextPage<any> = ({ product, error_message }) => {
   const {
     state,
     dispatch,
-    fetchAPI,
+    useFetchAPI,
     loginPromptController,
     shareProductController,
     addProductToCart,
@@ -70,9 +70,9 @@ const Product: NextPage<any> = ({ product, error_message }) => {
       />
     );
 
-  const handleFavoriteProduct = async (id: string): Promise<void> => {
+  const handleFavoriteProduct = async (id: string) => {
     try {
-      const { data } = await fetchAPI<string[]>({
+      const { data } = await useFetchAPI<string[]>({
         method: 'post',
         url: `/api/v1/users/favorites/products/${id}`,
       });
@@ -88,9 +88,9 @@ const Product: NextPage<any> = ({ product, error_message }) => {
     }
   };
 
-  const handleUnFavoriteProduct = async (id: string): Promise<void> => {
+  const handleUnFavoriteProduct = async (id: string) => {
     try {
-      const { data } = await fetchAPI<string[]>({
+      const { data } = await useFetchAPI<string[]>({
         method: 'patch',
         url: `/api/v1/users/favorites/products/${id}`,
       });
@@ -106,17 +106,17 @@ const Product: NextPage<any> = ({ product, error_message }) => {
     }
   };
 
-  const trackInnerWidth = (): void => setInnerWidth(window.innerWidth);
+  const trackInnerWidth = () => setInnerWidth(window.innerWidth);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     trackInnerWidth();
     window.addEventListener('resize', trackInnerWidth);
-    return (): void => {
+    return () => {
       window.removeEventListener('resize', trackInnerWidth);
     };
   }, []);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     if (product) {
       dispatch({
         type: actions.PUBLIC_PRODUCT_DATA,
@@ -126,7 +126,7 @@ const Product: NextPage<any> = ({ product, error_message }) => {
         },
       });
     }
-    return (): void => {
+    return () => {
       dispatch({
         type: actions.PUBLIC_PRODUCT_DATA,
         payload: {

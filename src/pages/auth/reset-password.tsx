@@ -18,7 +18,7 @@ const ResetPassword: NextPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });
 
-  const handleSubmit = async (e: SubmitEvent): Promise<void> => {
+  const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
     try {
       setLoading(true);
@@ -30,17 +30,17 @@ const ResetPassword: NextPage = () => {
       });
       router.push('/auth/reset-password-confirmation');
     } catch (error: any) {
-      console.error(error?.response?.data?.message ?? error);
+      console.error(error?.response?.data?.message || error);
       setError({
         status: true,
-        message: error?.response?.data?.message ?? error?.code,
+        message: error?.response?.data?.message || error?.code,
       });
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const debounceTimer = setTimeout(() => {
       setError({ status: false, message: '' });
     }, 5000);
@@ -77,7 +77,7 @@ const ResetPassword: NextPage = () => {
                     placeholder='Escreva o seu e-mail'
                     aria-label='Escreva o seu e-mail'
                     required={true}
-                    onChange={(e): void => setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </section>
 

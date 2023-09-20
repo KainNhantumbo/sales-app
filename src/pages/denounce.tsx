@@ -5,31 +5,28 @@ import {
   IoEllipsisHorizontal,
 } from 'react-icons/io5';
 import Link from 'next/link';
-import Select from 'react-select';
-import Layout from '@/components/Layout';
-import { useAppContext } from '@/context/AppContext';
-import { NextRouter, useRouter } from 'next/router';
-import { complements } from '@/shared/data';
-import { renderReactSelectCSS } from '@/styles/modules/select';
-import { DefaultTheme, useTheme } from 'styled-components';
 import { motion } from 'framer-motion';
 import actions from '@/shared/actions';
-import { denounceReasons } from '@/shared/data';
+import Layout from '@/components/Layout';
 import { useEffect, useState } from 'react';
+import { complements } from '@/shared/data';
+import { denounceReasons } from '@/shared/data';
+import SelectContainer from '@/components/Select';
+import { NextRouter, useRouter } from 'next/router';
+import { useAppContext } from '@/context/AppContext';
 import RequestLogin from '@/components/modals/RequestLogin';
-import { DenounceContainer as Container } from '../styles/common/denounce';
-import { NextPage } from 'next';
+import { DenounceContainer as Container } from '@/styles/common/denounce';
 
-const Denounce: NextPage = () => {
-  const theme: DefaultTheme = useTheme();
+export default function Denounce() {
   const router: NextRouter = useRouter();
   const [msg, setMsg] = useState<string>('');
-  const { state, dispatch, fetchAPI, loginPromptController } = useAppContext();
+  const { state, dispatch, useFetchAPI, loginPromptController } =
+    useAppContext();
 
-  const handleCreateDenounce = async (): Promise<void> => {
+  const handleCreateDenounce = async () => {
     try {
       const { url, type, id } = router.query;
-      await fetchAPI({
+      await useFetchAPI({
         method: 'post',
         url: `/api/v1/users/denounces`,
         data: {
@@ -50,12 +47,12 @@ const Denounce: NextPage = () => {
       setMsg('Denúncia enviada com sucesso.');
     } catch (err: any) {
       setMsg(err?.response?.data?.message);
-      console.error(err?.response?.data?.message ?? err);
+      console.error(err?.response?.data?.message || err);
     }
   };
 
-  useEffect((): (() => void) => {
-    return (): void => {
+  useEffect(() => {
+    return () => {
       dispatch({
         type: actions.CREATE_DENOUNCE,
         payload: {
@@ -66,11 +63,11 @@ const Denounce: NextPage = () => {
     };
   }, []);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const debounceTimer = setTimeout(() => {
       setMsg(' ');
     }, 5000);
-    return (): void => clearTimeout(debounceTimer);
+    return () => clearTimeout(debounceTimer);
   }, [msg]);
 
   return (
@@ -108,8 +105,7 @@ const Denounce: NextPage = () => {
                       <IoEllipsisHorizontal />
                       <span>Razão da Denúncia *</span>
                     </label>
-                    <Select
-                      styles={renderReactSelectCSS(theme)}
+                    <SelectContainer
                       options={denounceReasons}
                       placeholder={'Selecione um dos motivos'}
                       onChange={(option: any) => {
@@ -150,7 +146,7 @@ const Denounce: NextPage = () => {
                           loginPromptController();
                         }
                       }}
-                      onChange={(e): void =>
+                      onChange={(e) =>
                         dispatch({
                           type: actions.CREATE_DENOUNCE,
                           payload: {
@@ -197,7 +193,7 @@ const Denounce: NextPage = () => {
                     whileHover={{ scale: 1.05 }}
                     disabled={msg.length < 1 && true}
                     className='prompt-accept'
-                    onClick={(): void => {
+                    onClick={() => {
                       if (!state.auth.token) {
                         return loginPromptController();
                       }
@@ -214,6 +210,4 @@ const Denounce: NextPage = () => {
       </Container>
     </Layout>
   );
-};
-
-export default Denounce;
+}

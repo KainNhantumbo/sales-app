@@ -20,7 +20,7 @@ const NewsLetter: FC = () => {
     message: '',
   });
 
-  const handleEmailSubmition = async (): Promise<void> => {
+  const handleEmailSubmition = async () => {
     try {
       setLoading(true);
       await fetch({
@@ -47,11 +47,11 @@ const NewsLetter: FC = () => {
     }
   };
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const debounceTime = setTimeout(() => {
       setError({ status: false, message: '' });
     }, 5000);
-    return (): void => {
+    return () => {
       clearTimeout(debounceTime);
     };
   }, [error.status]);

@@ -8,7 +8,7 @@ const SearchStories: FC = () => {
   const { state, dispatch } = useAppContext();
   return (
     <Container>
-      <form onSubmit={(e): void => e.preventDefault()}>
+      <form onSubmit={(e) => e.preventDefault()}>
         <div className='form-element' title='Procurar histórias'>
           <input
             type='text'
@@ -16,7 +16,7 @@ const SearchStories: FC = () => {
             aria-label='Procurar histórias...'
             title='Procurar histórias...'
             value={state.searchStories}
-            onChange={(e): void => {
+            onChange={(e) => {
               dispatch({
                 type: actions.SEARCH_USER_STORIES,
                 payload: {
@@ -31,7 +31,7 @@ const SearchStories: FC = () => {
         {state.searchStories.length > 0 && (
           <button
             className='clear-btn'
-            onClick={(): void =>
+            onClick={() =>
               dispatch({
                 type: actions.SEARCH_USER_STORIES,
                 payload: { ...state, searchStories: '' },

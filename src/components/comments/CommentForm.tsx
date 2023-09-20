@@ -44,7 +44,7 @@ const CommentForm: FC<TMainCommentForm> = (props) => {
                     loginPromptController();
                   }
                 }}
-                onChange={(e): void => {
+                onChange={(e) => {
                   dispatch({
                     type: actions.CREATE_COMMENT,
                     payload: {
@@ -87,7 +87,7 @@ const CommentForm: FC<TMainCommentForm> = (props) => {
                 props.status.error.status ||
                 (state.comment.content.length < 2 && true)
               }
-              onClick={(): void => {
+              onClick={() => {
                 if (!state.auth.token) return loginPromptController();
                 props.createComment();
               }}>

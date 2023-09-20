@@ -27,7 +27,7 @@ const SignUp: NextPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });
 
-  const handleChange = (e: InputEvents): void => {
+  const handleChange = (e: InputEvents) => {
     dispatch({
       type: actions.SIGNUP_DATA,
       payload: {
@@ -40,7 +40,7 @@ const SignUp: NextPage = () => {
     });
   };
 
-  const handleSubmit = async (e: SubmitEvent): Promise<void> => {
+  const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
     if (state.signupData.password !== state.signupData.confirm_password)
       return setError({
@@ -68,21 +68,21 @@ const SignUp: NextPage = () => {
       });
       router.push('/auth/sign-up-confirm');
     } catch (error: any) {
-      console.error(error?.response?.data?.message ?? error);
+      console.error(error?.response?.data?.message || error);
       setError({
         status: true,
-        message: error?.response?.data?.message ?? error?.code,
+        message: error?.response?.data?.message || error?.code,
       });
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const debounceTimer = setTimeout(() => {
       setError({ status: false, message: '' });
     }, 5000);
-    return (): void => clearTimeout(debounceTimer);
+    return () => clearTimeout(debounceTimer);
   }, [error.status]);
 
   return (
@@ -121,7 +121,7 @@ const SignUp: NextPage = () => {
                       placeholder='Escreva o seu nome'
                       aria-label='Escreva o seu nome'
                       required={true}
-                      onChange={(e): void => handleChange(e)}
+                      onChange={(e) => handleChange(e)}
                     />
                   </div>
                   <div className='form-element'>
@@ -136,7 +136,7 @@ const SignUp: NextPage = () => {
                       placeholder='Escreva o seu apelido'
                       aria-label='Escreva o seu apelido'
                       required={true}
-                      onChange={(e): void => handleChange(e)}
+                      onChange={(e) => handleChange(e)}
                     />
                   </div>
                 </section>
@@ -154,7 +154,7 @@ const SignUp: NextPage = () => {
                       placeholder='Escreva o seu e-mail'
                       aria-label='Escreva o seu e-mail'
                       required
-                      onChange={(e): void => handleChange(e)}
+                      onChange={(e) => handleChange(e)}
                     />
                   </div>
                   <div className='form-element'>
@@ -170,7 +170,7 @@ const SignUp: NextPage = () => {
                       aria-hidden='true'
                       placeholder='Escreva a sua senha'
                       aria-label='Escreva a sua senha'
-                      onChange={(e): void => handleChange(e)}
+                      onChange={(e) => handleChange(e)}
                     />
                   </div>
                 </section>
@@ -189,7 +189,7 @@ const SignUp: NextPage = () => {
                       minLength={8}
                       placeholder='Confirme a sua senha'
                       aria-label='Confirme a sua senha'
-                      onChange={(e): void => handleChange(e)}
+                      onChange={(e) => handleChange(e)}
                     />
                   </div>
                 </section>

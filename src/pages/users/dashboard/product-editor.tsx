@@ -46,7 +46,7 @@ type TError = {
 const ProductEditor: NextPage = () => {
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
-  const { state, fetchAPI, dispatch } = useAppContext();
+  const { state, useFetchAPI, dispatch } = useAppContext();
 
   // --------------------states---------------------
   const [loading, setLoading] = useState<TLoading>({
@@ -71,7 +71,7 @@ const ProductEditor: NextPage = () => {
       const productId = router.query['productId'];
       if (!productId) throw new Error('Sem chave ID');
       console.log('data');
-      const { data } = await fetchAPI<Product>({
+      const { data } = await useFetchAPI<Product>({
         method: 'get',
         url: `/api/v1/users/products/${productId}?fields=-created_by,-favorites`,
       });
@@ -103,7 +103,7 @@ const ProductEditor: NextPage = () => {
     }
   }, [productData]);
 
-  const handleFiles = (index: string, value: FileList | null): void => {
+  const handleFiles = (index: string, value: FileList | null) => {
     const file = value?.item(0);
     if (file) {
       new Compressor(file, {
@@ -111,10 +111,10 @@ const ProductEditor: NextPage = () => {
         width: 320,
         height: 420,
         resize: 'cover',
-        success: (compressedImge: File | Blob): void => {
+        success: (compressedImge: File | Blob) => {
           const reader = new FileReader();
           reader.readAsDataURL(compressedImge);
-          reader.onloadend = function (e: ProgressEvent<FileReader>): void {
+          reader.onloadend = function (e: ProgressEvent<FileReader>) {
             const encodedImage: string = e.target?.result as string;
             setImagesData((obj) => ({
               ...obj,
@@ -126,7 +126,7 @@ const ProductEditor: NextPage = () => {
     }
   };
 
-  const handleChange = (e: InputEvents): void =>
+  const handleChange = (e: InputEvents) =>
     dispatch({
       type: actions.PRODUCT_DATA,
       payload: {
@@ -138,14 +138,14 @@ const ProductEditor: NextPage = () => {
       },
     });
 
-  const deleteImage = (id: string, index: string): void => {
+  const deleteImage = (id: string, index: string) => {
     if (!id)
       return setImagesData((data) => ({
         ...data,
         [index]: { id: '', data: '' },
       }));
 
-    fetchAPI({
+    useFetchAPI({
       method: 'delete',
       url: `/api/v1/users/product/assets`,
       data: { type: index, assetId: id },
@@ -168,11 +168,11 @@ const ProductEditor: NextPage = () => {
       });
   };
 
-  const handleUpdate = async (productId: string): Promise<void> => {
+  const handleUpdate = async (productId: string) => {
     if (!productId) return;
     try {
       setLoading({ status: true });
-      await fetchAPI({
+      await useFetchAPI({
         method: 'patch',
         url: `/api/v1/users/products/${productId}`,
         data: {
@@ -203,7 +203,7 @@ const ProductEditor: NextPage = () => {
       setError({
         status: true,
         msg:
-          error?.response?.data?.message ??
+          error?.response?.data?.message ||
           'Oops! Algo deu errado. Tente novamente.',
       });
     } finally {
@@ -211,10 +211,10 @@ const ProductEditor: NextPage = () => {
     }
   };
 
-  const handleCreate = async (): Promise<void> => {
+  const handleCreate = async () => {
     try {
       setLoading({ status: true });
-      await fetchAPI({
+      await useFetchAPI({
         method: 'post',
         url: `/api/v1/users/products`,
         data: {
@@ -246,7 +246,7 @@ const ProductEditor: NextPage = () => {
       setError({
         status: true,
         msg:
-          error?.response?.data?.message ??
+          error?.response?.data?.message ||
           'Oops! Algo deu errado. Tente novamente.',
       });
     } finally {
@@ -255,8 +255,8 @@ const ProductEditor: NextPage = () => {
   };
 
   // fetch product
-  useEffect((): (() => void) => {
-    return (): void =>
+  useEffect(() => {
+    return () =>
       dispatch({
         type: actions.PRODUCT_DATA,
         payload: {
@@ -284,13 +284,13 @@ const ProductEditor: NextPage = () => {
   }, []);
 
   // clear errors
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const debounceTimer = setTimeout(() => {
       if (error.status) {
         setError({ status: false, msg: '' });
       }
     }, 8000);
-    return (): void => clearTimeout(debounceTimer);
+    return () => clearTimeout(debounceTimer);
   }, [error.status]);
 
   return (
@@ -312,7 +312,7 @@ const ProductEditor: NextPage = () => {
           <section className='fetching-state'>
             <section className='wrapper'>
               <h3>
-                {(queryError as any)?.response?.data?.message ??
+                {(queryError as any)?.response?.data?.message ||
                   'Erro ao carregar dados do servidor'}
               </h3>
               <div>
@@ -426,7 +426,7 @@ const ProductEditor: NextPage = () => {
                           autoComplete='off'
                           placeholder='Escreva o nome do produto'
                           aria-label='Escreva o nome do produto'
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 128
                               ? undefined
                               : handleChange(e)
@@ -452,7 +452,7 @@ const ProductEditor: NextPage = () => {
                           autoComplete='off'
                           placeholder='Escreva a descrição do produto'
                           aria-label='Escreva a descrição do produto'
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 512
                               ? undefined
                               : handleChange(e)
@@ -480,7 +480,7 @@ const ProductEditor: NextPage = () => {
                           autoComplete='off'
                           placeholder='Coloque as especificações do produto'
                           aria-label='Coloque as especificações do produto'
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 2048
                               ? undefined
                               : handleChange(e)
@@ -538,7 +538,7 @@ const ProductEditor: NextPage = () => {
                           min={0}
                           placeholder='Quantidade do produto em estoque'
                           aria-label='Quantidade do produto em estoque'
-                          onChange={(e): void => handleChange(e)}
+                          onChange={(e) => handleChange(e)}
                           value={state.product.quantity}
                         />
                       </div>
@@ -557,7 +557,7 @@ const ProductEditor: NextPage = () => {
                           min={0}
                           placeholder='Preço do produto'
                           aria-label='Preço do produto'
-                          onChange={(e): void => handleChange(e)}
+                          onChange={(e) => handleChange(e)}
                           value={state.product.price}
                         />
                       </div>
@@ -573,7 +573,7 @@ const ProductEditor: NextPage = () => {
                           min={0}
                           placeholder='Taxa base de entrega do produto'
                           aria-label='Taxa base de entrega do produto'
-                          onChange={(e): void => handleChange(e)}
+                          onChange={(e) => handleChange(e)}
                           value={state.product.delivery_tax}
                         />
                       </div>
@@ -589,7 +589,7 @@ const ProductEditor: NextPage = () => {
                           type='checkbox'
                           id='promotion'
                           name='promotion'
-                          onChange={(e): void => {
+                          onChange={(e) => {
                             dispatch({
                               type: actions.PRODUCT_DATA,
                               payload: {
@@ -622,7 +622,7 @@ const ProductEditor: NextPage = () => {
                           max={100}
                           disabled={!state.product.promotion.status}
                           value={state.product.promotion.percentage}
-                          onChange={(e): void => {
+                          onChange={(e) => {
                             dispatch({
                               type: actions.PRODUCT_DATA,
                               payload: {
@@ -652,7 +652,7 @@ const ProductEditor: NextPage = () => {
                           id='allow_comments'
                           name='allow_comments'
                           checked={state.product.allow_comments}
-                          onChange={(e): void => {
+                          onChange={(e) => {
                             dispatch({
                               type: actions.PRODUCT_DATA,
                               payload: {
@@ -722,25 +722,19 @@ const ProductEditor: NextPage = () => {
               <div className='btns-container'>
                 {!loading.status && !error.status && (
                   <>
-                    <button
-                      className='back'
-                      onClick={(e): void => router.back()}>
+                    <button className='back' onClick={(e) => router.back()}>
                       <IoArrowUndoOutline />
                       <span>Descartar e voltar</span>
                     </button>
                     {state.product._id ? (
                       <button
                         className='save'
-                        onClick={(): Promise<void> =>
-                          handleUpdate(state.product._id)
-                        }>
+                        onClick={() => handleUpdate(state.product._id)}>
                         <IoSyncOutline />
                         <span>Salvar alterações</span>
                       </button>
                     ) : (
-                      <button
-                        className='save'
-                        onClick={(): Promise<void> => handleCreate()}>
+                      <button className='save' onClick={() => handleCreate()}>
                         <IoPush />
                         <span>Publicar Produto</span>
                       </button>

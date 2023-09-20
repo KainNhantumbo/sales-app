@@ -14,7 +14,7 @@ const DeleteStoryPrompt: FC<TProps> = (props) => {
       {state.isDeleteStoryPrompt.status && (
         <Container
           className='main'
-          onClick={(e: any): void => {
+          onClick={(e: any) => {
             const target = (e as any).target.classList;
             if (target.contains('main')) {
               deleteStoryPromptController(false, '');

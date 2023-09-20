@@ -44,7 +44,7 @@ const StoreProfile: NextPage<TProps> = ({ store, products }) => {
   const {
     state,
     dispatch,
-    fetchAPI,
+    useFetchAPI,
     loginPromptController,
     addProductToCart,
     removeProductFromCart,
@@ -65,9 +65,9 @@ const StoreProfile: NextPage<TProps> = ({ store, products }) => {
       />
     );
 
-  async function handleFavoriteProduct(id: string): Promise<void> {
+  async function handleFavoriteProduct(id: string) {
     try {
-      const { data } = await fetchAPI({
+      const { data } = await useFetchAPI({
         method: 'post',
         url: `/api/v1/users/favorites/products/${id}`,
       });
@@ -90,9 +90,9 @@ const StoreProfile: NextPage<TProps> = ({ store, products }) => {
     }
   }
 
-  async function handleUnFavoriteProduct(id: string): Promise<void> {
+  async function handleUnFavoriteProduct(id: string) {
     try {
-      const { data } = await fetchAPI({
+      const { data } = await useFetchAPI({
         method: 'patch',
         url: `/api/v1/users/favorites/products/${id}`,
       });
@@ -115,7 +115,7 @@ const StoreProfile: NextPage<TProps> = ({ store, products }) => {
     }
   }
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     setInnerWidth(window.innerWidth);
     dispatch({
       type: actions.PUBLIC_PRODUCTS_LIST_DATA,

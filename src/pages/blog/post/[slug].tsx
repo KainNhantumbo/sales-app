@@ -39,7 +39,7 @@ interface IPost {
 }
 
 const Post: NextPage<IPost> = ({ post: initialPost, latestPosts }) => {
-  const { state, fetchAPI, loginPromptController } = useAppContext();
+  const { state, useFetchAPI, loginPromptController } = useAppContext();
   const [post, setPost] = useState(initialPost);
   const router: NextRouter = useRouter();
   const theme: DefaultTheme = useTheme();
@@ -64,9 +64,9 @@ const Post: NextPage<IPost> = ({ post: initialPost, latestPosts }) => {
     hostname: complements.websiteUrl,
   });
 
-  const handleFavoritePost = async (): Promise<void> => {
+  const handleFavoritePost = async () => {
     try {
-      const { data } = await fetchAPI<string[]>({
+      const { data } = await useFetchAPI<string[]>({
         method: 'post',
         url: `/api/v1/users/favorites/blog-posts/${post._id}`,
       });
@@ -76,9 +76,9 @@ const Post: NextPage<IPost> = ({ post: initialPost, latestPosts }) => {
     }
   };
 
-  const handleUnFavoritePost = async (): Promise<void> => {
+  const handleUnFavoritePost = async () => {
     try {
-      const { data } = await fetchAPI<string[]>({
+      const { data } = await useFetchAPI<string[]>({
         method: 'patch',
         url: `/api/v1/users/favorites/blog-posts/${post._id}`,
       });

@@ -17,30 +17,26 @@ import {
   states,
 } from '@/shared/data';
 import Image from 'next/image';
-import { NextPage } from 'next';
-import dynamic from 'next/dynamic';
+import { InputEvents } from '@/types';
 import { motion } from 'framer-motion';
-import Layout from '@/components/Layout';
 import actions from '@/shared/actions';
-import { InputEvents } from '../../../types';
+import Layout from '@/components/Layout';
 import { formatCurrency } from '@/lib/utils';
 import { FaDollarSign } from 'react-icons/fa';
 import NewsLetter from '@/components/Newsletter';
 import { NextRouter, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { renderReactSelectCSS } from '@/styles/modules/select';
 import { DefaultTheme, useTheme } from 'styled-components';
 import { _purchase as Container } from '@/styles/common/purchase';
 import renderPaymentInputs from '@/components/RenderPaymentMethodInputs';
+import SelectContainer from '@/components/Select';
 
-const Select = dynamic(import('react-select'), { ssr: false });
-
-const Purchase: NextPage = () => {
+export default function Purchase() {
   const theme: DefaultTheme = useTheme();
   const router: NextRouter = useRouter();
-  const { state, dispatch, fetchAPI, cartModalController } = useAppContext();
+  const { state, dispatch, useFetchAPI, cartModalController } = useAppContext();
 
-  const handleChange = (e: InputEvents): void => {
+  const handleChange = (e: InputEvents) => {
     dispatch({
       type: actions.PURCHASE_CHECKOUT_DATA,
       payload: {
@@ -53,11 +49,11 @@ const Purchase: NextPage = () => {
     });
   };
 
-  const handlePayment = async (): Promise<void> => {
+  const handlePayment = async () => {
     try {
       const {
         data: { order_code, order_id },
-      } = await fetchAPI<{ order_id: string; order_code: string }>({
+      } = await useFetchAPI<{ order_id: string; order_code: string }>({
         method: 'post',
         url: `/api/v1/checkout/orders`,
         data: {
@@ -193,7 +189,7 @@ const Purchase: NextPage = () => {
                       inputMode='numeric'
                       maxLength={9}
                       value={state.checkout.main_phone_number}
-                      onChange={(e): void =>
+                      onChange={(e) =>
                         e.target.value.length > 9 ? undefined : handleChange(e)
                       }
                     />
@@ -215,7 +211,7 @@ const Purchase: NextPage = () => {
                       aria-label='Número de telemóvel alternativo'
                       value={state.checkout.alternative_phone_number}
                       maxLength={9}
-                      onChange={(e): void =>
+                      onChange={(e) =>
                         e.target.value.length > 9 ? undefined : handleChange(e)
                       }
                     />
@@ -242,11 +238,10 @@ const Purchase: NextPage = () => {
                       <span>Província / Estado *</span>
                     </label>
 
-                    <Select
+                    <SelectContainer
                       options={states}
                       placeholder={'Selecione a sua província'}
-                      styles={renderReactSelectCSS(theme)}
-                      onChange={(option: any): void => {
+                      onChange={(option: any) => {
                         dispatch({
                           type: actions.PURCHASE_CHECKOUT_DATA,
                           payload: {
@@ -278,7 +273,7 @@ const Purchase: NextPage = () => {
                       aria-label='Escreva o seu código postal'
                       value={state.checkout.location.zip_code}
                       maxLength={3}
-                      onChange={(e): void =>
+                      onChange={(e) =>
                         e.target.value.length > 3
                           ? undefined
                           : dispatch({
@@ -314,7 +309,7 @@ const Purchase: NextPage = () => {
                       aria-label='Escreva detalhes como o bairro, avenida/rua, quarteirão, número da casa, referências, etc.'
                       value={state.checkout.location.adress}
                       maxLength={128}
-                      onChange={(e): void =>
+                      onChange={(e) =>
                         e.target.value.length > 128
                           ? undefined
                           : dispatch({
@@ -350,7 +345,7 @@ const Purchase: NextPage = () => {
                       autoComplete='off'
                       placeholder='Quaisquer informações complementares ou relativas a sua encomenda'
                       aria-label='Quaisquer informações complementares ou relativas a sua encomenda'
-                      onChange={(e): void =>
+                      onChange={(e) =>
                         e.target.value.length > 512
                           ? undefined
                           : handleChange(e)
@@ -458,6 +453,4 @@ const Purchase: NextPage = () => {
       </Container>
     </Layout>
   );
-};
-
-export default Purchase;
+}

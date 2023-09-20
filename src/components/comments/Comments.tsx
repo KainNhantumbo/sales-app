@@ -28,7 +28,7 @@ type TLoading = {
 
 const Comments: FC<TProps> = ({ contentId }) => {
   const router: NextRouter = useRouter();
-  const { state, dispatch, fetchAPI, deleteCommentPromptController } =
+  const { state, dispatch, useFetchAPI, deleteCommentPromptController } =
     useAppContext();
 
   const [loading, setLoading] = useState<TLoading>({
@@ -59,7 +59,7 @@ const Comments: FC<TProps> = ({ contentId }) => {
 
   const getCommentReplies = (parentId: string) => formattedComments[parentId];
 
-  const clearCommentData = (): void => {
+  const clearCommentData = () => {
     setActiveModes({ edit: false, reply: false });
     dispatch({
       type: actions.CREATE_COMMENT,
@@ -84,9 +84,9 @@ const Comments: FC<TProps> = ({ contentId }) => {
     });
   };
 
-  const getComments = async (): Promise<void> => {
+  const getComments = async () => {
     try {
-      const { data } = await fetchAPI<TComment[]>({
+      const { data } = await useFetchAPI<TComment[]>({
         method: 'get',
         url: `/api/v1/users/comments/${contentId}`,
       });
@@ -99,10 +99,10 @@ const Comments: FC<TProps> = ({ contentId }) => {
     }
   };
 
-  const handleCreateComment = async (): Promise<void> => {
+  const handleCreateComment = async () => {
     setLoading({ status: true, key: 'create-comment' });
     try {
-      const { data } = await fetchAPI({
+      const { data } = await useFetchAPI({
         method: 'post',
         url: '/api/v1/users/comments',
         data: {
@@ -131,9 +131,9 @@ const Comments: FC<TProps> = ({ contentId }) => {
     }
   };
 
-  const handleUpdateComment = async (id: string): Promise<void> => {
+  const handleUpdateComment = async (id: string) => {
     try {
-      const { data }: AxiosResponse<IComment> = await fetchAPI({
+      const { data }: AxiosResponse<IComment> = await useFetchAPI({
         method: 'patch',
         url: `/api/v1/users/comments/${id}`,
         data: {
@@ -164,10 +164,13 @@ const Comments: FC<TProps> = ({ contentId }) => {
     }
   };
 
-  const handleDeleteComment = async (id: string): Promise<void> => {
+  const handleDeleteComment = async (id: string) => {
     clearCommentData();
     try {
-      await fetchAPI({ method: 'delete', url: `/api/v1/users/comments/${id}` });
+      await useFetchAPI({
+        method: 'delete',
+        url: `/api/v1/users/comments/${id}`,
+      });
       deleteCommentPromptController(false, '');
       getComments();
     } catch (err: any) {
@@ -175,7 +178,7 @@ const Comments: FC<TProps> = ({ contentId }) => {
     }
   };
 
-  const handleReplyComment = (data: IComment): void => {
+  const handleReplyComment = (data: IComment) => {
     clearCommentData();
     setActiveModes({ edit: false, reply: true });
     dispatch({
@@ -191,7 +194,7 @@ const Comments: FC<TProps> = ({ contentId }) => {
     });
   };
 
-  const handleEditComment = (data: IComment): void => {
+  const handleEditComment = (data: IComment) => {
     clearCommentData();
     setActiveModes({ edit: true, reply: false });
     dispatch({
@@ -206,9 +209,9 @@ const Comments: FC<TProps> = ({ contentId }) => {
     });
   };
 
-  const handleFavoriteComment = async (id: string): Promise<void> => {
+  const handleFavoriteComment = async (id: string) => {
     try {
-      const { data } = await fetchAPI({
+      const { data } = await useFetchAPI({
         method: 'post',
         url: `/api/v1/users/favorites/comments/${id}`,
       });
@@ -228,9 +231,9 @@ const Comments: FC<TProps> = ({ contentId }) => {
     }
   };
 
-  const handleUnFavoriteComment = async (id: string): Promise<void> => {
+  const handleUnFavoriteComment = async (id: string) => {
     try {
-      const { data } = await fetchAPI({
+      const { data } = await useFetchAPI({
         method: 'patch',
         url: `/api/v1/users/favorites/comments/${id}`,
       });
@@ -250,10 +253,10 @@ const Comments: FC<TProps> = ({ contentId }) => {
     }
   };
 
-  const handleSendReplyComment = async (): Promise<void> => {
+  const handleSendReplyComment = async () => {
     setLoading({ status: true, key: 'create-comment' });
     try {
-      await fetchAPI({
+      await useFetchAPI({
         method: 'post',
         url: '/api/v1/users/comments',
         data: {
@@ -276,28 +279,28 @@ const Comments: FC<TProps> = ({ contentId }) => {
     }
   };
 
-  useEffect((): (() => void) => {
-    return (): void => {
+  useEffect(() => {
+    return () => {
       setActiveModes({ reply: false, edit: false });
       clearCommentData();
     };
   }, []);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const debounceTime = setTimeout(() => {
       const q = router.query;
       if (q.productId || contentId) {
         getComments();
       }
     }, 500);
-    return (): void => clearTimeout(debounceTime);
+    return () => clearTimeout(debounceTime);
   }, [router.query, router.asPath, router.route, contentId]);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const desc = setTimeout(() => {
       setError({ status: false, msg: '', key: 'create-comment' });
     }, 5000);
-    return (): void => clearTimeout(desc);
+    return () => clearTimeout(desc);
   }, [error.status]);
 
   return (

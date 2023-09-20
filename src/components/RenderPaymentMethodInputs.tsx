@@ -26,7 +26,7 @@ const renderPaymentInputs = (option: TPaymentType) => {
                 min={0}
                 maxLength={9}
                 value={state.checkout.payment.data.mpesa_account}
-                onChange={(e): void =>
+                onChange={(e) =>
                   e.target.value.length > 9
                     ? undefined
                     : dispatch({

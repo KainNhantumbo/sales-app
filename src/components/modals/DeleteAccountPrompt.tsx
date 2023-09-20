@@ -14,13 +14,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { _deleteAccount as Container } from '@/styles/modules/delete-account-prompt';
 
 const DeleteAccountPrompt: FC = () => {
-  const { state, fetchAPI, dispatch, deleteAccountPromptController } =
+  const { state, useFetchAPI, dispatch, deleteAccountPromptController } =
     useAppContext();
   const router: NextRouter = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ status: false, message: '' });
 
-  const handleChange = ({ e }: { e: InputEvents }): void => {
+  const handleChange = ({ e }: { e: InputEvents }) => {
     dispatch({
       type: actions.SIGNIN_DATA,
       payload: {
@@ -33,9 +33,9 @@ const DeleteAccountPrompt: FC = () => {
     });
   };
 
-  const deleteUserAccount = async (): Promise<void> => {
+  const deleteUserAccount = async () => {
     try {
-      await fetchAPI({
+      await useFetchAPI({
         method: 'delete',
         url: '/api/v1/users/account',
       });
@@ -66,7 +66,7 @@ const DeleteAccountPrompt: FC = () => {
     }
   };
 
-  const handleSubmit = async (): Promise<void> => {
+  const handleSubmit = async () => {
     if (state.signInData.password.length < 8) {
       setError({
         status: true,
@@ -85,7 +85,7 @@ const DeleteAccountPrompt: FC = () => {
       });
 
       // logs the user out
-      await fetchAPI({
+      await useFetchAPI({
         method: 'post',
         url: '/api/v1/auth/default/logout',
         withCredentials: true,
@@ -104,7 +104,7 @@ const DeleteAccountPrompt: FC = () => {
     }
   };
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const desc = setTimeout(() => {
       setError({ status: false, message: '' });
     }, 5000);
@@ -118,7 +118,7 @@ const DeleteAccountPrompt: FC = () => {
       {state.isDeleteAccountPrompt && (
         <Container
           className='main'
-          onClick={(e: any): void => {
+          onClick={(e: any) => {
             const target = (e as any).target.classList;
             if (target.contains('main')) {
               deleteAccountPromptController();
@@ -162,7 +162,7 @@ const DeleteAccountPrompt: FC = () => {
                       placeholder='Escreva o seu e-mail'
                       aria-label='Escreva o seu e-mail'
                       required
-                      onChange={(e): void => handleChange({ e })}
+                      onChange={(e) => handleChange({ e })}
                     />
                   </section>
 
@@ -178,7 +178,7 @@ const DeleteAccountPrompt: FC = () => {
                       aria-hidden='true'
                       placeholder='Escreva a sua senha'
                       aria-label='Escreva a sua senha'
-                      onChange={(e): void => handleChange({ e })}
+                      onChange={(e) => handleChange({ e })}
                     />
                   </section>
 
@@ -197,7 +197,7 @@ const DeleteAccountPrompt: FC = () => {
                 <button
                   className='prompt-accept'
                   disabled={loading || error.status ? true : false}
-                  onClick={(): Promise<void> => handleSubmit()}>
+                  onClick={() => handleSubmit()}>
                   <BsTrash />
                   <span>Sim, eliminar conta.</span>
                 </button>

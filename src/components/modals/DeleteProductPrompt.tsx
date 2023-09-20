@@ -17,7 +17,7 @@ const DeleteProductPrompt: FC<TProps> = (props) => {
       {state.isDeleteProductPrompt.status && (
         <Container
           className='main'
-          onClick={(e: any): void => {
+          onClick={(e: any) => {
             const target = (e as any).target.classList;
             if (target.contains('main')) {
               deleteProductPromptController(false, '');

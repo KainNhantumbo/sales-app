@@ -19,16 +19,14 @@ class ErrorBoundary extends Component {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.setState({ hasError: true });
     console.log({ error, errorInfo });
   }
 
   render(): ReactNode {
     if (this.state.hasError)
-      return (
-        <ErrorPage retryFn={(): void => this.setState({ hasError: false })} />
-      );
+      return <ErrorPage retryFn={() => this.setState({ hasError: false })} />;
     return this.props.children;
   }
 }

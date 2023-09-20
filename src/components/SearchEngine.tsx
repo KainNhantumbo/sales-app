@@ -7,25 +7,22 @@ import {
   IoPricetags,
 } from 'react-icons/io5';
 import Slider from 'rc-slider';
-import Select from 'react-select';
+import SelectContainer from './Select';
 import actions from '@/shared/actions';
 import { BiSortAlt2 } from 'react-icons/bi';
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppContext } from '@/context/AppContext';
-import { renderReactSelectCSS } from '@/styles/modules/select';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useThemeContext } from '@/context/ThemeContext';
-import { DefaultTheme, useTheme } from 'styled-components';
 import product_categories from '../shared/product-categories.json';
 import { _seachEngine as Container } from '../styles/modules/search-engine';
 
-const SearchEngine: FC = () => {
-  const theme: DefaultTheme = useTheme();
+export default function SearchEngine() {
   const { slidePageUp } = useThemeContext();
   const { state, dispatch } = useAppContext();
   const [innerWidth, setInnerWidth] = useState<number>(0);
 
-  const toggleMenu = (): void => {
+  const toggleMenu = () => {
     dispatch({
       type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
       payload: {
@@ -35,7 +32,7 @@ const SearchEngine: FC = () => {
     });
   };
 
-  const changeWidth = (): void => {
+  const changeWidth = () => {
     setInnerWidth(window.innerWidth);
     if (window.innerWidth > 830) {
       dispatch({
@@ -56,10 +53,10 @@ const SearchEngine: FC = () => {
     }
   };
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     changeWidth();
     window.addEventListener('resize', changeWidth);
-    return (): void => {
+    return () => {
       window.removeEventListener('resize', changeWidth);
     };
   }, []);
@@ -112,7 +109,7 @@ const SearchEngine: FC = () => {
     <AnimatePresence>
       {state.isPublicProductsFilters && (
         <Container
-          onClick={(e: any): void => {
+          onClick={(e: any) => {
             const target = (e as any).target.classList;
             if (target[0]?.includes('search-engine')) {
               dispatch({
@@ -181,7 +178,7 @@ const SearchEngine: FC = () => {
             <div className='form-container'>
               <form
                 className='form-search'
-                onSubmit={(e): void => {
+                onSubmit={(e) => {
                   e.preventDefault();
                 }}>
                 <div className='form-element' title='Search'>
@@ -189,7 +186,7 @@ const SearchEngine: FC = () => {
                     type='text'
                     placeholder='Pesquisar produtos...'
                     value={state.queryPublicProducts.query}
-                    onChange={(e): void => {
+                    onChange={(e) => {
                       dispatch({
                         type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
                         payload: {
@@ -211,11 +208,10 @@ const SearchEngine: FC = () => {
                 <IoLayersOutline />
                 <span>Filtrar por</span>
               </h3>
-              <Select
+              <SelectContainer
                 options={categoryOptions}
                 placeholder={'Selecione uma categoria'}
-                styles={renderReactSelectCSS(theme)}
-                onChange={(option: any): void => {
+                onChange={(option: any) => {
                   dispatch({
                     type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
                     payload: {
@@ -235,10 +231,9 @@ const SearchEngine: FC = () => {
                 <BiSortAlt2 />
                 <span>Ordenar por</span>
               </h3>
-              <Select
+              <SelectContainer
                 options={sortOptions}
                 placeholder={'Selecione a opção'}
-                styles={renderReactSelectCSS(theme)}
                 value={
                   state.queryPublicProducts.sort
                     ? {
@@ -250,7 +245,7 @@ const SearchEngine: FC = () => {
                       }
                     : undefined
                 }
-                onChange={(option: any): void => {
+                onChange={(option: any) => {
                   dispatch({
                     type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
                     payload: {
@@ -269,10 +264,9 @@ const SearchEngine: FC = () => {
                 <IoGift />
                 <span>Promoções</span>
               </h3>
-              <Select
+              <SelectContainer
                 options={promotionOptions}
                 placeholder={'Selecione a opção'}
-                styles={renderReactSelectCSS(theme)}
                 value={
                   state.queryPublicProducts.promotion
                     ? promotionOptions[1]
@@ -280,7 +274,7 @@ const SearchEngine: FC = () => {
                     ? promotionOptions[2]
                     : promotionOptions[0]
                 }
-                onChange={(option: any): void => {
+                onChange={(option: any) => {
                   dispatch({
                     type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
                     payload: {
@@ -370,6 +364,4 @@ const SearchEngine: FC = () => {
       )}
     </AnimatePresence>
   );
-};
-
-export default SearchEngine;
+}

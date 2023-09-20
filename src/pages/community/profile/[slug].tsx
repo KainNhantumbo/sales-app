@@ -37,7 +37,7 @@ const UserProfile: NextPage<TProps> = ({ user }) => {
       />
     );
 
-  useEffect((): void => {
+  useEffect(() => {
     console.log(user);
   }, []);
 

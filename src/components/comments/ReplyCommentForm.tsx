@@ -28,7 +28,7 @@ export default function ReplyCommentForm(props: TCommentForm) {
                   loginPromptController();
                 }
               }}
-              onChange={(e): void => {
+              onChange={(e) => {
                 dispatch({
                   type: actions.CREATE_COMMENT,
                   payload: {

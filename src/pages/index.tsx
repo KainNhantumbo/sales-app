@@ -46,15 +46,15 @@ const Home: NextPage<IProps> = ({ ads_data }) => {
     loginPromptController,
     addProductToCart,
     removeProductFromCart,
-    fetchAPI,
+    useFetchAPI,
   } = useAppContext();
   const theme: DefaultTheme = useTheme();
   const LIMIT: number = 12;
   const { ref, inView }: InViewHookResponse = useInView();
 
-  const handleFavoriteProduct = async (id: string): Promise<void> => {
+  const handleFavoriteProduct = async (id: string) => {
     try {
-      const { data } = await fetchAPI({
+      const { data } = await useFetchAPI({
         method: 'post',
         url: `/api/v1/users/favorites/products/${id}`,
       });
@@ -77,9 +77,9 @@ const Home: NextPage<IProps> = ({ ads_data }) => {
     }
   };
 
-  const handleUnFavoriteProduct = async (id: string): Promise<void> => {
+  const handleUnFavoriteProduct = async (id: string) => {
     try {
-      const { data } = await fetchAPI({
+      const { data } = await useFetchAPI({
         method: 'patch',
         url: `/api/v1/users/favorites/products/${id}`,
       });
@@ -126,7 +126,7 @@ const Home: NextPage<IProps> = ({ ads_data }) => {
         lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
     });
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     if (data) {
       const reducedPosts = data?.pages
         .map((page) => {
@@ -143,7 +143,7 @@ const Home: NextPage<IProps> = ({ ads_data }) => {
       });
     }
 
-    return (): void => {
+    return () => {
       dispatch({
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
         payload: { ...state, publicProducts: [] },
@@ -151,22 +151,22 @@ const Home: NextPage<IProps> = ({ ads_data }) => {
     };
   }, [data]);
 
-  useEffect((): void => {
+  useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
   }, [inView, fetchNextPage, hasNextPage]);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       refetch({ queryKey: ['public-products'] });
     }, 500);
-    return (): void => {
+    return () => {
       clearTimeout(timer);
     };
   }, [state.queryPublicProducts]);
 
-  useEffect((): void => {
+  useEffect(() => {
     if (Array.isArray(ads_data)) {
       dispatch({
         type: actions.BANNER_ADS,
@@ -448,7 +448,7 @@ export async function getServerSideProps() {
     });
     return { props: { ads_data: data } };
   } catch (error: any) {
-    console.error(error?.response?.data?.message ?? error);
+    console.error(error?.response?.data?.message || error);
     return { props: { ads_data: [] } };
   }
 }

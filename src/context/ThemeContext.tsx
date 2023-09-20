@@ -41,17 +41,17 @@ const ThemeContext: FC<IProps> = ({ children }) => {
   });
   const [currentTheme, setCurrentTheme] = useState<Theme>(light_default);
 
-  const setDarkMode = (): void => {
+  const setDarkMode = () => {
     setCurrentTheme(dark_default);
     setThemeSettings({ darkMode: true });
   };
 
-  const setLightMode = (): void => {
+  const setLightMode = () => {
     setCurrentTheme(light_default);
     setThemeSettings({ darkMode: false });
   };
 
-  const matchMediaTheme = (): void => {
+  const matchMediaTheme = () => {
     const currentMode = window.matchMedia(
       '(prefers-color-scheme: dark)'
     ).matches;
@@ -64,14 +64,14 @@ const ThemeContext: FC<IProps> = ({ children }) => {
   };
 
   // slides the page to the top
-  const slidePageUp = (): void =>
+  const slidePageUp = () =>
     window.scrollTo({
       left: 0,
       top: 0,
       behavior: 'smooth',
     });
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     matchMediaTheme();
 
     window
@@ -79,7 +79,7 @@ const ThemeContext: FC<IProps> = ({ children }) => {
       .addEventListener('change', (e) =>
         e.matches ? setDarkMode() : setLightMode()
       );
-    return (): void =>
+    return () =>
       window
         .matchMedia('(prefers-color-scheme: dark)')
         .removeEventListener('change', (e) =>

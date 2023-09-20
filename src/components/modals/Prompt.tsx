@@ -11,7 +11,7 @@ export function PromptModal() {
       {state.prompt.status && (
         <Container
           className='main'
-          onClick={(e: any): void => {
+          onClick={(e: any) => {
             const target = (e as any).target.classList;
             if (target.contains('main')) {
               dispatch({

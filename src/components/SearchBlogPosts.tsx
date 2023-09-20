@@ -11,7 +11,7 @@ const SearchComponent: FC = () => {
 
   return (
     <Container>
-      <form onSubmit={(e): void => e.preventDefault()}>
+      <form onSubmit={(e) => e.preventDefault()}>
         <div className='form-element' title='Search'>
           <input
             type='text'
@@ -19,7 +19,7 @@ const SearchComponent: FC = () => {
             title='Procurar postagens...'
             aria-label='Procurar postagens...'
             value={state.search}
-            onChange={(e): void =>
+            onChange={(e) =>
               dispatch({
                 type: actions.SEARCH,
                 payload: {
@@ -32,7 +32,7 @@ const SearchComponent: FC = () => {
         </div>
 
         <button
-          onClick={(): void => {
+          onClick={() => {
             if (state.search.length < 1) return;
             router.push(`/blog/blog-search?q=${state.search}`);
           }}>

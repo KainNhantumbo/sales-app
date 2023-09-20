@@ -10,7 +10,7 @@ const SearchStores: FC = () => {
   const router: NextRouter = useRouter();
   return (
     <Container>
-      <form onSubmit={(e): void => e.preventDefault()}>
+      <form onSubmit={(e) => e.preventDefault()}>
         <div className='form-element' title='Procurar lojas'>
           <input
             type='text'
@@ -18,7 +18,7 @@ const SearchStores: FC = () => {
             aria-label='Procurar lojas...'
             title='Procurar lojas...'
             value={state.searchStores}
-            onChange={(e): void => {
+            onChange={(e) => {
               dispatch({
                 type: actions.SEARCH_STORES,
                 payload: {
@@ -31,7 +31,7 @@ const SearchStores: FC = () => {
         </div>
 
         <button
-          onClick={(): void => {
+          onClick={() => {
             if (state.searchStores.length < 1) return;
             router.push(
               `/ecommerce/stores/stores-search?q=${state.searchStores}`

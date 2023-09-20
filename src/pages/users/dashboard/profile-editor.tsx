@@ -74,7 +74,7 @@ const ProfileEditor: NextPage = () => {
   const router: NextRouter = useRouter();
   const {
     state,
-    fetchAPI,
+    useFetchAPI,
     dispatch,
     userWorkingDataController,
     deleteAccountPromptController,
@@ -114,7 +114,7 @@ const ProfileEditor: NextPage = () => {
   });
 
   // --------------------functions------------------
-  const handleChange = (e: InputEvents): void => {
+  const handleChange = (e: InputEvents) => {
     dispatch({
       type: actions.USER_DATA,
       payload: {
@@ -127,14 +127,14 @@ const ProfileEditor: NextPage = () => {
     });
   };
 
-  const handlePasswordsChange = (e: InputEvents): void => {
+  const handlePasswordsChange = (e: InputEvents) => {
     setPasswords((state) => ({
       ...state,
       [e.target.name]: e.target.value,
     }));
   };
 
-  const handleCoverImageFile = (): void => {
+  const handleCoverImageFile = () => {
     const imageData: File | null | undefined = coverImageFile?.item(0);
     if (imageData) {
       new Compressor(imageData, {
@@ -142,10 +142,10 @@ const ProfileEditor: NextPage = () => {
         width: 620,
         height: 220,
         resize: 'cover',
-        success: (compressedImge: File | Blob): void => {
+        success: (compressedImge: File | Blob) => {
           const reader = new FileReader();
           reader.readAsDataURL(compressedImge);
-          reader.onloadend = function (e: ProgressEvent<FileReader>): void {
+          reader.onloadend = function (e: ProgressEvent<FileReader>) {
             const encodedImage: string = e.target?.result as string;
             setCoverImageData({
               id: state.user.cover_image?.id || '',
@@ -157,7 +157,7 @@ const ProfileEditor: NextPage = () => {
     }
   };
 
-  const handleProfileImageFile = (): void => {
+  const handleProfileImageFile = () => {
     const imageData: File | null | undefined = profileImageFile?.item(0);
     if (imageData) {
       new Compressor(imageData, {
@@ -165,10 +165,10 @@ const ProfileEditor: NextPage = () => {
         width: 150,
         height: 150,
         resize: 'cover',
-        success: (compressedImge: File | Blob): void => {
+        success: (compressedImge: File | Blob) => {
           const reader = new FileReader();
           reader.readAsDataURL(compressedImge);
-          reader.onloadend = function (e: ProgressEvent<FileReader>): void {
+          reader.onloadend = function (e: ProgressEvent<FileReader>) {
             const encodedImage: string = e.target?.result as string;
             setProfileImageData({
               id: state.user.profile_image?.id || '',
@@ -180,8 +180,8 @@ const ProfileEditor: NextPage = () => {
     }
   };
 
-  const deleteAsset = (assetType: 'cover_image' | 'profile_image'): void => {
-    fetchAPI({
+  const deleteAsset = (assetType: 'cover_image' | 'profile_image') => {
+    useFetchAPI({
       method: 'delete',
       url: `/api/v1/users/account/assets`,
       data: { type: assetType, assetId: state.user[assetType]?.id },
@@ -202,13 +202,13 @@ const ProfileEditor: NextPage = () => {
         });
       })
       .catch((error) => {
-        console.error(error?.response?.data?.message ?? error);
+        console.error(error?.response?.data?.message || error);
       });
   };
 
-  const getUserData = (): void => {
+  const getUserData = () => {
     setLoading({ status: true, key: 'user-data' });
-    fetchAPI({
+    useFetchAPI({
       method: 'get',
       url: `/api/v1/users/account/${router.query?.id || state.auth.id}`,
     })
@@ -220,7 +220,7 @@ const ProfileEditor: NextPage = () => {
         });
       })
       .catch((error) => {
-        console.error(error?.response?.data?.message ?? error);
+        console.error(error?.response?.data?.message || error);
         setError({
           status: true,
           msg:
@@ -234,7 +234,7 @@ const ProfileEditor: NextPage = () => {
       });
   };
 
-  const handleSubmitUpdate = async (): Promise<void> => {
+  const handleSubmitUpdate = async () => {
     if (passwords.confirm_password !== '') {
       if (passwords.password !== passwords.confirm_password)
         return setError({
@@ -260,7 +260,7 @@ const ProfileEditor: NextPage = () => {
         .map(([key, value]) => (value ? { [key]: value } : undefined))
         .reduce((acc, value) => ({ ...acc, ...value }), {});
 
-      const { data } = await fetchAPI<User>({
+      const { data } = await useFetchAPI<User>({
         method: 'patch',
         url: `/api/v1/users/account`,
         data: {
@@ -292,7 +292,7 @@ const ProfileEditor: NextPage = () => {
     }
   };
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     handleCoverImageFile();
     return () => {
       setCoverImageData({ id: '', data: '' });
@@ -300,7 +300,7 @@ const ProfileEditor: NextPage = () => {
     };
   }, [coverImageFile]);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     handleProfileImageFile();
     return () => {
       setProfileImageData({ id: '', data: '' });
@@ -308,20 +308,20 @@ const ProfileEditor: NextPage = () => {
     };
   }, [profileImageFile]);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const fetch_data = setTimeout(() => {
       getUserData();
     }, 10);
-    return (): void => clearTimeout(fetch_data);
+    return () => clearTimeout(fetch_data);
   }, []);
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const debounceTimer = setTimeout(() => {
       if (error.status && error.key === 'user-update') {
         setError({ status: false, msg: '', key: 'user-data' });
       }
     }, 5000);
-    return (): void => clearTimeout(debounceTimer);
+    return () => clearTimeout(debounceTimer);
   }, [error.status]);
 
   // -------working capturer functions--------
@@ -335,7 +335,7 @@ const ProfileEditor: NextPage = () => {
     company_name: '',
   });
 
-  const createWorkingData = (): void => {
+  const createWorkingData = () => {
     const generatedId = crypto.randomUUID();
     dispatch({
       type: actions.USER_DATA,
@@ -362,7 +362,7 @@ const ProfileEditor: NextPage = () => {
     userWorkingDataController();
   };
 
-  const updateWorkingData = (id: string): void => {
+  const updateWorkingData = (id: string) => {
     dispatch({
       type: actions.USER_DATA,
       payload: {
@@ -387,7 +387,7 @@ const ProfileEditor: NextPage = () => {
     });
   };
 
-  const editWorkingData = (id: string): void => {
+  const editWorkingData = (id: string) => {
     setWorkingExperienceData(() => {
       return state.user.working_experience.filter((item) => {
         if (item.id === id) return item;
@@ -586,7 +586,7 @@ const ProfileEditor: NextPage = () => {
                           placeholder='Escreva o seu nome'
                           aria-label='Escreva o seu nome'
                           required={true}
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 32
                               ? undefined
                               : handleChange(e)
@@ -611,7 +611,7 @@ const ProfileEditor: NextPage = () => {
                           aria-label='Escreva o seu apelido'
                           value={state.user.last_name}
                           required={true}
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 32
                               ? undefined
                               : handleChange(e)
@@ -637,7 +637,7 @@ const ProfileEditor: NextPage = () => {
                           placeholder='Escreva o seu número de telemóvel'
                           aria-label='Escreva o seu número de telemóvel'
                           value={state.user.main_phone_number}
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 9
                               ? undefined
                               : handleChange(e)
@@ -661,7 +661,7 @@ const ProfileEditor: NextPage = () => {
                           placeholder='Escreva o seu número de telemóvel'
                           aria-label='Escreva o seu número de telemóvel'
                           value={state.user.alternative_phone_number}
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 9
                               ? undefined
                               : handleChange(e)
@@ -682,7 +682,7 @@ const ProfileEditor: NextPage = () => {
                           name='gender'
                           id='gender'
                           value={state.user.gender}
-                          onChange={(e): void => handleChange(e)}>
+                          onChange={(e) => handleChange(e)}>
                           <option value='Masculino'>Masculino</option>
                           <option value='Femenino'>Femenino</option>
                           <option value='Outro'>Outro</option>
@@ -699,7 +699,7 @@ const ProfileEditor: NextPage = () => {
                           max={'2013-01-01'}
                           id='birth_date'
                           name='birth_date'
-                          onChange={(e): void => handleChange(e)}
+                          onChange={(e) => handleChange(e)}
                         />
                       </div>
                     </section>
@@ -718,7 +718,7 @@ const ProfileEditor: NextPage = () => {
                           placeholder='Escreva uma breve biografia para o seu perfil'
                           aria-label='Escreva uma breve biografia para o seu perfil'
                           value={state.user.bio}
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 128
                               ? undefined
                               : handleChange(e)
@@ -737,7 +737,7 @@ const ProfileEditor: NextPage = () => {
                           <div className='genre' key={index.toString()}>
                             <span>{language}</span>
                             <button
-                              onClick={(): void => {
+                              onClick={() => {
                                 dispatch({
                                   type: actions.USER_DATA,
                                   payload: {
@@ -804,7 +804,7 @@ const ProfileEditor: NextPage = () => {
                           <div className='genre' key={index.toString()}>
                             <span>{skill}</span>
                             <button
-                              onClick={(): void => {
+                              onClick={() => {
                                 dispatch({
                                   type: actions.USER_DATA,
                                   payload: {
@@ -888,7 +888,7 @@ const ProfileEditor: NextPage = () => {
                           name='country'
                           id='country'
                           value={state.user.location?.country}
-                          onChange={(e): void => {
+                          onChange={(e) => {
                             countries.forEach((obj) => {
                               if (obj.country === e.target.value) {
                                 setCountryStates([...obj.states]);
@@ -928,7 +928,7 @@ const ProfileEditor: NextPage = () => {
                           id='state'
                           value={state.user.location?.state}
                           defaultValue={state.user.location?.state}
-                          onChange={(e): void => {
+                          onChange={(e) => {
                             dispatch({
                               type: actions.USER_DATA,
                               payload: {
@@ -966,7 +966,7 @@ const ProfileEditor: NextPage = () => {
                           aria-label='Endereço'
                           maxLength={128}
                           value={state.user.location?.adress}
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 128
                               ? undefined
                               : dispatch({
@@ -1000,7 +1000,7 @@ const ProfileEditor: NextPage = () => {
                           placeholder='Escreva o seu código postal'
                           aria-label='Escreva o seu código postal'
                           value={state.user.location?.zip_code}
-                          onChange={(e): void =>
+                          onChange={(e) =>
                             e.target.value.length > 3
                               ? undefined
                               : dispatch({
@@ -1052,7 +1052,7 @@ const ProfileEditor: NextPage = () => {
                           aria-label='Whatsapp'
                           value={state.user.social_network?.whatsapp}
                           autoComplete='off'
-                          onChange={(e): void => {
+                          onChange={(e) => {
                             dispatch({
                               type: actions.USER_DATA,
                               payload: {
@@ -1081,7 +1081,7 @@ const ProfileEditor: NextPage = () => {
                           autoComplete='off'
                           aria-label='facebook'
                           value={state.user.social_network?.facebook}
-                          onChange={(e): void => {
+                          onChange={(e) => {
                             dispatch({
                               type: actions.USER_DATA,
                               payload: {
@@ -1113,7 +1113,7 @@ const ProfileEditor: NextPage = () => {
                           placeholder='Link do website ou blog'
                           aria-label='website'
                           value={state.user.social_network?.website}
-                          onChange={(e): void => {
+                          onChange={(e) => {
                             dispatch({
                               type: actions.USER_DATA,
                               payload: {
@@ -1142,7 +1142,7 @@ const ProfileEditor: NextPage = () => {
                           placeholder='Link do perfil do instagram'
                           aria-label='instagram'
                           value={state.user.social_network?.instagram}
-                          onChange={(e): void => {
+                          onChange={(e) => {
                             dispatch({
                               type: actions.USER_DATA,
                               payload: {
@@ -1174,7 +1174,7 @@ const ProfileEditor: NextPage = () => {
                           autoComplete='off'
                           aria-label='linkedin'
                           value={state.user.social_network?.linkedin}
-                          onChange={(e): void => {
+                          onChange={(e) => {
                             dispatch({
                               type: actions.USER_DATA,
                               payload: {
@@ -1224,7 +1224,7 @@ const ProfileEditor: NextPage = () => {
                           autoComplete='off'
                           placeholder='Escreva a sua nova senha'
                           aria-label='Escreva a sua nova senha'
-                          onChange={(e): void => handlePasswordsChange(e)}
+                          onChange={(e) => handlePasswordsChange(e)}
                         />
                       </div>
                       <div className='form-element'>
@@ -1241,7 +1241,7 @@ const ProfileEditor: NextPage = () => {
                           minLength={8}
                           placeholder='Confirme a sua senha'
                           aria-label='Confirme a sua senha'
-                          onChange={(e): void => handlePasswordsChange(e)}
+                          onChange={(e) => handlePasswordsChange(e)}
                         />
                       </div>
                     </section>
@@ -1315,7 +1315,7 @@ const ProfileEditor: NextPage = () => {
                           </div>
                           <div className='actions'>
                             <button
-                              onClick={(e): void => {
+                              onClick={(e) => {
                                 e.preventDefault();
                                 editWorkingData(item.id);
                               }}>
@@ -1324,7 +1324,7 @@ const ProfileEditor: NextPage = () => {
                             </button>
                             <button
                               className='delete-btn'
-                              onClick={(): void => removeWorkingData(item.id)}>
+                              onClick={() => removeWorkingData(item.id)}>
                               <IoCloseCircle />
                               <span>Eliminar</span>
                             </button>
@@ -1404,15 +1404,13 @@ const ProfileEditor: NextPage = () => {
               <div className='btns-container'>
                 {!loading.status && !error.status && (
                   <>
-                    <button
-                      className='back'
-                      onClick={(e): void => router.back()}>
+                    <button className='back' onClick={(e) => router.back()}>
                       <IoArrowUndoOutline />
                       <span>Descartar e voltar</span>
                     </button>
                     <button
                       className='save'
-                      onClick={(): Promise<void> => handleSubmitUpdate()}>
+                      onClick={() => handleSubmitUpdate()}>
                       <IoSyncOutline />
                       <span>Salvar alterações</span>
                     </button>

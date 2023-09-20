@@ -19,14 +19,14 @@ const UpdatePassword: NextPage = () => {
     confirm_password: '',
   });
 
-  const handleChange = (e: InputEvents): void => {
+  const handleChange = (e: InputEvents) => {
     setPasswords((state) => ({
       ...state,
       [e.target.name]: e.target.value,
     }));
   };
 
-  const handleSubmit = async (e: SubmitEvent): Promise<void> => {
+  const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
     if (passwords.password !== passwords.confirm_password)
       return setError({
@@ -43,21 +43,21 @@ const UpdatePassword: NextPage = () => {
         withCredentials: true,
       });
     } catch (error: any) {
-      console.error(error?.response?.data?.message ?? error);
+      console.error(error?.response?.data?.message || error);
       setError({
         status: true,
-        message: error?.response?.data?.message ?? error?.code,
+        message: error?.response?.data?.message || error?.code,
       });
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const debounceTimer = setTimeout(() => {
       setError({ status: false, message: '' });
     }, 5000);
-    return (): void => clearTimeout(debounceTimer);
+    return () => clearTimeout(debounceTimer);
   }, [error.status]);
 
   return (
@@ -90,7 +90,7 @@ const UpdatePassword: NextPage = () => {
                     aria-hidden='true'
                     placeholder='Escreva a sua nova senha'
                     aria-label='Escreva a sua nova senha'
-                    onChange={(e): void => handleChange(e)}
+                    onChange={(e) => handleChange(e)}
                   />
                 </section>
                 <section className='input-field'>
@@ -106,7 +106,7 @@ const UpdatePassword: NextPage = () => {
                     minLength={8}
                     placeholder='Confirme a sua senha'
                     aria-label='Confirme a sua senha'
-                    onChange={(e): void => handleChange(e)}
+                    onChange={(e) => handleChange(e)}
                   />
                 </section>
 

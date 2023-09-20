@@ -35,7 +35,7 @@ const Products: NextPage = () => {
   const {
     state,
     dispatch,
-    fetchAPI,
+    useFetchAPI,
     shareProductController,
     deleteProductPromptController,
   } = useAppContext();
@@ -46,7 +46,7 @@ const Products: NextPage = () => {
   const fetchProducts = async ({
     pageParam = 0,
   }): Promise<{ data: ProductsList[]; currentOffset: number }> => {
-    const { data } = await fetchAPI<ProductsList[]>({
+    const { data } = await useFetchAPI<ProductsList[]>({
       url: `/api/v1/users/products?offset=${
         LIMIT * pageParam
       }&limit=${LIMIT}fields=name,price,quantity,promotion,category,favorites,createdAt,updatedAt&sort=${
@@ -71,20 +71,20 @@ const Products: NextPage = () => {
       lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
   });
 
-  const handleDeleteProduct = async (productId: string): Promise<void> => {
+  const handleDeleteProduct = async (productId: string) => {
     try {
-      await fetchAPI({
+      await useFetchAPI({
         method: 'delete',
         url: `/api/v1/users/products/${productId}`,
       });
       deleteProductPromptController(false, '');
       refetch({ queryKey: ['private-store-products'] });
     } catch (err: any) {
-      console.error(err?.response?.data?.message ?? err);
+      console.error(err?.response?.data?.message || err);
     }
   };
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     if (data) {
       const reducedData = data?.pages
         .map((page) => {
@@ -101,7 +101,7 @@ const Products: NextPage = () => {
       });
     }
 
-    return (): void =>
+    return () =>
       dispatch({
         type: actions.PRODUCTS_LIST_DATA,
         payload: { ...state, productList: [] },
@@ -121,8 +121,8 @@ const Products: NextPage = () => {
     }
   }, [inView, fetchNextPage, hasNextPage]);
 
-  useEffect((): (() => void) => {
-    return (): void =>
+  useEffect(() => {
+    return () =>
       dispatch({
         type: actions.CLEAN_UP_MODALS,
         payload: { ...state },
@@ -144,7 +144,7 @@ const Products: NextPage = () => {
             <section className='error-message'>
               <IoWarningOutline className='icon' />
               <p>
-                {(error as any).response?.data?.message ??
+                {(error as any).response?.data?.message ||
                   'Erro ao carregar produtos'}
               </p>
               <button

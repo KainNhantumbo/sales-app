@@ -21,7 +21,7 @@ export default function Contact() {
   });
 
   // picks form data
-  function formDataPicker(e: InputEvents): void {
+  function formDataPicker(e: InputEvents) {
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
@@ -29,7 +29,7 @@ export default function Contact() {
   }
 
   // sends email
-  function emailSender(e: SubmitEvent): void {
+  function emailSender(e: SubmitEvent) {
     e.preventDefault();
     emailjs
       .send(

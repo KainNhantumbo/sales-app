@@ -53,7 +53,7 @@ const Stores: NextPage = () => {
         lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
     });
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     console.log(data);
     if (data) {
       const reducedData = data?.pages
@@ -71,7 +71,7 @@ const Stores: NextPage = () => {
       });
     }
 
-    return (): void => {
+    return () => {
       dispatch({
         type: actions.PUBLIC_STORES_LIST_DATA,
         payload: { ...state, publicStoresList: [] },
@@ -79,7 +79,7 @@ const Stores: NextPage = () => {
     };
   }, [data]);
 
-  useEffect((): void => {
+  useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }

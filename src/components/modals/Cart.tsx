@@ -33,7 +33,7 @@ const Cart: FC = () => {
       {state.isCartModal && (
         <Container
           className='main'
-          onClick={(e: any): void => {
+          onClick={(e: any) => {
             const target = (e as any).target.classList;
             if (target.contains('main')) {
               cartModalController();
