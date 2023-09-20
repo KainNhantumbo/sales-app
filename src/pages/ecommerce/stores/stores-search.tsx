@@ -7,35 +7,32 @@ import {
   IoReload,
 } from 'react-icons/io5';
 import Link from 'next/link';
-import { NextPage } from 'next';
 import { useEffect } from 'react';
 import { formatDate } from '@/lib/utils';
 import Layout from '@/components/Layout';
 import actions from '@/shared/actions';
+import { useRouter } from 'next/router';
 import { getStoresData } from '@/lib/queries';
 import { IoMdCalendar } from 'react-icons/io';
 import { complements } from '@/shared/data';
-import { TPublicStoreList } from '../../../types';
+import { TPublicStoreList } from '@/types';
 import NewsLetter from '@/components/Newsletter';
-import { useRouter } from 'next/router';
+import { useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInView } from 'react-intersection-observer';
 import SearchComponent from '@/components/SearchBlogPosts';
-import { DefaultTheme, useTheme } from 'styled-components';
 import { _storeSeach as Container } from '@/styles/common/store-search';
-import { InViewHookResponse, useInView } from 'react-intersection-observer';
 
-const StoresSearch: NextPage = () => {
+export default function StoresSearch() {
   const LIMIT: number = 8;
-  const theme: DefaultTheme = useTheme();
+  const theme = useTheme();
   const router = useRouter();
   const { state, dispatch } = useAppContext();
-  const { ref, inView }: InViewHookResponse = useInView();
+  const { ref, inView } = useInView();
 
-  const fetchPosts = async ({
-    pageParam = 0,
-  }): Promise<{ data: TPublicStoreList; currentOffset: number }> => {
+  const fetchPosts = async ({ pageParam = 0 }) => {
     const { data } = await getStoresData<TPublicStoreList>({
       offset: pageParam * LIMIT,
       limit: LIMIT,
@@ -245,6 +242,4 @@ const StoresSearch: NextPage = () => {
       </Container>
     </Layout>
   );
-};
-
-export default StoresSearch;
+}

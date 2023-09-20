@@ -4,7 +4,6 @@ import {
   ReactNode,
   useState,
   useEffect,
-  FC,
 } from 'react';
 import { Theme } from '../types';
 import { GlobalStyles } from '../styles/global';
@@ -35,7 +34,7 @@ const context = createContext<IContext>({
   darkmode: false,
 });
 
-const ThemeContext: FC<IProps> = ({ children }) => {
+export default function ThemeContext({ children }: IProps) {
   const [themeSettings, setThemeSettings] = useState<ITheme>({
     darkMode: false,
   });
@@ -102,7 +101,6 @@ const ThemeContext: FC<IProps> = ({ children }) => {
       </context.Provider>
     </ThemeProvider>
   );
-};
+}
 
-export default ThemeContext;
-export const useThemeContext = (): IContext => useContext(context);
+export const useThemeContext = () => useContext(context);

@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { IoIosTrash } from 'react-icons/io';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,7 +8,7 @@ type TProps = {
   deleteFn: (productId: string) => Promise<void>;
 };
 
-const DeleteProductPrompt: FC<TProps> = (props) => {
+export default function DeleteProductPrompt(props: TProps) {
   const { state, deleteProductPromptController } = useAppContext();
 
   return (
@@ -67,6 +66,4 @@ const DeleteProductPrompt: FC<TProps> = (props) => {
       )}
     </AnimatePresence>
   );
-};
-
-export default DeleteProductPrompt;
+}

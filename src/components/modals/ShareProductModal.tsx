@@ -4,7 +4,7 @@ import {
   FaPinterest,
   FaTwitter,
 } from 'react-icons/fa';
-import { FC } from 'react';
+
 import { complements } from '@/shared/data';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -17,7 +17,7 @@ type TProps = {
   productId: string;
 };
 
-const ShareProducts: FC<TProps> = ({ name, category, productId }) => {
+export default function ShareProducts({ name, category, productId }: TProps) {
   const { state, shareProductController } = useAppContext();
 
   const options = [
@@ -101,6 +101,4 @@ const ShareProducts: FC<TProps> = ({ name, category, productId }) => {
       )}
     </AnimatePresence>
   );
-};
-
-export default ShareProducts;
+}

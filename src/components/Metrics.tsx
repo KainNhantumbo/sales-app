@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 import { _metrics as Container } from '@/styles/modules/metrics';
 import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from '@/context/AppContext';
@@ -6,9 +6,8 @@ import { TMetrics } from '../types';
 import actions from '@/shared/actions';
 import { BiStats } from 'react-icons/bi';
 import { formatCurrency } from '@/lib/utils';
-import { IoReload } from 'react-icons/io5';
 
-const Metrics: FC = () => {
+export default function Metrics() {
   const { state, dispatch, useFetchAPI } = useAppContext();
 
   const getMetrics = async (): Promise<TMetrics> => {
@@ -147,6 +146,4 @@ const Metrics: FC = () => {
       ) : null}
     </Container>
   );
-};
-
-export default Metrics;
+}

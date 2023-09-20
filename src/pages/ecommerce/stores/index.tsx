@@ -8,7 +8,6 @@ import {
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
-import { NextPage } from 'next';
 import { useEffect } from 'react';
 import Layout from '@/components/Layout';
 import actions from '@/shared/actions';
@@ -16,24 +15,24 @@ import { formatDate } from '@/lib/utils';
 import { PulseLoader } from 'react-spinners';
 import { IoMdCalendar } from 'react-icons/io';
 import { getStoresData } from '@/lib/queries';
-import { TPublicStoreList } from '../../../types';
+import { TPublicStoreList } from '@/types';
 import NewsLetter from '@/components/Newsletter';
 import { useRouter } from 'next/router';
 import SearchStores from '@/components/SearchPublicStores';
 import { useAppContext } from '@/context/AppContext';
-import { DefaultTheme, useTheme } from 'styled-components';
-import { InViewHookResponse, useInView } from 'react-intersection-observer';
+import { useTheme } from 'styled-components';
+import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { blurDataUrlImage, complements } from '@/shared/data';
 import buyingWomenImg from '@/../public/assets/buying_women.png';
 import { _stores as Container } from '@/styles/common/stores';
 
-const Stores: NextPage = () => {
+export default function Stores() {
   const LIMIT: number = 8;
-  const theme: DefaultTheme = useTheme();
+  const theme = useTheme();
   const router = useRouter();
   const { state, dispatch } = useAppContext();
-  const { ref, inView }: InViewHookResponse = useInView();
+  const { ref, inView } = useInView();
 
   const fetchData = async ({
     pageParam = 0,
@@ -219,6 +218,4 @@ const Stores: NextPage = () => {
       </Container>
     </Layout>
   );
-};
-
-export default Stores;
+}

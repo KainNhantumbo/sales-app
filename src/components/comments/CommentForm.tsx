@@ -1,14 +1,15 @@
-import type { FC } from 'react';
 import { BiUser } from 'react-icons/bi';
 import actions from '@/shared/actions';
 import { MoonLoader } from 'react-spinners';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
-import type { TMainCommentForm } from '../../types/comments';
+import { TMainCommentForm } from '@/types/comments';
+import { useModulesContext } from '@/context/Modules';
 
-const CommentForm: FC<TMainCommentForm> = (props) => {
-  const theme: DefaultTheme = useTheme();
-  const { state, dispatch, loginPromptController } = useAppContext();
+export default function CommentForm(props: TMainCommentForm) {
+  const theme = useTheme();
+  const { state, dispatch } = useAppContext();
+  const { requestLogin } = useModulesContext();
 
   return (
     <>
@@ -35,14 +36,10 @@ const CommentForm: FC<TMainCommentForm> = (props) => {
                 rows={5}
                 maxLength={512}
                 onMouseDown={() => {
-                  if (!state.auth.token) {
-                    loginPromptController();
-                  }
+                  if (!state.auth.token) return requestLogin();
                 }}
                 onTouchEnd={() => {
-                  if (!state.auth.token) {
-                    loginPromptController();
-                  }
+                  if (!state.auth.token) return requestLogin();
                 }}
                 onChange={(e) => {
                   dispatch({
@@ -88,7 +85,7 @@ const CommentForm: FC<TMainCommentForm> = (props) => {
                 (state.comment.content.length < 2 && true)
               }
               onClick={() => {
-                if (!state.auth.token) return loginPromptController();
+                if (!state.auth.token) return requestLogin();
                 props.createComment();
               }}>
               <span>Enviar</span>
@@ -98,6 +95,4 @@ const CommentForm: FC<TMainCommentForm> = (props) => {
       )}
     </>
   );
-};
-
-export default CommentForm;
+}

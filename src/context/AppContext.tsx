@@ -7,16 +7,16 @@ import {
   ReactNode,
 } from 'react';
 import fetch from '@/config/client';
-import ThemeContext from './ThemeContext';
 import actions from '@/shared/actions';
 import { useRouter } from 'next/router';
+import ModulesContext from './Modules';
+import ThemeContext from './ThemeContext';
 import { Action, State } from '@/types/reducer';
 import { TAuth, TCart } from '@/types/index';
 import { reducer, initialState } from '@/lib/reducer';
 import useIsomorphicLayoutEffect from '@/hooks/custom-layout-efffect';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import ModulesContext from './Modules';
 
 const queryClient: QueryClient = new QueryClient({
   defaultOptions: {
@@ -351,4 +351,4 @@ export default function AppContext(props: TProps) {
   );
 }
 
-export const useAppContext = (): IContext => useContext(context);
+export const useAppContext = () => useContext(context);

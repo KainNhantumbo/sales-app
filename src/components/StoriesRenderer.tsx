@@ -8,7 +8,7 @@ import {
 import moment from 'moment';
 import Image from 'next/image';
 import fetch from '@/config/client';
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BiUser } from 'react-icons/bi';
 import { FaEdit } from 'react-icons/fa';
@@ -20,29 +20,25 @@ import { IPublicStory } from '../types';
 import { useRouter } from 'next/router';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { PulseLoader } from 'react-spinners';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import DeleteStoryPrompt from './modals/DeleteStoryPrompt';
 import { _storiesRender as Container } from '@/styles/modules/stories-renderer';
-import { InViewHookResponse, useInView } from 'react-intersection-observer';
-import RequestLogin from './modals/RequestLogin';
+import { useInView } from 'react-intersection-observer';
+import { useModulesContext } from '@/context/Modules';
 
 interface IProps {
   userId?: string | undefined;
   favoritesId?: string | undefined;
 }
 
-const StoriesRenderer: FC<IProps> = (props) => {
-  const {
-    state,
-    dispatch,
-    useFetchAPI,
-    deleteStoryPromptController,
-    loginPromptController,
-  } = useAppContext();
+export default function StoriesRenderer(props: IProps) {
+  const { state, dispatch, useFetchAPI, deleteStoryPromptController } =
+    useAppContext();
+  const { requestLogin } = useModulesContext();
   const LIMIT: number = 8;
   const router = useRouter();
-  const theme: DefaultTheme = useTheme();
-  const { ref, inView }: InViewHookResponse = useInView();
+  const theme = useTheme();
+  const { ref, inView } = useInView();
 
   const getStories = async ({
     pageParam = 0,
@@ -168,7 +164,6 @@ const StoriesRenderer: FC<IProps> = (props) => {
   return (
     <Container>
       <DeleteStoryPrompt deleteFn={handleDeleteStory} />
-      <RequestLogin key={'stories-renderer'} />
 
       {state.publicStories.length < 1 && !isLoading && !isError ? (
         <div className='empty-data_container'>
@@ -289,9 +284,8 @@ const StoriesRenderer: FC<IProps> = (props) => {
                         whileTap={{ scale: 0.8 }}
                         disabled={!state.auth.id && true}
                         onClick={() => {
-                          if (!state.auth.token) {
-                            return loginPromptController();
-                          }
+                          if (!state.auth.token) return requestLogin();
+
                           story.favorites.includes(state.auth.id)
                             ? handleUnFavoriteStory(story._id)
                             : handleFavoriteStory(story._id);
@@ -361,6 +355,4 @@ const StoriesRenderer: FC<IProps> = (props) => {
       </div>
     </Container>
   );
-};
-
-export default StoriesRenderer;
+}

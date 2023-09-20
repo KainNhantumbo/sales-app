@@ -7,9 +7,9 @@ import ReplyComment from './ReplyComment';
 import ReplyCommentForm from './ReplyCommentForm';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { useState, useEffect, useMemo, FC } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
-import type { IComment, TComment } from '../../types/comments';
+import type { IComment, TComment } from '@/types/comments';
 import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
 import { _comments as Container } from '@/styles/modules/comments';
 
@@ -26,7 +26,7 @@ type TLoading = {
   key: 'create-comment' | 'update-comment' | 'delete-comment';
 };
 
-const Comments: FC<TProps> = ({ contentId }) => {
+export default function Comments({ contentId }: TProps) {
   const router = useRouter();
   const { state, dispatch, useFetchAPI, deleteCommentPromptController } =
     useAppContext();
@@ -86,7 +86,7 @@ const Comments: FC<TProps> = ({ contentId }) => {
 
   const getComments = async () => {
     try {
-      const { data } = await useFetchAPI<TComment[]>({
+      const { data } = await useFetchAPI<IComment[]>({
         method: 'get',
         url: `/api/v1/users/comments/${contentId}`,
       });
@@ -102,7 +102,7 @@ const Comments: FC<TProps> = ({ contentId }) => {
   const handleCreateComment = async () => {
     setLoading({ status: true, key: 'create-comment' });
     try {
-      const { data } = await useFetchAPI({
+      const { data } = await useFetchAPI<IComment>({
         method: 'post',
         url: '/api/v1/users/comments',
         data: {
@@ -211,7 +211,7 @@ const Comments: FC<TProps> = ({ contentId }) => {
 
   const handleFavoriteComment = async (id: string) => {
     try {
-      const { data } = await useFetchAPI({
+      const { data } = await useFetchAPI<string[]>({
         method: 'post',
         url: `/api/v1/users/favorites/comments/${id}`,
       });
@@ -233,7 +233,7 @@ const Comments: FC<TProps> = ({ contentId }) => {
 
   const handleUnFavoriteComment = async (id: string) => {
     try {
-      const { data } = await useFetchAPI({
+      const { data } = await useFetchAPI<string[]>({
         method: 'patch',
         url: `/api/v1/users/favorites/comments/${id}`,
       });
@@ -423,6 +423,4 @@ const Comments: FC<TProps> = ({ contentId }) => {
       </section>
     </Container>
   );
-};
-
-export default Comments;
+}

@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -7,7 +6,7 @@ import { _prompt as Container } from '@/styles/modules/logout-prompt';
 
 type TProps = { deleteFn: any };
 
-const DeleteStoryPrompt: FC<TProps> = (props) => {
+export default function DeleteStoryPrompt(props: TProps) {
   const { state, deleteStoryPromptController } = useAppContext();
   return (
     <AnimatePresence>
@@ -61,6 +60,4 @@ const DeleteStoryPrompt: FC<TProps> = (props) => {
       )}
     </AnimatePresence>
   );
-};
-
-export default DeleteStoryPrompt;
+}

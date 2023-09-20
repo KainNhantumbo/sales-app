@@ -1,12 +1,12 @@
 import { FiX } from 'react-icons/fi';
 import actions from '@/shared/actions';
 import { BiSearch } from 'react-icons/bi';
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { _searchBox as Container } from '@/styles/modules/search-box';
 
-const SearchBox: FC = () => {
+export default function SearchBox() {
   const [inputValue, setInputValue] = useState<string>('');
   const { state, dispatch, searchBoxController } = useAppContext();
 
@@ -87,6 +87,4 @@ const SearchBox: FC = () => {
       )}
     </AnimatePresence>
   );
-};
-
-export default SearchBox;
+}

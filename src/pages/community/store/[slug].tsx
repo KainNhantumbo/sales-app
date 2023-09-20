@@ -28,30 +28,31 @@ import actions from '@/shared/actions';
 import ErrorPage from '@/pages/error-page';
 import { useEffect, useState } from 'react';
 import { formatCurrency } from '@/lib/utils';
-import { GetServerSidePropsContext, NextPage } from 'next';
-import { VscVerifiedFilled } from 'react-icons/vsc';
+import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
+import { useTheme } from 'styled-components';
+import SideBarAds from '@/components/SidaBarAds';
+import { VscVerifiedFilled } from 'react-icons/vsc';
 import { useAppContext } from '@/context/AppContext';
-import { DefaultTheme, useTheme } from 'styled-components';
-import { TPublicProducts, TPublicStore } from '../../../types';
+import { useModulesContext } from '@/context/Modules';
+import { TPublicProducts, TPublicStore } from '@/types';
 import { useThemeContext } from '@/context/ThemeContext';
 import { _store as Container } from '@/styles/common/community-store-profile';
-import SideBarAds from '@/components/SidaBarAds';
 
 type TProps = { store?: TPublicStore | undefined; products: TPublicProducts[] };
 
-const StoreProfile: NextPage<TProps> = ({ store, products }) => {
+export default function StoreProfile({ store, products }: TProps) {
   const {
     state,
     dispatch,
     useFetchAPI,
-    loginPromptController,
     addProductToCart,
     removeProductFromCart,
   } = useAppContext();
+  const { requestLogin } = useModulesContext();
   const { slidePageUp } = useThemeContext();
   const router = useRouter();
-  const theme: DefaultTheme = useTheme();
+  const theme = useTheme();
   const [tab, setTab] = useState<'docs' | 'products'>('docs');
   const [innerWidth, setInnerWidth] = useState(0);
 
@@ -67,7 +68,7 @@ const StoreProfile: NextPage<TProps> = ({ store, products }) => {
 
   async function handleFavoriteProduct(id: string) {
     try {
-      const { data } = await useFetchAPI({
+      const { data } = await useFetchAPI<string[]>({
         method: 'post',
         url: `/api/v1/users/favorites/products/${id}`,
       });
@@ -92,7 +93,7 @@ const StoreProfile: NextPage<TProps> = ({ store, products }) => {
 
   async function handleUnFavoriteProduct(id: string) {
     try {
-      const { data } = await useFetchAPI({
+      const { data } = await useFetchAPI<string[]>({
         method: 'patch',
         url: `/api/v1/users/favorites/products/${id}`,
       });
@@ -378,8 +379,7 @@ const StoreProfile: NextPage<TProps> = ({ store, products }) => {
                           aria-label='Adicionar a lista de favoritos'
                           className='favorite-button'
                           onClick={() => {
-                            if (!state.auth?.token)
-                              return loginPromptController();
+                            if (!state.auth?.token) return requestLogin();
                             else if (item.favorites.includes(state.auth?.id))
                               return handleUnFavoriteProduct(item._id);
                             return handleFavoriteProduct(item._id);
@@ -496,9 +496,7 @@ const StoreProfile: NextPage<TProps> = ({ store, products }) => {
       </Container>
     </Layout>
   );
-};
-
-export default StoreProfile;
+}
 
 type TContext = GetServerSidePropsContext;
 

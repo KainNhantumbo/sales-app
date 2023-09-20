@@ -1,13 +1,12 @@
 import 'moment/locale/pt-br';
 import '@/styles/global.css';
-import type { FC } from 'react';
 import type { AppProps } from 'next/app';
 import AppContext from '@/context/AppContext';
 
-const App: FC<AppProps> = ({ Component, pageProps }) => (
-  <AppContext>
-    <Component {...pageProps} />
-  </AppContext>
-);
-
-export default App;
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <AppContext>
+      <Component {...pageProps} />
+    </AppContext>
+  );
+}

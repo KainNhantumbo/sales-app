@@ -6,14 +6,14 @@ import {
 import fetch from '@/config/client';
 import actions from '@/shared/actions';
 import { BsTrash } from 'react-icons/bs';
-import { InputEvents } from '../../types';
-import { useState, useEffect, FC } from 'react';
-import { useRouter, NextRouter } from 'next/router';
+import { InputEvents } from '@/types';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { _deleteAccount as Container } from '@/styles/modules/delete-account-prompt';
 
-const DeleteAccountPrompt: FC = () => {
+export default function DeleteAccountPrompt() {
   const { state, useFetchAPI, dispatch, deleteAccountPromptController } =
     useAppContext();
   const router = useRouter();
@@ -208,6 +208,4 @@ const DeleteAccountPrompt: FC = () => {
       )}
     </AnimatePresence>
   );
-};
-
-export default DeleteAccountPrompt;
+}

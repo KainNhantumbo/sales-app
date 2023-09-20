@@ -3,7 +3,7 @@ import type { TPaymentType } from '../types';
 import { useAppContext } from '@/context/AppContext';
 import { IoPhonePortraitOutline } from 'react-icons/io5';
 
-const renderPaymentInputs = (option: TPaymentType) => {
+export default function renderPaymentInputs(option: TPaymentType) {
   const { state, dispatch } = useAppContext();
   switch (option) {
     case 'm-pesa':
@@ -72,6 +72,4 @@ const renderPaymentInputs = (option: TPaymentType) => {
         </div>
       );
   }
-};
-
-export default renderPaymentInputs;
+}

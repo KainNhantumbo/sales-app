@@ -26,13 +26,13 @@ import { FaDollarSign } from 'react-icons/fa';
 import NewsLetter from '@/components/Newsletter';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import { _purchase as Container } from '@/styles/common/purchase';
 import renderPaymentInputs from '@/components/RenderPaymentMethodInputs';
 import SelectContainer from '@/components/Select';
 
 export default function Purchase() {
-  const theme: DefaultTheme = useTheme();
+  const theme = useTheme();
   const router = useRouter();
   const { state, dispatch, useFetchAPI, cartModalController } = useAppContext();
 

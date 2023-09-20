@@ -20,7 +20,7 @@ import {
   IoStorefront,
 } from 'react-icons/io5';
 import Link from 'next/link';
-import { NextPage } from 'next';
+import { Product } from '@/types';
 import QRCode from 'react-qr-code';
 import { motion } from 'framer-motion';
 import actions from '@/shared/actions';
@@ -28,7 +28,6 @@ import Layout from '@/components/Layout';
 import fetch from '@/config/client';
 import ErrorPage from '@/pages/error-page';
 import { FaCartPlus } from 'react-icons/fa';
-import { Product } from '../../../types';
 import { useEffect, useState } from 'react';
 import { complements } from '@/shared/data';
 import NewsLetter from '@/components/Newsletter';
@@ -39,24 +38,25 @@ import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import 'react-image-gallery/styles/css/image-gallery.css';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import product_categories from '@/shared/product-categories.json';
 import ShareProducts from '@/components/modals/ShareProductModal';
 import { _commerceProduct as Container } from '@/styles/common/ecommerce-product';
+import { useModulesContext } from '@/context/Modules';
 
-const Product: NextPage<any> = ({ product, error_message }) => {
+export default function Product({ product, error_message }: any) {
   const {
     state,
     dispatch,
     useFetchAPI,
-    loginPromptController,
     shareProductController,
     addProductToCart,
     removeProductFromCart,
     updateCartProduct,
     getCartProduct,
   } = useAppContext();
-  const theme: DefaultTheme = useTheme();
+  const { requestLogin } = useModulesContext();
+  const theme = useTheme();
   const router = useRouter();
   const [innerWidth, setInnerWidth] = useState<number>(0);
 
@@ -276,7 +276,7 @@ const Product: NextPage<any> = ({ product, error_message }) => {
                     title='Adicionar a lista de favoritos'
                     className='favorite-button'
                     onClick={() => {
-                      if (!state.auth?.id) return loginPromptController();
+                      if (!state.auth?.id) return requestLogin();
                       if (
                         state.publicProduct.favorites.includes(state.auth?.id)
                       )
@@ -299,9 +299,7 @@ const Product: NextPage<any> = ({ product, error_message }) => {
                     title='Compartilhar produto'
                     className='share-button'
                     onClick={() =>
-                      state.auth?.id
-                        ? shareProductController()
-                        : loginPromptController()
+                      state.auth?.id ? shareProductController() : requestLogin()
                     }>
                     <IoShareSocial />
                     <span>Compartilhar</span>
@@ -471,7 +469,7 @@ const Product: NextPage<any> = ({ product, error_message }) => {
                               : undefined,
                           });
                         }
-                        if (!state.auth.token) return loginPromptController();
+                        if (!state.auth.token) return requestLogin();
                         router.push('/ecommerce/products/purchase');
                       }}>
                       <IoBagCheck />
@@ -748,14 +746,9 @@ const Product: NextPage<any> = ({ product, error_message }) => {
       </Container>
     </Layout>
   );
-};
+}
 
-export default Product;
-
-export async function getStaticPaths(): Promise<{
-  paths: any;
-  fallback: boolean;
-}> {
+export async function getStaticPaths() {
   const productIdList = await fetch({
     method: 'get',
     url: '/api/v1/users/products/public',

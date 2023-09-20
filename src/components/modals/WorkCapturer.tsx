@@ -6,7 +6,7 @@ import {
   IoLinkOutline,
   IoPushOutline,
 } from 'react-icons/io5';
-import { Dispatch, FC, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { _capturer as Container } from '@/styles/modules/working-capturer';
@@ -36,7 +36,7 @@ interface IProps {
   updateFn: (id: string) => void;
 }
 
-const WorkCapturer: FC<IProps> = (props) => {
+export default function WorkCapturer(props: IProps) {
   const { state, userWorkingDataController } = useAppContext();
 
   return (
@@ -242,6 +242,4 @@ const WorkCapturer: FC<IProps> = (props) => {
       )}
     </AnimatePresence>
   );
-};
-
-export default WorkCapturer;
+}

@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
@@ -7,7 +6,7 @@ import { _prompt as Container } from '@/styles/modules/logout-prompt';
 
 type TProps = { deleteFn: any };
 
-const DeleteCommentPrompt: FC<TProps> = (props) => {
+export default function DeleteCommentPrompt(props: TProps) {
   const { state, deleteCommentPromptController } = useAppContext();
   return (
     <AnimatePresence>
@@ -61,6 +60,4 @@ const DeleteCommentPrompt: FC<TProps> = (props) => {
       )}
     </AnimatePresence>
   );
-};
-
-export default DeleteCommentPrompt;
+}

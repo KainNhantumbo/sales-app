@@ -11,18 +11,17 @@ import actions from '@/shared/actions';
 import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
 import { PulseLoader } from 'react-spinners';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import { complements } from '@/shared/data';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { InputEvents, SubmitEvent } from '../../types';
+import { InputEvents, SubmitEvent } from '@/types';
 import { _signUp as Container } from '@/styles/common/sign-up';
 import backgroundImage from '@/../public/assets/africa-unveiled.png';
-import { NextPage } from 'next';
 
-const SignUp: NextPage = () => {
+export default function SignUp() {
   const router = useRouter();
-  const theme: DefaultTheme = useTheme();
+  const theme = useTheme();
   const { state, dispatch } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });
@@ -237,6 +236,4 @@ const SignUp: NextPage = () => {
       </Container>
     </Layout>
   );
-};
-
-export default SignUp;
+}

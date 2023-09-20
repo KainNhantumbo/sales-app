@@ -7,31 +7,30 @@ import {
   IoReload,
 } from 'react-icons/io5';
 import Link from 'next/link';
-import { NextPage } from 'next';
 import { useEffect } from 'react';
+import { IBlogPosts } from '@/types';
 import actions from '@/shared/actions';
-import { IBlogPosts } from '../../types';
+import { useRouter } from 'next/router';
 import { formatDate } from '@/lib/utils';
 import Layout from '@/components/Layout';
 import { getPosts } from '@/lib/queries';
 import { complements } from '@/shared/data';
 import NewsLetter from '@/components/Newsletter';
-import { useRouter } from 'next/router';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import SearchComponent from '@/components/SearchBlogPosts';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
 import { _blogSeach as Container } from '@/styles/common/blog-search';
-import { InViewHookResponse, useInView } from 'react-intersection-observer';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInView } from 'react-intersection-observer';
 
-const BlogSearch: NextPage = () => {
+export default function BlogSearch() {
   const LIMIT: number = 8;
-  const theme: DefaultTheme = useTheme();
+  const theme = useTheme();
   const router = useRouter();
   const { state, dispatch } = useAppContext();
-  const { ref, inView }: InViewHookResponse = useInView();
+  const { ref, inView } = useInView();
 
   const fetchPosts = async ({
     pageParam = 0,
@@ -242,6 +241,4 @@ const BlogSearch: NextPage = () => {
       </Container>
     </Layout>
   );
-};
-
-export default BlogSearch;
+}

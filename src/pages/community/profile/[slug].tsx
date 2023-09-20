@@ -8,7 +8,6 @@ import {
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
-import { NextPage } from 'next';
 import { useEffect } from 'react';
 import fetch from '@/config/client';
 import { motion } from 'framer-motion';
@@ -17,7 +16,7 @@ import { BiUser } from 'react-icons/bi';
 import { formatDate } from '@/lib/utils';
 import Layout from '@/components/Layout';
 import ErrorPage from '@/pages/error-page';
-import { TPublicUser } from '../../../types';
+import { TPublicUser } from '@/types';
 import SideBarAds from '@/components/SidaBarAds';
 import { useRouter } from 'next/router';
 import StoriesRenderer from '@/components/StoriesRenderer';
@@ -26,7 +25,7 @@ import { _profile as Container } from '@/styles/common/community-user-profile';
 
 type TProps = { user: TPublicUser };
 
-const UserProfile: NextPage<TProps> = ({ user }) => {
+export default function UserProfile({ user }: TProps) {
   const router = useRouter();
 
   if (!user)
@@ -205,9 +204,7 @@ const UserProfile: NextPage<TProps> = ({ user }) => {
       </Container>
     </Layout>
   );
-};
-
-export default UserProfile;
+}
 
 export async function getStaticPaths(): Promise<any> {
   const slugs = await fetch<TPublicUser[]>({

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import editorJsHtml from 'editorjs-html';
 import { OutputData } from '@editorjs/editorjs';
 
@@ -7,7 +7,7 @@ const EditorJsToHtml = editorJsHtml();
 export type TParsedContent = string | JSX.Element;
 type TProps = { data: OutputData };
 
-const EditorJsRenderer: FC<TProps> = ({ data }) => {
+export default function EditorJsRenderer({ data }: TProps) {
   const html = EditorJsToHtml.parse(data) as TParsedContent[];
   return (
     <>
@@ -23,6 +23,4 @@ const EditorJsRenderer: FC<TProps> = ({ data }) => {
       })}
     </>
   );
-};
-
-export default EditorJsRenderer;
+}

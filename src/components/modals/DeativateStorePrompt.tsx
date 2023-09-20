@@ -4,9 +4,8 @@ import { IoArrowBackOutline } from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { _prompt as Container } from '@/styles/modules/logout-prompt';
-import { FC } from 'react';
 
-const DeactivatePrompt: FC = () => {
+const DeactivatePrompt = () => {
   const { state, dispatch, deactivateStorePromptController } = useAppContext();
 
   return (

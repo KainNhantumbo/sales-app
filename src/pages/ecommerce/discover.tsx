@@ -5,19 +5,18 @@ import {
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
-import { NextPage } from 'next';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { formatCurrency } from '@/lib/utils';
 import NewsLetter from '@/components/Newsletter';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import flying_paper from '@/../public/assets/flying paper.png';
 import { _discover as Container } from '@/styles/common/discover';
 import africa_culture from '@/../public/assets/africa-culture.png';
 import { store_features, pricing_data, complements } from '@/shared/data';
 
-const Discover: NextPage = () => {
-  const theme: DefaultTheme = useTheme();
+export default function Discover() {
+  const theme = useTheme();
 
   return (
     <Layout
@@ -150,6 +149,4 @@ const Discover: NextPage = () => {
       </Container>
     </Layout>
   );
-};
-
-export default Discover;
+}

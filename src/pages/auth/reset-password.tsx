@@ -1,18 +1,17 @@
 import Link from 'next/link';
-import { NextPage } from 'next';
-import fetch from '../../config/client';
+import fetch from '@/config/client';
+import { SubmitEvent } from '@/types';
 import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
-import { SubmitEvent } from '../../types';
 import { IoMailOutline } from 'react-icons/io5';
 import { complements } from '@/shared/data';
 import { PulseLoader } from 'react-spinners';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import { useRouter } from 'next/router';
 import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
 
-const ResetPassword: NextPage = () => {
-  const theme: DefaultTheme = useTheme();
+export default function ResetPassword() {
+  const theme = useTheme();
   const router = useRouter();
   const [email, setEmail] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -126,6 +125,4 @@ const ResetPassword: NextPage = () => {
       </Container>
     </Layout>
   );
-};
-
-export default ResetPassword;
+}

@@ -1,17 +1,16 @@
 import Link from 'next/link';
-import { NextPage } from 'next';
 import fetch from '@/config/client';
 import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
 import { PulseLoader } from 'react-spinners';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import { complements } from '@/shared/data';
-import { InputEvents, SubmitEvent } from '../../types';
+import { InputEvents, SubmitEvent } from '@/types';
 import { IoLockClosedOutline, IoLockOpenOutline } from 'react-icons/io5';
 import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
 
-const UpdatePassword: NextPage = () => {
-  const theme: DefaultTheme = useTheme();
+export default function UpdatePassword() {
+  const theme = useTheme();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });
   const [passwords, setPasswords] = useState({
@@ -146,6 +145,4 @@ const UpdatePassword: NextPage = () => {
       </Container>
     </Layout>
   );
-};
-
-export default UpdatePassword;
+}

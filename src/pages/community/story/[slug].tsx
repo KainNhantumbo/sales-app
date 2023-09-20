@@ -14,20 +14,20 @@ import { useDropzone } from 'react-dropzone';
 import { PulseLoader } from 'react-spinners';
 import { complements } from '@/shared/data';
 import SideBarAds from '@/components/SidaBarAds';
-import { IPublicStory, TStory } from '../../../types';
+import { IPublicStory, TStory } from '@/types';
 import { Router, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { useCallback, useEffect, useState } from 'react';
-import { DefaultTheme, useTheme } from 'styled-components';
-import { GetServerSidePropsContext, NextPage } from 'next';
+import { useTheme } from 'styled-components';
+import { GetServerSidePropsContext } from 'next';
 import { _story as Container } from '@/styles/common/story';
 import { BsTrash } from 'react-icons/bs';
 
 type TProps = { story: IPublicStory | undefined };
 type TError = { status: boolean; msg: string };
 
-const Story: NextPage<TProps> = (props) => {
-  const theme: DefaultTheme = useTheme();
+export default function Story(props: TProps) {
+  const theme = useTheme();
   const router = useRouter();
   const { state, dispatch, useFetchAPI } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
@@ -409,9 +409,7 @@ const Story: NextPage<TProps> = (props) => {
       </Container>
     </Layout>
   );
-};
-
-export default Story;
+}
 
 type TContext = GetServerSidePropsContext;
 

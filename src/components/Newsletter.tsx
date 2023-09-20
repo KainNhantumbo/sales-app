@@ -3,16 +3,15 @@ import fetch from '../config/client';
 import actions from '@/shared/actions';
 import { BsMailbox2 } from 'react-icons/bs';
 import { PulseLoader } from 'react-spinners';
-import { useState, useEffect, FC } from 'react';
+import { useState, useEffect } from 'react';
 import { blurDataUrlImage } from '@/shared/data';
 import { useAppContext } from '@/context/AppContext';
-import { IoPaperPlaneOutline } from 'react-icons/io5';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import newsletter_image from '../../public/assets/newsletter.png';
 import { _newsletter as Container } from '../styles/modules/newsletter';
 
-const NewsLetter: FC = () => {
-  const theme: DefaultTheme = useTheme();
+export default function NewsLetter () {
+  const theme = useTheme();
   const { state, dispatch } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<{ status: boolean; message: string }>({
@@ -126,4 +125,3 @@ const NewsLetter: FC = () => {
   );
 };
 
-export default NewsLetter;

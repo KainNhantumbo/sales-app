@@ -25,36 +25,35 @@ import { TBannerAds, TPublicProducts } from '../types';
 import { useAppContext } from '@/context/AppContext';
 import SearchEngine from '@/components/SearchEngine';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { DefaultTheme, useTheme } from 'styled-components';
-import RequestLogin from '@/components/modals/RequestLogin';
+import { useTheme } from 'styled-components';
 import { blurDataUrlImage, complements } from '@/shared/data';
-import { NextPage } from 'next';
 import ReactImageGallery from 'react-image-gallery';
 import { _home as Container } from '@/styles/common/home';
-import { InViewHookResponse, useInView } from 'react-intersection-observer';
+import { useInView } from 'react-intersection-observer';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import Slider from 'rc-slider';
+import { useModulesContext } from '@/context/Modules';
 
 interface IProps {
   ads_data: TBannerAds[];
 }
 
-const Home: NextPage<IProps> = ({ ads_data }) => {
+export default function Home({ ads_data }: IProps) {
   const {
     state,
     dispatch,
-    loginPromptController,
     addProductToCart,
     removeProductFromCart,
     useFetchAPI,
   } = useAppContext();
-  const theme: DefaultTheme = useTheme();
+  const { requestLogin } = useModulesContext();
+  const theme = useTheme();
   const LIMIT: number = 12;
-  const { ref, inView }: InViewHookResponse = useInView();
+  const { ref, inView } = useInView();
 
   const handleFavoriteProduct = async (id: string) => {
     try {
-      const { data } = await useFetchAPI({
+      const { data } = await useFetchAPI<string[]>({
         method: 'post',
         url: `/api/v1/users/favorites/products/${id}`,
       });
@@ -79,7 +78,7 @@ const Home: NextPage<IProps> = ({ ads_data }) => {
 
   const handleUnFavoriteProduct = async (id: string) => {
     try {
-      const { data } = await useFetchAPI({
+      const { data } = await useFetchAPI<string[]>({
         method: 'patch',
         url: `/api/v1/users/favorites/products/${id}`,
       });
@@ -180,8 +179,6 @@ const Home: NextPage<IProps> = ({ ads_data }) => {
       metadata={{
         title: `${complements.defaultTitle} | Produtos e Serviços`,
       }}>
-      <RequestLogin />
-
       <Container>
         <div className='content-wrapper'>
           <motion.button
@@ -292,8 +289,7 @@ const Home: NextPage<IProps> = ({ ads_data }) => {
                           aria-label='Adicionar a lista de favoritos'
                           className='favorite-button'
                           onClick={() => {
-                            if (!state.auth.token)
-                              return loginPromptController();
+                            if (!state.auth.token) return requestLogin();
                             else if (item.favorites.includes(state.auth?.id))
                               return handleUnFavoriteProduct(item._id);
                             return handleFavoriteProduct(item._id);
@@ -436,9 +432,7 @@ const Home: NextPage<IProps> = ({ ads_data }) => {
       </Container>
     </Layout>
   );
-};
-
-export default Home;
+}
 
 export async function getServerSideProps() {
   try {

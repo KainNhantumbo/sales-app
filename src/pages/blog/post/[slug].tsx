@@ -14,7 +14,6 @@ import moment from 'moment';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import { NextPage } from 'next';
 import { motion } from 'framer-motion';
 import { formatDate } from '@/lib/utils';
 import editorJsHtml from 'editorjs-html';
@@ -24,25 +23,27 @@ import NewsLetter from '@/components/Newsletter';
 import { useRouter } from 'next/router';
 import { readingTime } from 'reading-time-estimator';
 import { useAppContext } from '@/context/AppContext';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import { getPaths, getPost, getPosts } from '@/lib/queries';
 import { CommentCount, DiscussionEmbed } from 'disqus-react';
-import type { IBlogPost, IBlogPosts } from '../../../types/index';
+import type { IBlogPost, IBlogPosts } from '@/types';
 import { _post as Container } from '@/styles/common/post';
 import EditorJsRenderer from '@/components/EditorJSRenderer';
 import type { TParsedContent } from '@/components/EditorJSRenderer';
 import { author, complements, shareUrlPaths } from '@/shared/data';
+import { useModulesContext } from '@/context/Modules';
 
-interface IPost {
+interface IProps {
   post: IBlogPost;
   latestPosts: IBlogPosts[];
 }
 
-const Post: NextPage<IPost> = ({ post: initialPost, latestPosts }) => {
-  const { state, useFetchAPI, loginPromptController } = useAppContext();
+export default function Post({ post: initialPost, latestPosts }: IProps) {
+  const { state, useFetchAPI } = useAppContext();
+  const { requestLogin } = useModulesContext();
   const [post, setPost] = useState(initialPost);
   const router = useRouter();
-  const theme: DefaultTheme = useTheme();
+  const theme = useTheme();
 
   if (!initialPost) {
     return <ErrorPage retryFn={router.reload} />;
@@ -191,7 +192,7 @@ const Post: NextPage<IPost> = ({ post: initialPost, latestPosts }) => {
                 <div>
                   <button
                     onClick={() => {
-                      if (!state.auth.token) return loginPromptController();
+                      if (!state.auth.token) return requestLogin();
 
                       post.favorites.includes(state.auth.id)
                         ? handleUnFavoritePost()
@@ -299,9 +300,7 @@ const Post: NextPage<IPost> = ({ post: initialPost, latestPosts }) => {
       </Container>
     </Layout>
   );
-};
-
-export default Post;
+}
 
 export async function getStaticPaths(): Promise<any> {
   const slugs = await getPaths();

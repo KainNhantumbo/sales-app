@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { NextPage } from 'next';
-import { TOrder } from '../../../types';
+import { TOrder } from '@/types';
 import Layout from '@/components/Layout';
 import { DotLoader } from 'react-spinners';
 import { useEffect, useState } from 'react';
@@ -9,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { BsCreditCard2Front } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import { IoCart, IoChevronBack, IoReload } from 'react-icons/io5';
 import { complements, order_status_labels } from '@/shared/data';
 import { _purchaseFinalization as Container } from '@/styles/common/purchase-finalization';
@@ -28,9 +27,9 @@ type TOrderSummary = {
   user_name: string;
 };
 
-const OrderFinalization: NextPage = () => {
+export default function OrderFinalization() {
   const { useFetchAPI } = useAppContext();
-  const theme: DefaultTheme = useTheme();
+  const theme = useTheme();
   const router = useRouter();
   const [order, setOrder] = useState<TOrderSummary>({
     order_code: '',
@@ -162,6 +161,4 @@ const OrderFinalization: NextPage = () => {
       </Container>
     </Layout>
   );
-};
-
-export default OrderFinalization;
+}

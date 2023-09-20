@@ -1,4 +1,3 @@
-import type { FC } from 'react';
 import { FiX } from 'react-icons/fi';
 import actions from '@/shared/actions';
 import { BiSortAlt2 } from 'react-icons/bi';
@@ -18,7 +17,7 @@ const SortOptions = [
   { code: '-createdAt', name: 'Data de criação (desc.)' },
 ];
 
-const SortBox: FC = () => {
+export default function SortBox() {
   const { state, dispatch, sortBoxController } = useAppContext();
   return (
     <AnimatePresence>
@@ -79,6 +78,4 @@ const SortBox: FC = () => {
       )}
     </AnimatePresence>
   );
-};
-
-export default SortBox;
+}

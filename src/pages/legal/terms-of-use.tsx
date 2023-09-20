@@ -1,9 +1,8 @@
-import { NextPage } from 'next';
 import Layout from '@/components/Layout';
 import { complements } from '@/shared/data';
 import { _legal as Container } from '@/styles/common/legal';
 
-const TermsOfUse: NextPage = () => {
+export default function TermsOfUse() {
   return (
     <Layout metadata={{ title: complements.defaultTitle + ' | Termos de Uso' }}>
       <Container>
@@ -169,6 +168,4 @@ const TermsOfUse: NextPage = () => {
       </Container>
     </Layout>
   );
-};
-
-export default TermsOfUse;
+}

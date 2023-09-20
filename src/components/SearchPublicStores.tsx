@@ -1,11 +1,10 @@
-import type { FC } from 'react';
 import actions from '@/shared/actions';
 import { IoSearch } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { _search as Container } from '@/styles/modules/search-form';
 
-const SearchStores: FC = () => {
+export default function SearchStores() {
   const { state, dispatch } = useAppContext();
   const router = useRouter();
   return (
@@ -42,6 +41,4 @@ const SearchStores: FC = () => {
       </form>
     </Container>
   );
-};
-
-export default SearchStores;
+}

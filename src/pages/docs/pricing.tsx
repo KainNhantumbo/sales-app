@@ -1,15 +1,14 @@
 import Link from 'next/link';
-import { NextPage } from 'next';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { formatCurrency } from '@/lib/utils';
 import { IoBalloonOutline } from 'react-icons/io5';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import { complements, pricing_data } from '@/shared/data';
 import { _pricing as Container } from '@/styles/common/pricing';
 
-const Pricing: NextPage = () => {
-  const theme: DefaultTheme = useTheme();
+export default function Pricing() {
+  const theme = useTheme();
 
   return (
     <Layout
@@ -110,6 +109,4 @@ const Pricing: NextPage = () => {
       </Container>
     </Layout>
   );
-};
-
-export default Pricing;
+}

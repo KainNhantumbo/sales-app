@@ -1,12 +1,11 @@
 import Link from 'next/link';
-import { NextPage } from 'next';
 import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
 import { IoIosQuote } from 'react-icons/io';
 import { complements } from '@/shared/data';
 import NewsLetter from '@/components/Newsletter';
 import { IoStorefrontOutline } from 'react-icons/io5';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import { _about as Container } from '@/styles/common/about';
 
 const core_habits: Array<{ phrase: string; paragraph: string }> = [
@@ -37,8 +36,8 @@ const core_habits: Array<{ phrase: string; paragraph: string }> = [
   },
 ];
 
-const About: NextPage = () => {
-  const theme: DefaultTheme = useTheme();
+export default function About() {
+  const theme = useTheme();
   return (
     <Layout metadata={{ title: complements.defaultTitle + ' | Sobre nós' }}>
       <Container>
@@ -181,6 +180,4 @@ const About: NextPage = () => {
       </Container>
     </Layout>
   );
-};
-
-export default About;
+}

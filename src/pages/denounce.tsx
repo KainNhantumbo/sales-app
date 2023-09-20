@@ -7,21 +7,21 @@ import {
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import actions from '@/shared/actions';
+import { useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import { useEffect, useState } from 'react';
 import { complements } from '@/shared/data';
 import { denounceReasons } from '@/shared/data';
 import SelectContainer from '@/components/Select';
-import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import RequestLogin from '@/components/modals/RequestLogin';
+import { useModulesContext } from '@/context/Modules';
 import { DenounceContainer as Container } from '@/styles/common/denounce';
 
 export default function Denounce() {
   const router = useRouter();
+  const { requestLogin } = useModulesContext();
   const [msg, setMsg] = useState<string>('');
-  const { state, dispatch, useFetchAPI, loginPromptController } =
-    useAppContext();
+  const { state, dispatch, useFetchAPI } = useAppContext();
 
   const handleCreateDenounce = async () => {
     try {
@@ -73,7 +73,6 @@ export default function Denounce() {
   return (
     <Layout
       metadata={{ title: `${complements.defaultTitle} | Denunciar abuso` }}>
-      <RequestLogin />
       <Container>
         <div className='main-container'>
           <article>
@@ -137,14 +136,10 @@ export default function Denounce() {
                       placeholder='Forneça qualquer informação ou contexto adicional que nos ajude a entender e lidar com a situação.'
                       aria-label='Forneça qualquer informação ou contexto adicional que nos ajude a entender e lidar com a situação.'
                       onMouseDown={() => {
-                        if (!state.auth.token) {
-                          loginPromptController();
-                        }
+                        if (!state.auth.token) return requestLogin();
                       }}
                       onTouchEnd={() => {
-                        if (!state.auth.token) {
-                          loginPromptController();
-                        }
+                        if (!state.auth.token) return requestLogin();
                       }}
                       onChange={(e) =>
                         dispatch({
@@ -194,9 +189,7 @@ export default function Denounce() {
                     disabled={msg.length < 1 && true}
                     className='prompt-accept'
                     onClick={() => {
-                      if (!state.auth.token) {
-                        return loginPromptController();
-                      }
+                      if (!state.auth.token) return requestLogin();
                       handleCreateDenounce();
                     }}>
                     <IoCheckmark />

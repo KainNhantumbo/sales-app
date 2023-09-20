@@ -8,9 +8,8 @@ import {
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
-import { NextPage } from 'next';
 import { useEffect } from 'react';
-import { IBlogPosts } from '../../types';
+import { IBlogPosts } from '@/types';
 import Layout from '@/components/Layout';
 import actions from '@/shared/actions';
 import { getPosts } from '@/lib/queries';
@@ -19,31 +18,29 @@ import { PulseLoader } from 'react-spinners';
 import NewsLetter from '@/components/Newsletter';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { InViewHookResponse, useInView } from 'react-intersection-observer';
+import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { _blog as Container } from '@/styles/common/blog';
 import SearchComponent from '@/components/SearchBlogPosts';
-import { DefaultTheme, useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
 import { blurDataUrlImage, complements } from '@/shared/data';
 import buyingWomenImg from '@/../public/assets/buying_women.png';
 
-const Blog: NextPage = () => {
+export default function Blog() {
   const LIMIT: number = 8;
-  const theme: DefaultTheme = useTheme();
+  const theme = useTheme();
   const router = useRouter();
   const { state, dispatch } = useAppContext();
-  const { ref, inView }: InViewHookResponse = useInView();
+  const { ref, inView } = useInView();
 
-  const fetchPosts = async ({
-    pageParam = 0,
-  }): Promise<{ data: IBlogPosts[]; currentOffset: number }> => {
+  async function fetchPosts({ pageParam = 0 }) {
     const { data } = await getPosts<IBlogPosts[]>({
       offset: pageParam * LIMIT,
       limit: LIMIT,
     });
     return { data, currentOffset: pageParam + 1 };
-  };
+  }
 
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =
     useInfiniteQuery({
@@ -216,6 +213,4 @@ const Blog: NextPage = () => {
       </Container>
     </Layout>
   );
-};
-
-export default Blog;
+}

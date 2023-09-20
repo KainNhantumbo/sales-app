@@ -10,7 +10,7 @@ import {
   IoSpeedometerOutline,
   IoSunnyOutline,
 } from 'react-icons/io5';
-import { FC } from 'react';
+
 import Link from 'next/link';
 import { m as motion } from 'framer-motion';
 import { complements, urls } from '@/shared/data';
@@ -18,7 +18,7 @@ import { useAppContext } from '@/context/AppContext';
 import { useThemeContext } from '@/context/ThemeContext';
 import { _footer as Container } from '../styles/modules/footer';
 
-const Footer: FC = () => {
+export default function Footer() {
   const { state } = useAppContext();
   const { setDarkMode, darkmode, setLightMode, matchMediaTheme } =
     useThemeContext();
@@ -160,6 +160,4 @@ const Footer: FC = () => {
       </div>
     </Container>
   );
-};
-
-export default Footer;
+}
