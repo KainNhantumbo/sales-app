@@ -69,7 +69,6 @@ export default function ProductEditor() {
     try {
       const productId = router.query['productId'];
       if (!productId) throw new Error('Sem chave ID');
-      console.log('data');
       const { data } = await useFetchAPI<Product>({
         method: 'get',
         url: `/api/v1/users/products/${productId}?fields=-created_by,-favorites`,

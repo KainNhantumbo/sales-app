@@ -1,7 +1,7 @@
 import {
   IoHeart,
   IoDownloadOutline,
-  IoEllipsisHorizontal,
+  IoEllipsisHorizontal
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -35,7 +35,7 @@ export default function Story(props: TProps) {
 
   const [coverImageData, setCoverImageData] = useState({
     id: state.story.cover_image?.id || '',
-    data: state.story.cover_image?.url || '',
+    data: state.story.cover_image?.url || ''
   });
 
   const acceptedMimeTypes: string[] = ['image/png', 'image/jpeg', 'image/jpg'];
@@ -58,12 +58,12 @@ export default function Story(props: TProps) {
             const encodedImage: string = e.target?.result as string;
             setCoverImageData({
               id: state.story.cover_image?.id || '',
-              data: encodedImage,
+              data: encodedImage
             });
           };
-        },
+        }
       });
-    }, []),
+    }, [])
   });
 
   async function deleteCoverImage() {
@@ -75,7 +75,7 @@ export default function Story(props: TProps) {
       await useFetchAPI({
         method: 'delete',
         url: `/api/v1/users/stories/assets/${props.story?._id}`,
-        data: { assetId: props.story?.cover_image?.id },
+        data: { assetId: props.story?.cover_image?.id }
       });
 
       setCoverImageData({ id: '', data: '' });
@@ -85,9 +85,9 @@ export default function Story(props: TProps) {
           ...state,
           story: {
             ...state.story,
-            cover_image: { id: '', url: '' },
-          },
-        },
+            cover_image: { id: '', url: '' }
+          }
+        }
       });
     } catch (error: any) {
       console.error(error?.response?.data?.message || error);
@@ -95,7 +95,7 @@ export default function Story(props: TProps) {
         status: true,
         msg:
           error?.response?.data?.message ||
-          'Oops! Algo deu errado. Tente novamente.',
+          'Oops! Algo deu errado. Tente novamente.'
       });
     } finally {
       setLoading(false);
@@ -108,7 +108,7 @@ export default function Story(props: TProps) {
       await useFetchAPI({
         method: 'post',
         url: `/api/v1/users/stories`,
-        data: { ...state.story, coverImageData },
+        data: { ...state.story, coverImageData }
       });
       router.back();
     } catch (error: any) {
@@ -117,7 +117,7 @@ export default function Story(props: TProps) {
         status: true,
         msg:
           error?.response?.data?.message ||
-          'Oops! Algo deu errado. Tente novamente.',
+          'Oops! Algo deu errado. Tente novamente.'
       });
     } finally {
       setLoading(false);
@@ -130,7 +130,7 @@ export default function Story(props: TProps) {
       await useFetchAPI({
         method: 'patch',
         url: `/api/v1/users/stories/${props.story?._id}`,
-        data: { ...state.story, coverImageData },
+        data: { ...state.story, coverImageData }
       });
       router.back();
     } catch (error: any) {
@@ -139,7 +139,7 @@ export default function Story(props: TProps) {
         status: true,
         msg:
           error?.response?.data?.message ||
-          'Oops! Algo deu errado. Tente novamente.',
+          'Oops! Algo deu errado. Tente novamente.'
       });
     } finally {
       setLoading(false);
@@ -150,7 +150,7 @@ export default function Story(props: TProps) {
     if (props.story && Object.values(props.story).length > 0) {
       dispatch({
         type: actions.USER_STORY,
-        payload: { ...state, story: { ...props.story } },
+        payload: { ...state, story: { ...props.story } }
       });
     }
 
@@ -175,9 +175,9 @@ export default function Story(props: TProps) {
           story: {
             title: '',
             content: '',
-            cover_image: { id: '', url: '' },
-          },
-        },
+            cover_image: { id: '', url: '' }
+          }
+        }
       });
       setCoverImageData({ id: '', data: '' });
     };
@@ -249,9 +249,9 @@ export default function Story(props: TProps) {
                             ...state,
                             story: {
                               ...state.story,
-                              title: String(e.target.value),
-                            },
-                          },
+                              title: String(e.target.value)
+                            }
+                          }
                         })
                       }
                       value={state.story.title}
@@ -281,9 +281,9 @@ export default function Story(props: TProps) {
                             ...state,
                             story: {
                               ...state.story,
-                              content: String(e.target.value),
-                            },
-                          },
+                              content: String(e.target.value)
+                            }
+                          }
                         })
                       }
                       value={state.story.content}
@@ -375,7 +375,7 @@ export default function Story(props: TProps) {
                         color={`rgb(${theme.primary})`}
                         aria-placeholder='Processando...'
                         cssOverride={{
-                          display: 'block',
+                          display: 'block'
                         }}
                       />
                       <span>Processando...</span>
@@ -418,7 +418,7 @@ export async function getServerSideProps(context: TContext) {
     if (context.params?.slug === 'create-story') return { props: {} };
     const { data } = await fetch<AxiosResponse<TStory>>({
       method: 'get',
-      url: `/api/v1/users/stories/${context.params?.slug}`,
+      url: `/api/v1/users/stories/${context.params?.slug}`
     });
     return { props: { story: { ...data } } };
   } catch (error) {

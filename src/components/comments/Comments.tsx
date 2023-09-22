@@ -33,18 +33,18 @@ export default function Comments({ contentId }: TProps) {
 
   const [loading, setLoading] = useState<TLoading>({
     status: false,
-    key: 'create-comment',
+    key: 'create-comment'
   });
 
   const [error, setError] = useState<TError>({
     status: false,
     msg: '',
-    key: 'create-comment',
+    key: 'create-comment'
   });
 
   const [activeModes, setActiveModes] = useState({
     edit: false,
-    reply: false,
+    reply: false
   });
 
   // ---------------functions----------------
@@ -72,15 +72,15 @@ export default function Comments({ contentId }: TProps) {
             _id: '',
             first_name: '',
             last_name: '',
-            profile_image: { id: '', url: '' },
+            profile_image: { id: '', url: '' }
           },
           content: '',
           parent_id: '',
           favorites: [],
           updatedAt: '',
-          createdAt: '',
-        },
-      },
+          createdAt: ''
+        }
+      }
     });
   };
 
@@ -88,11 +88,11 @@ export default function Comments({ contentId }: TProps) {
     try {
       const { data } = await useFetchAPI<IComment[]>({
         method: 'get',
-        url: `/api/v1/users/comments/${contentId}`,
+        url: `/api/v1/users/comments/${contentId}`
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
-        payload: { ...state, commentsList: [...data] },
+        payload: { ...state, commentsList: [...data] }
       });
     } catch (error) {
       console.error(error);
@@ -108,23 +108,24 @@ export default function Comments({ contentId }: TProps) {
         data: {
           source_id: contentId,
           content: state.comment.content,
-          parent_id: null,
-        },
+          parent_id: null
+        }
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
         payload: {
           ...state,
-          commentsList: [...state.commentsList, data],
-        },
+          commentsList: [...state.commentsList, data]
+        }
       });
       clearCommentData();
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
       setError({
         status: true,
         key: 'create-comment',
-        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.',
+        msg:
+          error?.response?.data?.message || 'Erro: por favor, tente novamente.'
       });
     } finally {
       setLoading({ status: false, key: 'create-comment' });
@@ -137,8 +138,8 @@ export default function Comments({ contentId }: TProps) {
         method: 'patch',
         url: `/api/v1/users/comments/${id}`,
         data: {
-          ...state.comment,
-        },
+          ...state.comment
+        }
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
@@ -147,17 +148,18 @@ export default function Comments({ contentId }: TProps) {
           commentsList: [
             ...state.commentsList.map((comment) =>
               comment._id === data._id ? { ...comment, ...data } : comment
-            ),
-          ],
-        },
+            )
+          ]
+        }
       });
       clearCommentData();
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
       setError({
         status: true,
         key: 'create-comment',
-        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.',
+        msg:
+          error?.response?.data?.message || 'Erro: por favor, tente novamente.'
       });
     } finally {
       setLoading({ status: false, key: 'create-comment' });
@@ -169,12 +171,12 @@ export default function Comments({ contentId }: TProps) {
     try {
       await useFetchAPI({
         method: 'delete',
-        url: `/api/v1/users/comments/${id}`,
+        url: `/api/v1/users/comments/${id}`
       });
       deleteCommentPromptController(false, '');
       getComments();
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   };
 
@@ -188,9 +190,9 @@ export default function Comments({ contentId }: TProps) {
         comment: {
           ...state.comment,
           _id: data._id,
-          parent_id: data._id,
-        },
-      },
+          parent_id: data._id
+        }
+      }
     });
   };
 
@@ -203,9 +205,9 @@ export default function Comments({ contentId }: TProps) {
         ...state,
         comment: {
           ...state.comment,
-          ...data,
-        },
-      },
+          ...data
+        }
+      }
     });
   };
 
@@ -213,7 +215,7 @@ export default function Comments({ contentId }: TProps) {
     try {
       const { data } = await useFetchAPI<string[]>({
         method: 'post',
-        url: `/api/v1/users/favorites/comments/${id}`,
+        url: `/api/v1/users/favorites/comments/${id}`
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
@@ -222,12 +224,12 @@ export default function Comments({ contentId }: TProps) {
           commentsList: [
             ...state.commentsList.map((comment) =>
               comment._id === id ? { ...comment, favorites: data } : comment
-            ),
-          ],
-        },
+            )
+          ]
+        }
       });
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   };
 
@@ -235,7 +237,7 @@ export default function Comments({ contentId }: TProps) {
     try {
       const { data } = await useFetchAPI<string[]>({
         method: 'patch',
-        url: `/api/v1/users/favorites/comments/${id}`,
+        url: `/api/v1/users/favorites/comments/${id}`
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
@@ -244,12 +246,12 @@ export default function Comments({ contentId }: TProps) {
           commentsList: [
             ...state.commentsList.map((comment) =>
               comment._id === id ? { ...comment, favorites: data } : comment
-            ),
-          ],
-        },
+            )
+          ]
+        }
       });
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   };
 
@@ -262,17 +264,18 @@ export default function Comments({ contentId }: TProps) {
         data: {
           source_id: contentId,
           content: state.comment.content,
-          parent_id: state.comment.parent_id,
-        },
+          parent_id: state.comment.parent_id
+        }
       });
       clearCommentData();
       getComments();
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
       setError({
         status: true,
         key: 'create-comment',
-        msg: err.response?.data?.message || 'Erro: por favor, tente novamente.',
+        msg:
+          error?.response?.data?.message || 'Erro: por favor, tente novamente.'
       });
     } finally {
       setLoading({ status: false, key: 'create-comment' });
@@ -334,7 +337,7 @@ export default function Comments({ contentId }: TProps) {
               reply: activeModes.reply,
               edit: activeModes.edit,
               error,
-              loading,
+              loading
             }}
           />
           <section className='comments-container'>
@@ -356,7 +359,7 @@ export default function Comments({ contentId }: TProps) {
                         reply: activeModes.reply,
                         edit: activeModes.edit,
                         error,
-                        loading,
+                        loading
                       }}
                     />
                     {comment._id === state.comment._id && (
@@ -369,7 +372,7 @@ export default function Comments({ contentId }: TProps) {
                           reply: activeModes.reply,
                           edit: activeModes.edit,
                           error,
-                          loading,
+                          loading
                         }}
                       />
                     )}
@@ -396,7 +399,7 @@ export default function Comments({ contentId }: TProps) {
                                 reply: activeModes.reply,
                                 edit: activeModes.edit,
                                 error,
-                                loading,
+                                loading
                               }}
                             />
 
@@ -410,7 +413,7 @@ export default function Comments({ contentId }: TProps) {
                                   reply: activeModes.reply,
                                   edit: activeModes.edit,
                                   error,
-                                  loading,
+                                  loading
                                 }}
                               />
                             )}

@@ -2,7 +2,7 @@ import {
   IoEllipsisHorizontal,
   IoLockClosedOutline,
   IoLockOpenOutline,
-  IoMailOutline,
+  IoMailOutline
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -31,11 +31,8 @@ export default function SignUp() {
       type: actions.SIGNUP_DATA,
       payload: {
         ...state,
-        signupData: {
-          ...state.signupData,
-          [e.target.name]: e.target.value,
-        },
-      },
+        signupData: { ...state.signupData, [e.target.name]: e.target.value }
+      }
     });
   };
 
@@ -44,12 +41,12 @@ export default function SignUp() {
     if (state.signupData.password !== state.signupData.confirm_password)
       return setError({
         status: true,
-        message: 'As senhas devem ser iguais.',
+        message: 'As senhas devem ser iguais.'
       });
     if (state.signupData.password.length < 8)
       return setError({
         status: true,
-        message: 'As senhas devem ter pelo menos 8 carácteres.',
+        message: 'As senhas devem ter pelo menos 8 carácteres.'
       });
 
     try {
@@ -62,15 +59,15 @@ export default function SignUp() {
           password: state.signupData.password,
           first_name: state.signupData.first_name,
           last_name: state.signupData.last_name,
-          user_type: 'user',
-        },
+          user_type: 'user'
+        }
       });
       router.push('/auth/sign-up-confirm');
     } catch (error: any) {
       console.error(error?.response?.data?.message || error);
       setError({
         status: true,
-        message: error?.response?.data?.message || error?.code,
+        message: error?.response?.data?.message || error?.code
       });
     } finally {
       setLoading(false);
@@ -89,7 +86,7 @@ export default function SignUp() {
       metadata={{
         title: `${complements.defaultTitle} | Nova Conta de Usuário`,
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       }}>
       <Container>
         <Image
@@ -204,7 +201,7 @@ export default function SignUp() {
                     aria-placeholder='Processando...'
                     cssOverride={{
                       display: 'block',
-                      margin: '0 auto',
+                      margin: '0 auto'
                     }}
                   />
                 }

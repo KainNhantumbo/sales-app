@@ -53,7 +53,6 @@ export default function Stores() {
     });
 
   useEffect(() => {
-    console.log(data);
     if (data) {
       const reducedData = data?.pages
         .map((page) => {

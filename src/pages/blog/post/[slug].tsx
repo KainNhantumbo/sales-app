@@ -2,13 +2,13 @@ import {
   IoIosAlbums,
   IoIosBookmark,
   IoMdCalendar,
-  IoMdTime,
+  IoMdTime
 } from 'react-icons/io';
 import {
   IoChatbubblesOutline,
   IoHeart,
   IoHeartOutline,
-  IoOpenOutline,
+  IoOpenOutline
 } from 'react-icons/io5';
 import moment from 'moment';
 import Link from 'next/link';
@@ -33,21 +33,16 @@ import type { TParsedContent } from '@/components/EditorJSRenderer';
 import { author, complements, shareUrlPaths } from '@/shared/data';
 import { useModulesContext } from '@/context/Modules';
 
-interface IProps {
-  post: IBlogPost;
-  latestPosts: IBlogPosts[];
-}
+type TProps = { post: IBlogPost; latestPosts: IBlogPosts[] };
 
-export default function Post({ post: initialPost, latestPosts }: IProps) {
+export default function Post({ post: initialPost, latestPosts }: TProps) {
   const { state, useFetchAPI } = useAppContext();
   const { requestLogin } = useModulesContext();
   const [post, setPost] = useState(initialPost);
   const router = useRouter();
   const theme = useTheme();
 
-  if (!initialPost) {
-    return <ErrorPage retryFn={router.reload} />;
-  }
+  if (!initialPost) return <ErrorPage retryFn={router.reload} />;
 
   const EditorJsToHtml = editorJsHtml();
   const postContent = EditorJsToHtml.parse(post.content) as TParsedContent[];
@@ -62,18 +57,18 @@ export default function Post({ post: initialPost, latestPosts }: IProps) {
     title: post.title,
     slug: post.slug,
     excerpt: post.excerpt,
-    hostname: complements.websiteUrl,
+    hostname: complements.websiteUrl
   });
 
   const handleFavoritePost = async () => {
     try {
       const { data } = await useFetchAPI<string[]>({
         method: 'post',
-        url: `/api/v1/users/favorites/blog-posts/${post._id}`,
+        url: `/api/v1/users/favorites/blog-posts/${post._id}`
       });
       setPost((doc) => ({ ...doc, favorites: data }));
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   };
 
@@ -81,11 +76,11 @@ export default function Post({ post: initialPost, latestPosts }: IProps) {
     try {
       const { data } = await useFetchAPI<string[]>({
         method: 'patch',
-        url: `/api/v1/users/favorites/blog-posts/${post._id}`,
+        url: `/api/v1/users/favorites/blog-posts/${post._id}`
       });
       setPost((doc) => ({ ...doc, favorites: data }));
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   };
 
@@ -94,7 +89,7 @@ export default function Post({ post: initialPost, latestPosts }: IProps) {
       metadata={{
         title: post.title,
         updatedAt: post.updatedAt,
-        createdAt: post.createdAt,
+        createdAt: post.createdAt
       }}>
       <Container className='wrapper'>
         <div className='main-container'>
@@ -159,7 +154,7 @@ export default function Post({ post: initialPost, latestPosts }: IProps) {
                       config={{
                         identifier: post._id,
                         url: router.asPath,
-                        title: post.title,
+                        title: post.title
                       }}
                     />
                     comentários
@@ -245,7 +240,7 @@ export default function Post({ post: initialPost, latestPosts }: IProps) {
                 identifier: post._id,
                 url: router.asPath,
                 title: post.title,
-                language: 'pt_BR',
+                language: 'pt_BR'
               }}
             />
 
@@ -306,7 +301,7 @@ export async function getStaticPaths(): Promise<any> {
   const slugs = await getPaths();
   return {
     paths: slugs,
-    fallback: false,
+    fallback: false
   };
 }
 

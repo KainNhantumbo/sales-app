@@ -2,7 +2,7 @@ import {
   IoBan,
   IoCheckmark,
   IoClose,
-  IoEllipsisHorizontal,
+  IoEllipsisHorizontal
 } from 'react-icons/io5';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -34,20 +34,20 @@ export default function Denounce() {
           report_type: state.denounce.reson,
           resource_type: type || 'generic',
           resource_url: url || '',
-          resource_id: id || '',
-        },
+          resource_id: id || ''
+        }
       });
       dispatch({
         type: actions.CREATE_DENOUNCE,
         payload: {
           ...state,
-          denounce: { content: '', reson: '' },
-        },
+          denounce: { content: '', reson: '' }
+        }
       });
       setMsg('Denúncia enviada com sucesso.');
-    } catch (err: any) {
-      setMsg(err?.response?.data?.message);
-      console.error(err?.response?.data?.message || err);
+    } catch (error: any) {
+      setMsg(error?.response?.data?.message);
+      console.error(error?.response?.data?.message || error);
     }
   };
 
@@ -57,8 +57,8 @@ export default function Denounce() {
         type: actions.CREATE_DENOUNCE,
         payload: {
           ...state,
-          denounce: { content: '', reson: '' },
-        },
+          denounce: { content: '', reson: '' }
+        }
       });
     };
   }, []);
@@ -114,9 +114,9 @@ export default function Denounce() {
                             ...state,
                             denounce: {
                               ...state.denounce,
-                              reson: option?.value,
-                            },
-                          },
+                              reson: option?.value
+                            }
+                          }
                         });
                       }}
                     />
@@ -148,9 +148,9 @@ export default function Denounce() {
                             ...state,
                             denounce: {
                               ...state.denounce,
-                              content: e.target.value,
-                            },
-                          },
+                              content: e.target.value
+                            }
+                          }
                         })
                       }
                       value={state.denounce.content}
@@ -174,8 +174,8 @@ export default function Denounce() {
                         type: actions.CREATE_DENOUNCE,
                         payload: {
                           ...state,
-                          denounce: { content: '', reson: '' },
-                        },
+                          denounce: { content: '', reson: '' }
+                        }
                       });
                       router.back();
                     }}>

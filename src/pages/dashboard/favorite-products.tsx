@@ -4,7 +4,7 @@ import {
   IoBarcodeOutline,
   IoCart,
   IoCartOutline,
-  IoHeart,
+  IoHeart
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -31,7 +31,7 @@ export default function FavoriteProducts({ products }: TProps) {
     dispatch,
     addProductToCart,
     removeProductFromCart,
-    useFetchAPI,
+    useFetchAPI
   } = useAppContext();
   const { requestLogin } = useModulesContext();
   const theme = useTheme();
@@ -41,11 +41,11 @@ export default function FavoriteProducts({ products }: TProps) {
     try {
       await useFetchAPI({
         method: 'patch',
-        url: `/api/v1/users/favorites/products/${id}`,
+        url: `/api/v1/users/favorites/products/${id}`
       });
       refetchFavoriteProducts();
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   };
 
@@ -53,11 +53,11 @@ export default function FavoriteProducts({ products }: TProps) {
     try {
       const { data } = await fetch<TPublicProducts[]>({
         method: 'get',
-        url: `/api/v1/users/products/public?favoritesId=${state.auth.id}`,
+        url: `/api/v1/users/products/public?favoritesId=${state.auth.id}`
       });
       dispatch({
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
-        payload: { ...state, publicProducts: data },
+        payload: { ...state, publicProducts: data }
       });
     } catch (error) {
       console.error(error);
@@ -68,7 +68,7 @@ export default function FavoriteProducts({ products }: TProps) {
     setInnerWidth(window.innerWidth);
     dispatch({
       type: actions.PUBLIC_PRODUCTS_LIST_DATA,
-      payload: { ...state, publicProducts: [...products] },
+      payload: { ...state, publicProducts: [...products] }
     });
     window.addEventListener('resize', () => {
       setInnerWidth(window.innerWidth);
@@ -76,7 +76,7 @@ export default function FavoriteProducts({ products }: TProps) {
     return () => {
       dispatch({
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
-        payload: { ...state, publicProducts: [] },
+        payload: { ...state, publicProducts: [] }
       });
       window.removeEventListener('resize', () => {
         setInnerWidth(window.innerWidth);
@@ -90,7 +90,7 @@ export default function FavoriteProducts({ products }: TProps) {
         title: String.prototype.concat(
           complements.defaultTitle,
           ' | Produtos favoritos'
-        ),
+        )
       }}>
       <Container>
         <div className='wrapper-container'>
@@ -118,7 +118,7 @@ export default function FavoriteProducts({ products }: TProps) {
                       innerWidth > 445
                         ? {
                             translateY: -8,
-                            boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`,
+                            boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`
                           }
                         : undefined
                     }>
@@ -156,7 +156,7 @@ export default function FavoriteProducts({ products }: TProps) {
                                       100
                                   : item.price,
                                 quantity: 1,
-                                previewImage: item.image,
+                                previewImage: item.image
                               });
                         }}>
                         {state.cart.some(
@@ -251,7 +251,7 @@ export async function getServerSideProps(context: TContext) {
   try {
     const { data } = await fetch<TPublicProducts[]>({
       method: 'get',
-      url: `/api/v1/users/products/public?favoritesId=${context.query.id}`,
+      url: `/api/v1/users/products/public?favoritesId=${context.query.id}`
     });
     return { props: { products: [...data] } };
   } catch (error) {

@@ -10,7 +10,7 @@ import {
   IoHeart,
   IoHeartOutline,
   IoReload,
-  IoSearch,
+  IoSearch
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -44,7 +44,7 @@ export default function Home({ ads_data }: IProps) {
     dispatch,
     addProductToCart,
     removeProductFromCart,
-    useFetchAPI,
+    useFetchAPI
   } = useAppContext();
   const { requestLogin } = useModulesContext();
   const theme = useTheme();
@@ -55,7 +55,7 @@ export default function Home({ ads_data }: IProps) {
     try {
       const { data } = await useFetchAPI<string[]>({
         method: 'post',
-        url: `/api/v1/users/favorites/products/${id}`,
+        url: `/api/v1/users/favorites/products/${id}`
       });
       dispatch({
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
@@ -67,12 +67,12 @@ export default function Home({ ads_data }: IProps) {
                 return { ...product, favorites: data };
               }
               return product;
-            }),
-          ],
-        },
+            })
+          ]
+        }
       });
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   };
 
@@ -80,7 +80,7 @@ export default function Home({ ads_data }: IProps) {
     try {
       const { data } = await useFetchAPI<string[]>({
         method: 'patch',
-        url: `/api/v1/users/favorites/products/${id}`,
+        url: `/api/v1/users/favorites/products/${id}`
       });
       dispatch({
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
@@ -89,17 +89,17 @@ export default function Home({ ads_data }: IProps) {
           publicProducts: [
             ...state.publicProducts.map((product) =>
               product._id === id ? { ...product, favorites: data } : product
-            ),
-          ],
-        },
+            )
+          ]
+        }
       });
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   };
 
   const fetchPublicProducts = async ({
-    pageParam = 0,
+    pageParam = 0
   }): Promise<{ data: any; currentOffset: number }> => {
     const { category, price_range, promotion, query, sort } =
       state.queryPublicProducts;
@@ -112,7 +112,7 @@ export default function Home({ ads_data }: IProps) {
         price_range > 0 ? `&max_price=${price_range}` : ''
       }${promotion !== undefined ? `&promotion=${String(promotion)}` : ''}${
         query ? `&search=${query}` : ''
-      }${sort ? `&sort=${sort}` : ''}`,
+      }${sort ? `&sort=${sort}` : ''}`
     });
     return { data, currentOffset: pageParam + 1 };
   };
@@ -122,7 +122,7 @@ export default function Home({ ads_data }: IProps) {
       queryKey: ['public-products'],
       queryFn: fetchPublicProducts,
       getNextPageParam: (lastPage) =>
-        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
+        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
     });
 
   useEffect(() => {
@@ -137,15 +137,15 @@ export default function Home({ ads_data }: IProps) {
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
         payload: {
           ...state,
-          publicProducts: [...reducedPosts],
-        },
+          publicProducts: [...reducedPosts]
+        }
       });
     }
 
     return () => {
       dispatch({
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
-        payload: { ...state, publicProducts: [] },
+        payload: { ...state, publicProducts: [] }
       });
     };
   }, [data]);
@@ -169,7 +169,7 @@ export default function Home({ ads_data }: IProps) {
     if (Array.isArray(ads_data)) {
       dispatch({
         type: actions.BANNER_ADS,
-        payload: { ...state, banner_ads: [...ads_data] },
+        payload: { ...state, banner_ads: [...ads_data] }
       });
     }
   }, []);
@@ -177,7 +177,7 @@ export default function Home({ ads_data }: IProps) {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Produtos e Serviços`,
+        title: `${complements.defaultTitle} | Produtos e Serviços`
       }}>
       <Container>
         <div className='content-wrapper'>
@@ -190,8 +190,8 @@ export default function Home({ ads_data }: IProps) {
                 type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
                 payload: {
                   ...state,
-                  isPublicProductsFilters: true,
-                },
+                  isPublicProductsFilters: true
+                }
               });
             }}>
             <IoSearch />
@@ -216,7 +216,7 @@ export default function Home({ ads_data }: IProps) {
                     originalWidth: 1080,
                     originalHeight: 300,
 
-                    originalAlt: `Imagem de ${asset.name}`,
+                    originalAlt: `Imagem de ${asset.name}`
                   }))}
                   renderRightNav={(onClick, disabled) => (
                     <button
@@ -271,7 +271,7 @@ export default function Home({ ads_data }: IProps) {
                       className='product-container'
                       whileHover={{
                         translateY: -8,
-                        boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`,
+                        boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`
                       }}
                       ref={
                         state.publicProducts.length === index + 1
@@ -318,7 +318,7 @@ export default function Home({ ads_data }: IProps) {
                                         100
                                     : item.price,
                                   quantity: 1,
-                                  previewImage: item.image,
+                                  previewImage: item.image
                                 });
                           }}>
                           {state.cart.some(
@@ -408,7 +408,7 @@ export default function Home({ ads_data }: IProps) {
                     color={`rgb(${theme.primary_shade})`}
                     aria-placeholder='Processando...'
                     cssOverride={{
-                      display: 'block',
+                      display: 'block'
                     }}
                   />
                 </div>
@@ -438,7 +438,7 @@ export async function getServerSideProps() {
   try {
     const { data } = await fetch<TBannerAds[]>({
       method: 'get',
-      url: '/api/v1/default/ads/public',
+      url: '/api/v1/default/ads/public'
     });
     return { props: { ads_data: data } };
   } catch (error: any) {

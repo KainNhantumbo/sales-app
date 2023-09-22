@@ -4,7 +4,7 @@ import {
   IoGridOutline,
   IoHeart,
   IoLibraryOutline,
-  IoReload,
+  IoReload
 } from 'react-icons/io5';
 import Link from 'next/link';
 import { useEffect } from 'react';
@@ -32,13 +32,11 @@ export default function BlogSearch() {
   const { state, dispatch } = useAppContext();
   const { ref, inView } = useInView();
 
-  const fetchPosts = async ({
-    pageParam = 0,
-  }): Promise<{ data: IBlogPosts[]; currentOffset: number }> => {
+  const fetchPosts = async ({ pageParam = 0 }) => {
     const { data } = await getPosts<IBlogPosts[]>({
       offset: pageParam * LIMIT,
       limit: LIMIT,
-      search: String(router.query['q']),
+      search: String(router.query['q'])
     });
     return { data, currentOffset: pageParam + 1 };
   };
@@ -50,12 +48,12 @@ export default function BlogSearch() {
     error,
     hasNextPage,
     isLoading,
-    isError,
+    isError
   } = useInfiniteQuery({
     queryKey: ['blog-posts-search'],
     queryFn: fetchPosts,
     getNextPageParam: (lastPage) =>
-      lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
+      lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
   });
 
   useEffect(() => {
@@ -70,15 +68,15 @@ export default function BlogSearch() {
         type: actions.BLOG_POSTS_LIST_QUERY,
         payload: {
           ...state,
-          blogPostsList: [...reducedPosts],
-        },
+          blogPostsList: [...reducedPosts]
+        }
       });
     }
 
     return () => {
       dispatch({
         type: actions.BLOG_POSTS_LIST_QUERY,
-        payload: { ...state, blogPostsList: [] },
+        payload: { ...state, blogPostsList: [] }
       });
     };
   }, [data]);
@@ -103,7 +101,7 @@ export default function BlogSearch() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Pesquisa de Postagens`,
+        title: `${complements.defaultTitle} | Pesquisa de Postagens`
       }}>
       <Container>
         <div className='main-container'>
@@ -123,7 +121,7 @@ export default function BlogSearch() {
               style={{
                 fontWeight: '400',
                 fontSize: '1.4rem',
-                lineHeight: '1.8rem',
+                lineHeight: '1.8rem'
               }}>
               Pesquisou por: {router.query['q']}
             </section>
@@ -216,7 +214,7 @@ export default function BlogSearch() {
                         color={`rgb(${theme.primary_shade})`}
                         aria-placeholder='Processando...'
                         cssOverride={{
-                          display: 'block',
+                          display: 'block'
                         }}
                       />
                     </div>

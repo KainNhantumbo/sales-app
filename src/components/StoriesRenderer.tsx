@@ -3,7 +3,7 @@ import {
   IoHeart,
   IoHeartOutline,
   IoLeafOutline,
-  IoReload,
+  IoReload
 } from 'react-icons/io5';
 import moment from 'moment';
 import Image from 'next/image';
@@ -41,7 +41,7 @@ export default function StoriesRenderer(props: IProps) {
   const { ref, inView } = useInView();
 
   const getStories = async ({
-    pageParam = 0,
+    pageParam = 0
   }): Promise<{ data: IPublicStory[]; currentOffset: number }> => {
     const { data } = await fetch<IPublicStory[]>({
       method: 'get',
@@ -53,7 +53,7 @@ export default function StoriesRenderer(props: IProps) {
             ? `&favoritesId=${props.favoritesId}`
             : `?favoritesId=${props.favoritesId}`
           : ''
-      }${state.searchStories ? `?search=${state.searchStories}` : ''}`,
+      }${state.searchStories ? `?search=${state.searchStories}` : ''}`
     });
     return { data, currentOffset: pageParam + 1 };
   };
@@ -63,19 +63,19 @@ export default function StoriesRenderer(props: IProps) {
       queryKey: ['user-stories'],
       queryFn: getStories,
       getNextPageParam: (lastPage) =>
-        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
+        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
     });
 
   const handleDeleteStory = async (storeId: string) => {
     try {
       await useFetchAPI({
         method: 'delete',
-        url: `/api/v1/users/stories/${storeId}`,
+        url: `/api/v1/users/stories/${storeId}`
       });
       deleteStoryPromptController(false, '');
       refetch({ queryKey: ['user-stories'] });
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   };
 
@@ -83,7 +83,7 @@ export default function StoriesRenderer(props: IProps) {
     try {
       const { data } = await useFetchAPI<string[]>({
         method: 'post',
-        url: `/api/v1/users/favorites/stories/${storyId}`,
+        url: `/api/v1/users/favorites/stories/${storyId}`
       });
       dispatch({
         type: actions.PUBLIC_USER_STORIES,
@@ -92,12 +92,12 @@ export default function StoriesRenderer(props: IProps) {
           publicStories: [
             ...state.publicStories.map((story) =>
               story._id === storyId ? { ...story, favorites: data } : story
-            ),
-          ],
-        },
+            )
+          ]
+        }
       });
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   };
 
@@ -105,7 +105,7 @@ export default function StoriesRenderer(props: IProps) {
     try {
       const { data } = await useFetchAPI<string[]>({
         method: 'patch',
-        url: `/api/v1/users/favorites/stories/${storyId}`,
+        url: `/api/v1/users/favorites/stories/${storyId}`
       });
       dispatch({
         type: actions.PUBLIC_USER_STORIES,
@@ -114,12 +114,12 @@ export default function StoriesRenderer(props: IProps) {
           publicStories: [
             ...state.publicStories.map((story) =>
               story._id === storyId ? { ...story, favorites: data } : story
-            ),
-          ],
-        },
+            )
+          ]
+        }
       });
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   };
 
@@ -135,15 +135,15 @@ export default function StoriesRenderer(props: IProps) {
         type: actions.PUBLIC_USER_STORIES,
         payload: {
           ...state,
-          publicStories: [...reducedStories],
-        },
+          publicStories: [...reducedStories]
+        }
       });
     }
 
     return () => {
       dispatch({
         type: actions.PUBLIC_USER_STORIES,
-        payload: { ...state, publicStories: [] },
+        payload: { ...state, publicStories: [] }
       });
     };
   }, [data]);
@@ -342,7 +342,7 @@ export default function StoriesRenderer(props: IProps) {
               color={`rgb(${theme.primary_shade})`}
               aria-placeholder='Processando...'
               cssOverride={{
-                display: 'block',
+                display: 'block'
               }}
             />
           </div>

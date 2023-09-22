@@ -2,13 +2,13 @@ import {
   IoClose,
   IoEllipsisHorizontal,
   IoReload,
-  IoSearch,
+  IoSearch
 } from 'react-icons/io5';
 import {
   complements,
   orderSortOptions,
   orderStatusOptions,
-  order_status_labels,
+  order_status_labels
 } from '@/shared/data';
 import { useEffect } from 'react';
 import { TOrder } from '@/types';
@@ -32,7 +32,7 @@ export default function MyOrders() {
   const { inView, ref } = useInView();
 
   const fetchOrders = async ({
-    pageParam = 0,
+    pageParam = 0
   }): Promise<{ data: TOrder[]; currentOffset: number }> => {
     const { data } = await useFetchAPI<TOrder[]>({
       method: 'get',
@@ -42,7 +42,7 @@ export default function MyOrders() {
         state.ordersQuery.search && `&search=${state.ordersQuery.search}`
       }${state.ordersQuery.status && `&status=${state.ordersQuery.status}`}${
         state.ordersQuery.sort && `&sort=${state.ordersQuery.sort}`
-      }`,
+      }`
     });
     return { data, currentOffset: pageParam + 1 };
   };
@@ -54,14 +54,12 @@ export default function MyOrders() {
     isError,
     isLoading,
     fetchNextPage,
-    hasNextPage,
+    hasNextPage
   } = useInfiniteQuery({
     queryKey: ['user-orders'],
     queryFn: fetchOrders,
     getNextPageParam: (lastPage) =>
-      lastPage?.data?.length >= QUERY_LIMIT
-        ? lastPage.currentOffset
-        : undefined,
+      lastPage?.data?.length >= QUERY_LIMIT ? lastPage.currentOffset : undefined
   });
 
   const updateOrder = async (id: string, data: any) => {
@@ -69,7 +67,7 @@ export default function MyOrders() {
       await useFetchAPI({
         method: 'patch',
         url: `/api/v1/checkout/orders/${id}`,
-        data: { ...data },
+        data: { ...data }
       });
       refetch({ queryKey: ['user-orders'] });
     } catch (error: any) {
@@ -81,7 +79,7 @@ export default function MyOrders() {
     try {
       await useFetchAPI({
         method: 'delete',
-        url: `/api/v1/checkout/orders/${id}`,
+        url: `/api/v1/checkout/orders/${id}`
       });
       refetch({ queryKey: ['user-orders'] });
     } catch (error: any) {
@@ -112,15 +110,15 @@ export default function MyOrders() {
         type: actions.ORDERS,
         payload: {
           ...state,
-          orders: [...formattedData],
-        },
+          orders: [...formattedData]
+        }
       });
     }
 
     return () => {
       dispatch({
         type: actions.ORDERS,
-        payload: { ...state, orders: [] },
+        payload: { ...state, orders: [] }
       });
     };
   }, [data]);
@@ -146,7 +144,7 @@ export default function MyOrders() {
         title: String.prototype.concat(
           complements.defaultTitle,
           ' | Minhas Encomendas'
-        ),
+        )
       }}>
       <Container>
         <div className='wrapper-container'>
@@ -175,9 +173,9 @@ export default function MyOrders() {
                         ...state,
                         ordersQuery: {
                           ...state.ordersQuery,
-                          search: e.target.value,
-                        },
-                      },
+                          search: e.target.value
+                        }
+                      }
                     })
                   }
                 />
@@ -194,9 +192,9 @@ export default function MyOrders() {
                         ...state,
                         ordersQuery: {
                           ...state.ordersQuery,
-                          sort: String(option?.value),
-                        },
-                      },
+                          sort: String(option?.value)
+                        }
+                      }
                     })
                   }
                 />
@@ -212,9 +210,9 @@ export default function MyOrders() {
                         ...state,
                         ordersQuery: {
                           ...state.ordersQuery,
-                          status: String(option?.value),
-                        },
-                      },
+                          status: String(option?.value)
+                        }
+                      }
                     })
                   }
                 />
@@ -231,9 +229,9 @@ export default function MyOrders() {
                         ordersQuery: {
                           search: '',
                           status: '',
-                          sort: '',
-                        },
-                      },
+                          sort: ''
+                        }
+                      }
                     })
                   }>
                   <IoClose />
@@ -353,7 +351,7 @@ export default function MyOrders() {
                     color={`rgb(${theme.primary})`}
                     aria-placeholder='Processando...'
                     cssOverride={{
-                      display: 'block',
+                      display: 'block'
                     }}
                   />
                 </div>

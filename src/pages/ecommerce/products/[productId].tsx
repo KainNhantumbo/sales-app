@@ -17,7 +17,7 @@ import {
   IoRemove,
   IoScan,
   IoShareSocial,
-  IoStorefront,
+  IoStorefront
 } from 'react-icons/io5';
 import Link from 'next/link';
 import { Product } from '@/types';
@@ -53,7 +53,7 @@ export default function Product({ product, error_message }: any) {
     addProductToCart,
     removeProductFromCart,
     updateCartProduct,
-    getCartProduct,
+    getCartProduct
   } = useAppContext();
   const { requestLogin } = useModulesContext();
   const theme = useTheme();
@@ -74,17 +74,17 @@ export default function Product({ product, error_message }: any) {
     try {
       const { data } = await useFetchAPI<string[]>({
         method: 'post',
-        url: `/api/v1/users/favorites/products/${id}`,
+        url: `/api/v1/users/favorites/products/${id}`
       });
       dispatch({
         type: actions.PUBLIC_PRODUCT_DATA,
         payload: {
           ...state,
-          publicProduct: { ...state.publicProduct, favorites: data },
-        },
+          publicProduct: { ...state.publicProduct, favorites: data }
+        }
       });
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   };
 
@@ -92,17 +92,17 @@ export default function Product({ product, error_message }: any) {
     try {
       const { data } = await useFetchAPI<string[]>({
         method: 'patch',
-        url: `/api/v1/users/favorites/products/${id}`,
+        url: `/api/v1/users/favorites/products/${id}`
       });
       dispatch({
         type: actions.PUBLIC_PRODUCT_DATA,
         payload: {
           ...state,
-          publicProduct: { ...state.publicProduct, favorites: data },
-        },
+          publicProduct: { ...state.publicProduct, favorites: data }
+        }
       });
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   };
 
@@ -122,8 +122,8 @@ export default function Product({ product, error_message }: any) {
         type: actions.PUBLIC_PRODUCT_DATA,
         payload: {
           ...state,
-          publicProduct: { ...state.publicProduct, ...product },
-        },
+          publicProduct: { ...state.publicProduct, ...product }
+        }
       });
     }
     return () => {
@@ -144,10 +144,10 @@ export default function Product({ product, error_message }: any) {
               location: {
                 country: '',
                 state: '',
-                adress: '',
+                adress: ''
               },
               category: '',
-              verified_store: false,
+              verified_store: false
             },
             promotion: { status: false, percentage: 0 },
             price: 0,
@@ -156,9 +156,9 @@ export default function Product({ product, error_message }: any) {
             createdAt: '',
             updatedAt: '',
             favorites: [],
-            allow_comments: true,
-          },
-        },
+            allow_comments: true
+          }
+        }
       });
     };
   }, []);
@@ -168,7 +168,7 @@ export default function Product({ product, error_message }: any) {
       metadata={{
         title: `${complements.defaultTitle} | ${product.name}`,
         createdAt: product?.createdAt,
-        updatedAt: product?.updatedAt,
+        updatedAt: product?.updatedAt
       }}>
       <Container>
         <ShareProducts
@@ -199,7 +199,7 @@ export default function Product({ product, error_message }: any) {
                     items={Object.values(state.publicProduct.images).map(
                       (image) => ({
                         thumbnail: image.url,
-                        original: image.url,
+                        original: image.url
                       })
                     )}
                     renderRightNav={(onClick, disabled) => (
@@ -328,7 +328,7 @@ export default function Product({ product, error_message }: any) {
                                     .quantity > 1
                                     ? getCartProduct(state.publicProduct._id)
                                         .quantity - 1
-                                    : 1,
+                                    : 1
                               })
                             : addProductToCart({
                                 productId: state.publicProduct._id,
@@ -348,9 +348,9 @@ export default function Product({ product, error_message }: any) {
                                       )[0]?.id,
                                       url: Object.values(
                                         state.publicProduct.images
-                                      )[0]?.url,
+                                      )[0]?.url
                                     }
-                                  : undefined,
+                                  : undefined
                               })
                         }>
                         <IoRemove />
@@ -368,7 +368,7 @@ export default function Product({ product, error_message }: any) {
                           )
                             ? updateCartProduct({
                                 productId: state.publicProduct._id,
-                                quantity: Number(e.target.value),
+                                quantity: Number(e.target.value)
                               })
                             : addProductToCart({
                                 productId: state.publicProduct._id,
@@ -388,9 +388,9 @@ export default function Product({ product, error_message }: any) {
                                       )[0]?.id,
                                       url: Object.values(
                                         state.publicProduct.images
-                                      )[0]?.url,
+                                      )[0]?.url
                                     }
-                                  : undefined,
+                                  : undefined
                               })
                         }
                       />
@@ -406,7 +406,7 @@ export default function Product({ product, error_message }: any) {
                                 productId: state.publicProduct._id,
                                 quantity:
                                   getCartProduct(state.publicProduct._id)
-                                    .quantity + 1,
+                                    .quantity + 1
                               })
                             : addProductToCart({
                                 productId: state.publicProduct._id,
@@ -426,9 +426,9 @@ export default function Product({ product, error_message }: any) {
                                       )[0]?.id,
                                       url: Object.values(
                                         state.publicProduct.images
-                                      )[0]?.url,
+                                      )[0]?.url
                                     }
-                                  : undefined,
+                                  : undefined
                               })
                         }>
                         <IoAdd />
@@ -464,9 +464,9 @@ export default function Product({ product, error_message }: any) {
                                   )[0]?.id,
                                   url: Object.values(
                                     state.publicProduct.images
-                                  )[0]?.url,
+                                  )[0]?.url
                                 }
-                              : undefined,
+                              : undefined
                           });
                         }
                         if (!state.auth.token) return requestLogin();
@@ -502,9 +502,9 @@ export default function Product({ product, error_message }: any) {
                                     )[0]?.id,
                                     url: Object.values(
                                       state.publicProduct.images
-                                    )[0]?.url,
+                                    )[0]?.url
                                   }
-                                : undefined,
+                                : undefined
                             })
                       }>
                       {state.cart.some(
@@ -554,7 +554,7 @@ export default function Product({ product, error_message }: any) {
                       padding: 8,
                       borderRadius: '8px',
                       background: '#fff',
-                      border: `3px solid rgba(${theme.primary}, 0.9)`,
+                      border: `3px solid rgba(${theme.primary}, 0.9)`
                     }}
                     value={`${complements.websiteUrl}/ecommerce/products/${product._id}`}
                   />
@@ -751,7 +751,7 @@ export default function Product({ product, error_message }: any) {
 export async function getStaticPaths() {
   const productIdList = await fetch({
     method: 'get',
-    url: '/api/v1/users/products/public',
+    url: '/api/v1/users/products/public'
   }).then((res) =>
     res.data.map((item: any) => ({ params: { productId: item._id } }))
   );
@@ -762,14 +762,14 @@ export async function getStaticProps({ params: { productId } }: any) {
   try {
     const { data } = await fetch<Product>({
       method: 'get',
-      url: `/api/v1/users/products/public/${productId}`,
+      url: `/api/v1/users/products/public/${productId}`
     });
     return { props: { product: { ...data } }, revalidate: 10 };
   } catch (error: any) {
     console.error(error);
     return {
       props: { error_message: error?.response?.data?.message },
-      revalidate: 10,
+      revalidate: 10
     };
   }
 }

@@ -11,12 +11,12 @@ import {
   IoHeartOutline,
   IoLayers,
   IoLibrary,
-  IoStorefront,
+  IoStorefront
 } from 'react-icons/io5';
 import {
   blurDataUrlImage,
   complements,
-  formatSocialNetwork,
+  formatSocialNetwork
 } from '@/shared/data';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -47,7 +47,7 @@ export default function StoreProfile({ store, products }: TProps) {
     dispatch,
     useFetchAPI,
     addProductToCart,
-    removeProductFromCart,
+    removeProductFromCart
   } = useAppContext();
   const { requestLogin } = useModulesContext();
   const { slidePageUp } = useThemeContext();
@@ -70,7 +70,7 @@ export default function StoreProfile({ store, products }: TProps) {
     try {
       const { data } = await useFetchAPI<string[]>({
         method: 'post',
-        url: `/api/v1/users/favorites/products/${id}`,
+        url: `/api/v1/users/favorites/products/${id}`
       });
       dispatch({
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
@@ -82,12 +82,12 @@ export default function StoreProfile({ store, products }: TProps) {
                 return { ...product, favorites: data };
               }
               return product;
-            }),
-          ],
-        },
+            })
+          ]
+        }
       });
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   }
 
@@ -95,7 +95,7 @@ export default function StoreProfile({ store, products }: TProps) {
     try {
       const { data } = await useFetchAPI<string[]>({
         method: 'patch',
-        url: `/api/v1/users/favorites/products/${id}`,
+        url: `/api/v1/users/favorites/products/${id}`
       });
       dispatch({
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
@@ -107,12 +107,12 @@ export default function StoreProfile({ store, products }: TProps) {
                 return { ...product, favorites: data };
               }
               return product;
-            }),
-          ],
-        },
+            })
+          ]
+        }
       });
-    } catch (err: any) {
-      console.error(err.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   }
 
@@ -120,7 +120,7 @@ export default function StoreProfile({ store, products }: TProps) {
     setInnerWidth(window.innerWidth);
     dispatch({
       type: actions.PUBLIC_PRODUCTS_LIST_DATA,
-      payload: { ...state, publicProducts: [...products] },
+      payload: { ...state, publicProducts: [...products] }
     });
     window.addEventListener('resize', () => {
       setInnerWidth(window.innerWidth);
@@ -128,7 +128,7 @@ export default function StoreProfile({ store, products }: TProps) {
     return () => {
       dispatch({
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
-        payload: { ...state, publicProducts: [] },
+        payload: { ...state, publicProducts: [] }
       });
       window.removeEventListener('resize', () => {
         setInnerWidth(window.innerWidth);
@@ -141,7 +141,7 @@ export default function StoreProfile({ store, products }: TProps) {
       metadata={{
         title: `${complements.defaultTitle} | Loja ${store.name}`,
         createdAt: store.createdAt,
-        updatedAt: store.createdAt,
+        updatedAt: store.createdAt
       }}>
       <Container>
         <div className='wrapper-container '>
@@ -169,7 +169,7 @@ export default function StoreProfile({ store, products }: TProps) {
               {store.created_by.social_network && (
                 <div className='network-buttons'>
                   {formatSocialNetwork({
-                    ...store.created_by.social_network,
+                    ...store.created_by.social_network
                   })?.map((option, index) => (
                     <motion.a
                       whileHover={{ scale: 1.2 }}
@@ -364,7 +364,7 @@ export default function StoreProfile({ store, products }: TProps) {
                         innerWidth > 445
                           ? {
                               translateY: -8,
-                              boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`,
+                              boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`
                             }
                           : undefined
                       }>
@@ -408,7 +408,7 @@ export default function StoreProfile({ store, products }: TProps) {
                                         100
                                     : item.price,
                                   quantity: 1,
-                                  previewImage: item.image,
+                                  previewImage: item.image
                                 });
                           }}>
                           {state.cart.some(
@@ -506,17 +506,17 @@ export async function getServerSideProps(context: TContext) {
       await Promise.all([
         fetch<TPublicStore>({
           method: 'get',
-          url: `/api/v1/users/store/public/${context.params?.slug}`,
+          url: `/api/v1/users/store/public/${context.params?.slug}`
         }),
         fetch<TPublicProducts[]>({
           method: 'get',
-          url: `/api/v1/users/products/public?storeId=${context.params?.slug}`,
-        }),
+          url: `/api/v1/users/products/public?storeId=${context.params?.slug}`
+        })
       ])
     ).map((res) => res.data);
 
     return {
-      props: { store: storeData, products: storeProductsData },
+      props: { store: storeData, products: storeProductsData }
     };
   } catch (error) {
     console.error(error);

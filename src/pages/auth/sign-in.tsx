@@ -25,9 +25,9 @@ export default function SignIn() {
         ...state,
         signInData: {
           ...state.signInData,
-          [e.target.name]: e.target.value,
-        },
-      },
+          [e.target.name]: e.target.value
+        }
+      }
     });
   };
 
@@ -36,7 +36,7 @@ export default function SignIn() {
     if (state.signInData.password.length < 8) {
       return setError({
         status: true,
-        message: 'A senha deve conter pelo menos 8 carácteres',
+        message: 'A senha deve conter pelo menos 8 caracteres'
       });
     }
     try {
@@ -44,18 +44,18 @@ export default function SignIn() {
       const { data } = await fetch<TAuth>({
         method: 'post',
         url: '/api/v1/auth/default/login',
-        data: state.signInData,
+        data: { ...state.signInData }
       });
       dispatch({
         type: actions.USER_AUTH,
-        payload: { ...state, auth: { ...data } },
+        payload: { ...state, auth: { ...data } }
       });
       router.push(`/dashboard`);
     } catch (error: any) {
       console.error(error?.response?.data?.message || error);
       setError({
         status: true,
-        message: error?.response?.data?.message || error?.code,
+        message: error?.response?.data?.message || error?.code
       });
     } finally {
       setLoading(false);
@@ -74,7 +74,7 @@ export default function SignIn() {
       metadata={{
         title: `${complements.defaultTitle} | Acessar Conta de Usuário`,
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       }}>
       <Container>
         <Image

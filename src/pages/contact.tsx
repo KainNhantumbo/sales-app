@@ -17,43 +17,38 @@ export default function Contact() {
     email: complements.email,
     subject: '',
     message: '',
-    from_email: '',
+    from_email: ''
   });
 
   // picks form data
   function formDataPicker(e: InputEvents) {
-    setFormData((prevData) => ({
+    return setFormData((prevData) => ({
       ...prevData,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }));
   }
 
   // sends email
-  function emailSender(e: SubmitEvent) {
+  async function handleSendEmail(e: SubmitEvent) {
     e.preventDefault();
-    emailjs
-      .send(
+    try {
+      await emailjs.send(
         'service_sjw9i8b',
         'template_eso630j',
         formData,
         'z3FUpU83GBFJyGXVF'
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          setMessageStatus('Mensagem enviada com sucesso!');
-        },
-        (error) => {
-          console.error(error.text);
-          setMessageStatus(
-            'Oops! Houve um erro ao enviar a sua mensagem. Por favor, tente novamente.'
-          );
-        }
       );
+      setMessageStatus('Mensagem enviada com sucesso!');
+    } catch (error: any) {
+      console.error(error.text);
+      setMessageStatus(
+        'Oops! Houve um erro ao enviar a sua mensagem. Por favor, tente novamente.'
+      );
+    }
   }
 
   return (
-    <Layout metadata={{ title: complements.defaultTitle + ' | Contato' }}>
+    <Layout metadata={{ title: `${complements.defaultTitle} | Contato` }}>
       <Container>
         <article className='container'>
           <section className='intro'>
@@ -96,7 +91,7 @@ export default function Contact() {
               </a>
             </span>
           </div>
-          <form onSubmit={emailSender}>
+          <form onSubmit={handleSendEmail}>
             <section className='form-control'>
               <div className='form-item'>
                 <label htmlFor='assunto'>Assunto</label>

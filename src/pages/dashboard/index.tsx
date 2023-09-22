@@ -15,7 +15,7 @@ export default function Dashboard() {
   const theme = useTheme();
   const actionRoutes: TDashboardActions = dashboardActions({
     storeId: state.auth.storeId,
-    userId: state.auth.id,
+    userId: state.auth.id
   });
 
   return (
@@ -77,15 +77,15 @@ export default function Dashboard() {
                                 top: 0,
                                 left: 0,
                                 bottom: 0,
-                                right: 0,
+                                right: 0
                               }}
                               whileInView={{
                                 scale: 1,
-                                transition: { duration: 0.5, bounce: 1 },
+                                transition: { duration: 0.5, bounce: 1 }
                               }}
                               whileHover={{
                                 translateY: -8,
-                                boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`,
+                                boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`
                               }}>
                               <Link href={path.url}>
                                 <path.icon />

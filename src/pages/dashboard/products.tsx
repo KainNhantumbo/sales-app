@@ -6,7 +6,7 @@ import {
   IoPricetagsOutline,
   IoReload,
   IoStorefront,
-  IoWarningOutline,
+  IoWarningOutline
 } from 'react-icons/io5';
 import moment from 'moment';
 import Link from 'next/link';
@@ -35,7 +35,7 @@ export default function Products() {
     dispatch,
     useFetchAPI,
     shareProductController,
-    deleteProductPromptController,
+    deleteProductPromptController
   } = useAppContext();
   const LIMIT: number = 12;
   const theme = useTheme();
@@ -47,7 +47,7 @@ export default function Products() {
         LIMIT * pageParam
       }&limit=${LIMIT}fields=name,price,quantity,promotion,category,favorites,createdAt,updatedAt&sort=${
         state.productsListQuery.sort || 'updatedAt'
-      }&search=${state.productsListQuery.query || ''}`,
+      }&search=${state.productsListQuery.query || ''}`
     });
     return { data, currentOffset: pageParam + 1 };
   };
@@ -59,24 +59,24 @@ export default function Products() {
     hasNextPage,
     isLoading,
     isError,
-    error,
+    error
   } = useInfiniteQuery({
     queryKey: ['private-store-products'],
     queryFn: fetchProducts,
     getNextPageParam: (lastPage) =>
-      lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
+      lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
   });
 
   const handleDeleteProduct = async (productId: string) => {
     try {
       await useFetchAPI({
         method: 'delete',
-        url: `/api/v1/users/products/${productId}`,
+        url: `/api/v1/users/products/${productId}`
       });
       deleteProductPromptController(false, '');
       refetch({ queryKey: ['private-store-products'] });
-    } catch (err: any) {
-      console.error(err?.response?.data?.message || err);
+    } catch (error: any) {
+      console.error(error?.response?.data?.message || error);
     }
   };
 
@@ -92,15 +92,15 @@ export default function Products() {
         type: actions.PRODUCTS_LIST_DATA,
         payload: {
           ...state,
-          productList: [...reducedData],
-        },
+          productList: [...reducedData]
+        }
       });
     }
 
     return () =>
       dispatch({
         type: actions.PRODUCTS_LIST_DATA,
-        payload: { ...state, productList: [] },
+        payload: { ...state, productList: [] }
       });
   }, [data]);
 
@@ -121,7 +121,7 @@ export default function Products() {
     return () =>
       dispatch({
         type: actions.CLEAN_UP_MODALS,
-        payload: { ...state },
+        payload: { ...state }
       });
   }, []);
 
@@ -282,7 +282,7 @@ export default function Products() {
                       color={`rgb(${theme.primary_shade})`}
                       aria-placeholder='Processando...'
                       cssOverride={{
-                        display: 'block',
+                        display: 'block'
                       }}
                     />
                   </div>

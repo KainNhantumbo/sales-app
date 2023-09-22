@@ -4,11 +4,10 @@ import {
   IoLocation,
   IoLockClosed,
   IoOpenOutline,
-  IoPlanet,
+  IoPlanet
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect } from 'react';
 import fetch from '@/config/client';
 import { motion } from 'framer-motion';
 import { BsWind } from 'react-icons/bs';
@@ -36,10 +35,6 @@ export default function UserProfile({ user }: TProps) {
       />
     );
 
-  useEffect(() => {
-    console.log(user);
-  }, []);
-
   return (
     <Layout
       metadata={{
@@ -51,7 +46,7 @@ export default function UserProfile({ user }: TProps) {
           user.last_name
         )}`,
         createdAt: user.createdAt,
-        updatedAt: user.createdAt,
+        updatedAt: user.createdAt
       }}>
       <Container>
         <div className='wrapper-container'>
@@ -103,7 +98,7 @@ export default function UserProfile({ user }: TProps) {
                   {user.social_network && (
                     <div className='network-buttons'>
                       {formatSocialNetwork({
-                        ...user.social_network,
+                        ...user.social_network
                       })?.map((option, index) => (
                         <motion.a
                           whileHover={{ scale: 1.2 }}
@@ -209,7 +204,7 @@ export default function UserProfile({ user }: TProps) {
 export async function getStaticPaths(): Promise<any> {
   const slugs = await fetch<TPublicUser[]>({
     method: 'get',
-    url: '/api/v1/users/account/public',
+    url: '/api/v1/users/account/public'
   }).then((res) => res.data.map((item) => ({ params: { slug: item._id } })));
   return { paths: slugs, fallback: false };
 }
@@ -218,7 +213,7 @@ export async function getStaticProps({ params: { slug } }: any) {
   try {
     const { data: user } = await fetch<TPublicUser>({
       method: 'get',
-      url: `/api/v1/users/account/public/${slug}`,
+      url: `/api/v1/users/account/public/${slug}`
     });
     return { props: { user }, revalidate: 10 };
   } catch (error) {
