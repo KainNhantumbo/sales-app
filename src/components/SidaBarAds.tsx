@@ -3,7 +3,7 @@ import { FaAd } from 'react-icons/fa';
 import { IoAdd } from 'react-icons/io5';
 import { _sidebarAds as Container } from '@/styles/modules/sidebar-ads';
 
-export default function SideBarAds () {
+export default function SideBarAds() {
   return (
     <Container>
       <section className='no-ads'>
@@ -11,11 +11,11 @@ export default function SideBarAds () {
         <h3>
           <span>Espaço reservado para anúncios</span>
         </h3>
-        <Link href={`/users/dashboard/create-ad`}>
+        <Link href={`/dashboard/create-ad`}>
           <IoAdd />
           <span>Criar anúncio</span>
         </Link>
       </section>
     </Container>
   );
-};
+}

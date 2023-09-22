@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BaseButton, StyledCornerButton } from '../defaults';
+import { BaseButton, StyledCornerButton, _endMarkStyles } from '../defaults';
 
 export const _home = styled.div`
   position: relative;
@@ -386,22 +386,6 @@ export const _home = styled.div`
     }
   }
   .posts-container__end-mark {
-    display: grid;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    background: rgb(${({ theme }) => theme.foreground});
-    color: rgb(${({ theme }) => theme.primary_shade});
-    border-radius: 20px;
-    svg {
-      width: 25px;
-      height: 25px;
-    }
-
-    @media screen and (max-width: 1000px) {
-      border-radius: 10px;
-      margin-left: 10px;
-      margin-right: 10px;
-    }
+    ${_endMarkStyles}
   }
 `;

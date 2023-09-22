@@ -33,7 +33,7 @@ export const BaseButton = css`
   overflow: hidden;
   border: 1px solid rgba(${({ theme }) => theme.font}, 0.15);
   text-align: center;
-  
+
   :hover {
     background: rgba(${({ theme }) => theme.primary}, 0.9);
     border: 1px solid rgba(${({ theme }) => theme.font}, 0.3);
@@ -228,5 +228,25 @@ export const statsContainerStyles = css`
     margin: 0 auto;
 
     color: rgb(${({ theme }) => theme.primary_shade});
+  }
+`;
+
+export const _endMarkStyles = css`
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  background: rgb(${({ theme }) => theme.foreground});
+  color: rgb(${({ theme }) => theme.primary_shade});
+  border-radius: 20px;
+  margin-top: 5px;
+  svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  @media screen and (max-width: 1000px) {
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 `;

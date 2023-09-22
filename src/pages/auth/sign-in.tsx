@@ -50,7 +50,7 @@ export default function SignIn() {
         type: actions.USER_AUTH,
         payload: { ...state, auth: { ...data } },
       });
-      router.push(`/users/dashboard`);
+      router.push(`/dashboard`);
     } catch (error: any) {
       console.error(error?.response?.data?.message || error);
       setError({

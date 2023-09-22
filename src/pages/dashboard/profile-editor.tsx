@@ -34,7 +34,7 @@ import {
   IoSyncOutline,
   IoTrash,
   IoTrashOutline,
-  IoWatchOutline,
+  IoWatchOutline
 } from 'react-icons/io5';
 import moment from 'moment';
 import Image from 'next/image';
@@ -73,22 +73,22 @@ export default function ProfileEditor() {
     useFetchAPI,
     dispatch,
     userWorkingDataController,
-    deleteAccountPromptController,
+    deleteAccountPromptController
   } = useAppContext();
 
   const [loading, setLoading] = useState<TLoading>({
     status: false,
-    key: 'user-data',
+    key: 'user-data'
   });
 
   const [error, setError] = useState<TError>({
     status: false,
     msg: '',
-    key: 'user-data',
+    key: 'user-data'
   });
 
   const [countryStates, setCountryStates] = useState<string[]>([
-    state.user.location?.state,
+    state.user.location?.state
   ]);
   const [coverImageFile, setCoverImageFile] = useState<FileList | null>(null);
   const [profileImageFile, setProfileImageFile] = useState<FileList | null>(
@@ -96,16 +96,16 @@ export default function ProfileEditor() {
   );
   const [coverImageData, setCoverImageData] = useState({
     id: '',
-    data: '',
+    data: ''
   });
   const [profileImageData, setProfileImageData] = useState({
     id: '',
-    data: '',
+    data: ''
   });
 
   const [passwords, setPasswords] = useState({
     password: '',
-    confirm_password: '',
+    confirm_password: ''
   });
 
   const handleChange = (e: InputEvents) => {
@@ -115,16 +115,16 @@ export default function ProfileEditor() {
         ...state,
         user: {
           ...state.user,
-          [e.target.name]: e.target.value,
-        },
-      },
+          [e.target.name]: e.target.value
+        }
+      }
     });
   };
 
   const handlePasswordsChange = (e: InputEvents) => {
     setPasswords((state) => ({
       ...state,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }));
   };
 
@@ -143,10 +143,10 @@ export default function ProfileEditor() {
             const encodedImage: string = e.target?.result as string;
             setCoverImageData({
               id: state.user.cover_image?.id || '',
-              data: encodedImage,
+              data: encodedImage
             });
           };
-        },
+        }
       });
     }
   };
@@ -166,10 +166,10 @@ export default function ProfileEditor() {
             const encodedImage: string = e.target?.result as string;
             setProfileImageData({
               id: state.user.profile_image?.id || '',
-              data: encodedImage,
+              data: encodedImage
             });
           };
-        },
+        }
       });
     }
   };
@@ -178,7 +178,7 @@ export default function ProfileEditor() {
     useFetchAPI({
       method: 'delete',
       url: `/api/v1/users/account/assets`,
-      data: { type: assetType, assetId: state.user[assetType]?.id },
+      data: { type: assetType, assetId: state.user[assetType]?.id }
     })
       .then(() => {
         assetType === 'cover_image' && setCoverImageData({ id: '', data: '' });
@@ -190,9 +190,9 @@ export default function ProfileEditor() {
             ...state,
             user: {
               ...state.user,
-              [assetType]: { id: '', url: '' },
-            },
-          },
+              [assetType]: { id: '', url: '' }
+            }
+          }
         });
       })
       .catch((error) => {
@@ -204,13 +204,13 @@ export default function ProfileEditor() {
     setLoading({ status: true, key: 'user-data' });
     useFetchAPI({
       method: 'get',
-      url: `/api/v1/users/account/${router.query?.id || state.auth.id}`,
+      url: `/api/v1/users/account/${router.query?.id || state.auth.id}`
     })
       .then(({ data }) => {
         const formattedData = Array.isArray(data) ? data[0] : data;
         dispatch({
           type: actions.USER_DATA,
-          payload: { ...state, user: formattedData },
+          payload: { ...state, user: formattedData }
         });
       })
       .catch((error) => {
@@ -220,7 +220,7 @@ export default function ProfileEditor() {
           msg:
             error?.response?.data?.message ||
             'Oops! Algo deu errado. Tente novamente.',
-          key: 'user-data',
+          key: 'user-data'
         });
       })
       .finally(() => {
@@ -234,7 +234,7 @@ export default function ProfileEditor() {
         return setError({
           status: true,
           msg: 'A as senhas devem ser iguais e maiores que 8 carácteres.',
-          key: 'user-update',
+          key: 'user-update'
         });
     }
 
@@ -261,16 +261,16 @@ export default function ProfileEditor() {
           ...user,
           coverImageData,
           profileImageData,
-          social_network: serializedObj,
-        },
+          social_network: serializedObj
+        }
       });
 
       dispatch({
         type: actions.USER_DATA,
         payload: {
           ...state,
-          user: { ...data },
-        },
+          user: { ...data }
+        }
       });
     } catch (error: any) {
       console.error(error);
@@ -279,7 +279,7 @@ export default function ProfileEditor() {
         msg:
           error?.response?.data?.message ||
           'Oops! Algo deu errado. Tente novamente.',
-        key: 'user-update',
+        key: 'user-update'
       });
     } finally {
       setLoading({ status: false, key: 'user-update' });
@@ -326,7 +326,7 @@ export default function ProfileEditor() {
     start_date: '',
     description: '',
     portfolio_url: '',
-    company_name: '',
+    company_name: ''
   });
 
   const createWorkingData = () => {
@@ -339,10 +339,10 @@ export default function ProfileEditor() {
           ...state.user,
           working_experience: [
             ...state.user.working_experience,
-            { ...workingExperienceData, id: generatedId },
-          ],
-        },
-      },
+            { ...workingExperienceData, id: generatedId }
+          ]
+        }
+      }
     });
     setWorkingExperienceData({
       id: '',
@@ -351,7 +351,7 @@ export default function ProfileEditor() {
       start_date: '',
       description: '',
       portfolio_url: '',
-      company_name: '',
+      company_name: ''
     });
     userWorkingDataController();
   };
@@ -365,9 +365,9 @@ export default function ProfileEditor() {
           ...state.user,
           working_experience: state.user?.working_experience.map((item) =>
             item.id === id ? { ...item, ...workingExperienceData } : item
-          ),
-        },
-      },
+          )
+        }
+      }
     });
     userWorkingDataController();
     setWorkingExperienceData({
@@ -377,7 +377,7 @@ export default function ProfileEditor() {
       start_date: '',
       description: '',
       portfolio_url: '',
-      company_name: '',
+      company_name: ''
     });
   };
 
@@ -399,9 +399,9 @@ export default function ProfileEditor() {
           ...state.user,
           working_experience: state.user?.working_experience.filter(
             (item) => item.id !== id
-          ),
-        },
-      },
+          )
+        }
+      }
     });
   };
 
@@ -410,7 +410,7 @@ export default function ProfileEditor() {
       metadata={{
         title: `${complements.defaultTitle} | Editor de Perfil de Usuário`,
         updatedAt: state.user.updatedAt,
-        createdAt: state.user.createdAt,
+        createdAt: state.user.createdAt
       }}>
       <Container>
         <DeleteAccountPrompt />
@@ -741,9 +741,9 @@ export default function ProfileEditor() {
                                       spoken_languages:
                                         state.user.spoken_languages.filter(
                                           (item) => item !== language
-                                        ),
-                                    },
-                                  },
+                                        )
+                                    }
+                                  }
                                 });
                               }}>
                               <IoCloseCircle />
@@ -775,9 +775,9 @@ export default function ProfileEditor() {
                                   )
                                     return languages;
                                   return [...languages, value];
-                                })(),
-                              },
-                            },
+                                })()
+                              }
+                            }
                           });
                         }}>
                         {user_languages
@@ -808,9 +808,9 @@ export default function ProfileEditor() {
                                       professional_skills:
                                         state.user.professional_skills.filter(
                                           (item) => item !== skill
-                                        ),
-                                    },
-                                  },
+                                        )
+                                    }
+                                  }
                                 });
                               }}>
                               <IoCloseCircle />
@@ -842,9 +842,9 @@ export default function ProfileEditor() {
                                   )
                                     return skills;
                                   return [...skills, value];
-                                })(),
-                              },
-                            },
+                                })()
+                              }
+                            }
                           });
                         }}>
                         {user_skills
@@ -896,10 +896,10 @@ export default function ProfileEditor() {
                                   ...state.user,
                                   location: {
                                     ...state.user.location,
-                                    country: e.target.value,
-                                  },
-                                },
-                              },
+                                    country: e.target.value
+                                  }
+                                }
+                              }
                             });
                           }}>
                           {countries
@@ -931,10 +931,10 @@ export default function ProfileEditor() {
                                   ...state.user,
                                   location: {
                                     ...state.user.location,
-                                    state: e.target.value,
-                                  },
-                                },
-                              },
+                                    state: e.target.value
+                                  }
+                                }
+                              }
                             });
                           }}>
                           {countryStates
@@ -971,10 +971,10 @@ export default function ProfileEditor() {
                                       ...state.user,
                                       location: {
                                         ...state.user.location,
-                                        adress: e.target.value,
-                                      },
-                                    },
-                                  },
+                                        adress: e.target.value
+                                      }
+                                    }
+                                  }
                                 })
                           }
                         />
@@ -1005,10 +1005,10 @@ export default function ProfileEditor() {
                                       ...state.user,
                                       location: {
                                         ...state.user.location,
-                                        zip_code: e.target.value,
-                                      },
-                                    },
-                                  },
+                                        zip_code: e.target.value
+                                      }
+                                    }
+                                  }
                                 })
                           }
                         />
@@ -1055,10 +1055,10 @@ export default function ProfileEditor() {
                                   ...state.user,
                                   social_network: {
                                     ...state.user.social_network,
-                                    whatsapp: e.target.value,
-                                  },
-                                },
-                              },
+                                    whatsapp: e.target.value
+                                  }
+                                }
+                              }
                             });
                           }}
                         />
@@ -1084,10 +1084,10 @@ export default function ProfileEditor() {
                                   ...state.user,
                                   social_network: {
                                     ...state.user.social_network,
-                                    facebook: e.target.value,
-                                  },
-                                },
-                              },
+                                    facebook: e.target.value
+                                  }
+                                }
+                              }
                             });
                           }}
                         />
@@ -1116,10 +1116,10 @@ export default function ProfileEditor() {
                                   ...state.user,
                                   social_network: {
                                     ...state.user.social_network,
-                                    website: e.target.value,
-                                  },
-                                },
-                              },
+                                    website: e.target.value
+                                  }
+                                }
+                              }
                             });
                           }}
                         />
@@ -1145,10 +1145,10 @@ export default function ProfileEditor() {
                                   ...state.user,
                                   social_network: {
                                     ...state.user.social_network,
-                                    instagram: e.target.value,
-                                  },
-                                },
-                              },
+                                    instagram: e.target.value
+                                  }
+                                }
+                              }
                             });
                           }}
                         />
@@ -1177,10 +1177,10 @@ export default function ProfileEditor() {
                                   ...state.user,
                                   social_network: {
                                     ...state.user.social_network,
-                                    linkedin: e.target.value,
-                                  },
-                                },
-                              },
+                                    linkedin: e.target.value
+                                  }
+                                }
+                              }
                             });
                           }}
                         />
@@ -1387,7 +1387,7 @@ export default function ProfileEditor() {
                         color={`rgb(${theme.primary})`}
                         aria-placeholder='Processando...'
                         cssOverride={{
-                          display: 'block',
+                          display: 'block'
                         }}
                       />
                       <span>Processando...</span>

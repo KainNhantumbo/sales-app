@@ -1,6 +1,7 @@
 import {
   BaseButton,
   BaseButtonOutline,
+  _endMarkStyles,
   statsContainerStyles,
 } from '../defaults';
 import styled from 'styled-components';
@@ -26,23 +27,7 @@ export const _productList = styled.div`
   }
 
   .products-list_container__end-mark {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    background: rgb(${({ theme }) => theme.foreground});
-    color: rgb(${({ theme }) => theme.primary_shade});
-    border-radius: 20px;
-    margin-top: 5px;
-    svg {
-      width: 25px;
-      height: 25px;
-    }
-
-    @media screen and (max-width: 1000px) {
-      border-radius: 10px;
-      margin-left: 10px;
-      margin-right: 10px;
-    }
+    ${_endMarkStyles}
   }
 
   .error-message {

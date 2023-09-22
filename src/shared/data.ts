@@ -245,7 +245,7 @@ const dashboardActions = (props: {
     paths: [
       {
         label: 'Configurações da conta',
-        url: '/users/dashboard/profile-editor/',
+        url: '/dashboard-editor/',
         icon: BsPersonGear,
       },
       {
@@ -255,12 +255,12 @@ const dashboardActions = (props: {
       },
       {
         label: 'Minhas Encomendas',
-        url: `/users/dashboard/profile/my-orders`,
+        url: `/dashboard/my-orders`,
         icon: BsBox2,
       },
       {
         label: 'Produtos favoritos',
-        url: `/users/dashboard/profile/favorite-products?id=${props.userId}`,
+        url: `/dashboard/favorite-products?id=${props.userId}`,
         icon: BsBox2Heart,
       },
     ],
@@ -275,22 +275,22 @@ const dashboardActions = (props: {
       },
       {
         label: 'Configurações da loja',
-        url: '/users/dashboard/store-editor',
+        url: '/dashboard/store-editor',
         icon: IoCog,
       },
       {
         label: 'Gerir produtos',
-        url: '/users/dashboard/products',
+        url: '/dashboard/products',
         icon: IoCog,
       },
       {
         label: 'Adicionar produto',
-        url: '/users/dashboard/product-editor',
+        url: '/dashboard/product-editor',
         icon: IoAdd,
       },
       {
         label: 'Vendas de produtos',
-        url: '/users/dashboard/store/customer-orders',
+        url: '/dashboard/store/customer-orders',
         icon: IoBagCheck,
       },
     ],
@@ -300,22 +300,22 @@ const dashboardActions = (props: {
     paths: [
       {
         label: 'Minhas Transações',
-        url: '/users/dashboard/my-transactions',
+        url: '/dashboard/my-transactions',
         icon: IoAnalytics,
       },
       {
         label: 'Transações de clientes',
-        url: '/users/dashboard/customer-transactions',
+        url: '/dashboard/customer-transactions',
         icon: IoAnalytics,
       },
       {
         label: 'Pagamento de planos e subscrições',
-        url: '/users/dashboard/transactions/subscription-payments',
+        url: '/dashboard/transactions/subscription-payments',
         icon: BsCreditCard2Front,
       },
       {
         label: 'Pagamento de anúncios',
-        url: '/users/dashboard/transactions/ad-payments',
+        url: '/dashboard/transactions/ad-payments',
         icon: IoCardOutline,
       },
     ],
@@ -325,17 +325,17 @@ const dashboardActions = (props: {
     paths: [
       {
         label: 'Criar anúncio',
-        url: '/users/dashboard/create-ad',
+        url: '/dashboard/create-ad',
         icon: IoAdd,
       },
       {
         label: 'Gerir anúncios',
-        url: '/users/dashboard/ads/generics',
+        url: '/dashboard/ads/generics',
         icon: IoCog,
       },
       {
         label: 'Destacar produtos da loja',
-        url: '/users/dashboard/ads/products',
+        url: '/dashboard/ads/products',
         icon: IoFlash,
       },
     ],

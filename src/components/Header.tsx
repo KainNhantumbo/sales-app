@@ -108,7 +108,7 @@ export default function Header() {
                   <button
                     title='Painel de Controle e Conta'
                     className='user-account'
-                    onClick={() => push(`/users/dashboard`)}>
+                    onClick={() => push(`/dashboard`)}>
                     {state.auth.profile_image ? (
                       <img
                         loading='lazy'

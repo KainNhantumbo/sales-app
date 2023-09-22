@@ -81,7 +81,7 @@ export default function Footer() {
             </h3>
             <div className='elements'>
               {state.auth.id && (
-                <Link href={`/users/dashboard`}>
+                <Link href={`/dashboard`}>
                   <span>Minha conta</span>
                 </Link>
               )}

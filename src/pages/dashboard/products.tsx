@@ -239,7 +239,7 @@ export default function Products() {
                   </div>
                   <div className='products-list_item_secondary'>
                     <Link
-                      href={`/users/dashboard/product-editor?productId=${product._id}`}
+                      href={`/dashboard/product-editor?productId=${product._id}`}
                       title='Editar e atualizar informações do produto'>
                       <span>Editar produto</span>
                     </Link>

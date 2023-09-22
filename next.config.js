@@ -3,19 +3,22 @@ const nextPWA = require('next-pwa')({
   dest: 'public',
   disable: process.env.NODE_ENV === 'development',
   register: true,
-  scope: '/'
+  scope: '/',
 });
 
 module.exports = nextPWA({
   reactStrictMode: true,
   swcMinify: true,
+  env: {
+    API_BASE_URL: 'http://localhost:4500',
+  },
   compiler: {
-    styledComponents: true
+    styledComponents: true,
   },
   images: {
-    domains: ['https://res.cloudinary.com/']
+    domains: ['https://res.cloudinary.com/'],
   },
   experimental: {
-    scrollRestoration: true
-  }
+    scrollRestoration: true,
+  },
 });

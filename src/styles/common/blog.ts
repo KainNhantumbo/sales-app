@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BaseButton } from '../defaults';
+import { BaseButton, _endMarkStyles } from '../defaults';
 
 export const _blog = styled.div`
   position: relative;
@@ -190,22 +190,7 @@ export const _blog = styled.div`
       gap: 12px;
 
       .posts-container__end-mark {
-        display: grid;
-        justify-content: center;
-        align-items: center;
-        background: rgb(${({ theme }) => theme.foreground});
-        color: rgb(${({ theme }) => theme.primary_shade});
-        border-radius: 20px;
-        svg {
-          width: 25px;
-          height: 25px;
-        }
-
-        @media screen and (max-width: 1000px) {
-          border-radius: 10px;
-          margin-left: 10px;
-          margin-right: 10px;
-        }
+        ${_endMarkStyles}
       }
 
       .post {
