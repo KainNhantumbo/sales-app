@@ -45,23 +45,21 @@ export default function useCustomInfinityQuery<T>({
       const { data } = isPublicQuery
         ? await fetch<T[]>({ url: queryUrl })
         : await useFetchAPI<T[]>({ url: queryUrl });
-      return { data, currentOffset: pageParam + 1 };
+      return { data, offset: Number(pageParam) + 1 };
     },
-    getNextPageParam: (lastPage) =>
-      lastPage?.data?.length >= queryLimit ? lastPage.currentOffset : undefined
+    getNextPageParam: ({ data, offset }) =>
+      data.length >= queryLimit ? offset : undefined
   });
 
   useMemo(() => {
-    if (data) {
-      const reducedData = data?.pages
-        .map((page) => {
-          return page.data;
-        })
+    if (data !== undefined) {
+      const factory = data.pages
+        .map((page) => page.data)
         .reduce((accumulator, currentObj) => [...accumulator, ...currentObj]);
 
       dispatch({
         type: actions[stateAction],
-        payload: { ...state, [stateKey]: [...reducedData] }
+        payload: { ...state, [stateKey]: [...factory] }
       });
     }
   }, [data]);
@@ -74,9 +72,7 @@ export default function useCustomInfinityQuery<T>({
   }, [state[stateQueryKey]]);
 
   useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage();
-    }
+    if (inView && hasNextPage) fetchNextPage();
   }, [inView, fetchNextPage, hasNextPage]);
 
   return {

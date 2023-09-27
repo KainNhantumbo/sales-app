@@ -4,7 +4,7 @@ import {
   createContext,
   Dispatch,
   useReducer,
-  ReactNode,
+  ReactNode
 } from 'react';
 import fetch from '@/config/client';
 import actions from '@/shared/actions';
@@ -21,9 +21,9 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 const queryClient: QueryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      networkMode: 'always',
-    },
-  },
+      networkMode: 'always'
+    }
+  }
 });
 
 type TProps = { children: ReactNode };
@@ -72,9 +72,13 @@ const context = createContext<IContext>({
     quantity: 1,
     productName: '',
     price: 0,
-    previewImage: undefined,
-  }),
+    previewImage: undefined
+  })
 });
+
+export function useAppContext() {
+  return useContext(context);
+}
 
 export default function AppContext(props: TProps) {
   const CART_KEY: string = 'cart-items';
@@ -85,7 +89,7 @@ export default function AppContext(props: TProps) {
   const cartModalController = () => {
     dispatch({
       type: actions.CART_MODAL,
-      payload: { ...state, isCartModal: !state.isCartModal },
+      payload: { ...state, isCartModal: !state.isCartModal }
     });
   };
   const userWorkingDataController = () => {
@@ -93,8 +97,8 @@ export default function AppContext(props: TProps) {
       type: actions.USER_WORKING_DATA_MODAL,
       payload: {
         ...state,
-        isUserWorkingDataModal: !state.isUserWorkingDataModal,
-      },
+        isUserWorkingDataModal: !state.isUserWorkingDataModal
+      }
     });
   };
   const deleteAccountPromptController = () => {
@@ -102,8 +106,8 @@ export default function AppContext(props: TProps) {
       type: actions.DELETE_ACCOUNT_PROMPT,
       payload: {
         ...state,
-        isDeleteAccountPrompt: !state.isDeleteAccountPrompt,
-      },
+        isDeleteAccountPrompt: !state.isDeleteAccountPrompt
+      }
     });
   };
   const deactivateStorePromptController = () => {
@@ -111,22 +115,22 @@ export default function AppContext(props: TProps) {
       type: actions.DEACTIVATE_STORE_PROMPT,
       payload: {
         ...state,
-        isDeactivateStorePrompt: !state.isDeactivateStorePrompt,
-      },
+        isDeactivateStorePrompt: !state.isDeactivateStorePrompt
+      }
     });
   };
 
   const searchBoxController = () => {
     dispatch({
       type: actions.SEARCH_BOX_CONTROL,
-      payload: { ...state, isSearchActive: !state.isSearchActive },
+      payload: { ...state, isSearchActive: !state.isSearchActive }
     });
   };
 
   const sortBoxController = () => {
     dispatch({
       type: actions.SORT_BOX_CONTROL,
-      payload: { ...state, isSortActive: !state.isSortActive },
+      payload: { ...state, isSortActive: !state.isSortActive }
     });
   };
 
@@ -135,8 +139,8 @@ export default function AppContext(props: TProps) {
       type: actions.DELETE_COMMENT_PROMPT,
       payload: {
         ...state,
-        isDeleteCommentPrompt: { status, commentId: id ?? '' },
-      },
+        isDeleteCommentPrompt: { status, commentId: id ?? '' }
+      }
     });
   };
 
@@ -145,8 +149,8 @@ export default function AppContext(props: TProps) {
       type: actions.DELETE_STORY_PROMPT,
       payload: {
         ...state,
-        isDeleteStoryPrompt: { status, storyId: id ?? '' },
-      },
+        isDeleteStoryPrompt: { status, storyId: id ?? '' }
+      }
     });
   };
 
@@ -155,8 +159,8 @@ export default function AppContext(props: TProps) {
       type: actions.DELETE_PRODUCT_PROMPT,
       payload: {
         ...state,
-        isDeleteProductPrompt: { status, productId: id ?? '' },
-      },
+        isDeleteProductPrompt: { status, productId: id ?? '' }
+      }
     });
   };
 
@@ -165,8 +169,8 @@ export default function AppContext(props: TProps) {
       type: actions.SHARE_PRODUCT_MODAL,
       payload: {
         ...state,
-        isShareProductModal: !state.isShareProductModal,
-      },
+        isShareProductModal: !state.isShareProductModal
+      }
     });
   };
 
@@ -185,7 +189,7 @@ export default function AppContext(props: TProps) {
       quantity: 1,
       productName: '',
       previewImage: undefined,
-      price: 0,
+      price: 0
     };
   };
 
@@ -202,9 +206,9 @@ export default function AppContext(props: TProps) {
             product.productId === props.productId
               ? { ...product, ...props }
               : product
-          ),
-        ],
-      },
+          )
+        ]
+      }
     });
   };
 
@@ -219,9 +223,9 @@ export default function AppContext(props: TProps) {
             : [
                 ...state.cart.filter(
                   (product) => product.productId !== currentProductId
-                ),
-              ],
-      },
+                )
+              ]
+      }
     });
   };
 
@@ -230,8 +234,8 @@ export default function AppContext(props: TProps) {
       type: actions.PRODUCTS_CART,
       payload: {
         ...state,
-        cart: [...state.cart, { ...product }],
-      },
+        cart: [...state.cart, { ...product }]
+      }
     });
   };
 
@@ -253,21 +257,20 @@ export default function AppContext(props: TProps) {
     if (data?.length > 0)
       dispatch({
         type: actions.PRODUCTS_CART,
-        payload: { ...state, cart: data },
+        payload: { ...state, cart: data }
       });
   };
 
-  // -------------user authentication---------------
   const validateAuth = async () => {
     try {
       const { data } = await fetch<TAuth>({
         method: 'get',
         url: '/api/v1/auth/default/refresh',
-        withCredentials: true,
+        withCredentials: true
       });
       dispatch({
         type: actions.USER_AUTH,
-        payload: { ...state, auth: { ...data } },
+        payload: { ...state, auth: { ...data } }
       });
     } catch (error: any) {
       console.error(error?.response?.data?.message || error);
@@ -290,7 +293,7 @@ export default function AppContext(props: TProps) {
     );
     return await fetch<T>({
       ...config,
-      headers: { authorization: `Bearer ${state.auth.token}` },
+      headers: { authorization: `Bearer ${state.auth.token}` }
     });
   }
 
@@ -299,11 +302,11 @@ export default function AppContext(props: TProps) {
       const { data } = await fetch<TAuth>({
         method: 'get',
         url: '/api/v1/auth/default/refresh',
-        withCredentials: true,
+        withCredentials: true
       });
       dispatch({
         type: actions.USER_AUTH,
-        payload: { ...state, auth: { ...data } },
+        payload: { ...state, auth: { ...data } }
       });
     } catch (error: any) {
       console.error(error?.response?.data?.message || error);
@@ -342,7 +345,7 @@ export default function AppContext(props: TProps) {
             removeProductFromCart,
             updateCartProduct,
             getCartProduct,
-            cartModalController,
+            cartModalController
           }}>
           <ModulesContext>{props.children}</ModulesContext>
         </context.Provider>
@@ -350,5 +353,3 @@ export default function AppContext(props: TProps) {
     </ThemeContext>
   );
 }
-
-export const useAppContext = () => useContext(context);

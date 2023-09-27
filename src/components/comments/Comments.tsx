@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { useState, useEffect, useMemo } from 'react';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
-import type { IComment, TComment } from '@/types/comments';
+import type { IComment } from '@/types/comments';
 import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
 import { _comments as Container } from '@/styles/modules/comments';
 

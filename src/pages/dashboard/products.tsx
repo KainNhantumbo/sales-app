@@ -37,7 +37,7 @@ export default function Products() {
     shareProductController,
     deleteProductPromptController
   } = useAppContext();
-  const LIMIT: number = 12;
+  const LIMIT: number = 12 
   const theme = useTheme();
   const { ref, inView } = useInView();
 
