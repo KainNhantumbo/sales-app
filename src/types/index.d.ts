@@ -14,7 +14,7 @@ export type TPricingData = Array<{
   description: string[];
 }>;
 
-export type TAuth = {
+export type Auth = {
   id: string;
   storeId: string;
   token: string;
@@ -145,7 +145,7 @@ export interface IPublicStory extends TStory {
   updatedAt: string;
 }
 
-export type TQueryListProps = {
+export type TQueryLisProps = {
   offset?: number;
   limit?: number;
   search?: string;
@@ -419,7 +419,7 @@ export type TDenounce = {
   content: string;
 };
 
-export type TCart = {
+export type Cart = {
   productId: string;
   productName: string;
   quantity: number;

@@ -4,9 +4,9 @@ import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { _prompt as Container } from '@/styles/modules/logout-prompt';
 
-type TProps = { deleteFn: any };
+type Props = { deleteFn: any };
 
-export default function DeleteCommentPrompt(props: TProps) {
+export default function DeleteCommentPrompt(props: Props) {
   const { state, deleteCommentPromptController } = useAppContext();
   return (
     <AnimatePresence>
@@ -26,8 +26,8 @@ export default function DeleteCommentPrompt(props: TProps) {
               opacity: 1,
               scale: 1,
               transition: {
-                duration: 0.3,
-              },
+                duration: 0.3
+              }
             }}
             exit={{ opacity: 0, scale: 0 }}>
             <div className='dialog-prompt'>

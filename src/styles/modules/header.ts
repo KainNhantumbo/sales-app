@@ -23,7 +23,7 @@ export const _header = styled.header`
 
   .wrapper {
     margin: 0 auto;
-    @media screen and (min-width: 1200px) {
+    @media screen and (min-width: 1250px) {
       max-width: 1200px;
       left: calc(50% - 600px);
 
@@ -63,7 +63,7 @@ export const _header = styled.header`
     align-items: center;
     width: 100%;
     height: 100%;
-    top: -4px;
+    top: 65px;
     left: 180px;
     gap: 20px;
 

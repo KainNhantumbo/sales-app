@@ -1,12 +1,13 @@
 import actions from './actions';
 import fetch from '@/config/client';
-import { State } from '@/types/reducer';
 import { useEffect, useMemo } from 'react';
+import type { State } from '@/types/reducer';
+import type { TQueryLisProps } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useAppContext } from '@/context/AppContext';
 import { useInView } from 'react-intersection-observer';
 
-type TProps = {
+type Props = {
   queryLimit: number;
   queryUrl: string;
   queryKey: string;
@@ -27,7 +28,7 @@ export default function useCustomInfinityQuery<T>({
   stateAction,
   stateKey,
   stateQueryKey
-}: TProps) {
+}: Props) {
   const { ref, inView } = useInView();
   const { useFetchAPI, state, dispatch } = useAppContext();
 
@@ -84,4 +85,42 @@ export default function useCustomInfinityQuery<T>({
     error,
     inViewRef: ref
   };
+}
+
+export async function getPost<T>(slug: string) {
+  return await fetch<T>({
+    method: 'get',
+    url: `/api/v1/blog/posts/public/${slug}`
+  });
+}
+
+export async function getPaths(): Promise<any> {
+  return await fetch({
+    method: 'get',
+    url: '/api/v1/blog/posts?fields=slug'
+  }).then((res) =>
+    res.data.map((item: any) => ({ params: { slug: item.slug } }))
+  );
+}
+
+export async function getPosts<T>(props: TQueryLisProps) {
+  return await fetch<T>({
+    method: 'get',
+    url: `/api/v1/blog/posts?fields=title,excerpt,slug,cover_image,category,favorites,updatedAt&sort=updatedAt${
+      props.search ? `&search=${props.search}` : ''
+    }${props.offset ? `&offset=${props.offset.toString()}` : ''}${
+      props.limit ? `&limit=${props.limit.toString()}` : ''
+    }`
+  });
+}
+
+export async function getStoresData<T>(props: TQueryLisProps) {
+  return await fetch<T>({
+    method: 'get',
+    url: `/api/v1/users/store/public?${
+      props.offset ? `offset=${props.offset.toString()}` : ''
+    }${props.limit ? `&limit=${props.limit.toString()}` : ''}${
+      props.search ? `&search=${props.search}` : ''
+    }`
+  });
 }

@@ -5,9 +5,9 @@ import { OutputData } from '@editorjs/editorjs';
 const EditorJsToHtml = editorJsHtml();
 
 export type TParsedContent = string | JSX.Element;
-type TProps = { data: OutputData };
+type Props = { data: OutputData };
 
-export default function EditorJsRenderer({ data }: TProps) {
+export default function EditorJsRenderer({ data }: Props) {
   const html = EditorJsToHtml.parse(data) as TParsedContent[];
   return (
     <>

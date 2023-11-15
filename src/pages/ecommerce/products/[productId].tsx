@@ -53,7 +53,7 @@ export default function Product({ product, error_message }: any) {
     addProductToCart,
     removeProductFromCart,
     updateCartProduct,
-    getCartProduct
+    geCartProduct
   } = useAppContext();
   const { requestLogin } = useModulesContext();
   const theme = useTheme();
@@ -324,9 +324,9 @@ export default function Product({ product, error_message }: any) {
                             ? updateCartProduct({
                                 productId: state.publicProduct._id,
                                 quantity:
-                                  getCartProduct(state.publicProduct._id)
+                                  geCartProduct(state.publicProduct._id)
                                     .quantity > 1
-                                    ? getCartProduct(state.publicProduct._id)
+                                    ? geCartProduct(state.publicProduct._id)
                                         .quantity - 1
                                     : 1
                               })
@@ -360,7 +360,7 @@ export default function Product({ product, error_message }: any) {
                         title='Quantidade'
                         min={1}
                         aria-label='Quantidade'
-                        value={getCartProduct(state.publicProduct._id).quantity}
+                        value={geCartProduct(state.publicProduct._id).quantity}
                         onChange={(e) =>
                           state.cart.some(
                             (product) =>
@@ -405,7 +405,7 @@ export default function Product({ product, error_message }: any) {
                             ? updateCartProduct({
                                 productId: state.publicProduct._id,
                                 quantity:
-                                  getCartProduct(state.publicProduct._id)
+                                  geCartProduct(state.publicProduct._id)
                                     .quantity + 1
                               })
                             : addProductToCart({

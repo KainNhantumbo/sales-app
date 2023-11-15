@@ -1,14 +1,14 @@
 import { complements } from '@/shared/data';
 import { errorPage as Container } from '@/styles/common/error-page';
 
-interface IProps {
+interface Props {
   title?: string | undefined;
   message?: string | undefined;
   button_message?: string | undefined;
   retryFn: () => void;
 }
 
-export default function ErrorPage(props: IProps) {
+export default function ErrorPage(props: Props) {
   return (
     <Container>
       <section className='logo-container'>

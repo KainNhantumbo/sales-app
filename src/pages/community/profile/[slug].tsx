@@ -22,9 +22,9 @@ import StoriesRenderer from '@/components/StoriesRenderer';
 import { complements, formatSocialNetwork } from '@/shared/data';
 import { _profile as Container } from '@/styles/common/community-user-profile';
 
-type TProps = { user: TPublicUser };
+type Props = { user: TPublicUser };
 
-export default function UserProfile({ user }: TProps) {
+export default function UserProfile({ user }: Props) {
   const router = useRouter();
 
   if (!user)

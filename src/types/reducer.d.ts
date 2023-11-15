@@ -8,8 +8,8 @@ import {
   ProductsList,
   TPublicProducts,
   TStore,
-  TAuth,
-  TCart,
+  Auth,
+  Cart,
   TDenounce,
   TPublicProduct,
   TPurchaseCheckOut,
@@ -20,7 +20,7 @@ import {
   TOrder,
   TMetrics,
   TBannerAds,
-  TModalProps,
+  TModalProps
 } from './index';
 
 export type State = {
@@ -38,7 +38,7 @@ export type State = {
   isSortActive: boolean;
   isFilterActive: boolean;
   denounce: TDenounce;
-  auth: TAuth;
+  auth: Auth;
   search: string;
   searchStores: string;
   searchStories: string;
@@ -57,7 +57,7 @@ export type State = {
   blogPostsList: IBlogPosts[];
   queryPublicProducts: TSearchProducts;
   isPublicProductsFilters: boolean;
-  cart: TCart[];
+  cart: Cart[];
   orders: TOrder[];
   checkout: TPurchaseCheckOut;
   story: TStory;

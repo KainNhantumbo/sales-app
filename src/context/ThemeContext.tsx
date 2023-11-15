@@ -3,14 +3,14 @@ import {
   useContext,
   ReactNode,
   useState,
-  useEffect,
+  useEffect
 } from 'react';
 import { Theme } from '../types';
 import { GlobalStyles } from '../styles/global';
 import { ThemeProvider } from 'styled-components';
 import { dark_default, light_default } from '../styles/themes';
 
-interface IContext {
+interface Context {
   slidePageUp: () => void;
   matchMediaTheme: () => void;
   setLightMode: () => void;
@@ -18,7 +18,7 @@ interface IContext {
   darkmode: boolean;
 }
 
-interface IProps {
+interface Props {
   children: ReactNode;
 }
 
@@ -26,17 +26,17 @@ interface ITheme {
   darkMode: boolean;
 }
 
-const context = createContext<IContext>({
+const context = createContext<Context>({
   matchMediaTheme: () => {},
   setLightMode: () => {},
   setDarkMode: () => {},
   slidePageUp: () => {},
-  darkmode: false,
+  darkmode: false
 });
 
-export default function ThemeContext({ children }: IProps) {
+export default function ThemeContext({ children }: Props) {
   const [themeSettings, setThemeSettings] = useState<ITheme>({
-    darkMode: false,
+    darkMode: false
   });
   const [currentTheme, setCurrentTheme] = useState<Theme>(light_default);
 
@@ -67,7 +67,7 @@ export default function ThemeContext({ children }: IProps) {
     window.scrollTo({
       left: 0,
       top: 0,
-      behavior: 'smooth',
+      behavior: 'smooth'
     });
 
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function ThemeContext({ children }: IProps) {
           darkmode: themeSettings.darkMode,
           setDarkMode,
           setLightMode,
-          matchMediaTheme,
+          matchMediaTheme
         }}>
         {children}
       </context.Provider>

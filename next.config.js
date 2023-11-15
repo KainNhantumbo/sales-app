@@ -10,7 +10,7 @@ module.exports = nextPWA({
   reactStrictMode: true,
   swcMinify: true,
   env: {
-    API_BASE_URL: 'http://localhost:4500',
+    API_BASE_URL: '',
   },
   compiler: {
     styledComponents: true,

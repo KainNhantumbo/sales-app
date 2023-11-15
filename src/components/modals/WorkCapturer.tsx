@@ -4,14 +4,14 @@ import {
   IoClose,
   IoEllipsisHorizontal,
   IoLinkOutline,
-  IoPushOutline,
+  IoPushOutline
 } from 'react-icons/io5';
 import { Dispatch, SetStateAction } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { _capturer as Container } from '@/styles/modules/working-capturer';
 
-interface IProps {
+interface Props {
   setStateFn: Dispatch<
     SetStateAction<{
       id: string;
@@ -36,7 +36,7 @@ interface IProps {
   updateFn: (id: string) => void;
 }
 
-export default function WorkCapturer(props: IProps) {
+export default function WorkCapturer(props: Props) {
   const { state, userWorkingDataController } = useAppContext();
 
   return (
@@ -57,8 +57,8 @@ export default function WorkCapturer(props: IProps) {
               opacity: 1,
               scale: 1,
               transition: {
-                duration: 0.3,
-              },
+                duration: 0.3
+              }
             }}
             exit={{ opacity: 0, scale: 0 }}>
             <div className='dialog-prompt'>
@@ -88,7 +88,7 @@ export default function WorkCapturer(props: IProps) {
                           onChange={(e) =>
                             props.setStateFn(({ carrer, ...data }) => ({
                               ...data,
-                              carrer: e.target.value,
+                              carrer: e.target.value
                             }))
                           }
                           value={props.initialData.carrer}
@@ -109,7 +109,7 @@ export default function WorkCapturer(props: IProps) {
                           onChange={(e) =>
                             props.setStateFn(({ company_name, ...data }) => ({
                               ...data,
-                              company_name: e.target.value,
+                              company_name: e.target.value
                             }))
                           }
                         />
@@ -128,7 +128,7 @@ export default function WorkCapturer(props: IProps) {
                           onChange={(e) =>
                             props.setStateFn(({ start_date, ...data }) => ({
                               ...data,
-                              start_date: e.target.value,
+                              start_date: e.target.value
                             }))
                           }
                         />
@@ -144,7 +144,7 @@ export default function WorkCapturer(props: IProps) {
                           onChange={(e) =>
                             props.setStateFn(({ end_date, ...data }) => ({
                               ...data,
-                              end_date: e.target.value,
+                              end_date: e.target.value
                             }))
                           }
                         />
@@ -166,7 +166,7 @@ export default function WorkCapturer(props: IProps) {
                           onChange={(e) =>
                             props.setStateFn(({ portfolio_url, ...data }) => ({
                               ...data,
-                              portfolio_url: e.target.value,
+                              portfolio_url: e.target.value
                             }))
                           }
                           value={props.initialData.portfolio_url}
@@ -188,7 +188,7 @@ export default function WorkCapturer(props: IProps) {
                           onChange={(e) =>
                             props.setStateFn(({ description, ...data }) => ({
                               ...data,
-                              description: e.target.value,
+                              description: e.target.value
                             }))
                           }
                           value={props.initialData.description}
@@ -210,7 +210,7 @@ export default function WorkCapturer(props: IProps) {
                               start_date: '',
                               description: '',
                               portfolio_url: '',
-                              company_name: '',
+                              company_name: ''
                             };
                           });
                         }}>

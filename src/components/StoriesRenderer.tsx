@@ -26,12 +26,12 @@ import { _storiesRender as Container } from '@/styles/modules/stories-renderer';
 import { useInView } from 'react-intersection-observer';
 import { useModulesContext } from '@/context/Modules';
 
-interface IProps {
+interface Props {
   userId?: string | undefined;
   favoritesId?: string | undefined;
 }
 
-export default function StoriesRenderer(props: IProps) {
+export default function StoriesRenderer(props: Props) {
   const { state, dispatch, useFetchAPI, deleteStoryPromptController } =
     useAppContext();
   const { requestLogin } = useModulesContext();

@@ -13,7 +13,7 @@ import actions from '@/shared/actions';
 import { useRouter } from 'next/router';
 import { formatDate } from '@/lib/utils';
 import Layout from '@/components/Layout';
-import { getPosts } from '@/lib/queries';
+import { getPosts } from '@/shared/queries';
 import { complements } from '@/shared/data';
 import NewsLetter from '@/components/Newsletter';
 import { useInfiniteQuery } from '@tanstack/react-query';

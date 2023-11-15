@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 import { IBlogPosts } from '@/types';
 import Layout from '@/components/Layout';
 import actions from '@/shared/actions';
-import { getPosts } from '@/lib/queries';
+import { getPosts } from '@/shared/queries';
 import { formatDate } from '@/lib/utils';
 import { PulseLoader } from 'react-spinners';
 import NewsLetter from '@/components/Newsletter';

@@ -24,7 +24,7 @@ import { useRouter } from 'next/router';
 import { readingTime } from 'reading-time-estimator';
 import { useAppContext } from '@/context/AppContext';
 import { useTheme } from 'styled-components';
-import { getPaths, getPost, getPosts } from '@/lib/queries';
+import { getPaths, getPost, getPosts } from '@/shared/queries';
 import { CommentCount, DiscussionEmbed } from 'disqus-react';
 import type { IBlogPost, IBlogPosts } from '@/types';
 import { _post as Container } from '@/styles/common/post';
@@ -33,9 +33,9 @@ import type { TParsedContent } from '@/components/EditorJSRenderer';
 import { author, complements, shareUrlPaths } from '@/shared/data';
 import { useModulesContext } from '@/context/Modules';
 
-type TProps = { post: IBlogPost; latestPosts: IBlogPosts[] };
+type Props = { post: IBlogPost; latestPosts: IBlogPosts[] };
 
-export default function Post({ post: initialPost, latestPosts }: TProps) {
+export default function Post({ post: initialPost, latestPosts }: Props) {
   const { state, useFetchAPI } = useAppContext();
   const { requestLogin } = useModulesContext();
   const [post, setPost] = useState(initialPost);

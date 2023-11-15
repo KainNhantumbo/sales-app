@@ -4,9 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { _prompt as Container } from '@/styles/modules/logout-prompt';
 
-type TProps = { deleteFn: any };
+type Props = { deleteFn: any };
 
-export default function DeleteStoryPrompt(props: TProps) {
+export default function DeleteStoryPrompt(props: Props) {
   const { state, deleteStoryPromptController } = useAppContext();
   return (
     <AnimatePresence>
@@ -26,8 +26,8 @@ export default function DeleteStoryPrompt(props: TProps) {
               opacity: 1,
               scale: 1,
               transition: {
-                duration: 0.3,
-              },
+                duration: 0.3
+              }
             }}
             exit={{ opacity: 0, scale: 0 }}>
             <div className='dialog-prompt'>

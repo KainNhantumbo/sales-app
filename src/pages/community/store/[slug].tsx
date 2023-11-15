@@ -39,9 +39,9 @@ import { TPublicProducts, TPublicStore } from '@/types';
 import { useThemeContext } from '@/context/ThemeContext';
 import { _store as Container } from '@/styles/common/community-store-profile';
 
-type TProps = { store?: TPublicStore | undefined; products: TPublicProducts[] };
+type Props = { store?: TPublicStore | undefined; products: TPublicProducts[] };
 
-export default function StoreProfile({ store, products }: TProps) {
+export default function StoreProfile({ store, products }: Props) {
   const {
     state,
     dispatch,

@@ -4,11 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { _prompt as Container } from '@/styles/modules/logout-prompt';
 
-type TProps = {
+type Props = {
   deleteFn: (productId: string) => Promise<void>;
 };
 
-export default function DeleteProductPrompt(props: TProps) {
+export default function DeleteProductPrompt(props: Props) {
   const { state, deleteProductPromptController } = useAppContext();
 
   return (
@@ -29,8 +29,8 @@ export default function DeleteProductPrompt(props: TProps) {
               opacity: 1,
               scale: 1,
               transition: {
-                duration: 0.3,
-              },
+                duration: 0.3
+              }
             }}
             exit={{ opacity: 0, scale: 0 }}>
             <div className='dialog-prompt'>

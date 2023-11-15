@@ -23,9 +23,9 @@ import { blurDataUrlImage, complements } from '@/shared/data';
 import { _favoriteProducts as Container } from '@/styles/common/favorite-products';
 import { useModulesContext } from '@/context/Modules';
 
-type TProps = { products: TPublicProducts[] };
+type Props = { products: TPublicProducts[] };
 
-export default function FavoriteProducts({ products }: TProps) {
+export default function FavoriteProducts({ products }: Props) {
   const {
     state,
     dispatch,

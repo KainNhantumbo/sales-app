@@ -23,10 +23,10 @@ import { GetServerSidePropsContext } from 'next';
 import { _story as Container } from '@/styles/common/story';
 import { BsTrash } from 'react-icons/bs';
 
-type TProps = { story: IPublicStory | undefined };
+type Props = { story: IPublicStory | undefined };
 type TError = { status: boolean; msg: string };
 
-export default function Story(props: TProps) {
+export default function Story(props: Props) {
   const theme = useTheme();
   const router = useRouter();
   const { state, dispatch, useFetchAPI } = useAppContext();
@@ -40,7 +40,7 @@ export default function Story(props: TProps) {
 
   const acceptedMimeTypes: string[] = ['image/png', 'image/jpeg', 'image/jpg'];
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRooProps, getInpuProps, isDragActive } = useDropzone({
     maxFiles: 1,
     onDrop: useCallback(<T extends File>(acceptedFiles: T[]) => {
       const file = acceptedFiles[0];
@@ -336,7 +336,7 @@ export default function Story(props: TProps) {
                       </button>
                     </>
                   ) : (
-                    <div {...getRootProps()} className='image-drop-container'>
+                    <div {...getRooProps()} className='image-drop-container'>
                       <div className='content'>
                         <IoDownloadOutline
                           className={
@@ -358,7 +358,7 @@ export default function Story(props: TProps) {
                           Dimensões: 420 x 220 pixels [.JPEG, .JPG, .PNG].
                         </span>
 
-                        <input {...getInputProps()} />
+                        <input {...getInpuProps()} />
                       </div>
                     </div>
                   )}

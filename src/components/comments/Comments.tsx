@@ -13,7 +13,7 @@ import type { IComment } from '@/types/comments';
 import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
 import { _comments as Container } from '@/styles/modules/comments';
 
-type TProps = { contentId: string };
+type Props = { contentId: string };
 
 type TError = {
   status: boolean;
@@ -26,7 +26,7 @@ type TLoading = {
   key: 'create-comment' | 'update-comment' | 'delete-comment';
 };
 
-export default function Comments({ contentId }: TProps) {
+export default function Comments({ contentId }: Props) {
   const router = useRouter();
   const { state, dispatch, useFetchAPI, deleteCommentPromptController } =
     useAppContext();

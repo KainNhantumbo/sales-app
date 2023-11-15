@@ -2,7 +2,7 @@ import {
   FaFacebook,
   FaLinkedinIn,
   FaPinterest,
-  FaTwitter,
+  FaTwitter
 } from 'react-icons/fa';
 
 import { complements } from '@/shared/data';
@@ -11,36 +11,36 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { IoClose, IoShareSocial } from 'react-icons/io5';
 import { _shareProduct as Container } from '@/styles/modules/share-product-modal';
 
-type TProps = {
+type Props = {
   name: string;
   category: string;
   productId: string;
 };
 
-export default function ShareProducts({ name, category, productId }: TProps) {
+export default function ShareProducts({ name, category, productId }: Props) {
   const { state, shareProductController } = useAppContext();
 
   const options = [
     {
       name: 'Compartilhe no LinkedIn',
       url: `https://www.linkedin.com/shareArticle?mini=true&url=${complements.websiteUrl}/ecommerce/products/${productId}&title=${name}&summary=${category}`,
-      icon: FaLinkedinIn,
+      icon: FaLinkedinIn
     },
     {
       name: 'Compartilhe no Facebook',
       url: `https://www.facebook.com/sharer/sharer.php?u=${complements.websiteUrl}/ecommerce/products/${productId}`,
-      icon: FaFacebook,
+      icon: FaFacebook
     },
     {
       name: 'Compartilhe no Twitter',
       url: `https://twitter.com/intent/tweet?text=${complements.websiteUrl}/ecommerce/products/${productId}`,
-      icon: FaTwitter,
+      icon: FaTwitter
     },
     {
       name: 'Compartilhe no Pinterest',
       url: `https://pinterest.com/pin/create/button/?url=${complements.websiteUrl}/ecommerce/products/${productId}&media=${complements.websiteUrl}/ecommerce/products/${productId}&description=${name}`,
-      icon: FaPinterest,
-    },
+      icon: FaPinterest
+    }
   ];
 
   return (

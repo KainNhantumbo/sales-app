@@ -34,11 +34,11 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import Slider from 'rc-slider';
 import { useModulesContext } from '@/context/Modules';
 
-interface IProps {
+interface Props {
   ads_data: TBannerAds[];
 }
 
-export default function Home({ ads_data }: IProps) {
+export default function Home({ ads_data }: Props) {
   const {
     state,
     dispatch,
@@ -103,16 +103,19 @@ export default function Home({ ads_data }: IProps) {
   }): Promise<{ data: any; currentOffset: number }> => {
     const { category, price_range, promotion, query, sort } =
       state.queryPublicProducts;
+    const queryParams = new URLSearchParams({
+      search: query,
+      category: String(category),
+      offset: String(LIMIT * pageParam),
+      limit: String(LIMIT),
+      max_price: String(price_range),
+      promotion: String(Number(promotion)),
+      sort
+    });
 
     const { data } = await fetch<TPublicProducts[]>({
       method: 'get',
-      url: `/api/v1/users/products/public?offset=${
-        LIMIT * pageParam
-      }&limit=${LIMIT}${category ? `&category=${category}` : ''}${
-        price_range > 0 ? `&max_price=${price_range}` : ''
-      }${promotion !== undefined ? `&promotion=${String(promotion)}` : ''}${
-        query ? `&search=${query}` : ''
-      }${sort ? `&sort=${sort}` : ''}`
+      url: `/api/v1/users/products/public?${queryParams.toString()}`
     });
     return { data, currentOffset: pageParam + 1 };
   };

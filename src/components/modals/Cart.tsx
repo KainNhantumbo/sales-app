@@ -5,7 +5,7 @@ import {
   IoBackspace,
   IoBagCheck,
   IoCart,
-  IoRemove,
+  IoRemove
 } from 'react-icons/io5';
 import Image from 'next/image';
 import { formatCurrency } from '@/lib/utils';
@@ -22,8 +22,8 @@ export default function Cart() {
     state,
     cartModalController,
     removeProductFromCart,
-    getCartProduct,
-    updateCartProduct,
+    geCartProduct,
+    updateCartProduct
   } = useAppContext();
   const router = useRouter();
   const { requestLogin } = useModulesContext();
@@ -46,8 +46,8 @@ export default function Cart() {
               opacity: 1,
               scale: 1,
               transition: {
-                duration: 0.3,
-              },
+                duration: 0.3
+              }
             }}
             exit={{ opacity: 0, scale: 0 }}>
             <section className='main-container'>
@@ -104,10 +104,10 @@ export default function Cart() {
                               updateCartProduct({
                                 productId: product.productId,
                                 quantity:
-                                  getCartProduct(product.productId).quantity > 1
-                                    ? getCartProduct(product.productId)
+                                  geCartProduct(product.productId).quantity > 1
+                                    ? geCartProduct(product.productId)
                                         .quantity - 1
-                                    : 1,
+                                    : 1
                               })
                             }>
                             <IoRemove />
@@ -117,11 +117,11 @@ export default function Cart() {
                             title='Quantidade'
                             min={1}
                             aria-label='Quantidade'
-                            value={getCartProduct(product.productId).quantity}
+                            value={geCartProduct(product.productId).quantity}
                             onChange={(e) =>
                               updateCartProduct({
                                 productId: product.productId,
-                                quantity: Number(e.target.value),
+                                quantity: Number(e.target.value)
                               })
                             }
                           />
@@ -132,8 +132,7 @@ export default function Cart() {
                               updateCartProduct({
                                 productId: product.productId,
                                 quantity:
-                                  getCartProduct(product.productId).quantity +
-                                  1,
+                                  geCartProduct(product.productId).quantity + 1
                               })
                             }>
                             <IoAdd />

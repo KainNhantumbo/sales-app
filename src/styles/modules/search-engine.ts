@@ -208,7 +208,7 @@ export const _seachEngine = styled.aside`
         position: absolute;
         width: 100%;
         height: 10px;
-        background-color: rgb(${({ theme }) => theme.text});
+        background-color: rgba(${({ theme }) => theme.font_dimmed}, .5);
         border-radius: 10px;
       }
       .rc-slider-track {

@@ -14,8 +14,6 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    /* lint*/
-    // "noUnusedLocals": true,
     "paths": {
       "@/*": ["./src/*"]
     }

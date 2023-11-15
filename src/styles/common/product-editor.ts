@@ -3,7 +3,7 @@ import {
   BaseButtonOutline,
   Button_Mono_A,
   StyledInputs,
-  StyledLabels,
+  StyledLabels
 } from '../defaults';
 import styled from 'styled-components';
 
@@ -349,20 +349,8 @@ export const _productEditor = styled.div`
 
                 .clear-image {
                   ${Button_Mono_A}
-                  position: absolute;
                   top: 5px;
-                  right: 5px;
-                  width: 30px;
-                  height: 30px;
-                  border-radius: 12px;
-                  background: rgba(${({ theme }) => theme.primary}, 0.8);
-                  :hover {
-                    background: rgba(${({ theme }) => theme.error}, 0.6);
-
-                    svg {
-                      color: rgb(${({ theme }) => theme.white});
-                    }
-                  }
+                  right: calc(0% + 5px);
                 }
               }
             }

@@ -7,7 +7,7 @@ import actions from '@/shared/actions';
 import { complements } from '@/shared/data';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { InputEvents, SubmitEvent, TAuth } from '@/types';
+import { InputEvents, SubmitEvent, Auth } from '@/types';
 import { _signIn as Container } from '@/styles/common/sign-in';
 import { IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
 import backgroundImage from '@/../public/assets/africa-unveiled.png';
@@ -41,7 +41,7 @@ export default function SignIn() {
     }
     try {
       setLoading(true);
-      const { data } = await fetch<TAuth>({
+      const { data } = await fetch<Auth>({
         method: 'post',
         url: '/api/v1/auth/default/login',
         data: { ...state.signInData }

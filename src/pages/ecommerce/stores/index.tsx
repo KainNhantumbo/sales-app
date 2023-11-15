@@ -14,7 +14,7 @@ import actions from '@/shared/actions';
 import { formatDate } from '@/lib/utils';
 import { PulseLoader } from 'react-spinners';
 import { IoMdCalendar } from 'react-icons/io';
-import { getStoresData } from '@/lib/queries';
+import { getStoresData } from '@/shared/queries';
 import { TPublicStoreList } from '@/types';
 import NewsLetter from '@/components/Newsletter';
 import { useRouter } from 'next/router';

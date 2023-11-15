@@ -12,23 +12,19 @@ import { useRouter } from 'next/router';
 import ModulesContext from './Modules';
 import ThemeContext from './ThemeContext';
 import { Action, State } from '@/types/reducer';
-import { TAuth, TCart } from '@/types/index';
+import { Auth, Cart } from '@/types/index';
 import { reducer, initialState } from '@/lib/reducer';
-import useIsomorphicLayoutEffect from '@/hooks/custom-layout-efffect';
+import useIsomorphicLayoutEffect from '@/shared/custom-layout-efffect';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
 const queryClient: QueryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      networkMode: 'always'
-    }
-  }
+  defaultOptions: { queries: { networkMode: 'always' } }
 });
 
-type TProps = { children: ReactNode };
+type Props = { children: ReactNode };
 
-interface IContext {
+interface Context {
   state: State;
   dispatch: Dispatch<Action>;
   deleteCommentPromptController: (status: boolean, id: string) => void;
@@ -41,16 +37,16 @@ interface IContext {
   deleteAccountPromptController: () => void;
   deactivateStorePromptController: () => void;
   userWorkingDataController: () => void;
-  addProductToCart: (product: TCart) => void;
+  addProductToCart: (product: Cart) => void;
   removeProductFromCart: (currentProductId: string) => void;
   updateCartProduct: (props: { productId: string; quantity: number }) => void;
-  getCartProduct: (currentProductId: string) => TCart;
+  geCartProduct: (currentProductId: string) => Cart;
   useFetchAPI: <T>(
     config: AxiosRequestConfig
   ) => Promise<AxiosResponse<T, any>>;
 }
 
-const context = createContext<IContext>({
+const context = createContext<Context>({
   state: initialState,
   dispatch: () => {},
   useFetchAPI: (): any => {},
@@ -67,7 +63,7 @@ const context = createContext<IContext>({
   addProductToCart: () => {},
   shareProductController: () => {},
   userWorkingDataController: () => {},
-  getCartProduct: () => ({
+  geCartProduct: () => ({
     productId: '',
     quantity: 1,
     productName: '',
@@ -76,11 +72,7 @@ const context = createContext<IContext>({
   })
 });
 
-export function useAppContext() {
-  return useContext(context);
-}
-
-export default function AppContext(props: TProps) {
+export default function AppContext(props: Props) {
   const CART_KEY: string = 'cart-items';
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -175,7 +167,7 @@ export default function AppContext(props: TProps) {
   };
 
   // ----------------product cart--------------------------
-  const getCartProduct = (currentProductId: string): TCart => {
+  const geCartProduct = (currentProductId: string): Cart => {
     const foundProduct = state.cart.some(
       (product) => product.productId === currentProductId
     );
@@ -229,7 +221,7 @@ export default function AppContext(props: TProps) {
     });
   };
 
-  const addProductToCart = (product: TCart) => {
+  const addProductToCart = (product: Cart) => {
     dispatch({
       type: actions.PRODUCTS_CART,
       payload: {
@@ -252,7 +244,7 @@ export default function AppContext(props: TProps) {
   }, []);
 
   const restoreCartFromLocalStorage = () => {
-    const data: TCart[] = JSON.parse(localStorage.getItem(CART_KEY) || `[]`);
+    const data: Cart[] = JSON.parse(localStorage.getItem(CART_KEY) || `[]`);
 
     if (data?.length > 0)
       dispatch({
@@ -263,7 +255,7 @@ export default function AppContext(props: TProps) {
 
   const validateAuth = async () => {
     try {
-      const { data } = await fetch<TAuth>({
+      const { data } = await fetch<Auth>({
         method: 'get',
         url: '/api/v1/auth/default/refresh',
         withCredentials: true
@@ -299,7 +291,7 @@ export default function AppContext(props: TProps) {
 
   const authenticateUser = async () => {
     try {
-      const { data } = await fetch<TAuth>({
+      const { data } = await fetch<Auth>({
         method: 'get',
         url: '/api/v1/auth/default/refresh',
         withCredentials: true
@@ -344,7 +336,7 @@ export default function AppContext(props: TProps) {
             addProductToCart,
             removeProductFromCart,
             updateCartProduct,
-            getCartProduct,
+            geCartProduct,
             cartModalController
           }}>
           <ModulesContext>{props.children}</ModulesContext>
@@ -352,4 +344,8 @@ export default function AppContext(props: TProps) {
       </QueryClientProvider>
     </ThemeContext>
   );
+}
+
+export function useAppContext() {
+  return useContext(context);
 }

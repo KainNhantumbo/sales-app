@@ -4,7 +4,7 @@ import { complements } from '@/shared/data';
 import { useAppContext } from './AppContext';
 import { useContext, createContext, ReactNode } from 'react';
 
-type TProps = { children: ReactNode };
+type Props = { children: ReactNode };
 
 type TContext = {
   logoutUser: () => void;
@@ -16,7 +16,7 @@ const context = createContext<TContext>({
   requestLogin: () => {},
 });
 
-export default function ModulesContext(props: TProps) {
+export default function ModulesContext(props: Props) {
   const router = useRouter();
   const { state, dispatch, useFetchAPI } = useAppContext();
 

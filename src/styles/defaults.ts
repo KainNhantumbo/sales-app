@@ -1,51 +1,74 @@
 import { css } from 'styled-components';
 
 export const BaseButtonOutline = css`
-  border: none;
-  background: none;
-  padding: 7px 10px;
+  all: unset;
+  border-radius: 10px;
+  position: relative;
+  padding: 10px;
   color: rgb(${({ theme }) => theme.font});
   width: fit-content;
   cursor: pointer;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  outline: none;
   :hover {
     color: rgb(${({ theme }) => theme.primary_shade});
   }
+  svg {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: calc(50% - 10px);
+    left: 7px;
+    pointer-events: none;
+  }
   span {
+    padding-left: 20px;
     font-weight: 500;
     pointer-events: none;
+    text-align: center;
   }
 `;
 
 export const BaseButton = css`
   all: unset;
+  width: 100%;
   border-radius: 5px;
-  padding: 7px 10px;
+  position: relative;
+  padding: 10px;
   width: fit-content;
   cursor: pointer;
-  background: rgba(${({ theme }) => theme.primary}, 0.5);
+  background: rgb(${({ theme }) => theme.primary});
   color: rgb(${({ theme }) => theme.font});
+  border: 1px solid transparent;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  border: 1px solid rgba(${({ theme }) => theme.font}, 0.15);
   text-align: center;
-
   :hover {
-    background: rgba(${({ theme }) => theme.primary}, 0.9);
-    border: 1px solid rgba(${({ theme }) => theme.font}, 0.3);
+    box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.09);
   }
   :disabled {
     box-shadow: none;
     background: rgba(${({ theme }) => theme.primary}, 0.4);
-    span {
+    span,
+    svg {
       color: rgb(${({ theme }) => theme.foreground});
     }
   }
+
+  svg {
+    color: inherit;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: calc(50% - 10px);
+    left: 7px;
+    pointer-events: none;
+  }
+
   span {
+    padding-left: 20px;
     font-weight: 500;
     pointer-events: none;
   }
@@ -158,7 +181,7 @@ export const StyledInputs = css`
     border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
     color: rgb(${({ theme }) => theme.font});
     :focus {
-      border: 1px solid rgba(${({ theme }) => theme.black}, 0.15);
+      border: 1px solid rgba(${({ theme }) => theme.font}, 0.15);
       box-shadow: 0 0 20px rgba(${({ theme }) => theme.black}, 0.06);
     }
     ::placeholder {

@@ -2,13 +2,13 @@ import { Component } from 'react';
 import ErrorPage from '@/pages/error-page';
 import type { PropsWithChildren, ErrorInfo, ReactNode } from 'react';
 
-interface IState extends Readonly<{}> {
+interface State extends Readonly<{}> {
   hasError: boolean;
 }
 
 export default class ErrorBoundary extends Component {
   public props!: PropsWithChildren;
-  public state: IState;
+  public state: State;
 
   constructor(props: PropsWithChildren) {
     super(props);
