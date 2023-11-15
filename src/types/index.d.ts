@@ -145,7 +145,7 @@ export interface IPublicStory extends TStory {
   updatedAt: string;
 }
 
-export type TQueryLisProps = {
+export type QueryList = {
   offset?: number;
   limit?: number;
   search?: string;

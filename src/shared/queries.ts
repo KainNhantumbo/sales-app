@@ -2,7 +2,7 @@ import actions from './actions';
 import fetch from '@/config/client';
 import { useEffect, useMemo } from 'react';
 import type { State } from '@/types/reducer';
-import type { TQueryLisProps } from '@/types';
+import type { QueryList } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useAppContext } from '@/context/AppContext';
 import { useInView } from 'react-intersection-observer';
@@ -103,7 +103,7 @@ export async function getPaths(): Promise<any> {
   );
 }
 
-export async function getPosts<T>(props: TQueryLisProps) {
+export async function getPosts<T>(props: QueryList) {
   return await fetch<T>({
     method: 'get',
     url: `/api/v1/blog/posts?fields=title,excerpt,slug,cover_image,category,favorites,updatedAt&sort=updatedAt${
@@ -114,7 +114,7 @@ export async function getPosts<T>(props: TQueryLisProps) {
   });
 }
 
-export async function getStoresData<T>(props: TQueryLisProps) {
+export async function getStoresData<T>(props: QueryList) {
   return await fetch<T>({
     method: 'get',
     url: `/api/v1/users/store/public?${
