@@ -70,9 +70,10 @@ export const ContactContainer = styled.div`
     flex-direction: column;
     gap: 10px;
     padding: 20px;
-    border-radius: 20px;
+    border-radius: 5px;
     background: rgb(${({ theme }) => theme.foreground});
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.09);
+    border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
 
     .form-control {
       display: flex;

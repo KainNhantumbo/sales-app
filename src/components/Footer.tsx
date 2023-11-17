@@ -8,7 +8,7 @@ import {
   IoPaperPlaneOutline,
   IoShieldCheckmarkOutline,
   IoSpeedometerOutline,
-  IoSunnyOutline,
+  IoSunnyOutline
 } from 'react-icons/io5';
 
 import Link from 'next/link';
@@ -20,8 +20,7 @@ import { _footer as Container } from '../styles/modules/footer';
 
 export default function Footer() {
   const { state } = useAppContext();
-  const { setDarkMode, darkmode, setLightMode, matchMediaTheme } =
-    useThemeContext();
+  const { colorScheme, changeColorScheme } = useThemeContext();
 
   return (
     <Container>
@@ -143,17 +142,32 @@ export default function Footer() {
         <div className='theme-fluent-buttons'>
           <button
             title='Modo claro'
-            className={!darkmode ? 'active' : ''}
-            onClick={setLightMode}>
+            className={
+              colorScheme.scheme === 'light' && colorScheme.mode === 'manual'
+                ? 'active'
+                : ''
+            }
+            onClick={() =>
+              changeColorScheme({ mode: 'manual', scheme: 'light' })
+            }>
             <IoSunnyOutline />
           </button>
-          <button title='Modo automático' onClick={matchMediaTheme}>
+          <button
+            title='Modo automático'
+            className={colorScheme.mode === 'auto' ? 'active' : ''}
+            onClick={() => changeColorScheme({ mode: 'auto', scheme: 'dark' })}>
             <IoDesktopOutline />
           </button>
           <button
             title='Modo escuro '
-            className={darkmode ? 'active' : ''}
-            onClick={setDarkMode}>
+            className={
+              colorScheme.scheme === 'dark' && colorScheme.mode === 'manual'
+                ? 'active'
+                : ''
+            }
+            onClick={() =>
+              changeColorScheme({ mode: 'manual', scheme: 'dark' })
+            }>
             <IoMoonOutline />
           </button>
         </div>

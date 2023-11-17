@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { BiUser } from 'react-icons/bi';
 import Layout from '@/components/Layout';
 import Metrics from '@/components/Metrics';
-import { TDashboardActions } from '@/types';
+import { DashboardAction } from '@/types';
 import { useAppContext } from '@/context/AppContext';
 import { IoApps, IoConstruct } from 'react-icons/io5';
 import { useTheme } from 'styled-components';
@@ -13,7 +13,7 @@ import { app_metadata, complements, dashboardActions } from '@/shared/data';
 export default function Dashboard() {
   const { state } = useAppContext();
   const theme = useTheme();
-  const actionRoutes: TDashboardActions = dashboardActions({
+  const actionRoutes: DashboardAction = dashboardActions({
     storeId: state.auth.storeId,
     userId: state.auth.id
   });

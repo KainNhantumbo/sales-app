@@ -52,7 +52,7 @@ export default function Contact() {
       <Container>
         <article className='container'>
           <section className='intro'>
-            <h1>Fique sempre ligado</h1>
+            <h1>Fale conosco</h1>
             <h2>Como podemos ajudar?</h2>
             <p>
               Por favor, utilize uma das formas de contacto abaixo, clicando no

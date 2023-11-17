@@ -32,10 +32,10 @@ import {
 } from 'react-icons/fa';
 import type {
   Author,
-  TDashboardActions,
+  DashboardAction,
   TPaymentOptions,
-  TPricingData,
-  TShareUrlPaths,
+  Pricing,
+  ShareAnchors,
   TShareUrls,
   TSocialNetwork
 } from '../types';
@@ -151,7 +151,7 @@ const store_features = [
   }
 ];
 
-const pricing_data: TPricingData = [
+const pricing_data: Pricing = [
   {
     title: 'Gratuito (beta)',
     type: 'Trial',
@@ -202,7 +202,7 @@ const denounceReasons = denouces_data
   .sort((a, b) => (a > b ? 1 : -1))
   .map((reason) => ({ label: reason, value: reason }));
 
-const shareUrlPaths = (props: TShareUrlPaths): TShareUrls[] => {
+const shareUrlPaths = (props: ShareAnchors): TShareUrls[] => {
   return [
     {
       name: 'Compartilhe no LinkedIn',
@@ -364,7 +364,7 @@ const dashboardActions = (props: { userId: string; storeId: string }) => {
         }
       ]
     }
-  } as TDashboardActions;
+  } as DashboardAction;
 };
 
 const states: Array<{ value: string; label: string }> = [

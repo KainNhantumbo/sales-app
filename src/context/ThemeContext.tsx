@@ -5,102 +5,102 @@ import {
   useState,
   useEffect
 } from 'react';
-import { Theme } from '../types';
+import { Theme, ColorScheme } from '../types';
 import { GlobalStyles } from '../styles/global';
 import { ThemeProvider } from 'styled-components';
 import { dark_default, light_default } from '../styles/themes';
 
-interface Context {
-  slidePageUp: () => void;
-  matchMediaTheme: () => void;
-  setLightMode: () => void;
-  setDarkMode: () => void;
-  darkmode: boolean;
-}
+type Context = {
+  colorScheme: ColorScheme;
+  changeColorScheme: ({ mode, scheme }: ColorScheme) => void;
+};
 
-interface Props {
-  children: ReactNode;
-}
-
-interface ITheme {
-  darkMode: boolean;
-}
+type Props = { children: ReactNode };
 
 const context = createContext<Context>({
-  matchMediaTheme: () => {},
-  setLightMode: () => {},
-  setDarkMode: () => {},
-  slidePageUp: () => {},
-  darkmode: false
+  colorScheme: { mode: 'auto', scheme: 'light' },
+  changeColorScheme: () => {}
 });
 
 export default function ThemeContext({ children }: Props) {
-  const [themeSettings, setThemeSettings] = useState<ITheme>({
-    darkMode: false
-  });
   const [currentTheme, setCurrentTheme] = useState<Theme>(light_default);
+  const [colorScheme, setColorScheme] = useState<ColorScheme>({
+    mode: 'auto',
+    scheme: 'light'
+  });
 
-  const setDarkMode = () => {
+  const setDarkColorScheme = ({ mode, scheme }: ColorScheme): void => {
     setCurrentTheme(dark_default);
-    setThemeSettings({ darkMode: true });
+    setColorScheme({ mode, scheme });
+    localStorage.setItem('color-scheme', JSON.stringify({ mode, scheme }));
   };
 
-  const setLightMode = () => {
+  const setLightColorScheme = ({ mode, scheme }: ColorScheme): void => {
     setCurrentTheme(light_default);
-    setThemeSettings({ darkMode: false });
+    setColorScheme({ mode, scheme });
+
+    localStorage.setItem('color-scheme', JSON.stringify({ mode, scheme }));
   };
 
-  const matchMediaTheme = () => {
-    const currentMode = window.matchMedia(
-      '(prefers-color-scheme: dark)'
-    ).matches;
+  const changeColorScheme = ({ mode, scheme }: ColorScheme): void => {
+    switch (mode) {
+      case 'auto':
+        window
+          .matchMedia('(prefers-color-scheme: dark)')
+          .addEventListener('change', (e) => {
+            if (e.matches) {
+              setDarkColorScheme({ mode, scheme: 'dark' });
+            } else {
+              setLightColorScheme({ mode, scheme: 'light' });
+            }
+          });
 
-    if (currentMode) {
-      setDarkMode();
-    } else {
-      setLightMode();
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          setDarkColorScheme({ mode, scheme: 'dark' });
+        } else {
+          setLightColorScheme({ mode, scheme: 'light' });
+        }
+        break;
+      case 'manual':
+        if (scheme === 'dark') {
+          setDarkColorScheme({ mode, scheme });
+        }
+
+        if (scheme === 'light') {
+          setLightColorScheme({ mode, scheme });
+        }
+        break;
+      default:
+        setLightColorScheme({ mode: 'auto', scheme: 'light' });
     }
   };
 
-  // slides the page to the top
-  const slidePageUp = () =>
-    window.scrollTo({
-      left: 0,
-      top: 0,
-      behavior: 'smooth'
-    });
-
-  useEffect(() => {
-    matchMediaTheme();
-
-    window
-      .matchMedia('(prefers-color-scheme: dark)')
-      .addEventListener('change', (e) =>
-        e.matches ? setDarkMode() : setLightMode()
-      );
-    return () =>
-      window
-        .matchMedia('(prefers-color-scheme: dark)')
-        .removeEventListener('change', (e) =>
-          e.matches ? setDarkMode() : setLightMode()
-        );
+  useEffect((): void => {
+    const colorScheme: ColorScheme = JSON.parse(
+      localStorage.getItem('color-scheme') ||
+        `{"mode": "auto", "scheme": "light"}`
+    );
+    setColorScheme(colorScheme);
   }, []);
+
+  useEffect((): void => {
+    if (colorScheme.scheme === 'dark') {
+      setCurrentTheme(dark_default);
+    } else if (colorScheme.scheme === 'light') {
+      setCurrentTheme(light_default);
+    }
+  }, [colorScheme]);
 
   return (
     <ThemeProvider theme={currentTheme}>
       <GlobalStyles />
-      <context.Provider
-        value={{
-          slidePageUp,
-          darkmode: themeSettings.darkMode,
-          setDarkMode,
-          setLightMode,
-          matchMediaTheme
-        }}>
+      <context.Provider value={{ colorScheme, changeColorScheme }}>
         {children}
       </context.Provider>
     </ThemeProvider>
   );
 }
 
-export const useThemeContext = () => useContext(context);
+export function useThemeContext() {
+  return useContext(context);
+}

@@ -18,22 +18,6 @@ export type TCommentForm = {
   };
 };
 
-type TMainCommentForm = {
-  createComment: () => Promise<void>;
-  status: {
-    edit: boolean;
-    reply: boolean;
-    loading: {
-      status: boolean;
-      key: 'create-comment' | 'update-comment' | 'delete-comment';
-    };
-    error: {
-      status: boolean;
-      msg: string;
-      key: 'create-comment' | 'update-comment' | 'delete-comment';
-    };
-  };
-};
 
 export type TComment = {
   comment: IComment;

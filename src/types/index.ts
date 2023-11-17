@@ -1,11 +1,11 @@
 import type { IconType } from 'react-icons';
 import type { StaticImageData } from 'next/image';
 import type { OutputData } from '@editorjs/editorjs';
-import type { ReactNode, ChangeEvent, FormEvent } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 
 // ========================================== //
 // -------------static types-------------------
-export type TPricingData = Array<{
+export type Pricing = Array<{
   title: string;
   amount: number;
   url: string;
@@ -23,7 +23,7 @@ export type Auth = {
   email: string;
 };
 
-export type TShareUrlPaths = {
+export type ShareAnchors = {
   slug: string;
   title: string;
   hostname: string;
@@ -40,8 +40,8 @@ export type TSocialNetwork =
     }
   | undefined;
 
-export type TDashboardActions = {
-  [x: string]: {
+export type DashboardAction = {
+  [action: string]: {
     header: { label: string; icon: IconType };
     paths: Array<{ label: string; url: string; icon: IconType }>;
   };
@@ -121,7 +121,7 @@ export type TModalProps = {
   status: boolean;
   message: string;
   actionButtonMessage: string | undefined;
-  handleFunction: ((data: any | undefined) => void | Promise<void>) | undefined;
+  handleFunction: (data?: unknown) => void | Promise<unknown>;
 };
 
 // --------------client data--------------------------
@@ -583,4 +583,9 @@ export type TBannerAds = {
   _id: string;
   name: string;
   image: { id: string; url: string };
+};
+
+export type ColorScheme = {
+  mode: 'auto' | 'manual';
+  scheme: 'dark' | 'light';
 };
