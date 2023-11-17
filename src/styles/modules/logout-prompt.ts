@@ -26,6 +26,7 @@ export const _prompt = styled.section`
     max-width: 500px;
     margin: 25px;
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.1);
+    z-index: 21000;
 
     .prompt-info {
       display: flex;

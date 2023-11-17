@@ -1,5 +1,10 @@
 import styled from 'styled-components';
-import { BaseButton, StyledCornerButton, _endMarkStyles } from '../defaults';
+import {
+  BaseButton,
+  StyledCornerButton,
+  _endMarkStyles,
+  statsContainerStyles
+} from '../defaults';
 
 export const _home = styled.div`
   position: relative;
@@ -7,7 +12,7 @@ export const _home = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 50vh;
+  /* min-height: 50vh; */
   background: rgb(${({ theme }) => theme.background});
 
   * {
@@ -335,55 +340,7 @@ export const _home = styled.div`
   }
 
   .stats-container {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    place-content: center;
-    place-items: center;
-    margin: 0 auto;
-    margin-top: 12px;
-
-    .fetch-error-message {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      margin: 20px 0;
-      color: rgb(${({ theme }) => theme.error});
-      font-weight: 500;
-      font-size: 1.1rem;
-      line-height: 1.4rem;
-      align-self: flex-end;
-      padding-top: 3500px;
-
-      button {
-        ${BaseButton}
-      }
-    }
-    p {
-      margin-top: 10px;
-      font-size: 1.2rem;
-      font-weight: 500;
-      line-height: 1.6rem;
-      color: rgb(${({ theme }) => theme.primary_shade});
-    }
-
-    .loading {
-      width: 100%;
-      height: 100%;
-      align-self: flex-end;
-      display: flex;
-
-      flex-direction: row;
-      align-items: center;
-      font-weight: 500;
-      font-size: 1.1rem;
-      gap: 10px;
-      padding: 20px;
-      margin: 0 auto;
-
-      color: rgb(${({ theme }) => theme.primary_shade});
-    }
+    ${statsContainerStyles}
   }
   .posts-container__end-mark {
     ${_endMarkStyles}

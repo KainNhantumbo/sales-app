@@ -29,7 +29,7 @@
     "editorjs-html": "^3.4.3",
     "framer-motion": "^10.12.18",
     "moment": "^2.29.4",
-    "next": "13.4.0",
+    "next": "^14.0.1",
     "next-pwa": "^5.6.0",
     "rc-slider": "^10.2.0",
     "react": "18.2.0",

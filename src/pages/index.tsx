@@ -100,16 +100,18 @@ export default function Home({ ads_data }: Props) {
 
   const fetchPublicProducts = async ({
     pageParam = 0
-  }): Promise<{ data: any; currentOffset: number }> => {
+  }): Promise<{ data: TPublicProducts[]; currentOffset: number }> => {
     const { category, price_range, promotion, query, sort } =
       state.queryPublicProducts;
+
     const queryParams = new URLSearchParams({
       search: query,
-      category: String(category),
-      offset: String(LIMIT * pageParam),
+      category: category || '',
+      offset: Number(LIMIT * pageParam) ? String(LIMIT * pageParam) : '',
       limit: String(LIMIT),
-      max_price: String(price_range),
-      promotion: String(Number(promotion)),
+      max_price: Number(price_range) ? String(price_range) : '',
+      promotion:
+        promotion !== undefined ? String(Number(promotion)) : String(0),
       sort
     });
 
@@ -124,8 +126,8 @@ export default function Home({ ads_data }: Props) {
     useInfiniteQuery({
       queryKey: ['public-products'],
       queryFn: fetchPublicProducts,
-      getNextPageParam: (lastPage) =>
-        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
+      getNextPageParam: ({ data, currentOffset }) =>
+        data.length >= LIMIT ? currentOffset : undefined
     });
 
   useEffect(() => {
@@ -163,9 +165,8 @@ export default function Home({ ads_data }: Props) {
     const timer = setTimeout(() => {
       refetch({ queryKey: ['public-products'] });
     }, 500);
-    return () => {
-      clearTimeout(timer);
-    };
+
+    return () => clearTimeout(timer);
   }, [state.queryPublicProducts]);
 
   useEffect(() => {
@@ -395,7 +396,7 @@ export default function Home({ ads_data }: Props) {
 
             <div className='stats-container'>
               {isError && !isLoading ? (
-                <div className=' fetch-error-message '>
+                <div className='fetch-error-message '>
                   <h3>Erro ao carregar produtos</h3>
                   <button onClick={() => fetchNextPage()}>
                     <IoReload />
@@ -414,6 +415,7 @@ export default function Home({ ads_data }: Props) {
                       display: 'block'
                     }}
                   />
+                  <h3>Carregando...</h3>
                 </div>
               ) : null}
 

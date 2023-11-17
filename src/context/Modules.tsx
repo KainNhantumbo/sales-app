@@ -6,14 +6,14 @@ import { useContext, createContext, ReactNode } from 'react';
 
 type Props = { children: ReactNode };
 
-type TContext = {
+type Context = {
   logoutUser: () => void;
   requestLogin: () => void;
 };
 
-const context = createContext<TContext>({
+const context = createContext<Context>({
   logoutUser: () => {},
-  requestLogin: () => {},
+  requestLogin: () => {}
 });
 
 export default function ModulesContext(props: Props) {
@@ -35,13 +35,13 @@ export default function ModulesContext(props: Props) {
               type: actions.PROMPT,
               payload: {
                 ...state,
-                prompt: { ...state.prompt, status: false },
-              },
+                prompt: { ...state.prompt, status: false }
+              }
             });
             router.push('/auth/sign-in');
-          },
-        },
-      },
+          }
+        }
+      }
     });
   }
 
@@ -60,7 +60,7 @@ export default function ModulesContext(props: Props) {
               await useFetchAPI({
                 method: 'post',
                 url: '/api/v1/auth/default/logout',
-                withCredentials: true,
+                withCredentials: true
               });
               dispatch({
                 type: actions.USER_AUTH,
@@ -72,26 +72,26 @@ export default function ModulesContext(props: Props) {
                     storeId: '',
                     token: '',
                     email: '',
-                    profile_image: '',
-                  },
-                },
+                    profile_image: ''
+                  }
+                }
               });
 
               router.push('/auth/sign-in');
             } catch (error: any) {
-              console.error(error?.response?.data?.message || error);
+              console.error(error.response?.data?.message || error);
             } finally {
               dispatch({
                 type: actions.PROMPT,
                 payload: {
                   ...state,
-                  prompt: { ...state.prompt, status: false },
-                },
+                  prompt: { ...state.prompt, status: false }
+                }
               });
             }
-          },
-        },
-      },
+          }
+        }
+      }
     });
   }
 

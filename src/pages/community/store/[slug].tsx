@@ -498,9 +498,9 @@ export default function StoreProfile({ store, products }: Props) {
   );
 }
 
-type TContext = GetServerSidePropsContext;
+type Context = GetServerSidePropsContext;
 
-export async function getServerSideProps(context: TContext) {
+export async function getServerSideProps(context: Context) {
   try {
     const [storeData, storeProductsData] = (
       await Promise.all([

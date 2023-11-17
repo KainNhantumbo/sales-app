@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BaseButtonOutline, Button_Mono_B } from '../defaults';
+import { BaseButtonOutline, ButtonMonoOutline } from '../defaults';
 
 export const _toolbar = styled.section`
   position: fixed;
@@ -43,7 +43,7 @@ export const _toolbar = styled.section`
   }
 
   .mono {
-    ${Button_Mono_B}
+    ${ButtonMonoOutline}
     padding: 0;
     border: none;
 

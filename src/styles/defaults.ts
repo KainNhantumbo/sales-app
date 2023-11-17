@@ -74,7 +74,7 @@ export const BaseButton = css`
   }
 `;
 
-export const Button_Mono_A = css`
+export const ButtonMono = css`
   border: none;
   border-radius: 8px;
   background: rgb(${({ theme }) => theme.primary});
@@ -97,7 +97,7 @@ export const Button_Mono_A = css`
   }
 `;
 
-export const Button_Mono_B = css`
+export const ButtonMonoOutline = css`
   border: none;
   border-radius: 8px;
   background: none;
@@ -205,6 +205,7 @@ export const StyledInputs = css`
 export const statsContainerStyles = css`
   width: 100%;
   height: 100%;
+  max-height: 800px;
   display: grid;
   place-content: center;
   place-items: center;
@@ -217,12 +218,11 @@ export const statsContainerStyles = css`
     align-items: center;
     gap: 20px;
     margin: 20px 0;
-    color: rgb(${({ theme }) => theme.error});
+    color: rgb(${({ theme }) => theme.primary_shade});
     font-weight: 500;
     font-size: 1.1rem;
     line-height: 1.4rem;
     align-self: flex-end;
-    padding-top: 3500px;
 
     button {
       ${BaseButton}
@@ -233,7 +233,7 @@ export const statsContainerStyles = css`
     font-size: 1.2rem;
     font-weight: 500;
     line-height: 1.6rem;
-    color: rgb(${({ theme }) => theme.primary_shade});
+    color: rgb(${({ theme }) => theme.primary});
   }
 
   .loading {
@@ -241,7 +241,6 @@ export const statsContainerStyles = css`
     height: 100%;
     align-self: flex-end;
     display: flex;
-
     flex-direction: row;
     align-items: center;
     font-weight: 500;
@@ -249,18 +248,18 @@ export const statsContainerStyles = css`
     gap: 10px;
     padding: 20px;
     margin: 0 auto;
-
-    color: rgb(${({ theme }) => theme.primary_shade});
+    color: rgb(${({ theme }) => theme.primary});
   }
 `;
 
 export const _endMarkStyles = css`
+  width: 100%;
   display: grid;
   justify-content: center;
   align-items: center;
   background: rgb(${({ theme }) => theme.foreground});
-  color: rgb(${({ theme }) => theme.primary_shade});
-  border-radius: 20px;
+  color: rgb(${({ theme }) => theme.primary});
+  border-radius: 8px;
   margin-top: 5px;
   svg {
     width: 25px;
@@ -271,5 +270,80 @@ export const _endMarkStyles = css`
     border-radius: 10px;
     margin-left: 10px;
     margin-right: 10px;
+  }
+`;
+
+export const _defaultErrorMessage = css`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 12000;
+  width: 100vw;
+  height: 70vh;
+  display: grid;
+  place-items: center center;
+  place-content: center center;
+  background: rgba(${({ theme }) => theme.background}, 0.2);
+  backdrop-filter: blur(5px);
+
+  div {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 20px;
+    gap: 10px;
+    .icon {
+      width: 70px;
+      height: 70px;
+    }
+
+    p {
+      text-align: center;
+      line-height: 2rem;
+      font-size: 1.4rem;
+      max-width: 600px;
+    }
+
+    button {
+      ${BaseButton}
+    }
+  }
+`;
+
+export const _emptyDataContainer = css`
+  width: 100%;
+  height: 100%;
+  background: rgb(${({ theme }) => theme.background});
+  top: 95px;
+  left: 0;
+  display: grid;
+  place-content: center;
+  user-select: none;
+  position: fixed;
+
+  .content {
+    position: relative;
+    top: -100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    line-height: 1.6rem;
+    margin: 0 10px;
+
+    svg {
+      width: 70px;
+      height: 70px;
+      color: rgb(${({ theme }) => theme.primary});
+    }
+
+    h3 {
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-top: 20px;
+    }
   }
 `;

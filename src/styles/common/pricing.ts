@@ -117,7 +117,7 @@ export const _pricing = styled.div`
       gap: 10px;
       width: 100%;
       max-width: 1080px;
-      padding: 30px 0;
+      padding: 30px 12px;
       margin: 0 auto;
 
       border-top: 3px solid rgb(${({ theme }) => theme.primary});

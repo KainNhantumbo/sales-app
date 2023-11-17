@@ -1,10 +1,10 @@
 import {
   BaseButton,
   BaseButtonOutline,
-  Button_Mono_A,
-  Button_Mono_B,
+  ButtonMono,
+  ButtonMonoOutline,
   StyledInputs,
-  StyledLabels,
+  StyledLabels
 } from '../defaults';
 import styled from 'styled-components';
 
@@ -353,7 +353,7 @@ export const _userProfile = styled.div`
               }
 
               .clear-image {
-                ${Button_Mono_A}
+                ${ButtonMono}
                 position: absolute;
                 top: 3px;
                 right: 32px;
@@ -393,7 +393,7 @@ export const _userProfile = styled.div`
               }
 
               .clear-image {
-                ${Button_Mono_A}
+                ${ButtonMono}
                 position: absolute;
                 top: 10px;
                 right: calc(50% - 120px);
@@ -431,7 +431,7 @@ export const _userProfile = styled.div`
                 box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.1);
 
                 button {
-                  ${Button_Mono_B}
+                  ${ButtonMonoOutline}
                   border: none;
                   :hover {
                     color: rgb(${({ theme }) => theme.error});

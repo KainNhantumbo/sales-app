@@ -1,10 +1,9 @@
 import {
   IoClose,
-  IoAppsOutline,
   IoLogInOutline,
   IoLogOutOutline,
   IoStorefrontOutline,
-  IoCartOutline,
+  IoCartOutline,IoMenu
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -141,7 +140,7 @@ export default function Header() {
           aria-label='Abrir ou fechar o menu'
           className='toggle-btn'
           onClick={toggleMenu}>
-          {!isMenu ? <IoAppsOutline /> : <IoClose />}
+          {!isMenu ? <IoMenu /> : <IoClose />}
         </motion.button>
       </div>
     </Container>

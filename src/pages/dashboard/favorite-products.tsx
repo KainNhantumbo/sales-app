@@ -245,9 +245,9 @@ export default function FavoriteProducts({ products }: Props) {
   );
 }
 
-type TContext = GetServerSidePropsContext;
+type Context = GetServerSidePropsContext;
 
-export async function getServerSideProps(context: TContext) {
+export async function getServerSideProps(context: Context) {
   try {
     const { data } = await fetch<TPublicProducts[]>({
       method: 'get',

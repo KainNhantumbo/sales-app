@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { StyledInputs, Button_Mono_B } from '../defaults';
+import { StyledInputs, ButtonMonoOutline } from '../defaults';
 
 export const _search = styled.div`
   width: 100%;
@@ -35,7 +35,7 @@ export const _search = styled.div`
     }
 
     button {
-      ${Button_Mono_B}
+      ${ButtonMonoOutline}
       width: 41px;
       height: 41px;
     }

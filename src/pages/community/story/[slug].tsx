@@ -411,9 +411,9 @@ export default function Story(props: Props) {
   );
 }
 
-type TContext = GetServerSidePropsContext;
+type Context = GetServerSidePropsContext;
 
-export async function getServerSideProps(context: TContext) {
+export async function getServerSideProps(context: Context) {
   try {
     if (context.params?.slug === 'create-story') return { props: {} };
     const { data } = await fetch<AxiosResponse<TStory>>({

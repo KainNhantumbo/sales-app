@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import {
   BaseButton,
   BaseButtonOutline,
-  Button_Mono_A,
+  ButtonMono,
   StyledInputs,
-  StyledLabels,
+  StyledLabels
 } from '../defaults';
 
 export const _storeEditor = styled.div`
@@ -235,7 +235,7 @@ export const _storeEditor = styled.div`
               }
 
               .clear-image {
-                ${Button_Mono_A}
+                ${ButtonMono}
                 position: absolute;
                 top: 3px;
                 right: 32px;

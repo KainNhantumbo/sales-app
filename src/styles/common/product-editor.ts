@@ -1,7 +1,7 @@
 import {
   BaseButton,
   BaseButtonOutline,
-  Button_Mono_A,
+  ButtonMono,
   StyledInputs,
   StyledLabels
 } from '../defaults';
@@ -330,7 +330,7 @@ export const _productEditor = styled.div`
                 }
 
                 label {
-                  ${Button_Mono_A}
+                  ${ButtonMono}
                   width: 30px;
                   height: 30px;
                   position: absolute;
@@ -348,7 +348,7 @@ export const _productEditor = styled.div`
                 }
 
                 .clear-image {
-                  ${Button_Mono_A}
+                  ${ButtonMono}
                   top: 5px;
                   right: calc(0% + 5px);
                 }

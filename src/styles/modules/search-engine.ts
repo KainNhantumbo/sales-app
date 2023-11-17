@@ -1,8 +1,8 @@
 import {
   BaseButton,
   BaseButtonOutline,
-  Button_Mono_B,
-  StyledInputs,
+  ButtonMonoOutline,
+  StyledInputs
 } from '../defaults';
 import styled from 'styled-components';
 
@@ -149,7 +149,7 @@ export const _seachEngine = styled.aside`
         }
 
         button {
-          ${Button_Mono_B}
+          ${ButtonMonoOutline}
           width: 41px;
           height: 41px;
           border: 1px solid rgba(${({ theme }) => theme.font}, 0.2);
@@ -208,7 +208,7 @@ export const _seachEngine = styled.aside`
         position: absolute;
         width: 100%;
         height: 10px;
-        background-color: rgba(${({ theme }) => theme.font_dimmed}, .5);
+        background-color: rgba(${({ theme }) => theme.font_dimmed}, 0.5);
         border-radius: 10px;
       }
       .rc-slider-track {

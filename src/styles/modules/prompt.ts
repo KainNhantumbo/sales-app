@@ -27,7 +27,7 @@ export const _prompt = styled.section`
     margin: 25px;
     border: 1px solid rgba(${({ theme }) => theme.font}, 0.15);
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.1);
-
+    z-index: 12000;
     .prompt-info {
       display: flex;
       flex-direction: column;
