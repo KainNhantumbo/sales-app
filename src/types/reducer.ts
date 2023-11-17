@@ -6,7 +6,7 @@ import {
   ISignUp,
   Product,
   ProductsList,
-  TPublicProducts,
+  PublicProducts,
   TStore,
   Auth,
   Cart,
@@ -16,7 +16,7 @@ import {
   TSearchProducts,
   TStory,
   User,
-  TPublicStoreList,
+  PublicStoreList,
   TOrder,
   TMetrics,
   TBannerAds,
@@ -52,7 +52,7 @@ export type State = {
   productList: ProductsList[];
   comment: IComment;
   commentsList: IComment[];
-  publicProducts: TPublicProducts[];
+  publicProducts: PublicProducts[];
   productsListQuery: { query: string; sort: string };
   blogPostsList: IBlogPosts[];
   queryPublicProducts: TSearchProducts;
@@ -62,7 +62,7 @@ export type State = {
   checkout: TPurchaseCheckOut;
   story: TStory;
   publicStories: IPublicStory[];
-  publicStoresList: TPublicStoreList;
+  publicStoresList: PublicStoreList;
   metrics: TMetrics;
   banner_ads: TBannerAds[];
   prompt: TModalProps;

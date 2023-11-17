@@ -15,7 +15,7 @@ import Layout from '@/components/Layout';
 import { useEffect, useState } from 'react';
 import { formatCurrency } from '@/lib/utils';
 import SideBarAds from '@/components/SidaBarAds';
-import type { TPublicProducts } from '@/types';
+import type { PublicProducts } from '@/types';
 import { useAppContext } from '@/context/AppContext';
 import type { GetServerSidePropsContext } from 'next';
 import { useTheme } from 'styled-components';
@@ -23,7 +23,7 @@ import { blurDataUrlImage, complements } from '@/shared/data';
 import { _favoriteProducts as Container } from '@/styles/common/favorite-products';
 import { useModulesContext } from '@/context/Modules';
 
-type Props = { products: TPublicProducts[] };
+type Props = { products: PublicProducts[] };
 
 export default function FavoriteProducts({ products }: Props) {
   const {
@@ -51,7 +51,7 @@ export default function FavoriteProducts({ products }: Props) {
 
   const refetchFavoriteProducts = async () => {
     try {
-      const { data } = await fetch<TPublicProducts[]>({
+      const { data } = await fetch<PublicProducts[]>({
         method: 'get',
         url: `/api/v1/users/products/public?favoritesId=${state.auth.id}`
       });
@@ -249,7 +249,7 @@ type Context = GetServerSidePropsContext;
 
 export async function getServerSideProps(context: Context) {
   try {
-    const { data } = await fetch<TPublicProducts[]>({
+    const { data } = await fetch<PublicProducts[]>({
       method: 'get',
       url: `/api/v1/users/products/public?favoritesId=${context.query.id}`
     });

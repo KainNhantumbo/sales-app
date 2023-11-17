@@ -21,7 +21,7 @@ import Layout from '@/components/Layout';
 import actions from '@/shared/actions';
 import { formatCurrency } from '@/lib/utils';
 import { PulseLoader } from 'react-spinners';
-import { TBannerAds, TPublicProducts } from '../types';
+import { TBannerAds, PublicProducts } from '../types';
 import { useAppContext } from '@/context/AppContext';
 import SearchEngine from '@/components/SearchEngine';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -100,7 +100,7 @@ export default function Home({ ads_data }: Props) {
 
   const fetchPublicProducts = async ({
     pageParam = 0
-  }): Promise<{ data: TPublicProducts[]; currentOffset: number }> => {
+  }): Promise<{ data: PublicProducts[]; currentOffset: number }> => {
     const { category, price_range, promotion, query, sort } =
       state.queryPublicProducts;
 
@@ -115,7 +115,7 @@ export default function Home({ ads_data }: Props) {
       sort
     });
 
-    const { data } = await fetch<TPublicProducts[]>({
+    const { data } = await fetch<PublicProducts[]>({
       method: 'get',
       url: `/api/v1/users/products/public?${queryParams.toString()}`
     });

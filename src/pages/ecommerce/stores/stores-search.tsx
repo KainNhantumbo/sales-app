@@ -4,7 +4,7 @@ import {
   IoEllipsisHorizontal,
   IoGridOutline,
   IoLibraryOutline,
-  IoReload,
+  IoReload
 } from 'react-icons/io5';
 import Link from 'next/link';
 import { useEffect } from 'react';
@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import { getStoresData } from '@/lib/queries';
 import { IoMdCalendar } from 'react-icons/io';
 import { complements } from '@/shared/data';
-import { TPublicStoreList } from '@/types';
+import { PublicStoreList } from '@/types';
 import NewsLetter from '@/components/Newsletter';
 import { useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
@@ -33,10 +33,10 @@ export default function StoresSearch() {
   const { ref, inView } = useInView();
 
   const fetchPosts = async ({ pageParam = 0 }) => {
-    const { data } = await getStoresData<TPublicStoreList>({
+    const { data } = await getStoresData<PublicStoreList>({
       offset: pageParam * LIMIT,
       limit: LIMIT,
-      search: String(router.query['q']),
+      search: String(router.query['q'])
     });
     return { data, currentOffset: pageParam + 1 };
   };
@@ -49,12 +49,12 @@ export default function StoresSearch() {
     hasNextPage,
     isFetching,
     isLoading,
-    isError,
+    isError
   } = useInfiniteQuery({
     queryKey: ['public-stores-search'],
     queryFn: fetchPosts,
     getNextPageParam: (lastPage) =>
-      lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
+      lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
   });
 
   useEffect(() => {
@@ -69,15 +69,15 @@ export default function StoresSearch() {
         type: actions.PUBLIC_STORES_LIST_DATA,
         payload: {
           ...state,
-          publicStoresList: [...reducedPosts],
-        },
+          publicStoresList: [...reducedPosts]
+        }
       });
     }
 
     return () => {
       dispatch({
         type: actions.PUBLIC_STORES_LIST_DATA,
-        payload: { ...state, publicStoresList: [] },
+        payload: { ...state, publicStoresList: [] }
       });
     };
   }, [data]);
@@ -102,7 +102,7 @@ export default function StoresSearch() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Pesquisa de Lojas Integradas da Plataforma`,
+        title: `${complements.defaultTitle} | Pesquisa de Lojas Integradas da Plataforma`
       }}>
       <Container>
         <div className='main-container'>
@@ -123,7 +123,7 @@ export default function StoresSearch() {
               style={{
                 fontWeight: '400',
                 fontSize: '1.4rem',
-                lineHeight: '1.8rem',
+                lineHeight: '1.8rem'
               }}>
               Pesquisou por: {router.query['q']}
             </section>
@@ -219,7 +219,7 @@ export default function StoresSearch() {
                     color={`rgb(${theme.primary_shade})`}
                     aria-placeholder='Processando...'
                     cssOverride={{
-                      display: 'block',
+                      display: 'block'
                     }}
                   />
                 </div>

@@ -27,7 +27,7 @@ import Layout from '@/components/Layout';
 import actions from '@/shared/actions';
 import ErrorPage from '@/pages/error-page';
 import { useEffect, useState } from 'react';
-import { formatCurrency } from '@/lib/utils';
+import { formatCurrency, slidePageUp } from '@/lib/utils';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { useTheme } from 'styled-components';
@@ -35,11 +35,10 @@ import SideBarAds from '@/components/SidaBarAds';
 import { VscVerifiedFilled } from 'react-icons/vsc';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import { TPublicProducts, TPublicStore } from '@/types';
-import { useThemeContext } from '@/context/ThemeContext';
+import { PublicProducts, PublicStore } from '@/types';
 import { _store as Container } from '@/styles/common/community-store-profile';
 
-type Props = { store?: TPublicStore | undefined; products: TPublicProducts[] };
+type Props = { store?: PublicStore; products: PublicProducts[] };
 
 export default function StoreProfile({ store, products }: Props) {
   const {
@@ -50,7 +49,6 @@ export default function StoreProfile({ store, products }: Props) {
     removeProductFromCart
   } = useAppContext();
   const { requestLogin } = useModulesContext();
-  const { slidePageUp } = useThemeContext();
   const router = useRouter();
   const theme = useTheme();
   const [tab, setTab] = useState<'docs' | 'products'>('docs');
@@ -504,11 +502,11 @@ export async function getServerSideProps(context: Context) {
   try {
     const [storeData, storeProductsData] = (
       await Promise.all([
-        fetch<TPublicStore>({
+        fetch<PublicStore>({
           method: 'get',
           url: `/api/v1/users/store/public/${context.params?.slug}`
         }),
-        fetch<TPublicProducts[]>({
+        fetch<PublicProducts[]>({
           method: 'get',
           url: `/api/v1/users/products/public?storeId=${context.params?.slug}`
         })

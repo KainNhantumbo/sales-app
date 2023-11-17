@@ -13,12 +13,11 @@ import { BiSortAlt2 } from 'react-icons/bi';
 import { useEffect, useState } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useThemeContext } from '@/context/ThemeContext';
 import product_categories from '../shared/product-categories.json';
 import { _seachEngine as Container } from '../styles/modules/search-engine';
+import { slidePageUp } from '@/lib/utils';
 
 export default function SearchEngine() {
-  const { slidePageUp } = useThemeContext();
   const { state, dispatch } = useAppContext();
   const [innerWidth, setInnerWidth] = useState<number>(0);
 

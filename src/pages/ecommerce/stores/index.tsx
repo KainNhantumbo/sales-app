@@ -4,7 +4,7 @@ import {
   IoEllipsisHorizontal,
   IoGridOutline,
   IoReload,
-  IoStorefrontOutline,
+  IoStorefrontOutline
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -15,7 +15,7 @@ import { formatDate } from '@/lib/utils';
 import { PulseLoader } from 'react-spinners';
 import { IoMdCalendar } from 'react-icons/io';
 import { getStoresData } from '@/shared/queries';
-import { TPublicStoreList } from '@/types';
+import { PublicStoreList } from '@/types';
 import NewsLetter from '@/components/Newsletter';
 import { useRouter } from 'next/router';
 import SearchStores from '@/components/SearchPublicStores';
@@ -35,11 +35,11 @@ export default function Stores() {
   const { ref, inView } = useInView();
 
   const fetchData = async ({
-    pageParam = 0,
-  }): Promise<{ data: TPublicStoreList; currentOffset: number }> => {
-    const { data } = await getStoresData<TPublicStoreList>({
+    pageParam = 0
+  }): Promise<{ data: PublicStoreList; currentOffset: number }> => {
+    const { data } = await getStoresData<PublicStoreList>({
       offset: pageParam * LIMIT,
-      limit: LIMIT,
+      limit: LIMIT
     });
     return { data, currentOffset: pageParam + 1 };
   };
@@ -49,7 +49,7 @@ export default function Stores() {
       queryKey: ['stores-data'],
       queryFn: fetchData,
       getNextPageParam: (lastPage) =>
-        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
+        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
     });
 
   useEffect(() => {
@@ -64,15 +64,15 @@ export default function Stores() {
         type: actions.PUBLIC_STORES_LIST_DATA,
         payload: {
           ...state,
-          publicStoresList: [...reducedData],
-        },
+          publicStoresList: [...reducedData]
+        }
       });
     }
 
     return () => {
       dispatch({
         type: actions.PUBLIC_STORES_LIST_DATA,
-        payload: { ...state, publicStoresList: [] },
+        payload: { ...state, publicStoresList: [] }
       });
     };
   }, [data]);
@@ -195,7 +195,7 @@ export default function Stores() {
                   color={`rgb(${theme.primary_shade})`}
                   aria-placeholder='Processando...'
                   cssOverride={{
-                    display: 'block',
+                    display: 'block'
                   }}
                 />
               </div>

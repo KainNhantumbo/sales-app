@@ -10,6 +10,7 @@ export const _newsletter = styled.section`
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.09);
+  border: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
   position: relative;
   width: 100%;
   max-width: 800px;

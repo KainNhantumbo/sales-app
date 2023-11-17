@@ -196,7 +196,7 @@ export type TMessage = {
   updatedAt: string;
 };
 
-export type TPublicStoreList = Array<{
+export type PublicStoreList = Array<{
   _id: string;
   name: string;
   slogan?: string;
@@ -243,7 +243,7 @@ export interface Product extends ProductsList {
   allow_comments: boolean;
 }
 
-export type TPublicProducts = {
+export type PublicProducts = {
   _id: string;
   name: string;
   price: number;
@@ -280,7 +280,7 @@ export type TPublicProduct = {
   };
 };
 
-export type TPublicStore = {
+export type PublicStore = {
   _id: string;
   name: string;
   verified_store: boolean;
