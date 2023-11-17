@@ -3,10 +3,15 @@ import actions from '@/shared/actions';
 import { MoonLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import { useAppContext } from '@/context/AppContext';
-import { TMainCommentForm } from '@/types/comments';
+import { TCommentForm } from '@/types/comments';
 import { useModulesContext } from '@/context/Modules';
 
-export default function CommentForm(props: TMainCommentForm) {
+type Props = Omit<
+  TCommentForm,
+  'updateComment' | 'currentCommentId' | 'replyComment'
+>;
+
+export default function CommentForm(props: Props) {
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
   const { requestLogin } = useModulesContext();
@@ -48,9 +53,9 @@ export default function CommentForm(props: TMainCommentForm) {
                       ...state,
                       comment: {
                         ...state.comment,
-                        content: e.target.value,
-                      },
-                    },
+                        content: e.target.value
+                      }
+                    }
                   });
                 }}
               />
@@ -72,7 +77,7 @@ export default function CommentForm(props: TMainCommentForm) {
                 color={`rgb(${theme.primary_shade})`}
                 cssOverride={{
                   display: 'block',
-                  margin: '0 auto',
+                  margin: '0 auto'
                 }}
               />
             </div>

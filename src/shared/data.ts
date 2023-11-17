@@ -50,11 +50,11 @@ import {
 import { BiUser, BiUserCheck } from 'react-icons/bi';
 import Package from '@/../package.json';
 import denouces_data from './denounce-reasons.json';
-import blur_image_data from './blur-data-url-image.json';
+import blurImage from './blur-data-url-image.json';
 import authorPicture from '@/../public/assets/author.jpg';
 import mpesa_logo from '@/../public/trademarks/mpesa logo.png';
 
-const blurDataUrlImage = blur_image_data.data;
+const blurDataUrlImage = blurImage.data;
 
 const author: Author = {
   name: Package.author,

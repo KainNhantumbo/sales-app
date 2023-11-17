@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import { complements } from '@/shared/data';
-import { InputEvents, SubmitEvent } from '@/types';
+import { FetchError, InputEvents, SubmitEvent } from '@/types';
 import { IoLockClosedOutline, IoLockOpenOutline } from 'react-icons/io5';
 import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
 
@@ -15,13 +15,13 @@ export default function UpdatePassword() {
   const [error, setError] = useState({ status: false, message: '' });
   const [passwords, setPasswords] = useState({
     password: '',
-    confirm_password: '',
+    confirm_password: ''
   });
 
   const handleChange = (e: InputEvents) => {
     setPasswords((state) => ({
       ...state,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }));
   };
 
@@ -30,7 +30,7 @@ export default function UpdatePassword() {
     if (passwords.password !== passwords.confirm_password)
       return setError({
         status: true,
-        message: 'A as senhas devem ser iguais e maiores que 8 carácteres.',
+        message: 'A as senhas devem ser iguais e maiores que 8 carácteres.'
       });
 
     try {
@@ -39,13 +39,18 @@ export default function UpdatePassword() {
         method: 'post',
         url: '/api/v1/users/auth/update-password',
         data: passwords.password,
-        withCredentials: true,
+        withCredentials: true
       });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
       setError({
         status: true,
-        message: error?.response?.data?.message || error?.code,
+        message:
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
       });
     } finally {
       setLoading(false);
@@ -64,7 +69,7 @@ export default function UpdatePassword() {
       metadata={{
         title: `${complements.defaultTitle} | Atualização de Senha`,
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       }}>
       <Container>
         <main>
@@ -120,7 +125,7 @@ export default function UpdatePassword() {
                       aria-placeholder='Processando...'
                       cssOverride={{
                         display: 'block',
-                        margin: '0 auto',
+                        margin: '0 auto'
                       }}
                     />
                   </>

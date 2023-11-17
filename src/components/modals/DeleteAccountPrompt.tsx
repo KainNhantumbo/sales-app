@@ -1,12 +1,12 @@
 import {
   IoArrowBackOutline,
   IoLockClosedOutline,
-  IoMailOutline,
+  IoMailOutline
 } from 'react-icons/io5';
 import fetch from '@/config/client';
 import actions from '@/shared/actions';
 import { BsTrash } from 'react-icons/bs';
-import { InputEvents } from '@/types';
+import { FetchError, InputEvents } from '@/types';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
@@ -27,9 +27,9 @@ export default function DeleteAccountPrompt() {
         ...state,
         signInData: {
           ...state.signInData,
-          [e.target.name]: e.target.value,
-        },
-      },
+          [e.target.name]: e.target.value
+        }
+      }
     });
   };
 
@@ -37,7 +37,7 @@ export default function DeleteAccountPrompt() {
     try {
       await useFetchAPI({
         method: 'delete',
-        url: '/api/v1/users/account',
+        url: '/api/v1/users/account'
       });
       dispatch({
         type: actions.USER_AUTH,
@@ -49,19 +49,19 @@ export default function DeleteAccountPrompt() {
             token: '',
             email: '',
             profile_image: '',
-            storeId: '',
-          },
-        },
+            storeId: ''
+          }
+        }
       });
       deleteAccountPromptController();
       router.push('/');
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
       setError({
         status: true,
         message:
-          error.response?.data?.message ||
-          'Erro ao eliminar os dados da conta.',
+          (error as FetchError).response?.data?.message ||
+          'Erro ao eliminar os dados da conta.'
       });
     }
   };
@@ -70,7 +70,7 @@ export default function DeleteAccountPrompt() {
     if (state.signInData.password.length < 8) {
       setError({
         status: true,
-        message: 'A senha deve conter pelo menos 8 caracteres',
+        message: 'A senha deve conter pelo menos 8 caracteres'
       });
       return;
     }
@@ -81,23 +81,23 @@ export default function DeleteAccountPrompt() {
         method: 'post',
         url: '/api/v1/auth/default/login',
         data: state.signInData,
-        withCredentials: true,
+        withCredentials: true
       });
 
       // logs the user out
       await useFetchAPI({
         method: 'post',
         url: '/api/v1/auth/default/logout',
-        withCredentials: true,
+        withCredentials: true
       });
       deleteUserAccount();
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
       setError({
         status: true,
         message:
-          error.response?.data?.message ||
-          'Erro ao eliminar os dados da conta.',
+          (error as FetchError).response?.data?.message ||
+          'Erro ao eliminar os dados da conta.'
       });
     } finally {
       setLoading(false);
@@ -131,8 +131,8 @@ export default function DeleteAccountPrompt() {
               opacity: 1,
               scale: 1,
               transition: {
-                duration: 0.3,
-              },
+                duration: 0.3
+              }
             }}
             exit={{ opacity: 0, scale: 0 }}>
             <div className='dialog-prompt'>

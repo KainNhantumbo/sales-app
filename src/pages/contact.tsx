@@ -39,8 +39,8 @@ export default function Contact() {
         'z3FUpU83GBFJyGXVF'
       );
       setMessageStatus('Mensagem enviada com sucesso!');
-    } catch (error: any) {
-      console.error(error.text);
+    } catch (error) {
+      console.error((error as Error).message);
       setMessageStatus(
         'Oops! Houve um erro ao enviar a sua mensagem. Por favor, tente novamente.'
       );

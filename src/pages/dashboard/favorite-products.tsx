@@ -15,7 +15,7 @@ import Layout from '@/components/Layout';
 import { useEffect, useState } from 'react';
 import { formatCurrency } from '@/lib/utils';
 import SideBarAds from '@/components/SidaBarAds';
-import type { PublicProducts } from '@/types';
+import type { FetchError, PublicProducts } from '@/types';
 import { useAppContext } from '@/context/AppContext';
 import type { GetServerSidePropsContext } from 'next';
 import { useTheme } from 'styled-components';
@@ -44,8 +44,11 @@ export default function FavoriteProducts({ products }: Props) {
         url: `/api/v1/users/favorites/products/${id}`
       });
       refetchFavoriteProducts();
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 

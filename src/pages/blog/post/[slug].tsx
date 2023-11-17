@@ -26,7 +26,7 @@ import { useAppContext } from '@/context/AppContext';
 import { useTheme } from 'styled-components';
 import { getPaths, getPost, getPosts } from '@/shared/queries';
 import { CommentCount, DiscussionEmbed } from 'disqus-react';
-import type { IBlogPost, IBlogPosts } from '@/types';
+import type { FetchError, IBlogPost, IBlogPosts } from '@/types';
 import { _post as Container } from '@/styles/common/post';
 import EditorJsRenderer from '@/components/EditorJSRenderer';
 import type { TParsedContent } from '@/components/EditorJSRenderer';
@@ -67,8 +67,11 @@ export default function Post({ post: initialPost, latestPosts }: Props) {
         url: `/api/v1/users/favorites/blog-posts/${post._id}`
       });
       setPost((doc) => ({ ...doc, favorites: data }));
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 
@@ -79,8 +82,11 @@ export default function Post({ post: initialPost, latestPosts }: Props) {
         url: `/api/v1/users/favorites/blog-posts/${post._id}`
       });
       setPost((doc) => ({ ...doc, favorites: data }));
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 

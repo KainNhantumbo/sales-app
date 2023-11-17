@@ -12,6 +12,7 @@ import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 import type { IComment } from '@/types/comments';
 import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
 import { _comments as Container } from '@/styles/modules/comments';
+import { FetchError } from '@/types';
 
 type Props = { contentId: string };
 
@@ -119,13 +120,18 @@ export default function Comments({ contentId }: Props) {
         }
       });
       clearCommentData();
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
       setError({
         status: true,
         key: 'create-comment',
         msg:
-          error?.response?.data?.message || 'Erro: por favor, tente novamente.'
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message ||
+          'Erro: por favor, tente novamente.'
       });
     } finally {
       setLoading({ status: false, key: 'create-comment' });
@@ -153,13 +159,18 @@ export default function Comments({ contentId }: Props) {
         }
       });
       clearCommentData();
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
       setError({
         status: true,
         key: 'create-comment',
         msg:
-          error?.response?.data?.message || 'Erro: por favor, tente novamente.'
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message ||
+          'Erro: por favor, tente novamente.'
       });
     } finally {
       setLoading({ status: false, key: 'create-comment' });
@@ -175,8 +186,11 @@ export default function Comments({ contentId }: Props) {
       });
       deleteCommentPromptController(false, '');
       getComments();
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 
@@ -228,8 +242,11 @@ export default function Comments({ contentId }: Props) {
           ]
         }
       });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 
@@ -250,8 +267,11 @@ export default function Comments({ contentId }: Props) {
           ]
         }
       });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 
@@ -269,13 +289,18 @@ export default function Comments({ contentId }: Props) {
       });
       clearCommentData();
       getComments();
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
       setError({
         status: true,
         key: 'create-comment',
         msg:
-          error?.response?.data?.message || 'Erro: por favor, tente novamente.'
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message ||
+          'Erro: por favor, tente novamente.'
       });
     } finally {
       setLoading({ status: false, key: 'create-comment' });

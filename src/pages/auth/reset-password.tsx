@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import fetch from '@/config/client';
-import { SubmitEvent } from '@/types';
+import { FetchError, SubmitEvent } from '@/types';
 import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
 import { IoMailOutline } from 'react-icons/io5';
@@ -25,14 +25,19 @@ export default function ResetPassword() {
         method: 'post',
         url: '/api/v1/users/auth/request-new-password',
         data: email,
-        withCredentials: true,
+        withCredentials: true
       });
       router.push('/auth/reset-password-confirmation');
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
       setError({
         status: true,
-        message: error?.response?.data?.message || error?.code,
+        message:
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
       });
     } finally {
       setLoading(false);
@@ -51,7 +56,7 @@ export default function ResetPassword() {
       metadata={{
         title: `${complements.defaultTitle} | Atualização de Senha`,
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       }}>
       <Container>
         <main>
@@ -91,7 +96,7 @@ export default function ResetPassword() {
                       aria-placeholder='Processando...'
                       cssOverride={{
                         display: 'block',
-                        margin: '0 auto',
+                        margin: '0 auto'
                       }}
                     />
                   </>

@@ -20,7 +20,7 @@ import {
   IoStorefront
 } from 'react-icons/io5';
 import Link from 'next/link';
-import { Product } from '@/types';
+import { FetchError, Product } from '@/types';
 import QRCode from 'react-qr-code';
 import { motion } from 'framer-motion';
 import actions from '@/shared/actions';
@@ -83,8 +83,11 @@ export default function Product({ product, error_message }: any) {
           publicProduct: { ...state.publicProduct, favorites: data }
         }
       });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 
@@ -101,8 +104,11 @@ export default function Product({ product, error_message }: any) {
           publicProduct: { ...state.publicProduct, favorites: data }
         }
       });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 
@@ -765,10 +771,14 @@ export async function getStaticProps({ params: { productId } }: any) {
       url: `/api/v1/users/products/public/${productId}`
     });
     return { props: { product: { ...data } }, revalidate: 10 };
-  } catch (error: any) {
+  } catch (error) {
     console.error(error);
     return {
-      props: { error_message: error?.response?.data?.message },
+      props: {
+        error_message:
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      },
       revalidate: 10
     };
   }

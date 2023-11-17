@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { complements } from '@/shared/data';
 import { useAppContext } from './AppContext';
 import { useContext, createContext, ReactNode } from 'react';
+import { FetchError } from '@/types';
 
 type Props = { children: ReactNode };
 
@@ -78,8 +79,10 @@ export default function ModulesContext(props: Props) {
               });
 
               router.push('/auth/sign-in');
-            } catch (error: any) {
-              console.error(error.response?.data?.message || error);
+            } catch (error) {
+              console.error(
+                (error as FetchError).response?.data?.message || error
+              );
             } finally {
               dispatch({
                 type: actions.PROMPT,

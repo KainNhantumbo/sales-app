@@ -2,9 +2,10 @@ import type { IconType } from 'react-icons';
 import type { StaticImageData } from 'next/image';
 import type { OutputData } from '@editorjs/editorjs';
 import type { ChangeEvent, FormEvent } from 'react';
+import { AxiosError } from 'axios';
 
-// ========================================== //
-// -------------static types-------------------
+export type FetchError = AxiosError<{ message: string; code: number }>;
+
 export type Pricing = Array<{
   title: string;
   amount: number;
@@ -116,7 +117,7 @@ declare module 'styled-components' {
   export interface DefaultTheme extends Theme {}
 }
 
-export type TModalProps = {
+export type Modal = {
   title: string;
   status: boolean;
   message: string;
@@ -124,14 +125,13 @@ export type TModalProps = {
   handleFunction: (data?: unknown) => void | Promise<unknown>;
 };
 
-// --------------client data--------------------------
-export type TStory = {
+export type Story = {
   title: string;
   content: string;
   cover_image: { id: string; url: string } | undefined;
 };
 
-export interface IPublicStory extends TStory {
+export interface PublicStory extends Story {
   _id: string;
   created_by: {
     _id: string;
@@ -151,12 +151,12 @@ export type QueryList = {
   search?: string;
 };
 
-export interface ISignInData {
+export interface SignIn {
   email: string;
   password: string;
 }
 
-export interface ISignUp {
+export interface SignUp {
   first_name: string;
   last_name: string;
   email: string;
@@ -164,28 +164,11 @@ export interface ISignUp {
   confirm_password: string;
 }
 
-// ------------server data------------
 export type TChat = Array<{
   _id: string;
   sender: string;
   receiver: string;
 }>;
-
-export interface IComment {
-  _id: string;
-  source_id: string;
-  created_by: {
-    _id: string;
-    first_name: string;
-    last_name: string;
-    profile_image: { id: string; url: string };
-  };
-  content: string;
-  parent_id: string;
-  favorites: string[];
-  updatedAt: string;
-  createdAt: string;
-}
 
 export type TMessage = {
   _id: string;

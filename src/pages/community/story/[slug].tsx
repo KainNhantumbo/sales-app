@@ -14,7 +14,7 @@ import { useDropzone } from 'react-dropzone';
 import { PulseLoader } from 'react-spinners';
 import { complements } from '@/shared/data';
 import SideBarAds from '@/components/SidaBarAds';
-import { IPublicStory, TStory } from '@/types';
+import { FetchError, PublicStory, Story } from '@/types';
 import { Router, useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { useCallback, useEffect, useState } from 'react';
@@ -23,7 +23,7 @@ import { GetServerSidePropsContext } from 'next';
 import { _story as Container } from '@/styles/common/story';
 import { BsTrash } from 'react-icons/bs';
 
-type Props = { story: IPublicStory | undefined };
+type Props = { story: PublicStory | undefined };
 type TError = { status: boolean; msg: string };
 
 export default function Story(props: Props) {
@@ -40,7 +40,7 @@ export default function Story(props: Props) {
 
   const acceptedMimeTypes: string[] = ['image/png', 'image/jpeg', 'image/jpg'];
 
-  const { getRooProps, getInpuProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
     maxFiles: 1,
     onDrop: useCallback(<T extends File>(acceptedFiles: T[]) => {
       const file = acceptedFiles[0];
@@ -89,12 +89,16 @@ export default function Story(props: Props) {
           }
         }
       });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
       setError({
         status: true,
         msg:
-          error?.response?.data?.message ||
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message ||
           'Oops! Algo deu errado. Tente novamente.'
       });
     } finally {
@@ -111,12 +115,13 @@ export default function Story(props: Props) {
         data: { ...state.story, coverImageData }
       });
       router.back();
-    } catch (error: any) {
-      console.error(error.response?.data?.message || error);
+    } catch (error) {
+      console.error((error as FetchError).response?.data?.message || error);
       setError({
         status: true,
         msg:
-          error?.response?.data?.message ||
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message ||
           'Oops! Algo deu errado. Tente novamente.'
       });
     } finally {
@@ -133,12 +138,13 @@ export default function Story(props: Props) {
         data: { ...state.story, coverImageData }
       });
       router.back();
-    } catch (error: any) {
-      console.error(error.response?.data?.message || error);
+    } catch (error) {
+      console.error((error as FetchError).response?.data?.message || error);
       setError({
         status: true,
         msg:
-          error?.response?.data?.message ||
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message ||
           'Oops! Algo deu errado. Tente novamente.'
       });
     } finally {
@@ -336,7 +342,7 @@ export default function Story(props: Props) {
                       </button>
                     </>
                   ) : (
-                    <div {...getRooProps()} className='image-drop-container'>
+                    <div {...getRootProps()} className='image-drop-container'>
                       <div className='content'>
                         <IoDownloadOutline
                           className={
@@ -358,7 +364,7 @@ export default function Story(props: Props) {
                           Dimensões: 420 x 220 pixels [.JPEG, .JPG, .PNG].
                         </span>
 
-                        <input {...getInpuProps()} />
+                        <input {...getInputProps()} />
                       </div>
                     </div>
                   )}
@@ -416,7 +422,7 @@ type Context = GetServerSidePropsContext;
 export async function getServerSideProps(context: Context) {
   try {
     if (context.params?.slug === 'create-story') return { props: {} };
-    const { data } = await fetch<AxiosResponse<TStory>>({
+    const { data } = await fetch<AxiosResponse<Story>>({
       method: 'get',
       url: `/api/v1/users/stories/${context.params?.slug}`
     });

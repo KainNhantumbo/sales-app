@@ -21,7 +21,7 @@ import Layout from '@/components/Layout';
 import actions from '@/shared/actions';
 import { formatCurrency } from '@/lib/utils';
 import { PulseLoader } from 'react-spinners';
-import { TBannerAds, PublicProducts } from '../types';
+import { TBannerAds, PublicProducts, FetchError } from '../types';
 import { useAppContext } from '@/context/AppContext';
 import SearchEngine from '@/components/SearchEngine';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -71,8 +71,11 @@ export default function Home({ ads_data }: Props) {
           ]
         }
       });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 
@@ -93,8 +96,11 @@ export default function Home({ ads_data }: Props) {
           ]
         }
       });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 
@@ -446,8 +452,11 @@ export async function getServerSideProps() {
       url: '/api/v1/default/ads/public'
     });
     return { props: { ads_data: data } };
-  } catch (error: any) {
-    console.error(error?.response?.data?.message || error);
+  } catch (error) {
+    console.error(
+      (error as FetchError).response?.data?.message ||
+        (error as FetchError).message
+    );
     return { props: { ads_data: [] } };
   }
 }

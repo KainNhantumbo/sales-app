@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import ModulesContext from './Modules';
 import ThemeContext from './ThemeContext';
 import { Action, State } from '@/types/reducer';
-import { Auth, Cart } from '@/types/index';
+import { Auth, Cart, FetchError } from '@/types/index';
 import { reducer, initialState } from '@/lib/reducer';
 import useIsomorphicLayoutEffect from '@/shared/custom-layout-efffect';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
@@ -264,8 +264,11 @@ export default function AppContext(props: Props) {
         type: actions.USER_AUTH,
         payload: { ...state, auth: { ...data } }
       });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 
@@ -276,7 +279,10 @@ export default function AppContext(props: Props) {
         const status = Number(error?.response?.status);
         if (status > 400 && status < 404) {
           validateAuth().catch((error) => {
-            console.error(error?.response?.data?.message || error);
+            console.error(
+              (error as FetchError).response?.data?.message ||
+                (error as FetchError).message
+            );
             router.push('/auth/sign-in');
           });
         }
@@ -300,8 +306,11 @@ export default function AppContext(props: Props) {
         type: actions.USER_AUTH,
         payload: { ...state, auth: { ...data } }
       });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 

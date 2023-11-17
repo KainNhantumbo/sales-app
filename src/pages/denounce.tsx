@@ -16,6 +16,7 @@ import SelectContainer from '@/components/Select';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { DenounceContainer as Container } from '@/styles/common/denounce';
+import { FetchError } from '@/types';
 
 export default function Denounce() {
   const router = useRouter();
@@ -45,9 +46,15 @@ export default function Denounce() {
         }
       });
       setMsg('Denúncia enviada com sucesso.');
-    } catch (error: any) {
-      setMsg(error?.response?.data?.message);
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      setMsg(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 

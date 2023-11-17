@@ -17,7 +17,7 @@ import {
   IoReload,
   IoSave,
   IoSyncOutline,
-  IoTrashOutline,
+  IoTrashOutline
 } from 'react-icons/io5';
 import Compressor from 'compressorjs';
 import actions from '@/shared/actions';
@@ -25,7 +25,7 @@ import Layout from '@/components/Layout';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
 import { complements } from '@/shared/data';
-import { InputEvents, Product } from '@/types';
+import { FetchError, InputEvents, Product } from '@/types';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
@@ -49,29 +49,28 @@ export default function ProductEditor() {
 
   // --------------------states---------------------
   const [loading, setLoading] = useState<TLoading>({
-    status: false,
+    status: false
   });
 
   const [error, setError] = useState<TError>({
     status: false,
-    msg: '',
+    msg: ''
   });
 
   const [imagesData, setImagesData] = useState({
     img_0: { id: '', data: '' },
     img_1: { id: '', data: '' },
     img_2: { id: '', data: '' },
-    img_3: { id: '', data: '' },
+    img_3: { id: '', data: '' }
   });
 
-  // --------------------functions--------------------
   const fetchProduct = async (): Promise<Product | unknown> => {
     try {
       const productId = router.query['productId'];
       if (!productId) throw new Error('Sem chave ID');
       const { data } = await useFetchAPI<Product>({
         method: 'get',
-        url: `/api/v1/users/products/${productId}?fields=-created_by,-favorites`,
+        url: `/api/v1/users/products/${productId}?fields=-created_by,-favorites`
       });
       return data;
     } catch (error) {
@@ -83,10 +82,10 @@ export default function ProductEditor() {
     isLoading,
     isError,
     data: productData,
-    error: queryError,
+    error: queryError
   } = useQuery({
     queryKey: [`product-${router.query['productId'] ?? ''}`],
-    queryFn: fetchProduct,
+    queryFn: fetchProduct
   });
 
   useEffect(() => {
@@ -95,8 +94,8 @@ export default function ProductEditor() {
         type: actions.PRODUCT_DATA,
         payload: {
           ...state,
-          product: { ...state.product, ...productData },
-        },
+          product: { ...state.product, ...productData }
+        }
       });
     }
   }, [productData]);
@@ -116,10 +115,10 @@ export default function ProductEditor() {
             const encodedImage: string = e.target?.result as string;
             setImagesData((obj) => ({
               ...obj,
-              [`img_${index}`]: { id: '', data: encodedImage },
+              [`img_${index}`]: { id: '', data: encodedImage }
             }));
           };
-        },
+        }
       });
     }
   };
@@ -131,34 +130,34 @@ export default function ProductEditor() {
         ...state,
         product: {
           ...state.product,
-          [e.target.name]: e.target.value,
-        },
-      },
+          [e.target.name]: e.target.value
+        }
+      }
     });
 
   const deleteImage = (id: string, index: string) => {
     if (!id)
       return setImagesData((data) => ({
         ...data,
-        [index]: { id: '', data: '' },
+        [index]: { id: '', data: '' }
       }));
 
     useFetchAPI({
       method: 'delete',
       url: `/api/v1/users/product/assets`,
-      data: { type: index, assetId: id },
+      data: { type: index, assetId: id }
     })
       .then(() => {
         setImagesData((data) => ({
           ...data,
-          [index]: { id: '', data: '' },
+          [index]: { id: '', data: '' }
         }));
         dispatch({
           type: actions.PRODUCT_DATA,
           payload: {
             ...state,
-            product: { ...state.product, images: {} },
-          },
+            product: { ...state.product, images: {} }
+          }
         });
       })
       .catch((error) => {
@@ -188,21 +187,22 @@ export default function ProductEditor() {
               value.data !== ''
                 ? { [key]: { id: value.id, data: value.data } }
                 : null
-            ),
+            )
           ].reduce((accumulator, currentValue) => {
             const group = { [currentValue[0]]: currentValue[1] };
             return { ...accumulator, ...group };
-          }, {}),
-        },
+          }, {})
+        }
       });
       router.back();
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
       setError({
         status: true,
         msg:
-          error?.response?.data?.message ||
-          'Oops! Algo deu errado. Tente novamente.',
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message ||
+          'Oops! Algo deu errado. Tente novamente.'
       });
     } finally {
       setLoading({ status: false });
@@ -231,21 +231,22 @@ export default function ProductEditor() {
               value.data !== ''
                 ? { [key]: { id: value.id, data: value.data } }
                 : null
-            ),
+            )
           ].reduce((accumulator, currentValue) => {
             const group = { [currentValue[0]]: currentValue[1] };
             return { ...accumulator, ...group };
-          }, {}),
-        },
+          }, {})
+        }
       });
       router.back();
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
       setError({
         status: true,
         msg:
-          error?.response?.data?.message ||
-          'Oops! Algo deu errado. Tente novamente.',
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message ||
+          'Oops! Algo deu errado. Tente novamente.'
       });
     } finally {
       setLoading({ status: false });
@@ -275,9 +276,9 @@ export default function ProductEditor() {
             createdAt: '',
             updatedAt: '',
             favorites: [],
-            allow_comments: false,
-          },
-        },
+            allow_comments: false
+          }
+        }
       });
   }, []);
 
@@ -510,9 +511,9 @@ export default function ProductEditor() {
                                 ...state,
                                 product: {
                                   ...state.product,
-                                  category: e.target.value,
-                                },
-                              },
+                                  category: e.target.value
+                                }
+                              }
                             });
                           }}>
                           {product_categories
@@ -596,10 +597,10 @@ export default function ProductEditor() {
                                   ...state.product,
                                   promotion: {
                                     ...state.product.promotion,
-                                    status: e.target.checked,
-                                  },
-                                },
-                              },
+                                    status: e.target.checked
+                                  }
+                                }
+                              }
                             });
                           }}
                           checked={state.product.promotion.status}
@@ -629,10 +630,10 @@ export default function ProductEditor() {
                                   ...state.product,
                                   promotion: {
                                     ...state.product.promotion,
-                                    percentage: Number(e.target.value),
-                                  },
-                                },
-                              },
+                                    percentage: Number(e.target.value)
+                                  }
+                                }
+                              }
                             });
                           }}
                         />
@@ -657,9 +658,9 @@ export default function ProductEditor() {
                                 ...state,
                                 product: {
                                   ...state.product,
-                                  allow_comments: e.target.checked,
-                                },
-                              },
+                                  allow_comments: e.target.checked
+                                }
+                              }
                             });
                           }}
                         />
@@ -709,7 +710,7 @@ export default function ProductEditor() {
                       color={`rgb(${theme.primary})`}
                       aria-placeholder='Processando...'
                       cssOverride={{
-                        display: 'block',
+                        display: 'block'
                       }}
                     />
                     <span>Processando...</span>

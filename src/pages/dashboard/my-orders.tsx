@@ -11,7 +11,7 @@ import {
   order_status_labels
 } from '@/shared/data';
 import { useEffect } from 'react';
-import { TOrder } from '@/types';
+import { FetchError, TOrder } from '@/types';
 import { formatDate } from '@/lib/utils';
 import actions from '@/shared/actions';
 import Layout from '@/components/Layout';
@@ -70,8 +70,11 @@ export default function MyOrders() {
         data: { ...data }
       });
       refetch({ queryKey: ['user-orders'] });
-    } catch (error: any) {
-      console.info(error?.response?.data?.message || error);
+    } catch (error) {
+      console.info(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 
@@ -82,8 +85,11 @@ export default function MyOrders() {
         url: `/api/v1/checkout/orders/${id}`
       });
       refetch({ queryKey: ['user-orders'] });
-    } catch (error: any) {
-      console.info(error?.response?.data?.message || error);
+    } catch (error) {
+      console.info(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 

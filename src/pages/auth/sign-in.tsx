@@ -7,7 +7,7 @@ import actions from '@/shared/actions';
 import { complements } from '@/shared/data';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { InputEvents, SubmitEvent, Auth } from '@/types';
+import { InputEvents, SubmitEvent, Auth, FetchError } from '@/types';
 import { _signIn as Container } from '@/styles/common/sign-in';
 import { IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
 import backgroundImage from '@/../public/assets/africa-unveiled.png';
@@ -51,11 +51,16 @@ export default function SignIn() {
         payload: { ...state, auth: { ...data } }
       });
       router.push(`/dashboard`);
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
       setError({
         status: true,
-        message: error?.response?.data?.message || error?.code
+        message:
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
       });
     } finally {
       setLoading(false);

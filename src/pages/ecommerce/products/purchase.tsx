@@ -8,16 +8,16 @@ import {
   IoInformationCircle,
   IoPhonePortraitOutline,
   IoPlanetOutline,
-  IoStar,
+  IoStar
 } from 'react-icons/io5';
 import {
   blurDataUrlImage,
   complements,
   payment_options,
-  states,
+  states
 } from '@/shared/data';
 import Image from 'next/image';
-import { InputEvents } from '@/types';
+import { FetchError, InputEvents } from '@/types';
 import { motion } from 'framer-motion';
 import actions from '@/shared/actions';
 import Layout from '@/components/Layout';
@@ -43,16 +43,16 @@ export default function Purchase() {
         ...state,
         checkout: {
           ...state.checkout,
-          [e.target.name]: e.target.value,
-        },
-      },
+          [e.target.name]: e.target.value
+        }
+      }
     });
   };
 
   const handlePayment = async () => {
     try {
       const {
-        data: { order_code, order_id },
+        data: { order_code, order_id }
       } = await useFetchAPI<{ order_id: string; order_code: string }>({
         method: 'post',
         url: `/api/v1/checkout/orders`,
@@ -63,19 +63,19 @@ export default function Purchase() {
           location: state.checkout.location,
           cart: state.cart.map((product) => ({
             product_id: product.productId,
-            quantity: product.quantity,
+            quantity: product.quantity
           })),
           payment: {
             type: state.checkout.payment.type,
-            account: state.checkout.payment.data.mpesa_account,
-          },
-        },
+            account: state.checkout.payment.data.mpesa_account
+          }
+        }
       });
       router.push(
         `/ecommerce/products/purchase-finalization?order=${order_id}&code=${order_code}`
       );
-    } catch (error: any) {
-      console.error(error.response?.data?.message || error);
+    } catch (error) {
+      console.error((error as FetchError).response?.data?.message || error);
     }
   };
 
@@ -84,7 +84,7 @@ export default function Purchase() {
       metadata={{
         title: `${complements.defaultTitle} | Pagamento de Produtos`,
         updatedAt: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
+        createdAt: new Date().toISOString()
       }}>
       <Container>
         <div className='wrapper-container'>
@@ -250,10 +250,10 @@ export default function Purchase() {
                               ...state.checkout,
                               location: {
                                 ...state.checkout.location,
-                                state: String(option.value),
-                              },
-                            },
-                          },
+                                state: String(option.value)
+                              }
+                            }
+                          }
                         });
                       }}
                     />
@@ -284,10 +284,10 @@ export default function Purchase() {
                                   ...state.checkout,
                                   location: {
                                     ...state.checkout.location,
-                                    zip_code: e.target.value,
-                                  },
-                                },
-                              },
+                                    zip_code: e.target.value
+                                  }
+                                }
+                              }
                             })
                       }
                     />
@@ -320,10 +320,10 @@ export default function Purchase() {
                                   ...state.checkout,
                                   location: {
                                     ...state.checkout.location,
-                                    adress: e.target.value,
-                                  },
-                                },
-                              },
+                                    adress: e.target.value
+                                  }
+                                }
+                              }
                             })
                       }
                     />
@@ -376,7 +376,7 @@ export default function Purchase() {
                       className='payment-option'
                       whileTap={{ scale: 0.98 }}
                       whileHover={{
-                        boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`,
+                        boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`
                       }}>
                       <label htmlFor={String(index)}>
                         <span>Pagar com {option.label}</span>
@@ -400,10 +400,10 @@ export default function Purchase() {
                                 ...state.checkout,
                                 payment: {
                                   ...state.checkout.payment,
-                                  type: e.target.value as any,
-                                },
-                              },
-                            },
+                                  type: e.target.value as any
+                                }
+                              }
+                            }
                           })
                         }
                       />

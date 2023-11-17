@@ -12,7 +12,7 @@ import { formatDate } from '@/lib/utils';
 import Layout from '@/components/Layout';
 import actions from '@/shared/actions';
 import { useRouter } from 'next/router';
-import { getStoresData } from '@/lib/queries';
+import { getStoresData } from '@/shared/queries';
 import { IoMdCalendar } from 'react-icons/io';
 import { complements } from '@/shared/data';
 import { PublicStoreList } from '@/types';

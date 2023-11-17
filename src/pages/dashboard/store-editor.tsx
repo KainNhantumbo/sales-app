@@ -17,7 +17,7 @@ import {
   IoStar,
   IoStorefront,
   IoSyncOutline,
-  IoTrashOutline,
+  IoTrashOutline
 } from 'react-icons/io5';
 import Image from 'next/image';
 import Compressor from 'compressorjs';
@@ -27,7 +27,7 @@ import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
 import { complements } from '@/shared/data';
 import countries from '@/shared/countries.json';
-import { InputEvents, TStore } from '@/types';
+import { FetchError, InputEvents, TStore } from '@/types';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
@@ -54,23 +54,23 @@ export default function StoreEditor() {
 
   const [loading, setLoading] = useState<TLoading>({
     status: false,
-    key: 'store-data',
+    key: 'store-data'
   });
   const [error, setError] = useState<TError>({
     status: false,
     msg: '',
-    key: 'store-data',
+    key: 'store-data'
   });
 
   // --------------------states---------------------
   const [countryStates, setCountryStates] = useState<string[]>([
-    state.store.location?.state,
+    state.store.location?.state
   ]);
   const [coverImageFile, setCoverImageFile] = useState<FileList | null>(null);
 
   const [coverImageData, setCoverImageData] = useState({
     id: '',
-    data: '',
+    data: ''
   });
 
   // --------------------functions------------------
@@ -81,9 +81,9 @@ export default function StoreEditor() {
         ...state,
         store: {
           ...state.store,
-          [e.target.name]: e.target.value,
-        },
-      },
+          [e.target.name]: e.target.value
+        }
+      }
     });
   };
 
@@ -102,10 +102,10 @@ export default function StoreEditor() {
             const encodedImage: string = e.target?.result as string;
             setCoverImageData({
               id: state.user.cover_image?.id || '',
-              data: encodedImage,
+              data: encodedImage
             });
           };
-        },
+        }
       });
     }
   };
@@ -114,7 +114,7 @@ export default function StoreEditor() {
     useFetchAPI({
       method: 'delete',
       url: `/api/v1/users/store/assets`,
-      data: { assetId: state.store.cover_image?.id },
+      data: { assetId: state.store.cover_image?.id }
     })
       .then(() => {
         setCoverImageData({ id: '', data: '' });
@@ -124,9 +124,9 @@ export default function StoreEditor() {
             ...state,
             store: {
               ...state.store,
-              cover_image: { id: '', url: '' },
-            },
-          },
+              cover_image: { id: '', url: '' }
+            }
+          }
         });
       })
       .catch((error) => {
@@ -139,23 +139,23 @@ export default function StoreEditor() {
       setLoading({ status: true, key: 'store-data' });
       const { data } = await useFetchAPI<TStore>({
         method: 'get',
-        url: `/api/v1/users/store`,
+        url: `/api/v1/users/store`
       });
       dispatch({
         type: actions.STORE_DATA,
         payload: {
           ...state,
-          store: { ...state.store, ...data },
-        },
+          store: { ...state.store, ...data }
+        }
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
       setError({
         status: true,
         msg:
-          error?.response?.data?.message ||
+          (error as FetchError).response?.data?.message ||
           'Oops! Algo deu errado. Tente novamente.',
-        key: 'store-data',
+        key: 'store-data'
       });
     } finally {
       setLoading({ status: false, key: 'store-data' });
@@ -178,17 +178,18 @@ export default function StoreEditor() {
           delivery_policy: state.store.delivery_policy,
           location: state.store.location,
           active: state.store.active,
-          coverImageData,
-        },
+          coverImageData
+        }
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
       setError({
         status: true,
         msg:
-          error?.response?.data?.message ||
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message ||
           'Oops! Algo deu errado. Tente novamente.',
-        key: 'store-update',
+        key: 'store-update'
       });
     } finally {
       setLoading({ status: false, key: 'store-update' });
@@ -226,7 +227,7 @@ export default function StoreEditor() {
       metadata={{
         title: `${complements.defaultTitle} | Editor de Loja`,
         updatedAt: state.store.updatedAt,
-        createdAt: state.store.createdAt,
+        createdAt: state.store.createdAt
       }}>
       <Container>
         <DeactivatePrompt />
@@ -363,9 +364,9 @@ export default function StoreEditor() {
                                 ...state,
                                 store: {
                                   ...state.store,
-                                  category: e.target.value,
-                                },
-                              },
+                                  category: e.target.value
+                                }
+                              }
                             });
                           }}>
                           {product_categories
@@ -473,10 +474,10 @@ export default function StoreEditor() {
                                   ...state.store,
                                   location: {
                                     ...state.store.location,
-                                    country: e.target.value,
-                                  },
-                                },
-                              },
+                                    country: e.target.value
+                                  }
+                                }
+                              }
                             });
                           }}>
                           {countries
@@ -507,10 +508,10 @@ export default function StoreEditor() {
                                   ...state.store,
                                   location: {
                                     ...state.store.location,
-                                    state: e.target.value,
-                                  },
-                                },
-                              },
+                                    state: e.target.value
+                                  }
+                                }
+                              }
                             });
                           }}>
                           {countryStates
@@ -547,10 +548,10 @@ export default function StoreEditor() {
                                       ...state.store,
                                       location: {
                                         ...state.store.location,
-                                        adress: e.target.value,
-                                      },
-                                    },
-                                  },
+                                        adress: e.target.value
+                                      }
+                                    }
+                                  }
                                 })
                           }
                         />
@@ -683,9 +684,9 @@ export default function StoreEditor() {
                         ...state,
                         store: {
                           ...state.store,
-                          active: !state.store.active,
-                        },
-                      },
+                          active: !state.store.active
+                        }
+                      }
                     })
                   }>
                   <IoRadioButtonOff color={`rgb(${theme.error})`} />
@@ -738,7 +739,7 @@ export default function StoreEditor() {
                         color={`rgb(${theme.primary})`}
                         aria-placeholder='Processando...'
                         cssOverride={{
-                          display: 'block',
+                          display: 'block'
                         }}
                       />
                       <span>Processando...</span>

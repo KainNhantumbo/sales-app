@@ -45,7 +45,7 @@ import { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
 import countries from '@/shared/countries.json';
 import { complements } from '@/shared/data';
-import { InputEvents, User } from '@/types';
+import { FetchError, InputEvents, User } from '@/types';
 import user_languages from '@/shared/languages.json';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
@@ -196,7 +196,10 @@ export default function ProfileEditor() {
         });
       })
       .catch((error) => {
-        console.error(error?.response?.data?.message || error);
+        console.error(
+          (error as FetchError).response?.data?.message ||
+            (error as FetchError).message
+        );
       });
   };
 
@@ -214,11 +217,15 @@ export default function ProfileEditor() {
         });
       })
       .catch((error) => {
-        console.error(error?.response?.data?.message || error);
+        console.error(
+          (error as FetchError).response?.data?.message ||
+            (error as FetchError).message
+        );
         setError({
           status: true,
           msg:
-            error?.response?.data?.message ||
+            (error as FetchError).response?.data?.message ||
+            (error as FetchError).message ||
             'Oops! Algo deu errado. Tente novamente.',
           key: 'user-data'
         });
@@ -272,12 +279,13 @@ export default function ProfileEditor() {
           user: { ...data }
         }
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
       setError({
         status: true,
         msg:
-          error?.response?.data?.message ||
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message ||
           'Oops! Algo deu errado. Tente novamente.',
         key: 'user-update'
       });

@@ -9,14 +9,15 @@ import { useAppContext } from '@/context/AppContext';
 import { useTheme } from 'styled-components';
 import newsletter_image from '../../public/assets/newsletter.png';
 import { _newsletter as Container } from '../styles/modules/newsletter';
+import { FetchError } from '@/types';
 
-export default function NewsLetter () {
+export default function NewsLetter() {
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<{ status: boolean; message: string }>({
     status: false,
-    message: '',
+    message: ''
   });
 
   const handleEmailSubmition = async () => {
@@ -25,22 +26,27 @@ export default function NewsLetter () {
       await fetch({
         method: 'post',
         url: '/api/v1/users/newsletter',
-        data: state.newSubscriptorValue,
+        data: state.newSubscriptorValue
       });
       dispatch({
         type: actions.NEW_SUBSCRIPTOR_VALUE,
         payload: {
           ...state,
-          newSubscriptorValue: { subscriptor: '' },
-        },
+          newSubscriptorValue: { subscriptor: '' }
+        }
       });
       setError({
         status: true,
-        message: 'Inscreveu-se a newsletter com sucesso.',
+        message: 'Inscreveu-se a newsletter com sucesso.'
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
-      setError({ status: true, message: error?.response?.data?.message });
+      setError({
+        status: true,
+        message:
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      });
     } finally {
       setLoading(false);
     }
@@ -91,8 +97,8 @@ export default function NewsLetter () {
                       type: actions.NEW_SUBSCRIPTOR_VALUE,
                       payload: {
                         ...state,
-                        newSubscriptorValue: { subscriptor: e.target.value },
-                      },
+                        newSubscriptorValue: { subscriptor: e.target.value }
+                      }
                     })
                   }
                 />
@@ -113,7 +119,7 @@ export default function NewsLetter () {
                   aria-placeholder='Processando...'
                   cssOverride={{
                     display: 'block',
-                    margin: '0 auto',
+                    margin: '0 auto'
                   }}
                 />
               </>
@@ -123,5 +129,4 @@ export default function NewsLetter () {
       </section>
     </Container>
   );
-};
-
+}

@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import Layout from '@/components/Layout';
 import actions from '@/shared/actions';
-import { ProductsList } from '@/types';
+import { FetchError, ProductsList } from '@/types';
 import { formatCurrency } from '@/lib/utils';
 import { useTheme } from 'styled-components';
 import { complements } from '@/shared/data';
@@ -37,7 +37,7 @@ export default function Products() {
     shareProductController,
     deleteProductPromptController
   } = useAppContext();
-  const LIMIT: number = 12 
+  const LIMIT: number = 12;
   const theme = useTheme();
   const { ref, inView } = useInView();
 
@@ -75,8 +75,11 @@ export default function Products() {
       });
       deleteProductPromptController(false, '');
       refetch({ queryKey: ['private-store-products'] });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 

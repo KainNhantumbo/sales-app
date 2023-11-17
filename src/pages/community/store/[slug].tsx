@@ -35,7 +35,7 @@ import SideBarAds from '@/components/SidaBarAds';
 import { VscVerifiedFilled } from 'react-icons/vsc';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import { PublicProducts, PublicStore } from '@/types';
+import { PublicProducts, PublicStore, FetchError } from '@/types';
 import { _store as Container } from '@/styles/common/community-store-profile';
 
 type Props = { store?: PublicStore; products: PublicProducts[] };
@@ -84,8 +84,11 @@ export default function StoreProfile({ store, products }: Props) {
           ]
         }
       });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   }
 
@@ -109,8 +112,11 @@ export default function StoreProfile({ store, products }: Props) {
           ]
         }
       });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   }
 

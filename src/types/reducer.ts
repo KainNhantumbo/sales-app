@@ -1,9 +1,9 @@
 import {
   IBlogPosts,
   IComment,
-  IPublicStory,
-  ISignInData,
-  ISignUp,
+  PublicStory,
+  SignIn,
+  SignUp,
   Product,
   ProductsList,
   PublicProducts,
@@ -14,13 +14,13 @@ import {
   TPublicProduct,
   TPurchaseCheckOut,
   TSearchProducts,
-  TStory,
+  Story,
   User,
   PublicStoreList,
   TOrder,
   TMetrics,
   TBannerAds,
-  TModalProps
+  Modal
 } from './index';
 
 export type State = {
@@ -43,8 +43,8 @@ export type State = {
   searchStores: string;
   searchStories: string;
   newSubscriptorValue: { subscriptor: string };
-  signupData: ISignUp;
-  signInData: ISignInData;
+  signupData: SignUp;
+  signInData: SignIn;
   user: User;
   store: TStore;
   product: Product;
@@ -60,12 +60,12 @@ export type State = {
   cart: Cart[];
   orders: TOrder[];
   checkout: TPurchaseCheckOut;
-  story: TStory;
-  publicStories: IPublicStory[];
+  story: Story;
+  publicStories: PublicStory[];
   publicStoresList: PublicStoreList;
   metrics: TMetrics;
   banner_ads: TBannerAds[];
-  prompt: TModalProps;
+  prompt: Modal;
 };
 
 export type Action = { type: string; payload: State };

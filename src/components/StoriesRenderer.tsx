@@ -16,7 +16,7 @@ import actions from '@/shared/actions';
 import { BsTrash } from 'react-icons/bs';
 import { complements } from '@/shared/data';
 import { useAppContext } from '@/context/AppContext';
-import { IPublicStory } from '../types';
+import { FetchError, PublicStory } from '../types';
 import { useRouter } from 'next/router';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { PulseLoader } from 'react-spinners';
@@ -42,8 +42,8 @@ export default function StoriesRenderer(props: Props) {
 
   const getStories = async ({
     pageParam = 0
-  }): Promise<{ data: IPublicStory[]; currentOffset: number }> => {
-    const { data } = await fetch<IPublicStory[]>({
+  }): Promise<{ data: PublicStory[]; currentOffset: number }> => {
+    const { data } = await fetch<PublicStory[]>({
       method: 'get',
       url: `/api/v1/users/stories${
         props.userId ? `?userId=${props.userId}` : ''
@@ -74,8 +74,11 @@ export default function StoriesRenderer(props: Props) {
       });
       deleteStoryPromptController(false, '');
       refetch({ queryKey: ['user-stories'] });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 
@@ -96,8 +99,11 @@ export default function StoriesRenderer(props: Props) {
           ]
         }
       });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 
@@ -118,8 +124,11 @@ export default function StoriesRenderer(props: Props) {
           ]
         }
       });
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
     }
   };
 

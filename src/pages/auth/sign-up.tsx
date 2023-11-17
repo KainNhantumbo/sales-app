@@ -15,7 +15,7 @@ import { useTheme } from 'styled-components';
 import { complements } from '@/shared/data';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { InputEvents, SubmitEvent } from '@/types';
+import { FetchError, InputEvents, SubmitEvent } from '@/types';
 import { _signUp as Container } from '@/styles/common/sign-up';
 import backgroundImage from '@/../public/assets/africa-unveiled.png';
 
@@ -63,11 +63,16 @@ export default function SignUp() {
         }
       });
       router.push('/auth/sign-up-confirm');
-    } catch (error: any) {
-      console.error(error?.response?.data?.message || error);
+    } catch (error) {
+      console.error(
+        (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
+      );
       setError({
         status: true,
-        message: error?.response?.data?.message || error?.code
+        message:
+          (error as FetchError).response?.data?.message ||
+          (error as FetchError).message
       });
     } finally {
       setLoading(false);
