@@ -1,38 +1,113 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ✨ Ecommerce Platform (Next.JS + TS)
 
-## Getting Started
+Welcome to this **ecommerce app** app repository, built with Next.JS and Typescript, and of course, with a flavour of tons of awesome community open source packages.
 
-First, run the development server:
+So, while learning something new, I wanted to embrace the adventure of creating this project.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+I wanted to create an app similar to shopify but small in size, keeping the concept of creating a platform where users can create their virtual stores in one place, without worrying of infrastructure management by the user.
+
+You can find the API source code [here](https://github.com/KainNhantumbo/sales-api).
+
+**Access this app live at: [https://rubymart-demo.vercel.app](https://rubymart-demo.vercel.app)**
+
+## 📷 **Here are some screenshots:**
+
+      
+
+![](./src/assets/1.png?raw=true)
+![](./src/assets/2.png?raw=true)
+![](./src/assets/3.png?raw=true)
+![](./src/assets/4.png?raw=true)
+![](./src/assets/5.png?raw=true)
+
+
+## 🌠 Project status
+
+Note: This project still under development and not all of the features stated before may be already available yet. Further details of its bulding, software architecture and features will be given as the app grows.
+
+## 🌳 Project structure
+
+```
+$PROJECT_ROOT
+│
+├── public
+└── src
+    ├── assets
+    ├── components
+    ├── config
+    ├── context
+    ├── lib
+    ├── pages
+    ├── shared
+    ├── styles
+    └── types
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🐾 Project Stack
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- **Typescript** - a superset language of Javascript that provides typechecking.
+- **Vite** - a next generation frontend tooling.
+- **React.JS** - library used to build big, fast Web apps with JavaScript.
+- **Styled Components** - library to write styles for components.
+- **Node.JS** - javascript runtime.
+- **Framer-motion** - for advanced layout animations.
+- **Tanstack Query (known as React Query)** - library that simplifies query management, state and caching.
+- **Editor.JS** - enables an advanced text editing in textareas with plugins (give it a try).
+- **React Gallery** - a library that adds a wrapper to present images.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## 🎊 Features Log
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### - Version v0.27.0 (beta) [First Release]
+- **Accessbility and layout**: added support dark and light themes. Users can change theme manually or based on operationg system color scheme.  
+- **Stores**: added support to create and customize store profile, cover image and insert details.
+- **Denounce system**: users can denounce products that doesn't meet the community guidelines, contain offensive or inappropriate content;
+- **Stores**: added support manage store products and visualize their metrics.
+- **Cart**: added support to manage and tag cart items.
+- **Users**: users can have a customizable profile, including profile and cover images. 
+- **Built-in comments system**: users can now add comments to products.
+- **Auth**: Handle user login, registration and authentication with jwt (JSON web tokens) strategy.
+- **Server API**: Store all data in Mongo DB, handled by a separated Node.JS with Express.JS server application.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 🏗️ Testing and Local Setup
 
-## Learn More
+Make sure you have installed **Node.js (v18.17.0 or later recommended) which also comes with npm v9.6.7**.\
+In the project directory, you can run in terminal:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+ npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Runs the app in the development mode and the server will reload when you make changes to the source code.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+npm run build
+```
 
-## Deploy on Vercel
+Builds the app for production to the **dist folder**.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Builds and starts the server in prodution.
+
+## ☘️  Find me!
+
+📭 E-mail: [nhantumbok@gmail.com](nhantumbok@gmail.com 'Send an e-mail')\
+📚 Github: [https://github.com/KainNhantumbo](https://github.com/KainNhantumbo 'See my github profile')  
+📑 Portfolio: [https://portifolio-dev-mu.vercel.app](https://portifolio-dev-mu.vercel.app 'See my portfolio website')\
+✒️ My Blog: [https://publish-it-programming.vercel.app](https://publish-it-programming.vercel.app 'Visit my blog site')
+
+#### If you like this project, let me know by leaving a star on this repository so I can keep improving this app.😊😘
+
+Best regards, Kain Nhantumbo.\
+✌️🇲🇿 **Made with ❤ Next.JS and Typescript**
+
+## 📜 License
+
+Licensed under Apache License 2.0. All rights reserved.\
+Copyright &copy; 2023 Kain Nhantumbo.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.

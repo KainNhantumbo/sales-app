@@ -1,15 +1,38 @@
 {
   "name": "Rubymart",
-  "version": "0.26.0 (beta)",
+  "description": "ecommerce platform application",
+  "version": "0.27.0 (beta)",
   "private": true,
-  "author": "Kain Nhantumbo",
-  "url": "https://rubymart.vercel.app",
+  "author": {
+    "name": "Kain Nhantumbo",
+    "email": "nhantumbok@gmail.com",
+    "portfolio": "https://codenut-dev.vercel.app",
+    "github": "https://github.com/KainNhantumbo",
+    "linkedin": "https://www.linkedin.com/in/kain-nhantumbo?locale=en_US"
+  },
+  "url": "https://rubymart-demo.vercel.app",
   "companyName": "Ruby Labs S.U.,Lda.",
   "websiteName": "Rubymart - Sales Store of Mozambique",
   "email": "connectadevelops@gmail.com",
   "copyrightSentence": "© 2023 Rubymart | Todos os Direitos Reservados.",
   "disqusName": "shopping-tree",
   "notice": "Notice: This product, logos, design and trademarks are propriety of Ruby Labs S.U.,Lda., witch is protected by the laws of Republic of Mozambique. Any kind of unauthorized copy of this product or its parts, will be considered infringement and its perpetrators will be persecuted until the last maximum penalty alowed by law.",
+  "browserslist": [
+    "defaults",
+    "not IE 11"
+  ],
+  "keywords": [
+    "store",
+    "webstore platform application",
+    "ecommerce store",
+    "rubymart frontend next application"
+  ],
+  "engines": {
+    "node": ">=18.17.0",
+    "npm": ">=9.6.7"
+  },
+  "license": "Apache License Version 2.0",
+  "repository": "https://github.com/KainNhantumbo/sales-app",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
