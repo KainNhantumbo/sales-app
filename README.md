@@ -4,22 +4,19 @@ Welcome to this **ecommerce app** app repository, built with Next.JS and Typescr
 
 So, while learning something new, I wanted to embrace the adventure of creating this project.
 
-I wanted to create an app similar to shopify but small in size, keeping the concept of creating a platform where users can create their virtual stores in one place, without worrying of infrastructure management by the user.
+I wanted to create an app similar to shopify but small in size, keeping the concept of creating a platform where users can create their virtual stores in one place, without worrying about the infrastructure management, layout customization or anything else.
 
-You can find the API source code [here](https://github.com/KainNhantumbo/sales-api).
+You can find the API source code [here](https://github.com/KainNhantumbo/sales-api) to learn more about the features implementation on the backend.
 
 **Access this app live at: [https://rubymart-demo.vercel.app](https://rubymart-demo.vercel.app)**
 
 ## 📷 **Here are some screenshots:**
-
-      
 
 ![](./src/assets/1.png?raw=true)
 ![](./src/assets/2.png?raw=true)
 ![](./src/assets/3.png?raw=true)
 ![](./src/assets/4.png?raw=true)
 ![](./src/assets/5.png?raw=true)
-
 
 ## 🌠 Project status
 
@@ -58,14 +55,35 @@ $PROJECT_ROOT
 ## 🎊 Features Log
 
 ### - Version v0.27.0 (beta) [First Release]
-- **Accessbility and layout**: added support dark and light themes. Users can change theme manually or based on operationg system color scheme.  
-- **Stores**: added support to create and customize store profile, cover image and insert details.
-- **Denounce system**: users can denounce products that doesn't meet the community guidelines, contain offensive or inappropriate content;
-- **Stores**: added support manage store products and visualize their metrics.
-- **Cart**: added support to manage and tag cart items.
-- **Users**: users can have a customizable profile, including profile and cover images. 
+
+- **Accessbility and layout**: added support dark and light themes. Users can change theme manually or based on operationg system color scheme.
+
+- **Feed**: users can create, favorite and share posts, then publish on a feed availabe for the public.
+
+- **Denounce system**: users can denounce products that doesn't meet the community guidelines, contain offensive or inappropriate content.
+
+- **Cart**:
+
+  1. added support to manage (add, remove and update) cart items.
+  2. added support to favorite products.
+  3. cart state is stored on local storage.
+
+- **Stores**:
+
+  1. Added support manage store products, search other stores and visualize their metrics.
+  2. Added support to create and customize store profile, cover image and insert details.
+  3. Support to manualy activate or deactivate store (modifies public visibility of the store and all products in it).
+  4. Stores can be verified (e.g. store certification).
+
+- **Users**:
+
+  1. Users can have a customizable profile, including profile and cover images.
+  2. Handle user login, registration and authentication with jwt (JSON web tokens) strategy.
+  3. Users can sign a monthly subscription to maintain then stores active;
+  4. View list of favorited products.
+
 - **Built-in comments system**: users can now add comments to products.
-- **Auth**: Handle user login, registration and authentication with jwt (JSON web tokens) strategy.
+
 - **Server API**: Store all data in Mongo DB, handled by a separated Node.JS with Express.JS server application.
 
 ## 🏗️ Testing and Local Setup
@@ -91,7 +109,7 @@ npm run start
 
 Builds and starts the server in prodution.
 
-## ☘️  Find me!
+## ☘️ Find me!
 
 📭 E-mail: [nhantumbok@gmail.com](nhantumbok@gmail.com 'Send an e-mail')\
 📚 Github: [https://github.com/KainNhantumbo](https://github.com/KainNhantumbo 'See my github profile')  
