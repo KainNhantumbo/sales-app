@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { _metrics as Container } from '@/styles/modules/metrics';
-import { useQuery } from '@tanstack/react-query';
-import { useAppContext } from '@/context/AppContext';
 import { TMetrics } from '../types';
 import actions from '@/shared/actions';
 import { BiStats } from 'react-icons/bi';
 import { formatCurrency } from '@/lib/utils';
+import { useQuery } from '@tanstack/react-query';
+import { useAppContext } from '@/context/AppContext';
+import { _metrics as Container } from '@/styles/modules/metrics';
 
 export default function Metrics() {
   const { state, dispatch, useFetchAPI } = useAppContext();
@@ -35,7 +35,7 @@ export default function Metrics() {
   useEffect(() => {
     refetch({ queryKey: ['metrics'] });
   }, [state.auth, state.store, state.productList]);
-
+  
   return (
     <Container id='metrics'>
       <h2>

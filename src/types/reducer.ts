@@ -1,6 +1,5 @@
 import {
   IBlogPosts,
-  IComment,
   PublicStory,
   SignIn,
   SignUp,
@@ -22,6 +21,7 @@ import {
   TBannerAds,
   Modal
 } from './index';
+import { TComment, IComment } from './comments';
 
 export type State = {
   isDeleteAccountPrompt: boolean;

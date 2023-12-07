@@ -1,7 +1,7 @@
 import type { StylesConfig } from 'react-select';
 import type { DefaultTheme } from 'styled-components';
 
-export function selectStyles(theme): StylesConfig {
+export function selectStyles(theme: DefaultTheme): StylesConfig {
   return {
     singleValue: (base) => ({ ...base, color: `rgb(${theme.font})` }),
     control: (baseStyles) => ({

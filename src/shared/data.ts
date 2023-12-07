@@ -57,7 +57,7 @@ import mpesa_logo from '@/../public/trademarks/mpesa logo.png';
 const blurDataUrlImage = blurImage.data;
 
 const author: Author = {
-  name: Package.author,
+  name: Package.author.name,
   picture: authorPicture,
   description:
     'É um prazer te apresentar ao excitante mundo dos negócios, transmitindo conhecimentos que ajudarão a alcançar todo o seu potencial em sua jornada, fazendo de cada passo dado, uma experiência inovadora. Vamos trilhar este caminho juntos?'

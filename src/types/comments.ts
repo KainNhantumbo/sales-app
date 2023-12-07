@@ -18,7 +18,6 @@ export type TCommentForm = {
   };
 };
 
-
 export type TComment = {
   comment: IComment;
   clearCommentData: () => void;

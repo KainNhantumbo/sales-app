@@ -81,6 +81,7 @@ $PROJECT_ROOT
   2. Handle user login, registration and authentication with jwt (JSON web tokens) strategy.
   3. Users can sign a monthly subscription to maintain then stores active;
   4. View list of favorited products.
+  5. Users can share public products on social media.
 
 - **Built-in comments system**: users can now add comments to products.
 
