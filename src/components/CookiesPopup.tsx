@@ -50,7 +50,7 @@ export default function CookiesPopup() {
                 Nosso site utiliza cookies para te proporcionar uma melhor
                 experiência. Ao acessar o site da {complements.defaultTitle},
                 você concorda com a nossa{'  '}
-                <Link href='/legal/privacy-policy'>
+                <Link href='/legal/privacy'>
                   <strong>Política de Privacidade e Cookies</strong>
                 </Link>
                 .

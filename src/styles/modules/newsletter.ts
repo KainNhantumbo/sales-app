@@ -89,9 +89,12 @@ export const _newsletter = styled.section`
       }
 
       button {
-        width: 100%;
-        min-width: 140px;
         ${BaseButton}
+        width: 100%;
+        max-width: 80px;
+        span {
+          padding:0;
+        }
       }
     }
   }

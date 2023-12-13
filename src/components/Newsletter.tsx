@@ -103,7 +103,7 @@ export default function NewsLetter() {
                   }
                 />
                 <button type='submit' onClick={handleEmailSubmition}>
-                  <span>Inscrever-se</span>
+                  <span>Inscrever</span>
                 </button>
               </>
             )}

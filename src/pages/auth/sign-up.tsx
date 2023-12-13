@@ -231,7 +231,7 @@ export default function SignUp() {
         </main>
         <section className='base-container'>
           &copy; {complements.defaultTitle} |{' '}
-          <Link href={'/legal/privacy-policy'}>
+          <Link href={'/legal/privacy'}>
             <span>Política de Privacidade</span>
           </Link>
         </section>

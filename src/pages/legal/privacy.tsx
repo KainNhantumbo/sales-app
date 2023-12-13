@@ -2,7 +2,7 @@ import Layout from '@/components/Layout';
 import { complements } from '@/shared/data';
 import { _legal as Container } from '@/styles/common/legal';
 
-export default function PrivacyPolicy() {
+export default function Privacy() {
   return (
     <Layout
       metadata={{

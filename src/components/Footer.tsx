@@ -65,7 +65,7 @@ export default function Footer() {
               <Link href={'/legal/about'}>
                 <span>Sobre nós</span>
               </Link>
-              <Link href={'/legal/privacy-policy'}>
+              <Link href={'/legal/privacy'}>
                 <span>Política de Privacidade</span>
               </Link>
               <Link href={'/legal/code-of-conduct'}>
