@@ -89,11 +89,11 @@ export default function Denounce() {
             </h1>
             <section className='form-container'>
               <p>
-                Obrigado por denunciar qualquer abuso que viole nosso{' '}
+                Obrigado por denunciar qualquer abuso que viole o nosso{' '}
                 <Link href={'/legal/code-of-conduct'}>
                   <span>código de conduta</span>
                 </Link>{' '}
-                ou{' '}
+                ou os{' '}
                 <Link href={'/legal/terms-of-use'}>
                   <span>termos e condições</span>
                 </Link>

@@ -1,6 +1,6 @@
 const nextPWA = require('next-pwa')({
   dest: 'public',
-  disable: process.env.NODE_ENV === 'development',
+  disable: process.env.NODE_ENV !== 'production',
   register: true,
   scope: '/',
 });
@@ -9,9 +9,8 @@ const nextPWA = require('next-pwa')({
 module.exports = nextPWA({
   reactStrictMode: true,
   swcMinify: true,
-  env: {
-    API_BASE_URL: ''
-  },
+  optimizeFonts: false,
+  productionBrowserSourceMaps: false,
   compiler: {
     styledComponents: true
   },
@@ -21,8 +20,5 @@ module.exports = nextPWA({
         hostname: 'https://res.cloudinary.com/'
       }
     ]
-  },
-  experimental: {
-    scrollRestoration: true
   }
 });
