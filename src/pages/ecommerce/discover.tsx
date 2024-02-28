@@ -1,7 +1,7 @@
 import {
   IoBalloonOutline,
   IoHeartOutline,
-  IoStorefrontOutline,
+  IoStorefrontOutline
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -21,7 +21,7 @@ export default function Discover() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Descubra-nos`,
+        title: `${complements.defaultTitle} | Descubra-nos`
       }}>
       <Container>
         <article>
@@ -63,7 +63,7 @@ export default function Discover() {
                     dragElastic={0.2}
                     whileHover={{
                       translateY: -8,
-                      boxShadow: `0px 20px 25px rgba(${theme.black}, 0.09)`,
+                      boxShadow: `0px 20px 25px rgba(${theme.black}, 0.09)`
                     }}>
                     <card.icon />
                     <h3>{card.title}</h3>
@@ -120,7 +120,7 @@ export default function Discover() {
                       key={index.toString()}
                       whileHover={{
                         boxShadow: `0 0 25px rgba(${theme.black}, 0.09)`,
-                        border: '1px solid transparent',
+                        border: '1px solid transparent'
                       }}>
                       <h4>{plan.type}</h4>
                       <h3>{plan.title}</h3>
