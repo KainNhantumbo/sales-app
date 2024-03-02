@@ -319,9 +319,12 @@ export default function AppContext(props: Props) {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      validateAuth();
-    }, 1000 * 60 * 4);
+    const timer = setTimeout(
+      () => {
+        validateAuth();
+      },
+      1000 * 60 * 4
+    );
     return () => clearTimeout(timer);
   }, [state.auth]);
 

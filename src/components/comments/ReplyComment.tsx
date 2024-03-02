@@ -4,7 +4,7 @@ import {
   IoEllipse,
   IoFlag,
   IoHeart,
-  IoHeartOutline,
+  IoHeartOutline
 } from 'react-icons/io5';
 import moment from 'moment';
 import { useRouter } from 'next/router';

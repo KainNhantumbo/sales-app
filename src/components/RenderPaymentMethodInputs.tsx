@@ -40,11 +40,11 @@ export default function renderPaymentInputs(option: TPaymentType) {
                               type: option,
                               data: {
                                 ...state.checkout.payment.data,
-                                mpesa_account: e.target.value,
-                              },
-                            },
-                          },
-                        },
+                                mpesa_account: e.target.value
+                              }
+                            }
+                          }
+                        }
                       })
                 }
               />

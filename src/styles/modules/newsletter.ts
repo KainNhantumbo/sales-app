@@ -93,7 +93,7 @@ export const _newsletter = styled.section`
         width: 100%;
         max-width: 80px;
         span {
-          padding:0;
+          padding: 0;
         }
       }
     }

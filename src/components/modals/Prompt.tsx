@@ -18,8 +18,8 @@ export function PromptModal() {
                 type: actions.PROMPT,
                 payload: {
                   ...state,
-                  prompt: { ...state.prompt, status: false },
-                },
+                  prompt: { ...state.prompt, status: false }
+                }
               });
             }
           }}>
@@ -29,7 +29,7 @@ export function PromptModal() {
             animate={{
               opacity: 1,
               scale: 1,
-              transition: { duration: 0.3 },
+              transition: { duration: 0.3 }
             }}
             exit={{ opacity: 0, scale: 0 }}>
             <div className='dialog-prompt'>
@@ -45,8 +45,8 @@ export function PromptModal() {
                       type: actions.PROMPT,
                       payload: {
                         ...state,
-                        prompt: { ...state.prompt, status: false },
-                      },
+                        prompt: { ...state.prompt, status: false }
+                      }
                     })
                   }>
                   <span>Cancel</span>

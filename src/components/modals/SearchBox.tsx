@@ -18,9 +18,9 @@ export default function SearchBox() {
           ...state,
           productsListQuery: {
             ...state.productsListQuery,
-            query: inputValue,
-          },
-        },
+            query: inputValue
+          }
+        }
       });
       if (inputValue.length < 1) {
         dispatch({
@@ -29,9 +29,9 @@ export default function SearchBox() {
             ...state,
             productsListQuery: {
               ...state.productsListQuery,
-              query: '',
-            },
-          },
+              query: ''
+            }
+          }
         });
       }
     }, 300);

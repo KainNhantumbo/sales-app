@@ -20,8 +20,8 @@ export default function SearchStories() {
                 type: actions.SEARCH_USER_STORIES,
                 payload: {
                   ...state,
-                  searchStories: e.target.value,
-                },
+                  searchStories: e.target.value
+                }
               });
             }}
           />
@@ -33,7 +33,7 @@ export default function SearchStories() {
             onClick={() =>
               dispatch({
                 type: actions.SEARCH_USER_STORIES,
-                payload: { ...state, searchStories: '' },
+                payload: { ...state, searchStories: '' }
               })
             }>
             <IoClose />

@@ -13,7 +13,7 @@ export default function Pricing() {
   return (
     <Layout
       metadata={{
-        title: String.prototype.concat(complements.defaultTitle, ' | Preçário'),
+        title: String.prototype.concat(complements.defaultTitle, ' | Preçário')
       }}>
       <Container>
         <article>
@@ -36,7 +36,7 @@ export default function Pricing() {
                       key={index.toString()}
                       whileHover={{
                         boxShadow: `0 0 25px rgba(${theme.black}, 0.09)`,
-                        border: '1px solid transparent',
+                        border: '1px solid transparent'
                       }}>
                       <h4>{plan.type}</h4>
                       <h3>{plan.title}</h3>

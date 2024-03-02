@@ -11,7 +11,7 @@ export default function ResetConfirmation() {
       metadata={{
         title: `${complements.defaultTitle} | Confirmação de Atualização de Senha`,
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       }}>
       <Container>
         <main>

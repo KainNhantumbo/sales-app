@@ -2,7 +2,7 @@ import {
   BaseButton,
   BaseButtonOutline,
   StyledInputs,
-  StyledLabels,
+  StyledLabels
 } from '../defaults';
 import styled from 'styled-components';
 

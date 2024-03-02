@@ -41,7 +41,7 @@ const actions = {
   PUBLIC_USER_STORIES: 'PUBLIC_USER_STORIES',
   ORDERS: 'ORDERS',
   QUERY_ORDERS: 'QUERY_ORDERS',
-  PROMPT: 'PROMPT',
+  PROMPT: 'PROMPT'
 };
 
 export default actions;

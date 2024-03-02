@@ -21,7 +21,7 @@ import {
   TBannerAds,
   Modal
 } from './index';
-import {  IComment } from './comments';
+import { IComment } from './comments';
 
 export type State = {
   isDeleteAccountPrompt: boolean;

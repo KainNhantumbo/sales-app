@@ -14,7 +14,7 @@ const SortOptions = [
   { code: 'price', name: 'Preço' },
   { code: '-price', name: 'Preço (desc.)' },
   { code: 'createdAt', name: 'Data de criação' },
-  { code: '-createdAt', name: 'Data de criação (desc.)' },
+  { code: '-createdAt', name: 'Data de criação (desc.)' }
 ];
 
 export default function SortBox() {
@@ -62,9 +62,9 @@ export default function SortBox() {
                           ...state,
                           productsListQuery: {
                             ...state.productsListQuery,
-                            sort: option.code,
-                          },
-                        },
+                            sort: option.code
+                          }
+                        }
                       });
                     }}>
                     <HiSelector />

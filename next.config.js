@@ -2,7 +2,7 @@ const nextPWA = require('next-pwa')({
   dest: 'public',
   disable: process.env.NODE_ENV !== 'production',
   register: true,
-  scope: '/',
+  scope: '/'
 });
 
 /** @type {import('next').NextConfig} */

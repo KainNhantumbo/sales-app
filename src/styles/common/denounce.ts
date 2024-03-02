@@ -3,7 +3,7 @@ import {
   BaseButton,
   BaseButtonOutline,
   StyledInputs,
-  StyledLabels,
+  StyledLabels
 } from '../defaults';
 
 export const DenounceContainer = styled.div`

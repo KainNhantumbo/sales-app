@@ -9,7 +9,7 @@ export default function Feed() {
   return (
     <Layout
       metadata={{
-        title: String.prototype.concat(complements.defaultTitle, ' | Feed'),
+        title: String.prototype.concat(complements.defaultTitle, ' | Feed')
       }}>
       <Container>
         <div className='searchbar-wrapper'>

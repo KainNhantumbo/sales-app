@@ -15,7 +15,7 @@ export const initialState: State = {
     price_range: NaN,
     promotion: undefined,
     query: '',
-    sort: '',
+    sort: ''
   },
   isPublicProductsFilters: false,
   productsListQuery: { query: '', sort: '' },
@@ -30,7 +30,7 @@ export const initialState: State = {
   blogPostsList: [],
   denounce: {
     reson: '',
-    content: '',
+    content: ''
   },
   auth: {
     id: '',
@@ -38,7 +38,7 @@ export const initialState: State = {
     token: '',
     email: '',
     storeId: '',
-    profile_image: '',
+    profile_image: ''
   },
   search: '',
   newSubscriptorValue: { subscriptor: '' },
@@ -47,11 +47,11 @@ export const initialState: State = {
     last_name: '',
     email: '',
     password: '',
-    confirm_password: '',
+    confirm_password: ''
   },
   signInData: {
     email: '',
-    password: '',
+    password: ''
   },
   user: {
     _id: '',
@@ -75,31 +75,31 @@ export const initialState: State = {
         start_date: '',
         description: '',
         portfolio_url: '',
-        company_name: '',
-      },
+        company_name: ''
+      }
     ],
     location: {
       country: '',
       state: '',
       adress: '',
-      zip_code: '',
+      zip_code: ''
     },
     social_network: {
       website: '',
       whatsapp: '',
       instagram: '',
       facebook: '',
-      linkedin: '',
+      linkedin: ''
     },
     createdAt: '',
-    updatedAt: '',
+    updatedAt: ''
   },
   metrics: {
     products: {
       blocked: 0,
       count: 0,
       total_price_amount_value: 0,
-      total_promotional_products: 0,
+      total_promotional_products: 0
     },
     orders: {
       count: 0,
@@ -109,14 +109,14 @@ export const initialState: State = {
         delivered: 0,
         pending_payment: 0,
         progress: 0,
-        returned: 0,
-      },
+        returned: 0
+      }
     },
     store: {
       active_status: false,
       blocked: false,
-      verified_status: false,
-    },
+      verified_status: false
+    }
   },
   store: {
     _id: '',
@@ -134,8 +134,8 @@ export const initialState: State = {
         whatsapp: '',
         instagram: '',
         facebook: '',
-        linkedin: '',
-      },
+        linkedin: ''
+      }
     },
     description: '',
     slogan: '',
@@ -147,10 +147,10 @@ export const initialState: State = {
     location: {
       country: 'Moçambique',
       state: 'Maputo',
-      adress: '',
+      adress: ''
     },
     createdAt: '',
-    updatedAt: '',
+    updatedAt: ''
   },
   product: {
     _id: '',
@@ -168,12 +168,12 @@ export const initialState: State = {
       img_0: { id: '', url: '' },
       img_1: { id: '', url: '' },
       img_2: { id: '', url: '' },
-      img_3: { id: '', url: '' },
+      img_3: { id: '', url: '' }
     },
     createdAt: '',
     updatedAt: '',
     favorites: [],
-    allow_comments: true,
+    allow_comments: true
   },
   comment: {
     _id: '',
@@ -182,13 +182,13 @@ export const initialState: State = {
       _id: '',
       first_name: '',
       last_name: '',
-      profile_image: { id: '', url: '' },
+      profile_image: { id: '', url: '' }
     },
     content: '',
     parent_id: '',
     favorites: [],
     updatedAt: '',
-    createdAt: '',
+    createdAt: ''
   },
   productList: [],
   publicProducts: [],
@@ -206,10 +206,10 @@ export const initialState: State = {
       location: {
         country: '',
         state: '',
-        adress: '',
+        adress: ''
       },
       category: '',
-      verified_store: false,
+      verified_store: false
     },
     promotion: { status: false, percentage: 0 },
     price: 0,
@@ -218,7 +218,7 @@ export const initialState: State = {
     createdAt: '',
     updatedAt: '',
     favorites: [],
-    allow_comments: true,
+    allow_comments: true
   },
   cart: [],
   checkout: {
@@ -229,19 +229,19 @@ export const initialState: State = {
       country: 'Moçambique',
       state: '',
       adress: '',
-      zip_code: '',
+      zip_code: ''
     },
     payment: {
       type: 'm-pesa',
       data: {
-        mpesa_account: '',
-      },
-    },
+        mpesa_account: ''
+      }
+    }
   },
   story: {
     title: '',
     content: '',
-    cover_image: { id: '', url: '' },
+    cover_image: { id: '', url: '' }
   },
   ordersQuery: { search: '', sort: '', status: '' },
   publicStories: [],
@@ -252,8 +252,8 @@ export const initialState: State = {
     status: false,
     message: '',
     actionButtonMessage: '',
-    handleFunction: () => {},
-  },
+    handleFunction: () => {}
+  }
 };
 
 export function reducer(state: State, action: Action): State {
@@ -263,7 +263,7 @@ export function reducer(state: State, action: Action): State {
         ...state,
         isFilterActive: false,
         isSortActive: false,
-        isSearchActive: action.payload.isSearchActive,
+        isSearchActive: action.payload.isSearchActive
       };
 
     case actions.SORT_BOX_CONTROL:
@@ -271,7 +271,7 @@ export function reducer(state: State, action: Action): State {
         ...state,
         isFilterActive: false,
         isSearchActive: false,
-        isSortActive: action.payload.isSortActive,
+        isSortActive: action.payload.isSortActive
       };
 
     case actions.CLEAN_UP_MODALS:
@@ -279,55 +279,55 @@ export function reducer(state: State, action: Action): State {
         ...state,
         isFilterActive: false,
         isSearchActive: false,
-        isSortActive: false,
+        isSortActive: false
       };
 
     case actions.PRODUCTS_LIST_QUERY:
       return {
         ...state,
-        productsListQuery: action.payload.productsListQuery,
+        productsListQuery: action.payload.productsListQuery
       };
 
     case actions.DELETE_ACCOUNT_PROMPT:
       return {
         ...state,
-        isDeleteAccountPrompt: action.payload.isDeleteAccountPrompt,
+        isDeleteAccountPrompt: action.payload.isDeleteAccountPrompt
       };
 
     case actions.DEACTIVATE_STORE_PROMPT:
       return {
         ...state,
-        isDeactivateStorePrompt: action.payload.isDeactivateStorePrompt,
+        isDeactivateStorePrompt: action.payload.isDeactivateStorePrompt
       };
 
     case actions.DELETE_PRODUCT_PROMPT:
       return {
         ...state,
-        isDeleteProductPrompt: action.payload.isDeleteProductPrompt,
+        isDeleteProductPrompt: action.payload.isDeleteProductPrompt
       };
 
     case actions.SHARE_PRODUCT_MODAL:
       return {
         ...state,
-        isShareProductModal: action.payload.isShareProductModal,
+        isShareProductModal: action.payload.isShareProductModal
       };
 
     case actions.DELETE_COMMENT_PROMPT:
       return {
         ...state,
-        isDeleteCommentPrompt: action.payload.isDeleteCommentPrompt,
+        isDeleteCommentPrompt: action.payload.isDeleteCommentPrompt
       };
 
     case actions.DELETE_STORY_PROMPT:
       return {
         ...state,
-        isDeleteStoryPrompt: action.payload.isDeleteStoryPrompt,
+        isDeleteStoryPrompt: action.payload.isDeleteStoryPrompt
       };
 
     case actions.USER_WORKING_DATA_MODAL:
       return {
         ...state,
-        isUserWorkingDataModal: action.payload.isUserWorkingDataModal,
+        isUserWorkingDataModal: action.payload.isUserWorkingDataModal
       };
 
     case actions.USER_AUTH:
@@ -336,19 +336,19 @@ export function reducer(state: State, action: Action): State {
     case actions.IS_CONNECTED:
       return {
         ...state,
-        isConnected: action.payload.isConnected,
+        isConnected: action.payload.isConnected
       };
 
     case actions.NEW_SUBSCRIPTOR_VALUE:
       return {
         ...state,
-        newSubscriptorValue: action.payload.newSubscriptorValue,
+        newSubscriptorValue: action.payload.newSubscriptorValue
       };
 
     case actions.SIGNUP_DATA:
       return {
         ...state,
-        signupData: action.payload.signupData,
+        signupData: action.payload.signupData
       };
 
     case actions.SIGNIN_DATA:
@@ -357,31 +357,31 @@ export function reducer(state: State, action: Action): State {
     case actions.USER_DATA:
       return {
         ...state,
-        user: action.payload.user,
+        user: action.payload.user
       };
 
     case actions.STORE_DATA:
       return {
         ...state,
-        store: action.payload.store,
+        store: action.payload.store
       };
 
     case actions.PUBLIC_PRODUCTS_LIST_DATA:
       return {
         ...state,
-        publicProducts: action.payload.publicProducts,
+        publicProducts: action.payload.publicProducts
       };
 
     case actions.PRODUCT_DATA:
       return {
         ...state,
-        product: action.payload.product,
+        product: action.payload.product
       };
 
     case actions.PRODUCTS_LIST_DATA:
       return {
         ...state,
-        productList: action.payload.productList,
+        productList: action.payload.productList
       };
 
     case actions.SEARCH:
@@ -390,25 +390,25 @@ export function reducer(state: State, action: Action): State {
     case actions.SEARCH_STORES:
       return {
         ...state,
-        searchStores: action.payload.searchStores,
+        searchStores: action.payload.searchStores
       };
 
     case actions.SEARCH_USER_STORIES:
       return {
         ...state,
-        searchStories: action.payload.searchStories,
+        searchStories: action.payload.searchStories
       };
 
     case actions.CREATE_COMMENT:
       return {
         ...state,
-        comment: action.payload.comment,
+        comment: action.payload.comment
       };
 
     case actions.UPDATE_COMMENTS_LIST:
       return {
         ...state,
-        commentsList: action.payload.commentsList,
+        commentsList: action.payload.commentsList
       };
 
     case actions.CREATE_DENOUNCE:
@@ -417,19 +417,19 @@ export function reducer(state: State, action: Action): State {
     case actions.BLOG_POSTS_LIST_QUERY:
       return {
         ...state,
-        blogPostsList: action.payload.blogPostsList,
+        blogPostsList: action.payload.blogPostsList
       };
 
     case actions.QUERY_PUBLIC_PRODUCTS_LIST:
       return {
         ...state,
-        queryPublicProducts: action.payload.queryPublicProducts,
+        queryPublicProducts: action.payload.queryPublicProducts
       };
 
     case actions.PUBLIC_PRODUCTS_FILTERS_MENU:
       return {
         ...state,
-        isPublicProductsFilters: action.payload.isPublicProductsFilters,
+        isPublicProductsFilters: action.payload.isPublicProductsFilters
       };
 
     case actions.PUBLIC_PRODUCT_DATA:

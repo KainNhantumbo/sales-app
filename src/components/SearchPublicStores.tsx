@@ -22,8 +22,8 @@ export default function SearchStores() {
                 type: actions.SEARCH_STORES,
                 payload: {
                   ...state,
-                  searchStores: e.target.value,
-                },
+                  searchStores: e.target.value
+                }
               });
             }}
           />

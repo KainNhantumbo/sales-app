@@ -6,7 +6,7 @@ export default function Privacy() {
   return (
     <Layout
       metadata={{
-        title: complements.defaultTitle + ' | Política de Privacidade',
+        title: complements.defaultTitle + ' | Política de Privacidade'
       }}>
       <Container>
         <article>

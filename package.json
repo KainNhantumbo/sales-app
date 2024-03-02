@@ -37,7 +37,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit -p ./tsconfig.json",
+    "format": "npx prettier --write \"**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx,json}\""
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.27.0",
@@ -71,6 +73,8 @@
   "devDependencies": {
     "@types/react-image-gallery": "^1.2.0",
     "@types/styled-components": "^5.1.26",
-    "eslint": "^8.50.0"
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.1.0",
+    "prettier": "^3.2.5"
   }
 }

@@ -11,7 +11,7 @@ export default function SignUpConfirmation() {
       metadata={{
         title: `${complements.defaultTitle} | Confirmação de Nova Conta`,
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       }}>
       <Container>
         <main>

@@ -4,7 +4,6 @@ import { IoAdd } from 'react-icons/io5';
 import { _sidebarAds as Container } from '@/styles/modules/sidebar-ads';
 
 export default function SideBarAds() {
-  
   return (
     <Container>
       <section className='no-ads'>

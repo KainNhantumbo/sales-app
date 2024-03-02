@@ -8,7 +8,7 @@ export default function FAQ() {
   return (
     <Layout
       metadata={{
-        title: complements.defaultTitle + ' | Perguntas Frequêntes',
+        title: complements.defaultTitle + ' | Perguntas Frequêntes'
       }}>
       <Container>
         <article className='faq-container'>

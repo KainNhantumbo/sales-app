@@ -2,7 +2,7 @@ import {
   BaseButton,
   BaseButtonOutline,
   StyledCornerButton,
-  StyledInputs,
+  StyledInputs
 } from '../defaults';
 import styled from 'styled-components';
 

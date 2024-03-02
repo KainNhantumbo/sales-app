@@ -3,7 +3,8 @@ import {
   IoLogInOutline,
   IoLogOutOutline,
   IoStorefrontOutline,
-  IoCartOutline,IoMenu
+  IoCartOutline,
+  IoMenu
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -58,7 +59,7 @@ export default function Header() {
               exit={{
                 opacity: 0,
                 translateY: -70,
-                transition: { duration: 0.25 },
+                transition: { duration: 0.25 }
               }}
               style={{ display: isMenu ? 'flex' : 'none' }}>
               <section>

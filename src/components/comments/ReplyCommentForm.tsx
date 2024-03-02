@@ -35,9 +35,9 @@ export default function ReplyCommentForm(props: TCommentForm) {
                     ...state,
                     comment: {
                       ...state.comment,
-                      content: e.target.value,
-                    },
-                  },
+                      content: e.target.value
+                    }
+                  }
                 });
               }}
             />
@@ -59,7 +59,7 @@ export default function ReplyCommentForm(props: TCommentForm) {
               color={`rgb(${theme.primary_shade})`}
               cssOverride={{
                 display: 'block',
-                margin: '0 auto',
+                margin: '0 auto'
               }}
             />
           </div>

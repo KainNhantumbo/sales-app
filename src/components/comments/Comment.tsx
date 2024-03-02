@@ -4,7 +4,7 @@ import {
   IoEllipse,
   IoFlag,
   IoHeart,
-  IoHeartOutline,
+  IoHeartOutline
 } from 'react-icons/io5';
 
 import moment from 'moment';
@@ -15,8 +15,7 @@ import { complements } from '@/shared/data';
 import { TComment } from '@/types/comments';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
-
-export default function Comment (props: TComment) {
+export default function Comment(props: TComment) {
   const router = useRouter();
   const { state, deleteCommentPromptController } = useAppContext();
 
@@ -139,5 +138,4 @@ export default function Comment (props: TComment) {
       </div>
     </>
   );
-};
-
+}

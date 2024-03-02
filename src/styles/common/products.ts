@@ -2,7 +2,7 @@ import {
   BaseButton,
   BaseButtonOutline,
   _endMarkStyles,
-  statsContainerStyles,
+  statsContainerStyles
 } from '../defaults';
 import styled from 'styled-components';
 

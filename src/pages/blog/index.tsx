@@ -4,7 +4,7 @@ import {
   IoGridOutline,
   IoHeart,
   IoReload,
-  IoStorefrontOutline,
+  IoStorefrontOutline
 } from 'react-icons/io5';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -37,7 +37,7 @@ export default function Blog() {
   async function fetchPosts({ pageParam = 0 }) {
     const { data } = await getPosts<IBlogPosts[]>({
       offset: pageParam * LIMIT,
-      limit: LIMIT,
+      limit: LIMIT
     });
     return { data, currentOffset: pageParam + 1 };
   }
@@ -47,7 +47,7 @@ export default function Blog() {
       queryKey: ['blog-posts'],
       queryFn: fetchPosts,
       getNextPageParam: (lastPage) =>
-        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined,
+        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
     });
 
   useEffect(() => {
@@ -62,15 +62,15 @@ export default function Blog() {
         type: actions.BLOG_POSTS_LIST_QUERY,
         payload: {
           ...state,
-          blogPostsList: [...reducedPosts],
-        },
+          blogPostsList: [...reducedPosts]
+        }
       });
     }
 
     return () => {
       dispatch({
         type: actions.BLOG_POSTS_LIST_QUERY,
-        payload: { ...state, blogPostsList: [] },
+        payload: { ...state, blogPostsList: [] }
       });
     };
   }, [data]);
@@ -189,7 +189,7 @@ export default function Blog() {
                       color={`rgb(${theme.primary_shade})`}
                       aria-placeholder='Processando...'
                       cssOverride={{
-                        display: 'block',
+                        display: 'block'
                       }}
                     />
                   </div>

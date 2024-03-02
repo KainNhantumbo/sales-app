@@ -4,7 +4,7 @@ Welcome to this **ecommerce app** app repository, built with Next.JS and Typescr
 
 So, while learning something new, I wanted to embrace the adventure of creating this project.
 
-I wanted to create an app similar to shopify but small in size, keeping the concept of creating a platform where users can create their virtual stores in one place, without worrying about the infrastructure management, layout customization or anything else.
+I wanted to create an app similar to Shopify but small in size, keeping the concept of creating a platform where users can create their virtual stores in one place, without worrying about the infrastructure management, layout customization or anything else.
 
 You can find the API source code [here](https://github.com/KainNhantumbo/sales-api) to learn more about the features implementation on the backend.
 
@@ -20,7 +20,7 @@ You can find the API source code [here](https://github.com/KainNhantumbo/sales-a
 
 ## 🌠 Project status
 
-Note: This project still under development and not all of the features stated before may be already available yet. Further details of its bulding, software architecture and features will be given as the app grows.
+Note: This project still under development and not all of the features stated before may be already available yet. Further details of its building, software architecture and features will be given as the app grows.
 
 ## 🌳 Project structure
 
@@ -49,16 +49,16 @@ $PROJECT_ROOT
 - **Node.JS** - javascript runtime.
 - **Framer-motion** - for advanced layout animations.
 - **Tanstack Query (known as React Query)** - library that simplifies query management, state and caching.
-- **Editor.JS** - enables an advanced text editing in textareas with plugins (give it a try).
+- **Editor.JS** - enables an advanced text editing in textarea with plugins (give it a try).
 - **React Gallery** - a library that adds a wrapper to present images.
 
 ## 🎊 Features Log
 
 ### - Version v0.27.0 (beta) [First Release]
 
-- **Accessbility and layout**: added support dark and light themes. Users can change theme manually or based on operationg system color scheme.
+- **Accessability and layout**: added support dark and light themes. Users can change theme manually or based on operating system color scheme.
 
-- **Feed**: users can create, favorite and share posts, then publish on a feed availabe for the public.
+- **Feed**: users can create, favorite and share posts, then publish on a feed available for the public.
 
 - **Denounce system**: users can denounce products that doesn't meet the community guidelines, contain offensive or inappropriate content.
 
@@ -72,7 +72,7 @@ $PROJECT_ROOT
 
   1. Added support manage store products, search other stores and visualize their metrics.
   2. Added support to create and customize store profile, cover image and insert details.
-  3. Support to manualy activate or deactivate store (modifies public visibility of the store and all products in it).
+  3. Support to manually activate or deactivate store (modifies public visibility of the store and all products in it).
   4. Stores can be verified (e.g. store certification).
 
 - **Users**:
@@ -80,7 +80,7 @@ $PROJECT_ROOT
   1. Users can have a customizable profile, including profile and cover images.
   2. Handle user login, registration and authentication with jwt (JSON web tokens) strategy.
   3. Users can sign a monthly subscription to maintain then stores active;
-  4. View list of favorited products.
+  4. View list of favorite products.
   5. Users can share public products on social media.
 
 - **Built-in comments system**: users can now add comments to products.
@@ -108,12 +108,12 @@ Builds the app for production to the **dist folder**.
 npm run start
 ```
 
-Builds and starts the server in prodution.
+Builds and starts the server in production.
 
 ## ☘️ Find me!
 
 📭 E-mail: [nhantumbok@gmail.com](nhantumbok@gmail.com 'Send an e-mail')\
-📚 Github: [https://github.com/KainNhantumbo](https://github.com/KainNhantumbo 'See my github profile')  
+📚 Github: [https://github.com/KainNhantumbo](https://github.com/KainNhantumbo 'See my github profile')
 📑 Portfolio: [https://portifolio-dev-mu.vercel.app](https://portifolio-dev-mu.vercel.app 'See my portfolio website')\
 ✒️ My Blog: [https://publish-it-programming.vercel.app](https://publish-it-programming.vercel.app 'Visit my blog site')
 

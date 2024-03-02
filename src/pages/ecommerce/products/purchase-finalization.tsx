@@ -36,13 +36,13 @@ export default function OrderFinalization() {
     order_id: '',
     order_amount: 0,
     order_status: 'aknowledged',
-    user_name: '',
+    user_name: ''
   });
 
   const getOrder = async () => {
     const { data } = await useFetchAPI<TOrder>({
       method: 'get',
-      url: `/api/v1/checkout/orders/${router.query['order']}`,
+      url: `/api/v1/checkout/orders/${router.query['order']}`
     });
 
     return {
@@ -55,13 +55,13 @@ export default function OrderFinalization() {
         0
       ),
       order_status: data.order_status,
-      user_name: data.order_custumer.user_name,
+      user_name: data.order_custumer.user_name
     };
   };
 
   const { data, isError, isLoading, error } = useQuery({
     queryKey: ['purchase-finalization'],
-    queryFn: getOrder,
+    queryFn: getOrder
   });
 
   const serialiseOrderStatus = (status: string): string => {
@@ -79,7 +79,7 @@ export default function OrderFinalization() {
         order_id: '',
         order_amount: 0,
         order_status: 'aknowledged',
-        user_name: '',
+        user_name: ''
       });
     };
   }, []);
@@ -90,7 +90,7 @@ export default function OrderFinalization() {
         title: String.prototype.concat(
           complements.defaultTitle,
           ' | Finalização de Compra'
-        ),
+        )
       }}>
       <Container>
         {!isLoading && isError && (

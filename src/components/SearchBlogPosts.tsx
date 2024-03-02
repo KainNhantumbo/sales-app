@@ -23,8 +23,8 @@ export default function SearchComponent() {
                 type: actions.SEARCH,
                 payload: {
                   ...state,
-                  search: e.target.value,
-                },
+                  search: e.target.value
+                }
               })
             }
           />

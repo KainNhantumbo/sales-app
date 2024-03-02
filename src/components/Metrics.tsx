@@ -13,21 +13,21 @@ export default function Metrics() {
   const getMetrics = async (): Promise<TMetrics> => {
     const { data } = await useFetchAPI<TMetrics>({
       method: 'get',
-      url: `/api/v1/metrics/public`,
+      url: `/api/v1/metrics/public`
     });
     return data;
   };
 
   const { isLoading, isError, data, refetch } = useQuery({
     queryKey: ['metrics'],
-    queryFn: getMetrics,
+    queryFn: getMetrics
   });
 
   useEffect(() => {
     if (data) {
       dispatch({
         type: actions.METRICS_DATA,
-        payload: { ...state, metrics: { ...data } },
+        payload: { ...state, metrics: { ...data } }
       });
     }
   }, [data]);
@@ -35,7 +35,7 @@ export default function Metrics() {
   useEffect(() => {
     refetch({ queryKey: ['metrics'] });
   }, [state.auth, state.store, state.productList]);
-  
+
   return (
     <Container id='metrics'>
       <h2>

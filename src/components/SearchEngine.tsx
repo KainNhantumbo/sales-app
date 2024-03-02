@@ -4,7 +4,7 @@ import {
   IoFilter,
   IoGift,
   IoLayersOutline,
-  IoPricetags,
+  IoPricetags
 } from 'react-icons/io5';
 import Slider from 'rc-slider';
 import SelectContainer from './Select';
@@ -26,8 +26,8 @@ export default function SearchEngine() {
       type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
       payload: {
         ...state,
-        isPublicProductsFilters: !state.isPublicProductsFilters,
-      },
+        isPublicProductsFilters: !state.isPublicProductsFilters
+      }
     });
   };
 
@@ -38,16 +38,16 @@ export default function SearchEngine() {
         type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
         payload: {
           ...state,
-          isPublicProductsFilters: true,
-        },
+          isPublicProductsFilters: true
+        }
       });
     } else {
       dispatch({
         type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
         payload: {
           ...state,
-          isPublicProductsFilters: false,
-        },
+          isPublicProductsFilters: false
+        }
       });
     }
   };
@@ -62,7 +62,7 @@ export default function SearchEngine() {
 
   const categoryOptions = product_categories.map((category) => ({
     value: category,
-    label: category,
+    label: category
   }));
 
   const sortOptions = [
@@ -73,13 +73,13 @@ export default function SearchEngine() {
     { value: '-category', label: 'Categoria' },
     { value: 'category', label: 'Categoria (Invertido)' },
     { value: 'price', label: 'Preço (Alto para Baixo)' },
-    { value: '-price', label: 'Preço (Baixo para Alto)' },
+    { value: '-price', label: 'Preço (Baixo para Alto)' }
   ];
 
   const promotionOptions = [
     { value: undefined, label: 'Todos os produtos' },
     { value: 'true', label: 'Somente produtos com promoção' },
-    { value: 'false', label: 'Somente produtos sem promoção' },
+    { value: 'false', label: 'Somente produtos sem promoção' }
   ];
 
   const renderClearButton = () => (
@@ -94,9 +94,9 @@ export default function SearchEngine() {
               price_range: NaN,
               promotion: undefined,
               query: '',
-              sort: '',
-            },
-          },
+              sort: ''
+            }
+          }
         });
       }}>
       <IoClose />
@@ -115,8 +115,8 @@ export default function SearchEngine() {
                 type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
                 payload: {
                   ...state,
-                  isPublicProductsFilters: false,
-                },
+                  isPublicProductsFilters: false
+                }
               });
             }
           }}>
@@ -133,8 +133,8 @@ export default function SearchEngine() {
                   type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
                   payload: {
                     ...state,
-                    isPublicProductsFilters: false,
-                  },
+                    isPublicProductsFilters: false
+                  }
                 });
               }
             }}
@@ -149,12 +149,12 @@ export default function SearchEngine() {
                 ? {
                     opacity: 0,
                     translateX: -720,
-                    transition: { duration: 0.4 },
+                    transition: { duration: 0.4 }
                   }
                 : {
                     opacity: 0,
                     translateY: 720,
-                    transition: { duration: 0.38 },
+                    transition: { duration: 0.38 }
                   }
             }>
             <button
@@ -192,9 +192,9 @@ export default function SearchEngine() {
                           ...state,
                           queryPublicProducts: {
                             ...state.queryPublicProducts,
-                            query: e.target.value,
-                          },
-                        },
+                            query: e.target.value
+                          }
+                        }
                       });
                     }}
                   />
@@ -217,9 +217,9 @@ export default function SearchEngine() {
                       ...state,
                       queryPublicProducts: {
                         ...state.queryPublicProducts,
-                        category: String(option?.value),
-                      },
-                    },
+                        category: String(option?.value)
+                      }
+                    }
                   });
                 }}
               />
@@ -240,7 +240,7 @@ export default function SearchEngine() {
                           (element) =>
                             element.value === state.queryPublicProducts.sort
                         )[0].label,
-                        value: state.queryPublicProducts.sort,
+                        value: state.queryPublicProducts.sort
                       }
                     : undefined
                 }
@@ -251,9 +251,9 @@ export default function SearchEngine() {
                       ...state,
                       queryPublicProducts: {
                         ...state.queryPublicProducts,
-                        sort: String(option?.value),
-                      },
-                    },
+                        sort: String(option?.value)
+                      }
+                    }
                   });
                 }}
               />
@@ -270,8 +270,8 @@ export default function SearchEngine() {
                   state.queryPublicProducts.promotion
                     ? promotionOptions[1]
                     : state.queryPublicProducts.promotion === false
-                    ? promotionOptions[2]
-                    : promotionOptions[0]
+                      ? promotionOptions[2]
+                      : promotionOptions[0]
                 }
                 onChange={(option: any) => {
                   dispatch({
@@ -284,10 +284,10 @@ export default function SearchEngine() {
                           option?.value === 'true'
                             ? true
                             : option?.value === 'false'
-                            ? false
-                            : undefined,
-                      },
-                    },
+                              ? false
+                              : undefined
+                      }
+                    }
                   });
                 }}
               />
@@ -327,9 +327,9 @@ export default function SearchEngine() {
                         ...state,
                         queryPublicProducts: {
                           ...state.queryPublicProducts,
-                          price_range: Number(value),
-                        },
-                      },
+                          price_range: Number(value)
+                        }
+                      }
                     });
                   }}
                 />
@@ -347,8 +347,8 @@ export default function SearchEngine() {
                       type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
                       payload: {
                         ...state,
-                        isPublicProductsFilters: false,
-                      },
+                        isPublicProductsFilters: false
+                      }
                     });
 
                     if (innerWidth < 830) slidePageUp();

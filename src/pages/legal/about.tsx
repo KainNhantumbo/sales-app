@@ -11,29 +11,29 @@ import { _about as Container } from '@/styles/common/about';
 const core_habits: Array<{ phrase: string; paragraph: string }> = [
   {
     phrase: 'Entregar o melhor período de experiência aos usuários e clientes.',
-    paragraph: 'Detalhes importam, adicione valor a cada interação.',
+    paragraph: 'Detalhes importam, adicione valor a cada interação.'
   },
   {
     phrase: 'A normalidade é tediosa e irritante.',
-    paragraph: 'Procure novos desafios a cada momento.',
+    paragraph: 'Procure novos desafios a cada momento.'
   },
   {
     phrase: 'Sem políticas burocráticas.',
-    paragraph: 'Seja direto. Vá direto.',
+    paragraph: 'Seja direto. Vá direto.'
   },
   {
     phrase: 'Faça as tarefas de uma vez e vá se divertir aos montes.',
-    paragraph: 'Trabalhe seriamente nas coisas certas com urgência.',
+    paragraph: 'Trabalhe seriamente nas coisas certas com urgência.'
   },
   {
     phrase: 'Cresça 1% todos os dias.',
     paragraph:
-      'Interaja e faça progresso almejando a perfeição. Adote uma mentalidade de sucesso.',
+      'Interaja e faça progresso almejando a perfeição. Adote uma mentalidade de sucesso.'
   },
   {
     phrase: 'Actos aleatórios de bondade',
-    paragraph: 'Seja um líquido positivo.',
-  },
+    paragraph: 'Seja um líquido positivo.'
+  }
 ];
 
 export default function About() {
@@ -139,11 +139,11 @@ export default function About() {
                   dragElastic={0.3}
                   whileInView={{
                     scale: 1,
-                    transition: { duration: 0.5, bounce: 1 },
+                    transition: { duration: 0.5, bounce: 1 }
                   }}
                   whileHover={{
                     translateY: -8,
-                    boxShadow: `0px 20px 30px 10px rgba(${theme.black}, 0.09)`,
+                    boxShadow: `0px 20px 30px 10px rgba(${theme.black}, 0.09)`
                   }}
                   className={`core-habit ${'item' + index.toString()}`}>
                   <h3>{'0'.concat(Number(index + 1).toString())}</h3>
