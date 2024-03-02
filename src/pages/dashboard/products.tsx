@@ -1,3 +1,19 @@
+import Layout from '@/components/Layout';
+import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
+import SearchBox from '@/components/modals/SearchBox';
+import ShareProducts from '@/components/modals/ShareProductModal';
+import SortBox from '@/components/modals/SortBox';
+import ToolBox from '@/components/modals/ToolBox';
+import { useAppContext } from '@/context/AppContext';
+import { formatCurrency } from '@/lib/utils';
+import actions from '@/shared/actions';
+import { complements } from '@/shared/data';
+import { _productList as Container } from '@/styles/common/products';
+import { FetchError, ProductsList } from '@/types';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import moment from 'moment';
+import Link from 'next/link';
+import { useEffect } from 'react';
 import {
   IoCalendar,
   IoEllipsisHorizontal,
@@ -8,32 +24,16 @@ import {
   IoStorefront,
   IoWarningOutline
 } from 'react-icons/io5';
-import moment from 'moment';
-import Link from 'next/link';
-import { useEffect } from 'react';
-import Layout from '@/components/Layout';
-import actions from '@/shared/actions';
-import { FetchError, ProductsList } from '@/types';
-import { formatCurrency } from '@/lib/utils';
-import { useTheme } from 'styled-components';
-import { complements } from '@/shared/data';
-import { PulseLoader } from 'react-spinners';
 import { VscEmptyWindow } from 'react-icons/vsc';
-import ToolBox from '@/components/modals/ToolBox';
-import SortBox from '@/components/modals/SortBox';
-import { useAppContext } from '@/context/AppContext';
-import SearchBox from '@/components/modals/SearchBox';
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
-import ShareProducts from '@/components/modals/ShareProductModal';
-import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
-import { _productList as Container } from '@/styles/common/products';
+import { PulseLoader } from 'react-spinners';
+import { useTheme } from 'styled-components';
 
 export default function Products() {
   const {
     state,
     dispatch,
-    useFetchAPI,
+    httpClient,
     shareProductController,
     deleteProductPromptController
   } = useAppContext();
@@ -42,7 +42,7 @@ export default function Products() {
   const { ref, inView } = useInView();
 
   const fetchProducts = async ({ pageParam = 0 }) => {
-    const { data } = await useFetchAPI<ProductsList[]>({
+    const { data } = await httpClient<ProductsList[]>({
       url: `/api/v1/users/products?offset=${
         LIMIT * pageParam
       }&limit=${LIMIT}fields=name,price,quantity,promotion,category,favorites,createdAt,updatedAt&sort=${
@@ -69,7 +69,7 @@ export default function Products() {
 
   const handleDeleteProduct = async (productId: string) => {
     try {
-      await useFetchAPI({
+      await httpClient({
         method: 'delete',
         url: `/api/v1/users/products/${productId}`
       });

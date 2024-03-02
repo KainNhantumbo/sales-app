@@ -1,3 +1,25 @@
+import Layout from '@/components/Layout';
+import SideBarAds from '@/components/SidaBarAds';
+import fetch from '@/config/client';
+import { useAppContext } from '@/context/AppContext';
+import { useModulesContext } from '@/context/Modules';
+import { formatCurrency, slidePageUp } from '@/lib/utils';
+import ErrorPage from '@/pages/error-page';
+import actions from '@/shared/actions';
+import {
+  blurDataUrlImage,
+  complements,
+  formatSocialNetwork
+} from '@/shared/data';
+import { _store as Container } from '@/styles/common/community-store-profile';
+import { FetchError, PublicProducts, PublicStore } from '@/types';
+import { motion } from 'framer-motion';
+import { GetServerSidePropsContext } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { BiUser } from 'react-icons/bi';
 import {
   IoAlertCircle,
   IoBagCheck,
@@ -13,30 +35,8 @@ import {
   IoLibrary,
   IoStorefront
 } from 'react-icons/io5';
-import {
-  blurDataUrlImage,
-  complements,
-  formatSocialNetwork
-} from '@/shared/data';
-import Link from 'next/link';
-import Image from 'next/image';
-import fetch from '@/config/client';
-import { motion } from 'framer-motion';
-import { BiUser } from 'react-icons/bi';
-import Layout from '@/components/Layout';
-import actions from '@/shared/actions';
-import ErrorPage from '@/pages/error-page';
-import { useEffect, useState } from 'react';
-import { formatCurrency, slidePageUp } from '@/lib/utils';
-import { GetServerSidePropsContext } from 'next';
-import { useRouter } from 'next/router';
-import { useTheme } from 'styled-components';
-import SideBarAds from '@/components/SidaBarAds';
 import { VscVerifiedFilled } from 'react-icons/vsc';
-import { useAppContext } from '@/context/AppContext';
-import { useModulesContext } from '@/context/Modules';
-import { PublicProducts, PublicStore, FetchError } from '@/types';
-import { _store as Container } from '@/styles/common/community-store-profile';
+import { useTheme } from 'styled-components';
 
 type Props = { store?: PublicStore; products: PublicProducts[] };
 
@@ -44,7 +44,7 @@ export default function StoreProfile({ store, products }: Props) {
   const {
     state,
     dispatch,
-    useFetchAPI,
+    httpClient,
     addProductToCart,
     removeProductFromCart
   } = useAppContext();
@@ -54,19 +54,10 @@ export default function StoreProfile({ store, products }: Props) {
   const [tab, setTab] = useState<'docs' | 'products'>('docs');
   const [innerWidth, setInnerWidth] = useState(0);
 
-  if (!store || Object.values(store).length < 1)
-    return (
-      <ErrorPage
-        title='Loja Inativa'
-        message='A loja que procura pode estar atualmente indisponível. Peça ao proprietário para ativá-la.'
-        button_message='Voltar para página anterior'
-        retryFn={() => router.back()}
-      />
-    );
 
   async function handleFavoriteProduct(id: string) {
     try {
-      const { data } = await useFetchAPI<string[]>({
+      const { data } = await httpClient<string[]>({
         method: 'post',
         url: `/api/v1/users/favorites/products/${id}`
       });
@@ -94,7 +85,7 @@ export default function StoreProfile({ store, products }: Props) {
 
   async function handleUnFavoriteProduct(id: string) {
     try {
-      const { data } = await useFetchAPI<string[]>({
+      const { data } = await httpClient<string[]>({
         method: 'patch',
         url: `/api/v1/users/favorites/products/${id}`
       });
@@ -139,6 +130,16 @@ export default function StoreProfile({ store, products }: Props) {
       });
     };
   }, []);
+
+    if (!store || Object.values(store).length < 1)
+      return (
+        <ErrorPage
+          title='Loja Inativa'
+          message='A loja que procura pode estar atualmente indisponível. Peça ao proprietário para ativá-la.'
+          button_message='Voltar para página anterior'
+          retryFn={() => router.back()}
+        />
+      );
 
   return (
     <Layout

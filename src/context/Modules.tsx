@@ -1,9 +1,9 @@
 import actions from '@/shared/actions';
-import { useRouter } from 'next/router';
 import { complements } from '@/shared/data';
-import { useAppContext } from './AppContext';
-import { useContext, createContext, ReactNode } from 'react';
 import { FetchError } from '@/types';
+import { useRouter } from 'next/router';
+import { ReactNode, createContext, useContext } from 'react';
+import { useAppContext } from './AppContext';
 
 type Props = { children: ReactNode };
 
@@ -19,7 +19,7 @@ const context = createContext<Context>({
 
 export default function ModulesContext(props: Props) {
   const router = useRouter();
-  const { state, dispatch, useFetchAPI } = useAppContext();
+  const { state, dispatch, httpClient } = useAppContext();
 
   function requestLogin() {
     dispatch({
@@ -58,7 +58,7 @@ export default function ModulesContext(props: Props) {
           actionButtonMessage: 'Confirmar',
           handleFunction: async () => {
             try {
-              await useFetchAPI({
+              await httpClient({
                 method: 'post',
                 url: '/api/v1/auth/default/logout',
                 withCredentials: true

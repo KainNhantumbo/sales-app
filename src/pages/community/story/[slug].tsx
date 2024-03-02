@@ -1,27 +1,27 @@
-import {
-  IoHeart,
-  IoDownloadOutline,
-  IoEllipsisHorizontal
-} from 'react-icons/io5';
-import Link from 'next/link';
-import Image from 'next/image';
-import fetch from '@/config/client';
-import Compressor from 'compressorjs';
-import { AxiosResponse } from 'axios';
 import Layout from '@/components/Layout';
-import actions from '@/shared/actions';
-import { useDropzone } from 'react-dropzone';
-import { PulseLoader } from 'react-spinners';
-import { complements } from '@/shared/data';
 import SideBarAds from '@/components/SidaBarAds';
-import { FetchError, PublicStory, Story } from '@/types';
-import { Router, useRouter } from 'next/router';
+import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
-import { useCallback, useEffect, useState } from 'react';
-import { useTheme } from 'styled-components';
-import { GetServerSidePropsContext } from 'next';
+import actions from '@/shared/actions';
+import { complements } from '@/shared/data';
 import { _story as Container } from '@/styles/common/story';
+import { FetchError, PublicStory, Story } from '@/types';
+import { AxiosResponse } from 'axios';
+import Compressor from 'compressorjs';
+import { GetServerSidePropsContext } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Router, useRouter } from 'next/router';
+import { useCallback, useEffect, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 import { BsTrash } from 'react-icons/bs';
+import {
+  IoDownloadOutline,
+  IoEllipsisHorizontal,
+  IoHeart
+} from 'react-icons/io5';
+import { PulseLoader } from 'react-spinners';
+import { useTheme } from 'styled-components';
 
 type Props = { story: PublicStory | undefined };
 type TError = { status: boolean; msg: string };
@@ -29,7 +29,7 @@ type TError = { status: boolean; msg: string };
 export default function Story(props: Props) {
   const theme = useTheme();
   const router = useRouter();
-  const { state, dispatch, useFetchAPI } = useAppContext();
+  const { state, dispatch, httpClient } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<TError>({ status: false, msg: '' });
 
@@ -72,7 +72,7 @@ export default function Story(props: Props) {
 
     try {
       setLoading(true);
-      await useFetchAPI({
+      await httpClient({
         method: 'delete',
         url: `/api/v1/users/stories/assets/${props.story?._id}`,
         data: { assetId: props.story?.cover_image?.id }
@@ -109,7 +109,7 @@ export default function Story(props: Props) {
   async function createStory() {
     setLoading(true);
     try {
-      await useFetchAPI({
+      await httpClient({
         method: 'post',
         url: `/api/v1/users/stories`,
         data: { ...state.story, coverImageData }
@@ -132,7 +132,7 @@ export default function Story(props: Props) {
   async function updateStory() {
     setLoading(true);
     try {
-      await useFetchAPI({
+      await httpClient({
         method: 'patch',
         url: `/api/v1/users/stories/${props.story?._id}`,
         data: { ...state.story, coverImageData }

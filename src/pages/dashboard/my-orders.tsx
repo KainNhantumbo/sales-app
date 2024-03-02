@@ -1,40 +1,40 @@
-import {
-  IoClose,
-  IoEllipsisHorizontal,
-  IoReload,
-  IoSearch
-} from 'react-icons/io5';
+import Layout from '@/components/Layout';
+import SelectContainer from '@/components/Select';
+import SideBarAds from '@/components/SidaBarAds';
+import { useAppContext } from '@/context/AppContext';
+import { formatDate } from '@/lib/utils';
+import actions from '@/shared/actions';
 import {
   complements,
   orderSortOptions,
   orderStatusOptions,
   order_status_labels
 } from '@/shared/data';
-import { useEffect } from 'react';
-import { FetchError, TOrder } from '@/types';
-import { formatDate } from '@/lib/utils';
-import actions from '@/shared/actions';
-import Layout from '@/components/Layout';
-import { PulseLoader } from 'react-spinners';
-import SideBarAds from '@/components/SidaBarAds';
-import SelectContainer from '@/components/Select';
-import { BsBox2, BsBox2Fill } from 'react-icons/bs';
-import { useAppContext } from '@/context/AppContext';
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { _myOrders as Container } from '@/styles/common/my-orders';
-import { useTheme } from 'styled-components';
+import { FetchError, TOrder } from '@/types';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { BsBox2, BsBox2Fill } from 'react-icons/bs';
+import {
+  IoClose,
+  IoEllipsisHorizontal,
+  IoReload,
+  IoSearch
+} from 'react-icons/io5';
 import { useInView } from 'react-intersection-observer';
+import { PulseLoader } from 'react-spinners';
+import { useTheme } from 'styled-components';
 
 export default function MyOrders() {
   const QUERY_LIMIT: number = 10;
   const theme = useTheme();
-  const { state, dispatch, useFetchAPI } = useAppContext();
+  const { state, dispatch, httpClient } = useAppContext();
   const { inView, ref } = useInView();
 
   const fetchOrders = async ({
     pageParam = 0
   }): Promise<{ data: TOrder[]; currentOffset: number }> => {
-    const { data } = await useFetchAPI<TOrder[]>({
+    const { data } = await httpClient<TOrder[]>({
       method: 'get',
       url: `/api/v1/checkout/orders?offset=${
         pageParam * QUERY_LIMIT
@@ -64,7 +64,7 @@ export default function MyOrders() {
 
   const updateOrder = async (id: string, data: any) => {
     try {
-      await useFetchAPI({
+      await httpClient({
         method: 'patch',
         url: `/api/v1/checkout/orders/${id}`,
         data: { ...data }
@@ -80,7 +80,7 @@ export default function MyOrders() {
 
   const deleteOrder = async (id: string) => {
     try {
-      await useFetchAPI({
+      await httpClient({
         method: 'delete',
         url: `/api/v1/checkout/orders/${id}`
       });

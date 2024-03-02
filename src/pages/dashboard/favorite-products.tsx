@@ -1,3 +1,18 @@
+import Layout from '@/components/Layout';
+import SideBarAds from '@/components/SidaBarAds';
+import fetch from '@/config/client';
+import { useAppContext } from '@/context/AppContext';
+import { useModulesContext } from '@/context/Modules';
+import { formatCurrency } from '@/lib/utils';
+import actions from '@/shared/actions';
+import { blurDataUrlImage, complements } from '@/shared/data';
+import { _favoriteProducts as Container } from '@/styles/common/favorite-products';
+import type { FetchError, PublicProducts } from '@/types';
+import { motion } from 'framer-motion';
+import type { GetServerSidePropsContext } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import {
   IoBagCheck,
   IoBagHandle,
@@ -6,22 +21,7 @@ import {
   IoCartOutline,
   IoHeart
 } from 'react-icons/io5';
-import Link from 'next/link';
-import Image from 'next/image';
-import fetch from '@/config/client';
-import { motion } from 'framer-motion';
-import actions from '@/shared/actions';
-import Layout from '@/components/Layout';
-import { useEffect, useState } from 'react';
-import { formatCurrency } from '@/lib/utils';
-import SideBarAds from '@/components/SidaBarAds';
-import type { FetchError, PublicProducts } from '@/types';
-import { useAppContext } from '@/context/AppContext';
-import type { GetServerSidePropsContext } from 'next';
 import { useTheme } from 'styled-components';
-import { blurDataUrlImage, complements } from '@/shared/data';
-import { _favoriteProducts as Container } from '@/styles/common/favorite-products';
-import { useModulesContext } from '@/context/Modules';
 
 type Props = { products: PublicProducts[] };
 
@@ -31,7 +31,7 @@ export default function FavoriteProducts({ products }: Props) {
     dispatch,
     addProductToCart,
     removeProductFromCart,
-    useFetchAPI
+    httpClient
   } = useAppContext();
   const { requestLogin } = useModulesContext();
   const theme = useTheme();
@@ -39,7 +39,7 @@ export default function FavoriteProducts({ products }: Props) {
 
   const handleUnFavoriteProduct = async (id: string) => {
     try {
-      await useFetchAPI({
+      await httpClient({
         method: 'patch',
         url: `/api/v1/users/favorites/products/${id}`
       });

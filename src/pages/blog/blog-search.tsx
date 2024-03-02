@@ -1,3 +1,19 @@
+import Layout from '@/components/Layout';
+import NewsLetter from '@/components/Newsletter';
+import SearchComponent from '@/components/SearchBlogPosts';
+import { useAppContext } from '@/context/AppContext';
+import { formatDate } from '@/lib/utils';
+import actions from '@/shared/actions';
+import { complements } from '@/shared/data';
+import { getPosts } from '@/shared/queries';
+import { _blogSeach as Container } from '@/styles/common/blog-search';
+import { IBlogPosts } from '@/types';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
 import {
   IoArrowForwardOutline,
   IoEllipsisHorizontal,
@@ -6,24 +22,9 @@ import {
   IoLibraryOutline,
   IoReload
 } from 'react-icons/io5';
-import Link from 'next/link';
-import { useEffect } from 'react';
-import { IBlogPosts } from '@/types';
-import actions from '@/shared/actions';
-import { useRouter } from 'next/router';
-import { formatDate } from '@/lib/utils';
-import Layout from '@/components/Layout';
-import { getPosts } from '@/shared/queries';
-import { complements } from '@/shared/data';
-import NewsLetter from '@/components/Newsletter';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useAppContext } from '@/context/AppContext';
-import { DotLoader, PulseLoader } from 'react-spinners';
-import SearchComponent from '@/components/SearchBlogPosts';
-import { useTheme } from 'styled-components';
-import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
-import { _blogSeach as Container } from '@/styles/common/blog-search';
 import { useInView } from 'react-intersection-observer';
+import { DotLoader, PulseLoader } from 'react-spinners';
+import { useTheme } from 'styled-components';
 
 export default function BlogSearch() {
   const LIMIT: number = 8;
@@ -160,7 +161,9 @@ export default function BlogSearch() {
                       state.blogPostsList.length === index + 1 ? ref : undefined
                     }>
                     <>
-                      <img
+                      <Image
+                        width={3000}
+                        height={3000}
                         src={post.cover_image.url}
                         alt={`Image of ${post.title} article.`}
                       />

@@ -1,3 +1,22 @@
+import Layout from '@/components/Layout';
+import NewsLetter from '@/components/Newsletter';
+import Comments from '@/components/comments/Comments';
+import ShareProducts from '@/components/modals/ShareProductModal';
+import fetch from '@/config/client';
+import { useAppContext } from '@/context/AppContext';
+import { useModulesContext } from '@/context/Modules';
+import { formatCurrency, formatDate } from '@/lib/utils';
+import ErrorPage from '@/pages/error-page';
+import actions from '@/shared/actions';
+import { complements } from '@/shared/data';
+import product_categories from '@/shared/product-categories.json';
+import { _commerceProduct as Container } from '@/styles/common/ecommerce-product';
+import { FetchError, Product } from '@/types';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { FaCartPlus } from 'react-icons/fa';
 import {
   IoAdd,
   IoAlertCircle,
@@ -19,36 +38,17 @@ import {
   IoShareSocial,
   IoStorefront
 } from 'react-icons/io5';
-import Link from 'next/link';
-import { FetchError, Product } from '@/types';
-import QRCode from 'react-qr-code';
-import { motion } from 'framer-motion';
-import actions from '@/shared/actions';
-import Layout from '@/components/Layout';
-import fetch from '@/config/client';
-import ErrorPage from '@/pages/error-page';
-import { FaCartPlus } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
-import { complements } from '@/shared/data';
-import NewsLetter from '@/components/Newsletter';
 import { VscVerifiedFilled } from 'react-icons/vsc';
 import ReactImageGallery from 'react-image-gallery';
-import Comments from '@/components/comments/Comments';
-import { useRouter } from 'next/router';
-import { useAppContext } from '@/context/AppContext';
-import { formatCurrency, formatDate } from '@/lib/utils';
 import 'react-image-gallery/styles/css/image-gallery.css';
+import QRCode from 'react-qr-code';
 import { useTheme } from 'styled-components';
-import product_categories from '@/shared/product-categories.json';
-import ShareProducts from '@/components/modals/ShareProductModal';
-import { _commerceProduct as Container } from '@/styles/common/ecommerce-product';
-import { useModulesContext } from '@/context/Modules';
 
 export default function Product({ product, error_message }: any) {
   const {
     state,
     dispatch,
-    useFetchAPI,
+    httpClient,
     shareProductController,
     addProductToCart,
     removeProductFromCart,
@@ -60,19 +60,9 @@ export default function Product({ product, error_message }: any) {
   const router = useRouter();
   const [innerWidth, setInnerWidth] = useState<number>(0);
 
-  if (!product)
-    return (
-      <ErrorPage
-        message={
-          error_message || 'Não foi possível carregar os dados do produto'
-        }
-        retryFn={router.reload}
-      />
-    );
-
   const handleFavoriteProduct = async (id: string) => {
     try {
-      const { data } = await useFetchAPI<string[]>({
+      const { data } = await httpClient<string[]>({
         method: 'post',
         url: `/api/v1/users/favorites/products/${id}`
       });
@@ -93,7 +83,7 @@ export default function Product({ product, error_message }: any) {
 
   const handleUnFavoriteProduct = async (id: string) => {
     try {
-      const { data } = await useFetchAPI<string[]>({
+      const { data } = await httpClient<string[]>({
         method: 'patch',
         url: `/api/v1/users/favorites/products/${id}`
       });
@@ -168,6 +158,16 @@ export default function Product({ product, error_message }: any) {
       });
     };
   }, []);
+
+  if (!product)
+    return (
+      <ErrorPage
+        message={
+          error_message || 'Não foi possível carregar os dados do produto'
+        }
+        retryFn={router.reload}
+      />
+    );
 
   return (
     <Layout

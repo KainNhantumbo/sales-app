@@ -1,10 +1,11 @@
-import { BiUser } from 'react-icons/bi';
+import { useAppContext } from '@/context/AppContext';
+import { useModulesContext } from '@/context/Modules';
 import actions from '@/shared/actions';
+import { TCommentForm } from '@/types/comments';
+import Image from 'next/image';
+import { BiUser } from 'react-icons/bi';
 import { MoonLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
-import { useAppContext } from '@/context/AppContext';
-import { TCommentForm } from '@/types/comments';
-import { useModulesContext } from '@/context/Modules';
 
 type Props = Omit<
   TCommentForm,
@@ -22,7 +23,9 @@ export default function CommentForm(props: Props) {
         <section className='current-comment'>
           <div className='comment-swapper'>
             {state.auth.profile_image && (
-              <img
+              <Image
+                width={1000}
+                height={1000}
                 src={state.auth.profile_image}
                 alt='current user profile picture'
               />

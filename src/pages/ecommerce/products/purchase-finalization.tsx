@@ -1,17 +1,17 @@
-import Link from 'next/link';
-import { TOrder } from '@/types';
 import Layout from '@/components/Layout';
-import { DotLoader } from 'react-spinners';
-import { useEffect, useState } from 'react';
-import { formatCurrency } from '@/lib/utils';
-import { useQuery } from '@tanstack/react-query';
-import { BsCreditCard2Front } from 'react-icons/bs';
-import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { useTheme } from 'styled-components';
-import { IoCart, IoChevronBack, IoReload } from 'react-icons/io5';
+import { formatCurrency } from '@/lib/utils';
 import { complements, order_status_labels } from '@/shared/data';
 import { _purchaseFinalization as Container } from '@/styles/common/purchase-finalization';
+import { TOrder } from '@/types';
+import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { BsCreditCard2Front } from 'react-icons/bs';
+import { IoCart, IoChevronBack, IoReload } from 'react-icons/io5';
+import { DotLoader } from 'react-spinners';
+import { useTheme } from 'styled-components';
 
 type TOrderSummary = {
   order_code: string;
@@ -28,7 +28,7 @@ type TOrderSummary = {
 };
 
 export default function OrderFinalization() {
-  const { useFetchAPI } = useAppContext();
+  const { httpClient } = useAppContext();
   const theme = useTheme();
   const router = useRouter();
   const [order, setOrder] = useState<TOrderSummary>({
@@ -40,7 +40,7 @@ export default function OrderFinalization() {
   });
 
   const getOrder = async () => {
-    const { data } = await useFetchAPI<TOrder>({
+    const { data } = await httpClient<TOrder>({
       method: 'get',
       url: `/api/v1/checkout/orders/${router.query['order']}`
     });

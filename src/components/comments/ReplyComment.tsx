@@ -13,6 +13,7 @@ import { complements } from '@/shared/data';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useAppContext } from '@/context/AppContext';
 import type { TComment } from '@/types/comments';
+import Image from 'next/image';
 
 export default function ReplyComment(props: TComment) {
   const { state, deleteCommentPromptController } = useAppContext();
@@ -23,7 +24,9 @@ export default function ReplyComment(props: TComment) {
       <div className='header'>
         <div className='props'>
           {props.comment.created_by?.profile_image?.url ? (
-            <img
+            <Image
+              width={1000}
+              height={1000}
               src={props.comment.created_by?.profile_image?.url}
               alt='current user profile picture'
             />

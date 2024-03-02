@@ -1,17 +1,17 @@
-import { useEffect } from 'react';
-import { TMetrics } from '../types';
-import actions from '@/shared/actions';
-import { BiStats } from 'react-icons/bi';
-import { formatCurrency } from '@/lib/utils';
-import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from '@/context/AppContext';
+import { formatCurrency } from '@/lib/utils';
+import actions from '@/shared/actions';
 import { _metrics as Container } from '@/styles/modules/metrics';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { BiStats } from 'react-icons/bi';
+import { TMetrics } from '../types';
 
 export default function Metrics() {
-  const { state, dispatch, useFetchAPI } = useAppContext();
+  const { state, dispatch, httpClient } = useAppContext();
 
   const getMetrics = async (): Promise<TMetrics> => {
-    const { data } = await useFetchAPI<TMetrics>({
+    const { data } = await httpClient<TMetrics>({
       method: 'get',
       url: `/api/v1/metrics/public`
     });

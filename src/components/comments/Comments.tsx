@@ -1,18 +1,18 @@
-import Link from 'next/link';
-import Comment from './Comment';
-import { AxiosResponse } from 'axios';
-import CommentForm from './CommentForm';
-import actions from '@/shared/actions';
-import ReplyComment from './ReplyComment';
-import ReplyCommentForm from './ReplyCommentForm';
-import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
-import { useState, useEffect, useMemo } from 'react';
-import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
-import type { IComment } from '@/types/comments';
-import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
+import actions from '@/shared/actions';
 import { _comments as Container } from '@/styles/modules/comments';
 import { FetchError } from '@/types';
+import type { IComment } from '@/types/comments';
+import { AxiosResponse } from 'axios';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useMemo, useState } from 'react';
+import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
+import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
+import Comment from './Comment';
+import CommentForm from './CommentForm';
+import ReplyComment from './ReplyComment';
+import ReplyCommentForm from './ReplyCommentForm';
 
 type Props = { contentId: string };
 
@@ -29,7 +29,7 @@ type TLoading = {
 
 export default function Comments({ contentId }: Props) {
   const router = useRouter();
-  const { state, dispatch, useFetchAPI, deleteCommentPromptController } =
+  const { state, dispatch, httpClient, deleteCommentPromptController } =
     useAppContext();
 
   const [loading, setLoading] = useState<TLoading>({
@@ -87,7 +87,7 @@ export default function Comments({ contentId }: Props) {
 
   const getComments = async () => {
     try {
-      const { data } = await useFetchAPI<IComment[]>({
+      const { data } = await httpClient<IComment[]>({
         method: 'get',
         url: `/api/v1/users/comments/${contentId}`
       });
@@ -103,7 +103,7 @@ export default function Comments({ contentId }: Props) {
   const handleCreateComment = async () => {
     setLoading({ status: true, key: 'create-comment' });
     try {
-      const { data } = await useFetchAPI<IComment>({
+      const { data } = await httpClient<IComment>({
         method: 'post',
         url: '/api/v1/users/comments',
         data: {
@@ -140,7 +140,7 @@ export default function Comments({ contentId }: Props) {
 
   const handleUpdateComment = async (id: string) => {
     try {
-      const { data }: AxiosResponse<IComment> = await useFetchAPI({
+      const { data }: AxiosResponse<IComment> = await httpClient({
         method: 'patch',
         url: `/api/v1/users/comments/${id}`,
         data: {
@@ -180,7 +180,7 @@ export default function Comments({ contentId }: Props) {
   const handleDeleteComment = async (id: string) => {
     clearCommentData();
     try {
-      await useFetchAPI({
+      await httpClient({
         method: 'delete',
         url: `/api/v1/users/comments/${id}`
       });
@@ -227,7 +227,7 @@ export default function Comments({ contentId }: Props) {
 
   const handleFavoriteComment = async (id: string) => {
     try {
-      const { data } = await useFetchAPI<string[]>({
+      const { data } = await httpClient<string[]>({
         method: 'post',
         url: `/api/v1/users/favorites/comments/${id}`
       });
@@ -252,7 +252,7 @@ export default function Comments({ contentId }: Props) {
 
   const handleUnFavoriteComment = async (id: string) => {
     try {
-      const { data } = await useFetchAPI<string[]>({
+      const { data } = await httpClient<string[]>({
         method: 'patch',
         url: `/api/v1/users/favorites/comments/${id}`
       });
@@ -278,7 +278,7 @@ export default function Comments({ contentId }: Props) {
   const handleSendReplyComment = async () => {
     setLoading({ status: true, key: 'create-comment' });
     try {
-      await useFetchAPI({
+      await httpClient({
         method: 'post',
         url: '/api/v1/users/comments',
         data: {

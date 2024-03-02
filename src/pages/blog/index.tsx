@@ -137,7 +137,9 @@ export default function Blog() {
                     state.blogPostsList.length === index + 1 ? ref : undefined
                   }>
                   <>
-                    <img
+                    <Image
+                      width={3000}
+                      height={3000}
                       src={post.cover_image.url}
                       alt={`Image of ${post.title} article.`}
                     />

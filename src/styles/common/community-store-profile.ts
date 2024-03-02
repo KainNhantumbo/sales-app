@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BaseButton, BaseButtonOutline, StyledCornerButton } from '../defaults';
+import { BaseButton, StyledCornerButton } from '../defaults';
 
 export const _store = styled.div`
   position: relative;

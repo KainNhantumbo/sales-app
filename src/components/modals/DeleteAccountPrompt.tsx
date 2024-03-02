@@ -1,20 +1,20 @@
+import fetch from '@/config/client';
+import { useAppContext } from '@/context/AppContext';
+import actions from '@/shared/actions';
+import { _deleteAccount as Container } from '@/styles/modules/delete-account-prompt';
+import { FetchError, InputEvents } from '@/types';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { BsTrash } from 'react-icons/bs';
 import {
   IoArrowBackOutline,
   IoLockClosedOutline,
   IoMailOutline
 } from 'react-icons/io5';
-import fetch from '@/config/client';
-import actions from '@/shared/actions';
-import { BsTrash } from 'react-icons/bs';
-import { FetchError, InputEvents } from '@/types';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { useAppContext } from '@/context/AppContext';
-import { motion, AnimatePresence } from 'framer-motion';
-import { _deleteAccount as Container } from '@/styles/modules/delete-account-prompt';
 
 export default function DeleteAccountPrompt() {
-  const { state, useFetchAPI, dispatch, deleteAccountPromptController } =
+  const { state, httpClient, dispatch, deleteAccountPromptController } =
     useAppContext();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -35,7 +35,7 @@ export default function DeleteAccountPrompt() {
 
   const deleteUserAccount = async () => {
     try {
-      await useFetchAPI({
+      await httpClient({
         method: 'delete',
         url: '/api/v1/users/account'
       });
@@ -85,7 +85,7 @@ export default function DeleteAccountPrompt() {
       });
 
       // logs the user out
-      await useFetchAPI({
+      await httpClient({
         method: 'post',
         url: '/api/v1/auth/default/logout',
         withCredentials: true

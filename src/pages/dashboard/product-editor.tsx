@@ -1,3 +1,15 @@
+import Layout from '@/components/Layout';
+import { useAppContext } from '@/context/AppContext';
+import actions from '@/shared/actions';
+import { complements } from '@/shared/data';
+import product_categories from '@/shared/product-categories.json';
+import { _productEditor as Container } from '@/styles/common/product-editor';
+import { FetchError, InputEvents, Product } from '@/types';
+import { useQuery } from '@tanstack/react-query';
+import Compressor from 'compressorjs';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import {
   IoAdd,
   IoArrowUndoOutline,
@@ -19,19 +31,8 @@ import {
   IoSyncOutline,
   IoTrashOutline
 } from 'react-icons/io5';
-import Compressor from 'compressorjs';
-import actions from '@/shared/actions';
-import Layout from '@/components/Layout';
-import { useState, useEffect } from 'react';
-import { useTheme } from 'styled-components';
-import { complements } from '@/shared/data';
-import { FetchError, InputEvents, Product } from '@/types';
-import { useRouter } from 'next/router';
-import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
-import product_categories from '@/shared/product-categories.json';
-import { _productEditor as Container } from '@/styles/common/product-editor';
-import { useQuery } from '@tanstack/react-query';
+import { useTheme } from 'styled-components';
 
 type TLoading = {
   status: boolean;
@@ -45,7 +46,7 @@ type TError = {
 export default function ProductEditor() {
   const theme = useTheme();
   const router = useRouter();
-  const { state, useFetchAPI, dispatch } = useAppContext();
+  const { state, httpClient, dispatch } = useAppContext();
 
   // --------------------states---------------------
   const [loading, setLoading] = useState<TLoading>({
@@ -68,7 +69,7 @@ export default function ProductEditor() {
     try {
       const productId = router.query['productId'];
       if (!productId) throw new Error('Sem chave ID');
-      const { data } = await useFetchAPI<Product>({
+      const { data } = await httpClient<Product>({
         method: 'get',
         url: `/api/v1/users/products/${productId}?fields=-created_by,-favorites`
       });
@@ -142,7 +143,7 @@ export default function ProductEditor() {
         [index]: { id: '', data: '' }
       }));
 
-    useFetchAPI({
+    httpClient({
       method: 'delete',
       url: `/api/v1/users/product/assets`,
       data: { type: index, assetId: id }
@@ -169,7 +170,7 @@ export default function ProductEditor() {
     if (!productId) return;
     try {
       setLoading({ status: true });
-      await useFetchAPI({
+      await httpClient({
         method: 'patch',
         url: `/api/v1/users/products/${productId}`,
         data: {
@@ -212,7 +213,7 @@ export default function ProductEditor() {
   const handleCreate = async () => {
     try {
       setLoading({ status: true });
-      await useFetchAPI({
+      await httpClient({
         method: 'post',
         url: `/api/v1/users/products`,
         data: {
@@ -357,14 +358,18 @@ export default function ProductEditor() {
                     {Object.entries(imagesData).map(([key, value], index) => (
                       <div className='img-container' key={index.toString()}>
                         {value.data ? (
-                          <img
+                          <Image
+                            width={1000}
+                            height={1000}
                             className='cover-image'
                             src={value.data}
                             alt={`product image ${index.toString()}`}
                             title={`Imagem do Produto ${index.toString()}`}
                           />
                         ) : state.product.images[key]?.url ? (
-                          <img
+                          <Image
+                            width={1000}
+                            height={1000}
                             className='cover-image'
                             src={state.product.images[key].url}
                             alt={`Product image ${index.toString()}`}
@@ -695,11 +700,11 @@ export default function ProductEditor() {
                 )}
 
                 {error.status && !loading.status && error.msg.includes('.') ? (
-                  error.msg
-                    .split('.')
-                    .map((phrase) => (
-                      <div className='error-message'>{phrase}</div>
-                    ))
+                  error.msg.split('.').map((phrase, i) => (
+                    <div className='error-message' key={i}>
+                      {phrase}
+                    </div>
+                  ))
                 ) : (
                   <div className='error-message'>{error.msg}</div>
                 )}

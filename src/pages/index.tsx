@@ -1,3 +1,17 @@
+import Layout from '@/components/Layout';
+import SearchEngine from '@/components/SearchEngine';
+import { useAppContext } from '@/context/AppContext';
+import { useModulesContext } from '@/context/Modules';
+import { formatCurrency } from '@/lib/utils';
+import actions from '@/shared/actions';
+import { blurDataUrlImage, complements } from '@/shared/data';
+import { _home as Container } from '@/styles/common/home';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+import Slider from 'rc-slider';
+import { useEffect } from 'react';
 import {
   IoBagCheck,
   IoBagHandle,
@@ -12,27 +26,13 @@ import {
   IoReload,
   IoSearch
 } from 'react-icons/io5';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useEffect } from 'react';
-import fetch from '../config/client';
-import { motion } from 'framer-motion';
-import Layout from '@/components/Layout';
-import actions from '@/shared/actions';
-import { formatCurrency } from '@/lib/utils';
-import { PulseLoader } from 'react-spinners';
-import { TBannerAds, PublicProducts, FetchError } from '../types';
-import { useAppContext } from '@/context/AppContext';
-import SearchEngine from '@/components/SearchEngine';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useTheme } from 'styled-components';
-import { blurDataUrlImage, complements } from '@/shared/data';
 import ReactImageGallery from 'react-image-gallery';
-import { _home as Container } from '@/styles/common/home';
-import { useInView } from 'react-intersection-observer';
 import 'react-image-gallery/styles/css/image-gallery.css';
-import Slider from 'rc-slider';
-import { useModulesContext } from '@/context/Modules';
+import { useInView } from 'react-intersection-observer';
+import { PulseLoader } from 'react-spinners';
+import { useTheme } from 'styled-components';
+import fetch from '../config/client';
+import { FetchError, PublicProducts, TBannerAds } from '../types';
 
 interface Props {
   ads_data: TBannerAds[];
@@ -44,7 +44,7 @@ export default function Home({ ads_data }: Props) {
     dispatch,
     addProductToCart,
     removeProductFromCart,
-    useFetchAPI
+    httpClient
   } = useAppContext();
   const { requestLogin } = useModulesContext();
   const theme = useTheme();
@@ -53,7 +53,7 @@ export default function Home({ ads_data }: Props) {
 
   const handleFavoriteProduct = async (id: string) => {
     try {
-      const { data } = await useFetchAPI<string[]>({
+      const { data } = await httpClient<string[]>({
         method: 'post',
         url: `/api/v1/users/favorites/products/${id}`
       });
@@ -81,7 +81,7 @@ export default function Home({ ads_data }: Props) {
 
   const handleUnFavoriteProduct = async (id: string) => {
     try {
-      const { data } = await useFetchAPI<string[]>({
+      const { data } = await httpClient<string[]>({
         method: 'patch',
         url: `/api/v1/users/favorites/products/${id}`
       });

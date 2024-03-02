@@ -1,14 +1,15 @@
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { BiUser } from 'react-icons/bi';
 import Layout from '@/components/Layout';
 import Metrics from '@/components/Metrics';
-import { DashboardAction } from '@/types';
 import { useAppContext } from '@/context/AppContext';
+import { app_metadata, complements, dashboardActions } from '@/shared/data';
+import { _dashboard as Container } from '@/styles/common/dashbord';
+import { DashboardAction } from '@/types';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+import { BiUser } from 'react-icons/bi';
 import { IoApps, IoConstruct } from 'react-icons/io5';
 import { useTheme } from 'styled-components';
-import { _dashboard as Container } from '@/styles/common/dashbord';
-import { app_metadata, complements, dashboardActions } from '@/shared/data';
 
 export default function Dashboard() {
   const { state } = useAppContext();
@@ -31,7 +32,9 @@ export default function Dashboard() {
             <section className='user-container'>
               <div className='avatar-container'>
                 {state.auth.profile_image ? (
-                  <img
+                  <Image
+                    width={1000}
+                    height={1000}
                     src={state.auth.profile_image}
                     alt={`${state.auth.name} + profile picture`}
                   />

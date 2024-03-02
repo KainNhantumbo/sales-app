@@ -1,3 +1,23 @@
+import type { TParsedContent } from '@/components/EditorJSRenderer';
+import EditorJsRenderer from '@/components/EditorJSRenderer';
+import Layout from '@/components/Layout';
+import NewsLetter from '@/components/Newsletter';
+import { useAppContext } from '@/context/AppContext';
+import { useModulesContext } from '@/context/Modules';
+import { formatDate } from '@/lib/utils';
+import ErrorPage from '@/pages/error-page';
+import { author, complements, shareUrlPaths } from '@/shared/data';
+import { getPaths, getPost, getPosts } from '@/shared/queries';
+import { _post as Container } from '@/styles/common/post';
+import type { FetchError, IBlogPost, IBlogPosts } from '@/types';
+import { CommentCount, DiscussionEmbed } from 'disqus-react';
+import editorJsHtml from 'editorjs-html';
+import { motion } from 'framer-motion';
+import moment from 'moment';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import {
   IoIosAlbums,
   IoIosBookmark,
@@ -10,33 +30,13 @@ import {
   IoHeartOutline,
   IoOpenOutline
 } from 'react-icons/io5';
-import moment from 'moment';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { formatDate } from '@/lib/utils';
-import editorJsHtml from 'editorjs-html';
-import Layout from '@/components/Layout';
-import ErrorPage from '@/pages/error-page';
-import NewsLetter from '@/components/Newsletter';
-import { useRouter } from 'next/router';
 import { readingTime } from 'reading-time-estimator';
-import { useAppContext } from '@/context/AppContext';
 import { useTheme } from 'styled-components';
-import { getPaths, getPost, getPosts } from '@/shared/queries';
-import { CommentCount, DiscussionEmbed } from 'disqus-react';
-import type { FetchError, IBlogPost, IBlogPosts } from '@/types';
-import { _post as Container } from '@/styles/common/post';
-import EditorJsRenderer from '@/components/EditorJSRenderer';
-import type { TParsedContent } from '@/components/EditorJSRenderer';
-import { author, complements, shareUrlPaths } from '@/shared/data';
-import { useModulesContext } from '@/context/Modules';
 
 type Props = { post: IBlogPost; latestPosts: IBlogPosts[] };
 
 export default function Post({ post: initialPost, latestPosts }: Props) {
-  const { state, useFetchAPI } = useAppContext();
+  const { state, httpClient } = useAppContext();
   const { requestLogin } = useModulesContext();
   const [post, setPost] = useState(initialPost);
   const router = useRouter();
@@ -62,7 +62,7 @@ export default function Post({ post: initialPost, latestPosts }: Props) {
 
   const handleFavoritePost = async () => {
     try {
-      const { data } = await useFetchAPI<string[]>({
+      const { data } = await httpClient<string[]>({
         method: 'post',
         url: `/api/v1/users/favorites/blog-posts/${post._id}`
       });
@@ -77,7 +77,7 @@ export default function Post({ post: initialPost, latestPosts }: Props) {
 
   const handleUnFavoritePost = async () => {
     try {
-      const { data } = await useFetchAPI<string[]>({
+      const { data } = await httpClient<string[]>({
         method: 'patch',
         url: `/api/v1/users/favorites/blog-posts/${post._id}`
       });

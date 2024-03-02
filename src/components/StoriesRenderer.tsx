@@ -1,3 +1,18 @@
+import fetch from '@/config/client';
+import { useAppContext } from '@/context/AppContext';
+import { useModulesContext } from '@/context/Modules';
+import actions from '@/shared/actions';
+import { complements } from '@/shared/data';
+import { _storiesRender as Container } from '@/styles/modules/stories-renderer';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
+import moment from 'moment';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { BiUser } from 'react-icons/bi';
+import { BsTrash } from 'react-icons/bs';
+import { FaEdit } from 'react-icons/fa';
 import {
   IoBanOutline,
   IoHeart,
@@ -5,26 +20,11 @@ import {
   IoLeafOutline,
   IoReload
 } from 'react-icons/io5';
-import moment from 'moment';
-import Image from 'next/image';
-import fetch from '@/config/client';
-import { useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { BiUser } from 'react-icons/bi';
-import { FaEdit } from 'react-icons/fa';
-import actions from '@/shared/actions';
-import { BsTrash } from 'react-icons/bs';
-import { complements } from '@/shared/data';
-import { useAppContext } from '@/context/AppContext';
-import { FetchError, PublicStory } from '../types';
-import { useRouter } from 'next/router';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInView } from 'react-intersection-observer';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
+import { FetchError, PublicStory } from '../types';
 import DeleteStoryPrompt from './modals/DeleteStoryPrompt';
-import { _storiesRender as Container } from '@/styles/modules/stories-renderer';
-import { useInView } from 'react-intersection-observer';
-import { useModulesContext } from '@/context/Modules';
 
 interface Props {
   userId?: string | undefined;
@@ -32,7 +32,7 @@ interface Props {
 }
 
 export default function StoriesRenderer(props: Props) {
-  const { state, dispatch, useFetchAPI, deleteStoryPromptController } =
+  const { state, dispatch, httpClient, deleteStoryPromptController } =
     useAppContext();
   const { requestLogin } = useModulesContext();
   const LIMIT: number = 8;
@@ -68,7 +68,7 @@ export default function StoriesRenderer(props: Props) {
 
   const handleDeleteStory = async (storeId: string) => {
     try {
-      await useFetchAPI({
+      await httpClient({
         method: 'delete',
         url: `/api/v1/users/stories/${storeId}`
       });
@@ -84,7 +84,7 @@ export default function StoriesRenderer(props: Props) {
 
   const handleFavoriteStory = async (storyId: string) => {
     try {
-      const { data } = await useFetchAPI<string[]>({
+      const { data } = await httpClient<string[]>({
         method: 'post',
         url: `/api/v1/users/favorites/stories/${storyId}`
       });
@@ -109,7 +109,7 @@ export default function StoriesRenderer(props: Props) {
 
   const handleUnFavoriteStory = async (storyId: string) => {
     try {
-      const { data } = await useFetchAPI<string[]>({
+      const { data } = await httpClient<string[]>({
         method: 'patch',
         url: `/api/v1/users/favorites/stories/${storyId}`
       });

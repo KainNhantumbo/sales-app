@@ -1,3 +1,21 @@
+import Layout from '@/components/Layout';
+import DeleteAccountPrompt from '@/components/modals/DeleteAccountPrompt';
+import WorkCapturer from '@/components/modals/WorkCapturer';
+import { useAppContext } from '@/context/AppContext';
+import actions from '@/shared/actions';
+import countries from '@/shared/countries.json';
+import { complements } from '@/shared/data';
+import user_languages from '@/shared/languages.json';
+import user_skills from '@/shared/professional-skills.json';
+import { _userProfile as Container } from '@/styles/common/profile-editor';
+import { FetchError, InputEvents, User } from '@/types';
+import Compressor from 'compressorjs';
+import moment from 'moment';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { BiUser, BiUserCheck, BiUserX } from 'react-icons/bi';
+import { FaBlog, FaLinkedinIn } from 'react-icons/fa';
 import {
   IoAdd,
   IoArrowUndoOutline,
@@ -36,26 +54,8 @@ import {
   IoTrashOutline,
   IoWatchOutline
 } from 'react-icons/io5';
-import moment from 'moment';
-import Image from 'next/image';
-import Compressor from 'compressorjs';
-import Layout from '@/components/Layout';
-import actions from '@/shared/actions';
-import { useState, useEffect } from 'react';
-import { useTheme } from 'styled-components';
-import countries from '@/shared/countries.json';
-import { complements } from '@/shared/data';
-import { FetchError, InputEvents, User } from '@/types';
-import user_languages from '@/shared/languages.json';
-import { useRouter } from 'next/router';
-import { useAppContext } from '@/context/AppContext';
-import { FaBlog, FaLinkedinIn } from 'react-icons/fa';
 import { DotLoader, PulseLoader } from 'react-spinners';
-import user_skills from '@/shared/professional-skills.json';
-import WorkCapturer from '@/components/modals/WorkCapturer';
-import { BiUser, BiUserCheck, BiUserX } from 'react-icons/bi';
-import { _userProfile as Container } from '@/styles/common/profile-editor';
-import DeleteAccountPrompt from '@/components/modals/DeleteAccountPrompt';
+import { useTheme } from 'styled-components';
 
 type TError = {
   status: boolean;
@@ -70,7 +70,7 @@ export default function ProfileEditor() {
   const router = useRouter();
   const {
     state,
-    useFetchAPI,
+    httpClient,
     dispatch,
     userWorkingDataController,
     deleteAccountPromptController
@@ -175,7 +175,7 @@ export default function ProfileEditor() {
   };
 
   const deleteAsset = (assetType: 'cover_image' | 'profile_image') => {
-    useFetchAPI({
+    httpClient({
       method: 'delete',
       url: `/api/v1/users/account/assets`,
       data: { type: assetType, assetId: state.user[assetType]?.id }
@@ -205,7 +205,7 @@ export default function ProfileEditor() {
 
   const getUserData = () => {
     setLoading({ status: true, key: 'user-data' });
-    useFetchAPI({
+    httpClient({
       method: 'get',
       url: `/api/v1/users/account/${router.query?.id || state.auth.id}`
     })
@@ -261,7 +261,7 @@ export default function ProfileEditor() {
         .map(([key, value]) => (value ? { [key]: value } : undefined))
         .reduce((acc, value) => ({ ...acc, ...value }), {});
 
-      const { data } = await useFetchAPI<User>({
+      const { data } = await httpClient<User>({
         method: 'patch',
         url: `/api/v1/users/account`,
         data: {

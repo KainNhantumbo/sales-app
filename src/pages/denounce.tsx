@@ -1,33 +1,32 @@
+import Layout from '@/components/Layout';
+import SelectContainer from '@/components/Select';
+import { useAppContext } from '@/context/AppContext';
+import { useModulesContext } from '@/context/Modules';
+import actions from '@/shared/actions';
+import { complements, denounceReasons } from '@/shared/data';
+import { DenounceContainer as Container } from '@/styles/common/denounce';
+import { FetchError } from '@/types';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import {
   IoBan,
   IoCheckmark,
   IoClose,
   IoEllipsisHorizontal
 } from 'react-icons/io5';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import actions from '@/shared/actions';
-import { useRouter } from 'next/router';
-import Layout from '@/components/Layout';
-import { useEffect, useState } from 'react';
-import { complements } from '@/shared/data';
-import { denounceReasons } from '@/shared/data';
-import SelectContainer from '@/components/Select';
-import { useAppContext } from '@/context/AppContext';
-import { useModulesContext } from '@/context/Modules';
-import { DenounceContainer as Container } from '@/styles/common/denounce';
-import { FetchError } from '@/types';
 
 export default function Denounce() {
   const router = useRouter();
   const { requestLogin } = useModulesContext();
   const [msg, setMsg] = useState<string>('');
-  const { state, dispatch, useFetchAPI } = useAppContext();
+  const { state, dispatch, httpClient } = useAppContext();
 
   const handleCreateDenounce = async () => {
     try {
       const { url, type, id } = router.query;
-      await useFetchAPI({
+      await httpClient({
         method: 'post',
         url: `/api/v1/users/denounces`,
         data: {

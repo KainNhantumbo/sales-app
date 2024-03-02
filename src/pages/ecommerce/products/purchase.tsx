@@ -1,3 +1,22 @@
+import Layout from '@/components/Layout';
+import NewsLetter from '@/components/Newsletter';
+import renderPaymentInputs from '@/components/RenderPaymentMethodInputs';
+import SelectContainer from '@/components/Select';
+import { useAppContext } from '@/context/AppContext';
+import { formatCurrency } from '@/lib/utils';
+import actions from '@/shared/actions';
+import {
+  blurDataUrlImage,
+  complements,
+  payment_options,
+  states
+} from '@/shared/data';
+import { _purchase as Container } from '@/styles/common/purchase';
+import { FetchError, InputEvents } from '@/types';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { FaDollarSign } from 'react-icons/fa';
 import {
   IoBagHandle,
   IoBookmarkOutline,
@@ -10,31 +29,12 @@ import {
   IoPlanetOutline,
   IoStar
 } from 'react-icons/io5';
-import {
-  blurDataUrlImage,
-  complements,
-  payment_options,
-  states
-} from '@/shared/data';
-import Image from 'next/image';
-import { FetchError, InputEvents } from '@/types';
-import { motion } from 'framer-motion';
-import actions from '@/shared/actions';
-import Layout from '@/components/Layout';
-import { formatCurrency } from '@/lib/utils';
-import { FaDollarSign } from 'react-icons/fa';
-import NewsLetter from '@/components/Newsletter';
-import { useRouter } from 'next/router';
-import { useAppContext } from '@/context/AppContext';
 import { useTheme } from 'styled-components';
-import { _purchase as Container } from '@/styles/common/purchase';
-import renderPaymentInputs from '@/components/RenderPaymentMethodInputs';
-import SelectContainer from '@/components/Select';
 
 export default function Purchase() {
   const theme = useTheme();
   const router = useRouter();
-  const { state, dispatch, useFetchAPI, cartModalController } = useAppContext();
+  const { state, dispatch, httpClient, cartModalController } = useAppContext();
 
   const handleChange = (e: InputEvents) => {
     dispatch({
@@ -53,7 +53,7 @@ export default function Purchase() {
     try {
       const {
         data: { order_code, order_id }
-      } = await useFetchAPI<{ order_id: string; order_code: string }>({
+      } = await httpClient<{ order_id: string; order_code: string }>({
         method: 'post',
         url: `/api/v1/checkout/orders`,
         data: {

@@ -1,3 +1,16 @@
+import Layout from '@/components/Layout';
+import DeactivatePrompt from '@/components/modals/DeativateStorePrompt';
+import { useAppContext } from '@/context/AppContext';
+import actions from '@/shared/actions';
+import countries from '@/shared/countries.json';
+import { complements } from '@/shared/data';
+import product_categories from '@/shared/product-categories.json';
+import { _storeEditor as Container } from '@/styles/common/store-editor';
+import { FetchError, InputEvents, TStore } from '@/types';
+import Compressor from 'compressorjs';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import {
   IoAdd,
   IoArrowUndoOutline,
@@ -19,21 +32,8 @@ import {
   IoSyncOutline,
   IoTrashOutline
 } from 'react-icons/io5';
-import Image from 'next/image';
-import Compressor from 'compressorjs';
-import Layout from '@/components/Layout';
-import actions from '@/shared/actions';
-import { useState, useEffect } from 'react';
-import { useTheme } from 'styled-components';
-import { complements } from '@/shared/data';
-import countries from '@/shared/countries.json';
-import { FetchError, InputEvents, TStore } from '@/types';
-import { useRouter } from 'next/router';
-import { useAppContext } from '@/context/AppContext';
 import { DotLoader, PulseLoader } from 'react-spinners';
-import product_categories from '@/shared/product-categories.json';
-import DeactivatePrompt from '@/components/modals/DeativateStorePrompt';
-import { _storeEditor as Container } from '@/styles/common/store-editor';
+import { useTheme } from 'styled-components';
 
 type TLoading = {
   status: boolean;
@@ -49,7 +49,7 @@ type TError = {
 export default function StoreEditor() {
   const theme = useTheme();
   const router = useRouter();
-  const { state, useFetchAPI, dispatch, deactivateStorePromptController } =
+  const { state, httpClient, dispatch, deactivateStorePromptController } =
     useAppContext();
 
   const [loading, setLoading] = useState<TLoading>({
@@ -111,7 +111,7 @@ export default function StoreEditor() {
   };
 
   const deleteCoverImage = () => {
-    useFetchAPI({
+    httpClient({
       method: 'delete',
       url: `/api/v1/users/store/assets`,
       data: { assetId: state.store.cover_image?.id }
@@ -137,7 +137,7 @@ export default function StoreEditor() {
   const getStoreData = async () => {
     try {
       setLoading({ status: true, key: 'store-data' });
-      const { data } = await useFetchAPI<TStore>({
+      const { data } = await httpClient<TStore>({
         method: 'get',
         url: `/api/v1/users/store`
       });
@@ -165,7 +165,7 @@ export default function StoreEditor() {
   const handleSubmitUpdate = async () => {
     try {
       setLoading({ status: true, key: 'store-update' });
-      await useFetchAPI({
+      await httpClient({
         method: 'patch',
         url: `/api/v1/users/store/${state.store._id}`,
         data: {

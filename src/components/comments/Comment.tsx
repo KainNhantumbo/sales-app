@@ -7,12 +7,13 @@ import {
   IoHeartOutline
 } from 'react-icons/io5';
 
-import moment from 'moment';
-import { BiUser } from 'react-icons/bi';
 import { useAppContext } from '@/context/AppContext';
-import { useRouter } from 'next/router';
 import { complements } from '@/shared/data';
 import { TComment } from '@/types/comments';
+import moment from 'moment';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { BiUser } from 'react-icons/bi';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
 export default function Comment(props: TComment) {
@@ -24,7 +25,9 @@ export default function Comment(props: TComment) {
       <div className='header'>
         <div className='props'>
           {props.comment.created_by?.profile_image?.url ? (
-            <img
+            <Image
+              width={1000}
+              height={1000}
               src={props.comment.created_by?.profile_image?.url}
               alt='current user profile picture'
             />

@@ -1,22 +1,22 @@
+import fetch from '@/config/client';
+import { initialState, reducer } from '@/lib/reducer';
+import actions from '@/shared/actions';
+import useIsomorphicLayoutEffect from '@/shared/custom-layout-efffect';
+import { Auth, Cart, FetchError } from '@/types/index';
+import { Action, State } from '@/types/reducer';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { useRouter } from 'next/router';
 import {
+  Dispatch,
+  ReactNode,
+  createContext,
   useContext,
   useEffect,
-  createContext,
-  Dispatch,
-  useReducer,
-  ReactNode
+  useReducer
 } from 'react';
-import fetch from '@/config/client';
-import actions from '@/shared/actions';
-import { useRouter } from 'next/router';
 import ModulesContext from './Modules';
 import ThemeContext from './ThemeContext';
-import { Action, State } from '@/types/reducer';
-import { Auth, Cart, FetchError } from '@/types/index';
-import { reducer, initialState } from '@/lib/reducer';
-import useIsomorphicLayoutEffect from '@/shared/custom-layout-efffect';
-import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
 const queryClient: QueryClient = new QueryClient({
   defaultOptions: { queries: { networkMode: 'always' } }
@@ -41,15 +41,13 @@ interface Context {
   removeProductFromCart: (currentProductId: string) => void;
   updateCartProduct: (props: { productId: string; quantity: number }) => void;
   geCartProduct: (currentProductId: string) => Cart;
-  useFetchAPI: <T>(
-    config: AxiosRequestConfig
-  ) => Promise<AxiosResponse<T, any>>;
+  httpClient: <T>(config: AxiosRequestConfig) => Promise<AxiosResponse<T, any>>;
 }
 
 const context = createContext<Context>({
   state: initialState,
   dispatch: () => {},
-  useFetchAPI: (): any => {},
+  httpClient: (): any => {},
   searchBoxController: () => {},
   cartModalController: () => {},
   sortBoxController: () => {},
@@ -272,7 +270,7 @@ export default function AppContext(props: Props) {
     }
   };
 
-  async function useFetchAPI<T>(config: AxiosRequestConfig) {
+  async function httpClient<T>(config: AxiosRequestConfig) {
     fetch.interceptors.response.use(
       undefined,
       (error: AxiosError): Promise<never> => {
@@ -334,7 +332,7 @@ export default function AppContext(props: Props) {
         <context.Provider
           value={{
             state,
-            useFetchAPI,
+            httpClient,
             dispatch,
             sortBoxController,
             searchBoxController,

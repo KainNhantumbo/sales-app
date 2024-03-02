@@ -1,22 +1,22 @@
+import rubymart_logo from '@/../public/rubymart_logo.png';
+import { useAppContext } from '@/context/AppContext';
+import { useModulesContext } from '@/context/Modules';
+import { urls } from '@/shared/data';
+import { _header as Container } from '@/styles/modules/header';
+import { AnimatePresence, m as motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { BiUser } from 'react-icons/bi';
 import {
+  IoCartOutline,
   IoClose,
   IoLogInOutline,
   IoLogOutOutline,
-  IoStorefrontOutline,
-  IoCartOutline,
-  IoMenu
+  IoMenu,
+  IoStorefrontOutline
 } from 'react-icons/io5';
-import Link from 'next/link';
-import Image from 'next/image';
-import { urls } from '@/shared/data';
-import { useRouter } from 'next/router';
-import { BiUser } from 'react-icons/bi';
-import { useState, useEffect } from 'react';
-import { useAppContext } from '@/context/AppContext';
-import { useModulesContext } from '@/context/Modules';
-import rubymart_logo from '@/../public/rubymart_logo.png';
-import { m as motion, AnimatePresence } from 'framer-motion';
-import { _header as Container } from '@/styles/modules/header';
 
 export default function Header() {
   const { asPath, push } = useRouter();
@@ -110,7 +110,9 @@ export default function Header() {
                     className='user-account'
                     onClick={() => push(`/dashboard`)}>
                     {state.auth.profile_image ? (
-                      <img
+                      <Image
+                        width={1000}
+                        height={1000}
                         loading='lazy'
                         decoding='async'
                         src={state.auth.profile_image}

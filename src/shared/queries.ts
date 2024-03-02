@@ -1,11 +1,11 @@
-import actions from './actions';
 import fetch from '@/config/client';
-import { useEffect, useMemo } from 'react';
-import type { State } from '@/types/reducer';
-import type { QueryList } from '@/types';
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { useAppContext } from '@/context/AppContext';
+import type { QueryList } from '@/types';
+import type { State } from '@/types/reducer';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
+import actions from './actions';
 
 type Props = {
   queryLimit: number;
@@ -30,7 +30,7 @@ export default function useCustomInfinityQuery<T>({
   stateQueryKey
 }: Props) {
   const { ref, inView } = useInView();
-  const { useFetchAPI, state, dispatch } = useAppContext();
+  const { httpClient, state, dispatch } = useAppContext();
 
   const {
     data,
@@ -45,7 +45,7 @@ export default function useCustomInfinityQuery<T>({
     queryFn: async ({ pageParam = 0 }) => {
       const { data } = isPublicQuery
         ? await fetch<T[]>({ url: queryUrl })
-        : await useFetchAPI<T[]>({ url: queryUrl });
+        : await httpClient<T[]>({ url: queryUrl });
       return { data, offset: Number(pageParam) + 1 };
     },
     getNextPageParam: ({ data, offset }) =>
