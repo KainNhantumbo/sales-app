@@ -8,7 +8,7 @@ import {
 } from 'react-icons/io5';
 
 import { useAppContext } from '@/context/AppContext';
-import { complements } from '@/shared/data';
+import { complements } from '@/data/data';
 import { TComment } from '@/types/comments';
 import moment from 'moment';
 import Image from 'next/image';

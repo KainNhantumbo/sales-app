@@ -1,8 +1,8 @@
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
-import actions from '@/shared/actions';
+import { actions } from '@/shared/actions';
 import { _deleteAccount as Container } from '@/styles/modules/delete-account-prompt';
-import { FetchError, InputEvents } from '@/types';
+import { HttpError, InputEvents } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -60,7 +60,7 @@ export default function DeleteAccountPrompt() {
       setError({
         status: true,
         message:
-          (error as FetchError).response?.data?.message ||
+          (error as HttpError).response?.data?.message ||
           'Erro ao eliminar os dados da conta.'
       });
     }
@@ -96,7 +96,7 @@ export default function DeleteAccountPrompt() {
       setError({
         status: true,
         message:
-          (error as FetchError).response?.data?.message ||
+          (error as HttpError).response?.data?.message ||
           'Erro ao eliminar os dados da conta.'
       });
     } finally {

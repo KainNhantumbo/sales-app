@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout';
-import { complements } from '@/shared/data';
+import { complements } from '@/data/data';
 import { _legal as Container } from '@/styles/common/legal';
 
 export default function TermsOfUse() {

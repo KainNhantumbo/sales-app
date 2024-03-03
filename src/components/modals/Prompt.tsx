@@ -1,7 +1,7 @@
-import actions from '@/shared/actions';
-import { m as motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '@/context/AppContext';
+import { actions } from '@/shared/actions';
 import { _prompt as Container } from '@/styles/modules/prompt';
+import { AnimatePresence, m as motion } from 'framer-motion';
 
 export function PromptModal() {
   const { state, dispatch } = useAppContext();

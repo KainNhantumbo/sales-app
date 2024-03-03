@@ -2,10 +2,10 @@ import Layout from '@/components/Layout';
 import SelectContainer from '@/components/Select';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import actions from '@/shared/actions';
-import { complements, denounceReasons } from '@/shared/data';
+import { complements, denounceReasons } from '@/data/data';
+import { actions } from '@/shared/actions';
 import { DenounceContainer as Container } from '@/styles/common/denounce';
-import { FetchError } from '@/types';
+import { HttpError } from '@/types';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -31,7 +31,7 @@ export default function Denounce() {
         url: `/api/v1/users/denounces`,
         data: {
           content: state.denounce.content,
-          report_type: state.denounce.reson,
+          report_type: state.denounce.reason,
           resource_type: type || 'generic',
           resource_url: url || '',
           resource_id: id || ''
@@ -41,18 +41,18 @@ export default function Denounce() {
         type: actions.CREATE_DENOUNCE,
         payload: {
           ...state,
-          denounce: { content: '', reson: '' }
+          denounce: { content: '', reason: '' }
         }
       });
       setMsg('Denúncia enviada com sucesso.');
     } catch (error) {
       setMsg(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };
@@ -63,7 +63,7 @@ export default function Denounce() {
         type: actions.CREATE_DENOUNCE,
         payload: {
           ...state,
-          denounce: { content: '', reson: '' }
+          denounce: { content: '', reason: '' }
         }
       });
     };
@@ -101,12 +101,12 @@ export default function Denounce() {
               </p>
               <p className='prompt-message'>
                 Coloque informações que acha relevantes à sua denúncia (o
-                denunciado não saberá quem o denúnciou)
+                denunciado não saberá quem o denunciou)
               </p>
               <section className='form' spellCheck={'true'}>
                 <section className='form-section'>
                   <div className='form-element'>
-                    <label htmlFor='carrer'>
+                    <label htmlFor='career'>
                       <IoEllipsisHorizontal />
                       <span>Razão da Denúncia *</span>
                     </label>
@@ -120,7 +120,7 @@ export default function Denounce() {
                             ...state,
                             denounce: {
                               ...state.denounce,
-                              reson: option?.value
+                              reason: option?.value
                             }
                           }
                         });
@@ -180,7 +180,7 @@ export default function Denounce() {
                         type: actions.CREATE_DENOUNCE,
                         payload: {
                           ...state,
-                          denounce: { content: '', reson: '' }
+                          denounce: { content: '', reason: '' }
                         }
                       });
                       router.back();

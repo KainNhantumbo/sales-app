@@ -1,4 +1,4 @@
-const actions = {
+export const actions = {
   BANNER_ADS: 'BANNER_ADS',
   METRICS_DATA: 'METRICS_DATA',
   SEARCH: 'SEARCH',
@@ -13,7 +13,7 @@ const actions = {
   DEACTIVATE_STORE_PROMPT: 'DEACTIVATE_STORE_PROMPT',
   USER_AUTH: 'USER_AUTH',
   IS_CONNECTED: 'IS_CONNECTED',
-  NEW_SUBSCRIPTOR_VALUE: 'NEW_SUBSCRIPTOR_VALUE',
+  NEW_subscription_VALUE: 'NEW_subscription_VALUE',
   SIGNUP_DATA: 'SIGNUP_DATA',
   SIGNIN_DATA: 'SIGNIN_DATA',
   USER_DATA: 'USER_DATA',
@@ -43,5 +43,3 @@ const actions = {
   QUERY_ORDERS: 'QUERY_ORDERS',
   PROMPT: 'PROMPT'
 };
-
-export default actions;

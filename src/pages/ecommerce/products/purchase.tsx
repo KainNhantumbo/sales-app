@@ -3,16 +3,16 @@ import NewsLetter from '@/components/Newsletter';
 import renderPaymentInputs from '@/components/RenderPaymentMethodInputs';
 import SelectContainer from '@/components/Select';
 import { useAppContext } from '@/context/AppContext';
-import { formatCurrency } from '@/lib/utils';
-import actions from '@/shared/actions';
 import {
   blurDataUrlImage,
   complements,
   payment_options,
   states
-} from '@/shared/data';
+} from '@/data/data';
+import { formatCurrency } from '@/lib/utils';
+import { actions } from '@/shared/actions';
 import { _purchase as Container } from '@/styles/common/purchase';
-import { FetchError, InputEvents } from '@/types';
+import { HttpError, InputEvents } from '@/types';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -75,7 +75,7 @@ export default function Purchase() {
         `/ecommerce/products/purchase-finalization?order=${order_id}&code=${order_code}`
       );
     } catch (error) {
-      console.error((error as FetchError).response?.data?.message || error);
+      console.error((error as HttpError).response?.data?.message || error);
     }
   };
 
@@ -298,16 +298,16 @@ export default function Purchase() {
                 </section>
                 <section className='form-section'>
                   <div className='form-element'>
-                    <label htmlFor='adress'>
+                    <label htmlFor='address'>
                       <IoHomeOutline />
                       <span>Endereço *</span>
                     </label>
                     <textarea
                       rows={4}
-                      id='adress'
+                      id='address'
                       placeholder='Escreva detalhes como o bairro, avenida/rua, quarteirão, número da casa, referências, etc.'
                       aria-label='Escreva detalhes como o bairro, avenida/rua, quarteirão, número da casa, referências, etc.'
-                      value={state.checkout.location.adress}
+                      value={state.checkout.location.address}
                       maxLength={128}
                       onChange={(e) =>
                         e.target.value.length > 128
@@ -320,7 +320,7 @@ export default function Purchase() {
                                   ...state.checkout,
                                   location: {
                                     ...state.checkout.location,
-                                    adress: e.target.value
+                                    address: e.target.value
                                   }
                                 }
                               }
@@ -328,7 +328,7 @@ export default function Purchase() {
                       }
                     />
                     <span className='counter'>{`${
-                      state.checkout.location.adress.length || 0
+                      state.checkout.location.address.length || 0
                     } / 128`}</span>
                   </div>
                 </section>

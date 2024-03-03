@@ -1,23 +1,23 @@
+import backgroundImage from '@/../public/assets/africa-unveiled.png';
+import Layout from '@/components/Layout';
+import fetch from '@/config/client';
+import { useAppContext } from '@/context/AppContext';
+import { complements } from '@/data/data';
+import { actions } from '@/shared/actions';
+import { _signUp as Container } from '@/styles/common/sign-up';
+import { HttpError, InputEvents, SubmitEvent } from '@/types';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import {
   IoEllipsisHorizontal,
   IoLockClosedOutline,
   IoLockOpenOutline,
   IoMailOutline
 } from 'react-icons/io5';
-import Link from 'next/link';
-import Image from 'next/image';
-import fetch from '@/config/client';
-import actions from '@/shared/actions';
-import Layout from '@/components/Layout';
-import { useState, useEffect } from 'react';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
-import { complements } from '@/shared/data';
-import { useRouter } from 'next/router';
-import { useAppContext } from '@/context/AppContext';
-import { FetchError, InputEvents, SubmitEvent } from '@/types';
-import { _signUp as Container } from '@/styles/common/sign-up';
-import backgroundImage from '@/../public/assets/africa-unveiled.png';
 
 export default function SignUp() {
   const router = useRouter();
@@ -65,14 +65,14 @@ export default function SignUp() {
       router.push('/auth/sign-up-confirm');
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
       setError({
         status: true,
         message:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       });
     } finally {
       setLoading(false);

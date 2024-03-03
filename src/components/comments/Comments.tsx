@@ -1,7 +1,7 @@
 import { useAppContext } from '@/context/AppContext';
-import actions from '@/shared/actions';
+import { actions } from '@/shared/actions';
 import { _comments as Container } from '@/styles/modules/comments';
-import { FetchError } from '@/types';
+import { HttpError } from '@/types';
 import type { IComment } from '@/types/comments';
 import { AxiosResponse } from 'axios';
 import Link from 'next/link';
@@ -122,15 +122,15 @@ export default function Comments({ contentId }: Props) {
       clearCommentData();
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
       setError({
         status: true,
         key: 'create-comment',
         msg:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message ||
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message ||
           'Erro: por favor, tente novamente.'
       });
     } finally {
@@ -161,15 +161,15 @@ export default function Comments({ contentId }: Props) {
       clearCommentData();
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
       setError({
         status: true,
         key: 'create-comment',
         msg:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message ||
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message ||
           'Erro: por favor, tente novamente.'
       });
     } finally {
@@ -188,8 +188,8 @@ export default function Comments({ contentId }: Props) {
       getComments();
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };
@@ -244,8 +244,8 @@ export default function Comments({ contentId }: Props) {
       });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };
@@ -269,8 +269,8 @@ export default function Comments({ contentId }: Props) {
       });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };
@@ -291,15 +291,15 @@ export default function Comments({ contentId }: Props) {
       getComments();
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
       setError({
         status: true,
         key: 'create-comment',
         msg:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message ||
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message ||
           'Erro: por favor, tente novamente.'
       });
     } finally {

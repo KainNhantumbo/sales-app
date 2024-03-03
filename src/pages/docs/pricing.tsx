@@ -1,11 +1,11 @@
-import Link from 'next/link';
-import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
+import { complements, pricing_data } from '@/data/data';
 import { formatCurrency } from '@/lib/utils';
+import { _pricing as Container } from '@/styles/common/pricing';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { IoBalloonOutline } from 'react-icons/io5';
 import { useTheme } from 'styled-components';
-import { complements, pricing_data } from '@/shared/data';
-import { _pricing as Container } from '@/styles/common/pricing';
 
 export default function Pricing() {
   const theme = useTheme();

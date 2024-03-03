@@ -2,9 +2,9 @@ import Layout from '@/components/Layout';
 import SearchEngine from '@/components/SearchEngine';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
+import { blurDataUrlImage, complements } from '@/data/data';
 import { formatCurrency } from '@/lib/utils';
-import actions from '@/shared/actions';
-import { blurDataUrlImage, complements } from '@/shared/data';
+import { actions } from '@/shared/actions';
 import { _home as Container } from '@/styles/common/home';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
@@ -32,10 +32,10 @@ import { useInView } from 'react-intersection-observer';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import fetch from '../config/client';
-import { FetchError, PublicProducts, TBannerAds } from '../types';
+import { BannerAds, HttpError, PublicProducts } from '../types';
 
 interface Props {
-  ads_data: TBannerAds[];
+  ads_data: BannerAds[];
 }
 
 export default function Home({ ads_data }: Props) {
@@ -73,8 +73,8 @@ export default function Home({ ads_data }: Props) {
       });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };
@@ -98,8 +98,8 @@ export default function Home({ ads_data }: Props) {
       });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };
@@ -447,15 +447,15 @@ export default function Home({ ads_data }: Props) {
 
 export async function getServerSideProps() {
   try {
-    const { data } = await fetch<TBannerAds[]>({
+    const { data } = await fetch<BannerAds[]>({
       method: 'get',
       url: '/api/v1/default/ads/public'
     });
     return { props: { ads_data: data } };
   } catch (error) {
     console.error(
-      (error as FetchError).response?.data?.message ||
-        (error as FetchError).message
+      (error as HttpError).response?.data?.message ||
+        (error as HttpError).message
     );
     return { props: { ads_data: [] } };
   }

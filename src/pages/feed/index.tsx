@@ -1,9 +1,9 @@
 import Layout from '@/components/Layout';
-import { complements } from '@/shared/data';
-import SideBarAds from '@/components/SidaBarAds';
 import SearchStories from '@/components/SearchStories';
-import { _feed as Container } from '@/styles/common/feed';
+import SideBarAds from '@/components/SidaBarAds';
 import StoriesRenderer from '@/components/StoriesRenderer';
+import { complements } from '@/data/data';
+import { _feed as Container } from '@/styles/common/feed';
 
 export default function Feed() {
   return (

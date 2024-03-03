@@ -5,11 +5,11 @@ import ShareProducts from '@/components/modals/ShareProductModal';
 import SortBox from '@/components/modals/SortBox';
 import ToolBox from '@/components/modals/ToolBox';
 import { useAppContext } from '@/context/AppContext';
+import { complements } from '@/data/data';
 import { formatCurrency } from '@/lib/utils';
-import actions from '@/shared/actions';
-import { complements } from '@/shared/data';
+import { actions } from '@/shared/actions';
 import { _productList as Container } from '@/styles/common/products';
-import { FetchError, ProductsList } from '@/types';
+import { HttpError, ProductsList } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import moment from 'moment';
 import Link from 'next/link';
@@ -77,8 +77,8 @@ export default function Products() {
       refetch({ queryKey: ['private-store-products'] });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };

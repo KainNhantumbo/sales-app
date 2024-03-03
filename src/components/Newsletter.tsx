@@ -1,15 +1,15 @@
+import { useAppContext } from '@/context/AppContext';
+import { blurDataUrlImage } from '@/data/data';
+import { actions } from '@/shared/actions';
+import { HttpError } from '@/types';
 import Image from 'next/image';
-import fetch from '../config/client';
-import actions from '@/shared/actions';
+import { useEffect, useState } from 'react';
 import { BsMailbox2 } from 'react-icons/bs';
 import { PulseLoader } from 'react-spinners';
-import { useState, useEffect } from 'react';
-import { blurDataUrlImage } from '@/shared/data';
-import { useAppContext } from '@/context/AppContext';
 import { useTheme } from 'styled-components';
 import newsletter_image from '../../public/assets/newsletter.png';
+import fetch from '../config/client';
 import { _newsletter as Container } from '../styles/modules/newsletter';
-import { FetchError } from '@/types';
 
 export default function NewsLetter() {
   const theme = useTheme();
@@ -26,13 +26,13 @@ export default function NewsLetter() {
       await fetch({
         method: 'post',
         url: '/api/v1/users/newsletter',
-        data: state.newSubscriptorValue
+        data: state.newSubscriptionValue
       });
       dispatch({
-        type: actions.NEW_SUBSCRIPTOR_VALUE,
+        type: actions.NEW_subscription_VALUE,
         payload: {
           ...state,
-          newSubscriptorValue: { subscriptor: '' }
+          newSubscriptionValue: { subscription: '' }
         }
       });
       setError({
@@ -44,8 +44,8 @@ export default function NewsLetter() {
       setError({
         status: true,
         message:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       });
     } finally {
       setLoading(false);
@@ -91,13 +91,13 @@ export default function NewsLetter() {
                   aria-label='Escreva o seu e-mail'
                   placeholder='Escreva o seu e-mail'
                   autoComplete='true'
-                  value={state.newSubscriptorValue.subscriptor}
+                  value={state.newSubscriptionValue.subscription}
                   onChange={(e) =>
                     dispatch({
-                      type: actions.NEW_SUBSCRIPTOR_VALUE,
+                      type: actions.NEW_subscription_VALUE,
                       payload: {
                         ...state,
-                        newSubscriptorValue: { subscriptor: e.target.value }
+                        newSubscriptionValue: { subscription: e.target.value }
                       }
                     })
                   }

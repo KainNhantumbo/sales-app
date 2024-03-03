@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout';
 import Metrics from '@/components/Metrics';
 import { useAppContext } from '@/context/AppContext';
-import { app_metadata, complements, dashboardActions } from '@/shared/data';
+import { app_metadata, complements, dashboardActions } from '@/data/data';
 import { _dashboard as Container } from '@/styles/common/dashbord';
 import { DashboardAction } from '@/types';
 import { motion } from 'framer-motion';

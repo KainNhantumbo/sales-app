@@ -1,7 +1,7 @@
 import rubymart_logo from '@/../public/rubymart_logo.png';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import { urls } from '@/shared/data';
+import { urls } from '@/data/data';
 import { _header as Container } from '@/styles/modules/header';
 import { AnimatePresence, m as motion } from 'framer-motion';
 import Image from 'next/image';

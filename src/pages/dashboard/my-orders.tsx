@@ -2,16 +2,16 @@ import Layout from '@/components/Layout';
 import SelectContainer from '@/components/Select';
 import SideBarAds from '@/components/SidaBarAds';
 import { useAppContext } from '@/context/AppContext';
-import { formatDate } from '@/lib/utils';
-import actions from '@/shared/actions';
 import {
   complements,
   orderSortOptions,
   orderStatusOptions,
   order_status_labels
-} from '@/shared/data';
+} from '@/data/data';
+import { formatDate } from '@/lib/utils';
+import { actions } from '@/shared/actions';
 import { _myOrders as Container } from '@/styles/common/my-orders';
-import { FetchError, TOrder } from '@/types';
+import { HttpError, Order } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { BsBox2, BsBox2Fill } from 'react-icons/bs';
@@ -33,8 +33,8 @@ export default function MyOrders() {
 
   const fetchOrders = async ({
     pageParam = 0
-  }): Promise<{ data: TOrder[]; currentOffset: number }> => {
-    const { data } = await httpClient<TOrder[]>({
+  }): Promise<{ data: Order[]; currentOffset: number }> => {
+    const { data } = await httpClient<Order[]>({
       method: 'get',
       url: `/api/v1/checkout/orders?offset=${
         pageParam * QUERY_LIMIT
@@ -72,8 +72,8 @@ export default function MyOrders() {
       refetch({ queryKey: ['user-orders'] });
     } catch (error) {
       console.info(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };
@@ -87,8 +87,8 @@ export default function MyOrders() {
       refetch({ queryKey: ['user-orders'] });
     } catch (error) {
       console.info(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };
@@ -267,7 +267,7 @@ export default function MyOrders() {
                         </h3>
                         <div>
                           <h3 className='author-name'>
-                            <span>{order.order_custumer.user_name}</span>
+                            <span>{order.order_costumer.user_name}</span>
                           </h3>
                         </div>
                       </div>
@@ -275,34 +275,34 @@ export default function MyOrders() {
                         <p>
                           País:{' '}
                           <span>
-                            {order.order_custumer.user_location.country}
+                            {order.order_costumer.user_location.country}
                           </span>
                         </p>
                         <p>
                           Província / Estado:{' '}
                           <span>
-                            {order.order_custumer.user_location.state}
+                            {order.order_costumer.user_location.state}
                           </span>
                         </p>
                         <p>
                           Código Postal:{' '}
                           <span>
-                            {order.order_custumer.user_location.zip_code}
+                            {order.order_costumer.user_location.zip_code}
                           </span>
                         </p>
                         <p>
                           Endereço:{' '}
                           <span>
-                            {order.order_custumer.user_location.adress}
+                            {order.order_costumer.user_location.address}
                           </span>
                         </p>
-                        {order.order_custumer.user_notes &&
-                        order.order_custumer.user_notes.includes('\n') ? (
+                        {order.order_costumer.user_notes &&
+                        order.order_costumer.user_notes.includes('\n') ? (
                           <div className='content'>
                             <h3>
                               <span>Conteúdo</span>
                             </h3>
-                            {order.order_custumer.user_notes
+                            {order.order_costumer.user_notes
                               .split('\n')
                               .map((pharase, index) => (
                                 <p key={String(index)}>{pharase}</p>
@@ -314,7 +314,7 @@ export default function MyOrders() {
                               <h3>
                                 <span>Conteúdo</span>
                               </h3>
-                              <p>{order.order_custumer.user_notes}</p>
+                              <p>{order.order_costumer.user_notes}</p>
                             </div>
                           </>
                         )}

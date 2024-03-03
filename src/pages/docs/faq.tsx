@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout';
-import { complements } from '@/shared/data';
-import { BsCreditCard2Front, BsTruck } from 'react-icons/bs';
+import { complements } from '@/data/data';
 import { _legal as Container } from '@/styles/common/legal';
+import { BsCreditCard2Front, BsTruck } from 'react-icons/bs';
 import { IoBulb, IoCogOutline, IoFootsteps } from 'react-icons/io5';
 
 export default function FAQ() {

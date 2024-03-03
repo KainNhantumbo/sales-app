@@ -1,16 +1,16 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import fetch from '@/config/client';
-import Layout from '@/components/Layout';
-import { useState, useEffect } from 'react';
-import actions from '@/shared/actions';
-import { complements } from '@/shared/data';
-import { useRouter } from 'next/router';
-import { useAppContext } from '@/context/AppContext';
-import { InputEvents, SubmitEvent, Auth, FetchError } from '@/types';
-import { _signIn as Container } from '@/styles/common/sign-in';
-import { IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
 import backgroundImage from '@/../public/assets/africa-unveiled.png';
+import Layout from '@/components/Layout';
+import fetch from '@/config/client';
+import { useAppContext } from '@/context/AppContext';
+import { complements } from '@/data/data';
+import { actions } from '@/shared/actions';
+import { _signIn as Container } from '@/styles/common/sign-in';
+import { Auth, HttpError, InputEvents, SubmitEvent } from '@/types';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
 
 export default function SignIn() {
   const { state, dispatch } = useAppContext();
@@ -53,14 +53,14 @@ export default function SignIn() {
       router.push(`/dashboard`);
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
       setError({
         status: true,
         message:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       });
     } finally {
       setLoading(false);

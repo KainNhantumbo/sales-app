@@ -1,9 +1,9 @@
 import Layout from '@/components/Layout';
 import { useAppContext } from '@/context/AppContext';
+import { complements, order_status_labels } from '@/data/data';
 import { formatCurrency } from '@/lib/utils';
-import { complements, order_status_labels } from '@/shared/data';
 import { _purchaseFinalization as Container } from '@/styles/common/purchase-finalization';
-import { TOrder } from '@/types';
+import { Order } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -13,7 +13,7 @@ import { IoCart, IoChevronBack, IoReload } from 'react-icons/io5';
 import { DotLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
-type TOrderSummary = {
+type OrderSummary = {
   order_code: string;
   order_id: string;
   order_amount: number;
@@ -31,7 +31,7 @@ export default function OrderFinalization() {
   const { httpClient } = useAppContext();
   const theme = useTheme();
   const router = useRouter();
-  const [order, setOrder] = useState<TOrderSummary>({
+  const [order, seOrder] = useState<OrderSummary>({
     order_code: '',
     order_id: '',
     order_amount: 0,
@@ -39,8 +39,8 @@ export default function OrderFinalization() {
     user_name: ''
   });
 
-  const getOrder = async () => {
-    const { data } = await httpClient<TOrder>({
+  const geOrder = async () => {
+    const { data } = await httpClient<Order>({
       method: 'get',
       url: `/api/v1/checkout/orders/${router.query['order']}`
     });
@@ -55,13 +55,13 @@ export default function OrderFinalization() {
         0
       ),
       order_status: data.order_status,
-      user_name: data.order_custumer.user_name
+      user_name: data.order_costumer.user_name
     };
   };
 
   const { data, isError, isLoading, error } = useQuery({
     queryKey: ['purchase-finalization'],
-    queryFn: getOrder
+    queryFn: geOrder
   });
 
   const serialiseOrderStatus = (status: string): string => {
@@ -71,10 +71,10 @@ export default function OrderFinalization() {
 
   useEffect(() => {
     if (!isLoading && data) {
-      setOrder(data);
+      seOrder(data);
     }
     return () => {
-      setOrder({
+      seOrder({
         order_code: '',
         order_id: '',
         order_amount: 0,

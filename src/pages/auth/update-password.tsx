@@ -1,13 +1,13 @@
-import Link from 'next/link';
-import fetch from '@/config/client';
 import Layout from '@/components/Layout';
-import { useState, useEffect } from 'react';
+import fetch from '@/config/client';
+import { complements } from '@/data/data';
+import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
+import { HttpError, InputEvents, SubmitEvent } from '@/types';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { IoLockClosedOutline, IoLockOpenOutline } from 'react-icons/io5';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
-import { complements } from '@/shared/data';
-import { FetchError, InputEvents, SubmitEvent } from '@/types';
-import { IoLockClosedOutline, IoLockOpenOutline } from 'react-icons/io5';
-import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
 
 export default function UpdatePassword() {
   const theme = useTheme();
@@ -43,14 +43,14 @@ export default function UpdatePassword() {
       });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
       setError({
         status: true,
         message:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       });
     } finally {
       setLoading(false);

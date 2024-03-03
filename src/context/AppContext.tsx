@@ -1,19 +1,19 @@
 import fetch from '@/config/client';
 import { initialState, reducer } from '@/lib/reducer';
-import actions from '@/shared/actions';
-import useIsomorphicLayoutEffect from '@/shared/custom-layout-efffect';
-import { Auth, Cart, FetchError } from '@/types/index';
-import { Action, State } from '@/types/reducer';
+import { actions } from '@/shared/actions';
+import { useIsomorphicLayoutEffect } from '@/shared/custom-layout-effect';
+import type { Action, State } from '@/types';
+import type { Auth, Cart, HttpError } from '@/types/index';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
 import {
   Dispatch,
-  ReactNode,
   createContext,
   useContext,
   useEffect,
-  useReducer
+  useReducer,
+  type ReactNode
 } from 'react';
 import ModulesContext from './Modules';
 import ThemeContext from './ThemeContext';
@@ -264,8 +264,8 @@ export default function AppContext(props: Props) {
       });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };
@@ -278,8 +278,8 @@ export default function AppContext(props: Props) {
         if (status > 400 && status < 404) {
           validateAuth().catch((error) => {
             console.error(
-              (error as FetchError).response?.data?.message ||
-                (error as FetchError).message
+              (error as HttpError).response?.data?.message ||
+                (error as HttpError).message
             );
             router.push('/auth/sign-in');
           });
@@ -306,8 +306,8 @@ export default function AppContext(props: Props) {
       });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };

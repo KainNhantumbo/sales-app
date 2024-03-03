@@ -1,3 +1,18 @@
+import Layout from '@/components/Layout';
+import SideBarAds from '@/components/SidaBarAds';
+import StoriesRenderer from '@/components/StoriesRenderer';
+import fetch from '@/config/client';
+import { complements, formatSocialNetwork } from '@/data/data';
+import { formatDate } from '@/lib/utils';
+import ErrorPage from '@/pages/error-page';
+import { _profile as Container } from '@/styles/common/community-user-profile';
+import { TPublicUser } from '@/types';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { BiUser } from 'react-icons/bi';
+import { BsWind } from 'react-icons/bs';
 import {
   IoBriefcase,
   IoCreateOutline,
@@ -6,21 +21,6 @@ import {
   IoOpenOutline,
   IoPlanet
 } from 'react-icons/io5';
-import Link from 'next/link';
-import Image from 'next/image';
-import fetch from '@/config/client';
-import { motion } from 'framer-motion';
-import { BsWind } from 'react-icons/bs';
-import { BiUser } from 'react-icons/bi';
-import { formatDate } from '@/lib/utils';
-import Layout from '@/components/Layout';
-import ErrorPage from '@/pages/error-page';
-import { TPublicUser } from '@/types';
-import SideBarAds from '@/components/SidaBarAds';
-import { useRouter } from 'next/router';
-import StoriesRenderer from '@/components/StoriesRenderer';
-import { complements, formatSocialNetwork } from '@/shared/data';
-import { _profile as Container } from '@/styles/common/community-user-profile';
 
 type Props = { user: TPublicUser };
 

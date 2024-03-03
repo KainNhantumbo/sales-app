@@ -1,10 +1,15 @@
-import type { IconType } from 'react-icons';
-import type { StaticImageData } from 'next/image';
+import type { IComment } from '@/types/comments';
 import type { OutputData } from '@editorjs/editorjs';
+import type { AxiosError } from 'axios';
+import type { StaticImageData } from 'next/image';
 import type { ChangeEvent, FormEvent } from 'react';
-import { AxiosError } from 'axios';
+import type { IconType } from 'react-icons';
 
-export type FetchError = AxiosError<{ message: string; code: number }>;
+declare module 'styled-components' {
+  export interface DefaultTheme extends Theme {}
+}
+
+export type HttpError = AxiosError<{ message: string; code: number }>;
 
 export type Pricing = Array<{
   title: string;
@@ -61,7 +66,7 @@ export type TShareUrls = {
   icon: IconType;
 };
 
-export type TPaymentType =
+export type PaymentGateway =
   | 'e-mola'
   | 'm-pesa'
   | 'credit-card'
@@ -69,12 +74,12 @@ export type TPaymentType =
   | 'ponto-24';
 
 export type TPaymentOptions = Array<{
-  type: TPaymentType;
+  type: PaymentGateway;
   label: 'E-Mola' | 'M-Pesa' | 'Cartão de Crédito' | 'Paypal' | 'Conta Móvel';
   image: StaticImageData;
 }>;
 
-export type TSearchProducts = {
+export type SearchProducts = {
   sort: string;
   query: string;
   price_range: number;
@@ -113,10 +118,6 @@ export type Author = {
   description: string;
 };
 
-declare module 'styled-components' {
-  export interface DefaultTheme extends Theme {}
-}
-
 export type Modal = {
   title: string;
   status: boolean;
@@ -131,7 +132,7 @@ export type Story = {
   cover_image: { id: string; url: string } | undefined;
 };
 
-export interface PublicStory extends Story {
+export type PublicStory = Story & {
   _id: string;
   created_by: {
     _id: string;
@@ -143,7 +144,7 @@ export interface PublicStory extends Story {
   favorites: string[];
   createdAt: string;
   updatedAt: string;
-}
+};
 
 export type QueryList = {
   offset?: number;
@@ -151,18 +152,18 @@ export type QueryList = {
   search?: string;
 };
 
-export interface SignIn {
+export type SignIn = {
   email: string;
   password: string;
-}
+};
 
-export interface SignUp {
+export type SignUp = {
   first_name: string;
   last_name: string;
   email: string;
   password: string;
   confirm_password: string;
-}
+};
 
 export type TChat = Array<{
   _id: string;
@@ -188,7 +189,7 @@ export type PublicStoreList = Array<{
   createdAt: string;
 }>;
 
-export interface IBlogPosts {
+export type Posts = {
   _id: string;
   title: string;
   slug: string;
@@ -198,11 +199,11 @@ export interface IBlogPosts {
   createdAt: string;
   updatedAt: string;
   favorites: string[];
-}
+};
 
-export interface IBlogPost extends IBlogPosts {
+export type IBlogPost = Posts & {
   content: OutputData;
-}
+};
 
 export type ProductsList = {
   _id: string;
@@ -216,7 +217,7 @@ export type ProductsList = {
   updatedAt: string;
 };
 
-export interface Product extends ProductsList {
+export type Product = ProductsList & {
   store: string;
   created_by: string;
   description: string;
@@ -224,7 +225,7 @@ export interface Product extends ProductsList {
   delivery_tax: number;
   images: { [x: string]: { id: string; url: string } };
   allow_comments: boolean;
-}
+};
 
 export type PublicProducts = {
   _id: string;
@@ -235,7 +236,7 @@ export type PublicProducts = {
   image: { id: string; url: string } | undefined;
 };
 
-export type TPublicProduct = {
+export type PublicProduct = {
   _id: string;
   name: string;
   category: string;
@@ -256,7 +257,7 @@ export type TPublicProduct = {
     location: {
       country: string;
       state: string;
-      adress: string;
+      address: string;
     };
     category: string;
     verified_store: boolean;
@@ -300,13 +301,13 @@ export type PublicStore = {
   location: {
     country: string;
     state: string;
-    adress: string | undefined;
+    address: string | undefined;
   };
   createdAt: string;
   updatedAt: string;
 };
 
-export type TStore = {
+export type Store = {
   _id: string;
   name: string;
   active: boolean;
@@ -335,7 +336,7 @@ export type TStore = {
   location: {
     country: string;
     state: string;
-    adress: string;
+    address: string;
   };
   createdAt: string;
   updatedAt: string;
@@ -373,7 +374,7 @@ export type User = {
   spoken_languages: string[];
   working_experience: {
     id: string;
-    carrer: string;
+    career: string;
     end_date: string;
     start_date: string;
     description: string;
@@ -383,7 +384,7 @@ export type User = {
   location: {
     country: string;
     state: string;
-    adress: string;
+    address: string;
     zip_code: string;
   };
   social_network: {
@@ -397,8 +398,8 @@ export type User = {
   updatedAt: string;
 };
 
-export type TDenounce = {
-  reson: string;
+export type Denounce = {
+  reason: string;
   content: string;
 };
 
@@ -410,30 +411,29 @@ export type Cart = {
   previewImage: { id: string; url: string } | undefined;
 };
 
-export type TPurchaseCheckOut = {
+export type Purchase = {
   order_notes: string;
   main_phone_number: string;
   alternative_phone_number: string;
   location: {
     country: string;
     state: string;
-    adress: string;
+    address: string;
     zip_code: string;
   };
   payment: {
-    type: TPaymentType;
+    type: PaymentGateway;
     data: {
       mpesa_account: string;
     };
   };
 };
 
-export type TOrder = {
+export type Order = {
   _id: string;
   order_code: string;
-  order_transation: string | undefined;
+  order_transaction: string | undefined;
   order_status:
-    | 'aknowledged'
     | 'delivered'
     | 'returned'
     | 'cancelled'
@@ -443,7 +443,7 @@ export type TOrder = {
     type: string;
     account: string;
   };
-  order_custumer: {
+  order_costumer: {
     user_id: string;
     user_name: string;
     user_phone_0: string;
@@ -452,7 +452,7 @@ export type TOrder = {
     user_location: {
       country: string;
       state: string;
-      adress: string;
+      address: string;
       zip_code: string;
     };
   };
@@ -480,7 +480,7 @@ export type TPublicUser = {
   working_experience: {
     id: string;
     _id: string;
-    carrer: string;
+    career: string;
     end_date: string;
     start_date: string;
     description: string;
@@ -490,7 +490,7 @@ export type TPublicUser = {
   location: {
     country: string;
     state: string;
-    adress: string;
+    address: string;
     zip_code: string;
   };
   social_network?:
@@ -517,7 +517,6 @@ export type TUserMetrics = {
   orders: {
     count: number;
     status: {
-      aknowledged: number;
       delivered: number;
       returned: number;
       cancelled: number;
@@ -537,7 +536,7 @@ export type TUserMetrics = {
   };
 };
 
-export type TMetrics = {
+export type Metrics = {
   products: {
     count: number;
     blocked: number;
@@ -547,7 +546,6 @@ export type TMetrics = {
   orders: {
     count: number;
     status: {
-      aknowledged: number;
       delivered: number;
       returned: number;
       cancelled: number;
@@ -562,7 +560,7 @@ export type TMetrics = {
   };
 };
 
-export type TBannerAds = {
+export type BannerAds = {
   _id: string;
   name: string;
   image: { id: string; url: string };
@@ -572,3 +570,50 @@ export type ColorScheme = {
   mode: 'auto' | 'manual';
   scheme: 'dark' | 'light';
 };
+
+export type State = {
+  isDeleteAccountPrompt: boolean;
+  isDeactivateStorePrompt: boolean;
+  ordersQuery: { status: string; sort: string; search: string };
+  isDeleteProductPrompt: { status: boolean; productId: string };
+  isDeleteCommentPrompt: { status: boolean; commentId: string };
+  isDeleteStoryPrompt: { status: boolean; storyId: string };
+  isShareProductModal: boolean;
+  isUserWorkingDataModal: boolean;
+  isCartModal: boolean;
+  isConnected: boolean;
+  isSearchActive: boolean;
+  isSortActive: boolean;
+  isFilterActive: boolean;
+  denounce: Denounce;
+  auth: Auth;
+  search: string;
+  searchStores: string;
+  searchStories: string;
+  newSubscriptionValue: { subscription: string };
+  signupData: SignUp;
+  signInData: SignIn;
+  user: User;
+  store: Store;
+  product: Product;
+  publicProduct: PublicProduct;
+  productList: ProductsList[];
+  comment: IComment;
+  commentsList: IComment[];
+  publicProducts: PublicProducts[];
+  productsListQuery: { query: string; sort: string };
+  blogPostsList: Posts[];
+  queryPublicProducts: SearchProducts;
+  isPublicProductsFilters: boolean;
+  cart: Cart[];
+  orders: Order[];
+  checkout: Purchase;
+  story: Story;
+  publicStories: PublicStory[];
+  publicStoresList: PublicStoreList;
+  metrics: Metrics;
+  banner_ads: BannerAds[];
+  prompt: Modal;
+};
+
+export type Action = { type: string; payload: State };

@@ -1,8 +1,8 @@
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import actions from '@/shared/actions';
-import { complements } from '@/shared/data';
+import { complements } from '@/data/data';
+import { actions } from '@/shared/actions';
 import { _storiesRender as Container } from '@/styles/modules/stories-renderer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
@@ -23,7 +23,7 @@ import {
 import { useInView } from 'react-intersection-observer';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
-import { FetchError, PublicStory } from '../types';
+import { HttpError, PublicStory } from '../types';
 import DeleteStoryPrompt from './modals/DeleteStoryPrompt';
 
 interface Props {
@@ -76,8 +76,8 @@ export default function StoriesRenderer(props: Props) {
       refetch({ queryKey: ['user-stories'] });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };
@@ -101,8 +101,8 @@ export default function StoriesRenderer(props: Props) {
       });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };
@@ -126,8 +126,8 @@ export default function StoriesRenderer(props: Props) {
       });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };

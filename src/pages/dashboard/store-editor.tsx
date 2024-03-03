@@ -1,12 +1,12 @@
 import Layout from '@/components/Layout';
-import DeactivatePrompt from '@/components/modals/DeativateStorePrompt';
+import DeactivatePrompt from '@/components/modals/DeactivateStorePrompt';
 import { useAppContext } from '@/context/AppContext';
-import actions from '@/shared/actions';
-import countries from '@/shared/countries.json';
-import { complements } from '@/shared/data';
-import product_categories from '@/shared/product-categories.json';
+import countries from '@/data/countries.json';
+import { complements } from '@/data/data';
+import Categories from '@/data/product-categories.json';
+import { actions } from '@/shared/actions';
 import { _storeEditor as Container } from '@/styles/common/store-editor';
-import { FetchError, InputEvents, TStore } from '@/types';
+import { HttpError, InputEvents, Store } from '@/types';
 import Compressor from 'compressorjs';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -95,9 +95,9 @@ export default function StoreEditor() {
         width: 620,
         height: 220,
         resize: 'cover',
-        success: (compressedImge: File | Blob) => {
+        success: (compressedImage: File | Blob) => {
           const reader = new FileReader();
-          reader.readAsDataURL(compressedImge);
+          reader.readAsDataURL(compressedImage);
           reader.onloadend = function (e: ProgressEvent<FileReader>) {
             const encodedImage: string = e.target?.result as string;
             setCoverImageData({
@@ -134,10 +134,10 @@ export default function StoreEditor() {
       });
   };
 
-  const getStoreData = async () => {
+  const geStoreData = async () => {
     try {
       setLoading({ status: true, key: 'store-data' });
-      const { data } = await httpClient<TStore>({
+      const { data } = await httpClient<Store>({
         method: 'get',
         url: `/api/v1/users/store`
       });
@@ -153,7 +153,7 @@ export default function StoreEditor() {
       setError({
         status: true,
         msg:
-          (error as FetchError).response?.data?.message ||
+          (error as HttpError).response?.data?.message ||
           'Oops! Algo deu errado. Tente novamente.',
         key: 'store-data'
       });
@@ -186,8 +186,8 @@ export default function StoreEditor() {
       setError({
         status: true,
         msg:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message ||
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message ||
           'Oops! Algo deu errado. Tente novamente.',
         key: 'store-update'
       });
@@ -207,7 +207,7 @@ export default function StoreEditor() {
   useEffect(() => {
     const fetch_data = setTimeout(() => {
       if (state.auth.storeId) {
-        getStoreData();
+        geStoreData();
       }
     }, 10);
     return () => clearTimeout(fetch_data);
@@ -318,7 +318,7 @@ export default function StoreEditor() {
                     </h2>
                     <p>
                       Informações usadas para perfil da loja. Por favor, inserir
-                      informações correctas, reais e verdadeiras para evitar a
+                      informações corretas, reais e verdadeiras para evitar a
                       suspensão da loja.
                     </p>
                   </div>
@@ -369,13 +369,13 @@ export default function StoreEditor() {
                               }
                             });
                           }}>
-                          {product_categories
-                            .sort((a, b) => (a > b ? 1 : -1))
-                            .map((item, index) => (
+                          {Categories.sort((a, b) => (a > b ? 1 : -1)).map(
+                            (item, index) => (
                               <option key={index.toString()} value={item}>
                                 {item}
                               </option>
-                            ))}
+                            )
+                          )}
                         </select>
                       </div>
                     </section>
@@ -493,7 +493,7 @@ export default function StoreEditor() {
                       <div className='form-element'>
                         <label htmlFor='state'>
                           <IoStar />
-                          <span>Provícia / Estado</span>
+                          <span>Província / Estado</span>
                         </label>
                         <select
                           name='state'
@@ -526,17 +526,17 @@ export default function StoreEditor() {
                     </section>
                     <section className='form-section'>
                       <div className='form-element'>
-                        <label htmlFor='adress'>
+                        <label htmlFor='address'>
                           <IoHomeOutline />
                           <span>Endereço</span>
                         </label>
                         <input
                           type='text'
-                          id='adress'
+                          id='address'
                           placeholder='Localidade, bairro, rua, quarteirão, número da casa, etc.'
                           aria-label='Localidade, bairro, rua, quarteirão, número da casa, etc.'
                           maxLength={256}
-                          value={state.store.location?.adress}
+                          value={state.store.location?.address}
                           onChange={(e) =>
                             e.target.value.length > 256
                               ? undefined
@@ -548,7 +548,7 @@ export default function StoreEditor() {
                                       ...state.store,
                                       location: {
                                         ...state.store.location,
-                                        adress: e.target.value
+                                        address: e.target.value
                                       }
                                     }
                                   }
@@ -556,7 +556,7 @@ export default function StoreEditor() {
                           }
                         />
                         <span className='counter'>{`${
-                          state.store.location?.adress?.length || 0
+                          state.store.location?.address?.length || 0
                         } / 256`}</span>
                       </div>
                     </section>
@@ -661,16 +661,16 @@ export default function StoreEditor() {
               <div className='description'>
                 <h2>
                   <IoCart />
-                  <span>Activação da Loja</span>
+                  <span>Ativação da Loja</span>
                 </h2>
                 <p>
                   Por padrão, a loja está desativada, isso significa que os a
-                  loja e os seus produtos não aprecerão ao público ou nas
+                  loja e os seus produtos não aparecerão ao público ou nas
                   pesquisas feitas pelos usuários da plataforma. Active após o
-                  preenchimento correcto das informações acima.
+                  preenchimento correto das informações acima.
                 </p>
                 <p className='p-bottom'>
-                  Clique no botão abaixo para activar ou desactivar a loja.
+                  Clique no botão abaixo para ativar ou desativar a loja.
                 </p>
               </div>
 
@@ -690,14 +690,14 @@ export default function StoreEditor() {
                     })
                   }>
                   <IoRadioButtonOff color={`rgb(${theme.error})`} />
-                  <span>Loja Desactivada</span>
+                  <span>Loja Desativada</span>
                 </button>
               ) : (
                 <button
                   className='save'
                   onClick={() => deactivateStorePromptController()}>
                   <IoRadioButtonOn color={`rgb(${theme.secondary})`} />
-                  <span>Loja Activada</span>
+                  <span>Loja Ativada</span>
                 </button>
               )}
             </section>
@@ -714,7 +714,7 @@ export default function StoreEditor() {
                 {!loading.status && !error.status && (
                   <>
                     <h3>
-                      Confirme se as informações introduzidas estão correctas
+                      Confirme se as informações introduzidas estão corretas
                       antes de salvar alterações. Caso não tenha alterado nada,
                       não será atualizado, clique em "Descartar e voltar".
                     </h3>

@@ -1,11 +1,11 @@
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import type { QueryList } from '@/types';
-import type { State } from '@/types/reducer';
+import type { State } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
-import actions from './actions';
+import {actions} from '../shared/actions';
 
 type Props = {
   queryLimit: number;
@@ -114,7 +114,7 @@ export async function getPosts<T>(props: QueryList) {
   });
 }
 
-export async function getStoresData<T>(props: QueryList) {
+export async function geStoresData<T>(props: QueryList) {
   return await fetch<T>({
     method: 'get',
     url: `/api/v1/users/store/public?${

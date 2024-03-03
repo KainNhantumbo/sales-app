@@ -2,10 +2,10 @@ import Layout from '@/components/Layout';
 import SideBarAds from '@/components/SidaBarAds';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
-import actions from '@/shared/actions';
-import { complements } from '@/shared/data';
+import { complements } from '@/data/data';
+import { actions } from '@/shared/actions';
 import { _story as Container } from '@/styles/common/story';
-import { FetchError, PublicStory, Story } from '@/types';
+import { HttpError, PublicStory, Story } from '@/types';
 import { AxiosResponse } from 'axios';
 import Compressor from 'compressorjs';
 import { GetServerSidePropsContext } from 'next';
@@ -91,14 +91,14 @@ export default function Story(props: Props) {
       });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
       setError({
         status: true,
         msg:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message ||
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message ||
           'Oops! Algo deu errado. Tente novamente.'
       });
     } finally {
@@ -116,12 +116,12 @@ export default function Story(props: Props) {
       });
       router.back();
     } catch (error) {
-      console.error((error as FetchError).response?.data?.message || error);
+      console.error((error as HttpError).response?.data?.message || error);
       setError({
         status: true,
         msg:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message ||
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message ||
           'Oops! Algo deu errado. Tente novamente.'
       });
     } finally {
@@ -139,12 +139,12 @@ export default function Story(props: Props) {
       });
       router.back();
     } catch (error) {
-      console.error((error as FetchError).response?.data?.message || error);
+      console.error((error as HttpError).response?.data?.message || error);
       setError({
         status: true,
         msg:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message ||
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message ||
           'Oops! Algo deu errado. Tente novamente.'
       });
     } finally {

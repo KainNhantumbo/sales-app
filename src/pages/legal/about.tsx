@@ -1,12 +1,12 @@
-import Link from 'next/link';
-import { motion } from 'framer-motion';
 import Layout from '@/components/Layout';
-import { IoIosQuote } from 'react-icons/io';
-import { complements } from '@/shared/data';
 import NewsLetter from '@/components/Newsletter';
+import { complements } from '@/data/data';
+import { _about as Container } from '@/styles/common/about';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { IoIosQuote } from 'react-icons/io';
 import { IoStorefrontOutline } from 'react-icons/io5';
 import { useTheme } from 'styled-components';
-import { _about as Container } from '@/styles/common/about';
 
 const core_habits: Array<{ phrase: string; paragraph: string }> = [
   {

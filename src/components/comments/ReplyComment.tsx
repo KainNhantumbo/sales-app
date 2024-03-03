@@ -1,3 +1,11 @@
+import { useAppContext } from '@/context/AppContext';
+import { complements } from '@/data/data';
+import type { TComment } from '@/types/comments';
+import moment from 'moment';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { BiUser } from 'react-icons/bi';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 import {
   IoArrowUndo,
   IoClose,
@@ -6,14 +14,6 @@ import {
   IoHeart,
   IoHeartOutline
 } from 'react-icons/io5';
-import moment from 'moment';
-import { useRouter } from 'next/router';
-import { BiUser } from 'react-icons/bi';
-import { complements } from '@/shared/data';
-import { FaEdit, FaTrash } from 'react-icons/fa';
-import { useAppContext } from '@/context/AppContext';
-import type { TComment } from '@/types/comments';
-import Image from 'next/image';
 
 export default function ReplyComment(props: TComment) {
   const { state, deleteCommentPromptController } = useAppContext();

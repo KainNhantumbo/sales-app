@@ -1,10 +1,10 @@
-import { FiX } from 'react-icons/fi';
-import actions from '@/shared/actions';
-import { BiSortAlt2 } from 'react-icons/bi';
-import { HiSelector } from 'react-icons/hi';
 import { useAppContext } from '@/context/AppContext';
-import { motion, AnimatePresence } from 'framer-motion';
+import { actions } from '@/shared/actions';
 import { _sortBox as Container } from '@/styles/modules/sort-box';
+import { AnimatePresence, motion } from 'framer-motion';
+import { BiSortAlt2 } from 'react-icons/bi';
+import { FiX } from 'react-icons/fi';
+import { HiSelector } from 'react-icons/hi';
 
 const SortOptions = [
   { code: 'name', name: 'Nome' },

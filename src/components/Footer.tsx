@@ -11,11 +11,11 @@ import {
   IoSunnyOutline
 } from 'react-icons/io5';
 
-import Link from 'next/link';
-import { m as motion } from 'framer-motion';
-import { complements, urls } from '@/shared/data';
 import { useAppContext } from '@/context/AppContext';
 import { useThemeContext } from '@/context/ThemeContext';
+import { complements, urls } from '@/data/data';
+import { m as motion } from 'framer-motion';
+import Link from 'next/link';
 import { _footer as Container } from '../styles/modules/footer';
 
 export default function Footer() {

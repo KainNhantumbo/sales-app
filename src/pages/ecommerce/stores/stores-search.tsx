@@ -1,3 +1,18 @@
+import Layout from '@/components/Layout';
+import NewsLetter from '@/components/Newsletter';
+import SearchComponent from '@/components/SearchBlogPosts';
+import { useAppContext } from '@/context/AppContext';
+import { complements } from '@/data/data';
+import { geStoresData } from '@/lib/queries';
+import { formatDate } from '@/lib/utils';
+import { actions } from '@/shared/actions';
+import { _storeSeach as Container } from '@/styles/common/store-search';
+import { PublicStoreList } from '@/types';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { IoMdCalendar } from 'react-icons/io';
 import {
   IoAlbumsOutline,
   IoArrowForwardOutline,
@@ -6,24 +21,9 @@ import {
   IoLibraryOutline,
   IoReload
 } from 'react-icons/io5';
-import Link from 'next/link';
-import { useEffect } from 'react';
-import { formatDate } from '@/lib/utils';
-import Layout from '@/components/Layout';
-import actions from '@/shared/actions';
-import { useRouter } from 'next/router';
-import { getStoresData } from '@/shared/queries';
-import { IoMdCalendar } from 'react-icons/io';
-import { complements } from '@/shared/data';
-import { PublicStoreList } from '@/types';
-import NewsLetter from '@/components/Newsletter';
-import { useTheme } from 'styled-components';
-import { useAppContext } from '@/context/AppContext';
-import { DotLoader, PulseLoader } from 'react-spinners';
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
-import SearchComponent from '@/components/SearchBlogPosts';
-import { _storeSeach as Container } from '@/styles/common/store-search';
+import { DotLoader, PulseLoader } from 'react-spinners';
+import { useTheme } from 'styled-components';
 
 export default function StoresSearch() {
   const LIMIT: number = 8;
@@ -33,7 +33,7 @@ export default function StoresSearch() {
   const { ref, inView } = useInView();
 
   const fetchPosts = async ({ pageParam = 0 }) => {
-    const { data } = await getStoresData<PublicStoreList>({
+    const { data } = await geStoresData<PublicStoreList>({
       offset: pageParam * LIMIT,
       limit: LIMIT,
       search: String(router.query['q'])

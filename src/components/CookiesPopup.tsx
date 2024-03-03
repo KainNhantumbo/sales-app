@@ -1,15 +1,14 @@
-import Link from 'next/link';
-import { complements } from '@/shared/data';
-import { useState, useEffect } from 'react';
+import { complements } from '@/data/data';
 import { AnimatePresence, m as motion } from 'framer-motion';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { _cookies as Container } from '../styles/modules/cookies-popup';
 
 export default function CookiesPopup() {
-  const [privacyAdvisor, setprivacyAdvisor] = useState<boolean>();
+  const [privacyAdvisor, setPrivacyAdvisor] = useState<boolean>();
 
-  // controls the life cicle of the component
   const advisorController = () => {
-    setprivacyAdvisor(() => false);
+    setPrivacyAdvisor(() => false);
     localStorage.setItem('privacy_advisor', JSON.stringify('false'));
   };
 
@@ -19,12 +18,12 @@ export default function CookiesPopup() {
     );
     if (!advisorState) {
       localStorage.setItem('privacy_advisor', JSON.stringify('true'));
-      setprivacyAdvisor(() => true);
+      setPrivacyAdvisor(() => true);
     }
     if (advisorState === 'true') {
-      setprivacyAdvisor(() => true);
+      setPrivacyAdvisor(() => true);
     } else {
-      setprivacyAdvisor(() => false);
+      setPrivacyAdvisor(() => false);
     }
   }, []);
 

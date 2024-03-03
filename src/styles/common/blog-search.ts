@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseButton, _endMarkStyles } from '../defaults';
 
-export const _blogSeach = styled.div`
+export const _blogSearch = styled.div`
   position: relative;
   width: 100%;
   min-height: 40vh;

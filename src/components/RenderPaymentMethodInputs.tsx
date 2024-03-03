@@ -1,9 +1,9 @@
-import actions from '@/shared/actions';
-import type { TPaymentType } from '../types';
 import { useAppContext } from '@/context/AppContext';
+import { actions } from '@/shared/actions';
 import { IoPhonePortraitOutline } from 'react-icons/io5';
+import type { PaymentGateway } from '../types';
 
-export default function RenderPaymentInputs(option: TPaymentType) {
+export default function RenderPaymentInputs(option: PaymentGateway) {
   const { state, dispatch } = useAppContext();
   switch (option) {
     case 'm-pesa':

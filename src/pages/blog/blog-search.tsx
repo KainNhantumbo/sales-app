@@ -2,12 +2,12 @@ import Layout from '@/components/Layout';
 import NewsLetter from '@/components/Newsletter';
 import SearchComponent from '@/components/SearchBlogPosts';
 import { useAppContext } from '@/context/AppContext';
+import { complements } from '@/data/data';
+import { getPosts } from '@/lib/queries';
 import { formatDate } from '@/lib/utils';
-import actions from '@/shared/actions';
-import { complements } from '@/shared/data';
-import { getPosts } from '@/shared/queries';
-import { _blogSeach as Container } from '@/styles/common/blog-search';
-import { IBlogPosts } from '@/types';
+import { actions } from '@/shared/actions';
+import { _blogSearch as Container } from '@/styles/common/blog-search';
+import { Posts } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -34,7 +34,7 @@ export default function BlogSearch() {
   const { ref, inView } = useInView();
 
   const fetchPosts = async ({ pageParam = 0 }) => {
-    const { data } = await getPosts<IBlogPosts[]>({
+    const { data } = await getPosts<Posts[]>({
       offset: pageParam * LIMIT,
       limit: LIMIT,
       search: String(router.query['q'])

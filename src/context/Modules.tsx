@@ -1,6 +1,6 @@
-import actions from '@/shared/actions';
-import { complements } from '@/shared/data';
-import { FetchError } from '@/types';
+import { complements } from '@/data/data';
+import { actions } from '@/shared/actions';
+import { HttpError } from '@/types';
 import { useRouter } from 'next/router';
 import { ReactNode, createContext, useContext } from 'react';
 import { useAppContext } from './AppContext';
@@ -81,7 +81,7 @@ export default function ModulesContext(props: Props) {
               router.push('/auth/sign-in');
             } catch (error) {
               console.error(
-                (error as FetchError).response?.data?.message || error
+                (error as HttpError).response?.data?.message || error
               );
             } finally {
               dispatch({

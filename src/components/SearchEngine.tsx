@@ -1,3 +1,10 @@
+import { useAppContext } from '@/context/AppContext';
+import { slidePageUp } from '@/lib/utils';
+import { actions } from '@/shared/actions';
+import { AnimatePresence, motion } from 'framer-motion';
+import Slider from 'rc-slider';
+import { useEffect, useState } from 'react';
+import { BiSortAlt2 } from 'react-icons/bi';
 import {
   IoCartOutline,
   IoClose,
@@ -6,16 +13,9 @@ import {
   IoLayersOutline,
   IoPricetags
 } from 'react-icons/io5';
-import Slider from 'rc-slider';
-import SelectContainer from './Select';
-import actions from '@/shared/actions';
-import { BiSortAlt2 } from 'react-icons/bi';
-import { useEffect, useState } from 'react';
-import { useAppContext } from '@/context/AppContext';
-import { AnimatePresence, motion } from 'framer-motion';
-import product_categories from '../shared/product-categories.json';
+import Categories from '../data/product-categories.json';
 import { _seachEngine as Container } from '../styles/modules/search-engine';
-import { slidePageUp } from '@/lib/utils';
+import SelectContainer from './Select';
 
 export default function SearchEngine() {
   const { state, dispatch } = useAppContext();
@@ -60,7 +60,7 @@ export default function SearchEngine() {
     };
   }, []);
 
-  const categoryOptions = product_categories.map((category) => ({
+  const categoryOptions = Categories.map((category) => ({
     value: category,
     label: category
   }));

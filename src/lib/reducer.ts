@@ -1,6 +1,6 @@
-import actions from '@/shared/actions';
-import type { State, Action } from '../types/reducer';
-import product_categories from '../shared/product-categories.json';
+import { actions } from '@/shared/actions';
+import Categories from '../data/product-categories.json';
+import type { Action, State } from '../types';
 
 export const initialState: State = {
   banner_ads: [],
@@ -29,7 +29,7 @@ export const initialState: State = {
   isConnected: false,
   blogPostsList: [],
   denounce: {
-    reson: '',
+    reason: '',
     content: ''
   },
   auth: {
@@ -41,7 +41,7 @@ export const initialState: State = {
     profile_image: ''
   },
   search: '',
-  newSubscriptorValue: { subscriptor: '' },
+  newSubscriptionValue: { subscription: '' },
   signupData: {
     first_name: '',
     last_name: '',
@@ -70,7 +70,7 @@ export const initialState: State = {
     working_experience: [
       {
         id: '',
-        carrer: '',
+        career: '',
         end_date: '',
         start_date: '',
         description: '',
@@ -81,7 +81,7 @@ export const initialState: State = {
     location: {
       country: '',
       state: '',
-      adress: '',
+      address: '',
       zip_code: ''
     },
     social_network: {
@@ -104,7 +104,6 @@ export const initialState: State = {
     orders: {
       count: 0,
       status: {
-        aknowledged: 0,
         cancelled: 0,
         delivered: 0,
         pending_payment: 0,
@@ -139,7 +138,7 @@ export const initialState: State = {
     },
     description: '',
     slogan: '',
-    category: product_categories[0],
+    category: Categories[0],
     cover_image: { id: '', url: '' },
     privacy_policy: '',
     terms_policy: '',
@@ -147,7 +146,7 @@ export const initialState: State = {
     location: {
       country: 'Moçambique',
       state: 'Maputo',
-      adress: ''
+      address: ''
     },
     createdAt: '',
     updatedAt: ''
@@ -155,7 +154,7 @@ export const initialState: State = {
   product: {
     _id: '',
     name: '',
-    category: product_categories[0],
+    category: Categories[0],
     description: '',
     specifications: '',
     created_by: '',
@@ -196,7 +195,7 @@ export const initialState: State = {
   publicProduct: {
     _id: '',
     name: '',
-    category: product_categories[0],
+    category: Categories[0],
     description: '',
     specifications: '',
     created_by: '',
@@ -206,7 +205,7 @@ export const initialState: State = {
       location: {
         country: '',
         state: '',
-        adress: ''
+        address: ''
       },
       category: '',
       verified_store: false
@@ -228,7 +227,7 @@ export const initialState: State = {
     location: {
       country: 'Moçambique',
       state: '',
-      adress: '',
+      address: '',
       zip_code: ''
     },
     payment: {
@@ -339,10 +338,10 @@ export function reducer(state: State, action: Action): State {
         isConnected: action.payload.isConnected
       };
 
-    case actions.NEW_SUBSCRIPTOR_VALUE:
+    case actions.NEW_subscription_VALUE:
       return {
         ...state,
-        newSubscriptorValue: action.payload.newSubscriptorValue
+        newSubscriptionValue: action.payload.newSubscriptionValue
       };
 
     case actions.SIGNUP_DATA:

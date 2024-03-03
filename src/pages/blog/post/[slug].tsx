@@ -4,12 +4,12 @@ import Layout from '@/components/Layout';
 import NewsLetter from '@/components/Newsletter';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
+import { author, complements, shareUrlPaths } from '@/data/data';
 import { formatDate } from '@/lib/utils';
 import ErrorPage from '@/pages/error-page';
-import { author, complements, shareUrlPaths } from '@/shared/data';
-import { getPaths, getPost, getPosts } from '@/shared/queries';
+import { getPaths, getPost, getPosts } from '@/lib/queries';
 import { _post as Container } from '@/styles/common/post';
-import type { FetchError, IBlogPost, IBlogPosts } from '@/types';
+import type { HttpError, IBlogPost, Posts } from '@/types';
 import { CommentCount, DiscussionEmbed } from 'disqus-react';
 import editorJsHtml from 'editorjs-html';
 import { motion } from 'framer-motion';
@@ -33,7 +33,7 @@ import {
 import { readingTime } from 'reading-time-estimator';
 import { useTheme } from 'styled-components';
 
-type Props = { post: IBlogPost; latestPosts: IBlogPosts[] };
+type Props = { post: IBlogPost; latestPosts: Posts[] };
 
 export default function Post({ post: initialPost, latestPosts }: Props) {
   const { state, httpClient } = useAppContext();
@@ -69,8 +69,8 @@ export default function Post({ post: initialPost, latestPosts }: Props) {
       setPost((doc) => ({ ...doc, favorites: data }));
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };
@@ -84,8 +84,8 @@ export default function Post({ post: initialPost, latestPosts }: Props) {
       setPost((doc) => ({ ...doc, favorites: data }));
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };
@@ -137,7 +137,7 @@ export default function Post({ post: initialPost, latestPosts }: Props) {
                 <div>
                   <IoIosAlbums />
                   <span style={{ color: `rgb(${theme.primary_shade})` }}>
-                    {post.category || 'Miscelânia'}
+                    {post.category || 'Miscelânea'}
                   </span>
                 </div>
                 <div>

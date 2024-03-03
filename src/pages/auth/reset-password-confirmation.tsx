@@ -1,9 +1,9 @@
-import Link from 'next/link';
 import Layout from '@/components/Layout';
-import { IoMailOpen } from 'react-icons/io5';
-import { complements } from '@/shared/data';
-import { FaEnvelopeOpenText } from 'react-icons/fa';
+import { complements } from '@/data/data';
 import { _resetConfirmation as Container } from '@/styles/common/reset-password-confirmation';
+import Link from 'next/link';
+import { FaEnvelopeOpenText } from 'react-icons/fa';
+import { IoMailOpen } from 'react-icons/io5';
 
 export default function ResetConfirmation() {
   return (

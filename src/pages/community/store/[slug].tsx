@@ -3,16 +3,16 @@ import SideBarAds from '@/components/SidaBarAds';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import { formatCurrency, slidePageUp } from '@/lib/utils';
-import ErrorPage from '@/pages/error-page';
-import actions from '@/shared/actions';
 import {
   blurDataUrlImage,
   complements,
   formatSocialNetwork
-} from '@/shared/data';
+} from '@/data/data';
+import { formatCurrency, slidePageUp } from '@/lib/utils';
+import ErrorPage from '@/pages/error-page';
+import { actions } from '@/shared/actions';
 import { _store as Container } from '@/styles/common/community-store-profile';
-import { FetchError, PublicProducts, PublicStore } from '@/types';
+import { HttpError, PublicProducts, PublicStore } from '@/types';
 import { motion } from 'framer-motion';
 import { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
@@ -54,7 +54,6 @@ export default function StoreProfile({ store, products }: Props) {
   const [tab, setTab] = useState<'docs' | 'products'>('docs');
   const [innerWidth, setInnerWidth] = useState(0);
 
-
   async function handleFavoriteProduct(id: string) {
     try {
       const { data } = await httpClient<string[]>({
@@ -77,8 +76,8 @@ export default function StoreProfile({ store, products }: Props) {
       });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   }
@@ -105,8 +104,8 @@ export default function StoreProfile({ store, products }: Props) {
       });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   }
@@ -131,15 +130,15 @@ export default function StoreProfile({ store, products }: Props) {
     };
   }, []);
 
-    if (!store || Object.values(store).length < 1)
-      return (
-        <ErrorPage
-          title='Loja Inativa'
-          message='A loja que procura pode estar atualmente indisponível. Peça ao proprietário para ativá-la.'
-          button_message='Voltar para página anterior'
-          retryFn={() => router.back()}
-        />
-      );
+  if (!store || Object.values(store).length < 1)
+    return (
+      <ErrorPage
+        title='Loja Inativa'
+        message='A loja que procura pode estar atualmente indisponível. Peça ao proprietário para ativá-la.'
+        button_message='Voltar para página anterior'
+        retryFn={() => router.back()}
+      />
+    );
 
   return (
     <Layout
@@ -258,7 +257,7 @@ export default function StoreProfile({ store, products }: Props) {
                     {store.location?.state && (
                       <span> {store.location.state}</span>
                     )}{' '}
-                    <span>{store.location.adress}</span>
+                    <span>{store.location.address}</span>
                   </p>
                 )}
               </section>

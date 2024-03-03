@@ -1,10 +1,10 @@
 import Layout from '@/components/Layout';
 import { useAppContext } from '@/context/AppContext';
-import actions from '@/shared/actions';
-import { complements } from '@/shared/data';
-import product_categories from '@/shared/product-categories.json';
+import { complements } from '@/data/data';
+import Categories from '@/data/product-categories.json';
+import { actions } from '@/shared/actions';
 import { _productEditor as Container } from '@/styles/common/product-editor';
-import { FetchError, InputEvents, Product } from '@/types';
+import { HttpError, InputEvents, Product } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import Compressor from 'compressorjs';
 import Image from 'next/image';
@@ -201,8 +201,8 @@ export default function ProductEditor() {
       setError({
         status: true,
         msg:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message ||
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message ||
           'Oops! Algo deu errado. Tente novamente.'
       });
     } finally {
@@ -245,8 +245,8 @@ export default function ProductEditor() {
       setError({
         status: true,
         msg:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message ||
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message ||
           'Oops! Algo deu errado. Tente novamente.'
       });
     } finally {
@@ -264,7 +264,7 @@ export default function ProductEditor() {
           product: {
             _id: '',
             name: '',
-            category: product_categories[0],
+            category: Categories[0],
             description: '',
             specifications: '',
             created_by: '',
@@ -521,13 +521,13 @@ export default function ProductEditor() {
                               }
                             });
                           }}>
-                          {product_categories
-                            .sort((a, b) => (a > b ? 1 : -1))
-                            .map((item, index) => (
+                          {Categories.sort((a, b) => (a > b ? 1 : -1)).map(
+                            (item, index) => (
                               <option key={index.toString()} value={item}>
                                 {item}
                               </option>
-                            ))}
+                            )
+                          )}
                         </select>
                       </div>
                       <div className='form-element'>

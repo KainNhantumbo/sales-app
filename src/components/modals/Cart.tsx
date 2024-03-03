@@ -1,3 +1,11 @@
+import { useAppContext } from '@/context/AppContext';
+import { useModulesContext } from '@/context/Modules';
+import { blurDataUrlImage } from '@/data/data';
+import { formatCurrency } from '@/lib/utils';
+import { AnimatePresence, motion } from 'framer-motion';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { FaDollarSign } from 'react-icons/fa';
 import {
   IoAdd,
   IoAlbumsOutline,
@@ -7,15 +15,7 @@ import {
   IoCart,
   IoRemove
 } from 'react-icons/io5';
-import Image from 'next/image';
-import { formatCurrency } from '@/lib/utils';
-import { FaDollarSign } from 'react-icons/fa';
-import { blurDataUrlImage } from '@/shared/data';
-import { useRouter } from 'next/router';
-import { useAppContext } from '@/context/AppContext';
-import { AnimatePresence, motion } from 'framer-motion';
 import { _cart as Container } from '../../styles/modules/cart';
-import { useModulesContext } from '@/context/Modules';
 
 export default function Cart() {
   const {

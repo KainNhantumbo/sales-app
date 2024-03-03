@@ -5,13 +5,13 @@ import ShareProducts from '@/components/modals/ShareProductModal';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
+import { complements } from '@/data/data';
+import Categories from '@/data/product-categories.json';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import ErrorPage from '@/pages/error-page';
-import actions from '@/shared/actions';
-import { complements } from '@/shared/data';
-import product_categories from '@/shared/product-categories.json';
+import { actions } from '@/shared/actions';
 import { _commerceProduct as Container } from '@/styles/common/ecommerce-product';
-import { FetchError, Product } from '@/types';
+import { HttpError, Product } from '@/types';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -75,8 +75,8 @@ export default function Product({ product, error_message }: any) {
       });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };
@@ -96,8 +96,8 @@ export default function Product({ product, error_message }: any) {
       });
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };
@@ -130,7 +130,7 @@ export default function Product({ product, error_message }: any) {
           publicProduct: {
             _id: '',
             name: '',
-            category: product_categories[0],
+            category: Categories[0],
             description: '',
             specifications: '',
             created_by: '',
@@ -140,7 +140,7 @@ export default function Product({ product, error_message }: any) {
               location: {
                 country: '',
                 state: '',
-                adress: ''
+                address: ''
               },
               category: '',
               verified_store: false
@@ -703,8 +703,8 @@ export default function Product({ product, error_message }: any) {
                       <span>{state.publicProduct.store.location.country}</span>{' '}
                       - <span>{state.publicProduct.store.location.state}</span>
                       <span>
-                        {state.publicProduct.store.location.adress
-                          ? `, ${state.publicProduct.store.location.adress}`
+                        {state.publicProduct.store.location.address
+                          ? `, ${state.publicProduct.store.location.address}`
                           : '.'}
                       </span>
                     </p>
@@ -776,8 +776,8 @@ export async function getStaticProps({ params: { productId } }: any) {
     return {
       props: {
         error_message:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       },
       revalidate: 10
     };

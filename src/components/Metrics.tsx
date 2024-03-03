@@ -1,17 +1,17 @@
 import { useAppContext } from '@/context/AppContext';
 import { formatCurrency } from '@/lib/utils';
-import actions from '@/shared/actions';
+import { actions } from '@/shared/actions';
 import { _metrics as Container } from '@/styles/modules/metrics';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { BiStats } from 'react-icons/bi';
-import { TMetrics } from '../types';
+import { Metrics } from '../types';
 
 export default function Metrics() {
   const { state, dispatch, httpClient } = useAppContext();
 
-  const getMetrics = async (): Promise<TMetrics> => {
-    const { data } = await httpClient<TMetrics>({
+  const geMetrics = async (): Promise<Metrics> => {
+    const { data } = await httpClient<Metrics>({
       method: 'get',
       url: `/api/v1/metrics/public`
     });
@@ -20,7 +20,7 @@ export default function Metrics() {
 
   const { isLoading, isError, data, refetch } = useQuery({
     queryKey: ['metrics'],
-    queryFn: getMetrics
+    queryFn: geMetrics
   });
 
   useEffect(() => {
@@ -94,10 +94,6 @@ export default function Metrics() {
               <div className='element'>
                 <h4>Total</h4>
                 <span>- {state.metrics.orders.count}</span>
-              </div>
-              <div className='element'>
-                <h4>Pedidos reconhecidos</h4>
-                <span>- {state.metrics.orders.status.aknowledged}</span>
               </div>
               <div className='element'>
                 <h4>Pedidos entregues</h4>

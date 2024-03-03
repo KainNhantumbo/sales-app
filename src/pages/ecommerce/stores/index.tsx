@@ -1,3 +1,20 @@
+import buyingWomenImg from '@/../public/assets/buying_women.png';
+import Layout from '@/components/Layout';
+import NewsLetter from '@/components/Newsletter';
+import SearchStores from '@/components/SearchPublicStores';
+import { useAppContext } from '@/context/AppContext';
+import { blurDataUrlImage, complements } from '@/data/data';
+import { geStoresData } from '@/lib/queries';
+import { formatDate } from '@/lib/utils';
+import { actions } from '@/shared/actions';
+import { _stores as Container } from '@/styles/common/stores';
+import { PublicStoreList } from '@/types';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { IoMdCalendar } from 'react-icons/io';
 import {
   IoAlbumsOutline,
   IoArrowForwardOutline,
@@ -6,26 +23,9 @@ import {
   IoReload,
   IoStorefrontOutline
 } from 'react-icons/io5';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useEffect } from 'react';
-import Layout from '@/components/Layout';
-import actions from '@/shared/actions';
-import { formatDate } from '@/lib/utils';
-import { PulseLoader } from 'react-spinners';
-import { IoMdCalendar } from 'react-icons/io';
-import { getStoresData } from '@/shared/queries';
-import { PublicStoreList } from '@/types';
-import NewsLetter from '@/components/Newsletter';
-import { useRouter } from 'next/router';
-import SearchStores from '@/components/SearchPublicStores';
-import { useAppContext } from '@/context/AppContext';
-import { useTheme } from 'styled-components';
 import { useInView } from 'react-intersection-observer';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { blurDataUrlImage, complements } from '@/shared/data';
-import buyingWomenImg from '@/../public/assets/buying_women.png';
-import { _stores as Container } from '@/styles/common/stores';
+import { PulseLoader } from 'react-spinners';
+import { useTheme } from 'styled-components';
 
 export default function Stores() {
   const LIMIT: number = 8;
@@ -37,7 +37,7 @@ export default function Stores() {
   const fetchData = async ({
     pageParam = 0
   }): Promise<{ data: PublicStoreList; currentOffset: number }> => {
-    const { data } = await getStoresData<PublicStoreList>({
+    const { data } = await geStoresData<PublicStoreList>({
       offset: pageParam * LIMIT,
       limit: LIMIT
     });

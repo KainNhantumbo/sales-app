@@ -49,7 +49,7 @@ import {
 } from 'react-icons/bs';
 import { BiUser, BiUserCheck } from 'react-icons/bi';
 import Package from '@/../package.json';
-import denouces_data from './denounce-reasons.json';
+import denounces_data from './denounce-reasons.json';
 import blurImage from './blur-data-url-image.json';
 import authorPicture from '@/../public/assets/author.jpg';
 import mpesa_logo from '@/../public/trademarks/mpesa logo.png';
@@ -106,7 +106,7 @@ const app_metadata = {
 const urls = [
   { name: 'Início', url: '/', alias: '+' },
   { name: 'Descobrir', url: '/ecommerce/discover', alias: 'discover' },
-  { name: 'Preçário', url: '/docs/pricing', alias: 'princing' },
+  { name: 'Preçário', url: '/docs/pricing', alias: 'pricing' },
   { name: 'Lojas', url: '/ecommerce/stores', alias: 'stores' },
   { name: 'Feed', url: '/feed', alias: 'feed' },
   { name: 'Blog', url: '/blog', alias: 'blog' }
@@ -160,7 +160,7 @@ const pricing_data: Pricing = [
     amount: 0.0,
     description: [
       'Limitado',
-      'Faça parte da communidade',
+      'Faça parte da comunidade',
       'Para quem vai começar a vender online',
       'Desfrute das funcionalidades do programa beta',
       'Teste a plataforma por 15 dias',
@@ -198,7 +198,7 @@ const pricing_data: Pricing = [
   }
 ];
 
-const denounceReasons = denouces_data
+const denounceReasons = denounces_data
   .sort((a, b) => (a > b ? 1 : -1))
   .map((reason) => ({ label: reason, value: reason }));
 
@@ -353,7 +353,7 @@ const dashboardActions = (props: { userId: string; storeId: string }) => {
           icon: IoFingerPrint
         },
         {
-          label: 'Perguntas Frequêntes',
+          label: 'Perguntas Frequentes',
           url: `/docs/faq`,
           icon: IoInformationCircleOutline
         },
@@ -415,7 +415,6 @@ const formatSocialNetwork = <T = TSocialNetwork>(data: T) => {
 };
 
 const order_status_labels: Array<{ label: string; value: string }> = [
-  { label: 'Submetido', value: 'aknowledged' },
   { label: 'Entregue', value: 'delivered' },
   { label: 'Retornado', value: 'returned' },
   { label: 'Em progresso', value: 'progress' },

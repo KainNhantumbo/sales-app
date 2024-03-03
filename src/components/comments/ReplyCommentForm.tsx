@@ -1,9 +1,9 @@
-import actions from '@/shared/actions';
-import { MoonLoader } from 'react-spinners';
 import { useAppContext } from '@/context/AppContext';
-import type { TCommentForm } from '@/types/comments';
-import { useTheme } from 'styled-components';
 import { useModulesContext } from '@/context/Modules';
+import { actions } from '@/shared/actions';
+import type { TCommentForm } from '@/types/comments';
+import { MoonLoader } from 'react-spinners';
+import { useTheme } from 'styled-components';
 
 export default function ReplyCommentForm(props: TCommentForm) {
   const theme = useTheme();

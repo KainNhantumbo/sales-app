@@ -1,19 +1,19 @@
+import africa_culture from '@/../public/assets/africa-culture.png';
+import flying_paper from '@/../public/assets/flying paper.png';
+import Layout from '@/components/Layout';
+import NewsLetter from '@/components/Newsletter';
+import { complements, pricing_data, store_features } from '@/data/data';
+import { formatCurrency } from '@/lib/utils';
+import { _discover as Container } from '@/styles/common/discover';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
 import {
   IoBalloonOutline,
   IoHeartOutline,
   IoStorefrontOutline
 } from 'react-icons/io5';
-import Link from 'next/link';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import Layout from '@/components/Layout';
-import { formatCurrency } from '@/lib/utils';
-import NewsLetter from '@/components/Newsletter';
 import { useTheme } from 'styled-components';
-import flying_paper from '@/../public/assets/flying paper.png';
-import { _discover as Container } from '@/styles/common/discover';
-import africa_culture from '@/../public/assets/africa-culture.png';
-import { store_features, pricing_data, complements } from '@/shared/data';
 
 export default function Discover() {
   const theme = useTheme();

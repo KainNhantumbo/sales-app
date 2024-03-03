@@ -1,9 +1,9 @@
-import Link from 'next/link';
 import Layout from '@/components/Layout';
-import { BiUserPlus } from 'react-icons/bi';
-import { complements } from '@/shared/data';
-import { IoLogInOutline } from 'react-icons/io5';
+import { complements } from '@/data/data';
 import { _resetConfirmation as Container } from '@/styles/common/reset-password-confirmation';
+import Link from 'next/link';
+import { BiUserPlus } from 'react-icons/bi';
+import { IoLogInOutline } from 'react-icons/io5';
 
 export default function SignUpConfirmation() {
   return (

@@ -1,10 +1,10 @@
-import { FiX } from 'react-icons/fi';
-import actions from '@/shared/actions';
-import { BiSearch } from 'react-icons/bi';
-import { useEffect, useState } from 'react';
 import { useAppContext } from '@/context/AppContext';
-import { motion, AnimatePresence } from 'framer-motion';
+import { actions } from '@/shared/actions';
 import { _searchBox as Container } from '@/styles/modules/search-box';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { BiSearch } from 'react-icons/bi';
+import { FiX } from 'react-icons/fi';
 
 export default function SearchBox() {
   const [inputValue, setInputValue] = useState<string>('');

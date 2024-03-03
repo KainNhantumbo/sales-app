@@ -1,14 +1,14 @@
-import Link from 'next/link';
-import fetch from '@/config/client';
-import { FetchError, SubmitEvent } from '@/types';
 import Layout from '@/components/Layout';
-import { useState, useEffect } from 'react';
+import fetch from '@/config/client';
+import { complements } from '@/data/data';
+import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
+import { HttpError, SubmitEvent } from '@/types';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { IoMailOutline } from 'react-icons/io5';
-import { complements } from '@/shared/data';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
-import { useRouter } from 'next/router';
-import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
 
 export default function ResetPassword() {
   const theme = useTheme();
@@ -30,14 +30,14 @@ export default function ResetPassword() {
       router.push('/auth/reset-password-confirmation');
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
       setError({
         status: true,
         message:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       });
     } finally {
       setLoading(false);

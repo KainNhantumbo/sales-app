@@ -1,8 +1,8 @@
-import actions from '@/shared/actions';
-import { IoSearch } from 'react-icons/io5';
-import { useRouter } from 'next/router';
 import { useAppContext } from '@/context/AppContext';
+import { actions } from '@/shared/actions';
 import { _search as Container } from '@/styles/modules/search-form';
+import { useRouter } from 'next/router';
+import { IoSearch } from 'react-icons/io5';
 
 export default function SearchComponent() {
   const { state, dispatch } = useAppContext();

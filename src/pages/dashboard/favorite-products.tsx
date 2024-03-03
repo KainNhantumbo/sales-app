@@ -3,11 +3,11 @@ import SideBarAds from '@/components/SidaBarAds';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
+import { blurDataUrlImage, complements } from '@/data/data';
 import { formatCurrency } from '@/lib/utils';
-import actions from '@/shared/actions';
-import { blurDataUrlImage, complements } from '@/shared/data';
+import { actions } from '@/shared/actions';
 import { _favoriteProducts as Container } from '@/styles/common/favorite-products';
-import type { FetchError, PublicProducts } from '@/types';
+import type { HttpError, PublicProducts } from '@/types';
 import { motion } from 'framer-motion';
 import type { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
@@ -46,8 +46,8 @@ export default function FavoriteProducts({ products }: Props) {
       refetchFavoriteProducts();
     } catch (error) {
       console.error(
-        (error as FetchError).response?.data?.message ||
-          (error as FetchError).message
+        (error as HttpError).response?.data?.message ||
+          (error as HttpError).message
       );
     }
   };

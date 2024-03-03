@@ -2,13 +2,13 @@ import Layout from '@/components/Layout';
 import DeleteAccountPrompt from '@/components/modals/DeleteAccountPrompt';
 import WorkCapturer from '@/components/modals/WorkCapturer';
 import { useAppContext } from '@/context/AppContext';
-import actions from '@/shared/actions';
-import countries from '@/shared/countries.json';
-import { complements } from '@/shared/data';
-import user_languages from '@/shared/languages.json';
-import user_skills from '@/shared/professional-skills.json';
+import Countries from '@/data/countries.json';
+import { complements } from '@/data/data';
+import Languages from '@/data/languages.json';
+import Skills from '@/data/professional-skills.json';
+import { actions } from '@/shared/actions';
 import { _userProfile as Container } from '@/styles/common/profile-editor';
-import { FetchError, InputEvents, User } from '@/types';
+import type { HttpError, InputEvents, User } from '@/types';
 import Compressor from 'compressorjs';
 import moment from 'moment';
 import Image from 'next/image';
@@ -197,8 +197,8 @@ export default function ProfileEditor() {
       })
       .catch((error) => {
         console.error(
-          (error as FetchError).response?.data?.message ||
-            (error as FetchError).message
+          (error as HttpError).response?.data?.message ||
+            (error as HttpError).message
         );
       });
   };
@@ -218,14 +218,14 @@ export default function ProfileEditor() {
       })
       .catch((error) => {
         console.error(
-          (error as FetchError).response?.data?.message ||
-            (error as FetchError).message
+          (error as HttpError).response?.data?.message ||
+            (error as HttpError).message
         );
         setError({
           status: true,
           msg:
-            (error as FetchError).response?.data?.message ||
-            (error as FetchError).message ||
+            (error as HttpError).response?.data?.message ||
+            (error as HttpError).message ||
             'Oops! Algo deu errado. Tente novamente.',
           key: 'user-data'
         });
@@ -284,8 +284,8 @@ export default function ProfileEditor() {
       setError({
         status: true,
         msg:
-          (error as FetchError).response?.data?.message ||
-          (error as FetchError).message ||
+          (error as HttpError).response?.data?.message ||
+          (error as HttpError).message ||
           'Oops! Algo deu errado. Tente novamente.',
         key: 'user-update'
       });
@@ -329,7 +329,7 @@ export default function ProfileEditor() {
   // -------working capturer functions--------
   const [workingExperienceData, setWorkingExperienceData] = useState({
     id: '',
-    carrer: '',
+    career: '',
     end_date: '',
     start_date: '',
     description: '',
@@ -354,7 +354,7 @@ export default function ProfileEditor() {
     });
     setWorkingExperienceData({
       id: '',
-      carrer: '',
+      career: '',
       end_date: '',
       start_date: '',
       description: '',
@@ -380,7 +380,7 @@ export default function ProfileEditor() {
     userWorkingDataController();
     setWorkingExperienceData({
       id: '',
-      carrer: '',
+      career: '',
       end_date: '',
       start_date: '',
       description: '',
@@ -788,13 +788,13 @@ export default function ProfileEditor() {
                             }
                           });
                         }}>
-                        {user_languages
-                          .sort((a, b) => (a > b ? 1 : -1))
-                          .map((item, index) => (
+                        {Languages.sort((a, b) => (a > b ? 1 : -1)).map(
+                          (item, index) => (
                             <option value={item} key={index}>
                               {item}
                             </option>
-                          ))}
+                          )
+                        )}
                       </select>
                     </div>
                   </section>
@@ -855,13 +855,13 @@ export default function ProfileEditor() {
                             }
                           });
                         }}>
-                        {user_skills
-                          .sort((a, b) => (a > b ? 1 : -1))
-                          .map((item, index) => (
+                        {Skills.sort((a, b) => (a > b ? 1 : -1)).map(
+                          (item, index) => (
                             <option value={item} key={index}>
                               {item}
                             </option>
-                          ))}
+                          )
+                        )}
                       </select>
                     </div>
                   </section>
@@ -891,7 +891,7 @@ export default function ProfileEditor() {
                           id='country'
                           value={state.user.location?.country}
                           onChange={(e) => {
-                            countries.forEach((obj) => {
+                            Countries.forEach((obj) => {
                               if (obj.country === e.target.value) {
                                 setCountryStates([...obj.states]);
                               }
@@ -910,20 +910,20 @@ export default function ProfileEditor() {
                               }
                             });
                           }}>
-                          {countries
-                            .sort((a, b) => (a.country > b.country ? 1 : -1))
-                            .map((item, index) => (
-                              <option value={item.country} key={index}>
-                                {item.country}
-                              </option>
-                            ))}
+                          {Countries.sort((a, b) =>
+                            a.country > b.country ? 1 : -1
+                          ).map((item, index) => (
+                            <option value={item.country} key={index}>
+                              {item.country}
+                            </option>
+                          ))}
                         </select>
                       </div>
 
                       <div className='form-element'>
                         <label htmlFor='state'>
                           <IoStar />
-                          <span>Provícia / Estado</span>
+                          <span>Província / Estado</span>
                         </label>
                         <select
                           name='state'
@@ -957,17 +957,17 @@ export default function ProfileEditor() {
                     </section>
                     <section className='form-section'>
                       <div className='form-element'>
-                        <label htmlFor='adress'>
+                        <label htmlFor='address'>
                           <IoHomeOutline />
                           <span>Endereço</span>
                         </label>
                         <input
                           type='text'
-                          id='adress'
+                          id='address'
                           placeholder='Endereço'
                           aria-label='Endereço'
                           maxLength={128}
-                          value={state.user.location?.adress}
+                          value={state.user.location?.address}
                           onChange={(e) =>
                             e.target.value.length > 128
                               ? undefined
@@ -979,7 +979,7 @@ export default function ProfileEditor() {
                                       ...state.user,
                                       location: {
                                         ...state.user.location,
-                                        adress: e.target.value
+                                        address: e.target.value
                                       }
                                     }
                                   }
@@ -987,7 +987,7 @@ export default function ProfileEditor() {
                           }
                         />
                         <span className='counter'>{`${
-                          state.user.location?.adress?.length || 0
+                          state.user.location?.address?.length || 0
                         } / 128`}</span>
                       </div>
                       <div className='form-element'>
@@ -1266,13 +1266,13 @@ export default function ProfileEditor() {
                       state.user.working_experience.map((item) => (
                         <div className='card' key={item?.id}>
                           <div className='info'>
-                            {item.carrer && (
+                            {item.career && (
                               <div className='item'>
                                 <h3>
                                   <IoConstructOutline />
                                   <span>Carreira Profissional</span>
                                 </h3>
-                                <p>{item.carrer}</p>
+                                <p>{item.career}</p>
                               </div>
                             )}
                             {item.company_name && (

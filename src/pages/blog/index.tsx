@@ -1,3 +1,20 @@
+import buyingWomenImg from '@/../public/assets/buying_women.png';
+import Layout from '@/components/Layout';
+import NewsLetter from '@/components/Newsletter';
+import SearchComponent from '@/components/SearchBlogPosts';
+import { useAppContext } from '@/context/AppContext';
+import { blurDataUrlImage, complements } from '@/data/data';
+import { getPosts } from '@/lib/queries';
+import { formatDate } from '@/lib/utils';
+import { actions } from '@/shared/actions';
+import { _blog as Container } from '@/styles/common/blog';
+import { Posts } from '@/types';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
 import {
   IoArrowForwardOutline,
   IoEllipsisHorizontal,
@@ -6,26 +23,9 @@ import {
   IoReload,
   IoStorefrontOutline
 } from 'react-icons/io5';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useEffect } from 'react';
-import { IBlogPosts } from '@/types';
-import Layout from '@/components/Layout';
-import actions from '@/shared/actions';
-import { getPosts } from '@/shared/queries';
-import { formatDate } from '@/lib/utils';
-import { PulseLoader } from 'react-spinners';
-import NewsLetter from '@/components/Newsletter';
-import { useRouter } from 'next/router';
-import { useAppContext } from '@/context/AppContext';
 import { useInView } from 'react-intersection-observer';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { _blog as Container } from '@/styles/common/blog';
-import SearchComponent from '@/components/SearchBlogPosts';
+import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
-import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
-import { blurDataUrlImage, complements } from '@/shared/data';
-import buyingWomenImg from '@/../public/assets/buying_women.png';
 
 export default function Blog() {
   const LIMIT: number = 8;
@@ -35,7 +35,7 @@ export default function Blog() {
   const { ref, inView } = useInView();
 
   async function fetchPosts({ pageParam = 0 }) {
-    const { data } = await getPosts<IBlogPosts[]>({
+    const { data } = await getPosts<Posts[]>({
       offset: pageParam * LIMIT,
       limit: LIMIT
     });

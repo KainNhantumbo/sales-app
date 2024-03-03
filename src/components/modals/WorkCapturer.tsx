@@ -1,3 +1,7 @@
+import { useAppContext } from '@/context/AppContext';
+import { _capturer as Container } from '@/styles/modules/working-capturer';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Dispatch, SetStateAction } from 'react';
 import {
   IoCalendarNumberOutline,
   IoCheckmark,
@@ -6,16 +10,12 @@ import {
   IoLinkOutline,
   IoPushOutline
 } from 'react-icons/io5';
-import { Dispatch, SetStateAction } from 'react';
-import { useAppContext } from '@/context/AppContext';
-import { motion, AnimatePresence } from 'framer-motion';
-import { _capturer as Container } from '@/styles/modules/working-capturer';
 
 interface Props {
   setStateFn: Dispatch<
     SetStateAction<{
       id: string;
-      carrer: string;
+      career: string;
       end_date: string;
       start_date: string;
       description: string;
@@ -25,7 +25,7 @@ interface Props {
   >;
   initialData: {
     id: string;
-    carrer: string;
+    career: string;
     end_date: string;
     start_date: string;
     description: string;
@@ -75,23 +75,23 @@ export default function WorkCapturer(props: Props) {
                   <section className='form' spellCheck={'true'}>
                     <section className='form-section'>
                       <div className='form-element'>
-                        <label htmlFor='carrer'>
+                        <label htmlFor='career'>
                           <IoEllipsisHorizontal />
                           <span>Carreira Profissional</span>
                         </label>
                         <input
                           type='text'
-                          id='carrer'
+                          id='career'
                           placeholder='Carreira Profissional'
                           aria-label='Carreira Profissional'
                           required={true}
                           onChange={(e) =>
-                            props.setStateFn(({ carrer, ...data }) => ({
+                            props.setStateFn(({ career, ...data }) => ({
                               ...data,
-                              carrer: e.target.value
+                              career: e.target.value
                             }))
                           }
-                          value={props.initialData.carrer}
+                          value={props.initialData.career}
                         />
                       </div>
                       <div className='form-element'>
@@ -205,7 +205,7 @@ export default function WorkCapturer(props: Props) {
                           props.setStateFn(() => {
                             return {
                               id: '',
-                              carrer: '',
+                              career: '',
                               end_date: '',
                               start_date: '',
                               description: '',

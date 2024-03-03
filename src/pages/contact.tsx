@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { complements } from '@/data/data';
+import { ContactContainer as Container } from '@/styles/common/contact';
 import emailjs from '@emailjs/browser';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { BiEnvelope, BiMailSend } from 'react-icons/bi';
 import Layout from '../components/Layout';
 import { InputEvents, SubmitEvent } from '../types';
-import { complements } from '@/shared/data';
-import { BiEnvelope, BiMailSend } from 'react-icons/bi';
-import { ContactContainer as Container } from '@/styles/common/contact';
 
 export default function Contact() {
   const [messageStatus, setMessageStatus] = useState(

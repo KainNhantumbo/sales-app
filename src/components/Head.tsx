@@ -1,6 +1,6 @@
+import { complements } from '@/data/data';
 import Head from 'next/head';
 import type { HeadProps } from '../types';
-import { complements } from '@/shared/data';
 
 export default function CustomHead(props: HeadProps) {
   return (

@@ -5,11 +5,11 @@ import {
   FaTwitter
 } from 'react-icons/fa';
 
-import { complements } from '@/shared/data';
 import { useAppContext } from '@/context/AppContext';
-import { motion, AnimatePresence } from 'framer-motion';
-import { IoClose, IoShareSocial } from 'react-icons/io5';
+import { complements } from '@/data/data';
 import { _shareProduct as Container } from '@/styles/modules/share-product-modal';
+import { AnimatePresence, motion } from 'framer-motion';
+import { IoClose, IoShareSocial } from 'react-icons/io5';
 
 type Props = {
   name: string;

@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import Layout from '@/components/Layout';
-import { complements } from '@/shared/data';
+import { complements } from '@/data/data';
 import { _legal as Container } from '@/styles/common/legal';
+import Link from 'next/link';
 
 export default function StoreVerification() {
   return (
