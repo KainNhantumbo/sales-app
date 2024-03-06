@@ -22,7 +22,7 @@ export default function SearchBox() {
           }
         }
       });
-      if (inputValue.length < 1) {
+      if (inputValue.length < 1)
         dispatch({
           type: actions.PRODUCTS_LIST_QUERY,
           payload: {
@@ -33,11 +33,8 @@ export default function SearchBox() {
             }
           }
         });
-      }
     }, 300);
-    return () => {
-      clearTimeout(timer);
-    };
+    return () => clearTimeout(timer);
   }, [inputValue]);
 
   return (
@@ -62,10 +59,7 @@ export default function SearchBox() {
                   <BiSearch />
                   <span>Pesquisar</span>
                 </h2>
-                <button
-                  className='quit'
-                  title='Close'
-                  onClick={searchBoxController}>
+                <button className='quit' title='Close' onClick={searchBoxController}>
                   <FiX />
                 </button>
               </div>

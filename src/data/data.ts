@@ -100,7 +100,7 @@ const app_metadata = {
   appName: Package.name,
   version: Package.version,
   notice: Package.notice,
-  copyright: `© ${new Date().getFullYear()} ${Package.author}`
+  copyright: `© ${new Date().getFullYear()} ${Package.author.name}`
 };
 
 const urls = [

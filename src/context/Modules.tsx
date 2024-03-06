@@ -80,9 +80,7 @@ export default function ModulesContext(props: Props) {
 
               router.push('/auth/sign-in');
             } catch (error) {
-              console.error(
-                (error as HttpError).response?.data?.message || error
-              );
+              console.error((error as HttpError).response?.data?.message || error);
             } finally {
               dispatch({
                 type: actions.PROMPT,
@@ -98,11 +96,7 @@ export default function ModulesContext(props: Props) {
     });
   }
 
-  return (
-    <context.Provider value={{ logoutUser, requestLogin }}>
-      {props.children}
-    </context.Provider>
-  );
+  return <context.Provider value={{ logoutUser, requestLogin }}>{props.children}</context.Provider>;
 }
 
 export function useModulesContext() {

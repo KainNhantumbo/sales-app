@@ -44,7 +44,8 @@ export default function SignIn() {
       const { data } = await fetch<Auth>({
         method: 'post',
         url: '/api/v1/auth/default/login',
-        data: { ...state.signInData }
+        data: { ...state.signInData },
+        withCredentials: true
       });
       dispatch({
         type: actions.USER_AUTH,
@@ -53,14 +54,12 @@ export default function SignIn() {
       router.push(`/dashboard`);
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
       setError({
         status: true,
         message:
-          (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+          (error as HttpError).response?.data?.message || (error as HttpError).message
       });
     } finally {
       setLoading(false);
@@ -93,10 +92,7 @@ export default function SignIn() {
           <article>
             <div className='form-container'>
               <h2>Acesso de Usuário</h2>
-              <p>
-                Olá, preencha o formuário abaixo para acessar a sua conta de
-                usuário.
-              </p>
+              <p>Olá, preencha o formuário abaixo para acessar a sua conta de usuário.</p>
               <form onSubmit={handleSubmit}>
                 <section className='input-field'>
                   <label htmlFor='email'>
@@ -134,9 +130,7 @@ export default function SignIn() {
                     <span>Esqueceu a senha? Recuperar conta.</span>
                   </Link>
                 </div>
-                {error.status && (
-                  <span className='error-message'>{error.message}</span>
-                )}
+                {error.status && <span className='error-message'>{error.message}</span>}
 
                 <button
                   className='login'

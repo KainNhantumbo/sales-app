@@ -15,7 +15,7 @@ import {
   IoCart,
   IoRemove
 } from 'react-icons/io5';
-import { _cart as Container } from '../../styles/modules/cart';
+import { _cart as Container } from '@/styles/modules/cart';
 
 export default function Cart() {
   const {
@@ -35,9 +35,7 @@ export default function Cart() {
           className='main'
           onClick={(e: any) => {
             const target = (e as any).target.classList;
-            if (target.contains('main')) {
-              cartModalController();
-            }
+            if (target.contains('main')) cartModalController();
           }}>
           <motion.section
             className='dialog-modal'
@@ -45,9 +43,7 @@ export default function Cart() {
             animate={{
               opacity: 1,
               scale: 1,
-              transition: {
-                duration: 0.3
-              }
+              transition: { duration: 0.3 }
             }}
             exit={{ opacity: 0, scale: 0 }}>
             <section className='main-container'>
@@ -70,9 +66,7 @@ export default function Cart() {
                           src={product.previewImage?.url ?? blurDataUrlImage}
                           alt={'product preview image'}
                           onClick={() => {
-                            router.push(
-                              `/ecommerce/products/${product.productId}`
-                            );
+                            router.push(`/ecommerce/products/${product.productId}`);
                             cartModalController();
                           }}
                         />
@@ -89,9 +83,7 @@ export default function Cart() {
                           </p>
                           <p>
                             <>Subtotal: </>
-                            <span>
-                              {formatCurrency(product.price * product.quantity)}
-                            </span>
+                            <span>{formatCurrency(product.price * product.quantity)}</span>
                           </p>
                         </div>
                       </div>
@@ -105,8 +97,7 @@ export default function Cart() {
                                 productId: product.productId,
                                 quantity:
                                   geCartProduct(product.productId).quantity > 1
-                                    ? geCartProduct(product.productId)
-                                        .quantity - 1
+                                    ? geCartProduct(product.productId).quantity - 1
                                     : 1
                               })
                             }>
@@ -131,8 +122,7 @@ export default function Cart() {
                             onClick={() =>
                               updateCartProduct({
                                 productId: product.productId,
-                                quantity:
-                                  geCartProduct(product.productId).quantity + 1
+                                quantity: geCartProduct(product.productId).quantity + 1
                               })
                             }>
                             <IoAdd />
@@ -143,9 +133,7 @@ export default function Cart() {
                           whileTap={{ scale: 0.8 }}
                           whileHover={{ scale: 1.05 }}
                           className='remove-item'
-                          onClick={() =>
-                            removeProductFromCart(product.productId)
-                          }>
+                          onClick={() => removeProductFromCart(product.productId)}>
                           <IoBackspace /> <span>Remover</span>
                         </motion.button>
                       </div>
@@ -172,8 +160,7 @@ export default function Cart() {
                     {formatCurrency(
                       state.cart.reduce(
                         (accumulator, currentProduct) =>
-                          (accumulator +=
-                            currentProduct.price * currentProduct.quantity),
+                          (accumulator += currentProduct.price * currentProduct.quantity),
 
                         0
                       )

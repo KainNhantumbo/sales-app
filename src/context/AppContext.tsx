@@ -171,9 +171,7 @@ export default function AppContext(props: Props) {
     );
 
     if (foundProduct)
-      return state.cart.filter(
-        (product) => product.productId === currentProductId
-      )[0];
+      return state.cart.filter((product) => product.productId === currentProductId)[0];
     return {
       productId: '',
       quantity: 1,
@@ -183,19 +181,14 @@ export default function AppContext(props: Props) {
     };
   };
 
-  const updateCartProduct = (props: {
-    productId: string;
-    quantity: number;
-  }) => {
+  const updateCartProduct = (props: { productId: string; quantity: number }) => {
     dispatch({
       type: actions.PRODUCTS_CART,
       payload: {
         ...state,
         cart: [
           ...state.cart.map((product) =>
-            product.productId === props.productId
-              ? { ...product, ...props }
-              : product
+            product.productId === props.productId ? { ...product, ...props } : product
           )
         ]
       }
@@ -210,11 +203,7 @@ export default function AppContext(props: Props) {
         cart:
           state.cart.length < 2
             ? []
-            : [
-                ...state.cart.filter(
-                  (product) => product.productId !== currentProductId
-                )
-              ]
+            : [...state.cart.filter((product) => product.productId !== currentProductId)]
       }
     });
   };
@@ -264,29 +253,24 @@ export default function AppContext(props: Props) {
       });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
 
   async function httpClient<T>(config: AxiosRequestConfig) {
-    fetch.interceptors.response.use(
-      undefined,
-      (error: AxiosError): Promise<never> => {
-        const status = Number(error?.response?.status);
-        if (status > 400 && status < 404) {
-          validateAuth().catch((error) => {
-            console.error(
-              (error as HttpError).response?.data?.message ||
-                (error as HttpError).message
-            );
-            router.push('/auth/sign-in');
-          });
-        }
-        return Promise.reject(error);
+    fetch.interceptors.response.use(undefined, (error: AxiosError): Promise<never> => {
+      const status = Number(error?.response?.status);
+      if (status > 400 && status < 404) {
+        validateAuth().catch((error) => {
+          console.error(
+            (error as HttpError).response?.data?.message || (error as HttpError).message
+          );
+          router.push('/auth/sign-in');
+        });
       }
-    );
+      return Promise.reject(error);
+    });
     return await fetch<T>({
       ...config,
       headers: { authorization: `Bearer ${state.auth.token}` }
@@ -306,8 +290,7 @@ export default function AppContext(props: Props) {
       });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
