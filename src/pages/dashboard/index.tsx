@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout';
 import Metrics from '@/components/Metrics';
 import { useAppContext } from '@/context/AppContext';
-import { app_metadata, complements, dashboardActions } from '@/data/data';
+import { app_metadata, constants, dashboardActions } from '@/data/constants';
 import { _dashboard as Container } from '@/styles/common/dashbord';
 import { DashboardAction } from '@/types';
 import { motion } from 'framer-motion';
@@ -20,8 +20,7 @@ export default function Dashboard() {
   });
 
   return (
-    <Layout
-      metadata={{ title: `${complements.defaultTitle} | Painel de Controle` }}>
+    <Layout metadata={{ title: `${constants.defaultTitle} | Painel de Controle` }}>
       <Container>
         <article>
           <section className='header'>
@@ -58,9 +57,7 @@ export default function Dashboard() {
                 {Object.values(actionRoutes)
                   .sort((a, b) => (a.header.label > b.header.label ? 1 : -1))
                   .map((element, index) => (
-                    <div
-                      key={String(index)}
-                      className='cards-container_element'>
+                    <div key={String(index)} className='cards-container_element'>
                       <h3>
                         <element.header.icon />
                         <span>{element.header.label}</span>

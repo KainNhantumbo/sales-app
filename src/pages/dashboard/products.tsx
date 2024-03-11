@@ -5,7 +5,7 @@ import ShareProducts from '@/components/modals/ShareProductModal';
 import SortBox from '@/components/modals/SortBox';
 import ToolBox from '@/components/modals/ToolBox';
 import { useAppContext } from '@/context/AppContext';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _productList as Container } from '@/styles/common/products';
@@ -52,20 +52,13 @@ export default function Products() {
     return { data, currentOffset: pageParam + 1 };
   };
 
-  const {
-    data,
-    fetchNextPage,
-    refetch,
-    hasNextPage,
-    isLoading,
-    isError,
-    error
-  } = useInfiniteQuery({
-    queryKey: ['private-store-products'],
-    queryFn: fetchProducts,
-    getNextPageParam: (lastPage) =>
-      lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
-  });
+  const { data, fetchNextPage, refetch, hasNextPage, isLoading, isError, error } =
+    useInfiniteQuery({
+      queryKey: ['private-store-products'],
+      queryFn: fetchProducts,
+      getNextPageParam: (lastPage) =>
+        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
+    });
 
   const handleDeleteProduct = async (productId: string) => {
     try {
@@ -77,8 +70,7 @@ export default function Products() {
       refetch({ queryKey: ['private-store-products'] });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -129,8 +121,7 @@ export default function Products() {
   }, []);
 
   return (
-    <Layout
-      metadata={{ title: `${complements.defaultTitle} | Lista de Produtos` }}>
+    <Layout metadata={{ title: `${constants.defaultTitle} | Lista de Produtos` }}>
       <DeleteProductPrompt deleteFn={handleDeleteProduct} />
 
       <Container>
@@ -142,14 +133,8 @@ export default function Products() {
           {!isLoading && isError && (
             <section className='error-message'>
               <IoWarningOutline className='icon' />
-              <p>
-                {(error as any).response?.data?.message ||
-                  'Erro ao carregar produtos'}
-              </p>
-              <button
-                onClick={() =>
-                  refetch({ queryKey: ['private-store-products'] })
-                }>
+              <p>{(error as any).response?.data?.message || 'Erro ao carregar produtos'}</p>
+              <button onClick={() => refetch({ queryKey: ['private-store-products'] })}>
                 <IoReload />
                 <span>Tentar novamente</span>
               </button>
@@ -174,9 +159,7 @@ export default function Products() {
                 <div
                   key={product._id}
                   className='products-list_item'
-                  ref={
-                    state.productList.length === index + 1 ? ref : undefined
-                  }>
+                  ref={state.productList.length === index + 1 ? ref : undefined}>
                   {index === 0 && (
                     <ShareProducts
                       productId={product._id}
@@ -207,8 +190,7 @@ export default function Products() {
                             <i>{formatCurrency(product.price)}</i>{' '}
                             {formatCurrency(
                               product.price -
-                                (product.price * product.promotion.percentage) /
-                                  100
+                                (product.price * product.promotion.percentage) / 100
                             )}
                           </span>
                         </div>
@@ -229,9 +211,7 @@ export default function Products() {
                       <div className='item date'>
                         <IoCalendar />
                         <span>
-                          {moment(product.createdAt).format(
-                            'MMMM D, yyyy HH:mm'
-                          )}
+                          {moment(product.createdAt).format('MMMM D, yyyy HH:mm')}
                         </span>
                       </div>
                       <div className='item'>
@@ -253,9 +233,7 @@ export default function Products() {
                     </Link>
                     <button
                       title='Eliminar produto da sua loja'
-                      onClick={() =>
-                        deleteProductPromptController(true, product._id)
-                      }>
+                      onClick={() => deleteProductPromptController(true, product._id)}>
                       <span>Eliminar produto</span>
                     </button>
                     <button
@@ -291,12 +269,9 @@ export default function Products() {
                   </div>
                 )}
 
-                {!hasNextPage &&
-                  !isLoading &&
-                  !isError &&
-                  state.productList.length > 0 && (
-                    <p>Sem mais produtos para mostrar</p>
-                  )}
+                {!hasNextPage && !isLoading && !isError && state.productList.length > 0 && (
+                  <p>Sem mais produtos para mostrar</p>
+                )}
               </div>
               {state.productList.length > 0 && (
                 <div className='products-list_container__end-mark'>

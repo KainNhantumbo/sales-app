@@ -2,8 +2,8 @@ import Layout from '@/components/Layout';
 import DeleteAccountPrompt from '@/components/modals/DeleteAccountPrompt';
 import WorkCapturer from '@/components/modals/WorkCapturer';
 import { useAppContext } from '@/context/AppContext';
+import { constants } from '@/data/constants';
 import Countries from '@/data/countries.json';
-import { complements } from '@/data/data';
 import Languages from '@/data/languages.json';
 import Skills from '@/data/professional-skills.json';
 import { actions } from '@/shared/actions';
@@ -91,9 +91,7 @@ export default function ProfileEditor() {
     state.user.location?.state
   ]);
   const [coverImageFile, setCoverImageFile] = useState<FileList | null>(null);
-  const [profileImageFile, setProfileImageFile] = useState<FileList | null>(
-    null
-  );
+  const [profileImageFile, setProfileImageFile] = useState<FileList | null>(null);
   const [coverImageData, setCoverImageData] = useState({
     id: '',
     data: ''
@@ -182,8 +180,7 @@ export default function ProfileEditor() {
     })
       .then(() => {
         assetType === 'cover_image' && setCoverImageData({ id: '', data: '' });
-        assetType === 'profile_image' &&
-          setProfileImageData({ id: '', data: '' });
+        assetType === 'profile_image' && setProfileImageData({ id: '', data: '' });
         dispatch({
           type: actions.USER_DATA,
           payload: {
@@ -197,8 +194,7 @@ export default function ProfileEditor() {
       })
       .catch((error) => {
         console.error(
-          (error as HttpError).response?.data?.message ||
-            (error as HttpError).message
+          (error as HttpError).response?.data?.message || (error as HttpError).message
         );
       });
   };
@@ -218,8 +214,7 @@ export default function ProfileEditor() {
       })
       .catch((error) => {
         console.error(
-          (error as HttpError).response?.data?.message ||
-            (error as HttpError).message
+          (error as HttpError).response?.data?.message || (error as HttpError).message
         );
         setError({
           status: true,
@@ -416,7 +411,7 @@ export default function ProfileEditor() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Editor de Perfil de Usuário`,
+        title: `${constants.defaultTitle} | Editor de Perfil de Usuário`,
         updatedAt: state.user.updatedAt,
         createdAt: state.user.createdAt
       }}>
@@ -511,9 +506,7 @@ export default function ProfileEditor() {
                       multiple={false}
                       onChange={(e) => setCoverImageFile(e.target.files)}
                     />
-                    <span className='description'>
-                      Dimensões: 620 x 220 pixels.
-                    </span>
+                    <span className='description'>Dimensões: 620 x 220 pixels.</span>
                   </div>
                 </section>
 
@@ -554,9 +547,7 @@ export default function ProfileEditor() {
                       multiple={false}
                       onChange={(e) => setProfileImageFile(e.target.files)}
                     />
-                    <span className='description'>
-                      Dimensões: 150 x 150 pixels.
-                    </span>
+                    <span className='description'>Dimensões: 150 x 150 pixels.</span>
                   </div>
                 </section>
 
@@ -567,9 +558,8 @@ export default function ProfileEditor() {
                       <span>Informações Pessoais</span>
                     </h2>
                     <p>
-                      Informações usadas para identificação e contato. Por
-                      favor, inserir informações reais e verdadeiras para evitar
-                      bloqueio de conta.
+                      Informações usadas para identificação e contato. Por favor, inserir
+                      informações reais e verdadeiras para evitar bloqueio de conta.
                     </p>
                   </div>
 
@@ -589,9 +579,7 @@ export default function ProfileEditor() {
                           aria-label='Escreva o seu nome'
                           required={true}
                           onChange={(e) =>
-                            e.target.value.length > 32
-                              ? undefined
-                              : handleChange(e)
+                            e.target.value.length > 32 ? undefined : handleChange(e)
                           }
                           value={state.user.first_name}
                         />
@@ -614,9 +602,7 @@ export default function ProfileEditor() {
                           value={state.user.last_name}
                           required={true}
                           onChange={(e) =>
-                            e.target.value.length > 32
-                              ? undefined
-                              : handleChange(e)
+                            e.target.value.length > 32 ? undefined : handleChange(e)
                           }
                         />
                         <span className='counter'>{`${
@@ -640,9 +626,7 @@ export default function ProfileEditor() {
                           aria-label='Escreva o seu número de telemóvel'
                           value={state.user.main_phone_number}
                           onChange={(e) =>
-                            e.target.value.length > 9
-                              ? undefined
-                              : handleChange(e)
+                            e.target.value.length > 9 ? undefined : handleChange(e)
                           }
                         />
                         <span className='counter'>{`${
@@ -664,9 +648,7 @@ export default function ProfileEditor() {
                           aria-label='Escreva o seu número de telemóvel'
                           value={state.user.alternative_phone_number}
                           onChange={(e) =>
-                            e.target.value.length > 9
-                              ? undefined
-                              : handleChange(e)
+                            e.target.value.length > 9 ? undefined : handleChange(e)
                           }
                         />
                         <span className='counter'>{`${
@@ -721,9 +703,7 @@ export default function ProfileEditor() {
                           aria-label='Escreva uma breve biografia para o seu perfil'
                           value={state.user.bio}
                           onChange={(e) =>
-                            e.target.value.length > 128
-                              ? undefined
-                              : handleChange(e)
+                            e.target.value.length > 128 ? undefined : handleChange(e)
                           }
                         />
                         <span className='counter'>{`${
@@ -746,10 +726,9 @@ export default function ProfileEditor() {
                                     ...state,
                                     user: {
                                       ...state.user,
-                                      spoken_languages:
-                                        state.user.spoken_languages.filter(
-                                          (item) => item !== language
-                                        )
+                                      spoken_languages: state.user.spoken_languages.filter(
+                                        (item) => item !== language
+                                      )
                                     }
                                   }
                                 });
@@ -788,13 +767,11 @@ export default function ProfileEditor() {
                             }
                           });
                         }}>
-                        {Languages.sort((a, b) => (a > b ? 1 : -1)).map(
-                          (item, index) => (
-                            <option value={item} key={index}>
-                              {item}
-                            </option>
-                          )
-                        )}
+                        {Languages.sort((a, b) => (a > b ? 1 : -1)).map((item, index) => (
+                          <option value={item} key={index}>
+                            {item}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </section>
@@ -855,13 +832,11 @@ export default function ProfileEditor() {
                             }
                           });
                         }}>
-                        {Skills.sort((a, b) => (a > b ? 1 : -1)).map(
-                          (item, index) => (
-                            <option value={item} key={index}>
-                              {item}
-                            </option>
-                          )
-                        )}
+                        {Skills.sort((a, b) => (a > b ? 1 : -1)).map((item, index) => (
+                          <option value={item} key={index}>
+                            {item}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </section>
@@ -873,10 +848,7 @@ export default function ProfileEditor() {
                       <IoLocation />
                       <span>Localização e Endereço</span>
                     </h2>
-                    <p>
-                      Informações usadas para entregas de compras feitas nas
-                      lojas.
-                    </p>
+                    <p>Informações usadas para entregas de compras feitas nas lojas.</p>
                   </div>
 
                   <div className='items-container'>
@@ -910,13 +882,13 @@ export default function ProfileEditor() {
                               }
                             });
                           }}>
-                          {Countries.sort((a, b) =>
-                            a.country > b.country ? 1 : -1
-                          ).map((item, index) => (
-                            <option value={item.country} key={index}>
-                              {item.country}
-                            </option>
-                          ))}
+                          {Countries.sort((a, b) => (a.country > b.country ? 1 : -1)).map(
+                            (item, index) => (
+                              <option value={item.country} key={index}>
+                                {item.country}
+                              </option>
+                            )
+                          )}
                         </select>
                       </div>
 
@@ -1035,8 +1007,8 @@ export default function ProfileEditor() {
                       <span>Redes e Mídias Sociais</span>
                     </h2>
                     <p>
-                      Informações destacadas no seu perfil de usuário, loja e
-                      compartilhada com o público para aumentar a sua audiência.
+                      Informações destacadas no seu perfil de usuário, loja e compartilhada
+                      com o público para aumentar a sua audiência.
                     </p>
                   </div>
 
@@ -1204,9 +1176,8 @@ export default function ProfileEditor() {
                       <span>Atualização de Senhas</span>
                     </h2>
                     <p>
-                      Por favor, evite usar senhas fracas e já utilizadas
-                      anteriormente em outros sites para melhorar a segurança da
-                      sua conta.
+                      Por favor, evite usar senhas fracas e já utilizadas anteriormente em
+                      outros sites para melhorar a segurança da sua conta.
                     </p>
                   </div>
 
@@ -1257,8 +1228,8 @@ export default function ProfileEditor() {
                       <span>Experiência Profissional</span>
                     </h2>
                     <p>
-                      Adicione informações relativas a sua experiência ou campo
-                      de atuação profissional.
+                      Adicione informações relativas a sua experiência ou campo de atuação
+                      profissional.
                     </p>
                   </div>
                   <section className='cards-container'>
@@ -1367,40 +1338,35 @@ export default function ProfileEditor() {
                 {!loading.status && !error.status && (
                   <>
                     <h3>
-                      Confirme se as informações introduzidas estão correctas
-                      antes de salvar alterações. Caso não tenha alterado nada,
-                      não será atualizado, clique em "Descartar e voltar".
+                      Confirme se as informações introduzidas estão correctas antes de
+                      salvar alterações. Caso não tenha alterado nada, não será atualizado,
+                      clique em "Descartar e voltar".
                     </h3>
                     <p>
-                      Todas as informações que introduzir nesta página são, por
-                      padrão, públicas, exceto as suas senhas, dados de
-                      localização e algumas informações pessoais como gênero,
-                      data de nascimento e seu endereço exato (utilizado apenas
-                      para entregas).
+                      Todas as informações que introduzir nesta página são, por padrão,
+                      públicas, exceto as suas senhas, dados de localização e algumas
+                      informações pessoais como gênero, data de nascimento e seu endereço
+                      exato (utilizado apenas para entregas).
                     </p>
                   </>
                 )}
 
-                {error.status &&
-                  error.key === 'user-update' &&
-                  !loading.status && (
-                    <h3 className='error-message'>{error.msg}</h3>
-                  )}
+                {error.status && error.key === 'user-update' && !loading.status && (
+                  <h3 className='error-message'>{error.msg}</h3>
+                )}
 
-                {loading.status &&
-                  loading.key === 'user-update' &&
-                  !error.status && (
-                    <div className='loading'>
-                      <PulseLoader
-                        color={`rgb(${theme.primary})`}
-                        aria-placeholder='Processando...'
-                        cssOverride={{
-                          display: 'block'
-                        }}
-                      />
-                      <span>Processando...</span>
-                    </div>
-                  )}
+                {loading.status && loading.key === 'user-update' && !error.status && (
+                  <div className='loading'>
+                    <PulseLoader
+                      color={`rgb(${theme.primary})`}
+                      aria-placeholder='Processando...'
+                      cssOverride={{
+                        display: 'block'
+                      }}
+                    />
+                    <span>Processando...</span>
+                  </div>
+                )}
               </div>
 
               <div className='btns-container'>
@@ -1410,9 +1376,7 @@ export default function ProfileEditor() {
                       <IoArrowUndoOutline />
                       <span>Descartar e voltar</span>
                     </button>
-                    <button
-                      className='save'
-                      onClick={() => handleSubmitUpdate()}>
+                    <button className='save' onClick={() => handleSubmitUpdate()}>
                       <IoSyncOutline />
                       <span>Salvar alterações</span>
                     </button>

@@ -2,14 +2,14 @@ import Layout from '@/components/Layout';
 import SearchStories from '@/components/SearchStories';
 import SideBarAds from '@/components/SidaBarAds';
 import StoriesRenderer from '@/components/StoriesRenderer';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { _feed as Container } from '@/styles/common/feed';
 
 export default function Feed() {
   return (
     <Layout
       metadata={{
-        title: String.prototype.concat(complements.defaultTitle, ' | Feed')
+        title: String.prototype.concat(constants.defaultTitle, ' | Feed')
       }}>
       <Container>
         <div className='searchbar-wrapper'>

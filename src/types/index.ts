@@ -66,12 +66,7 @@ export type TShareUrls = {
   icon: IconType;
 };
 
-export type PaymentGateway =
-  | 'e-mola'
-  | 'm-pesa'
-  | 'credit-card'
-  | 'paypal'
-  | 'ponto-24';
+export type PaymentGateway = 'e-mola' | 'm-pesa' | 'credit-card' | 'paypal' | 'ponto-24';
 
 export type TPaymentOptions = Array<{
   type: PaymentGateway;
@@ -433,12 +428,7 @@ export type Order = {
   _id: string;
   order_code: string;
   order_transaction: string | undefined;
-  order_status:
-    | 'delivered'
-    | 'returned'
-    | 'cancelled'
-    | 'progress'
-    | 'pending-payment';
+  order_status: 'delivered' | 'returned' | 'cancelled' | 'progress' | 'pending';
   order_payment_type: {
     type: string;
     account: string;
@@ -617,3 +607,11 @@ export type State = {
 };
 
 export type Action = { type: string; payload: State };
+
+export type OrderSummary = {
+  order_code: string;
+  order_id: string;
+  order_amount: number;
+  order_status: 'delivered' | 'returned' | 'progress' | 'cancelled' | 'pending';
+  user_name: string;
+};

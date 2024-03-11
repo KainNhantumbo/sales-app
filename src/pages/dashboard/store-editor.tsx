@@ -1,8 +1,8 @@
 import Layout from '@/components/Layout';
 import DeactivatePrompt from '@/components/modals/DeactivateStorePrompt';
 import { useAppContext } from '@/context/AppContext';
+import { constants } from '@/data/constants';
 import countries from '@/data/countries.json';
-import { complements } from '@/data/data';
 import Categories from '@/data/product-categories.json';
 import { actions } from '@/shared/actions';
 import { _storeEditor as Container } from '@/styles/common/store-editor';
@@ -49,8 +49,7 @@ type TError = {
 export default function StoreEditor() {
   const theme = useTheme();
   const router = useRouter();
-  const { state, httpClient, dispatch, deactivateStorePromptController } =
-    useAppContext();
+  const { state, httpClient, dispatch, deactivateStorePromptController } = useAppContext();
 
   const [loading, setLoading] = useState<TLoading>({
     status: false,
@@ -225,7 +224,7 @@ export default function StoreEditor() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Editor de Loja`,
+        title: `${constants.defaultTitle} | Editor de Loja`,
         updatedAt: state.store.updatedAt,
         createdAt: state.store.createdAt
       }}>
@@ -317,9 +316,8 @@ export default function StoreEditor() {
                       <span>Informações da Loja</span>
                     </h2>
                     <p>
-                      Informações usadas para perfil da loja. Por favor, inserir
-                      informações corretas, reais e verdadeiras para evitar a
-                      suspensão da loja.
+                      Informações usadas para perfil da loja. Por favor, inserir informações
+                      corretas, reais e verdadeiras para evitar a suspensão da loja.
                     </p>
                   </div>
 
@@ -338,9 +336,7 @@ export default function StoreEditor() {
                           placeholder='Escreva o nome da loja'
                           aria-label='Escreva o nome da loja'
                           onChange={(e) =>
-                            e.target.value.length > 64
-                              ? undefined
-                              : handleChange(e)
+                            e.target.value.length > 64 ? undefined : handleChange(e)
                           }
                           value={state.store.name}
                         />
@@ -393,9 +389,7 @@ export default function StoreEditor() {
                           placeholder='Escreva o slogan de sua loja'
                           aria-label='Escreva o slogan de sua loja'
                           onChange={(e) =>
-                            e.target.value.length > 64
-                              ? undefined
-                              : handleChange(e)
+                            e.target.value.length > 64 ? undefined : handleChange(e)
                           }
                           value={state.store.slogan}
                           maxLength={64}
@@ -420,9 +414,7 @@ export default function StoreEditor() {
                           placeholder='Escreva a descrição de sua loja'
                           aria-label='Escreva a descrição de sua loja'
                           onChange={(e) =>
-                            e.target.value.length > 256
-                              ? undefined
-                              : handleChange(e)
+                            e.target.value.length > 256 ? undefined : handleChange(e)
                           }
                           value={state.store.description}
                           maxLength={256}
@@ -443,9 +435,8 @@ export default function StoreEditor() {
                       <span>Localização e Endereço</span>
                     </h2>
                     <p>
-                      Localização e endereço da sua loja física (caso exista) ou
-                      a sua localização de partida (casa, armazém dos produtos,
-                      etc.).
+                      Localização e endereço da sua loja física (caso exista) ou a sua
+                      localização de partida (casa, armazém dos produtos, etc.).
                     </p>
                   </div>
 
@@ -571,8 +562,8 @@ export default function StoreEditor() {
                     </h2>
 
                     <p>
-                      Documentação e regras de conduta endereçada aos clientes
-                      que visitam a sua loja.
+                      Documentação e regras de conduta endereçada aos clientes que visitam a
+                      sua loja.
                     </p>
                   </div>
 
@@ -591,9 +582,7 @@ export default function StoreEditor() {
                           aria-label='Escreva os termos e condições da sua loja'
                           rows={12}
                           onChange={(e) =>
-                            e.target.value.length > 2048
-                              ? undefined
-                              : handleChange(e)
+                            e.target.value.length > 2048 ? undefined : handleChange(e)
                           }
                           value={state.store.terms_policy}
                         />
@@ -616,9 +605,7 @@ export default function StoreEditor() {
                           aria-label='Escreva a política de privacidade da sua loja'
                           rows={12}
                           onChange={(e) =>
-                            e.target.value.length > 2048
-                              ? undefined
-                              : handleChange(e)
+                            e.target.value.length > 2048 ? undefined : handleChange(e)
                           }
                           value={state.store.privacy_policy}
                         />
@@ -641,9 +628,7 @@ export default function StoreEditor() {
                           aria-label='Escreva a política de entrega de encomendas ao cliente da sua loja'
                           rows={12}
                           onChange={(e) =>
-                            e.target.value.length > 1024
-                              ? undefined
-                              : handleChange(e)
+                            e.target.value.length > 1024 ? undefined : handleChange(e)
                           }
                           value={state.store.delivery_policy}
                         />
@@ -664,10 +649,9 @@ export default function StoreEditor() {
                   <span>Ativação da Loja</span>
                 </h2>
                 <p>
-                  Por padrão, a loja está desativada, isso significa que os a
-                  loja e os seus produtos não aparecerão ao público ou nas
-                  pesquisas feitas pelos usuários da plataforma. Active após o
-                  preenchimento correto das informações acima.
+                  Por padrão, a loja está desativada, isso significa que os a loja e os seus
+                  produtos não aparecerão ao público ou nas pesquisas feitas pelos usuários
+                  da plataforma. Active após o preenchimento correto das informações acima.
                 </p>
                 <p className='p-bottom'>
                   Clique no botão abaixo para ativar ou desativar a loja.
@@ -693,9 +677,7 @@ export default function StoreEditor() {
                   <span>Loja Desativada</span>
                 </button>
               ) : (
-                <button
-                  className='save'
-                  onClick={() => deactivateStorePromptController()}>
+                <button className='save' onClick={() => deactivateStorePromptController()}>
                   <IoRadioButtonOn color={`rgb(${theme.secondary})`} />
                   <span>Loja Ativada</span>
                 </button>
@@ -714,37 +696,33 @@ export default function StoreEditor() {
                 {!loading.status && !error.status && (
                   <>
                     <h3>
-                      Confirme se as informações introduzidas estão corretas
-                      antes de salvar alterações. Caso não tenha alterado nada,
-                      não será atualizado, clique em "Descartar e voltar".
+                      Confirme se as informações introduzidas estão corretas antes de salvar
+                      alterações. Caso não tenha alterado nada, não será atualizado, clique
+                      em "Descartar e voltar".
                     </h3>
                     <p>
-                      Todas as informações que introduzir nesta página são, por
-                      padrão, públicas.
+                      Todas as informações que introduzir nesta página são, por padrão,
+                      públicas.
                     </p>
                   </>
                 )}
 
-                {error.status &&
-                  error.key === 'store-update' &&
-                  !loading.status && (
-                    <h3 className='error-message'>{error.msg}</h3>
-                  )}
+                {error.status && error.key === 'store-update' && !loading.status && (
+                  <h3 className='error-message'>{error.msg}</h3>
+                )}
 
-                {loading.status &&
-                  loading.key === 'store-update' &&
-                  !error.status && (
-                    <div className='loading'>
-                      <PulseLoader
-                        color={`rgb(${theme.primary})`}
-                        aria-placeholder='Processando...'
-                        cssOverride={{
-                          display: 'block'
-                        }}
-                      />
-                      <span>Processando...</span>
-                    </div>
-                  )}
+                {loading.status && loading.key === 'store-update' && !error.status && (
+                  <div className='loading'>
+                    <PulseLoader
+                      color={`rgb(${theme.primary})`}
+                      aria-placeholder='Processando...'
+                      cssOverride={{
+                        display: 'block'
+                      }}
+                    />
+                    <span>Processando...</span>
+                  </div>
+                )}
               </div>
 
               <div className='btns-container'>
@@ -754,9 +732,7 @@ export default function StoreEditor() {
                       <IoArrowUndoOutline />
                       <span>Descartar e voltar</span>
                     </button>
-                    <button
-                      className='save'
-                      onClick={() => handleSubmitUpdate()}>
+                    <button className='save' onClick={() => handleSubmitUpdate()}>
                       <IoSyncOutline />
                       <span>Salvar alterações</span>
                     </button>

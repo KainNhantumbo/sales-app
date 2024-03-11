@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout';
 import { useAppContext } from '@/context/AppContext';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import Categories from '@/data/product-categories.json';
 import { actions } from '@/shared/actions';
 import { _productEditor as Container } from '@/styles/common/product-editor';
@@ -185,9 +185,7 @@ export default function ProductEditor() {
           allow_comments: state.product.allow_comments,
           productImages: [
             ...Object.entries(imagesData).filter(([key, value]) =>
-              value.data !== ''
-                ? { [key]: { id: value.id, data: value.data } }
-                : null
+              value.data !== '' ? { [key]: { id: value.id, data: value.data } } : null
             )
           ].reduce((accumulator, currentValue) => {
             const group = { [currentValue[0]]: currentValue[1] };
@@ -229,9 +227,7 @@ export default function ProductEditor() {
           allow_comments: state.product.allow_comments,
           productImages: [
             ...Object.entries(imagesData).filter(([key, value]) =>
-              value.data !== ''
-                ? { [key]: { id: value.id, data: value.data } }
-                : null
+              value.data !== '' ? { [key]: { id: value.id, data: value.data } } : null
             )
           ].reduce((accumulator, currentValue) => {
             const group = { [currentValue[0]]: currentValue[1] };
@@ -294,8 +290,7 @@ export default function ProductEditor() {
   }, [error.status]);
 
   return (
-    <Layout
-      metadata={{ title: `${complements.defaultTitle} | Editor de Produto` }}>
+    <Layout metadata={{ title: `${constants.defaultTitle} | Editor de Produto` }}>
       <Container>
         {!isError && isLoading && (
           <section className='loading-spinner'>
@@ -350,8 +345,8 @@ export default function ProductEditor() {
                       <p>Dimensões: 320 x 420 pixels. Máx. 512Kb.</p>
                       <p>
                         <strong>
-                          Nota: a primeira imagem carregada será principal. Não
-                          é obrigatório carregar imagens.
+                          Nota: a primeira imagem carregada será principal. Não é
+                          obrigatório carregar imagens.
                         </strong>
                       </p>
                     </div>
@@ -395,9 +390,7 @@ export default function ProductEditor() {
                           id={`cover${index}`}
                           accept='.jpg, .jpeg, .png'
                           multiple={false}
-                          onChange={(e) =>
-                            handleFiles(String(index), e.target.files)
-                          }
+                          onChange={(e) => handleFiles(String(index), e.target.files)}
                         />
                       </div>
                     ))}
@@ -410,10 +403,7 @@ export default function ProductEditor() {
                       <IoBagHandle />
                       <span>Informações do Produto</span>
                     </h2>
-                    <p>
-                      Informações usadas para a descrição e identificação do
-                      produto.
-                    </p>
+                    <p>Informações usadas para a descrição e identificação do produto.</p>
                   </div>
 
                   <div className='items-container'>
@@ -431,9 +421,7 @@ export default function ProductEditor() {
                           placeholder='Escreva o nome do produto'
                           aria-label='Escreva o nome do produto'
                           onChange={(e) =>
-                            e.target.value.length > 128
-                              ? undefined
-                              : handleChange(e)
+                            e.target.value.length > 128 ? undefined : handleChange(e)
                           }
                           value={state.product.name}
                         />
@@ -457,9 +445,7 @@ export default function ProductEditor() {
                           placeholder='Escreva a descrição do produto'
                           aria-label='Escreva a descrição do produto'
                           onChange={(e) =>
-                            e.target.value.length > 512
-                              ? undefined
-                              : handleChange(e)
+                            e.target.value.length > 512 ? undefined : handleChange(e)
                           }
                           value={state.product.description}
                           maxLength={512}
@@ -485,9 +471,7 @@ export default function ProductEditor() {
                           placeholder='Coloque as especificações do produto'
                           aria-label='Coloque as especificações do produto'
                           onChange={(e) =>
-                            e.target.value.length > 2048
-                              ? undefined
-                              : handleChange(e)
+                            e.target.value.length > 2048 ? undefined : handleChange(e)
                           }
                           value={state.product.specifications}
                           maxLength={2048}
@@ -688,13 +672,13 @@ export default function ProductEditor() {
                 {!loading.status && !error.status && (
                   <>
                     <h3>
-                      Confirme se as informações introduzidas estão correctas
-                      antes de salvar alterações. Caso não tenha alterado nada,
-                      não será atualizado, clique em "Descartar e voltar".
+                      Confirme se as informações introduzidas estão correctas antes de
+                      salvar alterações. Caso não tenha alterado nada, não será atualizado,
+                      clique em "Descartar e voltar".
                     </h3>
                     <p>
-                      Todas as informações que introduzir nesta página são, por
-                      padrão, públicas.
+                      Todas as informações que introduzir nesta página são, por padrão,
+                      públicas.
                     </p>
                   </>
                 )}

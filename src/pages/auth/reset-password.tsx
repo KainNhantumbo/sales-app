@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout';
 import fetch from '@/config/client';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
 import { HttpError, SubmitEvent } from '@/types';
 import Link from 'next/link';
@@ -30,14 +30,12 @@ export default function ResetPassword() {
       router.push('/auth/reset-password-confirmation');
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
       setError({
         status: true,
         message:
-          (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+          (error as HttpError).response?.data?.message || (error as HttpError).message
       });
     } finally {
       setLoading(false);
@@ -54,7 +52,7 @@ export default function ResetPassword() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Atualização de Senha`,
+        title: `${constants.defaultTitle} | Atualização de Senha`,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       }}>
@@ -64,9 +62,8 @@ export default function ResetPassword() {
             <div className='form-container'>
               <h2>Redifinir a sua senha</h2>
               <p>
-                Coloque o e-mail associado com a sua conta de usuário e
-                enviaremos um e-mail para você com as instruções de redifinição
-                de senha.
+                Coloque o e-mail associado com a sua conta de usuário e enviaremos um e-mail
+                para você com as instruções de redifinição de senha.
               </p>
               <form onSubmit={handleSubmit}>
                 <section className='input-field'>
@@ -122,7 +119,7 @@ export default function ResetPassword() {
           </article>
         </main>
         <section className='base-container'>
-          &copy; {complements.defaultTitle} |{' '}
+          &copy; {constants.defaultTitle} |{' '}
           <Link href={'/legal/privacy'}>
             <span>Política de Privacidade</span>
           </Link>

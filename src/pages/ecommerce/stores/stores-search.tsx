@@ -2,7 +2,7 @@ import Layout from '@/components/Layout';
 import NewsLetter from '@/components/Newsletter';
 import SearchComponent from '@/components/SearchBlogPosts';
 import { useAppContext } from '@/context/AppContext';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { geStoresData } from '@/lib/queries';
 import { formatDate } from '@/lib/utils';
 import { actions } from '@/shared/actions';
@@ -102,7 +102,7 @@ export default function StoresSearch() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Pesquisa de Lojas Integradas da Plataforma`
+        title: `${constants.defaultTitle} | Pesquisa de Lojas Integradas da Plataforma`
       }}>
       <Container>
         <div className='main-container'>
@@ -159,11 +159,7 @@ export default function StoresSearch() {
                     key={store._id}
                     className={'store'}
                     href={`/community/store/${store._id}`}
-                    ref={
-                      state.publicStoresList.length === index + 1
-                        ? ref
-                        : undefined
-                    }>
+                    ref={state.publicStoresList.length === index + 1 ? ref : undefined}>
                     <>
                       <h2 className='store-name'>
                         <strong>{store.name}</strong>
@@ -186,10 +182,7 @@ export default function StoresSearch() {
                       </div>
 
                       <p>{store.description}</p>
-                      <button
-                        onClick={() =>
-                          router.push(`/community/store/${store._id}`)
-                        }>
+                      <button onClick={() => router.push(`/community/store/${store._id}`)}>
                         <div>
                           <IoArrowForwardOutline />
                           <span>Visitar Loja</span>

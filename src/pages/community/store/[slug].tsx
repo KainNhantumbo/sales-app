@@ -3,11 +3,7 @@ import SideBarAds from '@/components/SidaBarAds';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import {
-  blurDataUrlImage,
-  complements,
-  formatSocialNetwork
-} from '@/data/data';
+import { blurDataUrlImage, constants, formatSocialNetwork } from '@/data/constants';
 import { formatCurrency, slidePageUp } from '@/lib/utils';
 import ErrorPage from '@/pages/error-page';
 import { actions } from '@/shared/actions';
@@ -41,13 +37,8 @@ import { useTheme } from 'styled-components';
 type Props = { store?: PublicStore; products: PublicProducts[] };
 
 export default function StoreProfile({ store, products }: Props) {
-  const {
-    state,
-    dispatch,
-    httpClient,
-    addProductToCart,
-    removeProductFromCart
-  } = useAppContext();
+  const { state, dispatch, httpClient, addProductToCart, removeProductFromCart } =
+    useAppContext();
   const { requestLogin } = useModulesContext();
   const router = useRouter();
   const theme = useTheme();
@@ -76,8 +67,7 @@ export default function StoreProfile({ store, products }: Props) {
       });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   }
@@ -104,8 +94,7 @@ export default function StoreProfile({ store, products }: Props) {
       });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   }
@@ -143,7 +132,7 @@ export default function StoreProfile({ store, products }: Props) {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Loja ${store.name}`,
+        title: `${constants.defaultTitle} | Loja ${store.name}`,
         createdAt: store.createdAt,
         updatedAt: store.createdAt
       }}>
@@ -244,8 +233,7 @@ export default function StoreProfile({ store, products }: Props) {
                   </h4>
                 </div>
                 <p className='category'>
-                  Oferece serviços/produtos relacionados a{' '}
-                  <i>{store.category}</i>.
+                  Oferece serviços/produtos relacionados a <i>{store.category}</i>.
                 </p>
                 <p className='description'>
                   <strong>Descrição:</strong> {store.description}
@@ -254,9 +242,7 @@ export default function StoreProfile({ store, products }: Props) {
                 {store.location && (
                   <p className='location'>
                     Localizada em <span>{store.location.country}</span> -
-                    {store.location?.state && (
-                      <span> {store.location.state}</span>
-                    )}{' '}
+                    {store.location?.state && <span> {store.location.state}</span>}{' '}
                     <span>{store.location.address}</span>
                   </p>
                 )}
@@ -295,9 +281,7 @@ export default function StoreProfile({ store, products }: Props) {
                         {store.privacy_policy.includes('\n') ? (
                           store.privacy_policy
                             .split('\n')
-                            .map((phrase, index) => (
-                              <p key={String(index)}>{phrase}</p>
-                            ))
+                            .map((phrase, index) => <p key={String(index)}>{phrase}</p>)
                         ) : (
                           <p>{store.privacy_policy}</p>
                         )}
@@ -314,9 +298,7 @@ export default function StoreProfile({ store, products }: Props) {
                         {store.terms_policy.includes('\n') ? (
                           store.terms_policy
                             .split('\n')
-                            .map((phrase, index) => (
-                              <p key={String(index)}>{phrase}</p>
-                            ))
+                            .map((phrase, index) => <p key={String(index)}>{phrase}</p>)
                         ) : (
                           <p>{store.terms_policy}</p>
                         )}
@@ -333,9 +315,7 @@ export default function StoreProfile({ store, products }: Props) {
                         {store.delivery_policy.includes('\n') ? (
                           store.delivery_policy
                             .split('\n')
-                            .map((phrase, index) => (
-                              <p key={String(index)}>{phrase}</p>
-                            ))
+                            .map((phrase, index) => <p key={String(index)}>{phrase}</p>)
                         ) : (
                           <p>{store.delivery_policy}</p>
                         )}
@@ -399,25 +379,20 @@ export default function StoreProfile({ store, products }: Props) {
                           aria-label='Adicionar ao carrinho'
                           className='cart-button'
                           onClick={() => {
-                            state.cart.some(
-                              (product) => product.productId === item._id
-                            )
+                            state.cart.some((product) => product.productId === item._id)
                               ? removeProductFromCart(item._id)
                               : addProductToCart({
                                   productId: item._id,
                                   productName: item.name,
                                   price: item.promotion.status
                                     ? item.price -
-                                      (item.price * item.promotion.percentage) /
-                                        100
+                                      (item.price * item.promotion.percentage) / 100
                                     : item.price,
                                   quantity: 1,
                                   previewImage: item.image
                                 });
                           }}>
-                          {state.cart.some(
-                            (product) => product.productId === item._id
-                          ) ? (
+                          {state.cart.some((product) => product.productId === item._id) ? (
                             <IoCart />
                           ) : (
                             <IoCartOutline />
@@ -457,8 +432,7 @@ export default function StoreProfile({ store, products }: Props) {
                               <span className='actual-price'>
                                 {formatCurrency(
                                   item.price -
-                                    (item.price * item.promotion.percentage) /
-                                      100
+                                    (item.price * item.promotion.percentage) / 100
                                 )}
                               </span>
                             </h4>

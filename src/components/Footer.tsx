@@ -13,7 +13,7 @@ import {
 
 import { useAppContext } from '@/context/AppContext';
 import { useThemeContext } from '@/context/ThemeContext';
-import { complements, urls } from '@/data/data';
+import { constants, urls } from '@/data/constants';
 import { m as motion } from 'framer-motion';
 import Link from 'next/link';
 import { _footer as Container } from '../styles/modules/footer';
@@ -105,10 +105,7 @@ export default function Footer() {
                 <span>Contacto</span>
               </Link>
               <Link href={'/docs/faq'}>
-                <span>Perguntas frequêntes</span>
-              </Link>
-              <Link href={'/denounce'}>
-                <span>Denunciar abuso</span>
+                <span>Perguntas frequentes</span>
               </Link>
             </div>
           </section>
@@ -119,12 +116,12 @@ export default function Footer() {
         <div className='base-container_presentation'>
           <div className='logo'>
             <p>
-              &copy; {new Date().getFullYear()} {complements.defaultTitle} |{' '}
-              {complements.companyName}
+              &copy; {new Date().getFullYear()} {constants.defaultTitle} |{' '}
+              {constants.companyName}
             </p>
           </div>
           <div className='sharer-button'>
-            {complements.socialMedia.map((option) => (
+            {constants.socialMedia.map((option) => (
               <motion.a
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.8 }}
@@ -147,9 +144,7 @@ export default function Footer() {
                 ? 'active'
                 : ''
             }
-            onClick={() =>
-              changeColorScheme({ mode: 'manual', scheme: 'light' })
-            }>
+            onClick={() => changeColorScheme({ mode: 'manual', scheme: 'light' })}>
             <IoSunnyOutline />
           </button>
           <button
@@ -161,13 +156,9 @@ export default function Footer() {
           <button
             title='Modo escuro '
             className={
-              colorScheme.scheme === 'dark' && colorScheme.mode === 'manual'
-                ? 'active'
-                : ''
+              colorScheme.scheme === 'dark' && colorScheme.mode === 'manual' ? 'active' : ''
             }
-            onClick={() =>
-              changeColorScheme({ mode: 'manual', scheme: 'dark' })
-            }>
+            onClick={() => changeColorScheme({ mode: 'manual', scheme: 'dark' })}>
             <IoMoonOutline />
           </button>
         </div>

@@ -1,4 +1,4 @@
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { AnimatePresence, m as motion } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -13,9 +13,7 @@ export default function CookiesPopup() {
   };
 
   useEffect(() => {
-    const advisorState = JSON.parse(
-      localStorage.getItem('privacy_advisor') || 'false'
-    );
+    const advisorState = JSON.parse(localStorage.getItem('privacy_advisor') || 'false');
     if (!advisorState) {
       localStorage.setItem('privacy_advisor', JSON.stringify('true'));
       setPrivacyAdvisor(() => true);
@@ -46,9 +44,8 @@ export default function CookiesPopup() {
             className='advisor'>
             <div>
               <p>
-                Nosso site utiliza cookies para te proporcionar uma melhor
-                experiência. Ao acessar o site da {complements.defaultTitle},
-                você concorda com a nossa{'  '}
+                Nosso site utiliza cookies para te proporcionar uma melhor experiência. Ao
+                acessar o site da {constants.defaultTitle}, você concorda com a nossa{'  '}
                 <Link href='/legal/privacy'>
                   <strong>Política de Privacidade e Cookies</strong>
                 </Link>

@@ -1,12 +1,7 @@
-import {
-  FaFacebook,
-  FaLinkedinIn,
-  FaPinterest,
-  FaTwitter
-} from 'react-icons/fa';
+import { FaFacebook, FaLinkedinIn, FaPinterest, FaTwitter } from 'react-icons/fa';
 
 import { useAppContext } from '@/context/AppContext';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { _shareProduct as Container } from '@/styles/modules/share-product-modal';
 import { AnimatePresence, motion } from 'framer-motion';
 import { IoClose, IoShareSocial } from 'react-icons/io5';
@@ -23,22 +18,22 @@ export default function ShareProducts({ name, category, productId }: Props) {
   const options = [
     {
       name: 'Compartilhe no LinkedIn',
-      url: `https://www.linkedin.com/shareArticle?mini=true&url=${complements.websiteUrl}/ecommerce/products/${productId}&title=${name}&summary=${category}`,
+      url: `https://www.linkedin.com/shareArticle?mini=true&url=${constants.websiteUrl}/ecommerce/products/${productId}&title=${name}&summary=${category}`,
       icon: FaLinkedinIn
     },
     {
       name: 'Compartilhe no Facebook',
-      url: `https://www.facebook.com/sharer/sharer.php?u=${complements.websiteUrl}/ecommerce/products/${productId}`,
+      url: `https://www.facebook.com/sharer/sharer.php?u=${constants.websiteUrl}/ecommerce/products/${productId}`,
       icon: FaFacebook
     },
     {
       name: 'Compartilhe no Twitter',
-      url: `https://twitter.com/intent/tweet?text=${complements.websiteUrl}/ecommerce/products/${productId}`,
+      url: `https://twitter.com/intent/tweet?text=${constants.websiteUrl}/ecommerce/products/${productId}`,
       icon: FaTwitter
     },
     {
       name: 'Compartilhe no Pinterest',
-      url: `https://pinterest.com/pin/create/button/?url=${complements.websiteUrl}/ecommerce/products/${productId}&media=${complements.websiteUrl}/ecommerce/products/${productId}&description=${name}`,
+      url: `https://pinterest.com/pin/create/button/?url=${constants.websiteUrl}/ecommerce/products/${productId}&media=${constants.websiteUrl}/ecommerce/products/${productId}&description=${name}`,
       icon: FaPinterest
     }
   ];
@@ -65,10 +60,7 @@ export default function ShareProducts({ name, category, productId }: Props) {
                   <IoShareSocial />
                   <span>Compartilhar o produto</span>
                 </h2>
-                <button
-                  className='quit'
-                  title='Close'
-                  onClick={shareProductController}>
+                <button className='quit' title='Close' onClick={shareProductController}>
                   <IoClose />
                 </button>
               </div>
@@ -88,9 +80,7 @@ export default function ShareProducts({ name, category, productId }: Props) {
                 ))}
               </section>
               <div className='prompt-actions'>
-                <button
-                  className='prompt-cancel'
-                  onClick={shareProductController}>
+                <button className='prompt-cancel' onClick={shareProductController}>
                   <IoClose />
                   <span>Fechar</span>
                 </button>

@@ -2,7 +2,7 @@ import Layout from '@/components/Layout';
 import SelectContainer from '@/components/Select';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import { complements, denounceReasons } from '@/data/data';
+import { constants, denounceReasons } from '@/data/constants';
 import { actions } from '@/shared/actions';
 import { DenounceContainer as Container } from '@/styles/common/denounce';
 import { HttpError } from '@/types';
@@ -10,12 +10,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import {
-  IoBan,
-  IoCheckmark,
-  IoClose,
-  IoEllipsisHorizontal
-} from 'react-icons/io5';
+import { IoBan, IoCheckmark, IoClose, IoEllipsisHorizontal } from 'react-icons/io5';
 
 export default function Denounce() {
   const router = useRouter();
@@ -46,13 +41,9 @@ export default function Denounce() {
       });
       setMsg('Denúncia enviada com sucesso.');
     } catch (error) {
-      setMsg(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
-      );
+      setMsg((error as HttpError).response?.data?.message || (error as HttpError).message);
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -77,8 +68,7 @@ export default function Denounce() {
   }, [msg]);
 
   return (
-    <Layout
-      metadata={{ title: `${complements.defaultTitle} | Denunciar abuso` }}>
+    <Layout metadata={{ title: `${constants.defaultTitle} | Denunciar abuso` }}>
       <Container>
         <div className='main-container'>
           <article>
@@ -96,12 +86,11 @@ export default function Denounce() {
                 <Link href={'/legal/terms-of-use'}>
                   <span>termos e condições</span>
                 </Link>
-                . Continuamos a tentar tornar este ambiente ótimo e saudável
-                para todos.
+                . Continuamos a tentar tornar este ambiente ótimo e saudável para todos.
               </p>
               <p className='prompt-message'>
-                Coloque informações que acha relevantes à sua denúncia (o
-                denunciado não saberá quem o denunciou)
+                Coloque informações que acha relevantes à sua denúncia (o denunciado não
+                saberá quem o denunciou)
               </p>
               <section className='form' spellCheck={'true'}>
                 <section className='form-section'>

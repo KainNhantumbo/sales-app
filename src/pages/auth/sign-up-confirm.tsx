@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { _resetConfirmation as Container } from '@/styles/common/reset-password-confirmation';
 import Link from 'next/link';
 import { BiUserPlus } from 'react-icons/bi';
@@ -9,7 +9,7 @@ export default function SignUpConfirmation() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Confirmação de Nova Conta`,
+        title: `${constants.defaultTitle} | Confirmação de Nova Conta`,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       }}>
@@ -22,8 +22,8 @@ export default function SignUpConfirmation() {
               </div>
               <h2>Conta de usuário criada</h2>
               <p>
-                Você criou a sua nova conta de usuário com sucesso, clique em
-                "acessar conta criada" para continuar.
+                Você criou a sua nova conta de usuário com sucesso, clique em "acessar conta
+                criada" para continuar.
               </p>
 
               <Link href={`/auth/sign-in`} className='a-open-mail'>

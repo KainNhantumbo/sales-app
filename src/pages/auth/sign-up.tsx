@@ -2,7 +2,7 @@ import backgroundImage from '@/../public/assets/africa-unveiled.png';
 import Layout from '@/components/Layout';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { actions } from '@/shared/actions';
 import { _signUp as Container } from '@/styles/common/sign-up';
 import { HttpError, InputEvents, SubmitEvent } from '@/types';
@@ -65,14 +65,12 @@ export default function SignUp() {
       router.push('/auth/sign-up-confirm');
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
       setError({
         status: true,
         message:
-          (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+          (error as HttpError).response?.data?.message || (error as HttpError).message
       });
     } finally {
       setLoading(false);
@@ -89,7 +87,7 @@ export default function SignUp() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Nova Conta de Usuário`,
+        title: `${constants.defaultTitle} | Nova Conta de Usuário`,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       }}>
@@ -104,10 +102,8 @@ export default function SignUp() {
         <main>
           <article>
             <div className='form-container'>
-              <h2>Bem vindo à {complements.defaultTitle}</h2>
-              <p>
-                Preencha o formuário abaixo para criar uma conta de usuário.
-              </p>
+              <h2>Bem vindo à {constants.defaultTitle}</h2>
+              <p>Preencha o formuário abaixo para criar uma conta de usuário.</p>
               <form onSubmit={handleSubmit}>
                 <section className='form-section'>
                   <div className='form-element'>
@@ -230,7 +226,7 @@ export default function SignUp() {
           </article>
         </main>
         <section className='base-container'>
-          &copy; {complements.defaultTitle} |{' '}
+          &copy; {constants.defaultTitle} |{' '}
           <Link href={'/legal/privacy'}>
             <span>Política de Privacidade</span>
           </Link>

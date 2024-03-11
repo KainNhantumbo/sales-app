@@ -1,44 +1,7 @@
-import {
-  IoCard,
-  IoCartOutline,
-  IoChatbubbleEllipsesOutline,
-  IoInfiniteOutline,
-  IoLogoFacebook,
-  IoMegaphoneOutline,
-  IoRocketOutline,
-  IoStorefront,
-  IoAdd,
-  IoBagCheck,
-  IoAnalytics,
-  IoCog,
-  IoFingerPrint,
-  IoCardOutline,
-  IoDocument,
-  IoMail,
-  IoStorefrontOutline,
-  IoFlash,
-  IoInformationCircleOutline
-} from 'react-icons/io5';
-import {
-  FaFacebook,
-  FaPinterest,
-  FaWhatsapp,
-  FaInstagram,
-  FaLinkedinIn,
-  FaTwitter,
-  FaDollarSign,
-  FaAd,
-  FaLink
-} from 'react-icons/fa';
-import type {
-  Author,
-  DashboardAction,
-  TPaymentOptions,
-  Pricing,
-  ShareAnchors,
-  TShareUrls,
-  TSocialNetwork
-} from '../types';
+import Package from '@/../package.json';
+import authorPicture from '@/../public/assets/author.jpg';
+import mpesa_logo from '@/../public/trademarks/mpesa logo.png';
+import { BiUser, BiUserCheck } from 'react-icons/bi';
 import {
   BsBox2,
   BsBox2Heart,
@@ -47,12 +10,49 @@ import {
   BsPersonGear,
   BsPersonVideo3
 } from 'react-icons/bs';
-import { BiUser, BiUserCheck } from 'react-icons/bi';
-import Package from '@/../package.json';
-import denounces_data from './denounce-reasons.json';
+import {
+  FaAd,
+  FaDollarSign,
+  FaFacebook,
+  FaInstagram,
+  FaLink,
+  FaLinkedinIn,
+  FaPinterest,
+  FaTwitter,
+  FaWhatsapp
+} from 'react-icons/fa';
+import {
+  IoAdd,
+  IoAnalytics,
+  IoBagCheck,
+  IoCard,
+  IoCardOutline,
+  IoCartOutline,
+  IoChatbubbleEllipsesOutline,
+  IoCog,
+  IoDocument,
+  IoFingerPrint,
+  IoFlash,
+  IoInfiniteOutline,
+  IoInformationCircleOutline,
+  IoLogoFacebook,
+  IoMail,
+  IoMegaphoneOutline,
+  IoRocketOutline,
+  IoStorefront,
+  IoStorefrontOutline
+} from 'react-icons/io5';
+import type {
+  Author,
+  DashboardAction,
+  Pricing,
+  ShareAnchors,
+  TPaymentOptions,
+  TShareUrls,
+  TSocialNetwork
+} from '../types';
 import blurImage from './blur-data-url-image.json';
-import authorPicture from '@/../public/assets/author.jpg';
-import mpesa_logo from '@/../public/trademarks/mpesa logo.png';
+import denounces_data from './denounce-reasons.json';
 
 const blurDataUrlImage = blurImage.data;
 
@@ -63,7 +63,7 @@ const author: Author = {
     'É um prazer te apresentar ao excitante mundo dos negócios, transmitindo conhecimentos que ajudarão a alcançar todo o seu potencial em sua jornada, fazendo de cada passo dado, uma experiência inovadora. Vamos trilhar este caminho juntos?'
 };
 
-const complements = {
+const constants = {
   defaultTitle: Package.name,
   email: Package.email,
   companyName: Package.companyName,
@@ -419,7 +419,7 @@ const order_status_labels: Array<{ label: string; value: string }> = [
   { label: 'Retornado', value: 'returned' },
   { label: 'Em progresso', value: 'progress' },
   { label: 'Cancelado', value: 'cancelled' },
-  { label: 'Aguardando Pagamento', value: 'pending-payment' }
+  { label: 'Aguardando Pagamento', value: 'pending' }
 ];
 
 const orderSortOptions = [
@@ -431,25 +431,23 @@ const orderSortOptions = [
   { value: 'invalidated', label: 'Revisão (Invertido)' }
 ].sort((a, b) => (a.label > b.label ? 1 : -1));
 
-const orderStatusOptions = order_status_labels.sort((a, b) =>
-  a.label > b.label ? 1 : -1
-);
+const orderStatusOptions = order_status_labels.sort((a, b) => (a.label > b.label ? 1 : -1));
 
 export {
-  dashboardActions,
-  denounceReasons,
-  complements,
   app_metadata,
-  urls,
-  store_features,
-  pricing_data,
   author,
   blurDataUrlImage,
-  shareUrlPaths,
-  states,
-  payment_options,
+  constants,
+  dashboardActions,
+  denounceReasons,
   formatSocialNetwork,
   orderSortOptions,
   orderStatusOptions,
-  order_status_labels
+  order_status_labels,
+  payment_options,
+  pricing_data,
+  shareUrlPaths,
+  states,
+  store_features,
+  urls
 };

@@ -3,7 +3,7 @@ import SideBarAds from '@/components/SidaBarAds';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import { blurDataUrlImage, complements } from '@/data/data';
+import { blurDataUrlImage, constants } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _favoriteProducts as Container } from '@/styles/common/favorite-products';
@@ -26,13 +26,8 @@ import { useTheme } from 'styled-components';
 type Props = { products: PublicProducts[] };
 
 export default function FavoriteProducts({ products }: Props) {
-  const {
-    state,
-    dispatch,
-    addProductToCart,
-    removeProductFromCart,
-    httpClient
-  } = useAppContext();
+  const { state, dispatch, addProductToCart, removeProductFromCart, httpClient } =
+    useAppContext();
   const { requestLogin } = useModulesContext();
   const theme = useTheme();
   const [innerWidth, setInnerWidth] = useState<number>(0);
@@ -46,8 +41,7 @@ export default function FavoriteProducts({ products }: Props) {
       refetchFavoriteProducts();
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -90,10 +84,7 @@ export default function FavoriteProducts({ products }: Props) {
   return (
     <Layout
       metadata={{
-        title: String.prototype.concat(
-          complements.defaultTitle,
-          ' | Produtos favoritos'
-        )
+        title: String.prototype.concat(constants.defaultTitle, ' | Produtos favoritos')
       }}>
       <Container>
         <div className='wrapper-container'>
@@ -104,10 +95,7 @@ export default function FavoriteProducts({ products }: Props) {
                 <IoHeart />
                 <span>Seus produtos favoritos</span>
               </h2>
-              <p>
-                Aparecerão aqui os produtos que for adicionar a sua lista de
-                favoritos.
-              </p>
+              <p>Aparecerão aqui os produtos que for adicionar a sua lista de favoritos.</p>
             </section>
 
             {state.publicProducts.length > 0 && (
@@ -146,25 +134,20 @@ export default function FavoriteProducts({ products }: Props) {
                         aria-label='Adicionar ao carrinho'
                         className='cart-button'
                         onClick={() => {
-                          state.cart.some(
-                            (product) => product.productId === item._id
-                          )
+                          state.cart.some((product) => product.productId === item._id)
                             ? removeProductFromCart(item._id)
                             : addProductToCart({
                                 productId: item._id,
                                 productName: item.name,
                                 price: item.promotion.status
                                   ? item.price -
-                                    (item.price * item.promotion.percentage) /
-                                      100
+                                    (item.price * item.promotion.percentage) / 100
                                   : item.price,
                                 quantity: 1,
                                 previewImage: item.image
                               });
                         }}>
-                        {state.cart.some(
-                          (product) => product.productId === item._id
-                        ) ? (
+                        {state.cart.some((product) => product.productId === item._id) ? (
                           <IoCart />
                         ) : (
                           <IoCartOutline />
@@ -198,22 +181,17 @@ export default function FavoriteProducts({ products }: Props) {
                       {item.promotion.status ? (
                         <div className='item promo-price'>
                           <h4>
-                            <span className='old-price'>
-                              {formatCurrency(item.price)}
-                            </span>{' '}
+                            <span className='old-price'>{formatCurrency(item.price)}</span>{' '}
                             <span className='actual-price'>
                               {formatCurrency(
-                                item.price -
-                                  (item.price * item.promotion.percentage) / 100
+                                item.price - (item.price * item.promotion.percentage) / 100
                               )}
                             </span>
                           </h4>
                         </div>
                       ) : (
                         <div className='item promo-price'>
-                          <span className='actual-price'>
-                            {formatCurrency(item.price)}
-                          </span>
+                          <span className='actual-price'>{formatCurrency(item.price)}</span>
                         </div>
                       )}
 

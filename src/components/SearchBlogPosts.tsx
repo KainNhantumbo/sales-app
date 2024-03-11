@@ -33,7 +33,7 @@ export default function SearchComponent() {
         <button
           onClick={() => {
             if (state.search.length < 1) return;
-            router.push(`/blog/blog-search?q=${state.search}`);
+            router.push(`/blog/search?q=${state.search}`);
           }}>
           <IoSearch />
         </button>

@@ -1,4 +1,4 @@
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { actions } from '@/shared/actions';
 import { HttpError } from '@/types';
 import { useRouter } from 'next/router';
@@ -28,7 +28,7 @@ export default function ModulesContext(props: Props) {
         ...state,
         prompt: {
           status: true,
-          title: `${complements.defaultTitle} | Iniciar sessão`,
+          title: `${constants.defaultTitle} | Iniciar sessão`,
           message: 'Você precisa iniciar sessão para continuar.',
           actionButtonMessage: 'Iniciar sessão',
           handleFunction: () => {
@@ -96,7 +96,11 @@ export default function ModulesContext(props: Props) {
     });
   }
 
-  return <context.Provider value={{ logoutUser, requestLogin }}>{props.children}</context.Provider>;
+  return (
+    <context.Provider value={{ logoutUser, requestLogin }}>
+      {props.children}
+    </context.Provider>
+  );
 }
 
 export function useModulesContext() {

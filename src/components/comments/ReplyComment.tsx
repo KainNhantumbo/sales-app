@@ -1,5 +1,5 @@
 import { useAppContext } from '@/context/AppContext';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import type { TComment } from '@/types/comments';
 import moment from 'moment';
 import Image from 'next/image';
@@ -44,8 +44,7 @@ export default function ReplyComment(props: TComment) {
 
           <span>
             {' '}
-            <IoEllipse className='dot' />{' '}
-            {moment(props.comment.createdAt).fromNow()}
+            <IoEllipse className='dot' /> {moment(props.comment.createdAt).fromNow()}
           </span>
         </div>
         <div className='actions'>
@@ -82,9 +81,7 @@ export default function ReplyComment(props: TComment) {
               )}
               <button
                 className='delete'
-                onClick={() =>
-                  deleteCommentPromptController(true, props.comment._id)
-                }>
+                onClick={() => deleteCommentPromptController(true, props.comment._id)}>
                 <FaTrash />
                 <span>Deletar</span>
               </button>
@@ -95,7 +92,7 @@ export default function ReplyComment(props: TComment) {
                 className='denounce'
                 onClick={() =>
                   router.push(
-                    `/denounce?url=${complements.websiteUrl.concat(
+                    `/denounce?url=${constants.websiteUrl.concat(
                       router.asPath
                     )}&type=comment&id=${props.comment._id}`
                   )
@@ -103,8 +100,7 @@ export default function ReplyComment(props: TComment) {
                 <IoFlag />
                 <span>Denunciar</span>
               </button>
-              {!props.status.reply ||
-              props.comment._id !== state.comment._id ? (
+              {!props.status.reply || props.comment._id !== state.comment._id ? (
                 <button
                   className='reply'
                   onClick={() => props.handleReplyComment(props.comment)}>
@@ -112,9 +108,7 @@ export default function ReplyComment(props: TComment) {
                   <span>Responder</span>
                 </button>
               ) : (
-                <button
-                  className='reply'
-                  onClick={() => props.clearCommentData()}>
+                <button className='reply' onClick={() => props.clearCommentData()}>
                   <IoClose />
                   <span>Cancelar</span>
                 </button>
@@ -136,18 +130,17 @@ export default function ReplyComment(props: TComment) {
             )}
           </>
         )}
-        {props.comment._id === state.comment.parent_id &&
-          props.status.reply && (
-            <>
-              {!props.comment.content.includes('\n') ? (
-                <p>{props.comment.content}</p>
-              ) : (
-                props.comment.content
-                  .split('\n')
-                  .map((phrase, index) => <p key={String(index)}>{phrase}</p>)
-              )}
-            </>
-          )}
+        {props.comment._id === state.comment.parent_id && props.status.reply && (
+          <>
+            {!props.comment.content.includes('\n') ? (
+              <p>{props.comment.content}</p>
+            ) : (
+              props.comment.content
+                .split('\n')
+                .map((phrase, index) => <p key={String(index)}>{phrase}</p>)
+            )}
+          </>
+        )}
       </div>
     </>
   );

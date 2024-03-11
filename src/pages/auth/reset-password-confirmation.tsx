@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { _resetConfirmation as Container } from '@/styles/common/reset-password-confirmation';
 import Link from 'next/link';
 import { FaEnvelopeOpenText } from 'react-icons/fa';
@@ -9,7 +9,7 @@ export default function ResetConfirmation() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Confirmação de Atualização de Senha`,
+        title: `${constants.defaultTitle} | Confirmação de Atualização de Senha`,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       }}>
@@ -21,10 +21,7 @@ export default function ResetConfirmation() {
                 <FaEnvelopeOpenText />
               </div>
               <h2>Confira a sua caixa de e-mail </h2>
-              <p>
-                Nós enviamos instruções para a atualização da sua senha em seu
-                e-mail.
-              </p>
+              <p>Nós enviamos instruções para a atualização da sua senha em seu e-mail.</p>
 
               <Link href={`mailto:`} className='a-open-mail'>
                 <IoMailOpen />

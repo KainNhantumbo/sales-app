@@ -2,7 +2,7 @@ import Layout from '@/components/Layout';
 import SideBarAds from '@/components/SidaBarAds';
 import StoriesRenderer from '@/components/StoriesRenderer';
 import fetch from '@/config/client';
-import { complements, formatSocialNetwork } from '@/data/data';
+import { constants, formatSocialNetwork } from '@/data/constants';
 import { formatDate } from '@/lib/utils';
 import ErrorPage from '@/pages/error-page';
 import { _profile as Container } from '@/styles/common/community-user-profile';
@@ -29,18 +29,13 @@ export default function UserProfile({ user }: Props) {
 
   if (!user)
     return (
-      <ErrorPage
-        message='Conta de usuário indisponível.'
-        retryFn={() => router.reload()}
-      />
+      <ErrorPage message='Conta de usuário indisponível.' retryFn={() => router.reload()} />
     );
 
   return (
     <Layout
       metadata={{
-        title: `${
-          complements.defaultTitle
-        } | Perfil de ${String.prototype.concat(
+        title: `${constants.defaultTitle} | Perfil de ${String.prototype.concat(
           user.first_name,
           ' ',
           user.last_name
@@ -118,14 +113,10 @@ export default function UserProfile({ user }: Props) {
               </div>
 
               <div className='right-wrapper-container'>
-                <motion.div
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.8 }}>
+                <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.8 }}>
                   <button
                     className='create-story-btn'
-                    onClick={() =>
-                      router.push(`/community/story/create-story`)
-                    }>
+                    onClick={() => router.push(`/community/story/create-story`)}>
                     <IoCreateOutline />
                     <span>Nova história</span>
                   </button>
@@ -162,35 +153,32 @@ export default function UserProfile({ user }: Props) {
                 </h5>
               )}
             </section>
-            {user.spoken_languages.length > 0 &&
-              user.professional_skills.length > 0 && (
-                <section className='professional-data-container'>
-                  {user.spoken_languages.length > 0 && (
-                    <div className='spoken-languages'>
-                      <h5>
-                        <IoPlanet />
-                        <span>Possui habilidades linguísticas em: </span>
-                      </h5>
-                      {user.spoken_languages.map((language, index) => (
-                        <p key={String(index)}>{language}</p>
-                      ))}
-                    </div>
-                  )}
-                  {user.professional_skills.length > 0 && (
-                    <div className='spoken-languages'>
-                      <h5>
-                        <IoBriefcase />
-                        <span>
-                          Possui habilidades profissionais relacionadas a{' '}
-                        </span>
-                      </h5>
-                      {user.professional_skills.map((ability, index) => (
-                        <p key={String(index)}>#{ability}</p>
-                      ))}
-                    </div>
-                  )}
-                </section>
-              )}
+            {user.spoken_languages.length > 0 && user.professional_skills.length > 0 && (
+              <section className='professional-data-container'>
+                {user.spoken_languages.length > 0 && (
+                  <div className='spoken-languages'>
+                    <h5>
+                      <IoPlanet />
+                      <span>Possui habilidades linguísticas em: </span>
+                    </h5>
+                    {user.spoken_languages.map((language, index) => (
+                      <p key={String(index)}>{language}</p>
+                    ))}
+                  </div>
+                )}
+                {user.professional_skills.length > 0 && (
+                  <div className='spoken-languages'>
+                    <h5>
+                      <IoBriefcase />
+                      <span>Possui habilidades profissionais relacionadas a </span>
+                    </h5>
+                    {user.professional_skills.map((ability, index) => (
+                      <p key={String(index)}>#{ability}</p>
+                    ))}
+                  </div>
+                )}
+              </section>
+            )}
             {/* user stories */}
 
             <StoriesRenderer key={user._id} userId={user._id} />

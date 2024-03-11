@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout';
 import NewsLetter from '@/components/Newsletter';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { _about as Container } from '@/styles/common/about';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -39,58 +39,54 @@ const core_habits: Array<{ phrase: string; paragraph: string }> = [
 export default function About() {
   const theme = useTheme();
   return (
-    <Layout metadata={{ title: complements.defaultTitle + ' | Sobre nós' }}>
+    <Layout metadata={{ title: constants.defaultTitle + ' | Sobre nós' }}>
       <Container>
         <article>
           <section>
             <h1>
-              Não somos os melhores, mas queremos dar o nosso melhor para o
-              nosso maravilhoso Moçambique.
+              Não somos os melhores, mas queremos dar o nosso melhor para o nosso
+              maravilhoso Moçambique.
             </h1>
             <h2>
-              Projecto feito por jovens empreendedores moçambicanos para
-              contribuir o desenvolvimento da economia e do espaço tecnológico
-              moçambicano.
+              Projecto feito por jovens empreendedores moçambicanos para contribuir o
+              desenvolvimento da economia e do espaço tecnológico moçambicano.
             </h2>
             <div className='mozambique-colors' />
           </section>
 
           <section className='introdution'>
             <p>
-              Acreditamos que o nosso país é um mar de oportunidades económicas
-              e empresariais, ainda mais com a promissora população jovem que
-              compoe a nossa nação. O nosso contributo é ajudar a impulsionar e
-              nutrir a espírito de empreendedorismo em nossos corações,
-              construindo com cada passo dado a nossa liberdade em criar
-              soluções digitais que facilitam o nosso dia-a-dia.
+              Acreditamos que o nosso país é um mar de oportunidades económicas e
+              empresariais, ainda mais com a promissora população jovem que compoe a nossa
+              nação. O nosso contributo é ajudar a impulsionar e nutrir a espírito de
+              empreendedorismo em nossos corações, construindo com cada passo dado a nossa
+              liberdade em criar soluções digitais que facilitam o nosso dia-a-dia.
             </p>
             <p>
-              No entanto, um dos nossos maiores pilares é a produtividade e
-              desempenho no trabalho. Enquanto nós amamos a produtividade,
-              percebemos que a produtividade está em si, inalcansável. Tem
-              tantas ferramentas para auxiliar no gerenciamento dos nossos
-              negócios e vendas, mas tudo em diferentes ecossistemas. Deve haver
-              uma maneira melhor de se trabalhar com mais eficiência - por isso,
-              criamos a {complements.defaultTitle}, uma ferramenta mais moderna,
-              cá da terra, agora como uma maneira de tornar a nossa visão de
-              fazer as coisas de forma mais produtiva.
+              No entanto, um dos nossos maiores pilares é a produtividade e desempenho no
+              trabalho. Enquanto nós amamos a produtividade, percebemos que a produtividade
+              está em si, inalcansável. Tem tantas ferramentas para auxiliar no
+              gerenciamento dos nossos negócios e vendas, mas tudo em diferentes
+              ecossistemas. Deve haver uma maneira melhor de se trabalhar com mais
+              eficiência - por isso, criamos a {constants.defaultTitle}, uma ferramenta mais
+              moderna, cá da terra, agora como uma maneira de tornar a nossa visão de fazer
+              as coisas de forma mais produtiva.
             </p>
             <p>
-              Claramente, o nosso objectivo é ajudar a crescer e dar maior
-              visibilidade aos negócios, vendas e campanhas de marketing dos
-              usuários e, fazendo com que as suas actividades de laborais sejam
-              gerenciadas na nossa plataforma, ajudando as pessoas serem mais
-              produtivas e retornando pelo menos 20% do seu tempo de volta para
-              dedicar a vida a outras coisas. Uma ferramenta para substituir
-              todas. Nós estamos apenas começando e somos muito gratos pelo
-              apoio da comunidade que está com a nossa equipe nesta jornada.
+              Claramente, o nosso objectivo é ajudar a crescer e dar maior visibilidade aos
+              negócios, vendas e campanhas de marketing dos usuários e, fazendo com que as
+              suas actividades de laborais sejam gerenciadas na nossa plataforma, ajudando
+              as pessoas serem mais produtivas e retornando pelo menos 20% do seu tempo de
+              volta para dedicar a vida a outras coisas. Uma ferramenta para substituir
+              todas. Nós estamos apenas começando e somos muito gratos pelo apoio da
+              comunidade que está com a nossa equipe nesta jornada.
             </p>
           </section>
 
           <blockquote>
             <p>
-              "Um bom espaço de trabalho combina pessoas excepcionais e
-              problemas desafiadores." - Kain Nhantumbo
+              "Um bom espaço de trabalho combina pessoas excepcionais e problemas
+              desafiadores." - Kain Nhantumbo
             </p>
           </blockquote>
 
@@ -100,28 +96,24 @@ export default function About() {
                 ❤ <span>Nossa</span> missão
               </h3>
               <p>
-                Os pequenos e médios negócios contribuem significativamente e
-                fortalecem a economia moçambicana. Sua tenacidade, perceverança
-                e sonhos representam a espinha dorsal da nossa força de
-                trabalho.
+                Os pequenos e médios negócios contribuem significativamente e fortalecem a
+                economia moçambicana. Sua tenacidade, perceverança e sonhos representam a
+                espinha dorsal da nossa força de trabalho.
               </p>
 
               <p>
-                Mas esses negócios enfrentam desafios desproporcionais ao seu
-                tamanho e recursos. E os provedores de tecnologia se concentram
-                principalmente nas atividade das grandes empreendimentos,
-                criando serviços fora do contato e fora do alcance de pequenos e
-                médios negócios.
+                Mas esses negócios enfrentam desafios desproporcionais ao seu tamanho e
+                recursos. E os provedores de tecnologia se concentram principalmente nas
+                atividade das grandes empreendimentos, criando serviços fora do contato e
+                fora do alcance de pequenos e médios negócios.
               </p>
               <p>
-                Na {complements.defaultTitle}, nossa missão é nivelar o campo de
-                jogo para os pequenos e médios empreendimentos que alimentam a
-                nossa economia.
+                Na {constants.defaultTitle}, nossa missão é nivelar o campo de jogo para os
+                pequenos e médios empreendimentos que alimentam a nossa economia.
               </p>
             </div>
             <div className='corner-motto'>
-              <i>Economizar mais tempo </i> fazendo com que sejamos mais
-              produtivos...
+              <i>Economizar mais tempo </i> fazendo com que sejamos mais produtivos...
             </div>
           </section>
 
@@ -165,10 +157,10 @@ export default function About() {
             </h2>
 
             <p>
-              A nossa equipe é energética e apaixonada pelo mercado dos pequenos
-              e médios negócios e quer ajudar na sua evolução. Queremos que
-              desenvolva relações prósperas com a comunidade{' '}
-              {complements.defaultTitle} e alcance os seus objetivos.
+              A nossa equipe é energética e apaixonada pelo mercado dos pequenos e médios
+              negócios e quer ajudar na sua evolução. Queremos que desenvolva relações
+              prósperas com a comunidade {constants.defaultTitle} e alcance os seus
+              objetivos.
             </p>
             <Link href={'/auth/sign-in'}>
               <IoStorefrontOutline />

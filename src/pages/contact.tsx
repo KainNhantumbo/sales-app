@@ -1,4 +1,4 @@
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { ContactContainer as Container } from '@/styles/common/contact';
 import emailjs from '@emailjs/browser';
 import { motion } from 'framer-motion';
@@ -13,8 +13,8 @@ export default function Contact() {
   );
 
   const [formData, setFormData] = useState({
-    name: complements.websiteName,
-    email: complements.email,
+    name: constants.websiteName,
+    email: constants.email,
     subject: '',
     message: '',
     from_email: ''
@@ -48,33 +48,31 @@ export default function Contact() {
   }
 
   return (
-    <Layout metadata={{ title: `${complements.defaultTitle} | Contato` }}>
+    <Layout metadata={{ title: `${constants.defaultTitle} | Contato` }}>
       <Container>
         <article className='container'>
           <section className='intro'>
             <h1>Fale conosco</h1>
             <h2>Como podemos ajudar?</h2>
             <p>
-              Por favor, utilize uma das formas de contacto abaixo, clicando no
-              endereço de e-mail ou utilizando o{' '}
-              <strong>formulário de contacto</strong> para que possamos
-              esclarecer quaisquer questões sobre os nossos produtos e serviços.
+              Por favor, utilize uma das formas de contacto abaixo, clicando no endereço de
+              e-mail ou utilizando o <strong>formulário de contacto</strong> para que
+              possamos esclarecer quaisquer questões sobre os nossos produtos e serviços.
             </p>
             <p>
               <strong>
-                Lembre-se que sempre estaremos abertos a sugestões de como
-                podemos melhor ajudar.
+                Lembre-se que sempre estaremos abertos a sugestões de como podemos melhor
+                ajudar.
               </strong>
-              Viu algum incomum, problemas ou erros no sistema? Reporte, assim
-              corrigimos o mais rápido possível.
+              Viu algum incomum, problemas ou erros no sistema? Reporte, assim corrigimos o
+              mais rápido possível.
             </p>
             <p>
               <strong>
-                Cultivamos a boa interação e comunicação entre os nossos
-                clientes, usuários e parceiros.
+                Cultivamos a boa interação e comunicação entre os nossos clientes, usuários
+                e parceiros.
               </strong>{' '}
-              Caso algo de errado tenha acontecido, nos escreva, sempre estará
-              em anonimato.
+              Caso algo de errado tenha acontecido, nos escreva, sempre estará em anonimato.
             </p>
           </section>
           <div>
@@ -86,8 +84,8 @@ export default function Contact() {
               <a
                 target='_blank'
                 rel='noreferrer noopener'
-                href={`mailto:${complements.email}`}>
-                {complements.email}
+                href={`mailto:${constants.email}`}>
+                {constants.email}
               </a>
             </span>
           </div>

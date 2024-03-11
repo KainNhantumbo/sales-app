@@ -6,7 +6,7 @@ import {
 } from '../defaults';
 import styled from 'styled-components';
 
-export const _seachEngine = styled.aside`
+export const _searchEngine = styled.aside`
   width: 100%;
   max-width: 380px;
   position: relative;

@@ -2,7 +2,7 @@ import Layout from '@/components/Layout';
 import SideBarAds from '@/components/SidaBarAds';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { actions } from '@/shared/actions';
 import { _story as Container } from '@/styles/common/story';
 import { HttpError, PublicStory, Story } from '@/types';
@@ -15,11 +15,7 @@ import { Router, useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { BsTrash } from 'react-icons/bs';
-import {
-  IoDownloadOutline,
-  IoEllipsisHorizontal,
-  IoHeart
-} from 'react-icons/io5';
+import { IoDownloadOutline, IoEllipsisHorizontal, IoHeart } from 'react-icons/io5';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
@@ -44,8 +40,7 @@ export default function Story(props: Props) {
     maxFiles: 1,
     onDrop: useCallback(<T extends File>(acceptedFiles: T[]) => {
       const file = acceptedFiles[0];
-      if (!file || !acceptedMimeTypes.includes(String(file.type)))
-        return undefined;
+      if (!file || !acceptedMimeTypes.includes(String(file.type))) return undefined;
       new Compressor(file, {
         quality: 0.8,
         width: 420,
@@ -67,8 +62,7 @@ export default function Story(props: Props) {
   });
 
   async function deleteCoverImage() {
-    if (!state.story.cover_image?.url)
-      return setCoverImageData({ id: '', data: '' });
+    if (!state.story.cover_image?.url) return setCoverImageData({ id: '', data: '' });
 
     try {
       setLoading(true);
@@ -91,8 +85,7 @@ export default function Story(props: Props) {
       });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
       setError({
         status: true,
@@ -201,7 +194,7 @@ export default function Story(props: Props) {
   }, [error.status]);
 
   return (
-    <Layout metadata={{ title: `${complements.defaultTitle} | Histórias` }}>
+    <Layout metadata={{ title: `${constants.defaultTitle} | Histórias` }}>
       <Container>
         <div className='wrapper-container'>
           <SideBarAds key={'story'} />
@@ -211,18 +204,15 @@ export default function Story(props: Props) {
               <h2>
                 <IoHeart />
                 <span>
-                  {props.story?._id
-                    ? 'Atualização de História'
-                    : 'Nova História'}
+                  {props.story?._id ? 'Atualização de História' : 'Nova História'}
                 </span>
               </h2>
               <p>
-                Escreva uma pequena história relacionada aos produtos que vende
-                ou para compartilhar conhecimentos com a comunidade.
+                Escreva uma pequena história relacionada aos produtos que vende ou para
+                compartilhar conhecimentos com a comunidade.
               </p>
               <p>
-                Por favor, seja educado ao escrever as suas histórias e respeite
-                o nosso{' '}
+                Por favor, seja educado ao escrever as suas histórias e respeite o nosso{' '}
                 <Link href={'/legal/code-of-conduct'}>
                   <span>código de conduta</span>
                 </Link>{' '}
@@ -346,18 +336,14 @@ export default function Story(props: Props) {
                       <div className='content'>
                         <IoDownloadOutline
                           className={
-                            isDragActive
-                              ? 'download-icon active-mode'
-                              : 'download-icon'
+                            isDragActive ? 'download-icon active-mode' : 'download-icon'
                           }
                         />
                         <h3>
                           {isDragActive ? (
                             <span>Solte a imagem aqui</span>
                           ) : (
-                            <span>
-                              Arraste e solte a imagem ou clique para carregar
-                            </span>
+                            <span>Arraste e solte a imagem ou clique para carregar</span>
                           )}
                         </h3>
                         <span className='description'>

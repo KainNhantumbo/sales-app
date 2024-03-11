@@ -1,4 +1,4 @@
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { errorPage as Container } from '@/styles/common/error-page';
 
 interface Props {
@@ -13,7 +13,7 @@ export default function ErrorPage(props: Props) {
     <Container>
       <section className='logo-container'>
         <div className='logo'>
-          <span>{complements.defaultTitle}</span>
+          <span>{constants.defaultTitle}</span>
         </div>
       </section>
       <section className='content-container'>

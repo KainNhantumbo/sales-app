@@ -4,10 +4,10 @@ import Layout from '@/components/Layout';
 import NewsLetter from '@/components/Newsletter';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import { author, complements, shareUrlPaths } from '@/data/data';
+import { author, constants, shareUrlPaths } from '@/data/constants';
+import { getPaths, getPost, getPosts } from '@/lib/queries';
 import { formatDate } from '@/lib/utils';
 import ErrorPage from '@/pages/error-page';
-import { getPaths, getPost, getPosts } from '@/lib/queries';
 import { _post as Container } from '@/styles/common/post';
 import type { HttpError, IBlogPost, Posts } from '@/types';
 import { CommentCount, DiscussionEmbed } from 'disqus-react';
@@ -18,12 +18,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import {
-  IoIosAlbums,
-  IoIosBookmark,
-  IoMdCalendar,
-  IoMdTime
-} from 'react-icons/io';
+import { IoIosAlbums, IoIosBookmark, IoMdCalendar, IoMdTime } from 'react-icons/io';
 import {
   IoChatbubblesOutline,
   IoHeart,
@@ -57,7 +52,7 @@ export default function Post({ post: initialPost, latestPosts }: Props) {
     title: post.title,
     slug: post.slug,
     excerpt: post.excerpt,
-    hostname: complements.websiteUrl
+    hostname: constants.websiteUrl
   });
 
   const handleFavoritePost = async () => {
@@ -69,8 +64,7 @@ export default function Post({ post: initialPost, latestPosts }: Props) {
       setPost((doc) => ({ ...doc, favorites: data }));
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -84,8 +78,7 @@ export default function Post({ post: initialPost, latestPosts }: Props) {
       setPost((doc) => ({ ...doc, favorites: data }));
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -241,7 +234,7 @@ export default function Post({ post: initialPost, latestPosts }: Props) {
             </section>
 
             <DiscussionEmbed
-              shortname={complements.disqusName}
+              shortname={constants.disqusName}
               config={{
                 identifier: post._id,
                 url: router.asPath,
@@ -258,10 +251,7 @@ export default function Post({ post: initialPost, latestPosts }: Props) {
                 {latestPosts
                   .filter((item) => item._id !== post._id)
                   .map((post) => (
-                    <Link
-                      key={post._id}
-                      className={'post'}
-                      href={`/post/${post.slug}`}>
+                    <Link key={post._id} className={'post'} href={`/post/${post.slug}`}>
                       <>
                         <Image
                           width={300}
@@ -283,8 +273,7 @@ export default function Post({ post: initialPost, latestPosts }: Props) {
                               : post.excerpt}
                           </p>
 
-                          <button
-                            onClick={() => router.push(`/post/${post.slug}`)}>
+                          <button onClick={() => router.push(`/post/${post.slug}`)}>
                             <IoOpenOutline />
                             <span>Continuar a leitura</span>
                           </button>

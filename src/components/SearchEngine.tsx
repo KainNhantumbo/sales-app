@@ -2,7 +2,6 @@ import { useAppContext } from '@/context/AppContext';
 import { slidePageUp } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { AnimatePresence, motion } from 'framer-motion';
-import Slider from 'rc-slider';
 import { useEffect, useState } from 'react';
 import { BiSortAlt2 } from 'react-icons/bi';
 import {
@@ -14,7 +13,7 @@ import {
   IoPricetags
 } from 'react-icons/io5';
 import Categories from '../data/product-categories.json';
-import { _seachEngine as Container } from '../styles/modules/search-engine';
+import { _searchEngine as Container } from '../styles/modules/search-engine';
 import SelectContainer from './Select';
 
 export default function SearchEngine() {
@@ -55,9 +54,7 @@ export default function SearchEngine() {
   useEffect(() => {
     changeWidth();
     window.addEventListener('resize', changeWidth);
-    return () => {
-      window.removeEventListener('resize', changeWidth);
-    };
+    return () => window.removeEventListener('resize', changeWidth);
   }, []);
 
   const categoryOptions = Categories.map((category) => ({
@@ -139,9 +136,7 @@ export default function SearchEngine() {
               }
             }}
             style={{ display: state.isPublicProductsFilters ? 'flex' : 'none' }}
-            initial={
-              innerWidth > 830 ? { translateX: -720 } : { translateY: 720 }
-            }
+            initial={innerWidth > 830 ? { translateX: -720 } : { translateY: 720 }}
             animate={innerWidth > 830 ? { translateX: 0 } : { translateY: 0 }}
             transition={{ duration: 0.38 }}
             exit={
@@ -237,8 +232,7 @@ export default function SearchEngine() {
                   state.queryPublicProducts.sort
                     ? {
                         label: sortOptions.filter(
-                          (element) =>
-                            element.value === state.queryPublicProducts.sort
+                          (element) => element.value === state.queryPublicProducts.sort
                         )[0].label,
                         value: state.queryPublicProducts.sort
                       }
@@ -304,35 +298,10 @@ export default function SearchEngine() {
                   <p>
                     Até: MZN{' '}
                     {(state.queryPublicProducts.price_range &&
-                      Number(state.queryPublicProducts.price_range).toFixed(
-                        2
-                      )) ||
+                      Number(state.queryPublicProducts.price_range).toFixed(2)) ||
                       Number(0).toFixed(2)}
                   </p>
                 </div>
-
-                <Slider
-                  min={0}
-                  step={50}
-                  max={75000}
-                  value={
-                    Number.isNaN(state.queryPublicProducts.price_range)
-                      ? 0
-                      : state.queryPublicProducts.price_range
-                  }
-                  onChange={(value) => {
-                    dispatch({
-                      type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
-                      payload: {
-                        ...state,
-                        queryPublicProducts: {
-                          ...state.queryPublicProducts,
-                          price_range: Number(value)
-                        }
-                      }
-                    });
-                  }}
-                />
               </div>
 
               {Object.values(state.queryPublicProducts)

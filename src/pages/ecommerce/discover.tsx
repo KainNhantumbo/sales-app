@@ -2,17 +2,13 @@ import africa_culture from '@/../public/assets/africa-culture.png';
 import flying_paper from '@/../public/assets/flying paper.png';
 import Layout from '@/components/Layout';
 import NewsLetter from '@/components/Newsletter';
-import { complements, pricing_data, store_features } from '@/data/data';
+import { constants, pricing_data, store_features } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';
 import { _discover as Container } from '@/styles/common/discover';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  IoBalloonOutline,
-  IoHeartOutline,
-  IoStorefrontOutline
-} from 'react-icons/io5';
+import { IoBalloonOutline, IoHeartOutline, IoStorefrontOutline } from 'react-icons/io5';
 import { useTheme } from 'styled-components';
 
 export default function Discover() {
@@ -21,7 +17,7 @@ export default function Discover() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Descubra-nos`
+        title: `${constants.defaultTitle} | Descubra-nos`
       }}>
       <Container>
         <article>
@@ -29,8 +25,8 @@ export default function Discover() {
             <div>
               <h2>Monte a sua loja virtual sem pagar nada</h2>
               <p>
-                Seu e-commerce virtual do seu jeito e com todas as
-                funcionalidades que precisa de graça.
+                Seu e-commerce virtual do seu jeito e com todas as funcionalidades que
+                precisa de graça.
               </p>
               <Link href={'/auth/sign-in'}>
                 <IoStorefrontOutline />
@@ -78,14 +74,14 @@ export default function Discover() {
             <div>
               <h2>Relaxe e sinta-se em casa</h2>
               <p>
-                Plataforma feita de jovens moçambicanos para todos moçambicanos
-                com o objectivo de desenvolver e nutrir o espírito de
-                empreendedorismo a nível nacional.
+                Plataforma feita de jovens moçambicanos para todos moçambicanos com o
+                objectivo de desenvolver e nutrir o espírito de empreendedorismo a nível
+                nacional.
               </p>
               <span>
-                Precisa de ajuda nos primeiros passos? Pode contar conosco, veja
-                a secção de contacto no rodapé ou acesse o nosso blog para
-                aprender mais sobre o e-commerce e vendas em lojas virtuais.
+                Precisa de ajuda nos primeiros passos? Pode contar conosco, veja a secção de
+                contacto no rodapé ou acesse o nosso blog para aprender mais sobre o
+                e-commerce e vendas em lojas virtuais.
               </span>
               <Link href={'/legal/about'}>
                 <IoHeartOutline />
@@ -104,14 +100,12 @@ export default function Discover() {
             <div className='wrapper'>
               <div className='pricing-container'>
                 <h2>
-                  <span>
-                    Encontre ferramentas ideais para a jornada do seu negócio
-                  </span>
+                  <span>Encontre ferramentas ideais para a jornada do seu negócio</span>
                 </h2>
 
                 <h3>
-                  Adira ao programa beta e crie a sua loja, não se preocupando
-                  com limites de vendas, produtos ou visitas:{' '}
+                  Adira ao programa beta e crie a sua loja, não se preocupando com limites
+                  de vendas, produtos ou visitas:{' '}
                 </h3>
 
                 <div className='plans-container'>

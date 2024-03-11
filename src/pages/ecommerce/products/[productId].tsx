@@ -5,7 +5,7 @@ import ShareProducts from '@/components/modals/ShareProductModal';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import Categories from '@/data/product-categories.json';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import ErrorPage from '@/pages/error-page';
@@ -75,8 +75,7 @@ export default function Product({ product, error_message }: any) {
       });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -96,8 +95,7 @@ export default function Product({ product, error_message }: any) {
       });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -162,9 +160,7 @@ export default function Product({ product, error_message }: any) {
   if (!product)
     return (
       <ErrorPage
-        message={
-          error_message || 'Não foi possível carregar os dados do produto'
-        }
+        message={error_message || 'Não foi possível carregar os dados do produto'}
         retryFn={router.reload}
       />
     );
@@ -172,7 +168,7 @@ export default function Product({ product, error_message }: any) {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | ${product.name}`,
+        title: `${constants.defaultTitle} | ${product.name}`,
         createdAt: product?.createdAt,
         updatedAt: product?.updatedAt
       }}>
@@ -186,58 +182,46 @@ export default function Product({ product, error_message }: any) {
         <div className='wrapper-container'>
           <aside>
             <div className='images-container'>
-              {state.publicProduct.images &&
-                Object.values(product.images).length > 0 && (
-                  <ReactImageGallery
-                    lazyLoad={true}
-                    useBrowserFullscreen={true}
-                    additionalClass='navigator'
-                    autoPlay={false}
-                    showPlayButton={false}
-                    showThumbnails={
-                      innerWidth < 445
-                        ? Object.values(state.publicProduct.images).length >= 2
-                          ? true
-                          : false
-                        : true
-                    }
-                    thumbnailPosition={innerWidth > 445 ? 'left' : 'bottom'}
-                    items={Object.values(state.publicProduct.images).map(
-                      (image) => ({
-                        thumbnail: image.url,
-                        original: image.url
-                      })
-                    )}
-                    renderRightNav={(onClick, disabled) => (
-                      <button
-                        className='nav-right'
-                        onClick={onClick}
-                        disabled={disabled}>
-                        <IoChevronForward />
-                      </button>
-                    )}
-                    renderLeftNav={(onClick, disabled) => (
-                      <button
-                        className='nav-left'
-                        onClick={onClick}
-                        disabled={disabled}>
-                        <IoChevronBack />
-                      </button>
-                    )}
-                    renderFullscreenButton={(onClick, isFullScreen) => (
-                      <button className='nav-fullscreen' onClick={onClick}>
-                        {isFullScreen ? <IoContract /> : <IoScan />}
-                      </button>
-                    )}
-                  />
-                )}
+              {state.publicProduct.images && Object.values(product.images).length > 0 && (
+                <ReactImageGallery
+                  lazyLoad={true}
+                  useBrowserFullscreen={true}
+                  additionalClass='navigator'
+                  autoPlay={false}
+                  showPlayButton={false}
+                  showThumbnails={
+                    innerWidth < 445
+                      ? Object.values(state.publicProduct.images).length >= 2
+                        ? true
+                        : false
+                      : true
+                  }
+                  thumbnailPosition={innerWidth > 445 ? 'left' : 'bottom'}
+                  items={Object.values(state.publicProduct.images).map((image) => ({
+                    thumbnail: image.url,
+                    original: image.url
+                  }))}
+                  renderRightNav={(onClick, disabled) => (
+                    <button className='nav-right' onClick={onClick} disabled={disabled}>
+                      <IoChevronForward />
+                    </button>
+                  )}
+                  renderLeftNav={(onClick, disabled) => (
+                    <button className='nav-left' onClick={onClick} disabled={disabled}>
+                      <IoChevronBack />
+                    </button>
+                  )}
+                  renderFullscreenButton={(onClick, isFullScreen) => (
+                    <button className='nav-fullscreen' onClick={onClick}>
+                      {isFullScreen ? <IoContract /> : <IoScan />}
+                    </button>
+                  )}
+                />
+              )}
 
               {!product.images ||
                 (Object.values(product.images).length < 1 && (
-                  <IoBagHandle
-                    title='Produto sem imagem'
-                    className='no-image-icon'
-                  />
+                  <IoBagHandle title='Produto sem imagem' className='no-image-icon' />
                 ))}
             </div>
 
@@ -283,9 +267,7 @@ export default function Product({ product, error_message }: any) {
                     className='favorite-button'
                     onClick={() => {
                       if (!state.auth?.id) return requestLogin();
-                      if (
-                        state.publicProduct.favorites.includes(state.auth?.id)
-                      )
+                      if (state.publicProduct.favorites.includes(state.auth?.id))
                         return handleUnFavoriteProduct(state.publicProduct._id);
                       return handleFavoriteProduct(state.publicProduct._id);
                     }}>
@@ -324,16 +306,13 @@ export default function Product({ product, error_message }: any) {
                         whileHover={{ scale: 1.05 }}
                         onClick={() =>
                           state.cart.some(
-                            (product) =>
-                              product.productId === state.publicProduct._id
+                            (product) => product.productId === state.publicProduct._id
                           )
                             ? updateCartProduct({
                                 productId: state.publicProduct._id,
                                 quantity:
-                                  geCartProduct(state.publicProduct._id)
-                                    .quantity > 1
-                                    ? geCartProduct(state.publicProduct._id)
-                                        .quantity - 1
+                                  geCartProduct(state.publicProduct._id).quantity > 1
+                                    ? geCartProduct(state.publicProduct._id).quantity - 1
                                     : 1
                               })
                             : addProductToCart({
@@ -343,18 +322,13 @@ export default function Product({ product, error_message }: any) {
                                 price: state.publicProduct.promotion.status
                                   ? state.publicProduct.price -
                                     (state.publicProduct.price *
-                                      state.publicProduct.promotion
-                                        .percentage) /
+                                      state.publicProduct.promotion.percentage) /
                                       100
                                   : state.publicProduct.price,
                                 previewImage: state.publicProduct.images
                                   ? {
-                                      id: Object.values(
-                                        state.publicProduct.images
-                                      )[0]?.id,
-                                      url: Object.values(
-                                        state.publicProduct.images
-                                      )[0]?.url
+                                      id: Object.values(state.publicProduct.images)[0]?.id,
+                                      url: Object.values(state.publicProduct.images)[0]?.url
                                     }
                                   : undefined
                               })
@@ -369,8 +343,7 @@ export default function Product({ product, error_message }: any) {
                         value={geCartProduct(state.publicProduct._id).quantity}
                         onChange={(e) =>
                           state.cart.some(
-                            (product) =>
-                              product.productId === state.publicProduct._id
+                            (product) => product.productId === state.publicProduct._id
                           )
                             ? updateCartProduct({
                                 productId: state.publicProduct._id,
@@ -383,18 +356,13 @@ export default function Product({ product, error_message }: any) {
                                 price: state.publicProduct.promotion.status
                                   ? state.publicProduct.price -
                                     (state.publicProduct.price *
-                                      state.publicProduct.promotion
-                                        .percentage) /
+                                      state.publicProduct.promotion.percentage) /
                                       100
                                   : state.publicProduct.price,
                                 previewImage: state.publicProduct.images
                                   ? {
-                                      id: Object.values(
-                                        state.publicProduct.images
-                                      )[0]?.id,
-                                      url: Object.values(
-                                        state.publicProduct.images
-                                      )[0]?.url
+                                      id: Object.values(state.publicProduct.images)[0]?.id,
+                                      url: Object.values(state.publicProduct.images)[0]?.url
                                     }
                                   : undefined
                               })
@@ -405,14 +373,12 @@ export default function Product({ product, error_message }: any) {
                         whileHover={{ scale: 1.05 }}
                         onClick={() =>
                           state.cart.some(
-                            (product) =>
-                              product.productId === state.publicProduct._id
+                            (product) => product.productId === state.publicProduct._id
                           )
                             ? updateCartProduct({
                                 productId: state.publicProduct._id,
                                 quantity:
-                                  geCartProduct(state.publicProduct._id)
-                                    .quantity + 1
+                                  geCartProduct(state.publicProduct._id).quantity + 1
                               })
                             : addProductToCart({
                                 productId: state.publicProduct._id,
@@ -421,18 +387,13 @@ export default function Product({ product, error_message }: any) {
                                 price: state.publicProduct.promotion.status
                                   ? state.publicProduct.price -
                                     (state.publicProduct.price *
-                                      state.publicProduct.promotion
-                                        .percentage) /
+                                      state.publicProduct.promotion.percentage) /
                                       100
                                   : state.publicProduct.price,
                                 previewImage: state.publicProduct.images
                                   ? {
-                                      id: Object.values(
-                                        state.publicProduct.images
-                                      )[0]?.id,
-                                      url: Object.values(
-                                        state.publicProduct.images
-                                      )[0]?.url
+                                      id: Object.values(state.publicProduct.images)[0]?.id,
+                                      url: Object.values(state.publicProduct.images)[0]?.url
                                     }
                                   : undefined
                               })
@@ -449,8 +410,7 @@ export default function Product({ product, error_message }: any) {
                       onClick={() => {
                         if (
                           !state.cart.some(
-                            (product) =>
-                              product.productId === state.publicProduct._id
+                            (product) => product.productId === state.publicProduct._id
                           )
                         ) {
                           addProductToCart({
@@ -465,12 +425,8 @@ export default function Product({ product, error_message }: any) {
                               : state.publicProduct.price,
                             previewImage: state.publicProduct.images
                               ? {
-                                  id: Object.values(
-                                    state.publicProduct.images
-                                  )[0]?.id,
-                                  url: Object.values(
-                                    state.publicProduct.images
-                                  )[0]?.url
+                                  id: Object.values(state.publicProduct.images)[0]?.id,
+                                  url: Object.values(state.publicProduct.images)[0]?.url
                                 }
                               : undefined
                           });
@@ -487,8 +443,7 @@ export default function Product({ product, error_message }: any) {
                       className='add-to-cart_button'
                       onClick={() =>
                         state.cart.some(
-                          (product) =>
-                            product.productId === state.publicProduct._id
+                          (product) => product.productId === state.publicProduct._id
                         )
                           ? removeProductFromCart(state.publicProduct._id)
                           : addProductToCart({
@@ -503,19 +458,14 @@ export default function Product({ product, error_message }: any) {
                                 : state.publicProduct.price,
                               previewImage: state.publicProduct.images
                                 ? {
-                                    id: Object.values(
-                                      state.publicProduct.images
-                                    )[0]?.id,
-                                    url: Object.values(
-                                      state.publicProduct.images
-                                    )[0]?.url
+                                    id: Object.values(state.publicProduct.images)[0]?.id,
+                                    url: Object.values(state.publicProduct.images)[0]?.url
                                   }
                                 : undefined
                             })
                       }>
                       {state.cart.some(
-                        (product) =>
-                          product.productId === state.publicProduct._id
+                        (product) => product.productId === state.publicProduct._id
                       ) ? (
                         <>
                           <IoCheckmark />
@@ -562,7 +512,7 @@ export default function Product({ product, error_message }: any) {
                       background: '#fff',
                       border: `3px solid rgba(${theme.primary}, 0.9)`
                     }}
-                    value={`${complements.websiteUrl}/ecommerce/products/${product._id}`}
+                    value={`${constants.websiteUrl}/ecommerce/products/${product._id}`}
                   />
                 </div>
               </section>
@@ -600,9 +550,7 @@ export default function Product({ product, error_message }: any) {
                   {state.publicProduct.specifications.includes('\n') ? (
                     state.publicProduct.specifications
                       .split('\n')
-                      .map((phrase, index) => (
-                        <p key={String(index)}>{phrase}</p>
-                      ))
+                      .map((phrase, index) => <p key={String(index)}>{phrase}</p>)
                   ) : (
                     <p>{state.publicProduct.specifications}</p>
                   )}
@@ -624,12 +572,10 @@ export default function Product({ product, error_message }: any) {
                 <div>
                   <h3>
                     <span>
-                      <i>Publicado em:</i>{' '}
-                      {formatDate(state.publicProduct.createdAt)}
+                      <i>Publicado em:</i> {formatDate(state.publicProduct.createdAt)}
                     </span>
                   </h3>
-                  {state.publicProduct.updatedAt !==
-                    state.publicProduct.createdAt && (
+                  {state.publicProduct.updatedAt !== state.publicProduct.createdAt && (
                     <h3>
                       <span>
                         <i>Última atualização:</i>{' '}
@@ -654,9 +600,9 @@ export default function Product({ product, error_message }: any) {
                 </h3>
 
                 <p>
-                  Zelamos pela segurança dos usuários e clientes na plataforma,
-                  se notou algo estranho ou suspeito, não exite em fazer uma
-                  denúncia, o denunciado não saberá a sua identidade.
+                  Zelamos pela segurança dos usuários e clientes na plataforma, se notou
+                  algo estranho ou suspeito, não exite em fazer uma denúncia, o denunciado
+                  não saberá a sua identidade.
                 </p>
                 <div>
                   <p>
@@ -672,7 +618,7 @@ export default function Product({ product, error_message }: any) {
                   </p>
                   <Link
                     className='denounce-anchor'
-                    href={`/denounce?url=${complements.websiteUrl.concat(
+                    href={`/denounce?url=${constants.websiteUrl.concat(
                       router.asPath
                     )}&type=product&id=${state.publicProduct._id}`}>
                     <IoAlertCircle />
@@ -700,8 +646,8 @@ export default function Product({ product, error_message }: any) {
                   <div className='location'>
                     <p>
                       Localizada em{' '}
-                      <span>{state.publicProduct.store.location.country}</span>{' '}
-                      - <span>{state.publicProduct.store.location.state}</span>
+                      <span>{state.publicProduct.store.location.country}</span> -{' '}
+                      <span>{state.publicProduct.store.location.state}</span>
                       <span>
                         {state.publicProduct.store.location.address
                           ? `, ${state.publicProduct.store.location.address}`
@@ -710,8 +656,7 @@ export default function Product({ product, error_message }: any) {
                     </p>
                   </div>
                 </section>
-                <Link
-                  href={`/community/store/${state.publicProduct.store._id}`}>
+                <Link href={`/community/store/${state.publicProduct.store._id}`}>
                   <IoPaperPlane />
                   <span>Visitar loja</span>
                 </Link>
@@ -732,10 +677,7 @@ export default function Product({ product, error_message }: any) {
             </section>
 
             {state.publicProduct.allow_comments ? (
-              <Comments
-                key={state.publicProduct._id}
-                contentId={state.publicProduct._id}
-              />
+              <Comments key={state.publicProduct._id} contentId={state.publicProduct._id} />
             ) : (
               <div className='no-comments-message'>
                 <h3>
@@ -758,9 +700,7 @@ export async function getStaticPaths() {
   const productIdList = await fetch({
     method: 'get',
     url: '/api/v1/users/products/public'
-  }).then((res) =>
-    res.data.map((item: any) => ({ params: { productId: item._id } }))
-  );
+  }).then((res) => res.data.map((item: any) => ({ params: { productId: item._id } })));
   return { paths: productIdList, fallback: false };
 }
 
@@ -776,8 +716,7 @@ export async function getStaticProps({ params: { productId } }: any) {
     return {
       props: {
         error_message:
-          (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+          (error as HttpError).response?.data?.message || (error as HttpError).message
       },
       revalidate: 10
     };

@@ -1,5 +1,5 @@
 import { useAppContext } from '@/context/AppContext';
-import { blurDataUrlImage } from '@/data/data';
+import { blurDataUrlImage } from '@/data/constants';
 import { actions } from '@/shared/actions';
 import { HttpError } from '@/types';
 import Image from 'next/image';
@@ -44,8 +44,7 @@ export default function NewsLetter() {
       setError({
         status: true,
         message:
-          (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+          (error as HttpError).response?.data?.message || (error as HttpError).message
       });
     } finally {
       setLoading(false);
@@ -79,8 +78,8 @@ export default function NewsLetter() {
         <div>
           <p>
             Receba um e-mail por semana, com as mais relevantes notícias sobre o
-            desenvolvimento da nossa plataforma, dicas sobre e-commerce, novos
-            produtos e algumas coisinhas a mais.
+            desenvolvimento da nossa plataforma, dicas sobre e-commerce, novos produtos e
+            algumas coisinhas a mais.
           </p>
 
           <form onSubmit={(e) => e.preventDefault()}>
@@ -108,9 +107,7 @@ export default function NewsLetter() {
               </>
             )}
 
-            {error.status && (
-              <span className='error-message'>{error.message}</span>
-            )}
+            {error.status && <span className='error-message'>{error.message}</span>}
             {loading && !error.status && (
               <>
                 <PulseLoader

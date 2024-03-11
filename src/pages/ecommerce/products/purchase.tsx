@@ -3,12 +3,7 @@ import NewsLetter from '@/components/Newsletter';
 import renderPaymentInputs from '@/components/RenderPaymentMethodInputs';
 import SelectContainer from '@/components/Select';
 import { useAppContext } from '@/context/AppContext';
-import {
-  blurDataUrlImage,
-  complements,
-  payment_options,
-  states
-} from '@/data/data';
+import { blurDataUrlImage, constants, payment_options, states } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _purchase as Container } from '@/styles/common/purchase';
@@ -71,9 +66,7 @@ export default function Purchase() {
           }
         }
       });
-      router.push(
-        `/ecommerce/products/purchase-finalization?order=${order_id}&code=${order_code}`
-      );
+      router.push(`/ecommerce/products/checkout?order=${order_id}&code=${order_code}`);
     } catch (error) {
       console.error((error as HttpError).response?.data?.message || error);
     }
@@ -82,7 +75,7 @@ export default function Purchase() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Pagamento de Produtos`,
+        title: `${constants.defaultTitle} | Pagamento de Produtos`,
         updatedAt: new Date().toISOString(),
         createdAt: new Date().toISOString()
       }}>
@@ -130,9 +123,7 @@ export default function Purchase() {
                       </p>
                       <p>
                         <>Subtotal </>
-                        <span>
-                          {formatCurrency(product.price * product.quantity)}
-                        </span>
+                        <span>{formatCurrency(product.price * product.quantity)}</span>
                       </p>
                     </div>
                   </div>
@@ -148,8 +139,7 @@ export default function Purchase() {
                   {formatCurrency(
                     state.cart.reduce(
                       (accumulator, currentProduct) =>
-                        (accumulator +=
-                          currentProduct.price * currentProduct.quantity),
+                        (accumulator += currentProduct.price * currentProduct.quantity),
 
                       0
                     )
@@ -166,9 +156,9 @@ export default function Purchase() {
                 </h2>
                 <p>
                   <strong>
-                    Por favor, tenha cautela e atenção ao inserir as
-                    informações, de modo a evitar invalidação de encomenda
-                    (taxada) ou complicações na entrega da sua encomenda.
+                    Por favor, tenha cautela e atenção ao inserir as informações, de modo a
+                    evitar invalidação de encomenda (taxada) ou complicações na entrega da
+                    sua encomenda.
                   </strong>
                 </p>
               </div>
@@ -346,9 +336,7 @@ export default function Purchase() {
                       placeholder='Quaisquer informações complementares ou relativas a sua encomenda'
                       aria-label='Quaisquer informações complementares ou relativas a sua encomenda'
                       onChange={(e) =>
-                        e.target.value.length > 512
-                          ? undefined
-                          : handleChange(e)
+                        e.target.value.length > 512 ? undefined : handleChange(e)
                       }
                       value={state.checkout.order_notes}
                       maxLength={512}
@@ -386,11 +374,7 @@ export default function Purchase() {
                         name={option.type}
                         id={String(index)}
                         value={option.type}
-                        checked={
-                          state.checkout.payment.type === option.type
-                            ? true
-                            : false
-                        }
+                        checked={state.checkout.payment.type === option.type ? true : false}
                         onChange={(e) =>
                           dispatch({
                             type: actions.PURCHASE_CHECKOUT_DATA,
@@ -418,11 +402,7 @@ export default function Purchase() {
                           key={String(index)}
                           src={option.image}
                           className={option.type}
-                          alt={String.prototype.concat(
-                            option.label,
-                            ' ',
-                            'logo'
-                          )}
+                          alt={String.prototype.concat(option.label, ' ', 'logo')}
                           width={600}
                           height={85}
                         />

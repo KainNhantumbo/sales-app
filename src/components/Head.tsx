@@ -1,14 +1,11 @@
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import Head from 'next/head';
 import type { HeadProps } from '../types';
 
 export default function CustomHead(props: HeadProps) {
   return (
     <Head>
-      <meta
-        name='apple-mobile-web-app-title'
-        content={complements.defaultTitle}
-      />
+      <meta name='apple-mobile-web-app-title' content={constants.defaultTitle} />
       <meta
         name='viewport'
         content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'
@@ -25,26 +22,23 @@ export default function CustomHead(props: HeadProps) {
       <meta property='og:type' content='website' />
       <meta name='theme-color' content='#fff' />
       <meta httpEquiv='Content-Type' content='text/html; charset=UTF-8' />
-      <link rel='canonical' href={complements.websiteUrl} />
-      <meta property='og:url' content={complements.websiteUrl} />
-      <meta property='og:site_name' content={complements.websiteName} />
+      <link rel='canonical' href={constants.websiteUrl} />
+      <meta property='og:url' content={constants.websiteUrl} />
+      <meta property='og:site_name' content={constants.websiteName} />
       <meta
         name='robots'
         content='follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large'
       />
-      <meta property='og:description' content={complements.description} />
-      <meta
-        property='og:title'
-        content={props?.title || complements.defaultTitle}
-      />
+      <meta property='og:description' content={constants.description} />
+      <meta property='og:title' content={props?.title || constants.defaultTitle} />
       <meta property='og:created_time' content={props?.createdAt} />
       <meta property='og:updated_time' content={props?.updatedAt} />
       <meta property='article:published_time' content={props?.createdAt} />
       <meta property='article:modified_time' content={props?.updatedAt} />
-      <meta name='author' content={complements.websiteName} />
+      <meta name='author' content={constants.websiteName} />
       <meta name='tags' content={props?.tags || ''} />
-      <meta name='description' content={complements.description} />
-      <title>{props?.title || complements.defaultTitle}</title>
+      <meta name='description' content={constants.description} />
+      <title>{props?.title || constants.defaultTitle}</title>
     </Head>
   );
 }

@@ -2,7 +2,7 @@ import Layout from '@/components/Layout';
 import SearchEngine from '@/components/SearchEngine';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import { blurDataUrlImage, complements } from '@/data/data';
+import { blurDataUrlImage, constants } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _home as Container } from '@/styles/common/home';
@@ -39,13 +39,8 @@ interface Props {
 }
 
 export default function Home({ ads_data }: Props) {
-  const {
-    state,
-    dispatch,
-    addProductToCart,
-    removeProductFromCart,
-    httpClient
-  } = useAppContext();
+  const { state, dispatch, addProductToCart, removeProductFromCart, httpClient } =
+    useAppContext();
   const { requestLogin } = useModulesContext();
   const theme = useTheme();
   const LIMIT: number = 12;
@@ -73,8 +68,7 @@ export default function Home({ ads_data }: Props) {
       });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -98,8 +92,7 @@ export default function Home({ ads_data }: Props) {
       });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -107,8 +100,7 @@ export default function Home({ ads_data }: Props) {
   const fetchPublicProducts = async ({
     pageParam = 0
   }): Promise<{ data: PublicProducts[]; currentOffset: number }> => {
-    const { category, price_range, promotion, query, sort } =
-      state.queryPublicProducts;
+    const { category, price_range, promotion, query, sort } = state.queryPublicProducts;
 
     const queryParams = new URLSearchParams({
       search: query,
@@ -116,8 +108,7 @@ export default function Home({ ads_data }: Props) {
       offset: Number(LIMIT * pageParam) ? String(LIMIT * pageParam) : '',
       limit: String(LIMIT),
       max_price: Number(price_range) ? String(price_range) : '',
-      promotion:
-        promotion !== undefined ? String(Number(promotion)) : String(0),
+      promotion: promotion !== undefined ? String(Number(promotion)) : String(0),
       sort
     });
 
@@ -187,7 +178,7 @@ export default function Home({ ads_data }: Props) {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Produtos e Serviços`
+        title: `${constants.defaultTitle} | Produtos e Serviços`
       }}>
       <Container>
         <div className='content-wrapper'>
@@ -229,18 +220,12 @@ export default function Home({ ads_data }: Props) {
                     originalAlt: `Imagem de ${asset.name}`
                   }))}
                   renderRightNav={(onClick, disabled) => (
-                    <button
-                      className='nav-right'
-                      onClick={onClick}
-                      disabled={disabled}>
+                    <button className='nav-right' onClick={onClick} disabled={disabled}>
                       <IoChevronForward />
                     </button>
                   )}
                   renderLeftNav={(onClick, disabled) => (
-                    <button
-                      className='nav-left'
-                      onClick={onClick}
-                      disabled={disabled}>
+                    <button className='nav-left' onClick={onClick} disabled={disabled}>
                       <IoChevronBack />
                     </button>
                   )}
@@ -283,11 +268,7 @@ export default function Home({ ads_data }: Props) {
                         translateY: -8,
                         boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`
                       }}
-                      ref={
-                        state.publicProducts.length === index + 1
-                          ? ref
-                          : undefined
-                      }>
+                      ref={state.publicProducts.length === index + 1 ? ref : undefined}>
                       <div className='product-image'>
                         {item.promotion.status && (
                           <span className='promotion'>
@@ -315,25 +296,20 @@ export default function Home({ ads_data }: Props) {
                           aria-label='Adicionar ao carrinho'
                           className='cart-button'
                           onClick={() => {
-                            state.cart.some(
-                              (product) => product.productId === item._id
-                            )
+                            state.cart.some((product) => product.productId === item._id)
                               ? removeProductFromCart(item._id)
                               : addProductToCart({
                                   productId: item._id,
                                   productName: item.name,
                                   price: item.promotion.status
                                     ? item.price -
-                                      (item.price * item.promotion.percentage) /
-                                        100
+                                      (item.price * item.promotion.percentage) / 100
                                     : item.price,
                                   quantity: 1,
                                   previewImage: item.image
                                 });
                           }}>
-                          {state.cart.some(
-                            (product) => product.productId === item._id
-                          ) ? (
+                          {state.cart.some((product) => product.productId === item._id) ? (
                             <IoCart />
                           ) : (
                             <IoCartOutline />
@@ -373,8 +349,7 @@ export default function Home({ ads_data }: Props) {
                               <span className='actual-price'>
                                 {formatCurrency(
                                   item.price -
-                                    (item.price * item.promotion.percentage) /
-                                      100
+                                    (item.price * item.promotion.percentage) / 100
                                 )}
                               </span>
                             </h4>
@@ -428,9 +403,7 @@ export default function Home({ ads_data }: Props) {
               {!hasNextPage &&
                 !isLoading &&
                 !isError &&
-                state.publicProducts.length > 0 && (
-                  <p>Sem mais produtos para mostrar.</p>
-                )}
+                state.publicProducts.length > 0 && <p>Sem mais produtos para mostrar.</p>}
             </div>
 
             {state.publicProducts.length > 0 && (
@@ -454,8 +427,7 @@ export async function getServerSideProps() {
     return { props: { ads_data: data } };
   } catch (error) {
     console.error(
-      (error as HttpError).response?.data?.message ||
-        (error as HttpError).message
+      (error as HttpError).response?.data?.message || (error as HttpError).message
     );
     return { props: { ads_data: [] } };
   }

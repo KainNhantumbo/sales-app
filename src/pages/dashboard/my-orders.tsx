@@ -3,11 +3,11 @@ import SelectContainer from '@/components/Select';
 import SideBarAds from '@/components/SidaBarAds';
 import { useAppContext } from '@/context/AppContext';
 import {
-  complements,
+  constants,
   orderSortOptions,
   orderStatusOptions,
   order_status_labels
-} from '@/data/data';
+} from '@/data/constants';
 import { formatDate } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _myOrders as Container } from '@/styles/common/my-orders';
@@ -15,12 +15,7 @@ import { HttpError, Order } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { BsBox2, BsBox2Fill } from 'react-icons/bs';
-import {
-  IoClose,
-  IoEllipsisHorizontal,
-  IoReload,
-  IoSearch
-} from 'react-icons/io5';
+import { IoClose, IoEllipsisHorizontal, IoReload, IoSearch } from 'react-icons/io5';
 import { useInView } from 'react-intersection-observer';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
@@ -31,36 +26,29 @@ export default function MyOrders() {
   const { state, dispatch, httpClient } = useAppContext();
   const { inView, ref } = useInView();
 
-  const fetchOrders = async ({
-    pageParam = 0
-  }): Promise<{ data: Order[]; currentOffset: number }> => {
+  const fetchOrders = async ({ pageParam = 0 }) => {
+    const query = new URLSearchParams({
+      search: state.ordersQuery.search,
+      status: state.ordersQuery.status,
+      sort: state.ordersQuery.sort,
+      offset: String(pageParam * QUERY_LIMIT),
+      limit: QUERY_LIMIT.toString()
+    });
+
     const { data } = await httpClient<Order[]>({
       method: 'get',
-      url: `/api/v1/checkout/orders?offset=${
-        pageParam * QUERY_LIMIT
-      }&limit=${QUERY_LIMIT}${
-        state.ordersQuery.search && `&search=${state.ordersQuery.search}`
-      }${state.ordersQuery.status && `&status=${state.ordersQuery.status}`}${
-        state.ordersQuery.sort && `&sort=${state.ordersQuery.sort}`
-      }`
+      url: `/api/v1/checkout/orders?${query.toString()}`
     });
     return { data, currentOffset: pageParam + 1 };
   };
 
-  const {
-    data,
-    error,
-    refetch,
-    isError,
-    isLoading,
-    fetchNextPage,
-    hasNextPage
-  } = useInfiniteQuery({
-    queryKey: ['user-orders'],
-    queryFn: fetchOrders,
-    getNextPageParam: (lastPage) =>
-      lastPage?.data?.length >= QUERY_LIMIT ? lastPage.currentOffset : undefined
-  });
+  const { data, error, refetch, isError, isLoading, fetchNextPage, hasNextPage } =
+    useInfiniteQuery({
+      queryKey: ['user-orders'],
+      queryFn: fetchOrders,
+      getNextPageParam: (lastPage) =>
+        lastPage?.data?.length >= QUERY_LIMIT ? lastPage.currentOffset : undefined
+    });
 
   const updateOrder = async (id: string, data: any) => {
     try {
@@ -72,8 +60,7 @@ export default function MyOrders() {
       refetch({ queryKey: ['user-orders'] });
     } catch (error) {
       console.info(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -87,16 +74,13 @@ export default function MyOrders() {
       refetch({ queryKey: ['user-orders'] });
     } catch (error) {
       console.info(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
 
   const isAnFilterActive = (): boolean => {
-    return Object.values(state.ordersQuery).some((item) =>
-      item !== '' ? true : false
-    );
+    return Object.values(state.ordersQuery).some((item) => (item !== '' ? true : false));
   };
 
   const serialiseOrderStatus = (status: string): string => {
@@ -106,10 +90,8 @@ export default function MyOrders() {
 
   useEffect(() => {
     if (data) {
-      const formattedData = data?.pages
-        .map((page) => {
-          return page.data;
-        })
+      const formattedData = data.pages
+        .map((page) => page.data)
         .reduce((accumulator, currentObj) => [...accumulator, ...currentObj]);
 
       dispatch({
@@ -130,28 +112,18 @@ export default function MyOrders() {
   }, [data]);
 
   useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage();
-    }
+    if (inView && hasNextPage) fetchNextPage();
   }, [inView, fetchNextPage, hasNextPage]);
 
   useEffect(() => {
     const debounceTime = setTimeout(() => {
       refetch({ queryKey: ['user-orders'] });
     }, 500);
-    return () => {
-      clearTimeout(debounceTime);
-    };
+    return () => clearTimeout(debounceTime);
   }, [state.ordersQuery]);
 
   return (
-    <Layout
-      metadata={{
-        title: String.prototype.concat(
-          complements.defaultTitle,
-          ' | Minhas Encomendas'
-        )
-      }}>
+    <Layout metadata={{ title: `${constants.defaultTitle} | Minhas Encomendas` }}>
       <Container>
         <div className='wrapper-container'>
           <SideBarAds key={'favorite-products'} />
@@ -177,10 +149,7 @@ export default function MyOrders() {
                       type: actions.QUERY_ORDERS,
                       payload: {
                         ...state,
-                        ordersQuery: {
-                          ...state.ordersQuery,
-                          search: e.target.value
-                        }
+                        ordersQuery: { ...state.ordersQuery, search: e.target.value }
                       }
                     })
                   }
@@ -196,10 +165,7 @@ export default function MyOrders() {
                       type: actions.QUERY_ORDERS,
                       payload: {
                         ...state,
-                        ordersQuery: {
-                          ...state.ordersQuery,
-                          sort: String(option?.value)
-                        }
+                        ordersQuery: { ...state.ordersQuery, sort: String(option?.value) }
                       }
                     })
                   }
@@ -232,11 +198,7 @@ export default function MyOrders() {
                       type: actions.QUERY_ORDERS,
                       payload: {
                         ...state,
-                        ordersQuery: {
-                          search: '',
-                          status: '',
-                          sort: ''
-                        }
+                        ordersQuery: { search: '', status: '', sort: '' }
                       }
                     })
                   }>
@@ -273,28 +235,19 @@ export default function MyOrders() {
                       </div>
                       <div className='details-container'>
                         <p>
-                          País:{' '}
-                          <span>
-                            {order.order_costumer.user_location.country}
-                          </span>
+                          País: <span>{order.order_costumer.user_location.country}</span>
                         </p>
                         <p>
                           Província / Estado:{' '}
-                          <span>
-                            {order.order_costumer.user_location.state}
-                          </span>
+                          <span>{order.order_costumer.user_location.state}</span>
                         </p>
                         <p>
                           Código Postal:{' '}
-                          <span>
-                            {order.order_costumer.user_location.zip_code}
-                          </span>
+                          <span>{order.order_costumer.user_location.zip_code}</span>
                         </p>
                         <p>
                           Endereço:{' '}
-                          <span>
-                            {order.order_costumer.user_location.address}
-                          </span>
+                          <span>{order.order_costumer.user_location.address}</span>
                         </p>
                         {order.order_costumer.user_notes &&
                         order.order_costumer.user_notes.includes('\n') ? (
@@ -304,8 +257,8 @@ export default function MyOrders() {
                             </h3>
                             {order.order_costumer.user_notes
                               .split('\n')
-                              .map((pharase, index) => (
-                                <p key={String(index)}>{pharase}</p>
+                              .map((phrase, index) => (
+                                <p key={String(index)}>{phrase}</p>
                               ))}
                           </div>
                         ) : (
@@ -326,7 +279,7 @@ export default function MyOrders() {
                       </div>
                     </section>
                     <section className='base-container'>
-                      <button onClick={() => {}}></button>
+                      {/* <button onClick={() => {}}></button> */}
                       <button onClick={() => deleteOrder(order._id)}>
                         Eliminar encomenda
                       </button>
@@ -338,9 +291,9 @@ export default function MyOrders() {
 
             <div className='stats-container'>
               {isError && !isLoading && state.orders.length > 0 && (
-                <div className=' fetch-error-message '>
+                <div className='fetch-error-message'>
                   <h3>
-                    {(error as any)?.response?.data?.message ||
+                    {(error as HttpError).response?.data?.message ||
                       'Erro ao carregar os dados'}
                   </h3>
                   <button onClick={() => fetchNextPage()}>
@@ -363,10 +316,9 @@ export default function MyOrders() {
                 </div>
               )}
 
-              {!hasNextPage &&
-                !isLoading &&
-                !isError &&
-                state.orders.length > 0 && <p>Sem mais dados para mostrar</p>}
+              {!hasNextPage && !isLoading && !isError && state.orders.length > 0 && (
+                <p>Sem mais dados para mostrar</p>
+              )}
             </div>
             {state.orders.length > 0 && (
               <div className='container-items__end-mark'>

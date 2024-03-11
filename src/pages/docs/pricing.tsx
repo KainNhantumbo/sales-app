@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout';
-import { complements, pricing_data } from '@/data/data';
+import { constants, pricing_data } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';
 import { _pricing as Container } from '@/styles/common/pricing';
 import { motion } from 'framer-motion';
@@ -13,18 +13,13 @@ export default function Pricing() {
   return (
     <Layout
       metadata={{
-        title: String.prototype.concat(complements.defaultTitle, ' | Preçário')
+        title: String.prototype.concat(constants.defaultTitle, ' | Preçário')
       }}>
       <Container>
         <article>
           <section className='introdution-container'>
-            <h1>
-              Quanto custa ter uma loja integrada na {complements.defaultTitle}?
-            </h1>
-            <p>
-              Confira nossos planos e preços e, comece o seu negócio em poucos
-              minutos.
-            </p>
+            <h1>Quanto custa ter uma loja integrada na {constants.defaultTitle}?</h1>
+            <p>Confira nossos planos e preços e, comece o seu negócio em poucos minutos.</p>
           </section>
 
           <section className='pricing'>
@@ -63,45 +58,44 @@ export default function Pricing() {
 
           <section className='body-container'>
             <h2>
-              <span>Por que escolher a {complements.defaultTitle}?</span>
+              <span>Por que escolher a {constants.defaultTitle}?</span>
             </h2>
             <p>
-              A {complements.defaultTitle} é uma ótima opção de plataforma de
-              e-commerce estável, segura e completa que oferece toda a estrutura
-              necessária para estabelecer o seu espaço comercial na internet.
-              Além disso, tem outras vantagens. Confira a seguir:
+              A {constants.defaultTitle} é uma ótima opção de plataforma de e-commerce
+              estável, segura e completa que oferece toda a estrutura necessária para
+              estabelecer o seu espaço comercial na internet. Além disso, tem outras
+              vantagens. Confira a seguir:
             </p>
 
             <div>
               <h3>Sem limite de visitas, produtos ou vendas</h3>
               <p>
-                Monte a sua loja virtual integrada sem pagar mensalidade e sem
-                custos por venda.
+                Monte a sua loja virtual integrada sem pagar mensalidade e sem custos por
+                venda.
               </p>
             </div>
             <div>
               <h3>É fácil de configurar</h3>
               <p>
-                São apenas alguns passos para você começar a vender: crie a sua
-                conta, configure a sua loja, adicione os seus produtos e escolha
-                o plano de subscrição (Gratuito para começar). E já está: tudo
-                preparado para começar a vender.
+                São apenas alguns passos para você começar a vender: crie a sua conta,
+                configure a sua loja, adicione os seus produtos e escolha o plano de
+                subscrição (Gratuito para começar). E já está: tudo preparado para começar a
+                vender.
               </p>
             </div>
             <div>
               <h3>Todas as suas vendas em um único lugar</h3>
               <p>
-                Acompanhe as suas vendas e seus resultados pelo nosso painel de
-                controle e entenda o que está indo bem e o que precisa de mais
-                atenção na sua loja.
+                Acompanhe as suas vendas e seus resultados pelo nosso painel de controle e
+                entenda o que está indo bem e o que precisa de mais atenção na sua loja.
               </p>
             </div>
             <div>
               <h3>A ajuda que você precisa</h3>
               <p>
-                Conte com o nosso suporte humanizado no momento que você
-                precisar ou então explore os nossos tutoriais em nosso blog para
-                satisfazer todas as suas dúvidas.
+                Conte com o nosso suporte humanizado no momento que você precisar ou então
+                explore os nossos tutoriais em nosso blog para satisfazer todas as suas
+                dúvidas.
               </p>
             </div>
           </section>

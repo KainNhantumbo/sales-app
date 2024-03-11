@@ -2,7 +2,7 @@ import Layout from '@/components/Layout';
 import NewsLetter from '@/components/Newsletter';
 import SearchComponent from '@/components/SearchBlogPosts';
 import { useAppContext } from '@/context/AppContext';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { getPosts } from '@/lib/queries';
 import { formatDate } from '@/lib/utils';
 import { actions } from '@/shared/actions';
@@ -42,20 +42,13 @@ export default function BlogSearch() {
     return { data, currentOffset: pageParam + 1 };
   };
 
-  const {
-    data,
-    refetch,
-    fetchNextPage,
-    error,
-    hasNextPage,
-    isLoading,
-    isError
-  } = useInfiniteQuery({
-    queryKey: ['blog-posts-search'],
-    queryFn: fetchPosts,
-    getNextPageParam: (lastPage) =>
-      lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
-  });
+  const { data, refetch, fetchNextPage, error, hasNextPage, isLoading, isError } =
+    useInfiniteQuery({
+      queryKey: ['blog-posts-search'],
+      queryFn: fetchPosts,
+      getNextPageParam: (lastPage) =>
+        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
+    });
 
   useEffect(() => {
     if (data) {
@@ -102,7 +95,7 @@ export default function BlogSearch() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Pesquisa de Postagens`
+        title: `${constants.defaultTitle} | Pesquisa de Postagens`
       }}>
       <Container>
         <div className='main-container'>
@@ -157,9 +150,7 @@ export default function BlogSearch() {
                     key={post._id}
                     className={'post'}
                     href={`/blog/post/${post.slug}`}
-                    ref={
-                      state.blogPostsList.length === index + 1 ? ref : undefined
-                    }>
+                    ref={state.blogPostsList.length === index + 1 ? ref : undefined}>
                     <>
                       <Image
                         width={3000}
@@ -185,10 +176,7 @@ export default function BlogSearch() {
                         </div>
                         <h3>{post.title}</h3>
                         <p>{post.excerpt}</p>
-                        <button
-                          onClick={() =>
-                            router.push(`/blog/post/${post.slug}`)
-                          }>
+                        <button onClick={() => router.push(`/blog/post/${post.slug}`)}>
                           <div>
                             <IoArrowForwardOutline />
                             <span>Continuar leitura</span>

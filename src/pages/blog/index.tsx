@@ -3,7 +3,7 @@ import Layout from '@/components/Layout';
 import NewsLetter from '@/components/Newsletter';
 import SearchComponent from '@/components/SearchBlogPosts';
 import { useAppContext } from '@/context/AppContext';
-import { blurDataUrlImage, complements } from '@/data/data';
+import { blurDataUrlImage, constants } from '@/data/constants';
 import { getPosts } from '@/lib/queries';
 import { formatDate } from '@/lib/utils';
 import { actions } from '@/shared/actions';
@@ -42,13 +42,12 @@ export default function Blog() {
     return { data, currentOffset: pageParam + 1 };
   }
 
-  const { data, fetchNextPage, hasNextPage, isLoading, isError } =
-    useInfiniteQuery({
-      queryKey: ['blog-posts'],
-      queryFn: fetchPosts,
-      getNextPageParam: (lastPage) =>
-        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
-    });
+  const { data, fetchNextPage, hasNextPage, isLoading, isError } = useInfiniteQuery({
+    queryKey: ['blog-posts'],
+    queryFn: fetchPosts,
+    getNextPageParam: (lastPage) =>
+      lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
+  });
 
   useEffect(() => {
     if (data) {
@@ -82,19 +81,19 @@ export default function Blog() {
   }, [inView, fetchNextPage, hasNextPage]);
 
   return (
-    <Layout metadata={{ title: complements.defaultTitle + ' | Blog' }}>
+    <Layout metadata={{ title: constants.defaultTitle + ' | Blog' }}>
       <Container>
         <section className='banner-container'>
           <div className='wrapper'>
             <div className='title'>
-              <h1>Blog da {complements.defaultTitle}</h1>
+              <h1>Blog da {constants.defaultTitle}</h1>
               <p>
                 <strong>
-                  Explore idéias, conceitos e dicas que possam ajudar a
-                  alavancar o seu negócio.
+                  Explore idéias, conceitos e dicas que possam ajudar a alavancar o seu
+                  negócio.
                 </strong>{' '}
-                Ainda não tem uma loja? Monte hoje mesmo uma loja virtual do seu
-                jeito e com todas funcionalidades que você precisa de graça!
+                Ainda não tem uma loja? Monte hoje mesmo uma loja virtual do seu jeito e com
+                todas funcionalidades que você precisa de graça!
               </p>
               <Link href={'/auth/sign-in'}>
                 <IoStorefrontOutline />
@@ -133,9 +132,7 @@ export default function Blog() {
                   key={post._id}
                   className={'post'}
                   href={`/blog/post/${post.slug}`}
-                  ref={
-                    state.blogPostsList.length === index + 1 ? ref : undefined
-                  }>
+                  ref={state.blogPostsList.length === index + 1 ? ref : undefined}>
                   <>
                     <Image
                       width={3000}
@@ -161,8 +158,7 @@ export default function Blog() {
                       </div>
                       <h3>{post.title}</h3>
                       <p>{post.excerpt}</p>
-                      <button
-                        onClick={() => router.push(`/blog/post/${post.slug}`)}>
+                      <button onClick={() => router.push(`/blog/post/${post.slug}`)}>
                         <div>
                           <IoArrowForwardOutline />
                           <span>Continuar leitura</span>

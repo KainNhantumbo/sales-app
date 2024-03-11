@@ -1,7 +1,7 @@
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { actions } from '@/shared/actions';
 import { _storiesRender as Container } from '@/styles/modules/stories-renderer';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -32,8 +32,7 @@ interface Props {
 }
 
 export default function StoriesRenderer(props: Props) {
-  const { state, dispatch, httpClient, deleteStoryPromptController } =
-    useAppContext();
+  const { state, dispatch, httpClient, deleteStoryPromptController } = useAppContext();
   const { requestLogin } = useModulesContext();
   const LIMIT: number = 8;
   const router = useRouter();
@@ -45,9 +44,7 @@ export default function StoriesRenderer(props: Props) {
   }): Promise<{ data: PublicStory[]; currentOffset: number }> => {
     const { data } = await fetch<PublicStory[]>({
       method: 'get',
-      url: `/api/v1/users/stories${
-        props.userId ? `?userId=${props.userId}` : ''
-      }${
+      url: `/api/v1/users/stories${props.userId ? `?userId=${props.userId}` : ''}${
         props.favoritesId
           ? props.userId
             ? `&favoritesId=${props.favoritesId}`
@@ -76,8 +73,7 @@ export default function StoriesRenderer(props: Props) {
       refetch({ queryKey: ['user-stories'] });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -101,8 +97,7 @@ export default function StoriesRenderer(props: Props) {
       });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -126,8 +121,7 @@ export default function StoriesRenderer(props: Props) {
       });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -182,9 +176,7 @@ export default function StoriesRenderer(props: Props) {
               <span>Nenhuma história para mostrar</span>
             </h3>
             {state.searchStories.length > 0 ? (
-              <p>
-                A sua pesquisa não teve resultados. Tente um termo diferente.
-              </p>
+              <p>A sua pesquisa não teve resultados. Tente um termo diferente.</p>
             ) : (
               <p>Crie algumas histórias para começar.</p>
             )}
@@ -199,9 +191,7 @@ export default function StoriesRenderer(props: Props) {
               <div
                 key={String(story._id)}
                 className='story-container'
-                ref={
-                  state.publicStories.length === index + 1 ? ref : undefined
-                }>
+                ref={state.publicStories.length === index + 1 ? ref : undefined}>
                 <div className='header-container'>
                   <div
                     className='profile-image-container'
@@ -240,9 +230,7 @@ export default function StoriesRenderer(props: Props) {
                   {story.content.includes('\n') ? (
                     story.content
                       .split('\n')
-                      .map((phrase, index) => (
-                        <p key={String(index)}>{phrase}</p>
-                      ))
+                      .map((phrase, index) => <p key={String(index)}>{phrase}</p>)
                   ) : (
                     <p>{story.content}</p>
                   )}
@@ -269,9 +257,7 @@ export default function StoriesRenderer(props: Props) {
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.8 }}
-                        onClick={() =>
-                          router.push(`/community/story/${story._id}`)
-                        }>
+                        onClick={() => router.push(`/community/story/${story._id}`)}>
                         <FaEdit />
                         <span>Editar</span>
                       </motion.button>
@@ -279,9 +265,7 @@ export default function StoriesRenderer(props: Props) {
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.8 }}
-                        onClick={() =>
-                          deleteStoryPromptController(true, story._id)
-                        }>
+                        onClick={() => deleteStoryPromptController(true, story._id)}>
                         <BsTrash />
                         <span>Apagar</span>
                       </motion.button>
@@ -317,7 +301,7 @@ export default function StoriesRenderer(props: Props) {
                         whileTap={{ scale: 0.8 }}
                         onClick={() =>
                           router.push(
-                            `/denounce?url=${complements.websiteUrl.concat(
+                            `/denounce?url=${constants.websiteUrl.concat(
                               router.asPath
                             )}&type=story&id=${story._id}`
                           )
@@ -357,10 +341,9 @@ export default function StoriesRenderer(props: Props) {
           </div>
         ) : null}
 
-        {!hasNextPage &&
-          !isLoading &&
-          !isError &&
-          state.publicStories.length > 0 && <p>Chegou ao fim</p>}
+        {!hasNextPage && !isLoading && !isError && state.publicStories.length > 0 && (
+          <p>Chegou ao fim</p>
+        )}
       </div>
     </Container>
   );

@@ -2,7 +2,7 @@ import backgroundImage from '@/../public/assets/africa-unveiled.png';
 import Layout from '@/components/Layout';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { actions } from '@/shared/actions';
 import { _signIn as Container } from '@/styles/common/sign-in';
 import { Auth, HttpError, InputEvents, SubmitEvent } from '@/types';
@@ -76,7 +76,7 @@ export default function SignIn() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Acessar Conta de Usuário`,
+        title: `${constants.defaultTitle} | Acessar Conta de Usuário`,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       }}>
@@ -165,7 +165,7 @@ export default function SignIn() {
           </article>
         </main>
         <section className='base-container'>
-          &copy; {complements.defaultTitle} |{' '}
+          &copy; {constants.defaultTitle} |{' '}
           <Link href={'/legal/privacy'}>
             <span>Política de Privacidade</span>
           </Link>

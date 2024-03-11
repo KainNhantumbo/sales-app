@@ -1,7 +1,7 @@
 import rubymart_logo from '@/../public/rubymart_logo.png';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import { urls } from '@/data/data';
+import { urls } from '@/data/constants';
 import { _header as Container } from '@/styles/modules/header';
 import { AnimatePresence, m as motion } from 'framer-motion';
 import Image from 'next/image';
@@ -26,8 +26,7 @@ export default function Header() {
 
   const toggleMenu = () => setIsMenu(!isMenu);
 
-  const changeWidth = () =>
-    window.innerWidth > 770 ? setIsMenu(true) : setIsMenu(false);
+  const changeWidth = () => (window.innerWidth > 770 ? setIsMenu(true) : setIsMenu(false));
 
   useEffect(() => {
     changeWidth();
@@ -42,12 +41,7 @@ export default function Header() {
       <div className='wrapper'>
         <div className='logo'>
           <Link href={'/'}>
-            <Image
-              alt='Rubymart'
-              src={rubymart_logo}
-              width={600}
-              height={134}
-            />{' '}
+            <Image alt='Rubymart' src={rubymart_logo} width={600} height={134} />{' '}
           </Link>
         </div>
         <AnimatePresence>
@@ -68,9 +62,7 @@ export default function Header() {
                     key={index.toString()}
                     href={item.url}
                     className={asPath.includes(item.alias) ? 'active' : ''}>
-                    <motion.span whileHover={{ scale: 1.1 }}>
-                      {item.name}
-                    </motion.span>
+                    <motion.span whileHover={{ scale: 1.1 }}>{item.name}</motion.span>
                   </Link>
                 ))}
               </section>
@@ -124,10 +116,7 @@ export default function Header() {
                     <span>Conta</span>
                   </button>
                 ) : (
-                  <button
-                    title='Sair'
-                    className='user-logout'
-                    onClick={logoutUser}>
+                  <button title='Sair' className='user-logout' onClick={logoutUser}>
                     <IoLogOutOutline />
                     <span>Terminar sessão</span>
                   </button>

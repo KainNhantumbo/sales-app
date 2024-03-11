@@ -3,7 +3,7 @@ import Layout from '@/components/Layout';
 import NewsLetter from '@/components/Newsletter';
 import SearchStores from '@/components/SearchPublicStores';
 import { useAppContext } from '@/context/AppContext';
-import { blurDataUrlImage, complements } from '@/data/data';
+import { blurDataUrlImage, constants } from '@/data/constants';
 import { geStoresData } from '@/lib/queries';
 import { formatDate } from '@/lib/utils';
 import { actions } from '@/shared/actions';
@@ -44,13 +44,12 @@ export default function Stores() {
     return { data, currentOffset: pageParam + 1 };
   };
 
-  const { data, fetchNextPage, hasNextPage, isFetching, isError } =
-    useInfiniteQuery({
-      queryKey: ['stores-data'],
-      queryFn: fetchData,
-      getNextPageParam: (lastPage) =>
-        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
-    });
+  const { data, fetchNextPage, hasNextPage, isFetching, isError } = useInfiniteQuery({
+    queryKey: ['stores-data'],
+    queryFn: fetchData,
+    getNextPageParam: (lastPage) =>
+      lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
+  });
 
   useEffect(() => {
     if (data) {
@@ -84,8 +83,7 @@ export default function Stores() {
   }, [inView, fetchNextPage, hasNextPage]);
 
   return (
-    <Layout
-      metadata={{ title: complements.defaultTitle + ' | Lojas Integradas' }}>
+    <Layout metadata={{ title: constants.defaultTitle + ' | Lojas Integradas' }}>
       <Container>
         <section className='banner-container'>
           <div className='wrapper'>
@@ -93,11 +91,10 @@ export default function Stores() {
               <h1>Lojas Integradas</h1>
               <p>
                 <strong>
-                  Conheça as lojas por trás dos produtos encontrados na nossa
-                  plataforma.
+                  Conheça as lojas por trás dos produtos encontrados na nossa plataforma.
                 </strong>{' '}
-                Ainda não tem uma loja? Monte hoje mesmo uma loja virtual do seu
-                jeito e com todas funcionalidades que você precisa de graça!
+                Ainda não tem uma loja? Monte hoje mesmo uma loja virtual do seu jeito e com
+                todas funcionalidades que você precisa de graça!
               </p>
               <Link href={'/auth/sign-in'}>
                 <IoStorefrontOutline />
@@ -136,11 +133,7 @@ export default function Stores() {
                   key={store._id}
                   className={'store'}
                   href={`/community/store/${store._id}`}
-                  ref={
-                    state.publicStoresList.length === index + 1
-                      ? ref
-                      : undefined
-                  }>
+                  ref={state.publicStoresList.length === index + 1 ? ref : undefined}>
                   <>
                     <h2 className='store-name'>
                       <strong>{store.name}</strong>
@@ -163,10 +156,7 @@ export default function Stores() {
                     </div>
 
                     <p>{store.description}</p>
-                    <button
-                      onClick={() =>
-                        router.push(`/community/store/${store._id}`)
-                      }>
+                    <button onClick={() => router.push(`/community/store/${store._id}`)}>
                       <div>
                         <IoArrowForwardOutline />
                         <span>Visitar Loja</span>

@@ -260,7 +260,7 @@ export default function AppContext(props: Props) {
 
   async function httpClient<T>(config: AxiosRequestConfig) {
     fetch.interceptors.response.use(undefined, (error: AxiosError): Promise<never> => {
-      const status = Number(error?.response?.status);
+      const status = Number(error.status);
       if (status > 400 && status < 404) {
         validateAuth().catch((error) => {
           console.error(

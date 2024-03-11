@@ -1,9 +1,9 @@
 import Layout from '@/components/Layout';
 import { useAppContext } from '@/context/AppContext';
-import { complements, order_status_labels } from '@/data/data';
+import { constants, order_status_labels } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';
-import { _purchaseFinalization as Container } from '@/styles/common/purchase-finalization';
-import { Order } from '@/types';
+import { _checkout as Container } from '@/styles/common/checkout';
+import type { Order, OrderSummary } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -13,21 +13,7 @@ import { IoCart, IoChevronBack, IoReload } from 'react-icons/io5';
 import { DotLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
-type OrderSummary = {
-  order_code: string;
-  order_id: string;
-  order_amount: number;
-  order_status:
-    | 'aknowledged'
-    | 'delivered'
-    | 'returned'
-    | 'progress'
-    | 'cancelled'
-    | 'pending-payment';
-  user_name: string;
-};
-
-export default function OrderFinalization() {
+export default function Checkout() {
   const { httpClient } = useAppContext();
   const theme = useTheme();
   const router = useRouter();
@@ -35,11 +21,11 @@ export default function OrderFinalization() {
     order_code: '',
     order_id: '',
     order_amount: 0,
-    order_status: 'aknowledged',
+    order_status: 'pending',
     user_name: ''
   });
 
-  const geOrder = async () => {
+  const getOrder = async () => {
     const { data } = await httpClient<Order>({
       method: 'get',
       url: `/api/v1/checkout/orders/${router.query['order']}`
@@ -60,8 +46,8 @@ export default function OrderFinalization() {
   };
 
   const { data, isError, isLoading, error } = useQuery({
-    queryKey: ['purchase-finalization'],
-    queryFn: geOrder
+    queryKey: ['checkout'],
+    queryFn: getOrder
   });
 
   const serialiseOrderStatus = (status: string): string => {
@@ -78,7 +64,7 @@ export default function OrderFinalization() {
         order_code: '',
         order_id: '',
         order_amount: 0,
-        order_status: 'aknowledged',
+        order_status: 'pending',
         user_name: ''
       });
     };
@@ -87,17 +73,13 @@ export default function OrderFinalization() {
   return (
     <Layout
       metadata={{
-        title: String.prototype.concat(
-          complements.defaultTitle,
-          ' | Finalização de Compra'
-        )
+        title: `${constants.defaultTitle}  | Finalização de Compra`
       }}>
       <Container>
         {!isLoading && isError && (
           <section className='fetching-state'>
             <h3>
-              {(error as any)?.response?.message ||
-                'Erro durante o carregamento de dados.'}
+              {(error as any)?.response?.message || 'Erro durante o carregamento de dados.'}
             </h3>
             <button onClick={() => router.reload()}>
               <IoReload />
@@ -142,8 +124,7 @@ export default function OrderFinalization() {
                     Nome do Proprietário: <i>{order.user_name}</i>
                   </p>
                   <p>
-                    Estado do Processo:{' '}
-                    <i>{serialiseOrderStatus(order.order_status)}</i>
+                    Estado do Processo: <i>{serialiseOrderStatus(order.order_status)}</i>
                   </p>
                   <p>Total a pagar: {formatCurrency(order.order_amount)}</p>
                 </div>

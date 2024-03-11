@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout';
 import fetch from '@/config/client';
-import { complements } from '@/data/data';
+import { constants } from '@/data/constants';
 import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
 import { HttpError, InputEvents, SubmitEvent } from '@/types';
 import Link from 'next/link';
@@ -43,14 +43,12 @@ export default function UpdatePassword() {
       });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
       setError({
         status: true,
         message:
-          (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+          (error as HttpError).response?.data?.message || (error as HttpError).message
       });
     } finally {
       setLoading(false);
@@ -67,7 +65,7 @@ export default function UpdatePassword() {
   return (
     <Layout
       metadata={{
-        title: `${complements.defaultTitle} | Atualização de Senha`,
+        title: `${constants.defaultTitle} | Atualização de Senha`,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       }}>
@@ -77,8 +75,7 @@ export default function UpdatePassword() {
             <div className='form-container'>
               <h2>Criar uma nova senha</h2>
               <p>
-                A sua nova senha deve ser diferente das senhas utilizadas
-                anteriormente.
+                A sua nova senha deve ser diferente das senhas utilizadas anteriormente.
               </p>
               <form onSubmit={handleSubmit}>
                 <section className='input-field'>
@@ -142,7 +139,7 @@ export default function UpdatePassword() {
           </article>
         </main>
         <section className='base-container'>
-          &copy; {complements.defaultTitle} |{' '}
+          &copy; {constants.defaultTitle} |{' '}
           <Link href={'/legal/privacy'}>
             <span>Política de Privacidade</span>
           </Link>
