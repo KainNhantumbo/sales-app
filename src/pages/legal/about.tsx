@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout';
-import NewsLetter from '@/components/Newsletter';
+import { NewsLetter } from '@/components/Newsletter';
 import { constants } from '@/data/constants';
 import { _about as Container } from '@/styles/common/about';
 import { motion } from 'framer-motion';
@@ -31,12 +31,12 @@ const core_habits: Array<{ phrase: string; paragraph: string }> = [
       'Interaja e faça progresso almejando a perfeição. Adote uma mentalidade de sucesso.'
   },
   {
-    phrase: 'Actos aleatórios de bondade',
+    phrase: 'Atos aleatórios de bondade',
     paragraph: 'Seja um líquido positivo.'
   }
 ];
 
-export default function About() {
+export default function Page() {
   const theme = useTheme();
   return (
     <Layout metadata={{ title: constants.defaultTitle + ' | Sobre nós' }}>
@@ -48,7 +48,7 @@ export default function About() {
               maravilhoso Moçambique.
             </h1>
             <h2>
-              Projecto feito por jovens empreendedores moçambicanos para contribuir o
+              Projeto feito por jovens empreendedores moçambicanos para contribuir o
               desenvolvimento da economia e do espaço tecnológico moçambicano.
             </h2>
             <div className='mozambique-colors' />

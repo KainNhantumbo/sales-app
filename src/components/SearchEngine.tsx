@@ -7,9 +7,9 @@ import { BiSortAlt2 } from 'react-icons/bi';
 import { IoCartOutline, IoClose, IoFilter, IoGift, IoLayersOutline } from 'react-icons/io5';
 import Categories from '../data/product-categories.json';
 import { _searchEngine as Container } from '../styles/modules/search-engine';
-import SelectContainer from './Select';
+import {SelectContainer} from './Select';
 
-export default function SearchEngine() {
+export function SearchEngine() {
   const { state, dispatch } = useAppContext();
   const [innerWidth, setInnerWidth] = useState<number>(0);
 

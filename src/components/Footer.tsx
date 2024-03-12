@@ -18,7 +18,7 @@ import { m as motion } from 'framer-motion';
 import Link from 'next/link';
 import { _footer as Container } from '../styles/modules/footer';
 
-export default function Footer() {
+export  function Footer() {
   const { state } = useAppContext();
   const { colorScheme, changeColorScheme } = useThemeContext();
 

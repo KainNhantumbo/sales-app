@@ -1,14 +1,8 @@
-import {
-  createContext,
-  useContext,
-  ReactNode,
-  useState,
-  useEffect
-} from 'react';
-import { Theme, ColorScheme } from '../types';
-import { GlobalStyles } from '../styles/global';
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
+import { GlobalStyles } from '../styles/global';
 import { dark_default, light_default } from '../styles/themes';
+import { ColorScheme, Theme } from '../types';
 
 type Context = {
   colorScheme: ColorScheme;
@@ -22,7 +16,7 @@ const context = createContext<Context>({
   changeColorScheme: () => {}
 });
 
-export default function ThemeContext({ children }: Props) {
+export function ThemeContext({ children }: Props) {
   const [currentTheme, setCurrentTheme] = useState<Theme>(light_default);
   const [colorScheme, setColorScheme] = useState<ColorScheme>({
     mode: 'auto',
@@ -77,8 +71,7 @@ export default function ThemeContext({ children }: Props) {
 
   useEffect((): void => {
     const colorScheme: ColorScheme = JSON.parse(
-      localStorage.getItem('color-scheme') ||
-        `{"mode": "auto", "scheme": "light"}`
+      localStorage.getItem('color-scheme') || `{"mode": "auto", "scheme": "light"}`
     );
     setColorScheme(colorScheme);
   }, []);

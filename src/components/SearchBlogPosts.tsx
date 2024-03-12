@@ -4,7 +4,7 @@ import { _search as Container } from '@/styles/modules/search-form';
 import { useRouter } from 'next/router';
 import { IoSearch } from 'react-icons/io5';
 
-export default function SearchComponent() {
+export function SearchComponent() {
   const { state, dispatch } = useAppContext();
   const router = useRouter();
 

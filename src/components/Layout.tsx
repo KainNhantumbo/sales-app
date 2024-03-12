@@ -1,7 +1,7 @@
-import Header from './Header';
-import Footer from './Footer';
-import Cart from './modals/Cart';
-import PageLoader from './PageLoader';
+import { Header } from './Header';
+import { Footer } from './Footer';
+import { Cart } from './modals/Cart';
+import {LoadingIndicator} from './PageLoader';
 import { ReactNode, useEffect } from 'react';
 import { HeadProps } from '../types/index';
 import { useRouter } from 'next/router';
@@ -33,12 +33,10 @@ export default function Layout({ children, metadata }: Props) {
       <Metadata {...metadata} />
       <Header />
       <main>
-        <PromptModal
-          key={state.prompt.title.split(' ').join('') || undefined}
-        />
+        <PromptModal key={state.prompt.title.split(' ').join('') || undefined} />
         <Cart />
         <CookiesPopup />
-        <PageLoader />
+        <LoadingIndicator />
         {children}
       </main>
       <Footer />

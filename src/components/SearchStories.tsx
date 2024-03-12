@@ -3,7 +3,7 @@ import { actions } from '@/shared/actions';
 import { _search as Container } from '@/styles/modules/search-form';
 import { IoClose } from 'react-icons/io5';
 
-export default function SearchStories() {
+export function SearchStories() {
   const { state, dispatch } = useAppContext();
   return (
     <Container>

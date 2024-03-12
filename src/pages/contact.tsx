@@ -7,7 +7,7 @@ import { BiEnvelope, BiMailSend } from 'react-icons/bi';
 import Layout from '../components/Layout';
 import { InputEvents, SubmitEvent } from '../types';
 
-export default function Contact() {
+export default function Page() {
   const [messageStatus, setMessageStatus] = useState(
     'Receberá a resposta para o seu e-mail assim que possível.'
   );

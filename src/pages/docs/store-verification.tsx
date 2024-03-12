@@ -3,7 +3,7 @@ import { constants } from '@/data/constants';
 import { _legal as Container } from '@/styles/common/legal';
 import Link from 'next/link';
 
-export default function StoreVerification() {
+export default function Page() {
   return (
     <Layout metadata={{ title: constants.defaultTitle + ' | Verificação de Loja' }}>
       <Container>

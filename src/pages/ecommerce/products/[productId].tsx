@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout';
-import NewsLetter from '@/components/Newsletter';
-import Comments from '@/components/comments/Comments';
-import ShareProducts from '@/components/modals/ShareProductModal';
+import { NewsLetter } from '@/components/Newsletter';
+import { Comments } from '@/components/comments/Comments';
+import { ShareProducts } from '@/components/modals/ShareProductModal';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
@@ -44,7 +44,7 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import QRCode from 'react-qr-code';
 import { useTheme } from 'styled-components';
 
-export default function Product({ product, error_message }: any) {
+export default function Page({ product, error_message }: any) {
   const {
     state,
     dispatch,

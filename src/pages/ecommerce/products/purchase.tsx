@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout';
-import NewsLetter from '@/components/Newsletter';
-import renderPaymentInputs from '@/components/RenderPaymentMethodInputs';
-import SelectContainer from '@/components/Select';
+import { NewsLetter } from '@/components/Newsletter';
+import { RenderPaymentInputs } from '@/components/RenderPaymentMethodInputs';
+import { SelectContainer } from '@/components/Select';
 import { useAppContext } from '@/context/AppContext';
 import { blurDataUrlImage, constants, payment_options, states } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';
@@ -26,7 +26,7 @@ import {
 } from 'react-icons/io5';
 import { useTheme } from 'styled-components';
 
-export default function Purchase() {
+export default function Page() {
   const theme = useTheme();
   const router = useRouter();
   const { state, dispatch, httpClient, cartModalController } = useAppContext();
@@ -411,7 +411,7 @@ export default function Purchase() {
                 </section>
 
                 <section className='payment-method-inputs'>
-                  {renderPaymentInputs(state.checkout.payment.type)}
+                  {RenderPaymentInputs(state.checkout.payment.type)}
                 </section>
 
                 <section className='payment-finalization-container'>

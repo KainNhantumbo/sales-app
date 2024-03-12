@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout';
 import { useAppContext } from '@/context/AppContext';
-import { constants } from '@/data/constants';
+import { DEFAULT_ERROR_MESSAGE, constants } from '@/data/constants';
 import Categories from '@/data/product-categories.json';
 import { actions } from '@/shared/actions';
 import { _productEditor as Container } from '@/styles/common/product-editor';
@@ -43,7 +43,7 @@ type TError = {
   msg: string;
 };
 
-export default function ProductEditor() {
+export default function Page() {
   const theme = useTheme();
   const router = useRouter();
   const { state, httpClient, dispatch } = useAppContext();
@@ -201,7 +201,7 @@ export default function ProductEditor() {
         msg:
           (error as HttpError).response?.data?.message ||
           (error as HttpError).message ||
-          'Oops! Algo deu errado. Tente novamente.'
+          DEFAULT_ERROR_MESSAGE
       });
     } finally {
       setLoading({ status: false });
@@ -243,7 +243,7 @@ export default function ProductEditor() {
         msg:
           (error as HttpError).response?.data?.message ||
           (error as HttpError).message ||
-          'Oops! Algo deu errado. Tente novamente.'
+          DEFAULT_ERROR_MESSAGE
       });
     } finally {
       setLoading({ status: false });

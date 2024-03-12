@@ -19,7 +19,7 @@ import {
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
-export default function SignUp() {
+export default function Page() {
   const router = useRouter();
   const theme = useTheme();
   const { state, dispatch } = useAppContext();

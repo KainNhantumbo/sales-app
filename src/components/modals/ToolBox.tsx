@@ -1,11 +1,11 @@
-import { motion } from 'framer-motion';
-import { HiPlus } from 'react-icons/hi';
 import { useAppContext } from '@/context/AppContext';
-import { BiSortAlt2, BiSearch } from 'react-icons/bi';
-import { useRouter } from 'next/router';
 import { _toolbar as Container } from '@/styles/modules/tool-bar';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
+import { BiSearch, BiSortAlt2 } from 'react-icons/bi';
+import { HiPlus } from 'react-icons/hi';
 
-export default function ToolBox() {
+export function ToolBox() {
   const router = useRouter();
   const { state, sortBoxController, searchBoxController } = useAppContext();
 

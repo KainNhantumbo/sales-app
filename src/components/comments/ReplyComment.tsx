@@ -15,7 +15,7 @@ import {
   IoHeartOutline
 } from 'react-icons/io5';
 
-export default function ReplyComment(props: TComment) {
+export function ReplyComment(props: TComment) {
   const { state, deleteCommentPromptController } = useAppContext();
   const router = useRouter();
 

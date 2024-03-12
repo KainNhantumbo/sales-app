@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout';
-import Metrics from '@/components/Metrics';
+import {Metrics} from '@/components/Metrics';
 import { useAppContext } from '@/context/AppContext';
 import { app_metadata, constants, dashboardActions } from '@/data/constants';
 import { _dashboard as Container } from '@/styles/common/dashbord';
@@ -11,7 +11,7 @@ import { BiUser } from 'react-icons/bi';
 import { IoApps, IoConstruct } from 'react-icons/io5';
 import { useTheme } from 'styled-components';
 
-export default function Dashboard() {
+export default function Page() {
   const { state } = useAppContext();
   const theme = useTheme();
   const actionRoutes: DashboardAction = dashboardActions({

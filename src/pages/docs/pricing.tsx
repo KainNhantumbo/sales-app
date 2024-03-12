@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { IoBalloonOutline } from 'react-icons/io5';
 import { useTheme } from 'styled-components';
 
-export default function Pricing() {
+export default function Page() {
   const theme = useTheme();
 
   return (

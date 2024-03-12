@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout';
-import NewsLetter from '@/components/Newsletter';
-import SearchComponent from '@/components/SearchBlogPosts';
+import {NewsLetter} from '@/components/Newsletter';
+import {SearchComponent} from '@/components/SearchBlogPosts';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
 import { getPosts } from '@/lib/queries';
@@ -26,7 +26,7 @@ import { useInView } from 'react-intersection-observer';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
-export default function BlogSearch() {
+export default function Page() {
   const LIMIT: number = 8;
   const theme = useTheme();
   const router = useRouter();

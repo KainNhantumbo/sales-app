@@ -1,12 +1,12 @@
-import { BsTrash } from 'react-icons/bs';
 import { useAppContext } from '@/context/AppContext';
-import { motion, AnimatePresence } from 'framer-motion';
-import { IoArrowBackOutline } from 'react-icons/io5';
 import { _prompt as Container } from '@/styles/modules/logout-prompt';
+import { AnimatePresence, motion } from 'framer-motion';
+import { BsTrash } from 'react-icons/bs';
+import { IoArrowBackOutline } from 'react-icons/io5';
 
 type Props = { deleteFn: any };
 
-export default function DeleteStoryPrompt(props: Props) {
+export function DeleteStoryPrompt(props: Props) {
   const { state, deleteStoryPromptController } = useAppContext();
   return (
     <AnimatePresence>
@@ -47,9 +47,7 @@ export default function DeleteStoryPrompt(props: Props) {
                 </button>
                 <button
                   className='prompt-accept'
-                  onClick={() =>
-                    props.deleteFn(state.isDeleteStoryPrompt.storyId)
-                  }>
+                  onClick={() => props.deleteFn(state.isDeleteStoryPrompt.storyId)}>
                   <BsTrash />
                   <span>Comfirmar</span>
                 </button>

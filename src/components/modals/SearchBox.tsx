@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 import { FiX } from 'react-icons/fi';
 
-export default function SearchBox() {
+export function SearchBox() {
   const [inputValue, setInputValue] = useState<string>('');
   const { state, dispatch, searchBoxController } = useAppContext();
 

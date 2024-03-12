@@ -20,7 +20,7 @@ type Props = {
   stateAction: keyof typeof actions;
 };
 
-export default function useCustomInfinityQuery<T>({
+export function useCustomInfinityQuery<T>({
   isPublicQuery,
   queryKey,
   queryLimit,
@@ -32,25 +32,18 @@ export default function useCustomInfinityQuery<T>({
   const { ref, inView } = useInView();
   const { httpClient, state, dispatch } = useAppContext();
 
-  const {
-    data,
-    fetchNextPage,
-    refetch,
-    hasNextPage,
-    isLoading,
-    isError,
-    error
-  } = useInfiniteQuery({
-    queryKey: [queryKey],
-    queryFn: async ({ pageParam = 0 }) => {
-      const { data } = isPublicQuery
-        ? await fetch<T[]>({ url: queryUrl })
-        : await httpClient<T[]>({ url: queryUrl });
-      return { data, offset: Number(pageParam) + 1 };
-    },
-    getNextPageParam: ({ data, offset }) =>
-      data.length >= queryLimit ? offset : undefined
-  });
+  const { data, fetchNextPage, refetch, hasNextPage, isLoading, isError, error } =
+    useInfiniteQuery({
+      queryKey: [queryKey],
+      queryFn: async ({ pageParam = 0 }) => {
+        const { data } = isPublicQuery
+          ? await fetch<T[]>({ url: queryUrl })
+          : await httpClient<T[]>({ url: queryUrl });
+        return { data, offset: Number(pageParam) + 1 };
+      },
+      getNextPageParam: ({ data, offset }) =>
+        data.length >= queryLimit ? offset : undefined
+    });
 
   useMemo(() => {
     if (data !== undefined) {
@@ -98,9 +91,7 @@ export async function getPaths(): Promise<any> {
   return await fetch({
     method: 'get',
     url: '/api/v1/blog/posts?fields=slug'
-  }).then((res) =>
-    res.data.map((item: any) => ({ params: { slug: item.slug } }))
-  );
+  }).then((res) => res.data.map((item: any) => ({ params: { slug: item.slug } })));
 }
 
 export async function getPosts<T>(props: QueryList) {

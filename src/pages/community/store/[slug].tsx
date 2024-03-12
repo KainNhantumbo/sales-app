@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout';
-import SideBarAds from '@/components/SidaBarAds';
+import {SideBarAds} from '@/components/SidaBarAds';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
@@ -36,7 +36,7 @@ import { useTheme } from 'styled-components';
 
 type Props = { store?: PublicStore; products: PublicProducts[] };
 
-export default function StoreProfile({ store, products }: Props) {
+export default function Page({ store, products }: Props) {
   const { state, dispatch, httpClient, addProductToCart, removeProductFromCart } =
     useAppContext();
   const { requestLogin } = useModulesContext();
@@ -167,7 +167,7 @@ export default function StoreProfile({ store, products }: Props) {
                     <motion.a
                       whileHover={{ scale: 1.2 }}
                       whileTap={{ scale: 0.8 }}
-                      href={option?.url}
+                      href={String(option?.url)}
                       title={option?.name}
                       aria-label={option?.name}
                       target={'_blank'}

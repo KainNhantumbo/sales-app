@@ -7,15 +7,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
-import {
-  IoArrowBackOutline,
-  IoLockClosedOutline,
-  IoMailOutline
-} from 'react-icons/io5';
+import { IoArrowBackOutline, IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
 
-export default function DeleteAccountPrompt() {
-  const { state, httpClient, dispatch, deleteAccountPromptController } =
-    useAppContext();
+export function DeleteAccountPrompt() {
+  const { state, httpClient, dispatch, deleteAccountPromptController } = useAppContext();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ status: false, message: '' });
@@ -137,13 +132,11 @@ export default function DeleteAccountPrompt() {
             exit={{ opacity: 0, scale: 0 }}>
             <div className='dialog-prompt'>
               <div className='prompt-info'>
-                <span className='prompt-title'>
-                  Eliminação de Conta de Usuário
-                </span>
+                <span className='prompt-title'>Eliminação de Conta de Usuário</span>
                 <div className='prompt-message'>
                   <p>
-                    Você realmente gostaria de eliminar todos os seus dados e a
-                    sua conta? Esta ação não pode ser desfeita.
+                    Você realmente gostaria de eliminar todos os seus dados e a sua conta?
+                    Esta ação não pode ser desfeita.
                   </p>
                 </div>
               </div>
@@ -182,9 +175,7 @@ export default function DeleteAccountPrompt() {
                     />
                   </section>
 
-                  {error.status && (
-                    <span className='error-message'>{error.message}</span>
-                  )}
+                  {error.status && <span className='error-message'>{error.message}</span>}
                 </form>
               </section>
               <div className='prompt-actions'>

@@ -4,7 +4,7 @@ import { _search as Container } from '@/styles/modules/search-form';
 import { useRouter } from 'next/router';
 import { IoSearch } from 'react-icons/io5';
 
-export default function SearchStores() {
+export function SearchStores() {
   const { state, dispatch } = useAppContext();
   const router = useRouter();
   return (
@@ -32,9 +32,7 @@ export default function SearchStores() {
         <button
           onClick={() => {
             if (state.searchStores.length < 1) return;
-            router.push(
-              `/ecommerce/stores/stores-search?q=${state.searchStores}`
-            );
+            router.push(`/ecommerce/stores/stores-search?q=${state.searchStores}`);
           }}>
           <IoSearch />
         </button>

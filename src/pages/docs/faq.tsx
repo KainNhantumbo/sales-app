@@ -4,16 +4,16 @@ import { _legal as Container } from '@/styles/common/legal';
 import { BsCreditCard2Front, BsTruck } from 'react-icons/bs';
 import { IoBulb, IoCogOutline, IoFootsteps } from 'react-icons/io5';
 
-export default function FAQ() {
+export default function Page() {
   return (
     <Layout
       metadata={{
-        title: constants.defaultTitle + ' | Perguntas Frequêntes'
+        title: constants.defaultTitle + ' | Perguntas Frequentes'
       }}>
       <Container>
         <article className='faq-container'>
           <section className='introdution-container'>
-            <h1>Perguntas Frequêntes</h1>
+            <h1>Perguntas Frequentes</h1>
             <p>
               O que é a {constants.defaultTitle}? Como crio minha loja com a{' '}
               {constants.defaultTitle}? Responderemos todas suas perguntas para que possa

@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
 
-export default function SignIn() {
+export default function Page() {
   const { state, dispatch } = useAppContext();
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);

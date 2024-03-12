@@ -47,7 +47,7 @@ export const _comments = styled.div`
       }
 
       .current-comment,
-      .sub-coment {
+      .sub-comment {
         display: flex;
         flex-direction: row;
         gap: 10px;
@@ -113,7 +113,7 @@ export const _comments = styled.div`
         border-left: 3px solid rgb(${({ theme }) => theme.primary_shade});
       }
 
-      .sub-coment {
+      .sub-comment {
         padding: 0;
         margin: 0;
 

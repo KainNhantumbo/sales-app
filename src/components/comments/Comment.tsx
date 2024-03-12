@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 import { BiUser } from 'react-icons/bi';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
-export default function Comment(props: TComment) {
+export function Comment(props: TComment) {
   const router = useRouter();
   const { state, deleteCommentPromptController } = useAppContext();
 

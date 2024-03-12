@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { FaEnvelopeOpenText } from 'react-icons/fa';
 import { IoMailOpen } from 'react-icons/io5';
 
-export default function ResetConfirmation() {
+export default function Page() {
   return (
     <Layout
       metadata={{

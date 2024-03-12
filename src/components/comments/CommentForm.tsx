@@ -7,12 +7,9 @@ import { BiUser } from 'react-icons/bi';
 import { MoonLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
-type Props = Omit<
-  TCommentForm,
-  'updateComment' | 'currentCommentId' | 'replyComment'
->;
+type Props = Omit<TCommentForm, 'updateComment' | 'currentCommentId' | 'replyComment'>;
 
-export default function CommentForm(props: Props) {
+export function CommentForm(props: Props) {
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
   const { requestLogin } = useModulesContext();

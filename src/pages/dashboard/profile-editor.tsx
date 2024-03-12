@@ -1,8 +1,8 @@
 import Layout from '@/components/Layout';
-import DeleteAccountPrompt from '@/components/modals/DeleteAccountPrompt';
-import WorkCapturer from '@/components/modals/WorkCapturer';
+import { DeleteAccountPrompt } from '@/components/modals/DeleteAccountPrompt';
+import { WorkCapturer } from '@/components/modals/WorkCapturer';
 import { useAppContext } from '@/context/AppContext';
-import { constants } from '@/data/constants';
+import { DEFAULT_ERROR_MESSAGE, constants } from '@/data/constants';
 import Countries from '@/data/countries.json';
 import Languages from '@/data/languages.json';
 import Skills from '@/data/professional-skills.json';
@@ -65,7 +65,7 @@ type TError = {
 
 type TLoading = { status: boolean; key: 'user-data' | 'user-update' };
 
-export default function ProfileEditor() {
+export default function Page() {
   const theme = useTheme();
   const router = useRouter();
   const {
@@ -221,7 +221,7 @@ export default function ProfileEditor() {
           msg:
             (error as HttpError).response?.data?.message ||
             (error as HttpError).message ||
-            'Oops! Algo deu errado. Tente novamente.',
+            DEFAULT_ERROR_MESSAGE,
           key: 'user-data'
         });
       })
@@ -281,7 +281,7 @@ export default function ProfileEditor() {
         msg:
           (error as HttpError).response?.data?.message ||
           (error as HttpError).message ||
-          'Oops! Algo deu errado. Tente novamente.',
+          DEFAULT_ERROR_MESSAGE,
         key: 'user-update'
       });
     } finally {

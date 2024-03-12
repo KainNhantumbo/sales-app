@@ -1,7 +1,7 @@
-import 'moment/locale/pt-br';
+import { AppContext } from '@/context/AppContext';
 import '@/styles/global.css';
+import 'moment/locale/pt-br';
 import type { AppProps } from 'next/app';
-import AppContext from '@/context/AppContext';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

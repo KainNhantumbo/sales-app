@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout';
-import SelectContainer from '@/components/Select';
-import SideBarAds from '@/components/SidaBarAds';
+import { SelectContainer } from '@/components/Select';
+import { SideBarAds } from '@/components/SidaBarAds';
 import { useAppContext } from '@/context/AppContext';
 import {
   constants,

@@ -15,8 +15,8 @@ import {
   useReducer,
   type ReactNode
 } from 'react';
-import ModulesContext from './Modules';
-import ThemeContext from './ThemeContext';
+import {ModulesContext} from './Modules';
+import {ThemeContext} from './ThemeContext';
 
 const queryClient: QueryClient = new QueryClient({
   defaultOptions: { queries: { networkMode: 'always' } }
@@ -70,7 +70,7 @@ const context = createContext<Context>({
   })
 });
 
-export default function AppContext(props: Props) {
+export function AppContext(props: Props) {
   const CART_KEY: string = 'cart-items';
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);

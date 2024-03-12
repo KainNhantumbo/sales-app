@@ -17,7 +17,7 @@ const context = createContext<Context>({
   requestLogin: () => {}
 });
 
-export default function ModulesContext(props: Props) {
+export function ModulesContext(props: Props) {
   const router = useRouter();
   const { state, dispatch, httpClient } = useAppContext();
 

@@ -2,7 +2,7 @@ import Layout from '@/components/Layout';
 import { constants } from '@/data/constants';
 import { _legal as Container } from '@/styles/common/legal';
 
-export default function CodeOfConduct() {
+export default function Page() {
   return (
     <Layout metadata={{ title: constants.defaultTitle + ' | Código de Conduta' }}>
       <Container>
@@ -14,7 +14,7 @@ export default function CodeOfConduct() {
           <h2>Sumário</h2>
           <div className='resumo'>
             <p>
-              A noosa plataforma online é dedicada a fornecer uma experiência livre de
+              A nossa plataforma online é dedicada a fornecer uma experiência livre de
               assédio para todos, independentemente de gênero e identidade de gênero, idade,
               orientação sexual, deficiência, aparência física, tamanho do corpo, raça ou
               religião (ou falta dela). Não toleramos qualquer forma de assédio aos ou dos
@@ -95,7 +95,7 @@ export default function CodeOfConduct() {
             <li>Ameaças de violência física ou intelectual;</li>
             <li>
               Incitação à violência contra qualquer indivíduo, incluindo encorajar uma
-              pessoa a cometer suicídio ou se automutilar;
+              pessoa a cometer suicídio ou automutilação;
             </li>
             <li>Intimidação deliberada;</li>
             <li>Perseguir ou seguir;</li>
@@ -126,7 +126,7 @@ export default function CodeOfConduct() {
           <ul>
             <li>
               <em>'Reversos'-ismos</em>, incluindo 'racismo reverso', 'sexismo reverso' e
-              'cisfobia';
+              'xenofobia';
             </li>
             <li>
               Comunicação razoável de limites, como "me deixe em paz", "vá embora" ou "não

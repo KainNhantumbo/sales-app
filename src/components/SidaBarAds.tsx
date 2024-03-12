@@ -1,9 +1,9 @@
+import { _sidebarAds as Container } from '@/styles/modules/sidebar-ads';
 import Link from 'next/link';
 import { FaAd } from 'react-icons/fa';
 import { IoAdd } from 'react-icons/io5';
-import { _sidebarAds as Container } from '@/styles/modules/sidebar-ads';
 
-export default function SideBarAds() {
+export function SideBarAds() {
   return (
     <Container>
       <section className='no-ads'>

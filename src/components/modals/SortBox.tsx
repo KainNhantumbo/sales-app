@@ -17,7 +17,7 @@ const SortOptions = [
   { code: '-createdAt', name: 'Data de criação (desc.)' }
 ];
 
-export default function SortBox() {
+export function SortBox() {
   const { state, dispatch, sortBoxController } = useAppContext();
   return (
     <AnimatePresence>
@@ -41,10 +41,7 @@ export default function SortBox() {
                   <BiSortAlt2 />
                   <span>Ordenar por...</span>
                 </h2>
-                <button
-                  className='quit'
-                  title='Close'
-                  onClick={sortBoxController}>
+                <button className='quit' title='Close' onClick={sortBoxController}>
                   <FiX />
                 </button>
               </div>

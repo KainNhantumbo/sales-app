@@ -10,7 +10,7 @@ import { IoMailOutline } from 'react-icons/io5';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
-export default function ResetPassword() {
+export default function Page() {
   const theme = useTheme();
   const router = useRouter();
   const [email, setEmail] = useState<string>('');

@@ -9,7 +9,7 @@ import { IoLockClosedOutline, IoLockOpenOutline } from 'react-icons/io5';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
-export default function UpdatePassword() {
+export default function Page() {
   const theme = useTheme();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });

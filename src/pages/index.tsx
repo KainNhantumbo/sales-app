@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout';
-import SearchEngine from '@/components/SearchEngine';
+import {SearchEngine} from '@/components/SearchEngine';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { blurDataUrlImage, constants } from '@/data/constants';
@@ -37,7 +37,7 @@ interface Props {
   ads_data: BannerAds[];
 }
 
-export default function Home({ ads_data }: Props) {
+export default function Page({ ads_data }: Props) {
   const { state, dispatch, addProductToCart, removeProductFromCart, httpClient } =
     useAppContext();
   const { requestLogin } = useModulesContext();

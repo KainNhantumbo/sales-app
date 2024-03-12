@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { BiUserPlus } from 'react-icons/bi';
 import { IoLogInOutline } from 'react-icons/io5';
 
-export default function SignUpConfirmation() {
+export default function Page() {
   return (
     <Layout
       metadata={{

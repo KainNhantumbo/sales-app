@@ -1,8 +1,8 @@
 import Layout from '@/components/Layout';
-import SideBarAds from '@/components/SidaBarAds';
+import { SideBarAds } from '@/components/SidaBarAds';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
-import { constants } from '@/data/constants';
+import { DEFAULT_ERROR_MESSAGE, constants } from '@/data/constants';
 import { actions } from '@/shared/actions';
 import { _story as Container } from '@/styles/common/story';
 import { HttpError, PublicStory, Story } from '@/types';
@@ -22,7 +22,7 @@ import { useTheme } from 'styled-components';
 type Props = { story: PublicStory | undefined };
 type TError = { status: boolean; msg: string };
 
-export default function Story(props: Props) {
+export default function Page(props: Props) {
   const theme = useTheme();
   const router = useRouter();
   const { state, dispatch, httpClient } = useAppContext();
@@ -92,7 +92,7 @@ export default function Story(props: Props) {
         msg:
           (error as HttpError).response?.data?.message ||
           (error as HttpError).message ||
-          'Oops! Algo deu errado. Tente novamente.'
+          DEFAULT_ERROR_MESSAGE
       });
     } finally {
       setLoading(false);
@@ -115,7 +115,7 @@ export default function Story(props: Props) {
         msg:
           (error as HttpError).response?.data?.message ||
           (error as HttpError).message ||
-          'Oops! Algo deu errado. Tente novamente.'
+          DEFAULT_ERROR_MESSAGE
       });
     } finally {
       setLoading(false);
@@ -138,7 +138,7 @@ export default function Story(props: Props) {
         msg:
           (error as HttpError).response?.data?.message ||
           (error as HttpError).message ||
-          'Oops! Algo deu errado. Tente novamente.'
+          DEFAULT_ERROR_MESSAGE
       });
     } finally {
       setLoading(false);

@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout';
-import SideBarAds from '@/components/SidaBarAds';
-import StoriesRenderer from '@/components/StoriesRenderer';
+import {SideBarAds} from '@/components/SidaBarAds';
+import {StoriesRenderer} from '@/components/StoriesRenderer';
 import fetch from '@/config/client';
 import { constants, formatSocialNetwork } from '@/data/constants';
 import { formatDate } from '@/lib/utils';
@@ -24,7 +24,7 @@ import {
 
 type Props = { user: TPublicUser };
 
-export default function UserProfile({ user }: Props) {
+export default function Page({ user }: Props) {
   const router = useRouter();
 
   if (!user)
@@ -98,7 +98,7 @@ export default function UserProfile({ user }: Props) {
                         <motion.a
                           whileHover={{ scale: 1.2 }}
                           whileTap={{ scale: 0.8 }}
-                          href={option?.url}
+                          href={String(option?.url)}
                           title={option?.name}
                           aria-label={option?.name}
                           target={'_blank'}

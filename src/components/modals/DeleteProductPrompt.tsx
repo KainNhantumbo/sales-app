@@ -1,14 +1,14 @@
-import { IoIosTrash } from 'react-icons/io';
 import { useAppContext } from '@/context/AppContext';
-import { motion, AnimatePresence } from 'framer-motion';
-import { IoArrowBackOutline } from 'react-icons/io5';
 import { _prompt as Container } from '@/styles/modules/logout-prompt';
+import { AnimatePresence, motion } from 'framer-motion';
+import { IoIosTrash } from 'react-icons/io';
+import { IoArrowBackOutline } from 'react-icons/io5';
 
 type Props = {
   deleteFn: (productId: string) => Promise<void>;
 };
 
-export default function DeleteProductPrompt(props: Props) {
+export function DeleteProductPrompt(props: Props) {
   const { state, deleteProductPromptController } = useAppContext();
 
   return (
@@ -38,8 +38,8 @@ export default function DeleteProductPrompt(props: Props) {
                 <span className='prompt-title'>Eliminar Produto da Loja</span>
                 <div className='prompt-message'>
                   <p>
-                    Você realmente gostaria de eliminar permanentemente este
-                    produto da sua loja?
+                    Você realmente gostaria de eliminar permanentemente este produto da sua
+                    loja?
                   </p>
                   <p>Esta ação não pode ser desfeita.</p>
                 </div>
@@ -53,9 +53,7 @@ export default function DeleteProductPrompt(props: Props) {
                 </button>
                 <button
                   className='prompt-accept'
-                  onClick={() =>
-                    props.deleteFn(state.isDeleteProductPrompt.productId)
-                  }>
+                  onClick={() => props.deleteFn(state.isDeleteProductPrompt.productId)}>
                   <IoIosTrash />
                   <span>Eliminar</span>
                 </button>

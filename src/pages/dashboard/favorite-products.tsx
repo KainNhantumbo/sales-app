@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout';
-import SideBarAds from '@/components/SidaBarAds';
+import { SideBarAds } from '@/components/SidaBarAds';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
@@ -25,7 +25,7 @@ import { useTheme } from 'styled-components';
 
 type Props = { products: PublicProducts[] };
 
-export default function FavoriteProducts({ products }: Props) {
+export default function Page({ products }: Props) {
   const { state, dispatch, addProductToCart, removeProductFromCart, httpClient } =
     useAppContext();
   const { requestLogin } = useModulesContext();

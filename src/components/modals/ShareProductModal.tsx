@@ -12,7 +12,7 @@ type Props = {
   productId: string;
 };
 
-export default function ShareProducts({ name, category, productId }: Props) {
+export function ShareProducts({ name, category, productId }: Props) {
   const { state, shareProductController } = useAppContext();
 
   const options = [

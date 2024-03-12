@@ -1,12 +1,11 @@
 import Package from '@/../package.json';
 import authorPicture from '@/../public/assets/author.jpg';
 import mpesa_logo from '@/../public/trademarks/mpesa logo.png';
-import { BiUser, BiUserCheck } from 'react-icons/bi';
+import { BiUser } from 'react-icons/bi';
 import {
   BsBox2,
   BsBox2Heart,
   BsCreditCard2Front,
-  BsCurrencyExchange,
   BsPersonGear,
   BsPersonVideo3
 } from 'react-icons/bs';
@@ -23,18 +22,14 @@ import {
 } from 'react-icons/fa';
 import {
   IoAdd,
-  IoAnalytics,
   IoBagCheck,
   IoCard,
   IoCardOutline,
   IoCartOutline,
   IoChatbubbleEllipsesOutline,
   IoCog,
-  IoDocument,
-  IoFingerPrint,
   IoFlash,
   IoInfiniteOutline,
-  IoInformationCircleOutline,
   IoLogoFacebook,
   IoMail,
   IoMegaphoneOutline,
@@ -48,22 +43,22 @@ import type {
   Pricing,
   ShareAnchors,
   TPaymentOptions,
-  TShareUrls,
+  ShareUrls,
   TSocialNetwork
 } from '../types';
 import blurImage from './blur-data-url-image.json';
 import denounces_data from './denounce-reasons.json';
 
-const blurDataUrlImage = blurImage.data;
+export const blurDataUrlImage = blurImage.data;
 
-const author: Author = {
+export const author: Author = {
   name: Package.author.name,
   picture: authorPicture,
   description:
     'É um prazer te apresentar ao excitante mundo dos negócios, transmitindo conhecimentos que ajudarão a alcançar todo o seu potencial em sua jornada, fazendo de cada passo dado, uma experiência inovadora. Vamos trilhar este caminho juntos?'
 };
 
-const constants = {
+export const constants = {
   defaultTitle: Package.name,
   email: Package.email,
   companyName: Package.companyName,
@@ -96,14 +91,16 @@ const constants = {
   ]
 };
 
-const app_metadata = {
+export const app_metadata = {
   appName: Package.name,
   version: Package.version,
   notice: Package.notice,
   copyright: `© ${new Date().getFullYear()} ${Package.author.name}`
 };
 
-const urls = [
+export const DEFAULT_ERROR_MESSAGE = 'Oops! Algo deu errado. Tente novamente.';
+
+export const urls = [
   { name: 'Início', url: '/', alias: '+' },
   { name: 'Descobrir', url: '/ecommerce/discover', alias: 'discover' },
   { name: 'Preçário', url: '/docs/pricing', alias: 'pricing' },
@@ -112,7 +109,7 @@ const urls = [
   { name: 'Blog', url: '/blog', alias: 'blog' }
 ];
 
-const store_features = [
+export const store_features = [
   {
     title: 'Integração com meios de pagamento',
     description:
@@ -151,7 +148,7 @@ const store_features = [
   }
 ];
 
-const pricing_data: Pricing = [
+export const pricing_data: Pricing = [
   {
     title: 'Gratuito (beta)',
     type: 'Trial',
@@ -198,11 +195,11 @@ const pricing_data: Pricing = [
   }
 ];
 
-const denounceReasons = denounces_data
+export const denounceReasons = denounces_data
   .sort((a, b) => (a > b ? 1 : -1))
   .map((reason) => ({ label: reason, value: reason }));
 
-const shareUrlPaths = (props: ShareAnchors): TShareUrls[] => {
+export const shareUrlPaths = (props: ShareAnchors): ShareUrls[] => {
   return [
     {
       name: 'Compartilhe no LinkedIn',
@@ -237,7 +234,7 @@ const shareUrlPaths = (props: ShareAnchors): TShareUrls[] => {
   ].sort((a, b) => (a.name > b.name ? 1 : -1));
 };
 
-const dashboardActions = (props: { userId: string; storeId: string }) => {
+export const dashboardActions = (props: { userId: string; storeId: string }) => {
   return {
     user: {
       header: { label: 'Conta', icon: BiUser },
@@ -332,7 +329,7 @@ const dashboardActions = (props: { userId: string; storeId: string }) => {
   } as DashboardAction;
 };
 
-const states: Array<{ value: string; label: string }> = [
+export const states: Array<{ value: string; label: string }> = [
   'Cabo Delgado',
   'Gaza',
   'Inhambane',
@@ -348,12 +345,12 @@ const states: Array<{ value: string; label: string }> = [
   .sort((a, b) => (a > b ? 1 : -1))
   .map((state) => ({ value: state, label: state }));
 
-const payment_options: TPaymentOptions = [
+export const payment_options: TPaymentOptions = [
   { type: 'm-pesa', label: 'M-Pesa', image: mpesa_logo }
 ];
 
-const formatSocialNetwork = <T = TSocialNetwork>(data: T) => {
-  if (data === null || data === undefined) return undefined;
+export const formatSocialNetwork = <T = TSocialNetwork>(data: T) => {
+  if (!data) return undefined;
 
   return Object.entries(data)
     .map(([key, value]) => {
@@ -379,7 +376,7 @@ const formatSocialNetwork = <T = TSocialNetwork>(data: T) => {
     });
 };
 
-const order_status_labels: Array<{ label: string; value: string }> = [
+export const order_status_labels: Array<{ label: string; value: string }> = [
   { label: 'Entregue', value: 'delivered' },
   { label: 'Retornado', value: 'returned' },
   { label: 'Em progresso', value: 'progress' },
@@ -387,7 +384,7 @@ const order_status_labels: Array<{ label: string; value: string }> = [
   { label: 'Aguardando Pagamento', value: 'pending' }
 ];
 
-const orderSortOptions = [
+export const orderSortOptions = [
   { value: 'createdAt', label: 'Data de Criação (Invertido)' },
   { value: '-createdAt', label: 'Data de Criação' },
   { value: 'updatedAt', label: 'Data de Atualização (Invertido)' },
@@ -396,23 +393,6 @@ const orderSortOptions = [
   { value: 'invalidated', label: 'Revisão (Invertido)' }
 ].sort((a, b) => (a.label > b.label ? 1 : -1));
 
-const orderStatusOptions = order_status_labels.sort((a, b) => (a.label > b.label ? 1 : -1));
-
-export {
-  app_metadata,
-  author,
-  blurDataUrlImage,
-  constants,
-  dashboardActions,
-  denounceReasons,
-  formatSocialNetwork,
-  orderSortOptions,
-  orderStatusOptions,
-  order_status_labels,
-  payment_options,
-  pricing_data,
-  shareUrlPaths,
-  states,
-  store_features,
-  urls
-};
+export const orderStatusOptions = order_status_labels.sort((a, b) =>
+  a.label > b.label ? 1 : -1
+);

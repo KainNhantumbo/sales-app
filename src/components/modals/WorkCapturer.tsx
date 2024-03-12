@@ -36,7 +36,7 @@ interface Props {
   updateFn: (id: string) => void;
 }
 
-export default function WorkCapturer(props: Props) {
+export function WorkCapturer(props: Props) {
   const { state, userWorkingDataController } = useAppContext();
 
   return (
@@ -66,8 +66,8 @@ export default function WorkCapturer(props: Props) {
                 <div className='prompt-header'>
                   <span className='prompt-title'>Experiência Profissional</span>
                   <p className='prompt-message'>
-                    Coloque informações relevantes da sua experiência
-                    profissional para os recrutadores.
+                    Coloque informações relevantes da sua experiência profissional para os
+                    recrutadores.
                   </p>
                 </div>
 
@@ -225,9 +225,7 @@ export default function WorkCapturer(props: Props) {
                           <span>Atualizar</span>
                         </button>
                       ) : (
-                        <button
-                          className='prompt-accept'
-                          onClick={() => props.saveFn()}>
+                        <button className='prompt-accept' onClick={() => props.saveFn()}>
                           <IoCheckmark />
                           <span>Adicionar experiência</span>
                         </button>

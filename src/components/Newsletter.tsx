@@ -11,7 +11,7 @@ import newsletter_image from '../../public/assets/newsletter.png';
 import fetch from '../config/client';
 import { _newsletter as Container } from '../styles/modules/newsletter';
 
-export default function NewsLetter() {
+export function NewsLetter() {
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
@@ -20,7 +20,7 @@ export default function NewsLetter() {
     message: ''
   });
 
-  const handleEmailSubmition = async () => {
+  const handleEmailSubmission = async () => {
     try {
       setLoading(true);
       await fetch({
@@ -101,7 +101,7 @@ export default function NewsLetter() {
                     })
                   }
                 />
-                <button type='submit' onClick={handleEmailSubmition}>
+                <button type='submit' onClick={handleEmailSubmission}>
                   <span>Inscrever</span>
                 </button>
               </>

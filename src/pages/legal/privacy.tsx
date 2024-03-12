@@ -2,7 +2,7 @@ import Layout from '@/components/Layout';
 import { constants } from '@/data/constants';
 import { _legal as Container } from '@/styles/common/legal';
 
-export default function Privacy() {
+export default function Page() {
   return (
     <Layout
       metadata={{
@@ -80,7 +80,7 @@ export default function Privacy() {
             <li>
               "Leis de Proteção de Dados": significa todas as disposições legais que regulam
               o Tratamento de Dados Pessoais, incluindo, porém sem se limitar, a Lei Geral
-              de Proteção de Dados Pessoais ("LGPD").
+              de Proteção de Dados Pessoais.
             </li>
           </ul>
           <h3>Seção 2 - Uso de Dados Pessoais</h3>

@@ -1,9 +1,9 @@
 import Layout from '@/components/Layout';
-import DeleteProductPrompt from '@/components/modals/DeleteProductPrompt';
-import SearchBox from '@/components/modals/SearchBox';
-import ShareProducts from '@/components/modals/ShareProductModal';
-import SortBox from '@/components/modals/SortBox';
-import ToolBox from '@/components/modals/ToolBox';
+import { DeleteProductPrompt } from '@/components/modals/DeleteProductPrompt';
+import { SearchBox } from '@/components/modals/SearchBox';
+import { ShareProducts } from '@/components/modals/ShareProductModal';
+import { SortBox } from '@/components/modals/SortBox';
+import { ToolBox } from '@/components/modals/ToolBox';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';
@@ -29,7 +29,7 @@ import { useInView } from 'react-intersection-observer';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
-export default function Products() {
+export default function Page() {
   const {
     state,
     dispatch,

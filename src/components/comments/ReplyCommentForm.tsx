@@ -5,14 +5,14 @@ import type { TCommentForm } from '@/types/comments';
 import { MoonLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
-export default function ReplyCommentForm(props: TCommentForm) {
+export function ReplyCommentForm(props: TCommentForm) {
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
   const { logoutUser } = useModulesContext();
 
   return (
     <>
-      <section className='sub-coment'>
+      <section className='sub-comment'>
         <div className='comment-swapper'>
           <div className='text-area'>
             <textarea
@@ -41,9 +41,7 @@ export default function ReplyCommentForm(props: TCommentForm) {
                 });
               }}
             />
-            <span className='counter'>{`${
-              state.comment.content.length || 0
-            } / 512`}</span>
+            <span className='counter'>{`${state.comment.content.length || 0} / 512`}</span>
           </div>
         </div>
 
@@ -74,8 +72,7 @@ export default function ReplyCommentForm(props: TCommentForm) {
             onClick={() => {
               if (!state.auth.token) return logoutUser();
 
-              if (props.status.edit)
-                return props.updateComment(props.currentCommentId);
+              if (props.status.edit) return props.updateComment(props.currentCommentId);
 
               if (props.status.reply) return props.replyComment();
 

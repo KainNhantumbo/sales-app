@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout';
 import DeactivatePrompt from '@/components/modals/DeactivateStorePrompt';
 import { useAppContext } from '@/context/AppContext';
-import { constants } from '@/data/constants';
+import { DEFAULT_ERROR_MESSAGE, constants } from '@/data/constants';
 import countries from '@/data/countries.json';
 import Categories from '@/data/product-categories.json';
 import { actions } from '@/shared/actions';
@@ -46,7 +46,7 @@ type TError = {
   key: 'store-data' | 'store-update';
 };
 
-export default function StoreEditor() {
+export default function Page() {
   const theme = useTheme();
   const router = useRouter();
   const { state, httpClient, dispatch, deactivateStorePromptController } = useAppContext();
@@ -151,9 +151,7 @@ export default function StoreEditor() {
       console.error(error);
       setError({
         status: true,
-        msg:
-          (error as HttpError).response?.data?.message ||
-          'Oops! Algo deu errado. Tente novamente.',
+        msg: (error as HttpError).response?.data?.message || DEFAULT_ERROR_MESSAGE,
         key: 'store-data'
       });
     } finally {
@@ -187,7 +185,7 @@ export default function StoreEditor() {
         msg:
           (error as HttpError).response?.data?.message ||
           (error as HttpError).message ||
-          'Oops! Algo deu errado. Tente novamente.',
+          DEFAULT_ERROR_MESSAGE,
         key: 'store-update'
       });
     } finally {

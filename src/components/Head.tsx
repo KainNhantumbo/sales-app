@@ -2,7 +2,7 @@ import { constants } from '@/data/constants';
 import Head from 'next/head';
 import type { HeadProps } from '../types';
 
-export default function CustomHead(props: HeadProps) {
+export default function PageHead(props: HeadProps) {
   return (
     <Head>
       <meta name='apple-mobile-web-app-title' content={constants.defaultTitle} />

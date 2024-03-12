@@ -13,7 +13,7 @@ import { IoCart, IoChevronBack, IoReload } from 'react-icons/io5';
 import { DotLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
-export default function Checkout() {
+export default function Page() {
   const { httpClient } = useAppContext();
   const theme = useTheme();
   const router = useRouter();

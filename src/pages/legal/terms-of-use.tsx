@@ -2,7 +2,7 @@ import Layout from '@/components/Layout';
 import { constants } from '@/data/constants';
 import { _legal as Container } from '@/styles/common/legal';
 
-export default function TermsOfUse() {
+export default function Page() {
   return (
     <Layout metadata={{ title: constants.defaultTitle + ' | Termos de Uso' }}>
       <Container>

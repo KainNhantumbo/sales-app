@@ -24,14 +24,14 @@ import { useInView } from 'react-intersection-observer';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import { HttpError, PublicStory } from '../types';
-import DeleteStoryPrompt from './modals/DeleteStoryPrompt';
+import {DeleteStoryPrompt} from './modals/DeleteStoryPrompt';
 
 interface Props {
   userId?: string | undefined;
   favoritesId?: string | undefined;
 }
 
-export default function StoriesRenderer(props: Props) {
+export function StoriesRenderer(props: Props) {
   const { state, dispatch, httpClient, deleteStoryPromptController } = useAppContext();
   const { requestLogin } = useModulesContext();
   const LIMIT: number = 8;

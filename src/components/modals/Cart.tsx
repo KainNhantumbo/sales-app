@@ -17,7 +17,7 @@ import {
   IoRemove
 } from 'react-icons/io5';
 
-export default function Cart() {
+export function Cart() {
   const {
     state,
     cartModalController,

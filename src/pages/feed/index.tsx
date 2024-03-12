@@ -1,11 +1,11 @@
 import Layout from '@/components/Layout';
-import SearchStories from '@/components/SearchStories';
-import SideBarAds from '@/components/SidaBarAds';
-import StoriesRenderer from '@/components/StoriesRenderer';
+import {SearchStories} from '@/components/SearchStories';
+import {SideBarAds} from '@/components/SidaBarAds';
+import {StoriesRenderer} from '@/components/StoriesRenderer';
 import { constants } from '@/data/constants';
 import { _feed as Container } from '@/styles/common/feed';
 
-export default function Feed() {
+export default function Page() {
   return (
     <Layout
       metadata={{

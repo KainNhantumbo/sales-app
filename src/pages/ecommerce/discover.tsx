@@ -1,7 +1,7 @@
 import africa_culture from '@/../public/assets/africa-culture.png';
 import flying_paper from '@/../public/assets/flying paper.png';
 import Layout from '@/components/Layout';
-import NewsLetter from '@/components/Newsletter';
+import { NewsLetter } from '@/components/Newsletter';
 import { constants, pricing_data, store_features } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';
 import { _discover as Container } from '@/styles/common/discover';
@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { IoBalloonOutline, IoHeartOutline, IoStorefrontOutline } from 'react-icons/io5';
 import { useTheme } from 'styled-components';
 
-export default function Discover() {
+export default function Page() {
   const theme = useTheme();
 
   return (

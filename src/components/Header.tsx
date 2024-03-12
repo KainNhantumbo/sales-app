@@ -18,7 +18,7 @@ import {
   IoStorefrontOutline
 } from 'react-icons/io5';
 
-export default function Header() {
+export function Header() {
   const { asPath, push } = useRouter();
   const { logoutUser } = useModulesContext();
   const [isMenu, setIsMenu] = useState<boolean>(false);

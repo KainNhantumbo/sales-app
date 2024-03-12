@@ -8,11 +8,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
-import DeleteCommentPrompt from '../modals/DeleteCommentPrompt';
-import Comment from './Comment';
-import CommentForm from './CommentForm';
-import ReplyComment from './ReplyComment';
-import ReplyCommentForm from './ReplyCommentForm';
+import { DeleteCommentPrompt } from '../modals/DeleteCommentPrompt';
+import { Comment } from './Comment';
+import { CommentForm } from './CommentForm';
+import { ReplyComment } from './ReplyComment';
+import { ReplyCommentForm } from './ReplyCommentForm';
 
 type Props = { contentId: string };
 
@@ -27,10 +27,9 @@ type TLoading = {
   key: 'create-comment' | 'update-comment' | 'delete-comment';
 };
 
-export default function Comments({ contentId }: Props) {
+export function Comments({ contentId }: Props) {
   const router = useRouter();
-  const { state, dispatch, httpClient, deleteCommentPromptController } =
-    useAppContext();
+  const { state, dispatch, httpClient, deleteCommentPromptController } = useAppContext();
 
   const [loading, setLoading] = useState<TLoading>({
     status: false,
@@ -122,8 +121,7 @@ export default function Comments({ contentId }: Props) {
       clearCommentData();
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
       setError({
         status: true,
@@ -161,8 +159,7 @@ export default function Comments({ contentId }: Props) {
       clearCommentData();
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
       setError({
         status: true,
@@ -188,8 +185,7 @@ export default function Comments({ contentId }: Props) {
       getComments();
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -244,8 +240,7 @@ export default function Comments({ contentId }: Props) {
       });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -269,8 +264,7 @@ export default function Comments({ contentId }: Props) {
       });
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
     }
   };
@@ -291,8 +285,7 @@ export default function Comments({ contentId }: Props) {
       getComments();
     } catch (error) {
       console.error(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message
+        (error as HttpError).response?.data?.message || (error as HttpError).message
       );
       setError({
         status: true,

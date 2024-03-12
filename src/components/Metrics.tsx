@@ -5,13 +5,13 @@ import { _metrics as Container } from '@/styles/modules/metrics';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { BiStats } from 'react-icons/bi';
-import { Metrics } from '../types';
+import { Metrics as MetricsType } from '../types';
 
-export default function Metrics() {
+export function Metrics() {
   const { state, dispatch, httpClient } = useAppContext();
 
-  const geMetrics = async (): Promise<Metrics> => {
-    const { data } = await httpClient<Metrics>({
+  const geMetrics = async (): Promise<MetricsType> => {
+    const { data } = await httpClient<MetricsType>({
       method: 'get',
       url: `/api/v1/metrics/public`
     });
@@ -72,17 +72,12 @@ export default function Metrics() {
               <div className='element'>
                 <h4>Valor em total em produtos</h4>
                 <span>
-                  -{' '}
-                  {formatCurrency(
-                    state.metrics.products.total_price_amount_value
-                  )}
+                  - {formatCurrency(state.metrics.products.total_price_amount_value)}
                 </span>
               </div>
               <div className='element'>
                 <h4>Valor de produtos em promoção</h4>
-                <span>
-                  - {state.metrics.products.total_promotional_products}
-                </span>
+                <span>- {state.metrics.products.total_promotional_products}</span>
               </div>
             </div>
           </section>
@@ -132,9 +127,7 @@ export default function Metrics() {
               </div>
               <div className='element'>
                 <h4>Loja verificada: </h4>
-                <span>
-                  {state.metrics.store.verified_status ? 'Sim' : 'Não'}
-                </span>
+                <span>{state.metrics.store.verified_status ? 'Sim' : 'Não'}</span>
               </div>
             </div>
           </section>

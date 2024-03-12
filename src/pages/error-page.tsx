@@ -8,7 +8,7 @@ interface Props {
   retryFn: () => void;
 }
 
-export default function ErrorPage(props: Props) {
+export default function Page(props: Props) {
   return (
     <Container>
       <section className='logo-container'>

@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout';
-import SelectContainer from '@/components/Select';
+import { SelectContainer } from '@/components/Select';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { constants, denounceReasons } from '@/data/constants';
@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { IoBan, IoCheckmark, IoClose, IoEllipsisHorizontal } from 'react-icons/io5';
 
-export default function Denounce() {
+export default function Page() {
   const router = useRouter();
   const { requestLogin } = useModulesContext();
   const [msg, setMsg] = useState<string>('');

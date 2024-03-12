@@ -60,7 +60,7 @@ export type InputEvents =
 
 export type SubmitEvent = FormEvent<HTMLFormElement>;
 
-export type TShareUrls = {
+export type ShareUrls = {
   name: string;
   url: string;
   icon: IconType;

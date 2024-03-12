@@ -2,7 +2,7 @@ import { constants } from '@/data/constants';
 import { useRouter } from 'next/router';
 import { errorPage as Container } from '../styles/common/error-page';
 
-export default function InternalServerError() {
+export default function Page() {
   const router = useRouter();
   return (
     <Container>

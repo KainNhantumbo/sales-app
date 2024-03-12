@@ -1,7 +1,7 @@
 import type { TParsedContent } from '@/components/EditorJSRenderer';
 import EditorJsRenderer from '@/components/EditorJSRenderer';
 import Layout from '@/components/Layout';
-import NewsLetter from '@/components/Newsletter';
+import {NewsLetter} from '@/components/Newsletter';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { author, constants, shareUrlPaths } from '@/data/constants';
@@ -30,7 +30,7 @@ import { useTheme } from 'styled-components';
 
 type Props = { post: IBlogPost; latestPosts: Posts[] };
 
-export default function Post({ post: initialPost, latestPosts }: Props) {
+export default function Page({ post: initialPost, latestPosts }: Props) {
   const { state, httpClient } = useAppContext();
   const { requestLogin } = useModulesContext();
   const [post, setPost] = useState(initialPost);
