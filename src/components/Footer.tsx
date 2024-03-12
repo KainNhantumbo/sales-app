@@ -104,6 +104,9 @@ export default function Footer() {
               <Link href={'/contact'}>
                 <span>Contacto</span>
               </Link>
+              <Link href={'/docs/store-verification'}>
+                <span>Verificação da Loja</span>
+              </Link>
               <Link href={'/docs/faq'}>
                 <span>Perguntas frequentes</span>
               </Link>

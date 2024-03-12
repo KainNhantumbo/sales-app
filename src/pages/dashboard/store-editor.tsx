@@ -133,7 +133,7 @@ export default function StoreEditor() {
       });
   };
 
-  const geStoreData = async () => {
+  const getStoreData = async () => {
     try {
       setLoading({ status: true, key: 'store-data' });
       const { data } = await httpClient<Store>({
@@ -206,9 +206,9 @@ export default function StoreEditor() {
   useEffect(() => {
     const fetch_data = setTimeout(() => {
       if (state.auth.storeId) {
-        geStoreData();
+        getStoreData();
       }
-    }, 10);
+    }, 100);
     return () => clearTimeout(fetch_data);
   }, []);
 

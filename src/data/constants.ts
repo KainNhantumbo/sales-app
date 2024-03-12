@@ -226,7 +226,7 @@ const shareUrlPaths = (props: ShareAnchors): TShareUrls[] => {
     },
     {
       name: 'Compartilhe no Twitter',
-      url: `https://twitter.com/intent/tweet?text=${props.hostname}/blog/post/${props.slug}`,
+      url: `https://twitter.com/intent/tweet/customer-orders?text=${props.hostname}/blog/post/${props.slug}`,
       icon: FaTwitter
     },
     {
@@ -243,12 +243,12 @@ const dashboardActions = (props: { userId: string; storeId: string }) => {
       header: { label: 'Conta', icon: BiUser },
       paths: [
         {
-          label: 'Configurações da conta',
+          label: 'Configurações da Conta',
           url: '/dashboard/profile-editor',
           icon: BsPersonGear
         },
         {
-          label: 'Visualizar perfil',
+          label: 'Visualizar Perfil',
           url: `/community/profile/${props.userId}`,
           icon: BsPersonVideo3
         },
@@ -258,7 +258,7 @@ const dashboardActions = (props: { userId: string; storeId: string }) => {
           icon: BsBox2
         },
         {
-          label: 'Produtos favoritos',
+          label: 'Produtos Favoritos',
           url: `/dashboard/favorite-products?id=${props.userId}`,
           icon: BsBox2Heart
         }
@@ -268,27 +268,27 @@ const dashboardActions = (props: { userId: string; storeId: string }) => {
       header: { label: 'Loja', icon: IoStorefront },
       paths: [
         {
-          label: 'Visualizar loja',
+          label: 'Visualizar Loja',
           url: `/community/store/${props.storeId}`,
           icon: IoStorefrontOutline
         },
         {
-          label: 'Configurações da loja',
+          label: 'Configurações da Loja',
           url: '/dashboard/store-editor',
           icon: IoCog
         },
         {
-          label: 'Gerir produtos',
+          label: 'Gerir Produtos',
           url: '/dashboard/products',
           icon: IoCog
         },
         {
-          label: 'Adicionar produto',
+          label: 'Adicionar Produto',
           url: '/dashboard/product-editor',
           icon: IoAdd
         },
         {
-          label: 'Vendas de produtos',
+          label: 'Vendas de Produtos',
           url: '/dashboard/store/customer-orders',
           icon: IoBagCheck
         }
@@ -298,22 +298,12 @@ const dashboardActions = (props: { userId: string; storeId: string }) => {
       header: { label: 'Transações', icon: FaDollarSign },
       paths: [
         {
-          label: 'Minhas Transações',
-          url: '/dashboard/my-transactions',
-          icon: IoAnalytics
-        },
-        {
-          label: 'Transações de clientes',
-          url: '/dashboard/customer-transactions',
-          icon: IoAnalytics
-        },
-        {
-          label: 'Pagamento de planos e subscrições',
+          label: 'Pagamento de Planos e Subscrições',
           url: '/dashboard/transactions/subscription-payments',
           icon: BsCreditCard2Front
         },
         {
-          label: 'Pagamento de anúncios',
+          label: 'Pagamento de Anúncios',
           url: '/dashboard/transactions/ad-payments',
           icon: IoCardOutline
         }
@@ -323,44 +313,19 @@ const dashboardActions = (props: { userId: string; storeId: string }) => {
       header: { label: 'Anúncios', icon: FaAd },
       paths: [
         {
-          label: 'Criar anúncio',
+          label: 'Criar Anúncio',
           url: '/dashboard/create-ad',
           icon: IoAdd
         },
         {
-          label: 'Gerir anúncios',
+          label: 'Gerir Anúncios',
           url: '/dashboard/ads/generics',
           icon: IoCog
         },
         {
-          label: 'Destacar produtos da loja',
+          label: 'Destacar Produtos da Loja',
           url: '/dashboard/ads/products',
           icon: IoFlash
-        }
-      ]
-    },
-    documentation: {
-      header: { label: 'Documentação', icon: IoDocument },
-      paths: [
-        {
-          label: 'Código de conduta',
-          url: '/legal/code-of-conduct',
-          icon: BiUserCheck
-        },
-        {
-          label: 'Verificação da loja',
-          url: `/docs/store-verification`,
-          icon: IoFingerPrint
-        },
-        {
-          label: 'Perguntas Frequentes',
-          url: `/docs/faq`,
-          icon: IoInformationCircleOutline
-        },
-        {
-          label: 'Preçário',
-          url: `/docs/pricing`,
-          icon: BsCurrencyExchange
         }
       ]
     }
