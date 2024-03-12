@@ -1,7 +1,7 @@
 import africa_culture from '@/../public/assets/africa-culture.png';
 import flying_paper from '@/../public/assets/flying paper.png';
-import Layout from '@/components/Layout';
-import { NewsLetter } from '@/components/Newsletter';
+import Layout from '@/components/layout';
+import { NewsLetter } from '@/components/newsletter';
 import { constants, pricing_data, store_features } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';
 import { _discover as Container } from '@/styles/common/discover';

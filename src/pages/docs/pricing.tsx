@@ -1,4 +1,4 @@
-import Layout from '@/components/Layout';
+import Layout from '@/components/layout';
 import { constants, pricing_data } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';
 import { _pricing as Container } from '@/styles/common/pricing';

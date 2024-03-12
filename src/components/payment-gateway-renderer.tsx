@@ -3,7 +3,7 @@ import { actions } from '@/shared/actions';
 import { IoPhonePortraitOutline } from 'react-icons/io5';
 import type { PaymentGateway } from '../types';
 
-export function RenderPaymentInputs(option: PaymentGateway) {
+export function PaymentGatewayRenderer(option: PaymentGateway) {
   const { state, dispatch } = useAppContext();
   switch (option) {
     case 'm-pesa':

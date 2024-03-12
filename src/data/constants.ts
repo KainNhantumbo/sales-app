@@ -59,6 +59,10 @@ export const author: Author = {
 };
 
 export const constants = {
+  appName: Package.name,
+  version: Package.version,
+  notice: Package.notice,
+  copyright: `© ${new Date().getFullYear()} ${Package.author.name}`,
   defaultTitle: Package.name,
   email: Package.email,
   companyName: Package.companyName,
@@ -89,13 +93,6 @@ export const constants = {
       icon: FaTwitter
     }
   ]
-};
-
-export const app_metadata = {
-  appName: Package.name,
-  version: Package.version,
-  notice: Package.notice,
-  copyright: `© ${new Date().getFullYear()} ${Package.author.name}`
 };
 
 export const DEFAULT_ERROR_MESSAGE = 'Oops! Algo deu errado. Tente novamente.';
@@ -241,7 +238,7 @@ export const dashboardActions = (props: { userId: string; storeId: string }) => 
       paths: [
         {
           label: 'Configurações da Conta',
-          url: '/dashboard/profile-editor',
+          url: '/dashboard/users/editor',
           icon: BsPersonGear
         },
         {
@@ -251,12 +248,12 @@ export const dashboardActions = (props: { userId: string; storeId: string }) => 
         },
         {
           label: 'Minhas Encomendas',
-          url: `/dashboard/my-orders`,
+          url: `/dashboard/users/orders`,
           icon: BsBox2
         },
         {
           label: 'Produtos Favoritos',
-          url: `/dashboard/favorite-products?id=${props.userId}`,
+          url: `/dashboard/products/favorite?id=${props.userId}`,
           icon: BsBox2Heart
         }
       ]
@@ -271,7 +268,7 @@ export const dashboardActions = (props: { userId: string; storeId: string }) => 
         },
         {
           label: 'Configurações da Loja',
-          url: '/dashboard/store-editor',
+          url: '/dashboard/store/editor',
           icon: IoCog
         },
         {
@@ -281,12 +278,12 @@ export const dashboardActions = (props: { userId: string; storeId: string }) => 
         },
         {
           label: 'Adicionar Produto',
-          url: '/dashboard/product-editor',
+          url: '/dashboard/products/editor',
           icon: IoAdd
         },
         {
           label: 'Vendas de Produtos',
-          url: '/dashboard/store/customer-orders',
+          url: '/dashboard/store/orders',
           icon: IoBagCheck
         }
       ]

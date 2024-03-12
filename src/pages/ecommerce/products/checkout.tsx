@@ -1,4 +1,4 @@
-import Layout from '@/components/Layout';
+import Layout from '@/components/layout';
 import { useAppContext } from '@/context/AppContext';
 import { constants, order_status_labels } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';

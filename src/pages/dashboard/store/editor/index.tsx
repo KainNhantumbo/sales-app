@@ -1,5 +1,5 @@
-import Layout from '@/components/Layout';
-import DeactivatePrompt from '@/components/modals/DeactivateStorePrompt';
+import Layout from '@/components/layout';
+import DeactivateStorePrompt from '@/components/modals/deactivate-store-prompt';
 import { useAppContext } from '@/context/AppContext';
 import { DEFAULT_ERROR_MESSAGE, constants } from '@/data/constants';
 import countries from '@/data/countries.json';
@@ -61,7 +61,7 @@ export default function Page() {
     key: 'store-data'
   });
 
-  // --------------------states---------------------
+  // --------------------state---------------------
   const [countryStates, setCountryStates] = useState<string[]>([
     state.store.location?.state
   ]);
@@ -227,7 +227,7 @@ export default function Page() {
         createdAt: state.store.createdAt
       }}>
       <Container>
-        <DeactivatePrompt />
+        <DeactivateStorePrompt />
         {loading.status && loading.key === 'store-data' && (
           <section className='fetching-state'>
             <div>

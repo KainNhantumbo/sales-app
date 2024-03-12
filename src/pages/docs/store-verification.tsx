@@ -1,4 +1,4 @@
-import Layout from '@/components/Layout';
+import Layout from '@/components/layout';
 import { constants } from '@/data/constants';
 import { _legal as Container } from '@/styles/common/legal';
 import Link from 'next/link';

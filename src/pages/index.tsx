@@ -1,5 +1,5 @@
-import Layout from '@/components/Layout';
-import {SearchEngine} from '@/components/SearchEngine';
+import { ProductsSearch } from '@/components/products-search';
+import Layout from '@/components/layout';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { blurDataUrlImage, constants } from '@/data/constants';
@@ -197,7 +197,7 @@ export default function Page({ ads_data }: Props) {
             <span>Pesquisar e filtrar produtos</span>
           </motion.button>
 
-          <SearchEngine />
+          <ProductsSearch />
 
           <article>
             {state.banner_ads.length > 0 ? (

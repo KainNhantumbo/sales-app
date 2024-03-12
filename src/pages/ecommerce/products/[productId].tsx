@@ -1,7 +1,7 @@
-import Layout from '@/components/Layout';
-import { NewsLetter } from '@/components/Newsletter';
-import { Comments } from '@/components/comments/Comments';
+import { Comments } from '@/components/comments/comments';
+import Layout from '@/components/layout';
 import { ShareProducts } from '@/components/modals/ShareProductModal';
+import { NewsLetter } from '@/components/newsletter';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';

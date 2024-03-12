@@ -1,7 +1,7 @@
-import Layout from '@/components/Layout';
-import {SearchStories} from '@/components/SearchStories';
-import {SideBarAds} from '@/components/SidaBarAds';
-import {StoriesRenderer} from '@/components/StoriesRenderer';
+import Layout from '@/components/layout';
+import { SearchStories } from '@/components/stories-search';
+import { SideBarAds } from '@/components/sidebar-ads';
+import { StoriesRenderer } from '@/components/stories-renderer';
 import { constants } from '@/data/constants';
 import { _feed as Container } from '@/styles/common/feed';
 

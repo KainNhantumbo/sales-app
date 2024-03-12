@@ -1,4 +1,4 @@
-import Layout from '@/components/Layout';
+import Layout from '@/components/layout';
 import { constants } from '@/data/constants';
 import { _resetConfirmation as Container } from '@/styles/common/reset-password-confirmation';
 import Link from 'next/link';

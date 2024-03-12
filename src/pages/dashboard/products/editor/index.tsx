@@ -1,4 +1,4 @@
-import Layout from '@/components/Layout';
+import Layout from '@/components/layout';
 import { useAppContext } from '@/context/AppContext';
 import { DEFAULT_ERROR_MESSAGE, constants } from '@/data/constants';
 import Categories from '@/data/product-categories.json';

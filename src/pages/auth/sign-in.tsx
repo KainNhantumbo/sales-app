@@ -1,5 +1,5 @@
 import backgroundImage from '@/../public/assets/africa-unveiled.png';
-import Layout from '@/components/Layout';
+import Layout from '@/components/layout';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';

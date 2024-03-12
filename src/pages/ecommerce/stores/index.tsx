@@ -1,7 +1,7 @@
 import buyingWomenImg from '@/../public/assets/buying_women.png';
-import Layout from '@/components/Layout';
-import {NewsLetter} from '@/components/Newsletter';
-import {SearchStores} from '@/components/SearchPublicStores';
+import Layout from '@/components/layout';
+import { NewsLetter } from '@/components/newsletter';
+import { StoreSearch } from '@/components/store-search';
 import { useAppContext } from '@/context/AppContext';
 import { blurDataUrlImage, constants } from '@/data/constants';
 import { geStoresData } from '@/lib/queries';
@@ -111,7 +111,7 @@ export default function Page() {
           </div>
         </section>
         <article>
-          <SearchStores />
+          <StoreSearch />
 
           {!isFetching && !isError && state.publicStoresList.length < 1 && (
             <div className='empty-data_container'>

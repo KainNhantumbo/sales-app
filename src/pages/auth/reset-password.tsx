@@ -1,4 +1,4 @@
-import Layout from '@/components/Layout';
+import Layout from '@/components/layout';
 import fetch from '@/config/client';
 import { constants } from '@/data/constants';
 import { _resetPassword as Container } from '@/styles/common/pasword-reseter';

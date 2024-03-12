@@ -16,8 +16,8 @@ export function ToolBox() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           title='Adicionar novo produto'
-          className='descripted'
-          onClick={() => router.push(`/dashboard/product-editor`)}>
+          className='described'
+          onClick={() => router.push(`/dashboard/products/editor`)}>
           <HiPlus />
           <span>Novo Produto</span>
         </motion.button>
@@ -26,7 +26,7 @@ export function ToolBox() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           title='Sort'
-          className='descripted'
+          className='described'
           onClick={sortBoxController}>
           <BiSortAlt2 />
           <span>Ordenar</span>
@@ -36,7 +36,7 @@ export function ToolBox() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           title='Search for anything'
-          className='descripted'
+          className='described'
           onClick={searchBoxController}>
           <BiSearch />
           <span>Pesquisar</span>

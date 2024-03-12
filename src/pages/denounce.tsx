@@ -1,5 +1,5 @@
-import Layout from '@/components/Layout';
-import { SelectContainer } from '@/components/Select';
+import Layout from '@/components/layout';
+import { SelectContainer } from '@/components/select';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { constants, denounceReasons } from '@/data/constants';

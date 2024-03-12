@@ -1,6 +1,6 @@
-import Layout from '@/components/Layout';
-import {SideBarAds} from '@/components/SidaBarAds';
-import {StoriesRenderer} from '@/components/StoriesRenderer';
+import Layout from '@/components/layout';
+import { SideBarAds } from '@/components/sidebar-ads';
+import { StoriesRenderer } from '@/components/stories-renderer';
 import fetch from '@/config/client';
 import { constants, formatSocialNetwork } from '@/data/constants';
 import { formatDate } from '@/lib/utils';

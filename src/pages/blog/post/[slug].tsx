@@ -1,7 +1,7 @@
-import type { TParsedContent } from '@/components/EditorJSRenderer';
-import EditorJsRenderer from '@/components/EditorJSRenderer';
-import Layout from '@/components/Layout';
-import {NewsLetter} from '@/components/Newsletter';
+import type { TParsedContent } from '@/components/editor-js-renderer';
+import EditorJsRenderer from '@/components/editor-js-renderer';
+import Layout from '@/components/layout';
+import { NewsLetter } from '@/components/newsletter';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { author, constants, shareUrlPaths } from '@/data/constants';

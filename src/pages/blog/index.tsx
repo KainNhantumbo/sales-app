@@ -1,7 +1,7 @@
 import buyingWomenImg from '@/../public/assets/buying_women.png';
-import Layout from '@/components/Layout';
-import {NewsLetter} from '@/components/Newsletter';
-import {SearchComponent} from '@/components/SearchBlogPosts';
+import Layout from '@/components/layout';
+import { NewsLetter } from '@/components/newsletter';
+import { PostsSearch } from '@/components/posts-search';
 import { useAppContext } from '@/context/AppContext';
 import { blurDataUrlImage, constants } from '@/data/constants';
 import { getPosts } from '@/lib/queries';
@@ -110,7 +110,7 @@ export default function Page() {
           </div>
         </section>
         <article>
-          <SearchComponent />
+          <PostsSearch />
 
           {!isLoading && !isError && state.blogPostsList.length < 1 && (
             <div className='empty-data_container'>

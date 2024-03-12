@@ -1,4 +1,4 @@
-import Layout from '@/components/Layout';
+import Layout from '@/components/layout';
 import { DeleteAccountPrompt } from '@/components/modals/DeleteAccountPrompt';
 import { WorkCapturer } from '@/components/modals/WorkCapturer';
 import { useAppContext } from '@/context/AppContext';

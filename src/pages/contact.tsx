@@ -4,7 +4,7 @@ import emailjs from '@emailjs/browser';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { BiEnvelope, BiMailSend } from 'react-icons/bi';
-import Layout from '../components/Layout';
+import Layout from '../components/layout';
 import { InputEvents, SubmitEvent } from '../types';
 
 export default function Page() {

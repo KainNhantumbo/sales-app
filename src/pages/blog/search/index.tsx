@@ -1,6 +1,6 @@
-import Layout from '@/components/Layout';
-import {NewsLetter} from '@/components/Newsletter';
-import {SearchComponent} from '@/components/SearchBlogPosts';
+import Layout from '@/components/layout';
+import { NewsLetter } from '@/components/newsletter';
+import { PostsSearch } from '@/components/posts-search';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
 import { getPosts } from '@/lib/queries';
@@ -99,7 +99,7 @@ export default function Page() {
       }}>
       <Container>
         <div className='main-container'>
-          <SearchComponent />
+          <PostsSearch />
 
           {isLoading && !isError && (
             <section className='fetching-state'>

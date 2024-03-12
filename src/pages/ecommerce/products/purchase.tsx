@@ -1,7 +1,7 @@
-import Layout from '@/components/Layout';
-import { NewsLetter } from '@/components/Newsletter';
-import { RenderPaymentInputs } from '@/components/RenderPaymentMethodInputs';
-import { SelectContainer } from '@/components/Select';
+import Layout from '@/components/layout';
+import { NewsLetter } from '@/components/newsletter';
+import { PaymentGatewayRenderer } from '@/components/payment-gateway-renderer';
+import { SelectContainer } from '@/components/select';
 import { useAppContext } from '@/context/AppContext';
 import { blurDataUrlImage, constants, payment_options, states } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';
@@ -411,7 +411,7 @@ export default function Page() {
                 </section>
 
                 <section className='payment-method-inputs'>
-                  {RenderPaymentInputs(state.checkout.payment.type)}
+                  {PaymentGatewayRenderer(state.checkout.payment.type)}
                 </section>
 
                 <section className='payment-finalization-container'>

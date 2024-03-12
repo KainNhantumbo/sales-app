@@ -1,5 +1,5 @@
-import Layout from '@/components/Layout';
-import {SideBarAds} from '@/components/SidaBarAds';
+import Layout from '@/components/layout';
+import { SideBarAds } from '@/components/sidebar-ads';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';

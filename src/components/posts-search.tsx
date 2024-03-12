@@ -4,35 +4,36 @@ import { _search as Container } from '@/styles/modules/search-form';
 import { useRouter } from 'next/router';
 import { IoSearch } from 'react-icons/io5';
 
-export function SearchStores() {
+export function PostsSearch() {
   const { state, dispatch } = useAppContext();
   const router = useRouter();
+
   return (
     <Container>
       <form onSubmit={(e) => e.preventDefault()}>
-        <div className='form-element' title='Procurar lojas'>
+        <div className='form-element' title='Search'>
           <input
             type='text'
-            placeholder='Procurar lojas...'
-            aria-label='Procurar lojas...'
-            title='Procurar lojas...'
-            value={state.searchStores}
-            onChange={(e) => {
+            placeholder='Procurar postagens...'
+            title='Procurar postagens...'
+            aria-label='Procurar postagens...'
+            value={state.search}
+            onChange={(e) =>
               dispatch({
-                type: actions.SEARCH_STORES,
+                type: actions.SEARCH,
                 payload: {
                   ...state,
-                  searchStores: e.target.value
+                  search: e.target.value
                 }
-              });
-            }}
+              })
+            }
           />
         </div>
 
         <button
           onClick={() => {
-            if (state.searchStores.length < 1) return;
-            router.push(`/ecommerce/stores/stores-search?q=${state.searchStores}`);
+            if (state.search.length < 1) return;
+            router.push(`/blog/search?q=${state.search}`);
           }}>
           <IoSearch />
         </button>

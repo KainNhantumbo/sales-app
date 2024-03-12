@@ -1,5 +1,5 @@
-import Layout from '@/components/Layout';
-import { NewsLetter } from '@/components/Newsletter';
+import Layout from '@/components/layout';
+import { NewsLetter } from '@/components/newsletter';
 import { constants } from '@/data/constants';
 import { _about as Container } from '@/styles/common/about';
 import { motion } from 'framer-motion';

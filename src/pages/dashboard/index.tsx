@@ -1,7 +1,7 @@
-import Layout from '@/components/Layout';
-import {Metrics} from '@/components/Metrics';
+import Layout from '@/components/layout';
+import { Metrics } from '@/components/metrics';
 import { useAppContext } from '@/context/AppContext';
-import { app_metadata, constants, dashboardActions } from '@/data/constants';
+import { constants, dashboardActions } from '@/data/constants';
 import { _dashboard as Container } from '@/styles/common/dashbord';
 import { DashboardAction } from '@/types';
 import { motion } from 'framer-motion';
@@ -109,10 +109,10 @@ export default function Page() {
 
         <section className='app-meta'>
           <p>
-            {app_metadata.appName} | versão {app_metadata.version}{' '}
+            {constants.appName} | versão {constants.version}{' '}
           </p>
-          <p>Copyright {app_metadata.copyright}</p>
-          <h3>{app_metadata.notice}</h3>
+          <p>Copyright {constants.copyright}</p>
+          <h3>{constants.notice}</h3>
         </section>
       </Container>
     </Layout>

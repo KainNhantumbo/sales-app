@@ -1,17 +1,20 @@
-import { Component } from 'react';
 import ErrorPage from '@/pages/error-page';
-import type { PropsWithChildren, ErrorInfo, ReactNode } from 'react';
+import type { ErrorInfo, PropsWithChildren } from 'react';
+import { Component } from 'react';
 
 interface State extends Readonly<{}> {
   hasError: boolean;
 }
 
+interface Props extends PropsWithChildren {}
+
 export default class ErrorBoundary extends Component {
-  public props!: PropsWithChildren;
+  public props: Props;
   public state: State;
 
   constructor(props: PropsWithChildren) {
     super(props);
+    this.props = props;
     this.state = { hasError: false };
   }
 
@@ -24,7 +27,7 @@ export default class ErrorBoundary extends Component {
     console.error({ error, errorInfo });
   }
 
-  render(): ReactNode {
+  render() {
     if (this.state.hasError)
       return <ErrorPage retryFn={() => this.setState({ hasError: false })} />;
     return this.props.children;

@@ -1,4 +1,4 @@
-import Layout from '@/components/Layout';
+import Layout from '@/components/layout';
 import { DeleteProductPrompt } from '@/components/modals/DeleteProductPrompt';
 import { SearchBox } from '@/components/modals/SearchBox';
 import { ShareProducts } from '@/components/modals/ShareProductModal';
@@ -222,7 +222,7 @@ export default function Page() {
                   </div>
                   <div className='products-list_item_secondary'>
                     <Link
-                      href={`/dashboard/product-editor?productId=${product._id}`}
+                      href={`/dashboard/products/editor?productId=${product._id}`}
                       title='Editar e atualizar informações do produto'>
                       <span>Editar produto</span>
                     </Link>

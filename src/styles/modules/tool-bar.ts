@@ -53,7 +53,7 @@ export const _toolbar = styled.section`
     }
   }
 
-  .descripted {
+  .described {
     ${BaseButtonOutline}
     padding: 3px;
     border: none;
