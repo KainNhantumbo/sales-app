@@ -4,14 +4,7 @@ import { actions } from '@/shared/actions';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { BiSortAlt2 } from 'react-icons/bi';
-import {
-  IoCartOutline,
-  IoClose,
-  IoFilter,
-  IoGift,
-  IoLayersOutline,
-  IoPricetags
-} from 'react-icons/io5';
+import { IoCartOutline, IoClose, IoFilter, IoGift, IoLayersOutline } from 'react-icons/io5';
 import Categories from '../data/product-categories.json';
 import { _searchEngine as Container } from '../styles/modules/search-engine';
 import SelectContainer from './Select';
@@ -88,7 +81,6 @@ export default function SearchEngine() {
             ...state,
             queryPublicProducts: {
               category: undefined,
-              price_range: NaN,
               promotion: undefined,
               query: '',
               sort: ''
@@ -288,22 +280,6 @@ export default function SearchEngine() {
             </div>
 
             <div className='caret-container'>
-              <h3>
-                <IoPricetags />
-                <span>Faixa de Preço</span>
-              </h3>
-              <div className='price-range'>
-                <div className='prices'>
-                  <p>De: MZN 0.00</p>
-                  <p>
-                    Até: MZN{' '}
-                    {(state.queryPublicProducts.price_range &&
-                      Number(state.queryPublicProducts.price_range).toFixed(2)) ||
-                      Number(0).toFixed(2)}
-                  </p>
-                </div>
-              </div>
-
               {Object.values(state.queryPublicProducts)
                 .map((value) => (value ? true : false))
                 .some((value) => value === true) && (

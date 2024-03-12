@@ -12,7 +12,6 @@ export const initialState: State = {
   searchStories: '',
   queryPublicProducts: {
     category: undefined,
-    price_range: NaN,
     promotion: undefined,
     query: '',
     sort: ''

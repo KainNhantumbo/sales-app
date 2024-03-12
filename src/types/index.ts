@@ -77,7 +77,6 @@ export type TPaymentOptions = Array<{
 export type SearchProducts = {
   sort: string;
   query: string;
-  price_range: number;
   category: string | undefined;
   promotion: boolean | undefined;
 };

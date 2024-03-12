@@ -10,7 +10,6 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import Slider from 'rc-slider';
 import { useEffect } from 'react';
 import {
   IoBagCheck,
@@ -100,14 +99,13 @@ export default function Home({ ads_data }: Props) {
   const fetchPublicProducts = async ({
     pageParam = 0
   }): Promise<{ data: PublicProducts[]; currentOffset: number }> => {
-    const { category, price_range, promotion, query, sort } = state.queryPublicProducts;
+    const { category, promotion, query, sort } = state.queryPublicProducts;
 
     const queryParams = new URLSearchParams({
       search: query,
       category: category || '',
       offset: Number(LIMIT * pageParam) ? String(LIMIT * pageParam) : '',
       limit: String(LIMIT),
-      max_price: Number(price_range) ? String(price_range) : '',
       promotion: promotion !== undefined ? String(Number(promotion)) : String(0),
       sort
     });
@@ -233,11 +231,7 @@ export default function Home({ ads_data }: Props) {
               </section>
             ) : null}
 
-            {state.banner_ads.length > 0 ? (
-              <>
-                <Slider />
-              </>
-            ) : null}
+            {state.banner_ads.length > 0 ? <>Banner</> : null}
 
             {state.publicProducts.length < 1 && !isLoading && !isError ? (
               <div className='empty-data_container'>
