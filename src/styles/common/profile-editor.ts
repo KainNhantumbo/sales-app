@@ -429,6 +429,7 @@ export const _userProfile = styled.div`
                 gap: 10px;
                 background: rgb(${({ theme }) => theme.foreground});
                 box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.1);
+                border: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
 
                 button {
                   ${ButtonMonoOutline}

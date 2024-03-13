@@ -42,8 +42,8 @@ import type {
   DashboardAction,
   Pricing,
   ShareAnchors,
-  TPaymentOptions,
   ShareUrls,
+  TPaymentOptions,
   TSocialNetwork
 } from '../types';
 import blurImage from './blur-data-url-image.json';
@@ -230,6 +230,8 @@ export const shareUrlPaths = (props: ShareAnchors): ShareUrls[] => {
     }
   ].sort((a, b) => (a.name > b.name ? 1 : -1));
 };
+
+export const DEFAULT_MIME_TYPES: string[] = ['image/png', 'image/jpeg', 'image/jpg'];
 
 export const dashboardActions = (props: { userId: string; storeId: string }) => {
   return {

@@ -8,76 +8,30 @@ import {
   orderStatusOptions,
   order_status_labels
 } from '@/data/constants';
+import { useUserOrdersQuery } from '@/hooks/user-orders-query-hook';
 import { formatDate } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _myOrders as Container } from '@/styles/common/my-orders';
-import { HttpError, Order } from '@/types';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import type { HttpError } from '@/types';
 import { BsBox2, BsBox2Fill } from 'react-icons/bs';
 import { IoClose, IoEllipsisHorizontal, IoReload, IoSearch } from 'react-icons/io5';
-import { useInView } from 'react-intersection-observer';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
-export default function MyOrders() {
-  const QUERY_LIMIT: number = 10;
+export default function Page() {
   const theme = useTheme();
-  const { state, dispatch, httpClient } = useAppContext();
-  const { inView, ref } = useInView();
+  const { state, dispatch } = useAppContext();
 
-  const fetchOrders = async ({ pageParam = 0 }) => {
-    const query = new URLSearchParams({
-      search: state.ordersQuery.search,
-      status: state.ordersQuery.status,
-      sort: state.ordersQuery.sort,
-      offset: String(pageParam * QUERY_LIMIT),
-      limit: QUERY_LIMIT.toString()
-    });
-
-    const { data } = await httpClient<Order[]>({
-      method: 'get',
-      url: `/api/v1/checkout/orders?${query.toString()}`
-    });
-    return { data, currentOffset: pageParam + 1 };
-  };
-
-  const { data, error, refetch, isError, isLoading, fetchNextPage, hasNextPage } =
-    useInfiniteQuery({
-      queryKey: ['user-orders'],
-      queryFn: fetchOrders,
-      getNextPageParam: (lastPage) =>
-        lastPage?.data?.length >= QUERY_LIMIT ? lastPage.currentOffset : undefined
-    });
-
-  const updateOrder = async (id: string, data: any) => {
-    try {
-      await httpClient({
-        method: 'patch',
-        url: `/api/v1/checkout/orders/${id}`,
-        data: { ...data }
-      });
-      refetch({ queryKey: ['user-orders'] });
-    } catch (error) {
-      console.info(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-    }
-  };
-
-  const deleteOrder = async (id: string) => {
-    try {
-      await httpClient({
-        method: 'delete',
-        url: `/api/v1/checkout/orders/${id}`
-      });
-      refetch({ queryKey: ['user-orders'] });
-    } catch (error) {
-      console.info(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-    }
-  };
+  const {
+    isLoading,
+    isError,
+    error,
+    hasNextPage,
+    fetchNextPage,
+    inViewRef,
+    deleteOrder,
+    updateOrder
+  } = useUserOrdersQuery();
 
   const isAnFilterActive = (): boolean => {
     return Object.values(state.ordersQuery).some((item) => (item !== '' ? true : false));
@@ -87,40 +41,6 @@ export default function MyOrders() {
     const option = order_status_labels.find(({ value }) => value === status);
     return option?.label ?? '';
   };
-
-  useEffect(() => {
-    if (data) {
-      const formattedData = data.pages
-        .map((page) => page.data)
-        .reduce((accumulator, currentObj) => [...accumulator, ...currentObj]);
-
-      dispatch({
-        type: actions.ORDERS,
-        payload: {
-          ...state,
-          orders: [...formattedData]
-        }
-      });
-    }
-
-    return () => {
-      dispatch({
-        type: actions.ORDERS,
-        payload: { ...state, orders: [] }
-      });
-    };
-  }, [data]);
-
-  useEffect(() => {
-    if (inView && hasNextPage) fetchNextPage();
-  }, [inView, fetchNextPage, hasNextPage]);
-
-  useEffect(() => {
-    const debounceTime = setTimeout(() => {
-      refetch({ queryKey: ['user-orders'] });
-    }, 500);
-    return () => clearTimeout(debounceTime);
-  }, [state.ordersQuery]);
 
   return (
     <Layout metadata={{ title: `${constants.defaultTitle} | Minhas Encomendas` }}>
@@ -213,7 +133,7 @@ export default function MyOrders() {
                 {state.orders.map((order, index) => (
                   <div
                     key={order._id}
-                    ref={state.orders.length === index + 1 ? ref : undefined}
+                    ref={state.orders.length === index + 1 ? inViewRef : undefined}
                     className='order-container'>
                     <section className='top-container'>
                       <div className='header'>
@@ -279,7 +199,6 @@ export default function MyOrders() {
                       </div>
                     </section>
                     <section className='base-container'>
-                      {/* <button onClick={() => {}}></button> */}
                       <button onClick={() => deleteOrder(order._id)}>
                         Eliminar encomenda
                       </button>
@@ -290,7 +209,7 @@ export default function MyOrders() {
             )}
 
             <div className='stats-container'>
-              {isError && !isLoading && state.orders.length > 0 && (
+              {isError && !isLoading && state.orders.length > 0 ? (
                 <div className='fetch-error-message'>
                   <h3>
                     {(error as HttpError).response?.data?.message ||
@@ -301,9 +220,9 @@ export default function MyOrders() {
                     <span>Tentar novamente</span>
                   </button>
                 </div>
-              )}
+              ) : null}
 
-              {isLoading && !isError && (
+              {isLoading && !isError ? (
                 <div className='loading'>
                   <PulseLoader
                     size={20}
@@ -314,19 +233,19 @@ export default function MyOrders() {
                     }}
                   />
                 </div>
-              )}
+              ) : null}
 
               {!hasNextPage && !isLoading && !isError && state.orders.length > 0 && (
                 <p>Sem mais dados para mostrar</p>
               )}
             </div>
-            {state.orders.length > 0 && (
+            {state.orders.length > 0 ? (
               <div className='container-items__end-mark'>
                 <IoEllipsisHorizontal />
               </div>
-            )}
+            ) : null}
 
-            {state.orders.length < 1 && (
+            {state.orders.length < 1 && !isLoading ? (
               <div className='empty-data_container'>
                 <section className='content'>
                   <BsBox2Fill />
@@ -336,7 +255,7 @@ export default function MyOrders() {
                   </h3>
                 </section>
               </div>
-            )}
+            ) : null}
           </article>
         </div>
       </Container>

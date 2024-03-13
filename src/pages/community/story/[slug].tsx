@@ -2,7 +2,7 @@ import Layout from '@/components/layout';
 import { SideBarAds } from '@/components/sidebar-ads';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
-import { DEFAULT_ERROR_MESSAGE, constants } from '@/data/constants';
+import { DEFAULT_ERROR_MESSAGE, DEFAULT_MIME_TYPES, constants } from '@/data/constants';
 import { actions } from '@/shared/actions';
 import { _story as Container } from '@/styles/common/story';
 import { HttpError, PublicStory, Story } from '@/types';
@@ -11,7 +11,7 @@ import Compressor from 'compressorjs';
 import { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { BsTrash } from 'react-icons/bs';
@@ -34,21 +34,19 @@ export default function Page(props: Props) {
     data: state.story.cover_image?.url || ''
   });
 
-  const acceptedMimeTypes: string[] = ['image/png', 'image/jpeg', 'image/jpg'];
-
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     maxFiles: 1,
-    onDrop: useCallback(<T extends File>(acceptedFiles: T[]) => {
-      const file = acceptedFiles[0];
-      if (!file || !acceptedMimeTypes.includes(String(file.type))) return undefined;
+    onDrop: useCallback(<T extends File>(contents: T[]) => {
+      const file = contents[0];
+      if (!file || !DEFAULT_MIME_TYPES.includes(String(file.type))) return;
       new Compressor(file, {
         quality: 0.8,
         width: 420,
         height: 220,
         resize: 'cover',
-        success: (compressedImge: File | Blob) => {
+        success: (compressedImage: File | Blob) => {
           const reader = new FileReader();
-          reader.readAsDataURL(compressedImge);
+          reader.readAsDataURL(compressedImage);
           reader.onloadend = function (e: ProgressEvent<FileReader>) {
             const encodedImage: string = e.target?.result as string;
             setCoverImageData({
@@ -152,30 +150,12 @@ export default function Page(props: Props) {
         payload: { ...state, story: { ...props.story } }
       });
     }
-
-    Router.events.on('routeChangeStart', function () {
-      setLoading(true);
-    });
-    Router.events.on('routeChangeComplete', function () {
-      setLoading(false);
-    });
-
     return () => {
-      Router.events.off('routeChangeStart', function () {
-        setLoading(false);
-      });
-      Router.events.off('routeChangeComplete', function () {
-        setLoading(false);
-      });
       dispatch({
         type: actions.USER_STORY,
         payload: {
           ...state,
-          story: {
-            title: '',
-            content: '',
-            cover_image: { id: '', url: '' }
-          }
+          story: { title: '', content: '', cover_image: { id: '', url: '' } }
         }
       });
       setCoverImageData({ id: '', data: '' });
@@ -184,13 +164,9 @@ export default function Page(props: Props) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (error.status) {
-        setError({ status: false, msg: '' });
-      }
+      if (error.status) setError({ status: false, msg: '' });
     }, 5000);
-    return () => {
-      clearTimeout(timer);
-    };
+    return () => clearTimeout(timer);
   }, [error.status]);
 
   return (
