@@ -211,13 +211,15 @@ export type ProductsList = {
   updatedAt: string;
 };
 
+export type ProductImage = { id: string; url: string, publicId: string  }
+
 export type Product = ProductsList & {
   store: string;
   created_by: string;
   description: string;
   specifications: string;
   delivery_tax: number;
-  images: { [x: string]: { id: string; url: string } };
+  images: Array<Omit<ProductImage, "publicId">>;
   allow_comments: boolean;
 };
 

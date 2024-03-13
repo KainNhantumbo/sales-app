@@ -1,17 +1,17 @@
+import { DropzoneArea } from '@/components/dropzone';
 import Layout from '@/components/layout';
 import { useAppContext } from '@/context/AppContext';
 import { DEFAULT_ERROR_MESSAGE, constants } from '@/data/constants';
 import Categories from '@/data/product-categories.json';
+import { initialState } from '@/lib/reducer';
 import { actions } from '@/shared/actions';
 import { _productEditor as Container } from '@/styles/common/product-editor';
-import { HttpError, InputEvents, Product } from '@/types';
-import { useQuery } from '@tanstack/react-query';
-import Compressor from 'compressorjs';
+import type { HttpError, InputEvents, Product } from '@/types';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
-  IoAdd,
   IoArrowUndoOutline,
   IoBagHandle,
   IoCarOutline,
@@ -20,7 +20,6 @@ import {
   IoChevronBack,
   IoEllipsisHorizontal,
   IoGiftOutline,
-  IoImageOutline,
   IoLayersOutline,
   IoPencilOutline,
   IoPizzaOutline,
@@ -34,95 +33,33 @@ import {
 import { DotLoader, PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
-type TLoading = {
-  status: boolean;
-};
-
-type TError = {
-  status: boolean;
-  msg: string;
-};
-
 export default function Page() {
   const theme = useTheme();
   const router = useRouter();
   const { state, httpClient, dispatch } = useAppContext();
 
-  // --------------------states---------------------
-  const [loading, setLoading] = useState<TLoading>({
-    status: false
-  });
-
-  const [error, setError] = useState<TError>({
-    status: false,
-    msg: ''
-  });
-
-  const [imagesData, setImagesData] = useState({
-    img_0: { id: '', data: '' },
-    img_1: { id: '', data: '' },
-    img_2: { id: '', data: '' },
-    img_3: { id: '', data: '' }
-  });
-
-  const fetchProduct = async (): Promise<Product | unknown> => {
-    try {
-      const productId = router.query['productId'];
-      if (!productId) throw new Error('Sem chave ID');
+  const { data, isLoading, isError, error } = useQuery({
+    queryFn: async () => {
       const { data } = await httpClient<Product>({
         method: 'get',
-        url: `/api/v1/users/products/${productId}?fields=-created_by,-favorites`
+        url: `/api/v1/users/products/${router.query['productId']}?fields=-created_by,-favorites`
       });
       return data;
-    } catch (error) {
-      return error;
-    }
-  };
-
-  const {
-    isLoading,
-    isError,
-    data: productData,
-    error: queryError
-  } = useQuery({
-    queryKey: [`product-${router.query['productId'] ?? ''}`],
-    queryFn: fetchProduct
+    },
+    queryKey: [`product-${router.query['productId'] ?? ''}`]
   });
 
   useEffect(() => {
-    if (productData) {
+    if (data) {
       dispatch({
         type: actions.PRODUCT_DATA,
         payload: {
           ...state,
-          product: { ...state.product, ...productData }
+          product: { ...state.product, ...data }
         }
       });
     }
-  }, [productData]);
-
-  const handleFiles = (index: string, value: FileList | null) => {
-    const file = value?.item(0);
-    if (file) {
-      new Compressor(file, {
-        quality: 0.8,
-        width: 320,
-        height: 420,
-        resize: 'cover',
-        success: (compressedImge: File | Blob) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(compressedImge);
-          reader.onloadend = function (e: ProgressEvent<FileReader>) {
-            const encodedImage: string = e.target?.result as string;
-            setImagesData((obj) => ({
-              ...obj,
-              [`img_${index}`]: { id: '', data: encodedImage }
-            }));
-          };
-        }
-      });
-    }
-  };
+  }, [data]);
 
   const handleChange = (e: InputEvents) =>
     dispatch({
@@ -136,158 +73,59 @@ export default function Page() {
       }
     });
 
-  const deleteImage = (id: string, index: string) => {
-    if (!id)
-      return setImagesData((data) => ({
-        ...data,
-        [index]: { id: '', data: '' }
-      }));
-
-    httpClient({
-      method: 'delete',
-      url: `/api/v1/users/product/assets`,
-      data: { type: index, assetId: id }
-    })
-      .then(() => {
-        setImagesData((data) => ({
-          ...data,
-          [index]: { id: '', data: '' }
-        }));
-        dispatch({
-          type: actions.PRODUCT_DATA,
-          payload: {
-            ...state,
-            product: { ...state.product, images: {} }
-          }
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
   const handleUpdate = async (productId: string) => {
     if (!productId) return;
     try {
-      setLoading({ status: true });
       await httpClient({
         method: 'patch',
         url: `/api/v1/users/products/${productId}`,
-        data: {
-          name: state.product.name,
-          category: state.product.category,
-          description: state.product.description,
-          specifications: state.product.specifications,
-          price: state.product.price,
-          delivery_tax: state.product.delivery_tax,
-          quantity: state.product.quantity,
-          promotion: state.product.promotion,
-          allow_comments: state.product.allow_comments,
-          productImages: [
-            ...Object.entries(imagesData).filter(([key, value]) =>
-              value.data !== '' ? { [key]: { id: value.id, data: value.data } } : null
-            )
-          ].reduce((accumulator, currentValue) => {
-            const group = { [currentValue[0]]: currentValue[1] };
-            return { ...accumulator, ...group };
-          }, {})
-        }
+        data: { ...state.product }
       });
       router.back();
     } catch (error) {
       console.error(error);
-      setError({
-        status: true,
-        msg:
-          (error as HttpError).response?.data?.message ||
+      console.warn(
+        (error as HttpError).response?.data?.message ||
           (error as HttpError).message ||
           DEFAULT_ERROR_MESSAGE
-      });
-    } finally {
-      setLoading({ status: false });
+      );
     }
   };
 
   const handleCreate = async () => {
     try {
-      setLoading({ status: true });
       await httpClient({
         method: 'post',
         url: `/api/v1/users/products`,
-        data: {
-          name: state.product.name,
-          category: state.product.category,
-          description: state.product.description,
-          specifications: state.product.specifications,
-          price: state.product.price,
-          delivery_tax: state.product.delivery_tax,
-          quantity: state.product.quantity,
-          promotion: state.product.promotion,
-          store: state.auth.storeId,
-          allow_comments: state.product.allow_comments,
-          productImages: [
-            ...Object.entries(imagesData).filter(([key, value]) =>
-              value.data !== '' ? { [key]: { id: value.id, data: value.data } } : null
-            )
-          ].reduce((accumulator, currentValue) => {
-            const group = { [currentValue[0]]: currentValue[1] };
-            return { ...accumulator, ...group };
-          }, {})
-        }
+        data: { ...state.product }
       });
       router.back();
     } catch (error) {
       console.error(error);
-      setError({
-        status: true,
-        msg:
-          (error as HttpError).response?.data?.message ||
+      console.warn(
+        (error as HttpError).response?.data?.message ||
           (error as HttpError).message ||
           DEFAULT_ERROR_MESSAGE
-      });
-    } finally {
-      setLoading({ status: false });
+      );
     }
   };
 
-  // fetch product
+  const { mutateAsync: createMutation, ...createMutationProps } = useMutation({
+    mutationFn: handleCreate
+  });
+
+  const { mutateAsync: updateMutation, ...updateMutationProps } = useMutation({
+    mutationFn: handleUpdate
+  });
+
+  // clear product form data
   useEffect(() => {
     return () =>
       dispatch({
         type: actions.PRODUCT_DATA,
-        payload: {
-          ...state,
-          product: {
-            _id: '',
-            name: '',
-            category: Categories[0],
-            description: '',
-            specifications: '',
-            created_by: '',
-            store: '',
-            promotion: { status: false, percentage: 0 },
-            price: 0,
-            delivery_tax: 0,
-            quantity: 0,
-            images: {},
-            createdAt: '',
-            updatedAt: '',
-            favorites: [],
-            allow_comments: false
-          }
-        }
+        payload: { ...state, product: { ...initialState.product } }
       });
   }, []);
-
-  // clear errors
-  useEffect(() => {
-    const debounceTimer = setTimeout(() => {
-      if (error.status) {
-        setError({ status: false, msg: '' });
-      }
-    }, 8000);
-    return () => clearTimeout(debounceTimer);
-  }, [error.status]);
 
   return (
     <Layout metadata={{ title: `${constants.defaultTitle} | Editor de Produto` }}>
@@ -307,8 +145,7 @@ export default function Page() {
           <section className='fetching-state'>
             <section className='wrapper'>
               <h3>
-                {(queryError as any)?.response?.data?.message ||
-                  'Erro ao carregar dados do servidor'}
+                {(error as HttpError)?.response?.data?.message || DEFAULT_ERROR_MESSAGE}
               </h3>
               <div>
                 <button onClick={() => router.reload()}>
@@ -350,50 +187,63 @@ export default function Page() {
                         </strong>
                       </p>
                     </div>
-                    {Object.entries(imagesData).map(([key, value], index) => (
-                      <div className='img-container' key={index.toString()}>
-                        {value.data ? (
-                          <Image
-                            width={1000}
-                            height={1000}
-                            className='cover-image'
-                            src={value.data}
-                            alt={`product image ${index.toString()}`}
-                            title={`Imagem do Produto ${index.toString()}`}
-                          />
-                        ) : state.product.images[key]?.url ? (
-                          <Image
-                            width={1000}
-                            height={1000}
-                            className='cover-image'
-                            src={state.product.images[key].url}
-                            alt={`Product image ${index.toString()}`}
-                            title={`Imagem do Produto ${index.toString()}`}
-                          />
-                        ) : (
-                          <IoImageOutline className='camera-icon' />
-                        )}
+                    {state.product.images.length > 0
+                      ? state.product.images.map((image, index) => (
+                          <div className='image-container' key={image.id}>
+                            <Image
+                              width={500}
+                              height={500}
+                              className='cover-image'
+                              src={image.url}
+                              alt={`product image ${index.toString()}`}
+                              title={`Imagem do Produto ${index.toString()}`}
+                            />
+                            <button
+                              title='Apagar imagem'
+                              className='clear-image'
+                              onClick={() =>
+                                dispatch({
+                                  type: actions.PRODUCT_DATA,
+                                  payload: {
+                                    ...state,
+                                    product: {
+                                      ...state.product,
+                                      images: state.product.images.filter(
+                                        (item) => image.id !== item.id
+                                      )
+                                    }
+                                  }
+                                })
+                              }>
+                              <IoTrashOutline />
+                            </button>
+                          </div>
+                        ))
+                      : null}
 
-                        <label
-                          htmlFor={`cover${index}`}
-                          title={`Carregar imagem ${index + 1}`}>
-                          <IoAdd />
-                        </label>
-                        <button
-                          title='Apagar imagem'
-                          className='clear-image'
-                          onClick={() => deleteImage(value.id, key)}>
-                          <IoTrashOutline />
-                        </button>
-                        <input
-                          type='file'
-                          id={`cover${index}`}
-                          accept='.jpg, .jpeg, .png'
-                          multiple={false}
-                          onChange={(e) => handleFiles(String(index), e.target.files)}
+                    {state.product.images.length < 5 ? (
+                      <div className='image-dropzone'>
+                        <DropzoneArea
+                          width={320}
+                          height={420}
+                          handler={(encodedImage) => {
+                            dispatch({
+                              type: actions.PRODUCT_DATA,
+                              payload: {
+                                ...state,
+                                product: {
+                                  ...state.product,
+                                  images: state.product.images.concat({
+                                    id: crypto.randomUUID(),
+                                    url: encodedImage
+                                  })
+                                }
+                              }
+                            });
+                          }}
                         />
                       </div>
-                    ))}
+                    ) : null}
                   </div>
                 </section>
 
@@ -669,66 +519,100 @@ export default function Page() {
                 <p>Salve as alterações feitas.</p>
               </div>
               <div>
-                {!loading.status && !error.status && (
-                  <>
-                    <h3>
-                      Confirme se as informações introduzidas estão correctas antes de
-                      salvar alterações. Caso não tenha alterado nada, não será atualizado,
-                      clique em "Descartar e voltar".
-                    </h3>
-                    <p>
-                      Todas as informações que introduzir nesta página são, por padrão,
-                      públicas.
-                    </p>
-                  </>
-                )}
+                {!updateMutationProps.isLoading ||
+                  (!createMutationProps.isLoading && !updateMutationProps.isError) ||
+                  (!createMutationProps.isError && (
+                    <>
+                      <h3>
+                        Confirme se as informações introduzidas estão corretas antes de
+                        salvar alterações. Caso não tenha alterado nada, não será
+                        atualizado, clique em "Descartar e voltar".
+                      </h3>
+                      <p>
+                        Todas as informações que introduzir nesta página são, por padrão,
+                        públicas.
+                      </p>
+                    </>
+                  ))}
 
-                {error.status && !loading.status && error.msg.includes('.') ? (
-                  error.msg.split('.').map((phrase, i) => (
-                    <div className='error-message' key={i}>
-                      {phrase}
-                    </div>
-                  ))
+                {!createMutationProps.isLoading &&
+                createMutationProps.isError &&
+                (createMutationProps.error as HttpError).response?.data?.message?.includes(
+                  '.'
+                ) ? (
+                  (createMutationProps.error as HttpError).response?.data?.message
+                    .split('.')
+                    .map((phrase, i) => (
+                      <div className='error-message' key={i}>
+                        {phrase}
+                      </div>
+                    ))
                 ) : (
-                  <div className='error-message'>{error.msg}</div>
-                )}
-
-                {loading.status && !error.status && (
-                  <div className='loading'>
-                    <PulseLoader
-                      color={`rgb(${theme.primary})`}
-                      aria-placeholder='Processando...'
-                      cssOverride={{
-                        display: 'block'
-                      }}
-                    />
-                    <span>Processando...</span>
+                  <div className='error-message'>
+                    {(createMutationProps.error as HttpError).response?.data?.message}
                   </div>
                 )}
+
+                {!updateMutationProps.isLoading &&
+                updateMutationProps.isError &&
+                (updateMutationProps.error as HttpError).response?.data?.message?.includes(
+                  '.'
+                ) ? (
+                  (updateMutationProps.error as HttpError).response?.data?.message
+                    .split('.')
+                    .map((phrase, i) => (
+                      <div className='error-message' key={i}>
+                        {phrase}
+                      </div>
+                    ))
+                ) : (
+                  <div className='error-message'>
+                    {(updateMutationProps.error as HttpError).response?.data?.message}
+                  </div>
+                )}
+
+                {createMutationProps.isLoading ||
+                  (updateMutationProps.isLoading &&
+                  !createMutationProps.isError &&
+                  !createMutationProps.isError ? (
+                    <div className='loading'>
+                      <PulseLoader
+                        color={`rgb(${theme.primary})`}
+                        aria-placeholder='Processando...'
+                        cssOverride={{
+                          display: 'block'
+                        }}
+                      />
+                      <span>Processando...</span>
+                    </div>
+                  ) : null)}
               </div>
 
               <div className='btns-container'>
-                {!loading.status && !error.status && (
-                  <>
-                    <button className='back' onClick={(e) => router.back()}>
-                      <IoArrowUndoOutline />
-                      <span>Descartar e voltar</span>
-                    </button>
-                    {state.product._id ? (
-                      <button
-                        className='save'
-                        onClick={() => handleUpdate(state.product._id)}>
-                        <IoSyncOutline />
-                        <span>Salvar alterações</span>
+                {!createMutationProps.isLoading &&
+                  !updateMutationProps.isLoading &&
+                  !createMutationProps.isError &&
+                  !createMutationProps.isError && (
+                    <>
+                      <button className='back' onClick={(e) => router.back()}>
+                        <IoArrowUndoOutline />
+                        <span>Descartar e voltar</span>
                       </button>
-                    ) : (
-                      <button className='save' onClick={() => handleCreate()}>
-                        <IoPush />
-                        <span>Publicar Produto</span>
-                      </button>
-                    )}
-                  </>
-                )}
+                      {state.product._id ? (
+                        <button
+                          className='save'
+                          onClick={() => handleUpdate(state.product._id)}>
+                          <IoSyncOutline />
+                          <span>Salvar alterações</span>
+                        </button>
+                      ) : (
+                        <button className='save' onClick={() => handleCreate()}>
+                          <IoPush />
+                          <span>Publicar Produto</span>
+                        </button>
+                      )}
+                    </>
+                  )}
               </div>
             </section>
           </section>

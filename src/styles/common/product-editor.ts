@@ -243,8 +243,7 @@ export const _productEditor = styled.div`
 
                 outline: none;
                 border-radius: 15px;
-                box-shadow: inset 0 0 5px
-                  rgba(${({ theme }) => theme.black}, 0.2);
+                box-shadow: inset 0 0 5px rgba(${({ theme }) => theme.black}, 0.2);
                 transition: 0.5s ease;
                 margin-top: 0.4em;
                 margin-right: 0.2em;
@@ -315,14 +314,14 @@ export const _productEditor = styled.div`
                 img {
                   width: 100%;
                   border-radius: 10px;
-                  width: 320px;
-                  height: 420px;
+                  width: 120px;
+                  height: 220px;
                   object-fit: cover;
                 }
 
                 .camera-icon {
-                  width: 320px;
-                  height: 420px;
+                  width: 180px;
+                  height: 220px;
                   border-radius: 12px;
                   margin: 0 auto;
                   padding: 5px;

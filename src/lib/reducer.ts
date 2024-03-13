@@ -162,12 +162,7 @@ export const initialState: State = {
     price: 0,
     delivery_tax: 0,
     quantity: 0,
-    images: {
-      img_0: { id: '', url: '' },
-      img_1: { id: '', url: '' },
-      img_2: { id: '', url: '' },
-      img_3: { id: '', url: '' }
-    },
+    images: [],
     createdAt: '',
     updatedAt: '',
     favorites: [],
