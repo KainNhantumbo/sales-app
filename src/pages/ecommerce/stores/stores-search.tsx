@@ -6,7 +6,7 @@ import { constants } from '@/data/constants';
 import { geStoresData } from '@/lib/queries';
 import { formatDate } from '@/lib/utils';
 import { actions } from '@/shared/actions';
-import { _storeSeach as Container } from '@/styles/common/store-search';
+import { _storeSearch as Container } from '@/styles/common/store-search';
 import { PublicStoreList } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import Link from 'next/link';
@@ -26,7 +26,7 @@ import { DotLoader, PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
 export default function Page() {
-  const LIMIT: number = 8;
+  const LIMIT: number = 10;
   const theme = useTheme();
   const router = useRouter();
   const { state, dispatch } = useAppContext();
