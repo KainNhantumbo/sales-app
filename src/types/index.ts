@@ -9,7 +9,7 @@ declare module 'styled-components' {
   export interface DefaultTheme extends Theme {}
 }
 
-export type HttpError = AxiosError<{ message: string; code: number }>;
+export type HttpError = AxiosError<{ message: string; code?: string; status: number }>;
 
 export type Pricing = Array<{
   title: string;
@@ -211,7 +211,7 @@ export type ProductsList = {
   updatedAt: string;
 };
 
-export type ProductImage = { id: string; url: string, publicId: string  }
+export type ProductImage = { id: string; url: string; publicId: string };
 
 export type Product = ProductsList & {
   store: string;
@@ -219,7 +219,7 @@ export type Product = ProductsList & {
   description: string;
   specifications: string;
   delivery_tax: number;
-  images: Array<Omit<ProductImage, "publicId">>;
+  images: Array<Omit<ProductImage, 'publicId'>>;
   allow_comments: boolean;
 };
 

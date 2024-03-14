@@ -4,6 +4,7 @@ import { PaymentGatewayRenderer } from '@/components/payment-gateway-renderer';
 import { SelectContainer } from '@/components/select';
 import { useAppContext } from '@/context/AppContext';
 import { blurDataUrlImage, constants, payment_options, states } from '@/data/constants';
+import { initialState } from '@/lib/reducer';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _purchase as Container } from '@/styles/common/purchase';
@@ -11,6 +12,7 @@ import { HttpError, InputEvents } from '@/types';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { FaDollarSign } from 'react-icons/fa';
 import {
   IoBagHandle,
@@ -26,9 +28,11 @@ import {
 } from 'react-icons/io5';
 import { useTheme } from 'styled-components';
 
+const initialErrorState = new Error()
+
 export default function Page() {
   const theme = useTheme();
-  const router = useRouter();
+  const router = useRouter();const [error, setError] = useState(initialErrorState);
   const { state, dispatch, httpClient, cartModalController } = useAppContext();
 
   const handleChange = (e: InputEvents) => {
@@ -46,9 +50,7 @@ export default function Page() {
 
   const handlePayment = async () => {
     try {
-      const {
-        data: { order_code, order_id }
-      } = await httpClient<{ order_id: string; order_code: string }>({
+      await httpClient<{ order_id: string; order_code: string }>({
         method: 'post',
         url: `/api/v1/checkout/orders`,
         data: {
@@ -66,7 +68,11 @@ export default function Page() {
           }
         }
       });
-      router.push(`/ecommerce/products/checkout?order=${order_id}&code=${order_code}`);
+      dispatch({
+        type: actions.PRODUCTS_CART,
+        payload: { ...state, cart: initialState.cart }
+      });
+      router.push(`/ecommerce/products/checkout-success`);
     } catch (error) {
       console.error((error as HttpError).response?.data?.message || error);
     }
@@ -421,7 +427,7 @@ export default function Page() {
                       whileHover={{ scale: 1.05 }}
                       className='pay-button'
                       onClick={handlePayment}>
-                      <span>Processeguir</span>
+                      <span>Prosseguir</span>
                     </motion.button>
                   </div>
                 </section>
