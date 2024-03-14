@@ -1,4 +1,4 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
+/* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -483,51 +483,3 @@ template {
   display: none;
 }
 /*# sourceMappingURL=main.css.map */
-
-@font-face {
-  font-family: 'CentraNube';
-  src: url('../../public/fonts/centranube-mediumitalic-webfont.woff2')
-      format('woff2'),
-    url('../../public/fonts/centranube-mediumitalic-webfont.woff')
-      format('woff'),
-    url('../../public/fonts/centranube-mediumitalic-webfont.ttf')
-      format('truetype');
-  font-weight: 500;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'CentraNube';
-  src: url('../../public/fonts/centranube-bookitalic-webfont.woff2')
-      format('woff2'),
-    url('../../public/fonts/centranube-bookitalic-webfont.woff') format('woff'),
-    url('../../public/fonts/centranube-bookitalic-webfont.ttf')
-      format('truetype');
-
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'CentraNube';
-  src: url('../../public/fonts/centranube-book-webfont.woff2') format('woff2'),
-    url('../../public/fonts/centranube-book-webfont.woff') format('woff'),
-    url('../../public/fonts/centranube-book-webfont.ttf') format('truetype');
-
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'CentraNube';
-  src: url('../../public/fonts/centranube-medium-webfont.woff2') format('woff2'),
-    url('../../public/fonts/centranube-medium-webfont.woff') format('woff'),
-    url('../../public/fonts/centranube-medium-webfont.ttf') format('truetype');
-
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}

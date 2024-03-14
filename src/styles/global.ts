@@ -17,7 +17,7 @@ export const GlobalStyles = createGlobalStyle`
     position: relative;
     color: rgb(${({ theme }) => theme.font});
     background: rgb(${({ theme }) => theme.foreground});
-    font-family: 'CentraNube', Inter, 'Open Sans', 'Roboto', 'Helvetica Neue', -apple-system, sans-serif;
+    font-family: 'Inter', 'Roboto', 'Open Sans', 'Helvetica Neue', -apple-system, sans-serif;
   }
 
   html {
