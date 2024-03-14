@@ -49,7 +49,7 @@ export const DropzoneArea = ({ handler, width, height }: DropzoneProps) => {
       <div>
         <IoDownloadOutline />
         <h3>
-          {isDragActive ? 'Drop your image here' : 'Click or drag and drop an image here'}
+          {isDragActive ? 'Solte a imagem aqui' : 'Clique ou arraste a imagem para aqui'}
         </h3>
         <span>[.JPEG, .JPG, .PNG]</span>
         <span>
@@ -66,10 +66,10 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   display: grid;
-  border: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
   place-content: center center;
   place-items: center center;
   border-radius: 12px;
+  border: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
   background: rgb(${({ theme }) => theme.background});
   padding: 12px;
 
@@ -78,15 +78,21 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-items: center;
+    align-items: center;
     gap: 12px;
     user-select: none;
+
+    svg {
+      width: 50px;
+      height: auto;
+    }
 
     h3 {
       width: 100%;
       max-width: 260px;
       margin: 0 auto;
       text-align: center;
-      color: rgb(${({ theme }) => theme.primary});
+      color: rgb(${({ theme }) => theme.primary_shade});
     }
 
     span {

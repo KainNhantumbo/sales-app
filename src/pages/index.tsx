@@ -106,7 +106,7 @@ export default function Page({ ads_data }: Props) {
       category: category || '',
       offset: Number(LIMIT * pageParam) ? String(LIMIT * pageParam) : '',
       limit: String(LIMIT),
-      promotion: promotion !== undefined ? String(Number(promotion)) : String(0),
+      promotion: promotion !== undefined ? String(Number(promotion)) : '',
       sort
     });
 

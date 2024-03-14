@@ -33,6 +33,7 @@ export const _cart = styled.section`
     max-width: 500px;
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.1);
     margin: 0 auto;
+    border: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
 
     @media screen and (max-width: 465px) {
       gap: 10px;

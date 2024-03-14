@@ -294,63 +294,41 @@ export const _productEditor = styled.div`
                 }
               }
 
-              .img-container {
+              .images-container_items {
                 display: flex;
-                align-items: start;
                 flex-flow: row wrap;
                 gap: 10px;
-                justify-content: center;
-                position: relative;
                 margin-bottom: 20px;
 
-                input {
-                  display: none;
+                @media screen and (max-width: 730px) {
+                  align-items: center;
+                  justify-content: center;
                 }
 
-                .description {
-                  line-height: 1.2rem;
-                }
+                div {
+                  position: relative;
 
-                img {
-                  width: 100%;
-                  border-radius: 10px;
-                  width: 120px;
-                  height: 220px;
-                  object-fit: cover;
-                }
+                  img {
+                    width: 100%;
+                    border-radius: 10px;
+                    width: 220px;
+                    height: 240px;
+                    object-fit: cover;
+                  }
 
-                .camera-icon {
-                  width: 180px;
-                  height: 220px;
-                  border-radius: 12px;
-                  margin: 0 auto;
-                  padding: 5px;
-                  background: rgba(${({ theme }) => theme.font}, 0.1);
-                }
-
-                label {
-                  ${ButtonMono}
-                  width: 30px;
-                  height: 30px;
-                  position: absolute;
-                  border-radius: 12px;
-                  top: 5px;
-                  left: calc(0% + 5px);
-                  background: rgba(${({ theme }) => theme.primary}, 0.8);
-                  padding: 8px;
-                  :hover {
-                    background: rgba(${({ theme }) => theme.primary}, 0.6);
-                    svg {
-                      color: rgb(${({ theme }) => theme.white});
-                    }
+                  button {
+                    ${ButtonMono}
+                    position: absolute;
+                    top: 5px;
+                    right: calc(0% + 5px);
+                    border: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
                   }
                 }
+              }
 
-                .clear-image {
-                  ${ButtonMono}
-                  top: 5px;
-                  right: calc(0% + 5px);
-                }
+              .image-dropzone {
+                width: 220px;
+                height: 240px;
               }
             }
           }

@@ -18,6 +18,7 @@ import {
   IoCashOutline,
   IoChatbubblesOutline,
   IoChevronBack,
+  IoCloseOutline,
   IoEllipsisHorizontal,
   IoGiftOutline,
   IoLayersOutline,
@@ -27,8 +28,7 @@ import {
   IoPush,
   IoReload,
   IoSave,
-  IoSyncOutline,
-  IoTrashOutline
+  IoSyncOutline
 } from 'react-icons/io5';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
@@ -40,13 +40,25 @@ export default function Page() {
 
   const { data, isLoading, isError, error } = useQuery({
     queryFn: async () => {
-      const { data } = await httpClient<Product>({
-        method: 'get',
-        url: `/api/v1/users/products/${router.query['productId']}?fields=-created_by,-favorites`
-      });
-      return data;
+      try {
+        const productId = router.query['productId'];
+        if (!productId) return initialState.product;
+
+        const { data } = await httpClient<Product>({
+          method: 'get',
+          url: `/api/v1/users/products/${productId}?fields=-created_by,-favorites`
+        });
+        return data;
+      } catch (error) {
+        console.error(error);
+        console.warn(
+          (error as HttpError).response?.data?.message ||
+            (error as HttpError).message ||
+            DEFAULT_ERROR_MESSAGE
+        );
+      }
     },
-    queryKey: [`product-${router.query['productId'] ?? ''}`]
+    queryKey: [`product-editor-query`]
   });
 
   useEffect(() => {
@@ -73,59 +85,52 @@ export default function Page() {
       }
     });
 
-  const handleUpdate = async (productId: string) => {
-    if (!productId) return;
-    try {
-      await httpClient({
-        method: 'patch',
-        url: `/api/v1/users/products/${productId}`,
-        data: { ...state.product }
-      });
-      router.back();
-    } catch (error) {
-      console.error(error);
-      console.warn(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message ||
-          DEFAULT_ERROR_MESSAGE
-      );
-    }
-  };
-
-  const handleCreate = async () => {
-    try {
-      await httpClient({
-        method: 'post',
-        url: `/api/v1/users/products`,
-        data: { ...state.product }
-      });
-      router.back();
-    } catch (error) {
-      console.error(error);
-      console.warn(
-        (error as HttpError).response?.data?.message ||
-          (error as HttpError).message ||
-          DEFAULT_ERROR_MESSAGE
-      );
-    }
-  };
-
   const { mutateAsync: createMutation, ...createMutationProps } = useMutation({
-    mutationFn: handleCreate
+    mutationFn: async () => {
+      try {
+        await httpClient({
+          method: 'post',
+          url: `/api/v1/users/products`,
+          data: { ...state.product }
+        });
+        router.back();
+      } catch (error) {
+        console.error(error);
+        console.warn(
+          (error as HttpError).response?.data?.message ||
+            (error as HttpError).message ||
+            DEFAULT_ERROR_MESSAGE
+        );
+      }
+    },
+    networkMode: 'always',
+    onError(error) {
+      return error
+    }
   });
 
   const { mutateAsync: updateMutation, ...updateMutationProps } = useMutation({
-    mutationFn: handleUpdate
+    mutationFn: async (productId: string) => {
+      if (!productId) return;
+      try {
+        await httpClient({
+          method: 'patch',
+          url: `/api/v1/users/products/${productId}`,
+          data: { ...state.product }
+        });
+        router.back();
+      } catch (error) {
+        console.error(error);
+        console.warn(
+          (error as HttpError).response?.data?.message ||
+            (error as HttpError).message ||
+            DEFAULT_ERROR_MESSAGE
+        );
+      }
+    },
+    networkMode: 'always',
+    useErrorBoundary: true
   });
-
-  // clear product form data
-  useEffect(() => {
-    return () =>
-      dispatch({
-        type: actions.PRODUCT_DATA,
-        payload: { ...state, product: { ...initialState.product } }
-      });
-  }, []);
 
   return (
     <Layout metadata={{ title: `${constants.defaultTitle} | Editor de Produto` }}>
@@ -187,63 +192,63 @@ export default function Page() {
                         </strong>
                       </p>
                     </div>
-                    {state.product.images.length > 0
-                      ? state.product.images.map((image, index) => (
-                          <div className='image-container' key={image.id}>
-                            <Image
-                              width={500}
-                              height={500}
-                              className='cover-image'
-                              src={image.url}
-                              alt={`product image ${index.toString()}`}
-                              title={`Imagem do Produto ${index.toString()}`}
-                            />
-                            <button
-                              title='Apagar imagem'
-                              className='clear-image'
-                              onClick={() =>
-                                dispatch({
-                                  type: actions.PRODUCT_DATA,
-                                  payload: {
-                                    ...state,
-                                    product: {
-                                      ...state.product,
-                                      images: state.product.images.filter(
-                                        (item) => image.id !== item.id
-                                      )
+                    <div className='images-container_items'>
+                      {state.product.images.length > 0
+                        ? state.product.images.map((image, index) => (
+                            <div key={image.id}>
+                              <Image
+                                width={500}
+                                height={500}
+                                src={image.url}
+                                alt={`product image ${index.toString()}`}
+                                title={`Imagem do Produto ${index.toString()}`}
+                              />
+                              <button
+                                title='Apagar imagem'
+                                onClick={() =>
+                                  dispatch({
+                                    type: actions.PRODUCT_DATA,
+                                    payload: {
+                                      ...state,
+                                      product: {
+                                        ...state.product,
+                                        images: state.product.images.filter(
+                                          (item) => image.id !== item.id
+                                        )
+                                      }
                                     }
-                                  }
-                                })
-                              }>
-                              <IoTrashOutline />
-                            </button>
-                          </div>
-                        ))
-                      : null}
-
-                    {state.product.images.length < 5 ? (
-                      <div className='image-dropzone'>
-                        <DropzoneArea
-                          width={320}
-                          height={420}
-                          handler={(encodedImage) => {
-                            dispatch({
-                              type: actions.PRODUCT_DATA,
-                              payload: {
-                                ...state,
-                                product: {
-                                  ...state.product,
-                                  images: state.product.images.concat({
-                                    id: crypto.randomUUID(),
-                                    url: encodedImage
                                   })
+                                }>
+                                <IoCloseOutline />
+                              </button>
+                            </div>
+                          ))
+                        : null}
+
+                      {state.product.images.length < 4 ? (
+                        <div className='image-dropzone'>
+                          <DropzoneArea
+                            width={320}
+                            height={420}
+                            handler={(encodedImage) => {
+                              dispatch({
+                                type: actions.PRODUCT_DATA,
+                                payload: {
+                                  ...state,
+                                  product: {
+                                    ...state.product,
+                                    images: state.product.images.concat({
+                                      id: crypto.randomUUID(),
+                                      url: encodedImage
+                                    })
+                                  }
                                 }
-                              }
-                            });
-                          }}
-                        />
-                      </div>
-                    ) : null}
+                              });
+                            }}
+                          />
+                        </div>
+                      ) : null}
+                    </div>
                   </div>
                 </section>
 
@@ -535,39 +540,17 @@ export default function Page() {
                     </>
                   ))}
 
-                {!createMutationProps.isLoading &&
-                createMutationProps.isError &&
-                (createMutationProps.error as HttpError).response?.data?.message?.includes(
-                  '.'
-                ) ? (
-                  (createMutationProps.error as HttpError).response?.data?.message
-                    .split('.')
-                    .map((phrase, i) => (
-                      <div className='error-message' key={i}>
-                        {phrase}
-                      </div>
-                    ))
-                ) : (
+                { createMutationProps.isError && (
                   <div className='error-message'>
-                    {(createMutationProps.error as HttpError).response?.data?.message}
+                    {(createMutationProps.error as HttpError)?.response?.data?.message ||
+                      DEFAULT_ERROR_MESSAGE}
                   </div>
                 )}
 
-                {!updateMutationProps.isLoading &&
-                updateMutationProps.isError &&
-                (updateMutationProps.error as HttpError).response?.data?.message?.includes(
-                  '.'
-                ) ? (
-                  (updateMutationProps.error as HttpError).response?.data?.message
-                    .split('.')
-                    .map((phrase, i) => (
-                      <div className='error-message' key={i}>
-                        {phrase}
-                      </div>
-                    ))
-                ) : (
+                {!updateMutationProps.isLoading && updateMutationProps.isError && (
                   <div className='error-message'>
-                    {(updateMutationProps.error as HttpError).response?.data?.message}
+                    {(updateMutationProps.error as HttpError)?.response?.data?.message ||
+                      DEFAULT_ERROR_MESSAGE}
                   </div>
                 )}
 
@@ -589,29 +572,29 @@ export default function Page() {
               </div>
 
               <div className='btns-container'>
+                <button className='back' onClick={(e) => router.back()}>
+                  <IoArrowUndoOutline />
+                  <span>Voltar</span>
+                </button>
+
+                {!updateMutationProps.isLoading &&
+                !updateMutationProps.isError &&
+                state.product._id ? (
+                  <button
+                    className='save'
+                    onClick={async () => await updateMutation(state.product._id)}>
+                    <IoSyncOutline />
+                    <span>Salvar alterações</span>
+                  </button>
+                ) : null}
+
                 {!createMutationProps.isLoading &&
-                  !updateMutationProps.isLoading &&
                   !createMutationProps.isError &&
-                  !createMutationProps.isError && (
-                    <>
-                      <button className='back' onClick={(e) => router.back()}>
-                        <IoArrowUndoOutline />
-                        <span>Descartar e voltar</span>
-                      </button>
-                      {state.product._id ? (
-                        <button
-                          className='save'
-                          onClick={() => handleUpdate(state.product._id)}>
-                          <IoSyncOutline />
-                          <span>Salvar alterações</span>
-                        </button>
-                      ) : (
-                        <button className='save' onClick={() => handleCreate()}>
-                          <IoPush />
-                          <span>Publicar Produto</span>
-                        </button>
-                      )}
-                    </>
+                  !state.product._id && (
+                    <button className='save' onClick={async () => await createMutation()}>
+                      <IoPush />
+                      <span>Publicar Produto</span>
+                    </button>
                   )}
               </div>
             </section>
