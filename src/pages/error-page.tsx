@@ -1,10 +1,10 @@
 import { constants } from '@/data/constants';
 import { errorPage as Container } from '@/styles/common/error-page';
 
-interface Props {
-  title?: string | undefined;
-  message?: string | undefined;
-  button_message?: string | undefined;
+type Props = {
+  title?: string;
+  message?: string;
+  button_message?: string;
   retryFn: () => void;
 }
 

@@ -1,9 +1,9 @@
 import Layout from '@/components/layout';
-import { DeleteProductPrompt } from '@/components/modals/DeleteProductPrompt';
-import { SearchBox } from '@/components/modals/SearchBox';
-import { ShareProducts } from '@/components/modals/ShareProductModal';
-import { SortBox } from '@/components/modals/SortBox';
-import { ToolBox } from '@/components/modals/ToolBox';
+import { DeleteProductPrompt } from '@/components/modals/delete-product-prompt';
+import { SearchBox } from '@/components/modals/search-box';
+import { ShareProducts } from '@/components/modals/share-product-prompt';
+import { SortBox } from '@/components/modals/sort-box';
+import { ToolBox } from '@/components/modals/tool-box';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';

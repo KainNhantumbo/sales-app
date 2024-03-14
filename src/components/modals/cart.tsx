@@ -22,7 +22,7 @@ export function Cart() {
     state,
     cartModalController,
     removeProductFromCart,
-    geCartProduct,
+    getCartProduct,
     updateCartProduct
   } = useAppContext();
   const router = useRouter();
@@ -96,8 +96,8 @@ export function Cart() {
                               updateCartProduct({
                                 productId: product.productId,
                                 quantity:
-                                  geCartProduct(product.productId).quantity > 1
-                                    ? geCartProduct(product.productId).quantity - 1
+                                  getCartProduct(product.productId).quantity > 1
+                                    ? getCartProduct(product.productId).quantity - 1
                                     : 1
                               })
                             }>
@@ -108,7 +108,7 @@ export function Cart() {
                             title='Quantidade'
                             min={1}
                             aria-label='Quantidade'
-                            value={geCartProduct(product.productId).quantity}
+                            value={getCartProduct(product.productId).quantity}
                             onChange={(e) =>
                               updateCartProduct({
                                 productId: product.productId,
@@ -122,7 +122,7 @@ export function Cart() {
                             onClick={() =>
                               updateCartProduct({
                                 productId: product.productId,
-                                quantity: geCartProduct(product.productId).quantity + 1
+                                quantity: getCartProduct(product.productId).quantity + 1
                               })
                             }>
                             <IoAdd />

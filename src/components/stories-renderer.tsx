@@ -24,12 +24,9 @@ import { useInView } from 'react-intersection-observer';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import { HttpError, PublicStory } from '../types';
-import {DeleteStoryPrompt} from './modals/DeleteStoryPrompt';
+import { DeleteStoryPrompt } from './modals/delete-story-prompt';
 
-interface Props {
-  userId?: string | undefined;
-  favoritesId?: string | undefined;
-}
+type Props = { userId?: string; favoritesId?: string };
 
 export function StoriesRenderer(props: Props) {
   const { state, dispatch, httpClient, deleteStoryPromptController } = useAppContext();

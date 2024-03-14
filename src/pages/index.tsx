@@ -31,11 +31,9 @@ import { useInView } from 'react-intersection-observer';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import fetch from '../config/client';
-import { BannerAds, HttpError, PublicProducts } from '../types';
+import type { BannerAds, HttpError, PublicProducts } from '../types';
 
-interface Props {
-  ads_data: BannerAds[];
-}
+type Props = { ads_data: BannerAds[] };
 
 export default function Page({ ads_data }: Props) {
   const { state, dispatch, addProductToCart, removeProductFromCart, httpClient } =
@@ -44,6 +42,8 @@ export default function Page({ ads_data }: Props) {
   const theme = useTheme();
   const LIMIT: number = 12;
   const { ref, inView } = useInView();
+
+  console.log('Theme test');
 
   const handleFavoriteProduct = async (id: string) => {
     try {

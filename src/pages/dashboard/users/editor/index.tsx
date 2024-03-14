@@ -1,6 +1,6 @@
 import Layout from '@/components/layout';
-import { DeleteAccountPrompt } from '@/components/modals/DeleteAccountPrompt';
-import { WorkCapturer } from '@/components/modals/WorkCapturer';
+import { DeleteAccountPrompt } from '@/components/modals/delete-account-prompt';
+import { WorkDataPrompt } from '@/components/modals/work-data-prompt';
 import { useAppContext } from '@/context/AppContext';
 import { DEFAULT_ERROR_MESSAGE, constants } from '@/data/constants';
 import Countries from '@/data/countries.json';
@@ -157,9 +157,9 @@ export default function Page() {
         width: 150,
         height: 150,
         resize: 'cover',
-        success: (compressedImge: File | Blob) => {
+        success: (compressedImage: File | Blob) => {
           const reader = new FileReader();
-          reader.readAsDataURL(compressedImge);
+          reader.readAsDataURL(compressedImage);
           reader.onloadend = function (e: ProgressEvent<FileReader>) {
             const encodedImage: string = e.target?.result as string;
             setProfileImageData({
@@ -448,7 +448,7 @@ export default function Page() {
             </section>
           )}
 
-        <WorkCapturer
+        <WorkDataPrompt
           setStateFn={setWorkingExperienceData}
           initialData={workingExperienceData}
           updateFn={updateWorkingData}

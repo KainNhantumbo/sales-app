@@ -1,9 +1,10 @@
 import { constants } from '@/data/constants';
 import { actions } from '@/shared/actions';
-import { HttpError } from '@/types';
+import type { HttpError } from '@/types';
 import { useRouter } from 'next/router';
-import { ReactNode, createContext, useContext } from 'react';
+import { type ReactNode, createContext, useContext } from 'react';
 import { useAppContext } from './AppContext';
+import { initialState } from '@/lib/reducer';
 
 type Props = { children: ReactNode };
 
@@ -17,7 +18,7 @@ const context = createContext<Context>({
   requestLogin: () => {}
 });
 
-export function ModulesContext(props: Props) {
+export function ModulesContext({ children }: Props) {
   const router = useRouter();
   const { state, dispatch, httpClient } = useAppContext();
 
@@ -65,17 +66,7 @@ export function ModulesContext(props: Props) {
               });
               dispatch({
                 type: actions.USER_AUTH,
-                payload: {
-                  ...state,
-                  auth: {
-                    id: '',
-                    name: '',
-                    storeId: '',
-                    token: '',
-                    email: '',
-                    profile_image: ''
-                  }
-                }
+                payload: { ...state, auth: initialState.auth }
               });
 
               router.push('/auth/sign-in');
@@ -84,10 +75,7 @@ export function ModulesContext(props: Props) {
             } finally {
               dispatch({
                 type: actions.PROMPT,
-                payload: {
-                  ...state,
-                  prompt: { ...state.prompt, status: false }
-                }
+                payload: { ...state, prompt: { ...state.prompt, status: false } }
               });
             }
           }
@@ -97,9 +85,7 @@ export function ModulesContext(props: Props) {
   }
 
   return (
-    <context.Provider value={{ logoutUser, requestLogin }}>
-      {props.children}
-    </context.Provider>
+    <context.Provider value={{ logoutUser, requestLogin }}>{children}</context.Provider>
   );
 }
 

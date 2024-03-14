@@ -28,11 +28,12 @@ import {
 } from 'react-icons/io5';
 import { useTheme } from 'styled-components';
 
-const initialErrorState = new Error()
+const initialErrorState = new Error();
 
 export default function Page() {
   const theme = useTheme();
-  const router = useRouter();const [error, setError] = useState(initialErrorState);
+  const router = useRouter();
+  const [error, setError] = useState(initialErrorState);
   const { state, dispatch, httpClient, cartModalController } = useAppContext();
 
   const handleChange = (e: InputEvents) => {
@@ -54,10 +55,7 @@ export default function Page() {
         method: 'post',
         url: `/api/v1/checkout/orders`,
         data: {
-          order_notes: state.checkout.order_notes,
-          main_phone_number: state.checkout.main_phone_number,
-          alternative_phone_number: state.checkout.alternative_phone_number,
-          location: state.checkout.location,
+          ...state.checkout,
           cart: state.cart.map((product) => ({
             product_id: product.productId,
             quantity: product.quantity

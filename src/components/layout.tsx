@@ -1,19 +1,16 @@
-import { Header } from './header';
-import { Footer } from './footer';
-import { Cart } from './modals/cart';
-import {LoadingIndicator} from './loading-indicator';
-import { ReactNode, useEffect } from 'react';
-import { HeadProps } from '../types/index';
-import { useRouter } from 'next/router';
-import { useAppContext } from '@/context/AppContext';
 import CookiesPopup from '@/components/cookies-popup';
-import { Prompt } from './modals/prompt';
+import { useAppContext } from '@/context/AppContext';
+import { useRouter } from 'next/router';
+import { type ReactNode, useEffect } from 'react';
+import { HeadProps } from '../types/index';
+import { Footer } from './footer';
 import Metadata from './head';
+import { Header } from './header';
+import { LoadingIndicator } from './loading-indicator';
+import { Cart } from './modals/cart';
+import { Prompt } from './modals/prompt';
 
-interface Props {
-  children: ReactNode;
-  metadata: HeadProps | undefined;
-}
+type Props = { children: ReactNode; metadata: HeadProps };
 
 export default function Layout({ children, metadata }: Props) {
   const { state } = useAppContext();

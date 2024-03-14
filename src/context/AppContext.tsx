@@ -15,8 +15,8 @@ import {
   useReducer,
   type ReactNode
 } from 'react';
-import {ModulesContext} from './Modules';
-import {ThemeContext} from './ThemeContext';
+import { ModulesContext } from './Modules';
+import { ThemeContext } from './ThemeContext';
 
 const queryClient: QueryClient = new QueryClient({
   defaultOptions: { queries: { networkMode: 'always' } }
@@ -24,7 +24,7 @@ const queryClient: QueryClient = new QueryClient({
 
 type Props = { children: ReactNode };
 
-interface Context {
+type Context = {
   state: State;
   dispatch: Dispatch<Action>;
   deleteCommentPromptController: (status: boolean, id: string) => void;
@@ -40,7 +40,7 @@ interface Context {
   addProductToCart: (product: Cart) => void;
   removeProductFromCart: (currentProductId: string) => void;
   updateCartProduct: (props: { productId: string; quantity: number }) => void;
-  geCartProduct: (currentProductId: string) => Cart;
+  getCartProduct: (currentProductId: string) => Cart;
   httpClient: <T>(config: AxiosRequestConfig) => Promise<AxiosResponse<T, any>>;
 }
 
@@ -61,7 +61,7 @@ const context = createContext<Context>({
   addProductToCart: () => {},
   shareProductController: () => {},
   userWorkingDataController: () => {},
-  geCartProduct: () => ({
+  getCartProduct: () => ({
     productId: '',
     quantity: 1,
     productName: '',
@@ -165,7 +165,7 @@ export function AppContext(props: Props) {
   };
 
   // ----------------product cart--------------------------
-  const geCartProduct = (currentProductId: string): Cart => {
+  const getCartProduct = (currentProductId: string): Cart => {
     const foundProduct = state.cart.some(
       (product) => product.productId === currentProductId
     );
@@ -186,11 +186,9 @@ export function AppContext(props: Props) {
       type: actions.PRODUCTS_CART,
       payload: {
         ...state,
-        cart: [
-          ...state.cart.map((product) =>
-            product.productId === props.productId ? { ...product, ...props } : product
-          )
-        ]
+        cart: state.cart.map((product) =>
+          product.productId === props.productId ? { ...product, ...props } : product
+        )
       }
     });
   };
@@ -203,7 +201,7 @@ export function AppContext(props: Props) {
         cart:
           state.cart.length < 2
             ? []
-            : [...state.cart.filter((product) => product.productId !== currentProductId)]
+            : state.cart.filter((product) => product.productId !== currentProductId)
       }
     });
   };
@@ -329,7 +327,7 @@ export function AppContext(props: Props) {
             addProductToCart,
             removeProductFromCart,
             updateCartProduct,
-            geCartProduct,
+            getCartProduct,
             cartModalController
           }}>
           <ModulesContext>{props.children}</ModulesContext>

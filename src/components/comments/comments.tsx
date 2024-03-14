@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
-import { DeleteCommentPrompt } from '../modals/DeleteCommentPrompt';
+import { DeleteCommentPrompt } from '../modals/delete-comment-prompt';
 import { Comment } from './comment';
 import { CommentForm } from './comment-form';
 import { ReplyComment } from './reply-comment';

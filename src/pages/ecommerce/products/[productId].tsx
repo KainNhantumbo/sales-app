@@ -1,6 +1,6 @@
 import { Comments } from '@/components/comments/comments';
 import Layout from '@/components/layout';
-import { ShareProducts } from '@/components/modals/ShareProductModal';
+import { ShareProducts } from '@/components/modals/share-product-prompt';
 import { NewsLetter } from '@/components/newsletter';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
@@ -53,7 +53,7 @@ export default function Page({ product, error_message }: any) {
     addProductToCart,
     removeProductFromCart,
     updateCartProduct,
-    geCartProduct
+    getCartProduct
   } = useAppContext();
   const { requestLogin } = useModulesContext();
   const theme = useTheme();
@@ -311,8 +311,8 @@ export default function Page({ product, error_message }: any) {
                             ? updateCartProduct({
                                 productId: state.publicProduct._id,
                                 quantity:
-                                  geCartProduct(state.publicProduct._id).quantity > 1
-                                    ? geCartProduct(state.publicProduct._id).quantity - 1
+                                  getCartProduct(state.publicProduct._id).quantity > 1
+                                    ? getCartProduct(state.publicProduct._id).quantity - 1
                                     : 1
                               })
                             : addProductToCart({
@@ -340,7 +340,7 @@ export default function Page({ product, error_message }: any) {
                         title='Quantidade'
                         min={1}
                         aria-label='Quantidade'
-                        value={geCartProduct(state.publicProduct._id).quantity}
+                        value={getCartProduct(state.publicProduct._id).quantity}
                         onChange={(e) =>
                           state.cart.some(
                             (product) => product.productId === state.publicProduct._id
@@ -378,7 +378,7 @@ export default function Page({ product, error_message }: any) {
                             ? updateCartProduct({
                                 productId: state.publicProduct._id,
                                 quantity:
-                                  geCartProduct(state.publicProduct._id).quantity + 1
+                                  getCartProduct(state.publicProduct._id).quantity + 1
                               })
                             : addProductToCart({
                                 productId: state.publicProduct._id,

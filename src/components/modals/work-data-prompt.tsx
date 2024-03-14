@@ -1,7 +1,7 @@
 import { useAppContext } from '@/context/AppContext';
 import { _capturer as Container } from '@/styles/modules/working-capturer';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import {
   IoCalendarNumberOutline,
   IoCheckmark,
@@ -11,7 +11,7 @@ import {
   IoPushOutline
 } from 'react-icons/io5';
 
-interface Props {
+type Props = {
   setStateFn: Dispatch<
     SetStateAction<{
       id: string;
@@ -34,9 +34,9 @@ interface Props {
   };
   saveFn: () => void;
   updateFn: (id: string) => void;
-}
+};
 
-export function WorkCapturer(props: Props) {
+export function WorkDataPrompt(props: Props) {
   const { state, userWorkingDataController } = useAppContext();
 
   return (
