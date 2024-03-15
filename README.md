@@ -8,7 +8,7 @@ I wanted to create an app similar to Shopify but small in size, keeping the conc
 
 You can find the API source code [here](https://github.com/KainNhantumbo/sales-api) to learn more about the features implementation on the backend.
 
-**Access this app live at: [https://rubymart-demo.vercel.app](https://rubymart-demo.vercel.app)**
+**Access this app live at: [https://sales-app-demo.vercel.app](https://sales-app-demo.vercel.app)**
 
 ## 📷 **Here are some screenshots:**
 
