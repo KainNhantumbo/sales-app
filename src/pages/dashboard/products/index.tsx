@@ -6,11 +6,11 @@ import { SortBox } from '@/components/modals/sort-box';
 import { ToolBox } from '@/components/modals/tool-box';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
+import { useProductsQuery } from '@/hooks/products-query-hook';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _productList as Container } from '@/styles/common/products';
-import { HttpError, ProductsList } from '@/types';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { HttpError } from '@/types';
 import moment from 'moment';
 import Link from 'next/link';
 import { useEffect } from 'react';
@@ -25,7 +25,6 @@ import {
   IoWarningOutline
 } from 'react-icons/io5';
 import { VscEmptyWindow } from 'react-icons/vsc';
-import { useInView } from 'react-intersection-observer';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
@@ -37,28 +36,9 @@ export default function Page() {
     shareProductController,
     deleteProductPromptController
   } = useAppContext();
-  const LIMIT: number = 12;
   const theme = useTheme();
-  const { ref, inView } = useInView();
-
-  const fetchProducts = async ({ pageParam = 0 }) => {
-    const { data } = await httpClient<ProductsList[]>({
-      url: `/api/v1/users/products?offset=${
-        LIMIT * pageParam
-      }&limit=${LIMIT}fields=name,price,quantity,promotion,category,favorites,createdAt,updatedAt&sort=${
-        state.productsListQuery.sort || 'updatedAt'
-      }&search=${state.productsListQuery.query || ''}`
-    });
-    return { data, currentOffset: pageParam + 1 };
-  };
-
-  const { data, fetchNextPage, refetch, hasNextPage, isLoading, isError, error } =
-    useInfiniteQuery({
-      queryKey: ['private-store-products'],
-      queryFn: fetchProducts,
-      getNextPageParam: (lastPage) =>
-        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
-    });
+  const { error, inViewRef, refetch, isError, isLoading, fetchNextPage, hasNextPage } =
+    useProductsQuery();
 
   const handleDeleteProduct = async (productId: string) => {
     try {
@@ -76,48 +56,7 @@ export default function Page() {
   };
 
   useEffect(() => {
-    if (data) {
-      const reducedData = data?.pages
-        .map((page) => {
-          return page.data;
-        })
-        .reduce((accumulator, currentObj) => [...accumulator, ...currentObj]);
-
-      dispatch({
-        type: actions.PRODUCTS_LIST_DATA,
-        payload: {
-          ...state,
-          productList: [...reducedData]
-        }
-      });
-    }
-
-    return () =>
-      dispatch({
-        type: actions.PRODUCTS_LIST_DATA,
-        payload: { ...state, productList: [] }
-      });
-  }, [data]);
-
-  useEffect(() => {
-    const debounceTimer = setTimeout(() => {
-      refetch({ queryKey: ['private-store-products'] });
-    }, 500);
-    return () => clearTimeout(debounceTimer);
-  }, [state.productsListQuery]);
-
-  useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, fetchNextPage, hasNextPage]);
-
-  useEffect(() => {
-    return () =>
-      dispatch({
-        type: actions.CLEAN_UP_MODALS,
-        payload: { ...state }
-      });
+    return () => dispatch({ type: actions.CLEAN_UP_MODALS, payload: { ...state } });
   }, []);
 
   return (
@@ -159,7 +98,7 @@ export default function Page() {
                 <div
                   key={product._id}
                   className='products-list_item'
-                  ref={state.productList.length === index + 1 ? ref : undefined}>
+                  ref={state.productList.length === index + 1 ? inViewRef : undefined}>
                   {index === 0 && (
                     <ShareProducts
                       productId={product._id}

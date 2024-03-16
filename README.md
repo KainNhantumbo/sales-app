@@ -114,8 +114,8 @@ Builds and starts the server in production.
 
 📭 E-mail: [nhantumbok@gmail.com](nhantumbok@gmail.com 'Send an e-mail')\
 📚 Github: [https://github.com/KainNhantumbo](https://github.com/KainNhantumbo 'See my github profile')
-📑 Portfolio: [https://portifolio-dev-mu.vercel.app](https://portifolio-dev-mu.vercel.app 'See my portfolio website')\
-✒️ My Blog: [https://publish-it-programming.vercel.app](https://publish-it-programming.vercel.app 'Visit my blog site')
+📑 Portfolio: [https://codenut-dev.vercel.app](https://codenut-dev.vercel.app 'See my portfolio website')\
+✒️ My Blog: [https://codenut-dev.vercel.app/en/blog](https://codenut-dev.vercel.app/en/blog 'Visit my blog site')
 
 #### If you like this project, let me know by leaving a star on this repository so I can keep improving this app.😊😘
 
@@ -125,7 +125,7 @@ Best regards, Kain Nhantumbo.\
 ## 📜 License
 
 Licensed under Apache License 2.0. All rights reserved.\
-Copyright &copy; 2023 Kain Nhantumbo.
+Copyright &copy; 2024 Kain Nhantumbo.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
