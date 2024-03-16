@@ -246,7 +246,7 @@ export type PublicProduct = {
   specifications: string;
   delivery_tax: number;
   allow_comments: boolean;
-  images: { [x: string]: { id: string; url: string } } | undefined;
+  images: Array<Omit<ProductImage, 'publicId'>>;
   store: {
     _id: string;
     name: string;

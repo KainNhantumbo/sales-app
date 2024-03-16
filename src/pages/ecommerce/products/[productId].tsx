@@ -6,16 +6,19 @@ import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { constants } from '@/data/constants';
-import Categories from '@/data/product-categories.json';
+import { useInnerWindowSize } from '@/hooks/use-window-size';
+import { errorTransformer } from '@/lib/error-transformer';
+import { initialState } from '@/lib/reducer';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import ErrorPage from '@/pages/error-page';
 import { actions } from '@/shared/actions';
 import { _commerceProduct as Container } from '@/styles/common/ecommerce-product';
-import { HttpError, Product } from '@/types';
+import type { HttpError, PublicProduct } from '@/types';
 import { motion } from 'framer-motion';
+import type { GetStaticPropsContext } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { FaCartPlus } from 'react-icons/fa';
 import {
   IoAdd,
@@ -44,7 +47,9 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import QRCode from 'react-qr-code';
 import { useTheme } from 'styled-components';
 
-export default function Page({ product, error_message }: any) {
+type Props = { product?: PublicProduct; error_message?: string };
+
+export default function Page({ product, error_message }: Props) {
   const {
     state,
     dispatch,
@@ -56,9 +61,9 @@ export default function Page({ product, error_message }: any) {
     getCartProduct
   } = useAppContext();
   const { requestLogin } = useModulesContext();
+  const { width: innerWindowWidth } = useInnerWindowSize();
   const theme = useTheme();
   const router = useRouter();
-  const [innerWidth, setInnerWidth] = useState<number>(0);
 
   const handleFavoriteProduct = async (id: string) => {
     try {
@@ -100,59 +105,17 @@ export default function Page({ product, error_message }: any) {
     }
   };
 
-  const trackInnerWidth = () => setInnerWidth(window.innerWidth);
-
-  useEffect(() => {
-    trackInnerWidth();
-    window.addEventListener('resize', trackInnerWidth);
-    return () => {
-      window.removeEventListener('resize', trackInnerWidth);
-    };
-  }, []);
-
   useEffect(() => {
     if (product) {
       dispatch({
         type: actions.PUBLIC_PRODUCT_DATA,
-        payload: {
-          ...state,
-          publicProduct: { ...state.publicProduct, ...product }
-        }
+        payload: { ...state, publicProduct: { ...state.publicProduct, ...product } }
       });
     }
     return () => {
       dispatch({
         type: actions.PUBLIC_PRODUCT_DATA,
-        payload: {
-          ...state,
-          publicProduct: {
-            _id: '',
-            name: '',
-            category: Categories[0],
-            description: '',
-            specifications: '',
-            created_by: '',
-            store: {
-              _id: '',
-              name: '',
-              location: {
-                country: '',
-                state: '',
-                address: ''
-              },
-              category: '',
-              verified_store: false
-            },
-            promotion: { status: false, percentage: 0 },
-            price: 0,
-            delivery_tax: 0,
-            images: undefined,
-            createdAt: '',
-            updatedAt: '',
-            favorites: [],
-            allow_comments: true
-          }
-        }
+        payload: { ...state, publicProduct: initialState.publicProduct }
       });
     };
   }, []);
@@ -182,7 +145,7 @@ export default function Page({ product, error_message }: any) {
         <div className='wrapper-container'>
           <aside>
             <div className='images-container'>
-              {state.publicProduct.images && Object.values(product.images).length > 0 && (
+              {product.images.length > 0 && (
                 <ReactImageGallery
                   lazyLoad={true}
                   useBrowserFullscreen={true}
@@ -190,14 +153,14 @@ export default function Page({ product, error_message }: any) {
                   autoPlay={false}
                   showPlayButton={false}
                   showThumbnails={
-                    innerWidth < 445
-                      ? Object.values(state.publicProduct.images).length >= 2
+                    innerWindowWidth < 445
+                      ? product.images.length >= 2
                         ? true
                         : false
                       : true
                   }
-                  thumbnailPosition={innerWidth > 445 ? 'left' : 'bottom'}
-                  items={Object.values(state.publicProduct.images).map((image) => ({
+                  thumbnailPosition={innerWindowWidth > 445 ? 'left' : 'bottom'}
+                  items={product.images.map((image) => ({
                     thumbnail: image.url,
                     original: image.url
                   }))}
@@ -220,24 +183,24 @@ export default function Page({ product, error_message }: any) {
               )}
 
               {!product.images ||
-                (Object.values(product.images).length < 1 && (
+                (product.images?.length < 1 ? (
                   <IoBagHandle title='Produto sem imagem' className='no-image-icon' />
-                ))}
+                ) : null)}
             </div>
 
             <section className='product-container'>
               <div className='product-name'>
                 <h1>
-                  <span>{state.publicProduct.name}</span>
+                  <span>{product.name}</span>
                 </h1>
                 <p>
-                  Categorizado em <i>{state.publicProduct.category}</i>.
+                  Categorizado em <i>{product.category}</i>.
                 </p>
               </div>
 
               <section className='front-container'>
                 <div className='product-details'>
-                  {state.publicProduct.promotion.status ? (
+                  {product.promotion.status ? (
                     <div className='price-container'>
                       <p className='promo-alert'>
                         <IoFlame />
@@ -245,10 +208,8 @@ export default function Page({ product, error_message }: any) {
                       </p>{' '}
                       <span className='actual-price'>
                         {formatCurrency(
-                          state.publicProduct.price -
-                            (state.publicProduct.price *
-                              state.publicProduct.promotion.percentage) /
-                              100
+                          product.price -
+                            (product.price * product.promotion.percentage) / 100
                         )}
                       </span>
                     </div>
@@ -267,11 +228,11 @@ export default function Page({ product, error_message }: any) {
                     className='favorite-button'
                     onClick={() => {
                       if (!state.auth?.id) return requestLogin();
-                      if (state.publicProduct.favorites.includes(state.auth?.id))
-                        return handleUnFavoriteProduct(state.publicProduct._id);
-                      return handleFavoriteProduct(state.publicProduct._id);
+                      if (product.favorites.includes(state.auth?.id))
+                        return handleUnFavoriteProduct(product._id);
+                      return handleFavoriteProduct(product._id);
                     }}>
-                    {state.publicProduct.favorites.includes(state.auth.id) ? (
+                    {product.favorites.includes(state.auth.id) ? (
                       <>
                         <IoHeart />
                         <span>Adicionado aos favoritos</span>
@@ -305,30 +266,26 @@ export default function Page({ product, error_message }: any) {
                         whileTap={{ scale: 0.8 }}
                         whileHover={{ scale: 1.05 }}
                         onClick={() =>
-                          state.cart.some(
-                            (product) => product.productId === state.publicProduct._id
-                          )
+                          state.cart.some((item) => item.productId === product._id)
                             ? updateCartProduct({
-                                productId: state.publicProduct._id,
+                                productId: product._id,
                                 quantity:
-                                  getCartProduct(state.publicProduct._id).quantity > 1
-                                    ? getCartProduct(state.publicProduct._id).quantity - 1
+                                  getCartProduct(product._id).quantity > 1
+                                    ? getCartProduct(product._id).quantity - 1
                                     : 1
                               })
                             : addProductToCart({
-                                productId: state.publicProduct._id,
-                                productName: state.publicProduct.name,
+                                productId: product._id,
+                                productName: product.name,
                                 quantity: 1,
-                                price: state.publicProduct.promotion.status
-                                  ? state.publicProduct.price -
-                                    (state.publicProduct.price *
-                                      state.publicProduct.promotion.percentage) /
-                                      100
-                                  : state.publicProduct.price,
-                                previewImage: state.publicProduct.images
+                                price: product.promotion.status
+                                  ? product.price -
+                                    (product.price * product.promotion.percentage) / 100
+                                  : product.price,
+                                previewImage: product.images
                                   ? {
-                                      id: Object.values(state.publicProduct.images)[0]?.id,
-                                      url: Object.values(state.publicProduct.images)[0]?.url
+                                      id: product.images[0]?.id,
+                                      url: product.images[0]?.url
                                     }
                                   : undefined
                               })
@@ -340,29 +297,25 @@ export default function Page({ product, error_message }: any) {
                         title='Quantidade'
                         min={1}
                         aria-label='Quantidade'
-                        value={getCartProduct(state.publicProduct._id).quantity}
+                        value={getCartProduct(product._id).quantity}
                         onChange={(e) =>
-                          state.cart.some(
-                            (product) => product.productId === state.publicProduct._id
-                          )
+                          state.cart.some((item) => item.productId === product._id)
                             ? updateCartProduct({
-                                productId: state.publicProduct._id,
-                                quantity: Number(e.target.value)
+                                productId: product._id,
+                                quantity: +e.target.value
                               })
                             : addProductToCart({
-                                productId: state.publicProduct._id,
-                                productName: state.publicProduct.name,
+                                productId: product._id,
+                                productName: product.name,
                                 quantity: 1,
-                                price: state.publicProduct.promotion.status
-                                  ? state.publicProduct.price -
-                                    (state.publicProduct.price *
-                                      state.publicProduct.promotion.percentage) /
-                                      100
-                                  : state.publicProduct.price,
-                                previewImage: state.publicProduct.images
+                                price: product.promotion.status
+                                  ? product.price -
+                                    (product.price * product.promotion.percentage) / 100
+                                  : product.price,
+                                previewImage: product.images
                                   ? {
-                                      id: Object.values(state.publicProduct.images)[0]?.id,
-                                      url: Object.values(state.publicProduct.images)[0]?.url
+                                      id: product.images[0]?.id,
+                                      url: product.images[0]?.url
                                     }
                                   : undefined
                               })
@@ -372,28 +325,23 @@ export default function Page({ product, error_message }: any) {
                         whileTap={{ scale: 0.8 }}
                         whileHover={{ scale: 1.05 }}
                         onClick={() =>
-                          state.cart.some(
-                            (product) => product.productId === state.publicProduct._id
-                          )
+                          state.cart.some((item) => item.productId === product._id)
                             ? updateCartProduct({
-                                productId: state.publicProduct._id,
-                                quantity:
-                                  getCartProduct(state.publicProduct._id).quantity + 1
+                                productId: product._id,
+                                quantity: getCartProduct(product._id).quantity + 1
                               })
                             : addProductToCart({
-                                productId: state.publicProduct._id,
-                                productName: state.publicProduct.name,
+                                productId: product._id,
+                                productName: product.name,
                                 quantity: 1,
-                                price: state.publicProduct.promotion.status
-                                  ? state.publicProduct.price -
-                                    (state.publicProduct.price *
-                                      state.publicProduct.promotion.percentage) /
-                                      100
+                                price: product.promotion.status
+                                  ? product.price -
+                                    (product.price * product.promotion.percentage) / 100
                                   : state.publicProduct.price,
                                 previewImage: state.publicProduct.images
                                   ? {
-                                      id: Object.values(state.publicProduct.images)[0]?.id,
-                                      url: Object.values(state.publicProduct.images)[0]?.url
+                                      id: state.publicProduct.images[0]?.id,
+                                      url: state.publicProduct.images[0]?.url
                                     }
                                   : undefined
                               })
@@ -425,8 +373,8 @@ export default function Page({ product, error_message }: any) {
                               : state.publicProduct.price,
                             previewImage: state.publicProduct.images
                               ? {
-                                  id: Object.values(state.publicProduct.images)[0]?.id,
-                                  url: Object.values(state.publicProduct.images)[0]?.url
+                                  id: state.publicProduct.images[0]?.id,
+                                  url: state.publicProduct.images[0]?.url
                                 }
                               : undefined
                           });
@@ -458,8 +406,8 @@ export default function Page({ product, error_message }: any) {
                                 : state.publicProduct.price,
                               previewImage: state.publicProduct.images
                                 ? {
-                                    id: Object.values(state.publicProduct.images)[0]?.id,
-                                    url: Object.values(state.publicProduct.images)[0]?.url
+                                    id: state.publicProduct.images[0]?.id,
+                                    url: state.publicProduct.images[0]?.url
                                   }
                                 : undefined
                             })
@@ -528,17 +476,17 @@ export default function Page({ product, error_message }: any) {
                 </h3>
               </div>
               <section className='content-container'>
-                {state.publicProduct.description.includes('\n') ? (
-                  state.publicProduct.description
+                {product.description.includes('\n') ? (
+                  product.description
                     .split('\n')
                     .map((phrase, index) => <p key={String(index)}>{phrase}</p>)
                 ) : (
-                  <p>{state.publicProduct.description}</p>
+                  <p>{product.description}</p>
                 )}
               </section>
             </div>
 
-            {state.publicProduct.specifications && (
+            {product.specifications && (
               <div className='data-section'>
                 <div className='description'>
                   <h3>
@@ -547,12 +495,12 @@ export default function Page({ product, error_message }: any) {
                   </h3>
                 </div>
                 <section className='content-container'>
-                  {state.publicProduct.specifications.includes('\n') ? (
-                    state.publicProduct.specifications
+                  {product.specifications.includes('\n') ? (
+                    product.specifications
                       .split('\n')
                       .map((phrase, index) => <p key={String(index)}>{phrase}</p>)
                   ) : (
-                    <p>{state.publicProduct.specifications}</p>
+                    <p>{product.specifications}</p>
                   )}
                 </section>
               </div>
@@ -567,19 +515,18 @@ export default function Page({ product, error_message }: any) {
               </div>
               <section className='content-container meta-data'>
                 <p>
-                  <i>ID do Produto:</i> {state.publicProduct._id}
+                  <i>ID do Produto:</i> {product._id}
                 </p>
                 <div>
                   <h3>
                     <span>
-                      <i>Publicado em:</i> {formatDate(state.publicProduct.createdAt)}
+                      <i>Publicado em:</i> {formatDate(product.createdAt)}
                     </span>
                   </h3>
-                  {state.publicProduct.updatedAt !== state.publicProduct.createdAt && (
+                  {product.updatedAt !== product.createdAt && (
                     <h3>
                       <span>
-                        <i>Última atualização:</i>{' '}
-                        {formatDate(state.publicProduct.updatedAt)}
+                        <i>Última atualização:</i> {formatDate(product.updatedAt)}
                       </span>
                     </h3>
                   )}
@@ -620,7 +567,7 @@ export default function Page({ product, error_message }: any) {
                     className='denounce-anchor'
                     href={`/denounce?url=${constants.websiteUrl.concat(
                       router.asPath
-                    )}&type=product&id=${state.publicProduct._id}`}>
+                    )}&type=product&id=${product._id}`}>
                     <IoAlertCircle />
                     <span>Denunciar Produto</span>
                   </Link>
@@ -636,32 +583,31 @@ export default function Page({ product, error_message }: any) {
               <div className='contents-container'>
                 <section>
                   <div>
-                    <p className='name'>{state.publicProduct.store.name}</p>
+                    <p className='name'>{product.store.name}</p>
                     <p className='category'>
                       Oferece serviços/produtos relacionados a{' '}
-                      <i>{state.publicProduct.store.category}</i>.
+                      <i>{product.store.category}</i>.
                     </p>
                   </div>
 
                   <div className='location'>
                     <p>
-                      Localizada em{' '}
-                      <span>{state.publicProduct.store.location.country}</span> -{' '}
-                      <span>{state.publicProduct.store.location.state}</span>
+                      Localizada em <span>{product.store.location.country}</span> -{' '}
+                      <span>{product.store.location.state}</span>
                       <span>
-                        {state.publicProduct.store.location.address
-                          ? `, ${state.publicProduct.store.location.address}`
+                        {product.store.location.address
+                          ? `, ${product.store.location.address}`
                           : '.'}
                       </span>
                     </p>
                   </div>
                 </section>
-                <Link href={`/community/store/${state.publicProduct.store._id}`}>
+                <Link href={`/community/store/${product.store._id}`}>
                   <IoPaperPlane />
                   <span>Visitar loja</span>
                 </Link>
                 <h5>
-                  {state.publicProduct.store.verified_store ? (
+                  {product.store.verified_store ? (
                     <>
                       <VscVerifiedFilled />
                       <span>Loja verificada</span>
@@ -676,8 +622,8 @@ export default function Page({ product, error_message }: any) {
               </div>
             </section>
 
-            {state.publicProduct.allow_comments ? (
-              <Comments key={state.publicProduct._id} contentId={state.publicProduct._id} />
+            {product.allow_comments ? (
+              <Comments key={product._id} contentId={product._id} />
             ) : (
               <div className='no-comments-message'>
                 <h3>
@@ -704,19 +650,20 @@ export async function getStaticPaths() {
   return { paths: productIdList, fallback: false };
 }
 
-export async function getStaticProps({ params: { productId } }: any) {
+export async function getStaticProps<
+  T extends GetStaticPropsContext<{ productId?: string }>
+>(props: T) {
   try {
-    const { data } = await fetch<Product>({
+    const { data } = await fetch<PublicProduct>({
       method: 'get',
-      url: `/api/v1/users/products/public/${productId}`
+      url: `/api/v1/users/products/public/${props.params?.productId}`
     });
     return { props: { product: { ...data } }, revalidate: 10 };
   } catch (error) {
     console.error(error);
     return {
       props: {
-        error_message:
-          (error as HttpError).response?.data?.message || (error as HttpError).message
+        error_message: errorTransformer(error as HttpError)
       },
       revalidate: 10
     };
