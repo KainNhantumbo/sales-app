@@ -8,7 +8,7 @@ import {
   orderStatusOptions,
   order_status_labels
 } from '@/data/constants';
-import { useUserOrdersQuery } from '@/hooks/user-orders-query-hook';
+import { useUserOrdersQuery } from '@/hooks/use-orders-query';
 import { formatDate } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _myOrders as Container } from '@/styles/common/my-orders';

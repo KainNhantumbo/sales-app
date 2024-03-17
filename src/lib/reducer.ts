@@ -207,7 +207,7 @@ export const initialState: State = {
     promotion: { status: false, percentage: 0 },
     price: 0,
     delivery_tax: 0,
-    images: undefined,
+    images: [],
     createdAt: '',
     updatedAt: '',
     favorites: [],

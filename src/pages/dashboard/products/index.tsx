@@ -6,7 +6,7 @@ import { SortBox } from '@/components/modals/sort-box';
 import { ToolBox } from '@/components/modals/tool-box';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
-import { useProductsQuery } from '@/hooks/products-query-hook';
+import { useProductsQuery } from '@/hooks/use-products-query';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _productList as Container } from '@/styles/common/products';
