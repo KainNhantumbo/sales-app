@@ -259,11 +259,7 @@ export type PublicStore = {
   privacy_policy?: string;
   terms_policy?: string;
   delivery_policy?: string;
-  location: {
-    country: string;
-    state: string;
-    address?: string;
-  };
+  location: { country: string; state: string; address?: string };
   createdAt: string;
   updatedAt: string;
 };

@@ -38,7 +38,7 @@ export function StoriesRenderer(props: Props) {
 
   const getStories = async ({
     pageParam = 0
-  }): Promise<{ data: PublicStory[]; currentOffset: number }> => {
+  }) => {
     const { data } = await fetch<PublicStory[]>({
       method: 'get',
       url: `/api/v1/users/stories${props.userId ? `?userId=${props.userId}` : ''}${
@@ -56,8 +56,7 @@ export function StoriesRenderer(props: Props) {
     useInfiniteQuery({
       queryKey: ['user-stories'],
       queryFn: getStories,
-      getNextPageParam: (lastPage) =>
-        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
+      getNextPageParam: (lastPage) => lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
     });
 
   const handleDeleteStory = async (storeId: string) => {
@@ -126,9 +125,7 @@ export function StoriesRenderer(props: Props) {
   useEffect(() => {
     if (data) {
       const reducedStories = data?.pages
-        .map((page) => {
-          return page.data;
-        })
+        .map((page) => page.data)
         .reduce((accumulator, currentObj) => [...accumulator, ...currentObj]);
 
       dispatch({
