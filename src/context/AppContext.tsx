@@ -1,18 +1,18 @@
 import fetch from '@/config/client';
+import { useCartStore } from '@/hooks/use-cart-store';
+import { errorTransformer } from '@/lib/error-transformer';
 import { initialState, reducer } from '@/lib/reducer';
 import { actions } from '@/shared/actions';
-import { useIsomorphicLayoutEffect } from '@/shared/custom-layout-effect';
-import type { Action, State } from '@/types';
-import type { Auth, Cart, HttpError } from '@/types/index';
+import type { Action, Auth, HttpError, State } from '@/types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
 import {
-  Dispatch,
   createContext,
   useContext,
   useEffect,
   useReducer,
+  type Dispatch,
   type ReactNode
 } from 'react';
 import { ModulesContext } from './Modules';
@@ -32,81 +32,52 @@ type Context = {
   deleteProductPromptController: (status: boolean, id: string) => void;
   shareProductController: () => void;
   sortBoxController: () => void;
-  cartModalController: () => void;
   searchBoxController: () => void;
   deleteAccountPromptController: () => void;
   deactivateStorePromptController: () => void;
   userWorkingDataController: () => void;
-  addProductToCart: (product: Cart) => void;
-  removeProductFromCart: (currentProductId: string) => void;
-  updateCartProduct: (props: { productId: string; quantity: number }) => void;
-  getCartProduct: (currentProductId: string) => Cart;
   httpClient: <T>(config: AxiosRequestConfig) => Promise<AxiosResponse<T, any>>;
-}
+};
 
 const context = createContext<Context>({
   state: initialState,
   dispatch: () => {},
   httpClient: (): any => {},
   searchBoxController: () => {},
-  cartModalController: () => {},
   sortBoxController: () => {},
   deleteAccountPromptController: () => {},
   deactivateStorePromptController: () => {},
   deleteProductPromptController: () => {},
   deleteCommentPromptController: () => {},
   deleteStoryPromptController: () => {},
-  removeProductFromCart: () => {},
-  updateCartProduct: () => {},
-  addProductToCart: () => {},
   shareProductController: () => {},
-  userWorkingDataController: () => {},
-  getCartProduct: () => ({
-    productId: '',
-    quantity: 1,
-    productName: '',
-    price: 0,
-    previewImage: undefined
-  })
+  userWorkingDataController: () => {}
 });
 
 export function AppContext(props: Props) {
-  const CART_KEY: string = 'cart-items';
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // initialize cart on start
+  useCartStore();
+
   // ============= modal controllers =================== //
-  const cartModalController = () => {
-    dispatch({
-      type: actions.CART_MODAL,
-      payload: { ...state, isCartModal: !state.isCartModal }
-    });
-  };
   const userWorkingDataController = () => {
     dispatch({
       type: actions.USER_WORKING_DATA_MODAL,
-      payload: {
-        ...state,
-        isUserWorkingDataModal: !state.isUserWorkingDataModal
-      }
+      payload: { ...state, isUserWorkingDataModal: !state.isUserWorkingDataModal }
     });
   };
   const deleteAccountPromptController = () => {
     dispatch({
       type: actions.DELETE_ACCOUNT_PROMPT,
-      payload: {
-        ...state,
-        isDeleteAccountPrompt: !state.isDeleteAccountPrompt
-      }
+      payload: { ...state, isDeleteAccountPrompt: !state.isDeleteAccountPrompt }
     });
   };
   const deactivateStorePromptController = () => {
     dispatch({
       type: actions.DEACTIVATE_STORE_PROMPT,
-      payload: {
-        ...state,
-        isDeactivateStorePrompt: !state.isDeactivateStorePrompt
-      }
+      payload: { ...state, isDeactivateStorePrompt: !state.isDeactivateStorePrompt }
     });
   };
 
@@ -127,115 +98,29 @@ export function AppContext(props: Props) {
   const deleteCommentPromptController = (status: boolean, id?: string) => {
     dispatch({
       type: actions.DELETE_COMMENT_PROMPT,
-      payload: {
-        ...state,
-        isDeleteCommentPrompt: { status, commentId: id ?? '' }
-      }
+      payload: { ...state, isDeleteCommentPrompt: { status, commentId: id ?? '' } }
     });
   };
 
   const deleteStoryPromptController = (status: boolean, id?: string) => {
     dispatch({
       type: actions.DELETE_STORY_PROMPT,
-      payload: {
-        ...state,
-        isDeleteStoryPrompt: { status, storyId: id ?? '' }
-      }
+      payload: { ...state, isDeleteStoryPrompt: { status, storyId: id ?? '' } }
     });
   };
 
   const deleteProductPromptController = (status: boolean, id?: string) => {
     dispatch({
       type: actions.DELETE_PRODUCT_PROMPT,
-      payload: {
-        ...state,
-        isDeleteProductPrompt: { status, productId: id ?? '' }
-      }
+      payload: { ...state, isDeleteProductPrompt: { status, productId: id ?? '' } }
     });
   };
 
   const shareProductController = () => {
     dispatch({
       type: actions.SHARE_PRODUCT_MODAL,
-      payload: {
-        ...state,
-        isShareProductModal: !state.isShareProductModal
-      }
+      payload: { ...state, isShareProductModal: !state.isShareProductModal }
     });
-  };
-
-  // ----------------product cart--------------------------
-  const getCartProduct = (currentProductId: string): Cart => {
-    const foundProduct = state.cart.some(
-      (product) => product.productId === currentProductId
-    );
-
-    if (foundProduct)
-      return state.cart.filter((product) => product.productId === currentProductId)[0];
-    return {
-      productId: '',
-      quantity: 1,
-      productName: '',
-      previewImage: undefined,
-      price: 0
-    };
-  };
-
-  const updateCartProduct = (props: { productId: string; quantity: number }) => {
-    dispatch({
-      type: actions.PRODUCTS_CART,
-      payload: {
-        ...state,
-        cart: state.cart.map((product) =>
-          product.productId === props.productId ? { ...product, ...props } : product
-        )
-      }
-    });
-  };
-
-  const removeProductFromCart = (currentProductId: string) => {
-    dispatch({
-      type: actions.PRODUCTS_CART,
-      payload: {
-        ...state,
-        cart:
-          state.cart.length < 2
-            ? []
-            : state.cart.filter((product) => product.productId !== currentProductId)
-      }
-    });
-  };
-
-  const addProductToCart = (product: Cart) => {
-    dispatch({
-      type: actions.PRODUCTS_CART,
-      payload: {
-        ...state,
-        cart: [...state.cart, { ...product }]
-      }
-    });
-  };
-
-  const syncCartToLocalStorage = () => {
-    localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
-  };
-
-  useEffect(() => {
-    syncCartToLocalStorage();
-  }, [state.cart]);
-
-  useIsomorphicLayoutEffect(() => {
-    restoreCartFromLocalStorage();
-  }, []);
-
-  const restoreCartFromLocalStorage = () => {
-    const data: Cart[] = JSON.parse(localStorage.getItem(CART_KEY) || `[]`);
-
-    if (data?.length > 0)
-      dispatch({
-        type: actions.PRODUCTS_CART,
-        payload: { ...state, cart: data }
-      });
   };
 
   const validateAuth = async () => {
@@ -245,14 +130,9 @@ export function AppContext(props: Props) {
         url: '/api/v1/auth/default/refresh',
         withCredentials: true
       });
-      dispatch({
-        type: actions.USER_AUTH,
-        payload: { ...state, auth: { ...data } }
-      });
+      dispatch({ type: actions.USER_AUTH, payload: { ...state, auth: { ...data } } });
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
+      console.error(errorTransformer(error as HttpError));
     }
   };
 
@@ -261,9 +141,7 @@ export function AppContext(props: Props) {
       const status = Number(error.status);
       if (status > 400 && status < 404) {
         validateAuth().catch((error) => {
-          console.error(
-            (error as HttpError).response?.data?.message || (error as HttpError).message
-          );
+          console.error(errorTransformer(error as HttpError));
           router.push('/auth/sign-in');
         });
       }
@@ -282,14 +160,9 @@ export function AppContext(props: Props) {
         url: '/api/v1/auth/default/refresh',
         withCredentials: true
       });
-      dispatch({
-        type: actions.USER_AUTH,
-        payload: { ...state, auth: { ...data } }
-      });
+      dispatch({ type: actions.USER_AUTH, payload: { ...state, auth: { ...data } } });
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
+      console.error(errorTransformer(error as HttpError));
     }
   };
 
@@ -298,12 +171,7 @@ export function AppContext(props: Props) {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(
-      () => {
-        validateAuth();
-      },
-      1000 * 60 * 4
-    );
+    const timer = setTimeout(() => validateAuth(), 1000 * 60 * 4);
     return () => clearTimeout(timer);
   }, [state.auth]);
 
@@ -323,12 +191,7 @@ export function AppContext(props: Props) {
             deleteAccountPromptController,
             deactivateStorePromptController,
             deleteStoryPromptController,
-            shareProductController,
-            addProductToCart,
-            removeProductFromCart,
-            updateCartProduct,
-            getCartProduct,
-            cartModalController
+            shareProductController
           }}>
           <ModulesContext>{props.children}</ModulesContext>
         </context.Provider>

@@ -13,12 +13,7 @@ export default function EditorJsRenderer({ data }: Props) {
     <>
       {html.map((item, index) => {
         if (typeof item === 'string') {
-          return (
-            <div
-              dangerouslySetInnerHTML={{ __html: item }}
-              key={String(index)}
-            />
-          );
+          return <div dangerouslySetInnerHTML={{ __html: item }} key={String(index)} />;
         }
       })}
     </>

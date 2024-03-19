@@ -6,7 +6,7 @@ type Props = {
   message?: string;
   button_message?: string;
   retryFn: () => void;
-}
+};
 
 export default function Page(props: Props) {
   return (

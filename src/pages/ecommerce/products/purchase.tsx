@@ -4,6 +4,7 @@ import { PaymentGatewayRenderer } from '@/components/payment-gateway-renderer';
 import { SelectContainer } from '@/components/select';
 import { useAppContext } from '@/context/AppContext';
 import { blurDataUrlImage, constants, payment_options, states } from '@/data/constants';
+import { useCartStore } from '@/hooks/use-cart-store';
 import { initialState } from '@/lib/reducer';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
@@ -28,13 +29,15 @@ import {
 } from 'react-icons/io5';
 import { useTheme } from 'styled-components';
 
+// TODO: set errors and display them to user for this page
 const initialErrorState = new Error();
 
 export default function Page() {
   const theme = useTheme();
   const router = useRouter();
   const [error, setError] = useState(initialErrorState);
-  const { state, dispatch, httpClient, cartModalController } = useAppContext();
+  const { state, dispatch, httpClient } = useAppContext();
+  const { cartModalController } = useCartStore();
 
   const handleChange = (e: InputEvents) => {
     dispatch({

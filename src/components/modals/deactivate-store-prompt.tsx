@@ -35,15 +35,11 @@ const DeactivatePrompt = () => {
                 <span className='prompt-title'>Desativar Loja</span>
                 <div className='prompt-message'>
                   <p>Você realmente gostaria de desativar a sua loja?</p>
-                  <p>
-                    A loja e todos os seus produtos ficarão ocultos do público.
-                  </p>
+                  <p>A loja e todos os seus produtos ficarão ocultos do público.</p>
                 </div>
               </div>
               <div className='prompt-actions'>
-                <button
-                  className='prompt-cancel'
-                  onClick={deactivateStorePromptController}>
+                <button className='prompt-cancel' onClick={deactivateStorePromptController}>
                   <IoArrowBackOutline />
                   <span>Cancelar</span>
                 </button>

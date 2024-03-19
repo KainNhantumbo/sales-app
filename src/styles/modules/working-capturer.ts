@@ -1,9 +1,4 @@
-import {
-  BaseButton,
-  BaseButtonOutline,
-  StyledInputs,
-  StyledLabels
-} from '../defaults';
+import { BaseButton, BaseButtonOutline, StyledInputs, StyledLabels } from '../defaults';
 import styled from 'styled-components';
 
 export const _capturer = styled.section`

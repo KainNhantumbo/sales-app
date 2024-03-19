@@ -5,7 +5,7 @@ import { useTheme } from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { _pageLoader as Container } from '@/styles/modules/page-loader';
 
-export  function LoadingIndicator() {
+export function LoadingIndicator() {
   const theme = useTheme();
   const [loadingPage, setLoadingPage] = useState<boolean>(false);
 

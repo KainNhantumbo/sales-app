@@ -6,6 +6,7 @@ import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { constants } from '@/data/constants';
+import { useCartStore } from '@/hooks/use-cart-store';
 import { useInnerWindowSize } from '@/hooks/use-window-size';
 import { errorTransformer } from '@/lib/error-transformer';
 import { initialState } from '@/lib/reducer';
@@ -50,20 +51,13 @@ import { useTheme } from 'styled-components';
 type Props = { product?: PublicProduct; error_message?: string };
 
 export default function Page({ product, error_message }: Props) {
-  const {
-    state,
-    dispatch,
-    httpClient,
-    shareProductController,
-    addProductToCart,
-    removeProductFromCart,
-    updateCartProduct,
-    getCartProduct
-  } = useAppContext();
-  const { requestLogin } = useModulesContext();
-  const { width: innerWindowWidth } = useInnerWindowSize();
   const theme = useTheme();
   const router = useRouter();
+  const { requestLogin } = useModulesContext();
+  const { width: innerWindowWidth } = useInnerWindowSize();
+  const { state, dispatch, httpClient, shareProductController } = useAppContext();
+  const { removeProductFromCart, addProductToCart, getCartProduct, updateCartProduct } =
+    useCartStore();
 
   const handleFavoriteProduct = async (id: string) => {
     try {

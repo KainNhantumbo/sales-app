@@ -94,7 +94,8 @@ export function useUserOrdersQuery() {
     isError,
     error,
     fetchNextPage,
-    refetch, hasNextPage,
+    refetch,
+    hasNextPage,
     inViewRef: ref,
     deleteOrder,
     updateOrder

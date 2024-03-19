@@ -51,9 +51,7 @@ export function Prompt() {
                   }>
                   <span>Cancel</span>
                 </button>
-                <button
-                  className='prompt-accept'
-                  onClick={state.prompt.handleFunction}>
+                <button className='prompt-accept' onClick={state.prompt.handleFunction}>
                   <span>{state.prompt.actionButtonMessage}</span>
                 </button>
               </div>

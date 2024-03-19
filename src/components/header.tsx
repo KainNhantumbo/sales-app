@@ -2,6 +2,8 @@ import rubymart_logo from '@/../public/rubymart_logo.png';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { urls } from '@/data/constants';
+import { useCartStore } from '@/hooks/use-cart-store';
+import { useInnerWindowSize } from '@/hooks/use-window-size';
 import { _header as Container } from '@/styles/modules/header';
 import { AnimatePresence, m as motion } from 'framer-motion';
 import Image from 'next/image';
@@ -19,22 +21,20 @@ import {
 } from 'react-icons/io5';
 
 export function Header() {
+  const { state } = useAppContext();
   const { asPath, push } = useRouter();
   const { logoutUser } = useModulesContext();
+  const { cartModalController } = useCartStore();
   const [isMenu, setIsMenu] = useState<boolean>(false);
-  const { state, cartModalController } = useAppContext();
+  const { width: windowWidth } = useInnerWindowSize();
 
   const toggleMenu = () => setIsMenu(!isMenu);
 
-  const changeWidth = () => (window.innerWidth > 770 ? setIsMenu(true) : setIsMenu(false));
+  const changeWidth = () => (windowWidth > 770 ? setIsMenu(true) : setIsMenu(false));
 
   useEffect(() => {
     changeWidth();
-    window.addEventListener('resize', changeWidth);
-    return () => {
-      window.removeEventListener('resize', changeWidth);
-    };
-  }, []);
+  }, [windowWidth]);
 
   return (
     <Container>

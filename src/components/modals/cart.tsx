@@ -1,6 +1,7 @@
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { blurDataUrlImage } from '@/data/constants';
+import { useCartStore } from '@/hooks/use-cart-store';
 import { formatCurrency } from '@/lib/utils';
 import { _cart as Container } from '@/styles/modules/cart';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -18,15 +19,11 @@ import {
 } from 'react-icons/io5';
 
 export function Cart() {
-  const {
-    state,
-    cartModalController,
-    removeProductFromCart,
-    getCartProduct,
-    updateCartProduct
-  } = useAppContext();
   const router = useRouter();
+  const { state } = useAppContext();
   const { requestLogin } = useModulesContext();
+  const { cartModalController, removeProductFromCart, getCartProduct, updateCartProduct } =
+    useCartStore();
 
   return (
     <AnimatePresence>

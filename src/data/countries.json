@@ -424,15 +424,7 @@
     "alpha2Code": "BY",
     "alpha3Code": "BLR",
     "numberCode": "112",
-    "states": [
-      "Brest",
-      "Homyel",
-      "Horad Minsk",
-      "Hrodna",
-      "Mahilyow",
-      "Minsk",
-      "Vitsyebsk"
-    ]
+    "states": ["Brest", "Homyel", "Horad Minsk", "Hrodna", "Mahilyow", "Minsk", "Vitsyebsk"]
   },
   {
     "country": "Bélgica",
@@ -460,14 +452,7 @@
     "alpha2Code": "BZ",
     "alpha3Code": "BLZ",
     "numberCode": "084",
-    "states": [
-      "Belize",
-      "Cayo",
-      "Corozal",
-      "Orange Walk",
-      "Stann Creek",
-      "Toledo"
-    ]
+    "states": ["Belize", "Cayo", "Corozal", "Orange Walk", "Stann Creek", "Toledo"]
   },
   {
     "country": "Benin",
@@ -1149,14 +1134,7 @@
     "alpha2Code": "CY",
     "alpha3Code": "CYP",
     "numberCode": "196",
-    "states": [
-      "Famagusta",
-      "Kyrenia",
-      "Larnaca",
-      "Limassol",
-      "Nicosia",
-      "Paphos"
-    ]
+    "states": ["Famagusta", "Kyrenia", "Larnaca", "Limassol", "Nicosia", "Paphos"]
   },
   {
     "country": "República Tcheca",
@@ -1705,11 +1683,7 @@
     "alpha2Code": "GL",
     "alpha3Code": "GRL",
     "numberCode": "304",
-    "states": [
-      "Avannaa (Nordgronland)",
-      "Tunu (Ostgronland)",
-      "Kitaa (Vestgronland)"
-    ]
+    "states": ["Avannaa (Nordgronland)", "Tunu (Ostgronland)", "Kitaa (Vestgronland)"]
   },
   {
     "country": "Granada",
@@ -2134,14 +2108,7 @@
     "alpha2Code": "IL",
     "alpha3Code": "ISR",
     "numberCode": "376",
-    "states": [
-      "Central",
-      "Haifa",
-      "Jerusalem",
-      "Northern",
-      "Southern",
-      "Tel Aviv"
-    ]
+    "states": ["Central", "Haifa", "Jerusalem", "Northern", "Southern", "Tel Aviv"]
   },
   {
     "country": "Italia",
@@ -2470,14 +2437,7 @@
     "alpha2Code": "LB",
     "alpha3Code": "LBN",
     "numberCode": "422",
-    "states": [
-      "Beyrouth",
-      "Beqaa",
-      "Liban-Nord",
-      "Liban-Sud",
-      "Mont-Liban",
-      "Nabatiye"
-    ]
+    "states": ["Beyrouth", "Beqaa", "Liban-Nord", "Liban-Sud", "Mont-Liban", "Nabatiye"]
   },
   {
     "country": "Lesoto",
@@ -3925,15 +3885,7 @@
     "alpha2Code": "XK",
     "alpha3Code": "XXK",
     "numberCode": "",
-    "states": [
-      "Ferizaj",
-      "Gjakova",
-      "Gjilan",
-      "Mitrovica",
-      "Peja",
-      "Pristina",
-      "Prizren"
-    ]
+    "states": ["Ferizaj", "Gjakova", "Gjilan", "Mitrovica", "Peja", "Pristina", "Prizren"]
   },
   {
     "country": "Seicheles",

@@ -4,6 +4,7 @@ import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { blurDataUrlImage, constants, formatSocialNetwork } from '@/data/constants';
+import { useCartStore } from '@/hooks/use-cart-store';
 import { formatCurrency, slidePageUp } from '@/lib/utils';
 import ErrorPage from '@/pages/error-page';
 import { actions } from '@/shared/actions';
@@ -37,13 +38,13 @@ import { useTheme } from 'styled-components';
 type Props = { store?: PublicStore; products: PublicProducts[] };
 
 export default function Page({ store, products }: Props) {
-  const { state, dispatch, httpClient, addProductToCart, removeProductFromCart } =
-    useAppContext();
-  const { requestLogin } = useModulesContext();
-  const router = useRouter();
   const theme = useTheme();
+  const router = useRouter();
+  const { state, dispatch, httpClient } = useAppContext();
+  const { addProductToCart, removeProductFromCart } = useCartStore();
+  const { requestLogin } = useModulesContext();
   const [tab, setTab] = useState<'docs' | 'products'>('docs');
-  const [innerWidth, setInnerWidth] = useState(0);
+  const [innerWidth, setInnerWidth] = useState<number>(0);
 
   async function handleFavoriteProduct(id: string) {
     try {

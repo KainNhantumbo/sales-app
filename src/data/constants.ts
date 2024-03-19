@@ -395,3 +395,5 @@ export const orderSortOptions = [
 export const orderStatusOptions = order_status_labels.sort((a, b) =>
   a.label > b.label ? 1 : -1
 );
+
+export const CART_STORE_KEY: string = 'USER-CART-ITEMS';

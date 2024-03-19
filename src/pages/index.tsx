@@ -3,7 +3,9 @@ import { ProductsSearch } from '@/components/products-search';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { blurDataUrlImage, constants } from '@/data/constants';
+import { useCartStore } from '@/hooks/use-cart-store';
 import { usePublicProductsQuery } from '@/hooks/use-public-products-query';
+import { errorTransformer } from '@/lib/error-transformer';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _home as Container } from '@/styles/common/home';
@@ -35,10 +37,10 @@ import type { BannerAds, HttpError } from '../types';
 type Props = { ads_data: BannerAds[] };
 
 export default function Page({ ads_data }: Props) {
-  const { state, dispatch, addProductToCart, removeProductFromCart } = useAppContext();
-  const { requestLogin } = useModulesContext();
   const theme = useTheme();
-
+  const { state, dispatch } = useAppContext();
+  const { requestLogin } = useModulesContext();
+  const { addProductToCart, removeProductFromCart } = useCartStore();
   const {
     fetchNextPage,
     hasNextPage,
@@ -69,15 +71,12 @@ export default function Page({ ads_data }: Props) {
             whileTap={{ scale: 0.8 }}
             whileHover={{ scale: 1.05 }}
             className='openFluentFilters'
-            onClick={() => {
+            onClick={() =>
               dispatch({
                 type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
-                payload: {
-                  ...state,
-                  isPublicProductsFilters: true
-                }
-              });
-            }}>
+                payload: { ...state, isPublicProductsFilters: true }
+              })
+            }>
             <IoSearch />
             <span>Pesquisar e filtrar produtos</span>
           </motion.button>
@@ -99,7 +98,6 @@ export default function Page({ ads_data }: Props) {
                     original: asset.image.url,
                     originalWidth: 1080,
                     originalHeight: 300,
-
                     originalAlt: `Imagem de ${asset.name}`
                   }))}
                   renderRightNav={(onClick, disabled) => (
@@ -307,9 +305,8 @@ export async function getServerSideProps() {
     });
     return { props: { ads_data: data } };
   } catch (error) {
-    console.error(
-      (error as HttpError).response?.data?.message || (error as HttpError).message
-    );
+    console.error(error);
+    console.error(errorTransformer(error as HttpError));
     return { props: { ads_data: [] } };
   }
 }

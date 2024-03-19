@@ -1,3 +1,3 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export const _storeOrders =  styled.section ``
+export const _storeOrders = styled.section``;

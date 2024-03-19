@@ -4,6 +4,7 @@ import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { blurDataUrlImage, constants } from '@/data/constants';
+import { useCartStore } from '@/hooks/use-cart-store';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _favoriteProducts as Container } from '@/styles/common/favorite-products';
@@ -26,11 +27,11 @@ import { useTheme } from 'styled-components';
 type Props = { products: PublicProducts[] };
 
 export default function Page({ products }: Props) {
-  const { state, dispatch, addProductToCart, removeProductFromCart, httpClient } =
-    useAppContext();
-  const { requestLogin } = useModulesContext();
   const theme = useTheme();
+  const { requestLogin } = useModulesContext();
   const [innerWidth, setInnerWidth] = useState<number>(0);
+  const { state, dispatch, httpClient } = useAppContext();
+  const { addProductToCart, removeProductFromCart } = useCartStore();
 
   const handleUnFavoriteProduct = async (id: string) => {
     try {

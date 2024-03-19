@@ -1,10 +1,5 @@
 import styled from 'styled-components';
-import {
-  BaseButton,
-  BaseButtonOutline,
-  StyledInputs,
-  StyledLabels
-} from '../defaults';
+import { BaseButton, BaseButtonOutline, StyledInputs, StyledLabels } from '../defaults';
 
 export const DenounceContainer = styled.div`
   position: relative;
