@@ -1,12 +1,12 @@
-import { ProductsSearch } from '@/components/products-search';
 import Layout from '@/components/layout';
+import { ProductsSearch } from '@/components/products-search';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { blurDataUrlImage, constants } from '@/data/constants';
+import { usePublicProductsQuery } from '@/hooks/use-public-products-query';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _home as Container } from '@/styles/common/home';
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -27,142 +27,27 @@ import {
 } from 'react-icons/io5';
 import ReactImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
-import { useInView } from 'react-intersection-observer';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 import fetch from '../config/client';
-import type { BannerAds, HttpError, PublicProducts } from '../types';
+import type { BannerAds, HttpError } from '../types';
 
 type Props = { ads_data: BannerAds[] };
 
 export default function Page({ ads_data }: Props) {
-  const { state, dispatch, addProductToCart, removeProductFromCart, httpClient } =
-    useAppContext();
+  const { state, dispatch, addProductToCart, removeProductFromCart } = useAppContext();
   const { requestLogin } = useModulesContext();
   const theme = useTheme();
-  const LIMIT: number = 12;
-  const { ref, inView } = useInView();
 
-  console.log('Theme test');
-
-  const handleFavoriteProduct = async (id: string) => {
-    try {
-      const { data } = await httpClient<string[]>({
-        method: 'post',
-        url: `/api/v1/users/favorites/products/${id}`
-      });
-      dispatch({
-        type: actions.PUBLIC_PRODUCTS_LIST_DATA,
-        payload: {
-          ...state,
-          publicProducts: [
-            ...state.publicProducts.map((product) => {
-              if (product._id === id) {
-                return { ...product, favorites: data };
-              }
-              return product;
-            })
-          ]
-        }
-      });
-    } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-    }
-  };
-
-  const handleUnFavoriteProduct = async (id: string) => {
-    try {
-      const { data } = await httpClient<string[]>({
-        method: 'patch',
-        url: `/api/v1/users/favorites/products/${id}`
-      });
-      dispatch({
-        type: actions.PUBLIC_PRODUCTS_LIST_DATA,
-        payload: {
-          ...state,
-          publicProducts: [
-            ...state.publicProducts.map((product) =>
-              product._id === id ? { ...product, favorites: data } : product
-            )
-          ]
-        }
-      });
-    } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-    }
-  };
-
-  const fetchPublicProducts = async ({
-    pageParam = 0
-  }): Promise<{ data: PublicProducts[]; currentOffset: number }> => {
-    const { category, promotion, query, sort } = state.queryPublicProducts;
-
-    const queryParams = new URLSearchParams({
-      search: query,
-      category: category || '',
-      offset: Number(LIMIT * pageParam) ? String(LIMIT * pageParam) : '',
-      limit: String(LIMIT),
-      promotion: promotion !== undefined ? String(Number(promotion)) : '',
-      sort
-    });
-
-    const { data } = await fetch<PublicProducts[]>({
-      method: 'get',
-      url: `/api/v1/users/products/public?${queryParams.toString()}`
-    });
-    return { data, currentOffset: pageParam + 1 };
-  };
-
-  const { data, refetch, fetchNextPage, hasNextPage, isLoading, isError } =
-    useInfiniteQuery({
-      queryKey: ['public-products'],
-      queryFn: fetchPublicProducts,
-      getNextPageParam: ({ data, currentOffset }) =>
-        data.length >= LIMIT ? currentOffset : undefined
-    });
-
-  useEffect(() => {
-    if (data) {
-      const reducedPosts = data?.pages
-        .map((page) => {
-          return page.data;
-        })
-        .reduce((accumulator, currentObj) => [...accumulator, ...currentObj]);
-
-      dispatch({
-        type: actions.PUBLIC_PRODUCTS_LIST_DATA,
-        payload: {
-          ...state,
-          publicProducts: [...reducedPosts]
-        }
-      });
-    }
-
-    return () => {
-      dispatch({
-        type: actions.PUBLIC_PRODUCTS_LIST_DATA,
-        payload: { ...state, publicProducts: [] }
-      });
-    };
-  }, [data]);
-
-  useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, fetchNextPage, hasNextPage]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      refetch({ queryKey: ['public-products'] });
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [state.queryPublicProducts]);
+  const {
+    fetchNextPage,
+    hasNextPage,
+    inViewRef,
+    isLoading,
+    onFavoriteProduct,
+    onUnFavoriteProduct,
+    isError
+  } = usePublicProductsQuery();
 
   useEffect(() => {
     if (Array.isArray(ads_data)) {
@@ -262,7 +147,9 @@ export default function Page({ ads_data }: Props) {
                         translateY: -8,
                         boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`
                       }}
-                      ref={state.publicProducts.length === index + 1 ? ref : undefined}>
+                      ref={
+                        state.publicProducts.length === index + 1 ? inViewRef : undefined
+                      }>
                       <div className='product-image'>
                         {item.promotion.status && (
                           <span className='promotion'>
@@ -276,8 +163,8 @@ export default function Page({ ads_data }: Props) {
                           onClick={() => {
                             if (!state.auth.token) return requestLogin();
                             else if (item.favorites.includes(state.auth?.id))
-                              return handleUnFavoriteProduct(item._id);
-                            return handleFavoriteProduct(item._id);
+                              return onUnFavoriteProduct(item._id);
+                            return onFavoriteProduct(item._id);
                           }}>
                           {item.favorites.includes(state.auth.id) ? (
                             <IoHeart />

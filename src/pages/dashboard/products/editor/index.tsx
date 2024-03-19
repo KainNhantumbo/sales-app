@@ -105,7 +105,7 @@ export default function Page() {
     },
     networkMode: 'always',
     onError(error) {
-      return error
+      return error;
     }
   });
 
@@ -540,7 +540,7 @@ export default function Page() {
                     </>
                   ))}
 
-                { createMutationProps.isError && (
+                {createMutationProps.isError && (
                   <div className='error-message'>
                     {(createMutationProps.error as HttpError)?.response?.data?.message ||
                       DEFAULT_ERROR_MESSAGE}
