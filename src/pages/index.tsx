@@ -4,6 +4,7 @@ import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { blurDataUrlImage, constants } from '@/data/constants';
 import { useCartStore } from '@/hooks/use-cart-store';
+import { useFavoriteProduct } from '@/hooks/use-favorite-product';
 import { usePublicProductsQuery } from '@/hooks/use-public-products-query';
 import { errorTransformer } from '@/lib/error-transformer';
 import { formatCurrency } from '@/lib/utils';
@@ -40,16 +41,10 @@ export default function Page({ ads_data }: Props) {
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
   const { requestLogin } = useModulesContext();
+  const { onFavoriteProduct, onUnFavoriteProduct } = useFavoriteProduct();
   const { addProductToCart, removeProductFromCart } = useCartStore();
-  const {
-    fetchNextPage,
-    hasNextPage,
-    inViewRef,
-    isLoading,
-    onFavoriteProduct,
-    onUnFavoriteProduct,
-    isError
-  } = usePublicProductsQuery();
+  const { fetchNextPage, hasNextPage, inViewRef, isLoading, isError } =
+    usePublicProductsQuery();
 
   useEffect(() => {
     if (Array.isArray(ads_data)) {

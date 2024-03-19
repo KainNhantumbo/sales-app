@@ -7,6 +7,7 @@ import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { constants } from '@/data/constants';
 import { useCartStore } from '@/hooks/use-cart-store';
+import { useFavoriteProduct } from '@/hooks/use-favorite-product';
 import { useInnerWindowSize } from '@/hooks/use-window-size';
 import { errorTransformer } from '@/lib/error-transformer';
 import { initialState } from '@/lib/reducer';
@@ -55,49 +56,10 @@ export default function Page({ product, error_message }: Props) {
   const router = useRouter();
   const { requestLogin } = useModulesContext();
   const { width: innerWindowWidth } = useInnerWindowSize();
-  const { state, dispatch, httpClient, shareProductController } = useAppContext();
+  const { state, dispatch, shareProductController } = useAppContext();
+  const { onFavoriteProduct, onUnFavoriteProduct } = useFavoriteProduct();
   const { removeProductFromCart, addProductToCart, getCartProduct, updateCartProduct } =
     useCartStore();
-
-  const handleFavoriteProduct = async (id: string) => {
-    try {
-      const { data } = await httpClient<string[]>({
-        method: 'post',
-        url: `/api/v1/users/favorites/products/${id}`
-      });
-      dispatch({
-        type: actions.PUBLIC_PRODUCT_DATA,
-        payload: {
-          ...state,
-          publicProduct: { ...state.publicProduct, favorites: data }
-        }
-      });
-    } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-    }
-  };
-
-  const handleUnFavoriteProduct = async (id: string) => {
-    try {
-      const { data } = await httpClient<string[]>({
-        method: 'patch',
-        url: `/api/v1/users/favorites/products/${id}`
-      });
-      dispatch({
-        type: actions.PUBLIC_PRODUCT_DATA,
-        payload: {
-          ...state,
-          publicProduct: { ...state.publicProduct, favorites: data }
-        }
-      });
-    } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-    }
-  };
 
   useEffect(() => {
     if (product) {
@@ -223,8 +185,8 @@ export default function Page({ product, error_message }: Props) {
                     onClick={() => {
                       if (!state.auth?.id) return requestLogin();
                       if (product.favorites.includes(state.auth?.id))
-                        return handleUnFavoriteProduct(product._id);
-                      return handleFavoriteProduct(product._id);
+                        return onUnFavoriteProduct(product._id);
+                      return onFavoriteProduct(product._id);
                     }}>
                     {product.favorites.includes(state.auth.id) ? (
                       <>
@@ -356,19 +318,17 @@ export default function Page({ product, error_message }: Props) {
                           )
                         ) {
                           addProductToCart({
-                            productId: state.publicProduct._id,
-                            productName: state.publicProduct.name,
+                            productId: product._id,
+                            productName: product.name,
                             quantity: 1,
-                            price: state.publicProduct.promotion.status
-                              ? state.publicProduct.price -
-                                (state.publicProduct.price *
-                                  state.publicProduct.promotion.percentage) /
-                                  100
-                              : state.publicProduct.price,
-                            previewImage: state.publicProduct.images
+                            price: product.promotion.status
+                              ? product.price -
+                                (product.price * product.promotion.percentage) / 100
+                              : product.price,
+                            previewImage: product.images
                               ? {
-                                  id: state.publicProduct.images[0]?.id,
-                                  url: state.publicProduct.images[0]?.url
+                                  id: product.images[0]?.id,
+                                  url: product.images[0]?.url
                                 }
                               : undefined
                           });
@@ -389,26 +349,22 @@ export default function Page({ product, error_message }: Props) {
                         )
                           ? removeProductFromCart(state.publicProduct._id)
                           : addProductToCart({
-                              productId: state.publicProduct._id,
-                              productName: state.publicProduct.name,
+                              productId: product._id,
+                              productName: product.name,
                               quantity: 1,
-                              price: state.publicProduct.promotion.status
-                                ? state.publicProduct.price -
-                                  (state.publicProduct.price *
-                                    state.publicProduct.promotion.percentage) /
-                                    100
-                                : state.publicProduct.price,
-                              previewImage: state.publicProduct.images
+                              price: product.promotion.status
+                                ? product.price -
+                                  (product.price * product.promotion.percentage) / 100
+                                : product.price,
+                              previewImage: product.images
                                 ? {
-                                    id: state.publicProduct.images[0]?.id,
-                                    url: state.publicProduct.images[0]?.url
+                                    id: product.images[0]?.id,
+                                    url: product.images[0]?.url
                                   }
                                 : undefined
                             })
                       }>
-                      {state.cart.some(
-                        (product) => product.productId === state.publicProduct._id
-                      ) ? (
+                      {state.cart.some((item) => item.productId === product._id) ? (
                         <>
                           <IoCheckmark />
                           <span>Adicionado ao carrinho</span>
@@ -431,7 +387,7 @@ export default function Page({ product, error_message }: Props) {
                       </span>
                     </h3>
 
-                    {state.publicProduct.store.verified_store ? (
+                    {product.store.verified_store ? (
                       <h5>
                         <VscVerifiedFilled />
                         <span>Produto de Loja verificada</span>

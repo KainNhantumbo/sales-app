@@ -21,5 +21,6 @@
     "tanstack",
     "webstore",
     "Zambezia"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

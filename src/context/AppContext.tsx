@@ -1,5 +1,4 @@
 import fetch from '@/config/client';
-import { useCartStore } from '@/hooks/use-cart-store';
 import { errorTransformer } from '@/lib/error-transformer';
 import { initialState, reducer } from '@/lib/reducer';
 import { actions } from '@/shared/actions';
@@ -57,9 +56,6 @@ const context = createContext<Context>({
 export function AppContext(props: Props) {
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  // initialize cart on start
-  useCartStore();
 
   // ============= modal controllers =================== //
   const userWorkingDataController = () => {

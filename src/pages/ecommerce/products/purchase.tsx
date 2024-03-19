@@ -44,10 +44,7 @@ export default function Page() {
       type: actions.PURCHASE_CHECKOUT_DATA,
       payload: {
         ...state,
-        checkout: {
-          ...state.checkout,
-          [e.target.name]: e.target.value
-        }
+        checkout: { ...state.checkout, [e.target.name]: e.target.value }
       }
     });
   };

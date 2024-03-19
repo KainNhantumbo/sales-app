@@ -5,11 +5,12 @@ import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { blurDataUrlImage, constants, formatSocialNetwork } from '@/data/constants';
 import { useCartStore } from '@/hooks/use-cart-store';
+import { useFavoriteProduct } from '@/hooks/use-favorite-product';
 import { formatCurrency, slidePageUp } from '@/lib/utils';
 import ErrorPage from '@/pages/error-page';
 import { actions } from '@/shared/actions';
 import { _store as Container } from '@/styles/common/community-store-profile';
-import { HttpError, PublicProducts, PublicStore } from '@/types';
+import { PublicProducts, PublicStore } from '@/types';
 import { motion } from 'framer-motion';
 import { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
@@ -40,65 +41,12 @@ type Props = { store?: PublicStore; products: PublicProducts[] };
 export default function Page({ store, products }: Props) {
   const theme = useTheme();
   const router = useRouter();
-  const { state, dispatch, httpClient } = useAppContext();
+  const { state, dispatch } = useAppContext();
+  const { onFavoriteProduct, onUnFavoriteProduct } = useFavoriteProduct();
   const { addProductToCart, removeProductFromCart } = useCartStore();
   const { requestLogin } = useModulesContext();
   const [tab, setTab] = useState<'docs' | 'products'>('docs');
   const [innerWidth, setInnerWidth] = useState<number>(0);
-
-  async function handleFavoriteProduct(id: string) {
-    try {
-      const { data } = await httpClient<string[]>({
-        method: 'post',
-        url: `/api/v1/users/favorites/products/${id}`
-      });
-      dispatch({
-        type: actions.PUBLIC_PRODUCTS_LIST_DATA,
-        payload: {
-          ...state,
-          publicProducts: [
-            ...state.publicProducts.map((product) => {
-              if (product._id === id) {
-                return { ...product, favorites: data };
-              }
-              return product;
-            })
-          ]
-        }
-      });
-    } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-    }
-  }
-
-  async function handleUnFavoriteProduct(id: string) {
-    try {
-      const { data } = await httpClient<string[]>({
-        method: 'patch',
-        url: `/api/v1/users/favorites/products/${id}`
-      });
-      dispatch({
-        type: actions.PUBLIC_PRODUCTS_LIST_DATA,
-        payload: {
-          ...state,
-          publicProducts: [
-            ...state.publicProducts.map((product) => {
-              if (product._id === id) {
-                return { ...product, favorites: data };
-              }
-              return product;
-            })
-          ]
-        }
-      });
-    } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-    }
-  }
 
   useEffect(() => {
     setInnerWidth(window.innerWidth);
@@ -366,8 +314,8 @@ export default function Page({ store, products }: Props) {
                           onClick={() => {
                             if (!state.auth?.token) return requestLogin();
                             else if (item.favorites.includes(state.auth?.id))
-                              return handleUnFavoriteProduct(item._id);
-                            return handleFavoriteProduct(item._id);
+                              return onUnFavoriteProduct(item._id);
+                            return onFavoriteProduct(item._id);
                           }}>
                           {item.favorites.includes(state.auth.id) ? (
                             <IoHeart />
