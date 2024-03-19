@@ -36,22 +36,21 @@ export type ShareAnchors = {
   excerpt: string;
 };
 
-export type TSocialNetwork =
-  | {
-      website: string | undefined;
-      whatsapp: string | undefined;
-      instagram: string | undefined;
-      facebook: string | undefined;
-      linkedin: string | undefined;
-    }
-  | undefined;
+export type SocialUrls = {
+  website: string;
+  whatsapp: string;
+  instagram: string;
+  facebook: string;
+  linkedin: string;
+};
 
-export type DashboardAction = {
-  [action: string]: {
+export type DashboardAction = Record<
+  string,
+  {
     header: { label: string; icon: IconType };
     paths: Array<{ label: string; url: string; icon: IconType }>;
-  };
-};
+  }
+>;
 
 export type InputEvents =
   | ChangeEvent<HTMLInputElement>
@@ -60,11 +59,7 @@ export type InputEvents =
 
 export type SubmitEvent = FormEvent<HTMLFormElement>;
 
-export type ShareUrls = {
-  name: string;
-  url: string;
-  icon: IconType;
-};
+export type ShareUrls = { name: string; url: string; icon: IconType };
 
 export type PaymentGateway = 'e-mola' | 'm-pesa' | 'credit-card' | 'paypal' | 'ponto-24';
 
@@ -77,8 +72,8 @@ export type TPaymentOptions = Array<{
 export type SearchProducts = {
   sort: string;
   query: string;
-  category: string | undefined;
-  promotion: boolean | undefined;
+  category?: string;
+  promotion?: boolean;
 };
 
 export type Theme = {
@@ -116,14 +111,14 @@ export type Modal = {
   title: string;
   status: boolean;
   message: string;
-  actionButtonMessage: string | undefined;
+  actionButtonMessage?: string;
   handleFunction: (data?: unknown) => void | Promise<unknown>;
 };
 
 export type Story = {
   title: string;
   content: string;
-  cover_image: { id: string; url: string } | undefined;
+  cover_image?: { id: string; url: string };
 };
 
 export type PublicStory = Story & {
@@ -133,23 +128,16 @@ export type PublicStory = Story & {
     first_name: string;
     last_name: string;
     email: string;
-    profile_image: { id: string; url: string } | undefined;
+    profile_image?: { id: string; url: string };
   };
   favorites: string[];
   createdAt: string;
   updatedAt: string;
 };
 
-export type QueryList = {
-  offset?: number;
-  limit?: number;
-  search?: string;
-};
+export type QueryList = { offset?: number; limit?: number; search?: string };
 
-export type SignIn = {
-  email: string;
-  password: string;
-};
+export type SignIn = { email: string; password: string };
 
 export type SignUp = {
   first_name: string;
@@ -190,14 +178,12 @@ export type Posts = {
   excerpt: string;
   category: string;
   cover_image: { id: string; url: string };
+  favorites: string[];
   createdAt: string;
   updatedAt: string;
-  favorites: string[];
 };
 
-export type IBlogPost = Posts & {
-  content: OutputData;
-};
+export type IBlogPost = Posts & { content: OutputData };
 
 export type ProductsList = {
   _id: string;
@@ -229,7 +215,7 @@ export type PublicProducts = {
   price: number;
   promotion: { status: boolean; percentage: number };
   favorites: string[];
-  image: { id: string; url: string } | undefined;
+  image?: { id: string; url: string };
 };
 
 export type PublicProduct = {
@@ -247,15 +233,7 @@ export type PublicProduct = {
   delivery_tax: number;
   allow_comments: boolean;
   images: Array<Omit<ProductImage, 'publicId'>>;
-  store: {
-    _id: string;
-    name: string;
-    location: {
-      country: string;
-      state: string;
-      address: string;
-    };
-    category: string;
+  store: Pick<Store, '_id' | 'name' | 'location' | 'category'> & {
     verified_store: boolean;
   };
 };
@@ -266,38 +244,25 @@ export type PublicStore = {
   verified_store: boolean;
   created_by: {
     _id: string;
-    profile_image:
-      | {
-          id: string;
-          url: string;
-        }
-      | undefined;
+    profile_image?: { id: string; url: string };
     first_name: string;
     last_name: string;
     email: string;
-    main_phone_number?: number | undefined;
-    alternative_phone_number?: number | undefined;
-    social_network?:
-      | {
-          website: string | undefined;
-          whatsapp: string | undefined;
-          instagram: string | undefined;
-          facebook: string | undefined;
-          linkedin: string | undefined;
-        }
-      | undefined;
+    main_phone_number?: number;
+    alternative_phone_number?: number;
+    social_network?: Partial<SocialUrls>;
   };
   description: string;
   slogan: string;
   category: string;
   cover_image?: { id: string; url: string };
-  privacy_policy?: string | undefined;
-  terms_policy?: string | undefined;
-  delivery_policy?: string | undefined;
+  privacy_policy?: string;
+  terms_policy?: string;
+  delivery_policy?: string;
   location: {
     country: string;
     state: string;
-    address: string | undefined;
+    address?: string;
   };
   createdAt: string;
   updatedAt: string;
@@ -321,24 +286,14 @@ export type Store = {
     email: string;
     main_phone_number: number;
     alternative_phone_number: number;
-    social_network: {
-      website: string;
-      whatsapp: string;
-      instagram: string;
-      facebook: string;
-      linkedin: string;
-    };
+    social_network: SocialUrls;
   };
-  location: {
-    country: string;
-    state: string;
-    address: string;
-  };
+  location: { country: string; state: string; address: string };
   createdAt: string;
   updatedAt: string;
 };
 
-export type TJob = {
+export type Job = {
   _id: string;
   title: string;
   description: string;
@@ -383,16 +338,15 @@ export type User = {
     address: string;
     zip_code: string;
   };
-  social_network: {
-    website?: string;
-    whatsapp?: string;
-    instagram?: string;
-    facebook?: string;
-    linkedin?: string;
-  };
+  social_network: SocialUrls;
   createdAt: string;
   updatedAt: string;
 };
+
+export type PublicUser = Omit<
+  User,
+  'gender' | 'birth_date' | 'main_phone_number' | 'alternative_phone_number'
+>;
 
 export type Denounce = {
   reason: string;
@@ -411,24 +365,17 @@ export type Purchase = {
   order_notes: string;
   main_phone_number: string;
   alternative_phone_number: string;
-  location: {
-    country: string;
-    state: string;
-    address: string;
-    zip_code: string;
-  };
+  location: { country: string; state: string; address: string; zip_code: string };
   payment: {
     type: PaymentGateway;
-    data: {
-      mpesa_account: string;
-    };
+    data: { mpesa_account: string };
   };
 };
 
 export type Order = {
   _id: string;
   order_code: string;
-  order_transaction: string | undefined;
+  order_transaction?: string;
   order_status: 'delivered' | 'returned' | 'cancelled' | 'progress' | 'pending';
   order_payment_type: {
     type: string;
@@ -440,12 +387,7 @@ export type Order = {
     user_phone_0: string;
     user_phone_1: string;
     user_notes: string;
-    user_location: {
-      country: string;
-      state: string;
-      address: string;
-      zip_code: string;
-    };
+    user_location: Pick<Purchase, 'location'>;
   };
   order_items: Array<{
     product_id: string;
@@ -455,76 +397,6 @@ export type Order = {
   }>;
   createdAt: string;
   updatedAt: string;
-};
-
-export type TPublicUser = {
-  _id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  bio: string | undefined;
-  cover_image: { id: string; url: string };
-  profile_image: { id: string; url: string };
-  professional_skills: string[];
-  spoken_languages: string[];
-  store: string;
-  working_experience: {
-    id: string;
-    _id: string;
-    career: string;
-    end_date: string;
-    start_date: string;
-    description: string;
-    portfolio_url: string;
-    company_name: string;
-  }[];
-  location: {
-    country: string;
-    state: string;
-    address: string;
-    zip_code: string;
-  };
-  social_network?:
-    | {
-        website: string | undefined;
-        whatsapp: string | undefined;
-        instagram: string | undefined;
-        facebook: string | undefined;
-        linkedin: string | undefined;
-      }
-    | undefined;
-
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type TUserMetrics = {
-  products: {
-    count: number;
-    blocked: number;
-    total_price_amount_value: number;
-    total_promotional_products: number;
-  };
-  orders: {
-    count: number;
-    status: {
-      delivered: number;
-      returned: number;
-      cancelled: number;
-      progress: number;
-      pending_payment: number;
-    };
-  };
-  store: {
-    blocked: boolean | undefined;
-    active_status: boolean | undefined;
-    verified_status: boolean | undefined;
-  };
-  user: {
-    name: string;
-    email: string | undefined;
-    profile_image: string;
-  };
 };
 
 export type Metrics = {
@@ -544,11 +416,7 @@ export type Metrics = {
       pending_payment: number;
     };
   };
-  store: {
-    blocked: boolean;
-    active_status: boolean;
-    verified_status: boolean;
-  };
+  store: { blocked: boolean; active_status: boolean; verified_status: boolean };
 };
 
 export type BannerAds = {
@@ -613,6 +481,11 @@ export type OrderSummary = {
   order_code: string;
   order_id: string;
   order_amount: number;
-  order_status: 'delivered' | 'returned' | 'progress' | 'cancelled' | 'pending';
+  order_status: Pick<Order, 'order_status'>;
   user_name: string;
+};
+
+export type Option = {
+  value: string | number | undefined;
+  label: string;
 };

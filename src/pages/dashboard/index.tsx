@@ -3,7 +3,6 @@ import { Metrics } from '@/components/metrics';
 import { useAppContext } from '@/context/AppContext';
 import { constants, dashboardActions } from '@/data/constants';
 import { _dashboard as Container } from '@/styles/common/dashbord';
-import { DashboardAction } from '@/types';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,7 +13,7 @@ import { useTheme } from 'styled-components';
 export default function Page() {
   const { state } = useAppContext();
   const theme = useTheme();
-  const actionRoutes: DashboardAction = dashboardActions({
+  const actionRoutes = dashboardActions({
     storeId: state.auth.storeId,
     userId: state.auth.id
   });

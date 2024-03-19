@@ -1,7 +1,9 @@
 import { useAppContext } from '@/context/AppContext';
 import { useInnerWindowSize } from '@/hooks/use-window-size';
+import { initialState } from '@/lib/reducer';
 import { slidePageUp } from '@/lib/utils';
 import { actions } from '@/shared/actions';
+import { Option } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect } from 'react';
 import { BiSortAlt2 } from 'react-icons/bi';
@@ -9,6 +11,28 @@ import { IoCartOutline, IoClose, IoFilter, IoGift, IoLayersOutline } from 'react
 import Categories from '../data/product-categories.json';
 import { _searchEngine as Container } from '../styles/modules/search-engine';
 import { SelectContainer } from './select';
+
+const sortOptions: Option[] = [
+  { value: 'createdAt', label: 'Adicionado Recentemente' },
+  { value: '-createdAt', label: 'Adicionado Antigamente' },
+  { value: '-name', label: 'Nome' },
+  { value: 'name', label: 'Nome (Invertido)' },
+  { value: '-category', label: 'Categoria' },
+  { value: 'category', label: 'Categoria (Invertido)' },
+  { value: 'price', label: 'Preço (Alto para Baixo)' },
+  { value: '-price', label: 'Preço (Baixo para Alto)' }
+];
+
+const promotionOptions: Option[] = [
+  { value: undefined, label: 'Todos os produtos' },
+  { value: 'true', label: 'Somente produtos com promoção' },
+  { value: 'false', label: 'Somente produtos sem promoção' }
+];
+
+const categoryOptions = Categories.map((category) => ({
+  value: category,
+  label: category
+}));
 
 export function ProductsSearch() {
   const { state, dispatch } = useAppContext();
@@ -24,7 +48,7 @@ export function ProductsSearch() {
   };
 
   useEffect(() => {
-    if (windowInnerWidth > 830) {
+    if (windowInnerWidth > 830)
       dispatch({
         type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
         payload: {
@@ -32,7 +56,7 @@ export function ProductsSearch() {
           isPublicProductsFilters: true
         }
       });
-    } else {
+    else
       dispatch({
         type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
         payload: {
@@ -40,45 +64,14 @@ export function ProductsSearch() {
           isPublicProductsFilters: false
         }
       });
-    }
   }, [windowInnerWidth]);
-
-  const categoryOptions = Categories.map((category) => ({
-    value: category,
-    label: category
-  }));
-
-  const sortOptions = [
-    { value: 'createdAt', label: 'Adicionado Recentemente' },
-    { value: '-createdAt', label: 'Adicionado Antigamente' },
-    { value: '-name', label: 'Nome' },
-    { value: 'name', label: 'Nome (Invertido)' },
-    { value: '-category', label: 'Categoria' },
-    { value: 'category', label: 'Categoria (Invertido)' },
-    { value: 'price', label: 'Preço (Alto para Baixo)' },
-    { value: '-price', label: 'Preço (Baixo para Alto)' }
-  ];
-
-  const promotionOptions = [
-    { value: undefined, label: 'Todos os produtos' },
-    { value: 'true', label: 'Somente produtos com promoção' },
-    { value: 'false', label: 'Somente produtos sem promoção' }
-  ];
 
   const renderClearButton = () => (
     <button
       onClick={() => {
         dispatch({
           type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
-          payload: {
-            ...state,
-            queryPublicProducts: {
-              category: undefined,
-              promotion: undefined,
-              query: '',
-              sort: ''
-            }
-          }
+          payload: { ...state, queryPublicProducts: initialState.queryPublicProducts }
         });
       }}>
       <IoClose />

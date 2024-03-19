@@ -6,7 +6,7 @@ import { constants, formatSocialNetwork } from '@/data/constants';
 import { formatDate } from '@/lib/utils';
 import ErrorPage from '@/pages/error-page';
 import { _profile as Container } from '@/styles/common/community-user-profile';
-import { TPublicUser } from '@/types';
+import { PublicUser } from '@/types';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -22,7 +22,7 @@ import {
   IoPlanet
 } from 'react-icons/io5';
 
-type Props = { user: TPublicUser };
+type Props = { user: PublicUser };
 
 export default function Page({ user }: Props) {
   const router = useRouter();
@@ -190,7 +190,7 @@ export default function Page({ user }: Props) {
 }
 
 export async function getStaticPaths(): Promise<any> {
-  const slugs = await fetch<TPublicUser[]>({
+  const slugs = await fetch<PublicUser[]>({
     method: 'get',
     url: '/api/v1/users/account/public'
   }).then((res) => res.data.map((item) => ({ params: { slug: item._id } })));
@@ -199,7 +199,7 @@ export async function getStaticPaths(): Promise<any> {
 
 export async function getStaticProps({ params: { slug } }: any) {
   try {
-    const { data: user } = await fetch<TPublicUser>({
+    const { data: user } = await fetch<PublicUser>({
       method: 'get',
       url: `/api/v1/users/account/public/${slug}`
     });
