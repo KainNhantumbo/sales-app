@@ -1,8 +1,9 @@
 import { useAppContext } from '@/context/AppContext';
+import { useInnerWindowSize } from '@/hooks/use-window-size';
 import { slidePageUp } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { BiSortAlt2 } from 'react-icons/bi';
 import { IoCartOutline, IoClose, IoFilter, IoGift, IoLayersOutline } from 'react-icons/io5';
 import Categories from '../data/product-categories.json';
@@ -11,8 +12,7 @@ import { SelectContainer } from './select';
 
 export function ProductsSearch() {
   const { state, dispatch } = useAppContext();
-  const [innerWidth, setInnerWidth] = useState<number>(0);
-
+  const { width: windowInnerWidth } = useInnerWindowSize();
   const toggleMenu = () => {
     dispatch({
       type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
@@ -23,9 +23,8 @@ export function ProductsSearch() {
     });
   };
 
-  const changeWidth = () => {
-    setInnerWidth(window.innerWidth);
-    if (window.innerWidth > 830) {
+  useEffect(() => {
+    if (windowInnerWidth > 830) {
       dispatch({
         type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
         payload: {
@@ -42,13 +41,7 @@ export function ProductsSearch() {
         }
       });
     }
-  };
-
-  useEffect(() => {
-    changeWidth();
-    window.addEventListener('resize', changeWidth);
-    return () => window.removeEventListener('resize', changeWidth);
-  }, []);
+  }, [windowInnerWidth]);
 
   const categoryOptions = Categories.map((category) => ({
     value: category,
@@ -111,7 +104,7 @@ export function ProductsSearch() {
           }}>
           <motion.div
             className='wrapper-container'
-            drag={innerWidth > 830 ? false : 'y'}
+            drag={windowInnerWidth > 830 ? false : 'y'}
             dragElastic={{ top: 0.12, bottom: 0.1 }}
             dragConstraints={{ top: 0, bottom: 0 }}
             onDragEnd={(event, info) => {
@@ -128,11 +121,11 @@ export function ProductsSearch() {
               }
             }}
             style={{ display: state.isPublicProductsFilters ? 'flex' : 'none' }}
-            initial={innerWidth > 830 ? { translateX: -720 } : { translateY: 720 }}
-            animate={innerWidth > 830 ? { translateX: 0 } : { translateY: 0 }}
+            initial={windowInnerWidth > 830 ? { translateX: -720 } : { translateY: 720 }}
+            animate={windowInnerWidth > 830 ? { translateX: 0 } : { translateY: 0 }}
             transition={{ duration: 0.38 }}
             exit={
-              innerWidth > 830
+              windowInnerWidth > 830
                 ? {
                     opacity: 0,
                     translateX: -720,
@@ -296,7 +289,7 @@ export function ProductsSearch() {
                       }
                     });
 
-                    if (innerWidth < 830) slidePageUp();
+                    if (windowInnerWidth < 830) slidePageUp();
                   }}>
                   <IoCartOutline />
                   <span>Mostrar {state.publicProducts.length} resultados</span>

@@ -5,15 +5,17 @@ import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { blurDataUrlImage, constants } from '@/data/constants';
 import { useCartStore } from '@/hooks/use-cart-store';
+import { useFavoriteProduct } from '@/hooks/use-favorite-product';
+import { useInnerWindowSize } from '@/hooks/use-window-size';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _favoriteProducts as Container } from '@/styles/common/favorite-products';
-import type { HttpError, PublicProducts } from '@/types';
+import type { PublicProducts } from '@/types';
 import { motion } from 'framer-motion';
 import type { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   IoBagCheck,
   IoBagHandle,
@@ -29,23 +31,10 @@ type Props = { products: PublicProducts[] };
 export default function Page({ products }: Props) {
   const theme = useTheme();
   const { requestLogin } = useModulesContext();
-  const [innerWidth, setInnerWidth] = useState<number>(0);
-  const { state, dispatch, httpClient } = useAppContext();
+  const { width: windowInnerWidth } = useInnerWindowSize();
+  const { onUnFavoriteProduct } = useFavoriteProduct();
+  const { state, dispatch } = useAppContext();
   const { addProductToCart, removeProductFromCart } = useCartStore();
-
-  const handleUnFavoriteProduct = async (id: string) => {
-    try {
-      await httpClient({
-        method: 'patch',
-        url: `/api/v1/users/favorites/products/${id}`
-      });
-      refetchFavoriteProducts();
-    } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-    }
-  };
 
   const refetchFavoriteProducts = async () => {
     try {
@@ -63,21 +52,14 @@ export default function Page({ products }: Props) {
   };
 
   useEffect(() => {
-    setInnerWidth(window.innerWidth);
     dispatch({
       type: actions.PUBLIC_PRODUCTS_LIST_DATA,
       payload: { ...state, publicProducts: [...products] }
-    });
-    window.addEventListener('resize', () => {
-      setInnerWidth(window.innerWidth);
     });
     return () => {
       dispatch({
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
         payload: { ...state, publicProducts: [] }
-      });
-      window.removeEventListener('resize', () => {
-        setInnerWidth(window.innerWidth);
       });
     };
   }, []);
@@ -107,7 +89,7 @@ export default function Page({ products }: Props) {
                     whileTap={{ scale: 0.98 }}
                     className='product-container'
                     whileHover={
-                      innerWidth > 445
+                      windowInnerWidth > 445
                         ? {
                             translateY: -8,
                             boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`
@@ -126,7 +108,8 @@ export default function Page({ products }: Props) {
                         className='favorite-button'
                         onClick={() => {
                           if (!state.auth.id) return requestLogin();
-                          return handleUnFavoriteProduct(item._id);
+                          onUnFavoriteProduct(item._id);
+                          refetchFavoriteProducts();
                         }}>
                         <IoHeart />
                       </button>
@@ -177,7 +160,7 @@ export default function Page({ products }: Props) {
                       className='product-details'>
                       <button className='buy-mobile-button'>
                         <IoBagCheck />
-                        <span>Ver os detalhes</span>
+                        <span>Detalhes</span>
                       </button>
                       {item.promotion.status ? (
                         <div className='item promo-price'>

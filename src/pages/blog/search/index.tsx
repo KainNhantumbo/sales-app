@@ -3,16 +3,12 @@ import { NewsLetter } from '@/components/newsletter';
 import { PostsSearch } from '@/components/posts-search';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
-import { getPosts } from '@/lib/queries';
+import { useBlogSearchQuery } from '@/hooks/use-blog-search-query';
 import { formatDate } from '@/lib/utils';
-import { actions } from '@/shared/actions';
 import { _blogSearch as Container } from '@/styles/common/blog-search';
-import { Posts } from '@/types';
-import { useInfiniteQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
 import {
   IoArrowForwardOutline,
@@ -22,75 +18,15 @@ import {
   IoLibraryOutline,
   IoReload
 } from 'react-icons/io5';
-import { useInView } from 'react-intersection-observer';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
 export default function Page() {
-  const LIMIT: number = 8;
   const theme = useTheme();
   const router = useRouter();
-  const { state, dispatch } = useAppContext();
-  const { ref, inView } = useInView();
-
-  const fetchPosts = async ({ pageParam = 0 }) => {
-    const { data } = await getPosts<Posts[]>({
-      offset: pageParam * LIMIT,
-      limit: LIMIT,
-      search: String(router.query['q'])
-    });
-    return { data, currentOffset: pageParam + 1 };
-  };
-
-  const { data, refetch, fetchNextPage, error, hasNextPage, isLoading, isError } =
-    useInfiniteQuery({
-      queryKey: ['blog-posts-search'],
-      queryFn: fetchPosts,
-      getNextPageParam: (lastPage) =>
-        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
-    });
-
-  useEffect(() => {
-    if (data) {
-      const reducedPosts = data?.pages
-        .map((page) => {
-          return page.data;
-        })
-        .reduce((accumulator, currentObj) => [...accumulator, ...currentObj]);
-
-      dispatch({
-        type: actions.BLOG_POSTS_LIST_QUERY,
-        payload: {
-          ...state,
-          blogPostsList: [...reducedPosts]
-        }
-      });
-    }
-
-    return () => {
-      dispatch({
-        type: actions.BLOG_POSTS_LIST_QUERY,
-        payload: { ...state, blogPostsList: [] }
-      });
-    };
-  }, [data]);
-
-  useEffect(() => {
-    const fetchTimer = setTimeout(() => {
-      if (router.query['q']) {
-        refetch({ queryKey: ['blog-posts-search'] });
-      }
-    }, 500);
-    return () => {
-      clearTimeout(fetchTimer);
-    };
-  }, [router.query]);
-
-  useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, fetchNextPage, hasNextPage]);
+  const { state } = useAppContext();
+  const { inViewRef, error, fetchNextPage, hasNextPage, isError, isLoading } =
+    useBlogSearchQuery();
 
   return (
     <Layout
@@ -150,7 +86,7 @@ export default function Page() {
                     key={post._id}
                     className={'post'}
                     href={`/blog/post/${post.slug}`}
-                    ref={state.blogPostsList.length === index + 1 ? ref : undefined}>
+                    ref={state.blogPostsList.length === index + 1 ? inViewRef : undefined}>
                     <>
                       <Image
                         width={3000}
@@ -163,7 +99,7 @@ export default function Page() {
                         <div className='details'>
                           <div>
                             <IoIosAlbums />
-                            <span>{post.category || 'Miscelânia'}</span>
+                            <span>{post.category || 'Miscelânea'}</span>
                           </div>
                           <div>
                             <IoMdCalendar />
@@ -191,7 +127,7 @@ export default function Page() {
                   {isError && isLoading && (
                     <div className='fetch-error-message '>
                       <h3>Erro ao carregar postagens</h3>
-                      <button onClick={fetchNextPage}>
+                      <button onClick={() => fetchNextPage()}>
                         <IoReload />
                         <span>Tentar novamente</span>
                       </button>

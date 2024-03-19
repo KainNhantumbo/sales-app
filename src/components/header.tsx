@@ -74,7 +74,7 @@ export function Header() {
                   aria-label='Abrir ou fechar o carrinho'
                   className='cart-button'
                   onClick={() => {
-                    if (window.innerWidth < 770) {
+                    if (windowWidth < 770) {
                       toggleMenu();
                     }
                     cartModalController();

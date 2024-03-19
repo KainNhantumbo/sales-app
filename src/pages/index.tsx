@@ -56,10 +56,7 @@ export default function Page({ ads_data }: Props) {
   }, []);
 
   return (
-    <Layout
-      metadata={{
-        title: `${constants.defaultTitle} | Produtos e Serviços`
-      }}>
+    <Layout metadata={{ title: `${constants.defaultTitle} | Produtos e Serviços` }}>
       <Container>
         <div className='content-wrapper'>
           <motion.button
@@ -73,7 +70,7 @@ export default function Page({ ads_data }: Props) {
               })
             }>
             <IoSearch />
-            <span>Pesquisar e filtrar produtos</span>
+            <span>Pesquisar e Filtros</span>
           </motion.button>
 
           <ProductsSearch />
@@ -121,7 +118,7 @@ export default function Page({ ads_data }: Props) {
                     {Object.values(state.queryPublicProducts)
                       .map((value) => (value ? true : false))
                       .some((value) => value === true) && (
-                      <p> Sua pesquisa não teve resultados</p>
+                      <p>Sua pesquisa não teve resultados</p>
                     )}
                     <h3>Nenhum produto para mostrar.</h3>
                   </div>

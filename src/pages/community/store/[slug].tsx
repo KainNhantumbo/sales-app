@@ -6,6 +6,7 @@ import { useModulesContext } from '@/context/Modules';
 import { blurDataUrlImage, constants, formatSocialNetwork } from '@/data/constants';
 import { useCartStore } from '@/hooks/use-cart-store';
 import { useFavoriteProduct } from '@/hooks/use-favorite-product';
+import { useInnerWindowSize } from '@/hooks/use-window-size';
 import { formatCurrency, slidePageUp } from '@/lib/utils';
 import ErrorPage from '@/pages/error-page';
 import { actions } from '@/shared/actions';
@@ -46,24 +47,18 @@ export default function Page({ store, products }: Props) {
   const { addProductToCart, removeProductFromCart } = useCartStore();
   const { requestLogin } = useModulesContext();
   const [tab, setTab] = useState<'docs' | 'products'>('docs');
-  const [innerWidth, setInnerWidth] = useState<number>(0);
+  const { width: windowInnerWidth } = useInnerWindowSize();
 
   useEffect(() => {
-    setInnerWidth(window.innerWidth);
     dispatch({
       type: actions.PUBLIC_PRODUCTS_LIST_DATA,
       payload: { ...state, publicProducts: [...products] }
     });
-    window.addEventListener('resize', () => {
-      setInnerWidth(window.innerWidth);
-    });
+
     return () => {
       dispatch({
         type: actions.PUBLIC_PRODUCTS_LIST_DATA,
         payload: { ...state, publicProducts: [] }
-      });
-      window.removeEventListener('resize', () => {
-        setInnerWidth(window.innerWidth);
       });
     };
   }, []);
@@ -294,7 +289,7 @@ export default function Page({ store, products }: Props) {
                       whileTap={{ scale: 0.98 }}
                       className='product-container'
                       whileHover={
-                        innerWidth > 445
+                        windowInnerWidth > 445
                           ? {
                               translateY: -8,
                               boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`
