@@ -27,7 +27,7 @@ export default function Page() {
   const router = useRouter();
   const { state } = useAppContext();
   const { fetchNextPage, hasNextPage, inViewRef, isError, isLoading } = useBlogPostsQuery();
-  
+
   return (
     <Layout metadata={{ title: constants.defaultTitle + ' | Blog' }}>
       <Container>
@@ -41,7 +41,7 @@ export default function Page() {
                   negócio.
                 </strong>{' '}
                 Ainda não tem uma loja? Monte hoje mesmo uma loja virtual do seu jeito e com
-                todas funcionalidades que você precisa de graça!
+                todas funcionalidades que você precisa de graça! informação é
               </p>
               <Link href={'/auth/sign-in'}>
                 <IoStorefrontOutline />

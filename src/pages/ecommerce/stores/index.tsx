@@ -4,7 +4,7 @@ import { NewsLetter } from '@/components/newsletter';
 import { StoreSearch } from '@/components/store-search';
 import { useAppContext } from '@/context/AppContext';
 import { blurDataUrlImage, constants } from '@/data/constants';
-import { geStoresData } from '@/lib/queries';
+import { getStoresData } from '@/lib/queries';
 import { formatDate } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _stores as Container } from '@/styles/common/stores';
@@ -37,7 +37,7 @@ export default function Page() {
   const fetchData = async ({
     pageParam = 0
   }): Promise<{ data: PublicStoreList; currentOffset: number }> => {
-    const { data } = await geStoresData<PublicStoreList>({
+    const { data } = await getStoresData<PublicStoreList>({
       offset: pageParam * LIMIT,
       limit: LIMIT
     });

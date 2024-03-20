@@ -16,44 +16,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { BiUser, BiUserCheck, BiUserX } from 'react-icons/bi';
 import { FaBlog, FaLinkedinIn } from 'react-icons/fa';
-import {
-  IoAdd,
-  IoArrowUndoOutline,
-  IoBookmarkOutline,
-  IoBriefcase,
-  IoCalendarNumberOutline,
-  IoChevronBack,
-  IoClipboardOutline,
-  IoCloseCircle,
-  IoConstructOutline,
-  IoCreateOutline,
-  IoEarthOutline,
-  IoEllipsisHorizontal,
-  IoExtensionPuzzleOutline,
-  IoFlowerOutline,
-  IoHeartHalfOutline,
-  IoHomeOutline,
-  IoImageOutline,
-  IoKey,
-  IoLinkOutline,
-  IoLocation,
-  IoLockClosedOutline,
-  IoLockOpenOutline,
-  IoLogoFacebook,
-  IoLogoInstagram,
-  IoLogoWhatsapp,
-  IoPencil,
-  IoPencilOutline,
-  IoPhonePortraitOutline,
-  IoPlanetOutline,
-  IoReload,
-  IoShareSocial,
-  IoStar,
-  IoSyncOutline,
-  IoTrash,
-  IoTrashOutline,
-  IoWatchOutline
-} from 'react-icons/io5';
+import Io from 'react-icons/io5';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
@@ -134,9 +97,9 @@ export default function Page() {
         width: 620,
         height: 220,
         resize: 'cover',
-        success: (compressedImge: File | Blob) => {
+        success: (compressedImage: File | Blob) => {
           const reader = new FileReader();
-          reader.readAsDataURL(compressedImge);
+          reader.readAsDataURL(compressedImage);
           reader.onloadend = function (e: ProgressEvent<FileReader>) {
             const encodedImage: string = e.target?.result as string;
             setCoverImageData({
@@ -436,11 +399,11 @@ export default function Page() {
                 <h3>{error.msg}</h3>
                 <div>
                   <button onClick={() => router.reload()}>
-                    <IoReload />
+                    <Io.IoReload />
                     <span>Recarregar a página</span>
                   </button>
                   <button onClick={() => router.back()}>
-                    <IoChevronBack />
+                    <Io.IoChevronBack />
                     <span>Voltar a página anterior</span>
                   </button>
                 </div>
@@ -458,7 +421,7 @@ export default function Page() {
         <article>
           <section className='header'>
             <h2>
-              <IoPencilOutline />
+              <Io.IoPencilOutline />
               <span>Detalhes pessoais</span>
             </h2>
             <span className='details'>Salve após fazer alterações!</span>
@@ -486,17 +449,17 @@ export default function Page() {
                         alt='cover image'
                       />
                     ) : (
-                      <IoImageOutline className='camera-icon' />
+                      <Io.IoImageOutline className='camera-icon' />
                     )}
                     <label htmlFor='cover' title='Selecionar imagem de capa'>
                       <span>Imagem de capa</span>
-                      <IoAdd />
+                      <Io.IoAdd />
                     </label>
                     <button
                       title='Apagar imagem de capa'
                       className='clear-image'
                       onClick={() => deleteAsset('cover_image')}>
-                      <IoTrashOutline />
+                      <Io.IoTrashOutline />
                     </button>
                     <input
                       type='file'
@@ -527,17 +490,17 @@ export default function Page() {
                         alt='profile image'
                       />
                     ) : (
-                      <IoImageOutline className='camera-icon' />
+                      <Io.IoImageOutline className='camera-icon' />
                     )}
                     <label htmlFor='avatar' title='Change profile picture'>
                       <span>Imagem de perfil</span>
-                      <IoAdd />
+                      <Io.IoAdd />
                     </label>
                     <button
                       title='Apagar imagem de perfil'
                       className='clear-image'
                       onClick={() => deleteAsset('profile_image')}>
-                      <IoTrashOutline />
+                      <Io.IoTrashOutline />
                     </button>
                     <input
                       type='file'
@@ -567,7 +530,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='first_name'>
-                          <IoEllipsisHorizontal />
+                          <Io.IoEllipsisHorizontal />
                           <span>Nome</span>
                         </label>
                         <input
@@ -589,7 +552,7 @@ export default function Page() {
                       </div>
                       <div className='form-element'>
                         <label htmlFor='last_name'>
-                          <IoEllipsisHorizontal />
+                          <Io.IoEllipsisHorizontal />
                           <span>Apelido</span>
                         </label>
                         <input
@@ -613,7 +576,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='main_phone_number'>
-                          <IoPhonePortraitOutline />
+                          <Io.IoPhonePortraitOutline />
                           <span>Número de telemóvel (Principal)</span>
                         </label>
                         <input
@@ -635,7 +598,7 @@ export default function Page() {
                       </div>
                       <div className='form-element'>
                         <label htmlFor='alternative_phone_number'>
-                          <IoPhonePortraitOutline />
+                          <Io.IoPhonePortraitOutline />
                           <span>Número de telemóvel (Alternativo)</span>
                         </label>
                         <input
@@ -659,7 +622,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='main_phone_number'>
-                          <IoHeartHalfOutline />
+                          <Io.IoHeartHalfOutline />
                           <span>Gênero</span>
                         </label>
                         <select
@@ -668,13 +631,13 @@ export default function Page() {
                           value={state.user.gender}
                           onChange={(e) => handleChange(e)}>
                           <option value='Masculino'>Masculino</option>
-                          <option value='Femenino'>Femenino</option>
+                          <option value='Feminino'>Feminino</option>
                           <option value='Outro'>Outro</option>
                         </select>
                       </div>
                       <div className='form-element'>
                         <label htmlFor='birth_date'>
-                          <IoCalendarNumberOutline />
+                          <Io.IoCalendarNumberOutline />
                           <span>Data de Nascimento</span>
                         </label>
                         <input
@@ -691,7 +654,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='bio'>
-                          <IoCreateOutline />
+                          <Io.IoCreateOutline />
                           <span>Biografia</span>
                         </label>
                         <input
@@ -733,7 +696,7 @@ export default function Page() {
                                   }
                                 });
                               }}>
-                              <IoCloseCircle />
+                              <Io.IoCloseCircle />
                             </button>
                           </div>
                         ))}
@@ -741,7 +704,7 @@ export default function Page() {
                     )}
                     <div className='form-element'>
                       <label htmlFor='spoken_languages'>
-                        <IoEarthOutline />
+                        <Io.IoEarthOutline />
                         <span>Línguas (máx. 5)</span>
                       </label>
                       <select
@@ -798,7 +761,7 @@ export default function Page() {
                                   }
                                 });
                               }}>
-                              <IoCloseCircle />
+                              <Io.IoCloseCircle />
                             </button>
                           </div>
                         ))}
@@ -806,7 +769,7 @@ export default function Page() {
                     )}
                     <div className='form-element'>
                       <label htmlFor='professional_skills'>
-                        <IoConstructOutline />
+                        <Io.IoConstructOutline />
                         <span>Habilidades Profissionais (máx. 10)</span>
                       </label>
                       <select
@@ -845,7 +808,7 @@ export default function Page() {
                 <div className='data-section'>
                   <div className='description'>
                     <h2>
-                      <IoLocation />
+                      <Io.IoLocation />
                       <span>Localização e Endereço</span>
                     </h2>
                     <p>Informações usadas para entregas de compras feitas nas lojas.</p>
@@ -855,7 +818,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='country'>
-                          <IoPlanetOutline />
+                          <Io.IoPlanetOutline />
                           <span>País</span>
                         </label>
                         <select
@@ -894,7 +857,7 @@ export default function Page() {
 
                       <div className='form-element'>
                         <label htmlFor='state'>
-                          <IoStar />
+                          <Io.IoStar />
                           <span>Província / Estado</span>
                         </label>
                         <select
@@ -930,7 +893,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='address'>
-                          <IoHomeOutline />
+                          <Io.IoHomeOutline />
                           <span>Endereço</span>
                         </label>
                         <input
@@ -964,7 +927,7 @@ export default function Page() {
                       </div>
                       <div className='form-element'>
                         <label htmlFor='zip_code'>
-                          <IoBookmarkOutline />
+                          <Io.IoBookmarkOutline />
                           <span>Código Postal</span>
                         </label>
                         <input
@@ -1003,7 +966,7 @@ export default function Page() {
                 <div className='data-section'>
                   <div className='description'>
                     <h2>
-                      <IoShareSocial />
+                      <Io.IoShareSocial />
                       <span>Redes e Mídias Sociais</span>
                     </h2>
                     <p>
@@ -1016,7 +979,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='whatsapp'>
-                          <IoLogoWhatsapp />
+                          <Io.IoLogoWhatsapp />
                           <span>Whatsapp</span>
                         </label>
                         <input
@@ -1045,7 +1008,7 @@ export default function Page() {
                       </div>
                       <div className='form-element'>
                         <label htmlFor='facebook'>
-                          <IoLogoFacebook />
+                          <Io.IoLogoFacebook />
                           <span>Facebook</span>
                         </label>
                         <input
@@ -1106,7 +1069,7 @@ export default function Page() {
                       </div>
                       <div className='form-element'>
                         <label htmlFor='instagram'>
-                          <IoLogoInstagram />
+                          <Io.IoLogoInstagram />
                           <span>Instagram</span>
                         </label>
                         <input
@@ -1172,7 +1135,7 @@ export default function Page() {
                 <div className='data-section'>
                   <div className='description'>
                     <h2>
-                      <IoKey />
+                      <Io.IoKey />
                       <span>Atualização de Senhas</span>
                     </h2>
                     <p>
@@ -1185,7 +1148,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='password'>
-                          <IoLockOpenOutline />
+                          <Io.IoLockOpenOutline />
                           <span>Nova senha</span>
                         </label>
                         <input
@@ -1202,7 +1165,7 @@ export default function Page() {
                       </div>
                       <div className='form-element'>
                         <label htmlFor='confirm_password'>
-                          <IoLockClosedOutline />
+                          <Io.IoLockClosedOutline />
                           <span>Confirme a senha</span>
                         </label>
                         <input
@@ -1224,7 +1187,7 @@ export default function Page() {
                 <section className={'working-data-container'}>
                   <div className='description'>
                     <h2>
-                      <IoBriefcase />
+                      <Io.IoBriefcase />
                       <span>Experiência Profissional</span>
                     </h2>
                     <p>
@@ -1240,7 +1203,7 @@ export default function Page() {
                             {item.career && (
                               <div className='item'>
                                 <h3>
-                                  <IoConstructOutline />
+                                  <Io.IoConstructOutline />
                                   <span>Carreira Profissional</span>
                                 </h3>
                                 <p>{item.career}</p>
@@ -1249,7 +1212,7 @@ export default function Page() {
                             {item.company_name && (
                               <div className='item'>
                                 <h3>
-                                  <IoExtensionPuzzleOutline />
+                                  <Io.IoExtensionPuzzleOutline />
                                   <span>Empresa ou Entidade Empregadora</span>
                                 </h3>
                                 <p>{item.company_name}</p>
@@ -1258,7 +1221,7 @@ export default function Page() {
                             {item.start_date && (
                               <div className='item dates'>
                                 <h3>
-                                  <IoWatchOutline />
+                                  <Io.IoWatchOutline />
                                   <span>Período de Trabalho</span>
                                 </h3>
                                 <span>
@@ -1270,8 +1233,8 @@ export default function Page() {
                             {item.portfolio_url && (
                               <div className='item'>
                                 <h3>
-                                  <IoLinkOutline />
-                                  <span>Endereço do Portifólio</span>
+                                  <Io.IoLinkOutline />
+                                  <span>Endereço do Portfólio</span>
                                 </h3>
                                 <p>{item.portfolio_url}</p>
                               </div>
@@ -1279,7 +1242,7 @@ export default function Page() {
                             {item.description && (
                               <div className='item'>
                                 <h3>
-                                  <IoFlowerOutline />
+                                  <Io.IoFlowerOutline />
                                   <span>Anotações</span>
                                 </h3>
                                 <p>{item.description}</p>
@@ -1292,13 +1255,13 @@ export default function Page() {
                                 e.preventDefault();
                                 editWorkingData(item.id);
                               }}>
-                              <IoPencil />
+                              <Io.IoPencil />
                               <span>Editar</span>
                             </button>
                             <button
                               className='delete-btn'
                               onClick={() => removeWorkingData(item.id)}>
-                              <IoCloseCircle />
+                              <Io.IoCloseCircle />
                               <span>Eliminar</span>
                             </button>
                           </div>
@@ -1306,7 +1269,7 @@ export default function Page() {
                       ))
                     ) : (
                       <div className='no-data-container'>
-                        <IoClipboardOutline />
+                        <Io.IoClipboardOutline />
                         <h3>
                           <span>Sem experiência profissional</span>
                         </h3>
@@ -1319,7 +1282,7 @@ export default function Page() {
                       e.preventDefault();
                       userWorkingDataController();
                     }}>
-                    <IoAdd />
+                    <Io.IoAdd />
                     <span>Adicionar Experiência Profissional</span>
                   </button>
                 </section>
@@ -1338,9 +1301,9 @@ export default function Page() {
                 {!loading.status && !error.status && (
                   <>
                     <h3>
-                      Confirme se as informações introduzidas estão correctas antes de
-                      salvar alterações. Caso não tenha alterado nada, não será atualizado,
-                      clique em "Descartar e voltar".
+                      Confirme se as informações introduzidas estão corretas antes de salvar
+                      alterações. Caso não tenha alterado nada, não será atualizado, clique
+                      em "Descartar e voltar".
                     </h3>
                     <p>
                       Todas as informações que introduzir nesta página são, por padrão,
@@ -1373,11 +1336,11 @@ export default function Page() {
                 {!loading.status && !error.status && (
                   <>
                     <button className='back' onClick={(e) => router.back()}>
-                      <IoArrowUndoOutline />
+                      <Io.IoArrowUndoOutline />
                       <span>Descartar e voltar</span>
                     </button>
                     <button className='save' onClick={() => handleSubmitUpdate()}>
-                      <IoSyncOutline />
+                      <Io.IoSyncOutline />
                       <span>Salvar alterações</span>
                     </button>
                   </>
@@ -1396,7 +1359,7 @@ export default function Page() {
                 <span> Cuidado, essa ação é irreversível.</span>
               </section>
               <button className='save' onClick={deleteAccountPromptController}>
-                <IoTrash />
+                <Io.IoTrash />
                 <span>Apagar dados</span>
               </button>
             </section>

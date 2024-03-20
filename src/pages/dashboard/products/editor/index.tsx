@@ -3,6 +3,7 @@ import Layout from '@/components/layout';
 import { useAppContext } from '@/context/AppContext';
 import { DEFAULT_ERROR_MESSAGE, constants } from '@/data/constants';
 import Categories from '@/data/product-categories.json';
+import { errorTransformer } from '@/lib/error-transformer';
 import { initialState } from '@/lib/reducer';
 import { actions } from '@/shared/actions';
 import { _productEditor as Container } from '@/styles/common/product-editor';
@@ -11,25 +12,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import {
-  IoArrowUndoOutline,
-  IoBagHandle,
-  IoCarOutline,
-  IoCashOutline,
-  IoChatbubblesOutline,
-  IoChevronBack,
-  IoCloseOutline,
-  IoEllipsisHorizontal,
-  IoGiftOutline,
-  IoLayersOutline,
-  IoPencilOutline,
-  IoPizzaOutline,
-  IoPricetagsOutline,
-  IoPush,
-  IoReload,
-  IoSave,
-  IoSyncOutline
-} from 'react-icons/io5';
+import Io from 'react-icons/io5';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
@@ -150,15 +133,15 @@ export default function Page() {
           <section className='fetching-state'>
             <section className='wrapper'>
               <h3>
-                {(error as HttpError)?.response?.data?.message || DEFAULT_ERROR_MESSAGE}
+                {errorTransformer(error as HttpError).message}
               </h3>
               <div>
                 <button onClick={() => router.reload()}>
-                  <IoReload />
+                  <Io.IoReload />
                   <span>Recarregar a página</span>
                 </button>
                 <button onClick={() => router.back()}>
-                  <IoChevronBack />
+                  <Io.IoChevronBack />
                   <span>Voltar a página anterior</span>
                 </button>
               </div>
@@ -169,7 +152,7 @@ export default function Page() {
         <article>
           <section className='header'>
             <h2>
-              <IoPencilOutline />
+              <Io.IoPencilOutline />
               <span>Detalhes do Produto</span>
             </h2>
             <span className='details'>Salve após fazer alterações!</span>
@@ -219,7 +202,7 @@ export default function Page() {
                                     }
                                   })
                                 }>
-                                <IoCloseOutline />
+                                <Io.IoCloseOutline />
                               </button>
                             </div>
                           ))
@@ -255,7 +238,7 @@ export default function Page() {
                 <div className='data-section'>
                   <div className='description'>
                     <h2>
-                      <IoBagHandle />
+                      <Io.IoBagHandle />
                       <span>Informações do Produto</span>
                     </h2>
                     <p>Informações usadas para a descrição e identificação do produto.</p>
@@ -265,7 +248,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='name'>
-                          <IoEllipsisHorizontal />
+                          <Io.IoEllipsisHorizontal />
                           <span>Nome do Produto *</span>
                         </label>
                         <input
@@ -289,7 +272,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='description'>
-                          <IoEllipsisHorizontal />
+                          <Io.IoEllipsisHorizontal />
                           <span>Descrição do Produto *</span>
                         </label>
 
@@ -315,7 +298,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='specifications'>
-                          <IoEllipsisHorizontal />
+                          <Io.IoEllipsisHorizontal />
                           <span>Especificações do Produto</span>
                         </label>
 
@@ -341,7 +324,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='category'>
-                          <IoLayersOutline />
+                          <Io.IoLayersOutline />
                           <span>Categoria do Produto</span>
                         </label>
                         <select
@@ -371,7 +354,7 @@ export default function Page() {
                       </div>
                       <div className='form-element'>
                         <label htmlFor='quantity'>
-                          <IoCashOutline />
+                          <Io.IoCashOutline />
                           <span>Quantidade em Estoque</span>
                         </label>
                         <input
@@ -390,7 +373,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='price'>
-                          <IoPricetagsOutline />
+                          <Io.IoPricetagsOutline />
                           <span>Preço (em meticais e sem decimais) </span>
                         </label>
                         <input
@@ -406,7 +389,7 @@ export default function Page() {
                       </div>
                       <div className='form-element'>
                         <label htmlFor='delivery_tax'>
-                          <IoCarOutline />
+                          <Io.IoCarOutline />
                           <span>Taxa Base de Entrega (Meticais)</span>
                         </label>
                         <input
@@ -425,7 +408,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element check-box'>
                         <label htmlFor='promotion'>
-                          <IoGiftOutline />
+                          <Io.IoGiftOutline />
                           <span>Está em promoção?</span>
                         </label>
                         <input
@@ -452,7 +435,7 @@ export default function Page() {
                       </div>
                       <div className='form-element'>
                         <label htmlFor='percentage'>
-                          <IoPizzaOutline />
+                          <Io.IoPizzaOutline />
                           <span>Percentagem de Desconto</span>
                         </label>
                         <input
@@ -487,7 +470,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element check-box'>
                         <label htmlFor='allow_comments'>
-                          <IoChatbubblesOutline />
+                          <Io.IoChatbubblesOutline />
                           <span>Permitir comentários?</span>
                         </label>
                         <input
@@ -518,7 +501,7 @@ export default function Page() {
             <section className='actions-container'>
               <div className='description'>
                 <h2>
-                  <IoSave />
+                  <Io.IoSave />
                   <span>Salvamento de Alterações</span>
                 </h2>
                 <p>Salve as alterações feitas.</p>
@@ -573,7 +556,7 @@ export default function Page() {
 
               <div className='btns-container'>
                 <button className='back' onClick={(e) => router.back()}>
-                  <IoArrowUndoOutline />
+                  <Io.IoArrowUndoOutline />
                   <span>Voltar</span>
                 </button>
 
@@ -583,7 +566,7 @@ export default function Page() {
                   <button
                     className='save'
                     onClick={async () => await updateMutation(state.product._id)}>
-                    <IoSyncOutline />
+                    <Io.IoSyncOutline />
                     <span>Salvar alterações</span>
                   </button>
                 ) : null}
@@ -592,7 +575,7 @@ export default function Page() {
                   !createMutationProps.isError &&
                   !state.product._id && (
                     <button className='save' onClick={async () => await createMutation()}>
-                      <IoPush />
+                      <Io.IoPush />
                       <span>Publicar Produto</span>
                     </button>
                   )}

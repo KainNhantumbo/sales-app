@@ -342,7 +342,7 @@ export type User = {
 export type PublicUser = Omit<
   User,
   'gender' | 'birth_date' | 'main_phone_number' | 'alternative_phone_number'
->;
+> & { store: string };
 
 export type Denounce = {
   reason: string;
@@ -383,7 +383,7 @@ export type Order = {
     user_phone_0: string;
     user_phone_1: string;
     user_notes: string;
-    user_location: Pick<Purchase, 'location'>;
+    user_location: { country: string; state: string; address: string; zip_code: string };
   };
   order_items: Array<{
     product_id: string;

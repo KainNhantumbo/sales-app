@@ -276,10 +276,7 @@ export function ProductsSearch() {
                   onClick={() => {
                     dispatch({
                       type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
-                      payload: {
-                        ...state,
-                        isPublicProductsFilters: false
-                      }
+                      payload: { ...state, isPublicProductsFilters: false }
                     });
 
                     if (windowInnerWidth < 830) slidePageUp();

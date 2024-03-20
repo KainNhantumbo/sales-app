@@ -17,9 +17,9 @@ export const DropzoneArea = ({ handler, width, height }: DropzoneProps) => {
     onDrop: useCallback(
       <T extends File>(acceptedFiles: T[]) => {
         const file = acceptedFiles[0];
-        if (!file || !DEFAULT_MIME_TYPES.includes(String(file.type)))
+        if (!file || !DEFAULT_MIME_TYPES.includes(file.type))
           return alert(
-            'Error: uploaded image has a file extension type that is forbidden.'
+            'Erro: extensão da imagem carregada não suportado.'
           );
 
         new Compressor(file, {

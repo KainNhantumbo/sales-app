@@ -3,10 +3,11 @@ import { SideBarAds } from '@/components/sidebar-ads';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import { blurDataUrlImage, constants, formatSocialNetwork } from '@/data/constants';
+import { blurDataUrlImage, constants } from '@/data/constants';
 import { useCartStore } from '@/hooks/use-cart-store';
 import { useFavoriteProduct } from '@/hooks/use-favorite-product';
 import { useInnerWindowSize } from '@/hooks/use-window-size';
+import { createSocialPaths } from '@/lib/url-transformers';
 import { formatCurrency, slidePageUp } from '@/lib/utils';
 import ErrorPage from '@/pages/error-page';
 import { actions } from '@/shared/actions';
@@ -69,7 +70,7 @@ export default function Page({ store, products }: Props) {
         title='Loja Inativa'
         message='A loja que procura pode estar atualmente indisponível. Peça ao proprietário para ativá-la.'
         button_message='Voltar para página anterior'
-        retryFn={() => router.back()}
+        onRetry={() => router.back()}
       />
     );
 
@@ -105,21 +106,21 @@ export default function Page({ store, products }: Props) {
               </h5>
               {store.created_by.social_network && (
                 <div className='network-buttons'>
-                  {formatSocialNetwork({
-                    ...store.created_by.social_network
-                  })?.map((option, index) => (
-                    <motion.a
-                      whileHover={{ scale: 1.2 }}
-                      whileTap={{ scale: 0.8 }}
-                      href={String(option?.url)}
-                      title={option?.name}
-                      aria-label={option?.name}
-                      target={'_blank'}
-                      rel={'noreferrer noopener'}
-                      key={String(index)}>
-                      {option?.icon && <option.icon />}
-                    </motion.a>
-                  ))}
+                  {createSocialPaths(store.created_by.social_network)?.map(
+                    (option, index) => (
+                      <motion.a
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.8 }}
+                        href={String(option?.url)}
+                        title={option?.name}
+                        aria-label={option?.name}
+                        target={'_blank'}
+                        rel={'noreferrer noopener'}
+                        key={String(index)}>
+                        {option?.icon && <option.icon />}
+                      </motion.a>
+                    )
+                  )}
                 </div>
               )}
               <motion.div

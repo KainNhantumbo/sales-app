@@ -7,23 +7,16 @@ import { ToolBox } from '@/components/modals/tool-box';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
 import { useProductsQuery } from '@/hooks/use-products-query';
+import { errorTransformer } from '@/lib/error-transformer';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _productList as Container } from '@/styles/common/products';
 import { HttpError } from '@/types';
+import { AxiosError } from 'axios';
 import moment from 'moment';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import {
-  IoCalendar,
-  IoEllipsisHorizontal,
-  IoHeartOutline,
-  IoLayersOutline,
-  IoPricetagsOutline,
-  IoReload,
-  IoStorefront,
-  IoWarningOutline
-} from 'react-icons/io5';
+import Io from 'react-icons/io5';
 import { VscEmptyWindow } from 'react-icons/vsc';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
@@ -42,16 +35,16 @@ export default function Page() {
 
   const handleDeleteProduct = async (productId: string) => {
     try {
-      await httpClient({
-        method: 'delete',
-        url: `/api/v1/users/products/${productId}`
-      });
+      await httpClient({ method: 'delete', url: `/api/v1/users/products/${productId}` });
       deleteProductPromptController(false, '');
       refetch({ queryKey: ['private-store-products'] });
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
+      if (error instanceof AxiosError) {
+        const { message, statusCode } = errorTransformer(error as HttpError);
+        console.error('Error message:', message);
+        console.error('Error code:', statusCode);
+      }
+      console.error(error);
     }
   };
 
@@ -71,10 +64,10 @@ export default function Page() {
         <article>
           {!isLoading && isError && (
             <section className='error-message'>
-              <IoWarningOutline className='icon' />
-              <p>{(error as any).response?.data?.message || 'Erro ao carregar produtos'}</p>
+              <Io.IoWarningOutline className='icon' />
+              <p>{errorTransformer(error as HttpError).message}</p>
               <button onClick={() => refetch({ queryKey: ['private-store-products'] })}>
-                <IoReload />
+                <Io.IoReload />
                 <span>Tentar novamente</span>
               </button>
             </section>
@@ -124,7 +117,7 @@ export default function Page() {
                     <div className='bottom-side'>
                       {product.promotion.status ? (
                         <div className='item promo-price'>
-                          <IoPricetagsOutline />
+                          <Io.IoPricetagsOutline />
                           <span>
                             <i>{formatCurrency(product.price)}</i>{' '}
                             {formatCurrency(
@@ -135,26 +128,26 @@ export default function Page() {
                         </div>
                       ) : (
                         <div className='item promo-price'>
-                          <IoPricetagsOutline />
+                          <Io.IoPricetagsOutline />
                           <span> {formatCurrency(product.price)}</span>
                         </div>
                       )}
                       <div className='item'>
-                        <IoLayersOutline />
+                        <Io.IoLayersOutline />
                         <span>{product.category ?? 'Sem categoria'}</span>
                       </div>
                       <div className='item'>
-                        <IoHeartOutline />
+                        <Io.IoHeartOutline />
                         <span>{product.favorites.length} Favoritos</span>
                       </div>
                       <div className='item date'>
-                        <IoCalendar />
+                        <Io.IoCalendar />
                         <span>
                           {moment(product.createdAt).format('MMMM D, yyyy HH:mm')}
                         </span>
                       </div>
                       <div className='item'>
-                        <IoStorefront />
+                        <Io.IoStorefront />
                         <span>{product.quantity} Produtos Estocados</span>
                       </div>
                     </div>
@@ -189,7 +182,7 @@ export default function Page() {
                   <div className=' fetch-error-message '>
                     <h3>Erro ao carregar produtos</h3>
                     <button onClick={() => fetchNextPage()}>
-                      <IoReload />
+                      <Io.IoReload />
                       <span>Tentar novamente</span>
                     </button>
                   </div>
@@ -214,7 +207,7 @@ export default function Page() {
               </div>
               {state.productList.length > 0 && (
                 <div className='products-list_container__end-mark'>
-                  <IoEllipsisHorizontal />
+                  <Io.IoEllipsisHorizontal />
                 </div>
               )}
             </div>

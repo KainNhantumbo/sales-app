@@ -3,7 +3,7 @@ import { NewsLetter } from '@/components/newsletter';
 import { PostsSearch } from '@/components/posts-search';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
-import { geStoresData } from '@/lib/queries';
+import { getStoresData } from '@/lib/queries';
 import { formatDate } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _storeSearch as Container } from '@/styles/common/store-search';
@@ -33,7 +33,7 @@ export default function Page() {
   const { ref, inView } = useInView();
 
   const fetchPosts = async ({ pageParam = 0 }) => {
-    const { data } = await geStoresData<PublicStoreList>({
+    const { data } = await getStoresData<PublicStoreList>({
       offset: pageParam * LIMIT,
       limit: LIMIT,
       search: String(router.query['q'])

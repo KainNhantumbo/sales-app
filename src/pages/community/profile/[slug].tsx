@@ -2,7 +2,8 @@ import Layout from '@/components/layout';
 import { SideBarAds } from '@/components/sidebar-ads';
 import { StoriesRenderer } from '@/components/stories-renderer';
 import fetch from '@/config/client';
-import { constants, formatSocialNetwork } from '@/data/constants';
+import { constants } from '@/data/constants';
+import { createSocialPaths } from '@/lib/url-transformers';
 import { formatDate } from '@/lib/utils';
 import ErrorPage from '@/pages/error-page';
 import { _profile as Container } from '@/styles/common/community-user-profile';
@@ -13,33 +14,20 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { BiUser } from 'react-icons/bi';
 import { BsWind } from 'react-icons/bs';
-import {
-  IoBriefcase,
-  IoCreateOutline,
-  IoLocation,
-  IoLockClosed,
-  IoOpenOutline,
-  IoPlanet
-} from 'react-icons/io5';
+import Io from 'react-icons/io5';
 
-type Props = { user: PublicUser };
-
-export default function Page({ user }: Props) {
+export default function Page({ user }: { user?: PublicUser }) {
   const router = useRouter();
 
   if (!user)
     return (
-      <ErrorPage message='Conta de usuário indisponível.' retryFn={() => router.reload()} />
+      <ErrorPage message='Conta de usuário indisponível.' onRetry={() => router.reload()} />
     );
 
   return (
     <Layout
       metadata={{
-        title: `${constants.defaultTitle} | Perfil de ${String.prototype.concat(
-          user.first_name,
-          ' ',
-          user.last_name
-        )}`,
+        title: `${constants.defaultTitle} | Perfil de ${user.first_name} ${user.last_name}`,
         createdAt: user.createdAt,
         updatedAt: user.createdAt
       }}>
@@ -92,9 +80,7 @@ export default function Page({ user }: Props) {
                   </h5>
                   {user.social_network && (
                     <div className='network-buttons'>
-                      {formatSocialNetwork({
-                        ...user.social_network
-                      })?.map((option, index) => (
+                      {createSocialPaths(user.social_network)?.map((option, index) => (
                         <motion.a
                           whileHover={{ scale: 1.2 }}
                           whileTap={{ scale: 0.8 }}
@@ -117,7 +103,7 @@ export default function Page({ user }: Props) {
                   <button
                     className='create-story-btn'
                     onClick={() => router.push(`/community/story/create-story`)}>
-                    <IoCreateOutline />
+                    <Io.IoCreateOutline />
                     <span>Nova história</span>
                   </button>
                 </motion.div>
@@ -126,7 +112,7 @@ export default function Page({ user }: Props) {
                   whileTap={{ scale: 0.8 }}
                   className='store-anchor'>
                   <Link href={`/community/store/${user.store}`}>
-                    <IoOpenOutline />
+                    <Io.IoOpenOutline />
                     <span>Visitar loja</span>
                   </Link>
                 </motion.div>
@@ -139,14 +125,14 @@ export default function Page({ user }: Props) {
               </p>
 
               <h5>
-                <IoLockClosed />
+                <Io.IoLockClosed />
                 <i>
                   Conta ativa desde <span>{formatDate(user.createdAt)}</span>
                 </i>
               </h5>
               {user.location?.country && user.location?.state && (
                 <h5>
-                  <IoLocation />
+                  <Io.IoLocation />
                   <i>
                     Vive em {user.location.state} - {user.location.country}.
                   </i>
@@ -158,7 +144,7 @@ export default function Page({ user }: Props) {
                 {user.spoken_languages.length > 0 && (
                   <div className='spoken-languages'>
                     <h5>
-                      <IoPlanet />
+                      <Io.IoPlanet />
                       <span>Possui habilidades linguísticas em: </span>
                     </h5>
                     {user.spoken_languages.map((language, index) => (
@@ -169,7 +155,7 @@ export default function Page({ user }: Props) {
                 {user.professional_skills.length > 0 && (
                   <div className='spoken-languages'>
                     <h5>
-                      <IoBriefcase />
+                      <Io.IoBriefcase />
                       <span>Possui habilidades profissionais relacionadas a </span>
                     </h5>
                     {user.professional_skills.map((ability, index) => (
@@ -179,7 +165,6 @@ export default function Page({ user }: Props) {
                 )}
               </section>
             )}
-            {/* user stories */}
 
             <StoriesRenderer key={user._id} userId={user._id} />
           </article>

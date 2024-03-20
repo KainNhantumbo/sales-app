@@ -1,3 +1,6 @@
 {
-  "recommendations": ["vue.vscode-typescript-vue-plugin"]
+  "recommendations": [
+    "vue.vscode-typescript-vue-plugin",
+    "redhat.java"
+  ]
 }

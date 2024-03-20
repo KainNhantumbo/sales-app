@@ -29,7 +29,7 @@ export default class ErrorBoundary extends Component {
 
   render() {
     if (this.state.hasError)
-      return <ErrorPage retryFn={() => this.setState({ hasError: false })} />;
+      return <ErrorPage onRetry={() => this.setState({ hasError: false })} />;
     return this.props.children;
   }
 }

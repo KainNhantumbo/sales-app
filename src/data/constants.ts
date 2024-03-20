@@ -1,51 +1,9 @@
 import Package from '@/../package.json';
 import authorPicture from '@/../public/assets/author.jpg';
 import mpesa_logo from '@/../public/trademarks/mpesa logo.png';
-import { BiUser } from 'react-icons/bi';
-import {
-  BsBox2,
-  BsBox2Heart,
-  BsCreditCard2Front,
-  BsPersonGear,
-  BsPersonVideo3
-} from 'react-icons/bs';
-import {
-  FaAd,
-  FaDollarSign,
-  FaFacebook,
-  FaInstagram,
-  FaLink,
-  FaLinkedinIn,
-  FaPinterest,
-  FaTwitter,
-  FaWhatsapp
-} from 'react-icons/fa';
-import {
-  IoAdd,
-  IoBagCheck,
-  IoCard,
-  IoCardOutline,
-  IoCartOutline,
-  IoChatbubbleEllipsesOutline,
-  IoCog,
-  IoFlash,
-  IoInfiniteOutline,
-  IoLogoFacebook,
-  IoMail,
-  IoMegaphoneOutline,
-  IoRocketOutline,
-  IoStorefront,
-  IoStorefrontOutline
-} from 'react-icons/io5';
-import type {
-  Author,
-  DashboardAction,
-  Pricing,
-  ShareAnchors,
-  ShareUrls,
-  TPaymentOptions,
-  TSocialNetwork
-} from '../types';
+import type { Author, Option, Pricing, TPaymentOptions } from '@/types';
+import Fa from 'react-icons/fa';
+import Io from 'react-icons/io5';
 import blurImage from './blur-data-url-image.json';
 import denounces_data from './denounce-reasons.json';
 
@@ -75,29 +33,29 @@ export const constants = {
     {
       name: 'Encontre-nos no Facebook',
       url: 'https://www.fb.com/@travel_sketchpad',
-      icon: IoLogoFacebook
+      icon: Io.IoLogoFacebook
     },
     {
       name: 'Encontre-nos no Instagram',
       url: 'https://www.pinterest.com/travel_sketchpad',
-      icon: FaInstagram
+      icon: Fa.FaInstagram
     },
     {
       name: 'Encontre-nos no LinkedIn',
       url: 'https://www.pinterest.com/travel_sketchpad',
-      icon: FaLinkedinIn
+      icon: Fa.FaLinkedinIn
     },
     {
       name: 'Encontre-nos no Twitter',
       url: 'https://www.twitter.com/travel_sketchpad',
-      icon: FaTwitter
+      icon: Fa.FaTwitter
     }
   ]
 };
 
 export const DEFAULT_ERROR_MESSAGE = 'Oops! Algo deu errado. Tente novamente.';
 
-export const urls = [
+export const urls: Array<{ name: string; url: string; alias: string }> = [
   { name: 'Início', url: '/', alias: '+' },
   { name: 'Descobrir', url: '/ecommerce/discover', alias: 'discover' },
   { name: 'Preçário', url: '/docs/pricing', alias: 'pricing' },
@@ -111,37 +69,37 @@ export const store_features = [
     title: 'Integração com meios de pagamento',
     description:
       'Os melhores e mais confiáveis meios de pagamento já integrados na sua loja.',
-    icon: IoCard
+    icon: Io.IoCard
   },
   {
     title: 'Venda em diversos canais',
     description:
       'Integre a sua loja virtual com redes sociais, canais de marketplace ou dropshipping em poucos cliques.',
-    icon: IoMegaphoneOutline
+    icon: Io.IoMegaphoneOutline
   },
   {
     title: 'Sem limite de produtos ou de visitas',
     description:
       'Adicione quantos produtos quiser e não tenha limite de vendas ou de visitas na sua loja virtual.',
-    icon: IoInfiniteOutline
+    icon: Io.IoInfiniteOutline
   },
   {
     title: 'Estratégias de marketing digital',
     description:
       'Aumente suas vendas com campanhas de performance via Google e redes sociais.',
-    icon: IoRocketOutline
+    icon: Io.IoRocketOutline
   },
   {
     title: 'Checkout transparente',
     description:
       'Ofereça a melhor Experiência no seu e-commerce e diminua sua taxa de abandono de carrinho.',
-    icon: IoCartOutline
+    icon: Io.IoCartOutline
   },
   {
     title: 'Diferentes canais de suporte',
     description:
       'Conte com os diferentes canais de suporte que oferecemos e tenha sempre a ajuda que você precisa na hora certa.',
-    icon: IoChatbubbleEllipsesOutline
+    icon: Io.IoChatbubbleEllipsesOutline
   }
 ];
 
@@ -192,143 +150,13 @@ export const pricing_data: Pricing = [
   }
 ];
 
-export const denounceReasons = denounces_data
+export const denounceReasons: Option[] = denounces_data
   .sort((a, b) => (a > b ? 1 : -1))
   .map((reason) => ({ label: reason, value: reason }));
 
-export const shareUrlPaths = (props: ShareAnchors): ShareUrls[] => {
-  return [
-    {
-      name: 'Compartilhe no LinkedIn',
-      url: `https://www.linkedin.com/shareArticle?mini=true&url=${props.hostname}/blog/post/${props.slug}&title=${props.title}&summary=${props.excerpt}`,
-      icon: FaLinkedinIn
-    },
-    {
-      name: 'Compartilhe no WhatsApp',
-      url: `https://api.whatsapp.com/send?text=${props.title}&url=${props.hostname}/blog/post/${props.slug}`,
-      icon: FaWhatsapp
-    },
-    {
-      name: 'Compartilhe no Facebook',
-      url: `https://www.facebook.com/sharer/sharer.php?u=${props.hostname}/blog/post/${props.slug}`,
-      icon: FaFacebook
-    },
-    {
-      name: 'Compartilhe por E-mail',
-      url: `mailto:?subject=${props.title}&body=${props.hostname}/blog/post/${props.slug}`,
-      icon: IoMail
-    },
-    {
-      name: 'Compartilhe no Twitter',
-      url: `https://twitter.com/intent/tweet/customer-orders?text=${props.hostname}/blog/post/${props.slug}`,
-      icon: FaTwitter
-    },
-    {
-      name: 'Compartilhe no Pinterest',
-      url: `https://pinterest.com/pin/create/button/?url=${props.hostname}/blog/post/${props.slug}&media=${props.hostname}/blog/post/${props.slug}&description=${props.excerpt}`,
-      icon: FaPinterest
-    }
-  ].sort((a, b) => (a.name > b.name ? 1 : -1));
-};
-
 export const DEFAULT_MIME_TYPES: string[] = ['image/png', 'image/jpeg', 'image/jpg'];
 
-export const dashboardActions = (props: { userId: string; storeId: string }) => {
-  return {
-    user: {
-      header: { label: 'Conta', icon: BiUser },
-      paths: [
-        {
-          label: 'Configurações da Conta',
-          url: '/dashboard/users/editor',
-          icon: BsPersonGear
-        },
-        {
-          label: 'Visualizar Perfil',
-          url: `/community/profile/${props.userId}`,
-          icon: BsPersonVideo3
-        },
-        {
-          label: 'Minhas Encomendas',
-          url: `/dashboard/users/orders`,
-          icon: BsBox2
-        },
-        {
-          label: 'Produtos Favoritos',
-          url: `/dashboard/products/favorite?id=${props.userId}`,
-          icon: BsBox2Heart
-        }
-      ]
-    },
-    store: {
-      header: { label: 'Loja', icon: IoStorefront },
-      paths: [
-        {
-          label: 'Visualizar Loja',
-          url: `/community/store/${props.storeId}`,
-          icon: IoStorefrontOutline
-        },
-        {
-          label: 'Configurações da Loja',
-          url: '/dashboard/store/editor',
-          icon: IoCog
-        },
-        {
-          label: 'Gerir Produtos',
-          url: '/dashboard/products',
-          icon: IoCog
-        },
-        {
-          label: 'Adicionar Produto',
-          url: '/dashboard/products/editor',
-          icon: IoAdd
-        },
-        {
-          label: 'Vendas de Produtos',
-          url: '/dashboard/store/orders',
-          icon: IoBagCheck
-        }
-      ]
-    },
-    transaction: {
-      header: { label: 'Transações', icon: FaDollarSign },
-      paths: [
-        {
-          label: 'Pagamento de Planos e Subscrições',
-          url: '/dashboard/transactions/subscription-payments',
-          icon: BsCreditCard2Front
-        },
-        {
-          label: 'Pagamento de Anúncios',
-          url: '/dashboard/transactions/ad-payments',
-          icon: IoCardOutline
-        }
-      ]
-    },
-    ad: {
-      header: { label: 'Anúncios', icon: FaAd },
-      paths: [
-        {
-          label: 'Criar Anúncio',
-          url: '/dashboard/create-ad',
-          icon: IoAdd
-        },
-        {
-          label: 'Gerir Anúncios',
-          url: '/dashboard/ads/generics',
-          icon: IoCog
-        },
-        {
-          label: 'Destacar Produtos da Loja',
-          url: '/dashboard/ads/products',
-          icon: IoFlash
-        }
-      ]
-    }
-  } as DashboardAction;
-};
-
-export const states: Array<{ value: string; label: string }> = [
+export const states: Array<Option> = [
   'Cabo Delgado',
   'Gaza',
   'Inhambane',
@@ -347,33 +175,6 @@ export const states: Array<{ value: string; label: string }> = [
 export const payment_options: TPaymentOptions = [
   { type: 'm-pesa', label: 'M-Pesa', image: mpesa_logo }
 ];
-
-export const formatSocialNetwork = <T = TSocialNetwork>(data: T) => {
-  if (!data) return undefined;
-
-  return Object.entries(data)
-    .map(([key, value]) => {
-      switch (key) {
-        case 'facebook':
-          return { name: 'Facebook', url: value, icon: IoLogoFacebook };
-        case 'instagram':
-          return { name: 'Instagram', url: value, icon: FaInstagram };
-        case 'website':
-          return { name: 'Website', url: value, icon: FaLink };
-        case 'linkedin':
-          return { name: 'LinkedIn', url: value, icon: FaLinkedinIn };
-        case 'whatsapp':
-          return { name: 'Whatsapp', url: value, icon: FaWhatsapp };
-        default:
-          return undefined;
-      }
-    })
-    .sort((a, b) => {
-      if (!a || !b) return 1;
-      if (a.name > b.name) return 1;
-      return -1;
-    });
-};
 
 export const order_status_labels: Array<{ label: string; value: string }> = [
   { label: 'Entregue', value: 'delivered' },

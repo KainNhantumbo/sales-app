@@ -20,7 +20,7 @@ export default function Page(props: Props) {
         <h1>{props.title ?? 'Opa! Isto é um erro'}</h1>
         <p>
           {props.message ??
-            'Oops! Parece que algo ruim aconteceu, por enquanto, isso é tudo que sabemos.'}
+            'Oops! Parece que algo errado aconteceu, por enquanto, isso é tudo que sabemos.'}
         </p>
         <button onClick={props.onRetry}>
           {props.button_message ?? 'Tentar novamente'}

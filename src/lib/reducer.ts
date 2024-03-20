@@ -10,12 +10,7 @@ export const initialState: State = {
   isCartModal: false,
   searchStores: '',
   searchStories: '',
-  queryPublicProducts: {
-    category: undefined,
-    promotion: undefined,
-    query: '',
-    sort: ''
-  },
+  queryPublicProducts: { category: undefined, promotion: undefined, query: '', sort: '' },
   isPublicProductsFilters: false,
   productsListQuery: { query: '', sort: '' },
   isDeleteAccountPrompt: false,
@@ -27,18 +22,8 @@ export const initialState: State = {
   isUserWorkingDataModal: false,
   isConnected: false,
   blogPostsList: [],
-  denounce: {
-    reason: '',
-    content: ''
-  },
-  auth: {
-    id: '',
-    name: '',
-    token: '',
-    email: '',
-    storeId: '',
-    profile_image: ''
-  },
+  denounce: { reason: '', content: '' },
+  auth: { id: '', name: '', token: '', email: '', storeId: '', profile_image: '' },
   search: '',
   newSubscriptionValue: { subscription: '' },
   signupData: {
@@ -48,10 +33,7 @@ export const initialState: State = {
     password: '',
     confirm_password: ''
   },
-  signInData: {
-    email: '',
-    password: ''
-  },
+  signInData: { email: '', password: '' },
   user: {
     _id: '',
     first_name: '',
@@ -66,23 +48,8 @@ export const initialState: State = {
     profile_image: { id: '', url: '' },
     professional_skills: [],
     spoken_languages: [],
-    working_experience: [
-      {
-        id: '',
-        career: '',
-        end_date: '',
-        start_date: '',
-        description: '',
-        portfolio_url: '',
-        company_name: ''
-      }
-    ],
-    location: {
-      country: '',
-      state: '',
-      address: '',
-      zip_code: ''
-    },
+    working_experience: [],
+    location: { country: '', state: '', address: '', zip_code: '' },
     social_network: {
       website: '',
       whatsapp: '',
@@ -110,11 +77,7 @@ export const initialState: State = {
         returned: 0
       }
     },
-    store: {
-      active_status: false,
-      blocked: false,
-      verified_status: false
-    }
+    store: { active_status: false, blocked: false, verified_status: false }
   },
   store: {
     _id: '',
@@ -142,11 +105,7 @@ export const initialState: State = {
     privacy_policy: '',
     terms_policy: '',
     delivery_policy: '',
-    location: {
-      country: 'Moçambique',
-      state: 'Maputo',
-      address: ''
-    },
+    location: { country: 'Moçambique', state: 'Maputo', address: '' },
     createdAt: '',
     updatedAt: ''
   },
@@ -196,11 +155,7 @@ export const initialState: State = {
     store: {
       _id: '',
       name: '',
-      location: {
-        country: '',
-        state: '',
-        address: ''
-      },
+      location: { country: '', state: '', address: '' },
       category: '',
       verified_store: false
     },
@@ -224,12 +179,7 @@ export const initialState: State = {
       address: '',
       zip_code: ''
     },
-    payment: {
-      type: 'm-pesa',
-      data: {
-        mpesa_account: ''
-      }
-    }
+    payment: { type: 'm-pesa', data: { mpesa_account: '' } }
   },
   story: {
     title: '',
@@ -408,10 +358,7 @@ export function reducer(state: State, action: Action): State {
       return { ...state, denounce: action.payload.denounce };
 
     case actions.BLOG_POSTS_LIST_QUERY:
-      return {
-        ...state,
-        blogPostsList: action.payload.blogPostsList
-      };
+      return { ...state, blogPostsList: action.payload.blogPostsList };
 
     case actions.QUERY_PUBLIC_PRODUCTS_LIST:
       return {

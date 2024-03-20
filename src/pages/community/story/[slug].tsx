@@ -1,65 +1,41 @@
+import { DropzoneArea } from '@/components/dropzone';
 import Layout from '@/components/layout';
 import { SideBarAds } from '@/components/sidebar-ads';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
-import { DEFAULT_ERROR_MESSAGE, DEFAULT_MIME_TYPES, constants } from '@/data/constants';
+import { constants } from '@/data/constants';
+import { useFetchState } from '@/hooks/use-fetch-state';
+import { initialState } from '@/lib/reducer';
 import { actions } from '@/shared/actions';
 import { _story as Container } from '@/styles/common/story';
 import { HttpError, PublicStory, Story } from '@/types';
-import { AxiosResponse } from 'axios';
-import Compressor from 'compressorjs';
-import { GetServerSidePropsContext } from 'next';
+import type { AxiosResponse } from 'axios';
+import type { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { useEffect, useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
-import { IoDownloadOutline, IoEllipsisHorizontal, IoHeart } from 'react-icons/io5';
+import { IoEllipsisHorizontal, IoHeart } from 'react-icons/io5';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
-type Props = { story: PublicStory | undefined };
-type TError = { status: boolean; msg: string };
+type Props = { story?: PublicStory };
 
 export default function Page(props: Props) {
   const theme = useTheme();
   const router = useRouter();
   const { state, dispatch, httpClient } = useAppContext();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<TError>({ status: false, msg: '' });
+  const { isError, isLoading, error, setError, setLoading } = useFetchState({
+    delay: 500
+  });
 
   const [coverImageData, setCoverImageData] = useState({
     id: state.story.cover_image?.id || '',
     data: state.story.cover_image?.url || ''
   });
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    maxFiles: 1,
-    onDrop: useCallback(<T extends File>(contents: T[]) => {
-      const file = contents[0];
-      if (!file || !DEFAULT_MIME_TYPES.includes(String(file.type))) return;
-      new Compressor(file, {
-        quality: 0.8,
-        width: 420,
-        height: 220,
-        resize: 'cover',
-        success: (compressedImage: File | Blob) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(compressedImage);
-          reader.onloadend = function (e: ProgressEvent<FileReader>) {
-            const encodedImage: string = e.target?.result as string;
-            setCoverImageData({
-              id: state.story.cover_image?.id || '',
-              data: encodedImage
-            });
-          };
-        }
-      });
-    }, [])
-  });
-
-  async function deleteCoverImage() {
+  async function onDeleteCoverImage() {
     if (!state.story.cover_image?.url) return setCoverImageData({ id: '', data: '' });
 
     try {
@@ -75,29 +51,18 @@ export default function Page(props: Props) {
         type: actions.USER_STORY,
         payload: {
           ...state,
-          story: {
-            ...state.story,
-            cover_image: { id: '', url: '' }
-          }
+          story: { ...state.story, cover_image: { id: '', url: '' } }
         }
       });
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-      setError({
-        status: true,
-        msg:
-          (error as HttpError).response?.data?.message ||
-          (error as HttpError).message ||
-          DEFAULT_ERROR_MESSAGE
-      });
+      setError(error as HttpError);
+      console.error(error);
     } finally {
       setLoading(false);
     }
   }
 
-  async function createStory() {
+  async function onCreate() {
     setLoading(true);
     try {
       await httpClient({
@@ -107,20 +72,14 @@ export default function Page(props: Props) {
       });
       router.back();
     } catch (error) {
-      console.error((error as HttpError).response?.data?.message || error);
-      setError({
-        status: true,
-        msg:
-          (error as HttpError).response?.data?.message ||
-          (error as HttpError).message ||
-          DEFAULT_ERROR_MESSAGE
-      });
+      setError(error as HttpError);
+      console.error(error);
     } finally {
       setLoading(false);
     }
   }
 
-  async function updateStory() {
+  async function onUpdate() {
     setLoading(true);
     try {
       await httpClient({
@@ -130,14 +89,8 @@ export default function Page(props: Props) {
       });
       router.back();
     } catch (error) {
-      console.error((error as HttpError).response?.data?.message || error);
-      setError({
-        status: true,
-        msg:
-          (error as HttpError).response?.data?.message ||
-          (error as HttpError).message ||
-          DEFAULT_ERROR_MESSAGE
-      });
+      setError(error as HttpError);
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -153,21 +106,11 @@ export default function Page(props: Props) {
     return () => {
       dispatch({
         type: actions.USER_STORY,
-        payload: {
-          ...state,
-          story: { title: '', content: '', cover_image: { id: '', url: '' } }
-        }
+        payload: { ...state, story: initialState.story }
       });
       setCoverImageData({ id: '', data: '' });
     };
   }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (error.status) setError({ status: false, msg: '' });
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, [error.status]);
 
   return (
     <Layout metadata={{ title: `${constants.defaultTitle} | Histórias` }}>
@@ -219,10 +162,7 @@ export default function Page(props: Props) {
                           type: actions.USER_STORY,
                           payload: {
                             ...state,
-                            story: {
-                              ...state.story,
-                              title: String(e.target.value)
-                            }
+                            story: { ...state.story, title: String(e.target.value) }
                           }
                         })
                       }
@@ -251,10 +191,7 @@ export default function Page(props: Props) {
                           type: actions.USER_STORY,
                           payload: {
                             ...state,
-                            story: {
-                              ...state.story,
-                              content: String(e.target.value)
-                            }
+                            story: { ...state.story, content: String(e.target.value) }
                           }
                         })
                       }
@@ -282,7 +219,7 @@ export default function Page(props: Props) {
                       <button
                         title='Apagar imagem de capa'
                         className='clear-image'
-                        onClick={deleteCoverImage}>
+                        onClick={onDeleteCoverImage}>
                         <BsTrash />
                         <span>Remover imagem</span>
                       </button>
@@ -302,42 +239,33 @@ export default function Page(props: Props) {
                       <button
                         title='Apagar imagem de capa'
                         className='clear-image'
-                        onClick={deleteCoverImage}>
+                        onClick={onDeleteCoverImage}>
                         <BsTrash />
                         <span>Remover imagem</span>
                       </button>
                     </>
                   ) : (
-                    <div {...getRootProps()} className='image-drop-container'>
-                      <div className='content'>
-                        <IoDownloadOutline
-                          className={
-                            isDragActive ? 'download-icon active-mode' : 'download-icon'
-                          }
-                        />
-                        <h3>
-                          {isDragActive ? (
-                            <span>Solte a imagem aqui</span>
-                          ) : (
-                            <span>Arraste e solte a imagem ou clique para carregar</span>
-                          )}
-                        </h3>
-                        <span className='description'>
-                          Dimensões: 420 x 220 pixels [.JPEG, .JPG, .PNG].
-                        </span>
-
-                        <input {...getInputProps()} />
-                      </div>
+                    <div className='image-drop-container'>
+                      <DropzoneArea
+                        width={220}
+                        height={420}
+                        handler={(encodedImage) => {
+                          setCoverImageData({
+                            id: state.story.cover_image?.id || '',
+                            data: encodedImage
+                          });
+                        }}
+                      />
                     </div>
                   )}
                 </div>
 
                 <section className='actions-container'>
-                  {error.status && !loading && (
-                    <h3 className='error-message'>{error.msg}</h3>
+                  {isError && !isLoading && (
+                    <h3 className='error-message'>{error.message}</h3>
                   )}
 
-                  {loading && !error.status && (
+                  {isLoading && !isError && (
                     <div className='loading'>
                       <PulseLoader
                         color={`rgb(${theme.primary})`}
@@ -350,20 +278,20 @@ export default function Page(props: Props) {
                     </div>
                   )}
 
-                  {!loading && !error.status && (
+                  {!isLoading && !isError && (
                     <div className='prompt-actions'>
                       {props.story?._id !== undefined ? (
                         <button
-                          onClick={updateStory}
-                          disabled={loading}
+                          onClick={onUpdate}
+                          disabled={isLoading}
                           className='prompt-accept'>
                           <span>Atualizar</span>
                         </button>
                       ) : (
                         <button
                           className='prompt-accept-btn'
-                          disabled={loading}
-                          onClick={createStory}>
+                          disabled={isLoading}
+                          onClick={onCreate}>
                           <span>Publicar</span>
                         </button>
                       )}

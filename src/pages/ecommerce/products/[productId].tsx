@@ -80,7 +80,7 @@ export default function Page({ product, error_message }: Props) {
     return (
       <ErrorPage
         message={error_message || 'Não foi possível carregar os dados do produto'}
-        retryFn={router.reload}
+        onRetry={router.reload}
       />
     );
 

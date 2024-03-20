@@ -4,12 +4,15 @@ import Layout from '@/components/layout';
 import { NewsLetter } from '@/components/newsletter';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import { author, constants, shareUrlPaths } from '@/data/constants';
+import { author, constants } from '@/data/constants';
+import { errorTransformer } from '@/lib/error-transformer';
 import { getPaths, getPost, getPosts } from '@/lib/queries';
+import { transformSocialUrls } from '@/lib/url-transformers';
 import { formatDate } from '@/lib/utils';
 import ErrorPage from '@/pages/error-page';
 import { _post as Container } from '@/styles/common/post';
 import type { HttpError, IBlogPost, Posts } from '@/types';
+import { AxiosError } from 'axios';
 import { CommentCount, DiscussionEmbed } from 'disqus-react';
 import editorJsHtml from 'editorjs-html';
 import { motion } from 'framer-motion';
@@ -37,7 +40,7 @@ export default function Page({ post: initialPost, latestPosts }: Props) {
   const router = useRouter();
   const theme = useTheme();
 
-  if (!initialPost) return <ErrorPage retryFn={router.reload} />;
+  if (!initialPost) return <ErrorPage onRetry={router.reload} />;
 
   const EditorJsToHtml = editorJsHtml();
   const postContent = EditorJsToHtml.parse(post.content) as TParsedContent[];
@@ -48,7 +51,7 @@ export default function Page({ post: initialPost, latestPosts }: Props) {
     'pt-br'
   );
 
-  const shareMedia = shareUrlPaths({
+  const social = transformSocialUrls({
     title: post.title,
     slug: post.slug,
     excerpt: post.excerpt,
@@ -63,9 +66,12 @@ export default function Page({ post: initialPost, latestPosts }: Props) {
       });
       setPost((doc) => ({ ...doc, favorites: data }));
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
+      if (error instanceof AxiosError) {
+        const { message, statusCode } = errorTransformer(error as HttpError);
+        console.error('Error message:', message);
+        console.error('Error code:', statusCode);
+      }
+      console.error(error);
     }
   };
 
@@ -77,9 +83,12 @@ export default function Page({ post: initialPost, latestPosts }: Props) {
       });
       setPost((doc) => ({ ...doc, favorites: data }));
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
+      if (error instanceof AxiosError) {
+        const { message, statusCode } = errorTransformer(error as HttpError);
+        console.error('Error message:', message);
+        console.error('Error code:', statusCode);
+      }
+      console.error(error);
     }
   };
 
@@ -110,7 +119,7 @@ export default function Page({ post: initialPost, latestPosts }: Props) {
                 <div className='share-options'>
                   <div className='title'>Compartilhe:</div>
                   <div className='options'>
-                    {shareMedia.map((option, index) => (
+                    {social.map((option, index) => (
                       <motion.a
                         whileHover={{ scale: 1.2 }}
                         whileTap={{ scale: 0.8 }}
@@ -204,7 +213,7 @@ export default function Page({ post: initialPost, latestPosts }: Props) {
               <section className='share-options'>
                 <div className='title'>Compartilhe esta postagem</div>
                 <div className='options'>
-                  {shareMedia.map((option) => (
+                  {social.map((option) => (
                     <motion.a
                       whileHover={{ scale: 1.2 }}
                       whileTap={{ scale: 0.8 }}
