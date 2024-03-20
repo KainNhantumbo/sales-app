@@ -82,7 +82,6 @@ export const ButtonMono = css`
   padding: 10px;
   width: fit-content;
   cursor: pointer;
-  outline: none;
 
   :hover {
     background: rgb(${({ theme }) => theme.secondary});
@@ -108,7 +107,6 @@ export const ButtonMonoOutline = css`
   cursor: pointer;
   display: grid;
   place-content: center;
-  outline: none;
 
   :hover {
     color: rgb(${({ theme }) => theme.primary_shade});
@@ -134,7 +132,6 @@ export const StyledCornerButton = css`
   display: grid;
   place-content: center;
   padding: 5px;
-  outline: none;
 
   :hover {
     color: rgb(${({ theme }) => theme.primary_shade});
@@ -175,7 +172,6 @@ export const StyledInputs = css`
     padding: 10px 18px;
     line-height: 1.2rem;
     font-weight: 400;
-    outline: none;
     border-radius: 5px;
     background: rgba(${({ theme }) => theme.background}, 0.7);
     border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);

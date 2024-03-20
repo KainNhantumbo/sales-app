@@ -144,7 +144,6 @@ export const _home = styled.div`
           z-index: 300;
           backdrop-filter: blur(10px);
           padding: 5px;
-          outline: none;
 
           :hover {
             background: rgba(${({ theme }) => theme.black}, 0.6);

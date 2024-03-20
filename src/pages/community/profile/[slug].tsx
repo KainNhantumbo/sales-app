@@ -14,7 +14,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { BiUser } from 'react-icons/bi';
 import { BsWind } from 'react-icons/bs';
-import Io from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
 
 export default function Page({ user }: { user?: PublicUser }) {
   const router = useRouter();

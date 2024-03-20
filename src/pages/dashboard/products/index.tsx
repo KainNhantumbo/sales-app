@@ -16,7 +16,7 @@ import { AxiosError } from 'axios';
 import moment from 'moment';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import Io from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
 import { VscEmptyWindow } from 'react-icons/vsc';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';

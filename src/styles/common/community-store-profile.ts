@@ -201,7 +201,6 @@ export const _store = styled.div`
         button {
           width: 100%;
           border: none;
-          outline: none;
           user-select: none;
           background: rgb(${({ theme }) => theme.foreground});
           display: flex;

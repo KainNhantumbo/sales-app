@@ -20,21 +20,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { BiUser } from 'react-icons/bi';
-import {
-  IoAlertCircle,
-  IoBagCheck,
-  IoBagHandle,
-  IoBarcodeOutline,
-  IoCart,
-  IoCartOutline,
-  IoDocuments,
-  IoEllipsisHorizontal,
-  IoHeart,
-  IoHeartOutline,
-  IoLayers,
-  IoLibrary,
-  IoStorefront
-} from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
 import { VscVerifiedFilled } from 'react-icons/vsc';
 import { useTheme } from 'styled-components';
 
@@ -44,11 +30,14 @@ export default function Page({ store, products }: Props) {
   const theme = useTheme();
   const router = useRouter();
   const { state, dispatch } = useAppContext();
-  const { onFavoriteProduct, onUnFavoriteProduct } = useFavoriteProduct();
   const { addProductToCart, removeProductFromCart } = useCartStore();
   const { requestLogin } = useModulesContext();
   const [tab, setTab] = useState<'docs' | 'products'>('docs');
   const { width: windowInnerWidth } = useInnerWindowSize();
+
+  const { onFavoriteProduct, onUnFavoriteProduct } = useFavoriteProduct({
+    key: 'public-products-list'
+  });
 
   useEffect(() => {
     dispatch({
@@ -150,7 +139,7 @@ export default function Page({ store, products }: Props) {
                   alt={`Imagem de capa da loja ${store.name}`}
                 />
               ) : (
-                <IoStorefront className='no-image-icon' />
+                <Io.IoStorefront className='no-image-icon' />
               )}
 
               <h5>
@@ -161,7 +150,7 @@ export default function Page({ store, products }: Props) {
                   </>
                 ) : (
                   <>
-                    <IoAlertCircle className='alert' />
+                    <Io.IoAlertCircle className='alert' />
                     <span className='alert'>Loja não verificada</span>
                   </>
                 )}
@@ -200,7 +189,7 @@ export default function Page({ store, products }: Props) {
                     setTab('docs');
                     slidePageUp();
                   }}>
-                  <IoDocuments />
+                  <Io.IoDocuments />
                   <span>Documentação</span>
                 </button>
                 <button
@@ -209,7 +198,7 @@ export default function Page({ store, products }: Props) {
                     setTab('products');
                     slidePageUp();
                   }}>
-                  <IoLayers />
+                  <Io.IoLayers />
                   <span>Produtos</span>
                 </button>
               </div>
@@ -219,7 +208,7 @@ export default function Page({ store, products }: Props) {
                   {store.privacy_policy && (
                     <section className='data-container'>
                       <h3>
-                        <IoEllipsisHorizontal />
+                        <Io.IoEllipsisHorizontal />
                         <span>Política de Privacidade</span>
                       </h3>
                       <div className='content'>
@@ -236,7 +225,7 @@ export default function Page({ store, products }: Props) {
                   {store.terms_policy && (
                     <section className='data-container'>
                       <h3>
-                        <IoEllipsisHorizontal />
+                        <Io.IoEllipsisHorizontal />
                         <span>Termos e Condições</span>
                       </h3>
                       <div className='content'>
@@ -253,7 +242,7 @@ export default function Page({ store, products }: Props) {
                   {store.delivery_policy && (
                     <section className='data-container data-container_last'>
                       <h3>
-                        <IoEllipsisHorizontal />
+                        <Io.IoEllipsisHorizontal />
                         <span>Política de Entrega de Produtos</span>
                       </h3>
                       <div className='content '>
@@ -273,7 +262,7 @@ export default function Page({ store, products }: Props) {
                     !store.terms_policy && (
                       <div className='empty-data_container'>
                         <section className='content'>
-                          <IoLibrary />
+                          <Io.IoLibrary />
                           <h3>
                             <span>Loja sem documentação.</span>
                           </h3>
@@ -308,15 +297,15 @@ export default function Page({ store, products }: Props) {
                           aria-label='Adicionar a lista de favoritos'
                           className='favorite-button'
                           onClick={() => {
-                            if (!state.auth?.token) return requestLogin();
-                            else if (item.favorites.includes(state.auth?.id))
+                            if (!state.auth.id) return requestLogin();
+                            if (item.favorites.includes(state.auth?.id))
                               return onUnFavoriteProduct(item._id);
                             return onFavoriteProduct(item._id);
                           }}>
                           {item.favorites.includes(state.auth.id) ? (
-                            <IoHeart />
+                            <Io.IoHeart />
                           ) : (
-                            <IoHeartOutline />
+                            <Io.IoHeartOutline />
                           )}
                         </button>
                         <button
@@ -338,9 +327,9 @@ export default function Page({ store, products }: Props) {
                                 });
                           }}>
                           {state.cart.some((product) => product.productId === item._id) ? (
-                            <IoCart />
+                            <Io.IoCart />
                           ) : (
-                            <IoCartOutline />
+                            <Io.IoCartOutline />
                           )}
                         </button>
                         {item.image && (
@@ -357,7 +346,7 @@ export default function Page({ store, products }: Props) {
                         )}
                         {!item.image && (
                           <Link href={`/ecommerce/products/${item._id}`}>
-                            <IoBagHandle className='no-image-icon' />
+                            <Io.IoBagHandle className='no-image-icon' />
                           </Link>
                         )}
                       </div>
@@ -365,7 +354,7 @@ export default function Page({ store, products }: Props) {
                         href={`/ecommerce/products/${item._id}`}
                         className='product-details'>
                         <button className='buy-mobile-button'>
-                          <IoBagCheck />
+                          <Io.IoBagCheck />
                           <span>Ver os detalhes</span>
                         </button>
                         {item.promotion.status ? (
@@ -406,7 +395,7 @@ export default function Page({ store, products }: Props) {
               {tab === 'products' && state.publicProducts.length < 1 && (
                 <div className='empty-data_container'>
                   <section className='content'>
-                    <IoBarcodeOutline />
+                    <Io.IoBarcodeOutline />
                     <h3>
                       <span>Nenhum produto para mostrar</span>
                     </h3>
@@ -421,7 +410,7 @@ export default function Page({ store, products }: Props) {
   );
 }
 
-type Context = GetServerSidePropsContext;
+type Context = GetServerSidePropsContext<{ slug: string }>;
 
 export async function getServerSideProps(context: Context) {
   try {

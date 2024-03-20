@@ -20,29 +20,9 @@ import { motion } from 'framer-motion';
 import type { GetStaticPropsContext } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import * as React from 'react';
 import { FaCartPlus } from 'react-icons/fa';
-import {
-  IoAdd,
-  IoAlertCircle,
-  IoBagCheck,
-  IoBagHandle,
-  IoBan,
-  IoCheckmark,
-  IoChevronBack,
-  IoChevronForward,
-  IoContract,
-  IoEllipsisHorizontal,
-  IoEyeOff,
-  IoFlame,
-  IoHeart,
-  IoHeartOutline,
-  IoPaperPlane,
-  IoRemove,
-  IoScan,
-  IoShareSocial,
-  IoStorefront
-} from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
 import { VscVerifiedFilled } from 'react-icons/vsc';
 import ReactImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
@@ -51,21 +31,26 @@ import { useTheme } from 'styled-components';
 
 type Props = { product?: PublicProduct; error_message?: string };
 
-export default function Page({ product, error_message }: Props) {
+export default function Page({ product: publicProduct, error_message }: Props) {
   const theme = useTheme();
   const router = useRouter();
   const { requestLogin } = useModulesContext();
   const { width: innerWindowWidth } = useInnerWindowSize();
   const { state, dispatch, shareProductController } = useAppContext();
-  const { onFavoriteProduct, onUnFavoriteProduct } = useFavoriteProduct();
   const { removeProductFromCart, addProductToCart, getCartProduct, updateCartProduct } =
     useCartStore();
 
-  useEffect(() => {
-    if (product) {
+  const { onFavoriteProduct, onUnFavoriteProduct } = useFavoriteProduct({
+    key: 'public-product'
+  });
+
+  const product = React.useMemo(() => state.publicProduct, [state.publicProduct]);
+
+  React.useEffect(() => {
+    if (publicProduct) {
       dispatch({
         type: actions.PUBLIC_PRODUCT_DATA,
-        payload: { ...state, publicProduct: { ...state.publicProduct, ...product } }
+        payload: { ...state, publicProduct }
       });
     }
     return () => {
@@ -74,22 +59,16 @@ export default function Page({ product, error_message }: Props) {
         payload: { ...state, publicProduct: initialState.publicProduct }
       });
     };
-  }, []);
+  }, [publicProduct]);
 
-  if (!product)
-    return (
-      <ErrorPage
-        message={error_message || 'Não foi possível carregar os dados do produto'}
-        onRetry={router.reload}
-      />
-    );
+  if (!publicProduct) return <ErrorPage message={error_message} onRetry={router.reload} />;
 
   return (
     <Layout
       metadata={{
-        title: `${constants.defaultTitle} | ${product.name}`,
-        createdAt: product?.createdAt,
-        updatedAt: product?.updatedAt
+        title: `${constants.defaultTitle} | ${publicProduct.name}`,
+        createdAt: publicProduct.createdAt,
+        updatedAt: publicProduct.updatedAt
       }}>
       <Container>
         <ShareProducts
@@ -122,17 +101,17 @@ export default function Page({ product, error_message }: Props) {
                   }))}
                   renderRightNav={(onClick, disabled) => (
                     <button className='nav-right' onClick={onClick} disabled={disabled}>
-                      <IoChevronForward />
+                      <Io.IoChevronForward />
                     </button>
                   )}
                   renderLeftNav={(onClick, disabled) => (
                     <button className='nav-left' onClick={onClick} disabled={disabled}>
-                      <IoChevronBack />
+                      <Io.IoChevronBack />
                     </button>
                   )}
                   renderFullscreenButton={(onClick, isFullScreen) => (
                     <button className='nav-fullscreen' onClick={onClick}>
-                      {isFullScreen ? <IoContract /> : <IoScan />}
+                      {isFullScreen ? <Io.IoContract /> : <Io.IoScan />}
                     </button>
                   )}
                 />
@@ -140,7 +119,7 @@ export default function Page({ product, error_message }: Props) {
 
               {!product.images ||
                 (product.images?.length < 1 ? (
-                  <IoBagHandle title='Produto sem imagem' className='no-image-icon' />
+                  <Io.IoBagHandle title='Produto sem imagem' className='no-image-icon' />
                 ) : null)}
             </div>
 
@@ -159,7 +138,7 @@ export default function Page({ product, error_message }: Props) {
                   {product.promotion.status ? (
                     <div className='price-container'>
                       <p className='promo-alert'>
-                        <IoFlame />
+                        <Io.IoFlame />
                         <span>PROMO</span>
                       </p>{' '}
                       <span className='actual-price'>
@@ -190,12 +169,12 @@ export default function Page({ product, error_message }: Props) {
                     }}>
                     {product.favorites.includes(state.auth.id) ? (
                       <>
-                        <IoHeart />
+                        <Io.IoHeart />
                         <span>Adicionado aos favoritos</span>
                       </>
                     ) : (
                       <>
-                        <IoHeartOutline />
+                        <Io.IoHeartOutline />
                         <span>Adicionar aos favoritos</span>
                       </>
                     )}
@@ -206,7 +185,7 @@ export default function Page({ product, error_message }: Props) {
                     onClick={() =>
                       state.auth?.id ? shareProductController() : requestLogin()
                     }>
-                    <IoShareSocial />
+                    <Io.IoShareSocial />
                     <span>Compartilhar</span>
                   </button>
                 </div>
@@ -246,7 +225,7 @@ export default function Page({ product, error_message }: Props) {
                                   : undefined
                               })
                         }>
-                        <IoRemove />
+                        <Io.IoRemove />
                       </motion.button>
                       <input
                         type='number'
@@ -302,7 +281,7 @@ export default function Page({ product, error_message }: Props) {
                                   : undefined
                               })
                         }>
-                        <IoAdd />
+                        <Io.IoAdd />
                       </motion.button>
                     </div>
                   </div>
@@ -336,7 +315,7 @@ export default function Page({ product, error_message }: Props) {
                         if (!state.auth.token) return requestLogin();
                         router.push('/ecommerce/products/purchase');
                       }}>
-                      <IoBagCheck />
+                      <Io.IoBagCheck />
                       <span>Comprar agora</span>
                     </motion.button>
                     <motion.button
@@ -366,7 +345,7 @@ export default function Page({ product, error_message }: Props) {
                       }>
                       {state.cart.some((item) => item.productId === product._id) ? (
                         <>
-                          <IoCheckmark />
+                          <Io.IoCheckmark />
                           <span>Adicionado ao carrinho</span>
                         </>
                       ) : (
@@ -394,7 +373,7 @@ export default function Page({ product, error_message }: Props) {
                       </h5>
                     ) : (
                       <h5 className='alert'>
-                        <IoAlertCircle />
+                        <Io.IoAlertCircle />
                         <span>Produto de Loja não verificada</span>
                       </h5>
                     )}
@@ -421,7 +400,7 @@ export default function Page({ product, error_message }: Props) {
             <div className='data-section'>
               <div className='description'>
                 <h3>
-                  <IoEllipsisHorizontal />
+                  <Io.IoEllipsisHorizontal />
                   <span>Descrição do Produto</span>
                 </h3>
               </div>
@@ -440,7 +419,7 @@ export default function Page({ product, error_message }: Props) {
               <div className='data-section'>
                 <div className='description'>
                   <h3>
-                    <IoEllipsisHorizontal />
+                    <Io.IoEllipsisHorizontal />
                     <span>Especificações do Produto</span>
                   </h3>
                 </div>
@@ -459,7 +438,7 @@ export default function Page({ product, error_message }: Props) {
             <div className='data-section'>
               <div className='description'>
                 <h3>
-                  <IoEllipsisHorizontal />
+                  <Io.IoEllipsisHorizontal />
                   <span>Dados do Produto</span>
                 </h3>
               </div>
@@ -487,7 +466,7 @@ export default function Page({ product, error_message }: Props) {
             <div className='data-section'>
               <div className='description'>
                 <h3>
-                  <IoBan />
+                  <Io.IoBan />
                   <span>Denúncia</span>
                 </h3>
               </div>
@@ -518,7 +497,7 @@ export default function Page({ product, error_message }: Props) {
                     href={`/denounce?url=${constants.websiteUrl.concat(
                       router.asPath
                     )}&type=product&id=${product._id}`}>
-                    <IoAlertCircle />
+                    <Io.IoAlertCircle />
                     <span>Denunciar Produto</span>
                   </Link>
                 </div>
@@ -527,7 +506,7 @@ export default function Page({ product, error_message }: Props) {
 
             <section className='store-container'>
               <h2>
-                <IoStorefront />
+                <Io.IoStorefront />
                 <span>Loja proprietária</span>
               </h2>
               <div className='contents-container'>
@@ -553,7 +532,7 @@ export default function Page({ product, error_message }: Props) {
                   </div>
                 </section>
                 <Link href={`/community/store/${product.store._id}`}>
-                  <IoPaperPlane />
+                  <Io.IoPaperPlane />
                   <span>Visitar loja</span>
                 </Link>
                 <h5>
@@ -564,7 +543,7 @@ export default function Page({ product, error_message }: Props) {
                     </>
                   ) : (
                     <>
-                      <IoAlertCircle className='alert' />
+                      <Io.IoAlertCircle className='alert' />
                       <span className='alert'>Loja não verificada</span>
                     </>
                   )}
@@ -577,7 +556,7 @@ export default function Page({ product, error_message }: Props) {
             ) : (
               <div className='no-comments-message'>
                 <h3>
-                  <IoEyeOff />
+                  <Io.IoEyeOff />
                   <span>Comentários</span>
                 </h3>
                 <p>A loja desativou os comentários para este produto.</p>

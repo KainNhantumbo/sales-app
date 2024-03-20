@@ -2,8 +2,8 @@ import Package from '@/../package.json';
 import authorPicture from '@/../public/assets/author.jpg';
 import mpesa_logo from '@/../public/trademarks/mpesa logo.png';
 import type { Author, Option, Pricing, TPaymentOptions } from '@/types';
-import Fa from 'react-icons/fa';
-import Io from 'react-icons/io5';
+import * as Fa from 'react-icons/fa';
+import * as Io from 'react-icons/io5';
 import blurImage from './blur-data-url-image.json';
 import denounces_data from './denounce-reasons.json';
 

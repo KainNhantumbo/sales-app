@@ -241,7 +241,6 @@ export const _productEditor = styled.div`
                 left: 25px;
                 -moz-appearance: none;
 
-                outline: none;
                 border-radius: 15px;
                 box-shadow: inset 0 0 5px rgba(${({ theme }) => theme.black}, 0.2);
                 transition: 0.5s ease;

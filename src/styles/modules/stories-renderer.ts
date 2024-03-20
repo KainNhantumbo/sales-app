@@ -125,8 +125,8 @@ export const _storiesRender = styled.div`
           cursor: pointer;
           img {
             width: 100%;
-            width: 50px;
-            height: 50px;
+            max-width: 50px;
+            max-height: 50px;
             border-radius: 50%;
             margin: 0 auto;
           }
@@ -172,6 +172,7 @@ export const _storiesRender = styled.div`
       .cover-image {
         width: 100%;
         height: 100%;
+        max-height: 420px;
         border-radius: 12px;
         object-fit: cover;
       }
@@ -199,7 +200,6 @@ export const _storiesRender = styled.div`
         button {
           width: 100%;
           border: none;
-          outline: none;
           user-select: none;
           background: rgb(${({ theme }) => theme.foreground});
           display: flex;

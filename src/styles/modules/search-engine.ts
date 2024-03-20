@@ -67,7 +67,6 @@ export const _searchEngine = styled.aside`
       left: calc(50% - 60px);
       z-index: 2200;
       border-radius: 10px;
-      outline: none;
       border: none;
       cursor: grab;
 

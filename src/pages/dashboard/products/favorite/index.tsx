@@ -16,14 +16,7 @@ import type { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import {
-  IoBagCheck,
-  IoBagHandle,
-  IoBarcodeOutline,
-  IoCart,
-  IoCartOutline,
-  IoHeart
-} from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
 import { useTheme } from 'styled-components';
 
 type Props = { products: PublicProducts[] };
@@ -32,7 +25,7 @@ export default function Page({ products }: Props) {
   const theme = useTheme();
   const { requestLogin } = useModulesContext();
   const { width: windowInnerWidth } = useInnerWindowSize();
-  const { onUnFavoriteProduct } = useFavoriteProduct();
+  const { onUnFavoriteProduct } = useFavoriteProduct({ key: 'public-products-list' });
   const { state, dispatch } = useAppContext();
   const { addProductToCart, removeProductFromCart } = useCartStore();
 
@@ -75,7 +68,7 @@ export default function Page({ products }: Props) {
           <article>
             <section className='header-container'>
               <h2>
-                <IoHeart />
+                <Io.IoHeart />
                 <span>Seus produtos favoritos</span>
               </h2>
               <p>Aparecerão aqui os produtos que for adicionar a sua lista de favoritos.</p>
@@ -111,7 +104,7 @@ export default function Page({ products }: Props) {
                           onUnFavoriteProduct(item._id);
                           refetchFavoriteProducts();
                         }}>
-                        <IoHeart />
+                        <Io.IoHeart />
                       </button>
                       <button
                         title='Adicionar ao carrinho'
@@ -132,9 +125,9 @@ export default function Page({ products }: Props) {
                               });
                         }}>
                         {state.cart.some((product) => product.productId === item._id) ? (
-                          <IoCart />
+                          <Io.IoCart />
                         ) : (
-                          <IoCartOutline />
+                          <Io.IoCartOutline />
                         )}
                       </button>
                       {item.image && (
@@ -151,7 +144,7 @@ export default function Page({ products }: Props) {
                       )}
                       {!item.image && (
                         <Link href={`/ecommerce/products/${item._id}`}>
-                          <IoBagHandle className='no-image-icon' />
+                          <Io.IoBagHandle className='no-image-icon' />
                         </Link>
                       )}
                     </div>
@@ -159,7 +152,7 @@ export default function Page({ products }: Props) {
                       href={`/ecommerce/products/${item._id}`}
                       className='product-details'>
                       <button className='buy-mobile-button'>
-                        <IoBagCheck />
+                        <Io.IoBagCheck />
                         <span>Detalhes</span>
                       </button>
                       {item.promotion.status ? (
@@ -195,7 +188,7 @@ export default function Page({ products }: Props) {
             {state.publicProducts.length < 1 && (
               <div className='empty-data_container'>
                 <section className='content'>
-                  <IoBarcodeOutline />
+                  <Io.IoBarcodeOutline />
                   <h3>
                     <span>Sem produtos para mostrar</span>
                     <p>Adicione alguns produtos a sua lista de favoritos</p>

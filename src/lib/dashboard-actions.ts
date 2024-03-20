@@ -1,8 +1,8 @@
 import { DashboardAction } from '@/types';
 import { BiUser } from 'react-icons/bi';
-import Bs from 'react-icons/bs';
-import Fa from 'react-icons/fa';
-import Io from 'react-icons/io5';
+import * as Bs from 'react-icons/bs';
+import * as Fa from 'react-icons/fa';
+import * as Io from 'react-icons/io5';
 
 export function createDashboardActions(props: {
   userId: string;

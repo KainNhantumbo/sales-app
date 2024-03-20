@@ -10,15 +10,7 @@ import { _blog as Container } from '@/styles/common/blog';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
-import {
-  IoArrowForwardOutline,
-  IoEllipsisHorizontal,
-  IoGridOutline,
-  IoHeart,
-  IoReload,
-  IoStorefrontOutline
-} from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
@@ -44,7 +36,7 @@ export default function Page() {
                 todas funcionalidades que você precisa de graça! informação é
               </p>
               <Link href={'/auth/sign-in'}>
-                <IoStorefrontOutline />
+                <Io.IoStorefrontOutline />
                 <span>Criar loja grátis</span>
               </Link>
             </div>
@@ -64,7 +56,7 @@ export default function Page() {
             <div className='empty-data_container'>
               <section className='content'>
                 <div className='icon'>
-                  <IoGridOutline />
+                  <Io.IoGridOutline />
                 </div>
                 <div className='message'>
                   <h3>Nenhuma postagem para mostrar.</h3>
@@ -92,15 +84,15 @@ export default function Page() {
                     <div className='content-container'>
                       <div className='details'>
                         <div>
-                          <IoIosAlbums />
+                          <Io.IoAlbums />
                           <span>{post.category || 'Miscelânea'}</span>
                         </div>
                         <div>
-                          <IoMdCalendar />
+                          <Io.IoCalendar />
                           <span>{formatDate(post.updatedAt)}</span>
                         </div>
                         <div>
-                          <IoHeart />
+                          <Io.IoHeart />
                           <span>{post.favorites.length} favoritos</span>
                         </div>
                       </div>
@@ -108,7 +100,7 @@ export default function Page() {
                       <p>{post.excerpt}</p>
                       <button onClick={() => router.push(`/blog/post/${post.slug}`)}>
                         <div>
-                          <IoArrowForwardOutline />
+                          <Io.IoArrowForwardOutline />
                           <span>Continuar leitura</span>
                         </div>
                       </button>
@@ -122,7 +114,7 @@ export default function Page() {
                   <div className=' fetch-error-message '>
                     <h3>Erro ao carregar postagens</h3>
                     <button onClick={() => fetchNextPage()}>
-                      <IoReload />
+                      <Io.IoReload />
                       <span>Tentar novamente</span>
                     </button>
                   </div>
@@ -149,7 +141,7 @@ export default function Page() {
 
               {state.blogPostsList.length > 0 && (
                 <div className='posts-container__end-mark'>
-                  <IoEllipsisHorizontal />
+                  <Io.IoEllipsisHorizontal />
                 </div>
               )}
             </section>

@@ -4,28 +4,19 @@ import { initialState, reducer } from '@/lib/reducer';
 import { actions } from '@/shared/actions';
 import type { Action, Auth, HttpError, State } from '@/types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosError, AxiosRequestConfig, AxiosResponse, isAxiosError } from 'axios';
 import { useRouter } from 'next/router';
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  type Dispatch,
-  type ReactNode
-} from 'react';
+import * as React from 'react';
 import { ModulesContext } from './Modules';
 import { ThemeContext } from './ThemeContext';
 
-const queryClient: QueryClient = new QueryClient({
-  defaultOptions: { queries: { networkMode: 'always' } }
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { networkMode: 'always', refetchOnWindowFocus: false } }
 });
-
-type Props = { children: ReactNode };
 
 type Context = {
   state: State;
-  dispatch: Dispatch<Action>;
+  dispatch: React.Dispatch<Action>;
   deleteCommentPromptController: (status: boolean, id: string) => void;
   deleteStoryPromptController: (status: boolean, id: string) => void;
   deleteProductPromptController: (status: boolean, id: string) => void;
@@ -38,7 +29,7 @@ type Context = {
   httpClient: <T>(config: AxiosRequestConfig) => Promise<AxiosResponse<T, any>>;
 };
 
-const context = createContext<Context>({
+const context = React.createContext<Context>({
   state: initialState,
   dispatch: () => {},
   httpClient: (): any => {},
@@ -53,9 +44,9 @@ const context = createContext<Context>({
   userWorkingDataController: () => {}
 });
 
-export function AppContext(props: Props) {
+export function AppContext(props: { children: React.ReactNode }) {
   const router = useRouter();
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = React.useReducer(reducer, initialState);
 
   // ============= modal controllers =================== //
   const userWorkingDataController = () => {
@@ -128,7 +119,12 @@ export function AppContext(props: Props) {
       });
       dispatch({ type: actions.USER_AUTH, payload: { ...state, auth: { ...data } } });
     } catch (error) {
-      console.error(errorTransformer(error as HttpError));
+      if (error instanceof AxiosError) {
+        const { message, statusCode } = errorTransformer(error as HttpError);
+        console.error('Error message:', message);
+        console.error('Error code:', statusCode);
+      }
+      console.error(error);
     }
   };
 
@@ -137,7 +133,12 @@ export function AppContext(props: Props) {
       const status = Number(error.status);
       if (status > 400 && status < 404) {
         validateAuth().catch((error) => {
-          console.error(errorTransformer(error as HttpError));
+          if (error instanceof AxiosError) {
+            const { message, statusCode } = errorTransformer(error as HttpError);
+            console.error('Error message:', message);
+            console.error('Error code:', statusCode);
+          }
+          console.error(error);
           router.push('/auth/sign-in');
         });
       }
@@ -158,15 +159,20 @@ export function AppContext(props: Props) {
       });
       dispatch({ type: actions.USER_AUTH, payload: { ...state, auth: { ...data } } });
     } catch (error) {
-      console.error(errorTransformer(error as HttpError));
+      if (error instanceof AxiosError) {
+        const { message, statusCode } = errorTransformer(error as HttpError);
+        console.error('Error message:', message);
+        console.error('Error code:', statusCode);
+      }
+      console.error(error);
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     authenticateUser();
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const timer = setTimeout(() => validateAuth(), 1000 * 60 * 4);
     return () => clearTimeout(timer);
   }, [state.auth]);
@@ -197,5 +203,5 @@ export function AppContext(props: Props) {
 }
 
 export function useAppContext() {
-  return useContext(context);
+  return React.useContext(context);
 }

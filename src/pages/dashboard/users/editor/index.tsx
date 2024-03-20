@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { BiUser, BiUserCheck, BiUserX } from 'react-icons/bi';
 import { FaBlog, FaLinkedinIn } from 'react-icons/fa';
-import Io from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 

@@ -3,23 +3,16 @@ import { BaseButton, BaseButtonOutline } from '../defaults';
 
 export const _header = styled.header`
   width: 100%;
-  height: 70px;
+  height: 50px;
   position: fixed;
   top: 0;
   left: 0;
   backdrop-filter: blur(5px);
   background: rgba(${({ theme }) => theme.foreground}, 0.8);
-  padding: 20px 8px;
+  padding: 10px 8px;
   font-weight: 500;
-  font-size: 1.1rem;
+  font-size: 0.98rem;
   z-index: 20000;
-
-  * {
-    ::selection {
-      background: rgb(${({ theme }) => theme.background_shade});
-      color: rgb(${({ theme }) => theme.primary_shade});
-    }
-  }
 
   .wrapper {
     margin: 0 auto;
@@ -35,7 +28,7 @@ export const _header = styled.header`
 
   .logo {
     position: absolute;
-    top: calc(50% - 16px);
+    top: calc(50% - 14px);
     left: 30px;
     cursor: pointer;
     margin-right: 40px;
@@ -46,7 +39,7 @@ export const _header = styled.header`
 
     img {
       width: 100%;
-      max-width: 130px;
+      max-width: 120px;
       height: 100%;
       object-fit: cover;
     }
@@ -178,23 +171,20 @@ export const _header = styled.header`
     .cart-button {
       position: relative;
       border: none;
-      border-radius: 12px;
       background: none;
       color: rgb(${({ theme }) => theme.font});
       width: fit-content;
       cursor: pointer;
       display: grid;
       place-content: center;
-      padding: 10px;
-      outline: none;
-      border: 1px solid rgba(${({ theme }) => theme.black}, 0.07);
+      padding: 8px;
 
       span {
-        width: 22px;
-        height: 22px;
+        width: 18px;
+        height: 18px;
         position: absolute;
         right: -5px;
-        bottom: -5px;
+        bottom: -2px;
         border-radius: 50%;
         background: rgb(${({ theme }) => theme.primary_shade});
         color: rgb(${({ theme }) => theme.white});
@@ -208,8 +198,8 @@ export const _header = styled.header`
 
       svg {
         pointer-events: none;
-        width: 20px;
-        height: 20px;
+        width: 24px;
+        height: 24px;
       }
     }
 
@@ -272,19 +262,17 @@ export const _header = styled.header`
 
   .toggle-btn {
     position: fixed;
-    top: 13px;
+    top: 6px;
     right: 20px;
     border: none;
     border-radius: 12px;
     background: none;
     color: rgb(${({ theme }) => theme.font});
-    border: 1px solid rgba(${({ theme }) => theme.black}, 0.07);
     width: fit-content;
     cursor: pointer;
     display: grid;
     place-content: center;
-    padding: 10px;
-    outline: none;
+    padding: 8px;
 
     :hover {
       color: rgb(${({ theme }) => theme.primary_shade});

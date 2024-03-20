@@ -1,6 +1,5 @@
 import fetch from '@/config/client';
 import type { QueryList } from '@/types';
-import { URLSearchParams } from 'node:url';
 
 export async function getPost<T>(slug: string) {
   return await fetch<T>({ method: 'get', url: `/api/v1/blog/posts/public/${slug}` });

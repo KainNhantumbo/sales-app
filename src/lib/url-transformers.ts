@@ -1,6 +1,6 @@
 import { ShareAnchors, ShareUrls, SocialUrls } from '@/types';
-import Fa from 'react-icons/fa';
-import Io from 'react-icons/io5';
+import * as Fa from 'react-icons/fa';
+import * as Io from 'react-icons/io5';
 
 export function transformSocialUrls(props: ShareAnchors): ShareUrls[] {
   return [

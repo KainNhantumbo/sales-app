@@ -208,7 +208,6 @@ export const _footer = styled.footer`
         background: none;
         padding: 8px;
         border-radius: 50%;
-        outline: none;
         user-select: none;
 
         :hover {

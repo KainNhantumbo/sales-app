@@ -14,20 +14,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import {
-  IoBagCheck,
-  IoBagHandle,
-  IoBarcodeOutline,
-  IoCart,
-  IoCartOutline,
-  IoChevronBack,
-  IoChevronForward,
-  IoEllipsisHorizontal,
-  IoHeart,
-  IoHeartOutline,
-  IoReload,
-  IoSearch
-} from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
 import ReactImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import { PulseLoader } from 'react-spinners';
@@ -41,10 +28,13 @@ export default function Page({ ads_data }: Props) {
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
   const { requestLogin } = useModulesContext();
-  const { onFavoriteProduct, onUnFavoriteProduct } = useFavoriteProduct();
   const { addProductToCart, removeProductFromCart } = useCartStore();
   const { fetchNextPage, hasNextPage, inViewRef, isLoading, isError } =
-    usePublicProductsQuery();
+  usePublicProductsQuery();
+
+  const { onFavoriteProduct, onUnFavoriteProduct } = useFavoriteProduct({
+    key: 'public-products-list'
+  });
 
   useEffect(() => {
     if (Array.isArray(ads_data)) {
@@ -69,7 +59,7 @@ export default function Page({ ads_data }: Props) {
                 payload: { ...state, isPublicProductsFilters: true }
               })
             }>
-            <IoSearch />
+            <Io.IoSearch />
             <span>Pesquisar e Filtros</span>
           </motion.button>
 
@@ -94,12 +84,12 @@ export default function Page({ ads_data }: Props) {
                   }))}
                   renderRightNav={(onClick, disabled) => (
                     <button className='nav-right' onClick={onClick} disabled={disabled}>
-                      <IoChevronForward />
+                      <Io.IoChevronForward />
                     </button>
                   )}
                   renderLeftNav={(onClick, disabled) => (
                     <button className='nav-left' onClick={onClick} disabled={disabled}>
-                      <IoChevronBack />
+                      <Io.IoChevronBack />
                     </button>
                   )}
                 />
@@ -112,7 +102,7 @@ export default function Page({ ads_data }: Props) {
               <div className='empty-data_container'>
                 <section className='content'>
                   <div className='icon'>
-                    <IoBarcodeOutline />
+                    <Io.IoBarcodeOutline />
                   </div>
                   <div className='message'>
                     {Object.values(state.queryPublicProducts)
@@ -157,9 +147,9 @@ export default function Page({ ads_data }: Props) {
                             return onFavoriteProduct(item._id);
                           }}>
                           {item.favorites.includes(state.auth.id) ? (
-                            <IoHeart />
+                            <Io.IoHeart />
                           ) : (
-                            <IoHeartOutline />
+                            <Io.IoHeartOutline />
                           )}
                         </button>
                         <button
@@ -181,9 +171,9 @@ export default function Page({ ads_data }: Props) {
                                 });
                           }}>
                           {state.cart.some((product) => product.productId === item._id) ? (
-                            <IoCart />
+                            <Io.IoCart />
                           ) : (
-                            <IoCartOutline />
+                            <Io.IoCartOutline />
                           )}
                         </button>
                         {item.image && (
@@ -200,7 +190,7 @@ export default function Page({ ads_data }: Props) {
                         )}
                         {!item.image && (
                           <Link href={`/ecommerce/products/${item._id}`}>
-                            <IoBagHandle className='no-image-icon' />
+                            <Io.IoBagHandle className='no-image-icon' />
                           </Link>
                         )}
                       </div>
@@ -208,7 +198,7 @@ export default function Page({ ads_data }: Props) {
                         href={`/ecommerce/products/${item._id}`}
                         className='product-details'>
                         <button className='buy-mobile-button'>
-                          <IoBagCheck />
+                          <Io.IoBagCheck />
                           <span>Comprar agora</span>
                         </button>
                         {item.promotion.status ? (
@@ -251,7 +241,7 @@ export default function Page({ ads_data }: Props) {
                 <div className='fetch-error-message '>
                   <h3>Erro ao carregar produtos</h3>
                   <button onClick={() => fetchNextPage()}>
-                    <IoReload />
+                    <Io.IoReload />
                     <span>Tentar novamente</span>
                   </button>
                 </div>
@@ -279,7 +269,7 @@ export default function Page({ ads_data }: Props) {
 
             {state.publicProducts.length > 0 && (
               <div className='posts-container__end-mark'>
-                <IoEllipsisHorizontal />
+                <Io.IoEllipsisHorizontal />
               </div>
             )}
           </article>

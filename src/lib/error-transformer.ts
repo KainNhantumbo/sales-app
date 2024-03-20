@@ -1,8 +1,8 @@
 import { DEFAULT_ERROR_MESSAGE } from '@/data/constants';
 import { HttpError } from '@/types';
 
-export const errorTransformer = ({ response }: HttpError) => {
-  let message: string = '';
+export const errorTransformer = ({ response, status }: HttpError) => {
+  let message: string = DEFAULT_ERROR_MESSAGE;
 
   if (response?.data && response.data.message) {
     if (Array.isArray(response.data.message)) {
@@ -11,9 +11,12 @@ export const errorTransformer = ({ response }: HttpError) => {
         return message;
       }, '');
     } else {
-      message = response?.data?.message || DEFAULT_ERROR_MESSAGE;
+      message = response?.data?.message;
     }
   }
 
-  return { message, statusCode: response?.data.status };
+  return {
+    message: message || DEFAULT_ERROR_MESSAGE,
+    statusCode: response?.data.status || status
+  };
 };
