@@ -30,7 +30,7 @@ export default function Page({ ads_data }: Props) {
   const { requestLogin } = useModulesContext();
   const { addProductToCart, removeProductFromCart } = useCartStore();
   const { fetchNextPage, hasNextPage, inViewRef, isLoading, isError } =
-  usePublicProductsQuery();
+    usePublicProductsQuery();
 
   const { onFavoriteProduct, onUnFavoriteProduct } = useFavoriteProduct({
     key: 'public-products-list'

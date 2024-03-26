@@ -69,12 +69,12 @@ export function createDashboardActions(props: {
       paths: [
         {
           label: 'Pagamento de Planos e Subscrições',
-          url: '/dashboard/transactions/subscription-payments',
+          url: '/dashboard/transactions/subscriptions',
           icon: Bs.BsCreditCard2Front
         },
         {
           label: 'Pagamento de Anúncios',
-          url: '/dashboard/transactions/ad-payments',
+          url: '/dashboard/transactions/advertisements',
           icon: Io.IoCardOutline
         }
       ]
@@ -84,19 +84,19 @@ export function createDashboardActions(props: {
       paths: [
         {
           label: 'Criar Anúncio',
-          url: '/dashboard/create-ad',
+          url: '/dashboard/advertisements/editor',
           icon: Io.IoAdd
         },
         {
           label: 'Gerir Anúncios',
-          url: '/dashboard/ads/generics',
+          url: '/dashboard/advertisements/collections',
           icon: Io.IoCog
-        },
-        {
-          label: 'Destacar Produtos da Loja',
-          url: '/dashboard/ads/products',
-          icon: Io.IoFlash
         }
+        // ,{
+        //   label: 'Destacar Produtos da Loja',
+        //   url: '/dashboard/advertisements/products',
+        //   icon: Io.IoFlash
+        // }
       ]
     }
   };
