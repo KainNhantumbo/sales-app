@@ -2,6 +2,7 @@ import { useAppContext } from '@/context/AppContext';
 import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
 import type { HttpError } from '@/types';
+import { toast } from 'react-toastify';
 
 type Props = { key: 'public-products-list' | 'public-product' };
 
@@ -38,7 +39,8 @@ export function useFavoriteProduct({ key }: Props) {
         });
       }
     } catch (error) {
-      console.error(errorTransformer(error as HttpError));
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
       console.error(error);
     }
   };
@@ -73,7 +75,8 @@ export function useFavoriteProduct({ key }: Props) {
           }
         });
     } catch (error) {
-      console.error(errorTransformer(error as HttpError));
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
       console.error(error);
     }
   };

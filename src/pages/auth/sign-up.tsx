@@ -3,20 +3,17 @@ import Layout from '@/components/layout';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
+import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
 import { _signUp as Container } from '@/styles/common/sign-up';
 import { HttpError, InputEvents, SubmitEvent } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import {
-  IoEllipsisHorizontal,
-  IoLockClosedOutline,
-  IoLockOpenOutline,
-  IoMailOutline
-} from 'react-icons/io5';
+import { useState } from 'react';
+import * as Io from 'react-icons/io5';
 import { PulseLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 
 export default function Page() {
@@ -24,7 +21,6 @@ export default function Page() {
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState({ status: false, message: '' });
 
   const handleChange = (e: InputEvents) => {
     dispatch({
@@ -39,50 +35,26 @@ export default function Page() {
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
     if (state.signupData.password !== state.signupData.confirm_password)
-      return setError({
-        status: true,
-        message: 'As senhas devem ser iguais.'
-      });
+      return toast.error('As senhas devem ser iguais.');
     if (state.signupData.password.length < 8)
-      return setError({
-        status: true,
-        message: 'As senhas devem ter pelo menos 8 carácteres.'
-      });
+      return toast.error('As senhas devem ter pelo menos 8 carácteres.');
 
     try {
       setLoading(true);
       await fetch({
         method: 'post',
         url: '/api/v1/users/account',
-        data: {
-          email: state.signupData.email,
-          password: state.signupData.password,
-          first_name: state.signupData.first_name,
-          last_name: state.signupData.last_name,
-          user_type: 'user'
-        }
+        data: { ...state.signupData, user_type: 'user' }
       });
       router.push('/auth/sign-up-confirm');
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-      setError({
-        status: true,
-        message:
-          (error as HttpError).response?.data?.message || (error as HttpError).message
-      });
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    const debounceTimer = setTimeout(() => {
-      setError({ status: false, message: '' });
-    }, 5000);
-    return () => clearTimeout(debounceTimer);
-  }, [error.status]);
 
   return (
     <Layout
@@ -103,12 +75,12 @@ export default function Page() {
           <article>
             <div className='form-container'>
               <h2>Bem vindo à {constants.defaultTitle}</h2>
-              <p>Preencha o formuário abaixo para criar uma conta de usuário.</p>
+              <p>Preencha o formulário abaixo para criar uma conta de usuário.</p>
               <form onSubmit={handleSubmit}>
                 <section className='form-section'>
                   <div className='form-element'>
                     <label htmlFor='first_name'>
-                      <IoEllipsisHorizontal />
+                      <Io.IoEllipsisHorizontal />
                       <span>Nome</span>
                     </label>
                     <input
@@ -123,7 +95,7 @@ export default function Page() {
                   </div>
                   <div className='form-element'>
                     <label htmlFor='last_name'>
-                      <IoEllipsisHorizontal />
+                      <Io.IoEllipsisHorizontal />
                       <span>Apelido</span>
                     </label>
                     <input
@@ -141,7 +113,7 @@ export default function Page() {
                 <section className='form-section'>
                   <div className='form-element'>
                     <label htmlFor='email'>
-                      <IoMailOutline />
+                      <Io.IoMailOutline />
                       <span>E-mail</span>
                     </label>
                     <input
@@ -156,7 +128,7 @@ export default function Page() {
                   </div>
                   <div className='form-element'>
                     <label htmlFor='password'>
-                      <IoLockOpenOutline />
+                      <Io.IoLockOpenOutline />
                       <span>Senha</span>
                     </label>
                     <input
@@ -175,7 +147,7 @@ export default function Page() {
                 <section className='form-section'>
                   <div className='form-element'>
                     <label htmlFor='confirm_password'>
-                      <IoLockClosedOutline />
+                      <Io.IoLockClosedOutline />
                       <span>Confirme a senha</span>
                     </label>
                     <input
@@ -191,14 +163,10 @@ export default function Page() {
                   </div>
                 </section>
 
-                <span className='error-message'>
-                  {error.status && !loading ? error.message : `  `}
-                </span>
-
                 {
                   <PulseLoader
                     color={`rgb(${theme.primary})`}
-                    loading={loading && !error.status && true}
+                    loading={loading}
                     aria-placeholder='Processando...'
                     cssOverride={{
                       display: 'block',
@@ -207,10 +175,7 @@ export default function Page() {
                   />
                 }
 
-                <button
-                  className='next'
-                  type='submit'
-                  disabled={loading || error.status ? true : false}>
+                <button className='next' type='submit' disabled={loading}>
                   <span>Cadastre-se</span>
                 </button>
               </form>

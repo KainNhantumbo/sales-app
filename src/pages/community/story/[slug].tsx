@@ -5,6 +5,7 @@ import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
 import { useFetchState } from '@/hooks/use-fetch-state';
+import { errorTransformer } from '@/lib/error-transformer';
 import { initialState } from '@/lib/reducer';
 import { actions } from '@/shared/actions';
 import { _story as Container } from '@/styles/common/story';
@@ -18,6 +19,7 @@ import { useEffect, useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { IoEllipsisHorizontal, IoHeart } from 'react-icons/io5';
 import { PulseLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 
 type Props = { story?: PublicStory };
@@ -26,7 +28,7 @@ export default function Page(props: Props) {
   const theme = useTheme();
   const router = useRouter();
   const { state, dispatch, httpClient } = useAppContext();
-  const { isError, isLoading, error, setError, setLoading } = useFetchState({
+  const { isLoading, setLoading } = useFetchState({
     delay: 500
   });
 
@@ -55,7 +57,8 @@ export default function Page(props: Props) {
         }
       });
     } catch (error) {
-      setError(error as HttpError);
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
       console.error(error);
     } finally {
       setLoading(false);
@@ -72,7 +75,8 @@ export default function Page(props: Props) {
       });
       router.back();
     } catch (error) {
-      setError(error as HttpError);
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
       console.error(error);
     } finally {
       setLoading(false);
@@ -89,7 +93,8 @@ export default function Page(props: Props) {
       });
       router.back();
     } catch (error) {
-      setError(error as HttpError);
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
       console.error(error);
     } finally {
       setLoading(false);
@@ -261,11 +266,7 @@ export default function Page(props: Props) {
                 </div>
 
                 <section className='actions-container'>
-                  {isError && !isLoading && (
-                    <h3 className='error-message'>{error.message}</h3>
-                  )}
-
-                  {isLoading && !isError && (
+                  {isLoading && (
                     <div className='loading'>
                       <PulseLoader
                         color={`rgb(${theme.primary})`}
@@ -278,7 +279,7 @@ export default function Page(props: Props) {
                     </div>
                   )}
 
-                  {!isLoading && !isError && (
+                  {!isLoading && (
                     <div className='prompt-actions'>
                       {props.story?._id !== undefined ? (
                         <button

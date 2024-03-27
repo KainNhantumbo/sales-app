@@ -6,6 +6,7 @@ import type { HttpError, Posts } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { toast } from 'react-toastify';
 
 export function useBlogPostsQuery() {
   const LIMIT: number = 8;
@@ -22,7 +23,9 @@ export function useBlogPostsQuery() {
         });
         return { data, currentOffset: pageParam + 1 };
       } catch (error) {
-        console.error(errorTransformer(error as HttpError));
+        const { message } = errorTransformer(error as HttpError);
+        toast.error(message);
+        console.error(error);
         return { data: [] };
       }
     },

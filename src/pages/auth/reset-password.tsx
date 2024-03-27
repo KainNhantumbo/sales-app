@@ -1,13 +1,15 @@
 import Layout from '@/components/layout';
 import fetch from '@/config/client';
 import { constants } from '@/data/constants';
-import { _resetPassword as Container } from '@/styles/common/pasword-reseter';
-import { HttpError, SubmitEvent } from '@/types';
+import { errorTransformer } from '@/lib/error-transformer';
+import { _resetPassword as Container } from '@/styles/common/password-reset';
+import type { HttpError, SubmitEvent } from '@/types';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IoMailOutline } from 'react-icons/io5';
 import { PulseLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 
 export default function Page() {
@@ -15,7 +17,6 @@ export default function Page() {
   const router = useRouter();
   const [email, setEmail] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState({ status: false, message: '' });
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
@@ -29,25 +30,13 @@ export default function Page() {
       });
       router.push('/auth/reset-password-confirmation');
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-      setError({
-        status: true,
-        message:
-          (error as HttpError).response?.data?.message || (error as HttpError).message
-      });
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    const debounceTimer = setTimeout(() => {
-      setError({ status: false, message: '' });
-    }, 5000);
-    return () => clearTimeout(debounceTimer);
-  }, [error.status]);
 
   return (
     <Layout
@@ -60,10 +49,10 @@ export default function Page() {
         <main>
           <article>
             <div className='form-container'>
-              <h2>Redifinir a sua senha</h2>
+              <h2>Redefinir a sua senha</h2>
               <p>
                 Coloque o e-mail associado com a sua conta de usuário e enviaremos um e-mail
-                para você com as instruções de redifinição de senha.
+                para você com as instruções de redefinição de senha.
               </p>
               <form onSubmit={handleSubmit}>
                 <section className='input-field'>
@@ -82,10 +71,7 @@ export default function Page() {
                   />
                 </section>
 
-                {error.status && !loading && (
-                  <span className='error-message'>{error.message}</span>
-                )}
-                {loading && !error.status && (
+                {loading && (
                   <>
                     <PulseLoader
                       color={`rgb(${theme.primary})`}
@@ -99,10 +85,7 @@ export default function Page() {
                   </>
                 )}
 
-                <button
-                  className='login'
-                  type='submit'
-                  disabled={loading || error.status ? true : false}>
+                <button className='login' type='submit' disabled={loading}>
                   <span>Enviar e-mail</span>
                 </button>
               </form>

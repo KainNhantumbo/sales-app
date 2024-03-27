@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import * as Io from 'react-icons/io5';
 import { DotLoader, PulseLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 
 export default function Page() {
@@ -33,12 +34,9 @@ export default function Page() {
         });
         return data;
       } catch (error) {
+        const { message } = errorTransformer(error as HttpError);
+        toast.error(message);
         console.error(error);
-        console.warn(
-          (error as HttpError).response?.data?.message ||
-            (error as HttpError).message ||
-            DEFAULT_ERROR_MESSAGE
-        );
       }
     },
     queryKey: [`product-editor-query`]
@@ -61,10 +59,7 @@ export default function Page() {
       type: actions.PRODUCT_DATA,
       payload: {
         ...state,
-        product: {
-          ...state.product,
-          [e.target.name]: e.target.value
-        }
+        product: { ...state.product, [e.target.name]: e.target.value }
       }
     });
 
@@ -78,12 +73,9 @@ export default function Page() {
         });
         router.back();
       } catch (error) {
+        const { message } = errorTransformer(error as HttpError);
+        toast.error(message);
         console.error(error);
-        console.warn(
-          (error as HttpError).response?.data?.message ||
-            (error as HttpError).message ||
-            DEFAULT_ERROR_MESSAGE
-        );
       }
     },
     networkMode: 'always',
@@ -103,12 +95,9 @@ export default function Page() {
         });
         router.back();
       } catch (error) {
+        const { message } = errorTransformer(error as HttpError);
+        toast.error(message);
         console.error(error);
-        console.warn(
-          (error as HttpError).response?.data?.message ||
-            (error as HttpError).message ||
-            DEFAULT_ERROR_MESSAGE
-        );
       }
     },
     networkMode: 'always',
@@ -132,9 +121,7 @@ export default function Page() {
         {!isLoading && isError && (
           <section className='fetching-state'>
             <section className='wrapper'>
-              <h3>
-                {errorTransformer(error as HttpError).message}
-              </h3>
+              <h3>{errorTransformer(error as HttpError).message}</h3>
               <div>
                 <button onClick={() => router.reload()}>
                   <Io.IoReload />

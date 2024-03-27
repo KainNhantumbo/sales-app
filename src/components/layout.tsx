@@ -9,11 +9,15 @@ import { Header } from './header';
 import { LoadingIndicator } from './loading-indicator';
 import { Cart } from './modals/cart';
 import { Prompt } from './modals/prompt';
+import { ToastContainer } from 'react-toastify';
+import { useTheme } from 'styled-components';
+import { useThemeContext } from '@/context/ThemeContext';
 
 type Props = { children: ReactNode; metadata: HeadProps };
 
 export default function Layout({ children, metadata }: Props) {
   const { state } = useAppContext();
+  const { colorScheme } = useThemeContext();
   const router = useRouter();
 
   useEffect(() => {
@@ -31,6 +35,15 @@ export default function Layout({ children, metadata }: Props) {
       <Header />
       <main>
         <Prompt key={state.prompt.title.split(' ').join('') || undefined} />
+        <ToastContainer
+          autoClose={10000}
+          limit={3}
+          newestOnTop={true}
+          position='bottom-right'
+          stacked={true}
+          className={'toast-container'}
+          theme={colorScheme.scheme === 'dark' ? 'dark' : 'light'}
+        />
         <Cart />
         <CookiesPopup />
         <LoadingIndicator />

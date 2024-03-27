@@ -5,6 +5,7 @@ import { SelectContainer } from '@/components/select';
 import { useAppContext } from '@/context/AppContext';
 import { blurDataUrlImage, constants, payment_options, states } from '@/data/constants';
 import { useCartStore } from '@/hooks/use-cart-store';
+import { errorTransformer } from '@/lib/error-transformer';
 import { initialState } from '@/lib/reducer';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
@@ -13,29 +14,14 @@ import { HttpError, InputEvents } from '@/types';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import { FaDollarSign } from 'react-icons/fa';
-import {
-  IoBagHandle,
-  IoBookmarkOutline,
-  IoCard,
-  IoCreateOutline,
-  IoEllipsisHorizontal,
-  IoHomeOutline,
-  IoInformationCircle,
-  IoPhonePortraitOutline,
-  IoPlanetOutline,
-  IoStar
-} from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
+import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
-
-// TODO: set errors and display them to user for this page
-const initialErrorState = new Error();
 
 export default function Page() {
   const theme = useTheme();
   const router = useRouter();
-  const [error, setError] = useState(initialErrorState);
   const { state, dispatch, httpClient } = useAppContext();
   const { cartModalController } = useCartStore();
 
@@ -72,7 +58,9 @@ export default function Page() {
       });
       router.push(`/ecommerce/products/checkout-success`);
     } catch (error) {
-      console.error((error as HttpError).response?.data?.message || error);
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
+      console.log(error);
     }
   };
 
@@ -89,7 +77,7 @@ export default function Page() {
             <section className='checkout-summary-container'>
               <div className='header-container'>
                 <h2 className='title'>
-                  <IoBagHandle />
+                  <Io.IoBagHandle />
                   <span>Detalhes da Faturação</span>
                 </h2>
 
@@ -98,7 +86,7 @@ export default function Page() {
                   whileHover={{ scale: 1.05 }}
                   className='open-cart-button'
                   onClick={cartModalController}>
-                  <IoCreateOutline />
+                  <Io.IoCreateOutline />
                   <span>Fazer alterações</span>
                 </motion.button>
               </div>
@@ -155,7 +143,7 @@ export default function Page() {
             <section className='form-container'>
               <div className='header-container'>
                 <h2>
-                  <IoInformationCircle />
+                  <Io.IoInformationCircle />
                   <span>Informações Adicionais</span>
                 </h2>
                 <p>
@@ -171,7 +159,7 @@ export default function Page() {
                 <section className='form-section'>
                   <div className='form-element '>
                     <label htmlFor='main_phone_number'>
-                      <IoPhonePortraitOutline />
+                      <Io.IoPhonePortraitOutline />
                       <span>Número de telemóvel *</span>
                     </label>
                     <input
@@ -193,7 +181,7 @@ export default function Page() {
                   </div>
                   <div className='form-element'>
                     <label htmlFor='alternative_phone_number'>
-                      <IoPhonePortraitOutline />
+                      <Io.IoPhonePortraitOutline />
                       <span>Número de telemóvel (Alt.)</span>
                     </label>
                     <input
@@ -218,7 +206,7 @@ export default function Page() {
                 <section className='form-section'>
                   <div className='form-element'>
                     <label htmlFor='country'>
-                      <IoPlanetOutline />
+                      <Io.IoPlanetOutline />
                       <span>País</span>
                     </label>
                     <select name='country' id='country' disabled={true}>
@@ -228,7 +216,7 @@ export default function Page() {
 
                   <div className='form-element'>
                     <label htmlFor='state'>
-                      <IoStar />
+                      <Io.IoStar />
                       <span>Província / Estado *</span>
                     </label>
 
@@ -256,7 +244,7 @@ export default function Page() {
                 <section className='form-section'>
                   <div className='form-element'>
                     <label htmlFor='zip_code'>
-                      <IoBookmarkOutline />
+                      <Io.IoBookmarkOutline />
                       <span>Código Postal</span>
                     </label>
                     <input
@@ -293,7 +281,7 @@ export default function Page() {
                 <section className='form-section'>
                   <div className='form-element'>
                     <label htmlFor='address'>
-                      <IoHomeOutline />
+                      <Io.IoHomeOutline />
                       <span>Endereço *</span>
                     </label>
                     <textarea
@@ -330,7 +318,7 @@ export default function Page() {
                 <section className='form-section'>
                   <div className='form-element'>
                     <label htmlFor='order_notes'>
-                      <IoEllipsisHorizontal />
+                      <Io.IoEllipsisHorizontal />
                       <span>Notas de Encomenda</span>
                     </label>
                     <textarea
@@ -357,7 +345,7 @@ export default function Page() {
           <aside>
             <section className='payment-details'>
               <h2>
-                <IoCard />
+                <Io.IoCard />
                 <span>Detalhes de Pagamento</span>
               </h2>
               <section className='content-container'>

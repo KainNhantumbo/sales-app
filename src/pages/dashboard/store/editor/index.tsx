@@ -1,48 +1,24 @@
 import Layout from '@/components/layout';
 import DeactivateStorePrompt from '@/components/modals/deactivate-store-prompt';
 import { useAppContext } from '@/context/AppContext';
-import { DEFAULT_ERROR_MESSAGE, constants } from '@/data/constants';
+import { constants } from '@/data/constants';
 import countries from '@/data/countries.json';
 import Categories from '@/data/product-categories.json';
+import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
 import { _storeEditor as Container } from '@/styles/common/store-editor';
-import { HttpError, InputEvents, Store } from '@/types';
+import type { HttpError, InputEvents, Store } from '@/types';
 import Compressor from 'compressorjs';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import {
-  IoAdd,
-  IoArrowUndoOutline,
-  IoCart,
-  IoDocuments,
-  IoEllipsisHorizontal,
-  IoHomeOutline,
-  IoImageOutline,
-  IoLayersOutline,
-  IoLocation,
-  IoPencilOutline,
-  IoPlanetOutline,
-  IoRadioButtonOff,
-  IoRadioButtonOn,
-  IoReload,
-  IoSave,
-  IoStar,
-  IoStorefront,
-  IoSyncOutline,
-  IoTrashOutline
-} from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
 import { DotLoader, PulseLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 
 type TLoading = {
   status: boolean;
-  key: 'store-data' | 'store-update';
-};
-
-type TError = {
-  status: boolean;
-  msg: string;
   key: 'store-data' | 'store-update';
 };
 
@@ -55,22 +31,13 @@ export default function Page() {
     status: false,
     key: 'store-data'
   });
-  const [error, setError] = useState<TError>({
-    status: false,
-    msg: '',
-    key: 'store-data'
-  });
 
   // --------------------state---------------------
   const [countryStates, setCountryStates] = useState<string[]>([
     state.store.location?.state
   ]);
   const [coverImageFile, setCoverImageFile] = useState<FileList | null>(null);
-
-  const [coverImageData, setCoverImageData] = useState({
-    id: '',
-    data: ''
-  });
+  const [coverImageData, setCoverImageData] = useState({ id: '', data: '' });
 
   // --------------------functions------------------
   const handleChange = (e: InputEvents) => {
@@ -78,10 +45,7 @@ export default function Page() {
       type: actions.STORE_DATA,
       payload: {
         ...state,
-        store: {
-          ...state.store,
-          [e.target.name]: e.target.value
-        }
+        store: { ...state.store, [e.target.name]: e.target.value }
       }
     });
   };
@@ -121,14 +85,13 @@ export default function Page() {
           type: actions.USER_DATA,
           payload: {
             ...state,
-            store: {
-              ...state.store,
-              cover_image: { id: '', url: '' }
-            }
+            store: { ...state.store, cover_image: { id: '', url: '' } }
           }
         });
       })
       .catch((error) => {
+        const { message } = errorTransformer(error as HttpError);
+        toast.error(message);
         console.error(error);
       });
   };
@@ -142,18 +105,12 @@ export default function Page() {
       });
       dispatch({
         type: actions.STORE_DATA,
-        payload: {
-          ...state,
-          store: { ...state.store, ...data }
-        }
+        payload: { ...state, store: { ...state.store, ...data } }
       });
     } catch (error) {
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
       console.error(error);
-      setError({
-        status: true,
-        msg: (error as HttpError).response?.data?.message || DEFAULT_ERROR_MESSAGE,
-        key: 'store-data'
-      });
     } finally {
       setLoading({ status: false, key: 'store-data' });
     }
@@ -165,29 +122,12 @@ export default function Page() {
       await httpClient({
         method: 'patch',
         url: `/api/v1/users/store/${state.store._id}`,
-        data: {
-          name: state.store.name,
-          category: state.store.category,
-          description: state.store.description,
-          slogan: state.store.slogan,
-          privacy_policy: state.store.privacy_policy,
-          terms_policy: state.store.terms_policy,
-          delivery_policy: state.store.delivery_policy,
-          location: state.store.location,
-          active: state.store.active,
-          coverImageData
-        }
+        data: { ...state.store, coverImageData }
       });
     } catch (error) {
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
       console.error(error);
-      setError({
-        status: true,
-        msg:
-          (error as HttpError).response?.data?.message ||
-          (error as HttpError).message ||
-          DEFAULT_ERROR_MESSAGE,
-        key: 'store-update'
-      });
     } finally {
       setLoading({ status: false, key: 'store-update' });
     }
@@ -210,15 +150,6 @@ export default function Page() {
     return () => clearTimeout(fetch_data);
   }, []);
 
-  useEffect(() => {
-    const debounceTimer = setTimeout(() => {
-      if (error.status && error.key === 'store-update') {
-        setError({ status: false, msg: '', key: 'store-data' });
-      }
-    }, 5000);
-    return () => clearTimeout(debounceTimer);
-  }, [error.status]);
-
   return (
     <Layout
       metadata={{
@@ -237,23 +168,10 @@ export default function Page() {
           </section>
         )}
 
-        {!loading.status &&
-          loading.key === 'store-data' &&
-          error.status &&
-          error.key === 'store-data' && (
-            <section className='fetching-state'>
-              <p>{error.msg}</p>
-              <button onClick={() => router.reload()}>
-                <IoReload />
-                <span>Recarregar a página</span>
-              </button>
-            </section>
-          )}
-
         <article>
           <section className='header'>
             <h2>
-              <IoPencilOutline />
+              <Io.IoPencilOutline />
               <span>Detalhes da Loja</span>
             </h2>
             <span className='details'>Salve após fazer alterações!</span>
@@ -281,17 +199,17 @@ export default function Page() {
                         alt='cover image'
                       />
                     ) : (
-                      <IoImageOutline className='camera-icon' />
+                      <Io.IoImageOutline className='camera-icon' />
                     )}
                     <label htmlFor='cover' title='Selecionar imagem de capa'>
                       <span>Imagem de capa</span>
-                      <IoAdd />
+                      <Io.IoAdd />
                     </label>
                     <button
                       title='Apagar imagem de capa'
                       className='clear-image'
                       onClick={deleteCoverImage}>
-                      <IoTrashOutline />
+                      <Io.IoTrashOutline />
                     </button>
                     <input
                       type='file'
@@ -310,7 +228,7 @@ export default function Page() {
                 <div className='data-section'>
                   <div className='description'>
                     <h2>
-                      <IoStorefront />
+                      <Io.IoStorefront />
                       <span>Informações da Loja</span>
                     </h2>
                     <p>
@@ -323,7 +241,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='name'>
-                          <IoEllipsisHorizontal />
+                          <Io.IoEllipsisHorizontal />
                           <span>Nome da Loja *</span>
                         </label>
                         <input
@@ -344,7 +262,7 @@ export default function Page() {
                       </div>
                       <div className='form-element'>
                         <label htmlFor='category'>
-                          <IoLayersOutline />
+                          <Io.IoLayersOutline />
                           <span>Categoria Principal dos Produtos *</span>
                         </label>
                         <select
@@ -376,7 +294,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='slogan'>
-                          <IoEllipsisHorizontal />
+                          <Io.IoEllipsisHorizontal />
                           <span>Slogan da Loja</span>
                         </label>
                         <input
@@ -401,7 +319,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='description'>
-                          <IoEllipsisHorizontal />
+                          <Io.IoEllipsisHorizontal />
                           <span>Descrição da Loja *</span>
                         </label>
 
@@ -429,7 +347,7 @@ export default function Page() {
                 <div className='data-section'>
                   <div className='description'>
                     <h2>
-                      <IoLocation />
+                      <Io.IoLocation />
                       <span>Localização e Endereço</span>
                     </h2>
                     <p>
@@ -442,7 +360,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='country'>
-                          <IoPlanetOutline />
+                          <Io.IoPlanetOutline />
                           <span>País</span>
                         </label>
                         <select
@@ -481,7 +399,7 @@ export default function Page() {
 
                       <div className='form-element'>
                         <label htmlFor='state'>
-                          <IoStar />
+                          <Io.IoStar />
                           <span>Província / Estado</span>
                         </label>
                         <select
@@ -516,7 +434,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='address'>
-                          <IoHomeOutline />
+                          <Io.IoHomeOutline />
                           <span>Endereço</span>
                         </label>
                         <input
@@ -555,7 +473,7 @@ export default function Page() {
                 <div className='data-section'>
                   <div className='description'>
                     <h2>
-                      <IoDocuments />
+                      <Io.IoDocuments />
                       <span>Políticas da Loja</span>
                     </h2>
 
@@ -569,7 +487,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='terms_policy'>
-                          <IoEllipsisHorizontal />
+                          <Io.IoEllipsisHorizontal />
                           <span>Termos e Condições</span>
                         </label>
                         <textarea
@@ -592,7 +510,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='privacy_policy'>
-                          <IoEllipsisHorizontal />
+                          <Io.IoEllipsisHorizontal />
                           <span>Política de Privacidade</span>
                         </label>
                         <textarea
@@ -615,7 +533,7 @@ export default function Page() {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='delivery_policy'>
-                          <IoEllipsisHorizontal />
+                          <Io.IoEllipsisHorizontal />
                           <span>Política de Entregas ao Cliente</span>
                         </label>
                         <textarea
@@ -643,7 +561,7 @@ export default function Page() {
             <section className='delete-account'>
               <div className='description'>
                 <h2>
-                  <IoCart />
+                  <Io.IoCart />
                   <span>Ativação da Loja</span>
                 </h2>
                 <p>
@@ -671,12 +589,12 @@ export default function Page() {
                       }
                     })
                   }>
-                  <IoRadioButtonOff color={`rgb(${theme.error})`} />
+                  <Io.IoRadioButtonOff color={`rgb(${theme.error})`} />
                   <span>Loja Desativada</span>
                 </button>
               ) : (
                 <button className='save' onClick={() => deactivateStorePromptController()}>
-                  <IoRadioButtonOn color={`rgb(${theme.secondary})`} />
+                  <Io.IoRadioButtonOn color={`rgb(${theme.secondary})`} />
                   <span>Loja Ativada</span>
                 </button>
               )}
@@ -685,13 +603,13 @@ export default function Page() {
             <section className='actions-container'>
               <div className='description'>
                 <h2>
-                  <IoSave />
+                  <Io.IoSave />
                   <span>Salvamento de Alterações</span>
                 </h2>
                 <p>Salve as alterações feitas.</p>
               </div>
               <div>
-                {!loading.status && !error.status && (
+                {!loading.status && (
                   <>
                     <h3>
                       Confirme se as informações introduzidas estão corretas antes de salvar
@@ -705,11 +623,7 @@ export default function Page() {
                   </>
                 )}
 
-                {error.status && error.key === 'store-update' && !loading.status && (
-                  <h3 className='error-message'>{error.msg}</h3>
-                )}
-
-                {loading.status && loading.key === 'store-update' && !error.status && (
+                {loading.status && loading.key === 'store-update' && (
                   <div className='loading'>
                     <PulseLoader
                       color={`rgb(${theme.primary})`}
@@ -724,14 +638,14 @@ export default function Page() {
               </div>
 
               <div className='btns-container'>
-                {!loading.status && !error.status && (
+                {!loading.status && (
                   <>
                     <button className='back' onClick={(e) => router.back()}>
-                      <IoArrowUndoOutline />
+                      <Io.IoArrowUndoOutline />
                       <span>Descartar e voltar</span>
                     </button>
                     <button className='save' onClick={() => handleSubmitUpdate()}>
-                      <IoSyncOutline />
+                      <Io.IoSyncOutline />
                       <span>Salvar alterações</span>
                     </button>
                   </>

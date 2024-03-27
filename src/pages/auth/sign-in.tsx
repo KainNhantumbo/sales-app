@@ -3,20 +3,21 @@ import Layout from '@/components/layout';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
+import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
 import { _signIn as Container } from '@/styles/common/sign-in';
 import { Auth, HttpError, InputEvents, SubmitEvent } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
+import { toast } from 'react-toastify';
 
 export default function Page() {
   const { state, dispatch } = useAppContext();
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState({ status: false, message: '' });
 
   const handleChange = (e: InputEvents) => {
     dispatch({
@@ -34,10 +35,7 @@ export default function Page() {
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
     if (state.signInData.password.length < 8) {
-      return setError({
-        status: true,
-        message: 'A senha deve conter pelo menos 8 caracteres'
-      });
+      return toast.error('A senha deve conter pelo menos 8 caracteres');
     }
     try {
       setLoading(true);
@@ -53,25 +51,13 @@ export default function Page() {
       });
       router.push(`/dashboard`);
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-      setError({
-        status: true,
-        message:
-          (error as HttpError).response?.data?.message || (error as HttpError).message
-      });
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    const debounceTimer = setTimeout(() => {
-      setError({ status: false, message: '' });
-    }, 5000);
-    return () => clearTimeout(debounceTimer);
-  }, [error.status]);
 
   return (
     <Layout
@@ -92,7 +78,7 @@ export default function Page() {
           <article>
             <div className='form-container'>
               <h2>Acesso de Usuário</h2>
-              <p>Olá, preencha o formuário abaixo para acessar a sua conta de usuário.</p>
+              <p>Olá, preencha o formulário abaixo para acessar a sua conta de usuário.</p>
               <form onSubmit={handleSubmit}>
                 <section className='input-field'>
                   <label htmlFor='email'>
@@ -130,12 +116,8 @@ export default function Page() {
                     <span>Esqueceu a senha? Recuperar conta.</span>
                   </Link>
                 </div>
-                {error.status && <span className='error-message'>{error.message}</span>}
 
-                <button
-                  className='login'
-                  type='submit'
-                  disabled={loading || error.status ? true : false}>
+                <button className='login' type='submit' disabled={loading}>
                   <span>Acessar conta</span>
                 </button>
               </form>

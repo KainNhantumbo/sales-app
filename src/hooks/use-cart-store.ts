@@ -3,7 +3,7 @@ import { CART_STORE_KEY } from '@/data/constants';
 import { actions } from '@/shared/actions';
 import type { Cart } from '@/types';
 import { useIsomorphicLayoutEffect } from 'framer-motion';
-import { useEffect } from 'react';
+import * as React from 'react';
 
 export function useCartStore() {
   const { dispatch, state } = useAppContext();
@@ -14,21 +14,24 @@ export function useCartStore() {
     });
   };
 
-  const getCartProduct = (currentProductId: string): Cart => {
-    const foundProduct = state.cart.some(
-      (product) => product.productId === currentProductId
-    );
+  const getCartProduct = React.useCallback(
+    (currentProductId: string): Cart => {
+      const foundProduct = state.cart.some(
+        (product) => product.productId === currentProductId
+      );
 
-    if (foundProduct)
-      return state.cart.filter((product) => product.productId === currentProductId)[0];
-    return {
-      productId: '',
-      quantity: 1,
-      productName: '',
-      previewImage: undefined,
-      price: 0
-    };
-  };
+      if (foundProduct)
+        return state.cart.filter((product) => product.productId === currentProductId)[0];
+      return {
+        productId: '',
+        quantity: 1,
+        productName: '',
+        previewImage: undefined,
+        price: 0
+      };
+    },
+    [state.cart]
+  );
 
   const updateCartProduct = (props: { productId: string; quantity: number }) => {
     dispatch({
@@ -58,10 +61,7 @@ export function useCartStore() {
   const addProductToCart = (product: Cart) => {
     dispatch({
       type: actions.PRODUCTS_CART,
-      payload: {
-        ...state,
-        cart: [...state.cart, { ...product }]
-      }
+      payload: { ...state, cart: state.cart.concat(product) }
     });
   };
 
@@ -69,13 +69,6 @@ export function useCartStore() {
     localStorage.setItem(CART_STORE_KEY, JSON.stringify(state.cart));
   };
 
-  useEffect(() => {
-    syncCartToLocalStorage();
-  }, [state.cart]);
-
-  useIsomorphicLayoutEffect(() => {
-    restoreCartFromLocalStorage();
-  }, []);
 
   const restoreCartFromLocalStorage = () => {
     const data: Cart[] = JSON.parse(localStorage.getItem(CART_STORE_KEY) || `[]`);
@@ -86,6 +79,14 @@ export function useCartStore() {
         payload: { ...state, cart: data }
       });
   };
+
+  React.useEffect(() => {
+    syncCartToLocalStorage();
+  }, [state.cart]);
+
+  useIsomorphicLayoutEffect(() => {
+    restoreCartFromLocalStorage();
+  }, []);
 
   return {
     addProductToCart,

@@ -21,7 +21,7 @@ export function useFetchState<U extends FetchStateProps>({ delay = 5000 }: U) {
   }, [error]);
 
   return {
-    error: { ...message },
+    error: { message },
     isLoading: loading,
     isError: error,
     setError,

@@ -1,9 +1,11 @@
 import { useAppContext } from '@/context/AppContext';
+import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
 import type { HttpError, Order } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { toast } from 'react-toastify';
 
 export function useUserOrdersQuery() {
   const QUERY_LIMIT: number = 10;
@@ -43,9 +45,9 @@ export function useUserOrdersQuery() {
       });
       refetch({ queryKey: ['user-orders'] });
     } catch (error) {
-      console.info(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
+      console.error(error);
     }
   };
 
@@ -57,9 +59,9 @@ export function useUserOrdersQuery() {
       });
       refetch({ queryKey: ['user-orders'] });
     } catch (error) {
-      console.info(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
+      console.error(error);
     }
   };
 

@@ -51,10 +51,7 @@ export function usePublicProductsQuery() {
   useEffect(() => {
     dispatch({
       type: actions.PUBLIC_PRODUCTS_LIST_DATA,
-      payload: {
-        ...state,
-        publicProducts: products
-      }
+      payload: { ...state, publicProducts: products }
     });
   }, [products]);
 
