@@ -14,7 +14,7 @@ import { actions } from '@/shared/actions';
 import { _myOrders as Container } from '@/styles/common/my-orders';
 import type { HttpError } from '@/types';
 import { BsBox2, BsBox2Fill } from 'react-icons/bs';
-import { IoClose, IoEllipsisHorizontal, IoReload, IoSearch } from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
@@ -74,7 +74,7 @@ export default function Page() {
                     })
                   }
                 />
-                <IoSearch />
+                <Io.IoSearch />
               </div>
               <div className='seletor'>
                 <SelectContainer
@@ -122,7 +122,7 @@ export default function Page() {
                       }
                     })
                   }>
-                  <IoClose />
+                  <Io.IoClose />
                   <span>Limpar filtros</span>
                 </button>
               )}
@@ -216,7 +216,7 @@ export default function Page() {
                       'Erro ao carregar os dados'}
                   </h3>
                   <button onClick={() => fetchNextPage()}>
-                    <IoReload />
+                    <Io.IoReload />
                     <span>Tentar novamente</span>
                   </button>
                 </div>
@@ -241,7 +241,7 @@ export default function Page() {
             </div>
             {state.orders.length > 0 ? (
               <div className='container-items__end-mark'>
-                <IoEllipsisHorizontal />
+                <Io.IoEllipsisHorizontal />
               </div>
             ) : null}
 

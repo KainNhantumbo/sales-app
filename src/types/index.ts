@@ -11,6 +11,15 @@ declare module 'styled-components' {
 
 export type HttpError = AxiosError<{ message: string; code?: string; status: number }>;
 
+export type Ad = {
+  name: string;
+  owner: string;
+  notes: string;
+  phone: string;
+  image: { id: string; url: string };
+  expires_in: number;
+};
+
 export type Pricing = Array<{
   title: string;
   amount: number;
@@ -92,14 +101,12 @@ export type Theme = {
   foreground_shade: string;
 };
 
-export type HeadProps =
-  | {
-      title?: string;
-      createdAt?: string;
-      updatedAt?: string;
-      tags?: string;
-    }
-  | undefined;
+export type HeadProps = {
+  title?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  tags?: string;
+};
 
 export type Author = {
   name: string;
@@ -145,21 +152,6 @@ export type SignUp = {
   email: string;
   password: string;
   confirm_password: string;
-};
-
-export type TChat = Array<{
-  _id: string;
-  sender: string;
-  receiver: string;
-}>;
-
-export type TMessage = {
-  _id: string;
-  chat_id: string;
-  sender: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
 };
 
 export type PublicStoreList = Array<{
@@ -290,17 +282,16 @@ export type Store = {
 };
 
 export type Job = {
-  _id: string;
   title: string;
   description: string;
-  job_type: string;
-  apply_url?: string;
-  experience_level: string;
-  expected_salary?: string;
-  favorites: { _id: string; first_name: string; last_name: string }[];
-  professional_skills: string[] | never[];
-  created_by: string;
-  location?: { country: string; state: string };
+  salary: number;
+  experience: string;
+  location: 'Remoto' | 'Presencial' | 'Híbrido';
+  email: string;
+  address: string;
+  company: string;
+  positions: number;
+  favorites: string[];
   createdAt: string;
   updatedAt: string;
 };
