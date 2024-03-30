@@ -94,8 +94,7 @@ export const _signIn = styled.div`
 
         button {
           ${BaseButton}
-          width: 100%;
-          padding-left: 0;
+          width: fit-content;
         }
       }
 
@@ -108,7 +107,7 @@ export const _signIn = styled.div`
           cursor: pointer;
 
           :hover {
-            color: rgb(${({ theme }) => theme.font});
+            color: #24abf2;
             transition: all 200ms ease;
           }
         }
@@ -142,7 +141,7 @@ export const _signIn = styled.div`
           color: rgb(${({ theme }) => theme.primary_shade});
           cursor: pointer;
           :hover {
-            color: rgb(${({ theme }) => theme.black});
+            color: #24abf2;
           }
 
           span {

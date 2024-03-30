@@ -1,7 +1,7 @@
 import { useAppContext } from '@/context/AppContext';
 import { actions } from '@/shared/actions';
-import { _prompt as Container } from '@/styles/modules/prompt';
-import { AnimatePresence, m as motion } from 'framer-motion';
+import { _prompt as Container } from '@/styles/modules/logout-prompt';
+import { AnimatePresence } from 'framer-motion';
 
 export function Prompt() {
   const { state, dispatch } = useAppContext();
@@ -12,26 +12,15 @@ export function Prompt() {
         <Container
           className='main'
           onClick={(e: any) => {
-            const target = (e as any).target.classList;
-            if (target.contains('main')) {
+            const isTarget: boolean = e.target.classList.contains('main');
+            if (isTarget) {
               dispatch({
                 type: actions.PROMPT,
-                payload: {
-                  ...state,
-                  prompt: { ...state.prompt, status: false }
-                }
+                payload: { ...state, prompt: { ...state.prompt, status: false } }
               });
             }
           }}>
-          <motion.section
-            className='dialog-modal'
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              transition: { duration: 0.3 }
-            }}
-            exit={{ opacity: 0, scale: 0 }}>
+          <section className='dialog-modal'>
             <div className='dialog-prompt'>
               <div className='prompt-info'>
                 <span className='prompt-title'>{state.prompt.title}</span>
@@ -56,7 +45,7 @@ export function Prompt() {
                 </button>
               </div>
             </div>
-          </motion.section>
+          </section>
         </Container>
       )}
     </AnimatePresence>

@@ -104,7 +104,7 @@ export const _signUp = styled.div`
         button {
           ${BaseButton}
           align-self: center;
-          width: 100%;
+          width: fit-content;
         }
       }
 
@@ -118,7 +118,7 @@ export const _signUp = styled.div`
           color: rgb(${({ theme }) => theme.primary_shade});
           cursor: pointer;
           :hover {
-            color: rgb(${({ theme }) => theme.black});
+            color: #24abf2;
           }
 
           span {

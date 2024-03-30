@@ -15,7 +15,7 @@ export function useFetchState<U extends FetchStateProps>({ delay = 5000 }: U) {
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
-      setError(null);
+      error && setError(null);
     }, delay);
     return () => clearTimeout(debounceTimer);
   }, [error]);

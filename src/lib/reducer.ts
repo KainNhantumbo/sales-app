@@ -3,6 +3,7 @@ import Categories from '../data/product-categories.json';
 import type { Action, State } from '../types';
 
 export const initialState: State = {
+  ads: [],
   banner_ads: [],
   isFilterActive: false,
   isSearchActive: false,
@@ -335,6 +336,9 @@ export function reducer(state: State, action: Action): State {
         ...state,
         searchStores: action.payload.searchStores
       };
+
+    case actions.ADS:
+      return { ...state, ads: action.payload.ads };
 
     case actions.SEARCH_USER_STORIES:
       return {

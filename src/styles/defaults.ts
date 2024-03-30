@@ -11,19 +11,19 @@ export const BaseButtonOutline = css`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
   :hover {
     color: rgb(${({ theme }) => theme.primary_shade});
   }
   svg {
     width: 20px;
-    height: 20px;
-    position: absolute;
-    top: calc(50% - 10px);
-    left: 7px;
+    height: auto;
     pointer-events: none;
   }
   span {
-    padding-left: 20px;
     font-weight: 500;
     pointer-events: none;
     text-align: center;
@@ -45,6 +45,10 @@ export const BaseButton = css`
   text-overflow: ellipsis;
   overflow: hidden;
   text-align: center;
+  /* display: flex;
+  align-items: center;
+  gap: 8px; */
+
   :hover {
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.09);
   }
@@ -60,15 +64,11 @@ export const BaseButton = css`
   svg {
     color: inherit;
     width: 20px;
-    height: 20px;
-    position: absolute;
-    top: calc(50% - 10px);
-    left: 7px;
+    height: auto;
     pointer-events: none;
   }
 
   span {
-    padding-left: 20px;
     font-weight: 500;
     pointer-events: none;
   }

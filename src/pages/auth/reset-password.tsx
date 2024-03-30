@@ -85,7 +85,7 @@ export default function Page() {
                   </>
                 )}
 
-                <button className='login' type='submit' disabled={loading}>
+                <button type='submit' disabled={loading}>
                   <span>Enviar e-mail</span>
                 </button>
               </form>

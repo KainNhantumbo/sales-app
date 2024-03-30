@@ -10,7 +10,6 @@ import { LoadingIndicator } from './loading-indicator';
 import { Cart } from './modals/cart';
 import { Prompt } from './modals/prompt';
 import { ToastContainer } from 'react-toastify';
-import { useTheme } from 'styled-components';
 import { useThemeContext } from '@/context/ThemeContext';
 
 type Props = { children: ReactNode; metadata: HeadProps };
@@ -34,7 +33,7 @@ export default function Layout({ children, metadata }: Props) {
       <Metadata {...metadata} />
       <Header />
       <main>
-        <Prompt key={state.prompt.title.split(' ').join('') || undefined} />
+        <Prompt />
         <ToastContainer
           autoClose={10000}
           limit={3}

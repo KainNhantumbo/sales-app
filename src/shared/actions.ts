@@ -1,4 +1,5 @@
 export const actions = {
+  ADS: 'ADS',
   BANNER_ADS: 'BANNER_ADS',
   METRICS_DATA: 'METRICS_DATA',
   SEARCH: 'SEARCH',

@@ -84,7 +84,7 @@ export const _resetPassword = styled.div`
         button {
           ${BaseButton}
           width: 100%;
-          padding-left: 0;
+          padding: inherit 0;
         }
       }
 

@@ -1,7 +1,9 @@
 'use client';
 
 import moment from 'moment';
-export const formatDate = (date: string): string => moment(date).format('LL');
+export const formatDate = (date = new Date().toISOString()): string => {
+  return moment(date).format('LL');
+};
 
 export const formatCurrency = (currency: number): string =>
   Intl.NumberFormat('pt-BR', {

@@ -11,13 +11,19 @@ declare module 'styled-components' {
 
 export type HttpError = AxiosError<{ message: string; code?: string; status: number }>;
 
-export type Ad = {
+export type AdsList = {
+  _id: string;
   name: string;
   owner: string;
+  expires_in: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Ad = Pick<AdsList, 'name' | 'owner' | 'expires_in'> & {
   notes: string;
   phone: string;
   image: { id: string; url: string };
-  expires_in: number;
 };
 
 export type Pricing = Array<{
@@ -418,6 +424,7 @@ export type ColorScheme = {
 };
 
 export type State = {
+  ads: AdsList[];
   isDeleteAccountPrompt: boolean;
   isDeactivateStorePrompt: boolean;
   ordersQuery: { status: string; sort: string; search: string };
@@ -475,4 +482,13 @@ export type OrderSummary = {
 export type Option = {
   value: string | number | undefined;
   label: string;
+};
+
+
+export type Subscription = {
+  model: string;
+  trial: { isConsumed: boolean; period: number; expiresIn: number };
+  expiresIn: number;
+  updatedAt: string;
+  createdAt: string;
 };
