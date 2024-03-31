@@ -20,9 +20,8 @@ export type AdsList = {
   updatedAt: string;
 };
 
-export type Ad = Pick<AdsList, 'name' | 'owner' | 'expires_in'> & {
+export type Ad = Pick<AdsList, 'name' | 'owner'> & {
   notes: string;
-  phone: string;
   image: { id: string; url: string };
 };
 
