@@ -189,8 +189,6 @@ export const orderSortOptions = [
   { value: '-createdAt', label: 'Data de Criação' },
   { value: 'updatedAt', label: 'Data de Atualização (Invertido)' },
   { value: '-updatedAt', label: 'Data de Atualização' },
-  { value: '-invalidated', label: 'Revisão' },
-  { value: 'invalidated', label: 'Revisão (Invertido)' }
 ].sort((a, b) => (a.label > b.label ? 1 : -1));
 
 export const orderStatusOptions = order_status_labels.sort((a, b) =>

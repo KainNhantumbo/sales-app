@@ -1,69 +1,64 @@
 import { useAppContext } from '@/context/AppContext';
+import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
-import { AdsList } from '@/types';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { AdsList, HttpError } from '@/types';
+import { useQuery } from '@tanstack/react-query';
+import { useRouter, useSearchParams } from 'next/navigation';
 import * as React from 'react';
-import { useInView } from 'react-intersection-observer';
+import { toast } from 'react-toastify';
 
 export function useAdsQuery() {
   const { state, dispatch, httpClient } = useAppContext();
-  const LIMIT: number = 12;
-  const { ref, inView } = useInView();
+  const params = useSearchParams();
+  const router = useRouter();
+  const [urlQueryString, setUrlQueryString] = React.useState({
+    sort: params.get('sort') || 'updatedAt',
+    search: params.get('search') || ''
+  });
 
-  const { data, fetchNextPage, refetch, hasNextPage, isLoading, isError, error } =
-    useInfiniteQuery({
-      queryKey: ['private-ads'],
-      queryFn: async ({ pageParam = 0 }) => {
-        const query = new URLSearchParams({
-          offset: String(LIMIT * pageParam),
-          limit: String(LIMIT),
-          sort: 'updatedAt',
-          fields: '',
-          search: ''
-        });
+  const { data, refetch, isLoading, isError, error } = useQuery({
+    queryKey: ['private-ads'],
+    queryFn: async () => {
+      try {
+        const query = new URLSearchParams(urlQueryString);
         const { data } = await httpClient<AdsList[]>({
           url: `/api/v1/users/ads?${query.toString()}`
         });
-        return { data, currentOffset: pageParam + 1 };
-      },
-      getNextPageParam: ({ data, currentOffset }) =>
-        data?.length >= LIMIT ? currentOffset : undefined
-    });
+        return { ...data };
+      } catch (error) {
+        const { message } = errorTransformer(error as HttpError);
+        toast.error(message);
+        console.error(error);
+      }
+    }
+  });
 
-  const ads = React.useMemo(
-    () =>
-      data
-        ? data?.pages
-            .map(({ data }) => data)
-            .reduce((accumulator, currentObj) => [...accumulator, ...currentObj])
-        : [],
-    [data]
+  const isAnyFilterActive: boolean = React.useMemo(
+    () => Object.values(urlQueryString).some((value) => value !== ''),
+    [urlQueryString]
   );
 
   React.useEffect(() => {
-    dispatch({ type: actions.ADS, payload: { ...state, ads } });
-  }, [ads]);
-
-  // React.useEffect(() => {
-  //   const debounceTimer = setTimeout(() => {
-  //     refetch({ queryKey: ['private-ads'] });
-  //   }, 500);
-  //   return () => clearTimeout(debounceTimer);
-  // }, [state.productsListQuery]);
+    if (data) {
+      dispatch({ type: actions.ADS, payload: { ...state, ads: data } });
+    }
+  }, [data]);
 
   React.useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, fetchNextPage, hasNextPage]);
+    const instance = setTimeout(() => {
+      refetch({ queryKey: ['private-ads'] });
+    }, 400);
+    return () => clearTimeout(instance);
+  }, [params]);
 
-  return {
-    inViewRef: ref,
-    error,
-    isError,
-    isLoading,
-    refetch,
-    fetchNextPage,
-    hasNextPage
-  };
+  React.useEffect(() => {
+    const instance = setTimeout(() => {
+      router.replace(
+        `/dashboard/advertisements/collections?${new URLSearchParams(urlQueryString)}`
+      );
+    }, 400);
+    return () => clearTimeout(instance);
+  }, [urlQueryString]);
+
+  return { error, isError, isLoading, refetch, setUrlQueryString, isAnyFilterActive , urlQueryString};
 }

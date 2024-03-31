@@ -20,6 +20,7 @@ export const _pageLoader = styled.section`
     bottom: calc(40px);
     right: calc(20px);
     user-select: none;
+    border: 1px solid rgba(${({ theme }) => theme.font}, 0.8);
     background: rgba(${({ theme }) => theme.foreground}, 0.8);
     box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.1);
     z-index: 10;

@@ -18,7 +18,7 @@ export const _sortBox = styled.section`
     justify-content: space-between;
     flex-direction: column;
     position: relative;
-    top: 100px;
+    top: 70px;
     right: 30px;
     gap: 20px;
     padding: 20px 12px;

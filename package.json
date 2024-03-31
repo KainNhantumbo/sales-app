@@ -34,7 +34,7 @@
   "license": "Apache License Version 2.0",
   "repository": "https://github.com/KainNhantumbo/sales-app.git",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

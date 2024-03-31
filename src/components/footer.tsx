@@ -1,16 +1,4 @@
-import {
-  IoDesktopOutline,
-  IoDocumentsOutline,
-  IoExtensionPuzzleOutline,
-  IoHelpBuoyOutline,
-  IoLockOpenOutline,
-  IoMoonOutline,
-  IoPaperPlaneOutline,
-  IoShieldCheckmarkOutline,
-  IoSpeedometerOutline,
-  IoSunnyOutline
-} from 'react-icons/io5';
-
+import * as Io from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
 import { useThemeContext } from '@/context/ThemeContext';
 import { constants, urls } from '@/data/constants';
@@ -26,15 +14,15 @@ export function Footer() {
     <Container>
       <section className='featured-container'>
         <h3>
-          <IoShieldCheckmarkOutline />
+          <Io.IoShieldCheckmarkOutline />
           <span>Sérios sobre segurança e privacidade</span>
         </h3>
         <h3>
-          <IoSpeedometerOutline />
+          <Io.IoSpeedometerOutline />
           <span>Performance e estabilidade</span>
         </h3>
         <h3>
-          <IoHelpBuoyOutline />
+          <Io.IoHelpBuoyOutline />
           <span>24 horas de suporte integrado</span>
         </h3>
       </section>
@@ -42,7 +30,7 @@ export function Footer() {
         <nav>
           <section>
             <h3>
-              <IoPaperPlaneOutline />
+              <Io.IoPaperPlaneOutline />
               <span>Navegação</span>
             </h3>
             <div className='elements'>
@@ -55,7 +43,7 @@ export function Footer() {
           </section>
           <section>
             <h3>
-              <IoDocumentsOutline />
+              <Io.IoDocumentsOutline />
               <span>Institucional</span>
             </h3>
             <div className='elements'>
@@ -75,7 +63,7 @@ export function Footer() {
           </section>
           <section>
             <h3>
-              <IoLockOpenOutline />
+              <Io.IoLockOpenOutline />
               <span>Acesso a Contas</span>
             </h3>
             <div className='elements'>
@@ -97,7 +85,7 @@ export function Footer() {
           </section>
           <section>
             <h3>
-              <IoExtensionPuzzleOutline />
+              <Io.IoExtensionPuzzleOutline />
               <span>Atendimento e Suporte</span>
             </h3>
             <div className='elements'>
@@ -148,13 +136,13 @@ export function Footer() {
                 : ''
             }
             onClick={() => changeColorScheme({ mode: 'manual', scheme: 'light' })}>
-            <IoSunnyOutline />
+            <Io.IoSunnyOutline />
           </button>
           <button
             title='Modo automático'
             className={colorScheme.mode === 'auto' ? 'active' : ''}
             onClick={() => changeColorScheme({ mode: 'auto', scheme: 'dark' })}>
-            <IoDesktopOutline />
+            <Io.IoDesktopOutline />
           </button>
           <button
             title='Modo escuro '
@@ -162,7 +150,7 @@ export function Footer() {
               colorScheme.scheme === 'dark' && colorScheme.mode === 'manual' ? 'active' : ''
             }
             onClick={() => changeColorScheme({ mode: 'manual', scheme: 'dark' })}>
-            <IoMoonOutline />
+            <Io.IoMoonOutline />
           </button>
         </div>
       </div>

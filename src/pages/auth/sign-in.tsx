@@ -6,12 +6,12 @@ import { constants } from '@/data/constants';
 import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
 import { _signIn as Container } from '@/styles/common/sign-in';
-import { Auth, HttpError, InputEvents, SubmitEvent } from '@/types';
+import type { Auth, HttpError, InputEvents, SubmitEvent } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
+import { IoEnterOutline, IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 
 export default function Page() {
@@ -117,7 +117,8 @@ export default function Page() {
                   </Link>
                 </div>
 
-                <button className='login' type='submit' disabled={loading}>
+                <button type='submit' disabled={loading}>
+                  <IoEnterOutline />
                   <span>Acessar conta</span>
                 </button>
               </form>

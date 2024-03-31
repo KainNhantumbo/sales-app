@@ -4,7 +4,7 @@ import { BaseButtonOutline, ButtonMonoOutline } from '../defaults';
 export const _toolbar = styled.section`
   position: fixed;
   left: 0;
-  top: 70px;
+  top: 50px;
   padding: 5px 10px;
   width: 100%;
   height: 35px;

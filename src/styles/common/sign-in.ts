@@ -94,7 +94,7 @@ export const _signIn = styled.div`
 
         button {
           ${BaseButton}
-          width: fit-content;
+          
         }
       }
 
