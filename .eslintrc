@@ -1,12 +1,16 @@
 {
   "root": true,
   "env": { "browser": true, "es2020": true },
-  "extends": ["next/core-web-vitals"],
+  "extends": [
+    "eslint:recommended",
+    "next/core-web-vitals",
+    "plugin:react-hooks/recommended"
+  ],
   "rules": {
     "react/no-unescaped-entities": "off",
     "@next/next/no-page-custom-font": "off",
     "react-hooks/rules-of-hooks": "warn",
-    "react-hooks/exhaustive-deps": "off",
+    "react-hooks/exhaustive-deps": "warn",
     "no-unused-vars": [
       "warn",
       {

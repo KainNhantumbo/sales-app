@@ -42,14 +42,14 @@ export function useAdsQuery() {
     if (data) {
       dispatch({ type: actions.ADS, payload: { ...state, ads: data } });
     }
-  }, [data]);
+  }, [data, dispatch, state]);
 
   React.useEffect(() => {
     const instance = setTimeout(() => {
       refetch({ queryKey: ['private-ads'] });
     }, 400);
     return () => clearTimeout(instance);
-  }, [params]);
+  }, [params, refetch]);
 
   React.useEffect(() => {
     const instance = setTimeout(() => {
@@ -58,7 +58,7 @@ export function useAdsQuery() {
       );
     }, 400);
     return () => clearTimeout(instance);
-  }, [urlQueryString]);
+  }, [router, urlQueryString]);
 
   return {
     error,

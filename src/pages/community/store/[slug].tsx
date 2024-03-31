@@ -51,7 +51,7 @@ export default function Page({ store, products }: Props) {
         payload: { ...state, publicProducts: [] }
       });
     };
-  }, []);
+  }, [dispatch, products, state]);
 
   if (!store || Object.values(store).length < 1)
     return (

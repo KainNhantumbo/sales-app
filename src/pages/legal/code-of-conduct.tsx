@@ -53,7 +53,7 @@ export default function Page() {
           <p>
             Alguns espaços da {constants.defaultTitle} podem ter regras adicionais em vigor,
             que serão claramente disponibilizadas aos usuários e clientes. Os usuários e
-            clientes são responsáveis ​​por conhecer e cumprir estas regras.
+            clientes são responsáveis por conhecer e cumprir estas regras.
           </p>
 
           <h2>
@@ -112,8 +112,7 @@ export default function Page() {
             <li>Comunicação individual contínua após a cessação dos pedidos;</li>
             <li>
               "Exibição" deliberada de qualquer aspecto da identidade de uma pessoa sem seu
-              consentimento, exceto quando necessário para proteger pessoas vulneráveis ​​de
-              abuso intencional;
+              consentimento, exceto quando necessário para proteger pessoas vulneráveis de abuso intencional;
             </li>
             <li>Publicação de comunicação privada sem assédio.</li>
           </ul>

@@ -35,7 +35,7 @@ export function SearchBox() {
         });
     }, 300);
     return () => clearTimeout(timer);
-  }, [inputValue]);
+  }, [dispatch, inputValue, state]);
 
   return (
     <AnimatePresence>

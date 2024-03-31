@@ -65,9 +65,9 @@ export function useCartStore() {
     });
   };
 
-  const syncCartToLocalStorage = () => {
+  const syncCartToLocalStorage = React.useCallback(() => {
     localStorage.setItem(CART_STORE_KEY, JSON.stringify(state.cart));
-  };
+  }, [state.cart]);
 
   const restoreCartFromLocalStorage = () => {
     const data: Cart[] = JSON.parse(localStorage.getItem(CART_STORE_KEY) || `[]`);
@@ -81,7 +81,7 @@ export function useCartStore() {
 
   React.useEffect(() => {
     syncCartToLocalStorage();
-  }, [state.cart]);
+  }, [state.cart, syncCartToLocalStorage]);
 
   useIsomorphicLayoutEffect(() => {
     restoreCartFromLocalStorage();

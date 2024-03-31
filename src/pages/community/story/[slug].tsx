@@ -115,7 +115,7 @@ export default function Page(props: Props) {
       });
       setCoverImageData({ id: '', data: '' });
     };
-  }, []);
+  }, [dispatch, props.story, state]);
 
   return (
     <Layout metadata={{ title: `${constants.defaultTitle} | Histórias` }}>

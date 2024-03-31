@@ -54,9 +54,7 @@ export default function Page() {
   useEffect(() => {
     if (data) {
       const reducedData = data?.pages
-        .map((page) => {
-          return page.data;
-        })
+        .map(({ data }) => data)
         .reduce((accumulator, currentObj) => [...accumulator, ...currentObj]);
 
       dispatch({
@@ -74,7 +72,7 @@ export default function Page() {
         payload: { ...state, publicStoresList: [] }
       });
     };
-  }, [data]);
+  }, [data, state, dispatch]);
 
   useEffect(() => {
     if (inView && hasNextPage) {

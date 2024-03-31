@@ -1,10 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 import editorJsHtml from 'editorjs-html';
 import { OutputData } from '@editorjs/editorjs';
 
 const EditorJsToHtml = editorJsHtml();
 
-export type TParsedContent = string | JSX.Element;
+export type TParsedContent = string | React.ReactNode;
 type Props = { data: OutputData };
 
 export default function EditorJsRenderer({ data }: Props) {

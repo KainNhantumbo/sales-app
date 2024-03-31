@@ -9,7 +9,7 @@ import { AnimatePresence, m as motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { BiUser } from 'react-icons/bi';
 import {
   IoCartOutline,
@@ -30,11 +30,14 @@ export function Header() {
 
   const toggleMenu = () => setIsMenu(!isMenu);
 
-  const changeWidth = () => (windowWidth > 770 ? setIsMenu(true) : setIsMenu(false));
+  const changeWidth = useCallback(
+    () => (windowWidth > 770 ? setIsMenu(true) : setIsMenu(false)),
+    [windowWidth]
+  );
 
   useEffect(() => {
     changeWidth();
-  }, [windowWidth]);
+  }, [changeWidth, windowWidth]);
 
   return (
     <Container>

@@ -80,7 +80,7 @@ export default function Page() {
         payload: { ...state, publicStoresList: [] }
       });
     };
-  }, [data]);
+  }, [data, state, dispatch]);
 
   useEffect(() => {
     const fetchTimer = setTimeout(() => {
@@ -91,7 +91,7 @@ export default function Page() {
     return () => {
       clearTimeout(fetchTimer);
     };
-  }, [router.query]);
+  }, [router.query, refetch]);
 
   useEffect(() => {
     if (inView && hasNextPage) {

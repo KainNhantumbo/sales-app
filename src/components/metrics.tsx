@@ -24,17 +24,17 @@ export function Metrics() {
   });
 
   useEffect(() => {
-    if (data) {
+    if (typeof data !== 'undefined') {
       dispatch({
         type: actions.METRICS_DATA,
-        payload: { ...state, metrics: { ...data } }
+        payload: { ...state, metrics: data }
       });
     }
-  }, [data]);
+  }, [data, dispatch, state]);
 
   useEffect(() => {
     refetch({ queryKey: ['metrics'] });
-  }, [state.auth, state.store, state.productList]);
+  }, [state.auth, state.store, state.productList, refetch]);
 
   return (
     <Container id='metrics'>

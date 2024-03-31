@@ -5,17 +5,23 @@ import { constants, pricing_data } from '@/data/constants';
 import { errorTransformer } from '@/lib/error-transformer';
 import { formatDate } from '@/lib/utils';
 import { _subsTransactions as Container } from '@/styles/common/transactions-subscriptions';
-import { HttpError, Subscription } from '@/types';
+import type { HttpError, Subscription } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 import { useMemo } from 'react';
+import * as Io from 'react-icons/io5';
 import { IoCardOutline } from 'react-icons/io5';
+import { DotLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
+import { useTheme } from 'styled-components';
 
 export default function Page() {
   const { httpClient } = useAppContext();
+  const router = useRouter();
+  const theme = useTheme();
 
-  const { data, isError, isLoading } = useQuery({
+  const { data, error, isError, isLoading } = useQuery({
     queryKey: ['query-subscriptions'],
     queryFn: async () => {
       try {
@@ -86,6 +92,35 @@ export default function Page() {
             </section>
           </article>
         </div>
+
+        {!isLoading && isError && (
+          <section className='fetching-state'>
+            <section className='wrapper'>
+              <h3>{errorTransformer(error as HttpError).message}</h3>
+              <div>
+                <button onClick={() => router.reload()}>
+                  <Io.IoReload />
+                  <span>Recarregar a página</span>
+                </button>
+                <button onClick={() => router.back()}>
+                  <Io.IoChevronBack />
+                  <span>Voltar a página anterior</span>
+                </button>
+              </div>
+            </section>
+          </section>
+        )}
+
+        {!isError && isLoading && (
+          <section className='loading-spinner'>
+            <section className='wrapper'>
+              <div className='center'>
+                <DotLoader size={50} color={`rgb(${theme.primary})`} />
+                <p>Carregando os dados do produto</p>
+              </div>
+            </section>
+          </section>
+        )}
       </Container>
     </Layout>
   );

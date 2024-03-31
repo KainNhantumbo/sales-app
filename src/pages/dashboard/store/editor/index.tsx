@@ -11,7 +11,7 @@ import type { HttpError, InputEvents, Store } from '@/types';
 import Compressor from 'compressorjs';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import * as Io from 'react-icons/io5';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
@@ -50,28 +50,27 @@ export default function Page() {
     });
   };
 
-  const handleCoverImageFile = () => {
-    const imageData: File | null | undefined = coverImageFile?.item(0);
-    if (imageData) {
-      new Compressor(imageData, {
-        quality: 0.8,
-        width: 620,
-        height: 220,
-        resize: 'cover',
-        success: (compressedImage: File | Blob) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(compressedImage);
-          reader.onloadend = function (e: ProgressEvent<FileReader>) {
-            const encodedImage: string = e.target?.result as string;
-            setCoverImageData({
-              id: state.user.cover_image?.id || '',
-              data: encodedImage
-            });
-          };
-        }
-      });
-    }
-  };
+  const handleCoverImageFile = useCallback(() => {
+    const imageData = coverImageFile?.item(0);
+    if (!imageData) return toast.error('Falha ao processar imagem');
+    new Compressor(imageData, {
+      quality: 0.8,
+      width: 620,
+      height: 220,
+      resize: 'cover',
+      success: (compressedImage) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(compressedImage);
+        reader.onloadend = function (e: ProgressEvent<FileReader>) {
+          const encodedImage: string = e.target?.result as string;
+          setCoverImageData({
+            id: state.user.cover_image?.id || '',
+            data: encodedImage
+          });
+        };
+      }
+    });
+  }, [coverImageFile, state.user.cover_image]);
 
   const deleteCoverImage = () => {
     httpClient({
@@ -96,7 +95,7 @@ export default function Page() {
       });
   };
 
-  const getStoreData = async () => {
+  const getStoreData = useCallback(async () => {
     try {
       setLoading({ status: true, key: 'store-data' });
       const { data } = await httpClient<Store>({
@@ -114,7 +113,7 @@ export default function Page() {
     } finally {
       setLoading({ status: false, key: 'store-data' });
     }
-  };
+  }, [dispatch, httpClient, state]);
 
   const handleSubmitUpdate = async () => {
     try {
@@ -139,16 +138,14 @@ export default function Page() {
       setCoverImageData({ id: '', data: '' });
       setCoverImageFile(null);
     };
-  }, [coverImageFile]);
+  }, [coverImageFile, handleCoverImageFile]);
 
   useEffect(() => {
     const fetch_data = setTimeout(() => {
-      if (state.auth.storeId) {
-        getStoreData();
-      }
+      if (state.auth.storeId) getStoreData();
     }, 100);
     return () => clearTimeout(fetch_data);
-  }, []);
+  }, [getStoreData, state.auth.storeId]);
 
   return (
     <Layout

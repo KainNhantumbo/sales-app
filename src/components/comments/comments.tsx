@@ -1,4 +1,5 @@
 import { useAppContext } from '@/context/AppContext';
+import { initialState } from '@/lib/reducer';
 import { actions } from '@/shared/actions';
 import { _comments as Container } from '@/styles/modules/comments';
 import { HttpError } from '@/types';
@@ -6,7 +7,7 @@ import type { IComment } from '@/types/comments';
 import { AxiosResponse } from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 import { DeleteCommentPrompt } from '../modals/delete-comment-prompt';
 import { Comment } from './comment';
@@ -59,32 +60,15 @@ export function Comments({ contentId }: Props) {
 
   const getCommentReplies = (parentId: string) => formattedComments[parentId];
 
-  const clearCommentData = () => {
+  const clearCommentData = useCallback(() => {
     setActiveModes({ edit: false, reply: false });
     dispatch({
       type: actions.CREATE_COMMENT,
-      payload: {
-        ...state,
-        comment: {
-          _id: '',
-          source_id: '',
-          created_by: {
-            _id: '',
-            first_name: '',
-            last_name: '',
-            profile_image: { id: '', url: '' }
-          },
-          content: '',
-          parent_id: '',
-          favorites: [],
-          updatedAt: '',
-          createdAt: ''
-        }
-      }
+      payload: { ...state, comment: initialState.comment }
     });
-  };
+  }, [dispatch, state]);
 
-  const getComments = async () => {
+  const getComments = useCallback(async () => {
     try {
       const { data } = await httpClient<IComment[]>({
         method: 'get',
@@ -97,7 +81,7 @@ export function Comments({ contentId }: Props) {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [contentId, dispatch, httpClient, state]);
 
   const handleCreateComment = async () => {
     setLoading({ status: true, key: 'create-comment' });
@@ -305,7 +289,7 @@ export function Comments({ contentId }: Props) {
       setActiveModes({ reply: false, edit: false });
       clearCommentData();
     };
-  }, []);
+  }, [clearCommentData]);
 
   useEffect(() => {
     const debounceTime = setTimeout(() => {
@@ -315,7 +299,7 @@ export function Comments({ contentId }: Props) {
       }
     }, 500);
     return () => clearTimeout(debounceTime);
-  }, [router.query, router.asPath, router.route, contentId]);
+  }, [router, contentId, getComments]);
 
   useEffect(() => {
     const desc = setTimeout(() => {

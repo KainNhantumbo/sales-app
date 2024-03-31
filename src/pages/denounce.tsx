@@ -3,6 +3,7 @@ import { SelectContainer } from '@/components/select';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { constants, denounceReasons } from '@/data/constants';
+import { initialState } from '@/lib/reducer';
 import { actions } from '@/shared/actions';
 import { DenounceContainer as Container } from '@/styles/common/denounce';
 import { HttpError } from '@/types';
@@ -52,13 +53,10 @@ export default function Page() {
     return () => {
       dispatch({
         type: actions.CREATE_DENOUNCE,
-        payload: {
-          ...state,
-          denounce: { content: '', reason: '' }
-        }
+        payload: { ...state, denounce: initialState.denounce }
       });
     };
-  }, []);
+  }, [dispatch, state]);
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {

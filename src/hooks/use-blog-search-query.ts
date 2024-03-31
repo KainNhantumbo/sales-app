@@ -52,7 +52,7 @@ export function useBlogSearchQuery() {
         payload: { ...state, blogPostsList: [] }
       });
     };
-  }, [posts]);
+  }, [dispatch, posts, state]);
 
   useEffect(() => {
     const fetchTimer = setTimeout(() => {
@@ -63,7 +63,7 @@ export function useBlogSearchQuery() {
     return () => {
       clearTimeout(fetchTimer);
     };
-  }, [router.query]);
+  }, [refetch, router.query]);
 
   useEffect(() => {
     if (inView && hasNextPage) {

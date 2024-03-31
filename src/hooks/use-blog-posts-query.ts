@@ -52,7 +52,7 @@ export function useBlogPostsQuery() {
         type: actions.BLOG_POSTS_LIST_QUERY,
         payload: { ...state, blogPostsList: [] }
       });
-  }, [posts]);
+  }, [dispatch, posts, state]);
 
   useEffect(() => {
     if (inView && hasNextPage) fetchNextPage();

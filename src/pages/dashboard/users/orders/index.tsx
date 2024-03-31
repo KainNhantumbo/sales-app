@@ -22,16 +22,8 @@ export default function Page() {
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
 
-  const {
-    isLoading,
-    isError,
-    error,
-    hasNextPage,
-    fetchNextPage,
-    inViewRef,
-    deleteOrder,
-    updateOrder
-  } = useUserOrdersQuery();
+  const { isLoading, isError, error, hasNextPage, fetchNextPage, inViewRef, deleteOrder, updateOrder } =
+    useUserOrdersQuery();
 
   const isAnFilterActive = (): boolean => {
     return Object.values(state.ordersQuery).some((item) => (item !== '' ? true : false));

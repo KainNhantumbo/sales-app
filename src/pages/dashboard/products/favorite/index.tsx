@@ -55,7 +55,7 @@ export default function Page({ products }: Props) {
         payload: { ...state, publicProducts: [] }
       });
     };
-  }, []);
+  }, [dispatch, products, state]);
 
   return (
     <Layout

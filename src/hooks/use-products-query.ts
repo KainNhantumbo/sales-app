@@ -48,14 +48,14 @@ export function useProductsQuery() {
       type: actions.PRODUCTS_LIST_DATA,
       payload: { ...state, productList: products }
     });
-  }, [products]);
+  }, [dispatch, products, state]);
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
       refetch({ queryKey: ['private-store-products'] });
     }, 500);
     return () => clearTimeout(debounceTimer);
-  }, [state.productsListQuery]);
+  }, [refetch, state.productsListQuery]);
 
   useEffect(() => {
     if (inView && hasNextPage) {

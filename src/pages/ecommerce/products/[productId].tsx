@@ -59,7 +59,7 @@ export default function Page({ product: publicProduct, error_message }: Props) {
         payload: { ...state, publicProduct: initialState.publicProduct }
       });
     };
-  }, [publicProduct]);
+  }, [publicProduct, state, dispatch]);
 
   if (!publicProduct) return <ErrorPage message={error_message} onRetry={router.reload} />;
 

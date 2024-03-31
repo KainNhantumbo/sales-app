@@ -18,7 +18,7 @@ export function useFetchState<U extends FetchStateProps>({ delay = 5000 }: U) {
       error && setError(null);
     }, delay);
     return () => clearTimeout(debounceTimer);
-  }, [error]);
+  }, [delay, error]);
 
   return {
     error: { message },

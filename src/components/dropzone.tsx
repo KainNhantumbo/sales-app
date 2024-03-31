@@ -38,7 +38,7 @@ export const DropzoneArea = ({ handler, width, height }: DropzoneProps) => {
           }
         });
       },
-      [handler]
+      [handler, width, height]
     )
   });
 

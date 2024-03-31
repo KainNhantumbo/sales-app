@@ -124,7 +124,7 @@ export function StoriesRenderer(props: Props) {
   useEffect(() => {
     if (data) {
       const reducedStories = data?.pages
-        .map((page) => page.data)
+        .map(({ data }) => data)
         .reduce((accumulator, currentObj) => [...accumulator, ...currentObj]);
 
       dispatch({
@@ -142,7 +142,7 @@ export function StoriesRenderer(props: Props) {
         payload: { ...state, publicStories: [] }
       });
     };
-  }, [data]);
+  }, [data, dispatch, state]);
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -155,7 +155,7 @@ export function StoriesRenderer(props: Props) {
       refetch({ queryKey: ['user-stories'] });
     }, 400);
     return () => clearTimeout(debounceTime);
-  }, [state.searchStories]);
+  }, [refetch, state.searchStories]);
 
   return (
     <Container>

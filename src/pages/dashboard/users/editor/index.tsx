@@ -2,10 +2,11 @@ import Layout from '@/components/layout';
 import { DeleteAccountPrompt } from '@/components/modals/delete-account-prompt';
 import { WorkDataPrompt } from '@/components/modals/work-data-prompt';
 import { useAppContext } from '@/context/AppContext';
-import { DEFAULT_ERROR_MESSAGE, constants } from '@/data/constants';
+import { constants } from '@/data/constants';
 import Countries from '@/data/countries.json';
 import Languages from '@/data/languages.json';
 import Skills from '@/data/professional-skills.json';
+import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
 import { _userProfile as Container } from '@/styles/common/profile-editor';
 import type { HttpError, InputEvents, User } from '@/types';
@@ -13,7 +14,7 @@ import Compressor from 'compressorjs';
 import moment from 'moment';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { BiUser, BiUserCheck, BiUserX } from 'react-icons/bi';
 import { FaBlog, FaLinkedinIn } from 'react-icons/fa';
 import * as Io from 'react-icons/io5';
@@ -89,7 +90,7 @@ export default function Page() {
     }));
   };
 
-  const handleCoverImageFile = () => {
+  const handleCoverImageFile = useCallback(() => {
     const imageData: File | null | undefined = coverImageFile?.item(0);
     if (imageData) {
       new Compressor(imageData, {
@@ -110,10 +111,10 @@ export default function Page() {
         }
       });
     }
-  };
+  }, [coverImageFile, state.user.cover_image]);
 
-  const handleProfileImageFile = () => {
-    const imageData: File | null | undefined = profileImageFile?.item(0);
+  const handleProfileImageFile = useCallback(() => {
+    const imageData = profileImageFile?.item(0);
     if (imageData) {
       new Compressor(imageData, {
         quality: 0.8,
@@ -133,7 +134,7 @@ export default function Page() {
         }
       });
     }
-  };
+  }, [profileImageFile, state.user.profile_image]);
 
   const deleteAsset = (assetType: 'cover_image' | 'profile_image') => {
     httpClient({
@@ -162,7 +163,7 @@ export default function Page() {
       });
   };
 
-  const getUserData = () => {
+  const getUserData = useCallback(() => {
     setLoading({ status: true, key: 'user-data' });
     httpClient({
       method: 'get',
@@ -176,22 +177,14 @@ export default function Page() {
         });
       })
       .catch((error) => {
-        console.error(
-          (error as HttpError).response?.data?.message || (error as HttpError).message
-        );
-        setError({
-          status: true,
-          msg:
-            (error as HttpError).response?.data?.message ||
-            (error as HttpError).message ||
-            DEFAULT_ERROR_MESSAGE,
-          key: 'user-data'
-        });
+        const { message } = errorTransformer(error as HttpError);
+        console.error(error);
+        setError({ status: true, msg: message, key: 'user-data' });
       })
       .finally(() => {
         setLoading({ status: false, key: 'user-data' });
       });
-  };
+  }, [dispatch, httpClient, router.query, state]);
 
   const handleSubmitUpdate = async () => {
     if (passwords.confirm_password !== '') {
@@ -232,21 +225,12 @@ export default function Page() {
 
       dispatch({
         type: actions.USER_DATA,
-        payload: {
-          ...state,
-          user: { ...data }
-        }
+        payload: { ...state, user: { ...data } }
       });
     } catch (error) {
       console.error(error);
-      setError({
-        status: true,
-        msg:
-          (error as HttpError).response?.data?.message ||
-          (error as HttpError).message ||
-          DEFAULT_ERROR_MESSAGE,
-        key: 'user-update'
-      });
+      const { message } = errorTransformer(error as HttpError);
+      setError({ status: true, msg: message, key: 'user-update' });
     } finally {
       setLoading({ status: false, key: 'user-update' });
     }
@@ -258,7 +242,7 @@ export default function Page() {
       setCoverImageData({ id: '', data: '' });
       setCoverImageFile(null);
     };
-  }, [coverImageFile]);
+  }, [coverImageFile, handleCoverImageFile]);
 
   useEffect(() => {
     handleProfileImageFile();
@@ -266,14 +250,14 @@ export default function Page() {
       setProfileImageData({ id: '', data: '' });
       setProfileImageFile(null);
     };
-  }, [profileImageFile]);
+  }, [handleProfileImageFile, profileImageFile]);
 
   useEffect(() => {
     const fetch_data = setTimeout(() => {
       getUserData();
     }, 10);
     return () => clearTimeout(fetch_data);
-  }, []);
+  }, [getUserData]);
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
@@ -282,7 +266,7 @@ export default function Page() {
       }
     }, 5000);
     return () => clearTimeout(debounceTimer);
-  }, [error.status]);
+  }, [error]);
 
   // -------working capturer functions--------
   const [workingExperienceData, setWorkingExperienceData] = useState({
