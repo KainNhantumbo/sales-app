@@ -15,7 +15,7 @@ import { useTheme } from 'styled-components';
 type PublicAds = Array<{ _id: string; name: string; image: { id: string; url: string } }>;
 
 export function SideBarAds() {
-const theme =  useTheme()
+  const theme = useTheme();
   const [list, setList] = React.useState<PublicAds>([]);
 
   const { data, isLoading, isError } = useQuery({

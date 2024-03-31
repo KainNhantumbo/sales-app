@@ -18,9 +18,7 @@ export const DropzoneArea = ({ handler, width, height }: DropzoneProps) => {
       <T extends File>(acceptedFiles: T[]) => {
         const file = acceptedFiles[0];
         if (!file || !DEFAULT_MIME_TYPES.includes(file.type))
-          return alert(
-            'Erro: extensão da imagem carregada não suportado.'
-          );
+          return alert('Erro: extensão da imagem carregada não suportado.');
 
         new Compressor(file, {
           width,

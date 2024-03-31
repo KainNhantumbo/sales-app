@@ -19,7 +19,6 @@ export default function Page() {
     userId: state.auth.id
   });
 
-
   return (
     <Layout metadata={{ title: `${constants.defaultTitle} | Painel de Controle` }}>
       <Container>

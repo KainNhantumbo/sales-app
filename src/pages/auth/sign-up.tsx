@@ -176,7 +176,7 @@ export default function Page() {
                 }
 
                 <button className='next' type='submit' disabled={loading}>
-                    <Io.IoEnterOutline />
+                  <Io.IoEnterOutline />
                   <span>Cadastre-se</span>
                 </button>
               </form>

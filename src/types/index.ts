@@ -483,7 +483,6 @@ export type Option = {
   label: string;
 };
 
-
 export type Subscription = {
   model: string;
   trial: { isConsumed: boolean; period: number; expiresIn: number };

@@ -36,9 +36,7 @@ export function StoriesRenderer(props: Props) {
   const theme = useTheme();
   const { ref, inView } = useInView();
 
-  const getStories = async ({
-    pageParam = 0
-  }) => {
+  const getStories = async ({ pageParam = 0 }) => {
     const { data } = await fetch<PublicStory[]>({
       method: 'get',
       url: `/api/v1/users/stories${props.userId ? `?userId=${props.userId}` : ''}${
@@ -56,7 +54,8 @@ export function StoriesRenderer(props: Props) {
     useInfiniteQuery({
       queryKey: ['user-stories'],
       queryFn: getStories,
-      getNextPageParam: (lastPage) => lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
+      getNextPageParam: (lastPage) =>
+        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
     });
 
   const handleDeleteStory = async (storeId: string) => {

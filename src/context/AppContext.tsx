@@ -4,7 +4,7 @@ import { initialState, reducer } from '@/lib/reducer';
 import { actions } from '@/shared/actions';
 import type { Action, Auth, HttpError, State } from '@/types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AxiosError, AxiosRequestConfig, AxiosResponse, isAxiosError } from 'axios';
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { ModulesContext } from './Modules';

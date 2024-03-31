@@ -69,7 +69,6 @@ export function useCartStore() {
     localStorage.setItem(CART_STORE_KEY, JSON.stringify(state.cart));
   };
 
-
   const restoreCartFromLocalStorage = () => {
     const data: Cart[] = JSON.parse(localStorage.getItem(CART_STORE_KEY) || `[]`);
 

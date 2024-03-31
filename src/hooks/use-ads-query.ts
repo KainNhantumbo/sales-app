@@ -60,5 +60,13 @@ export function useAdsQuery() {
     return () => clearTimeout(instance);
   }, [urlQueryString]);
 
-  return { error, isError, isLoading, refetch, setUrlQueryString, isAnyFilterActive , urlQueryString};
+  return {
+    error,
+    isError,
+    isLoading,
+    refetch,
+    setUrlQueryString,
+    isAnyFilterActive,
+    urlQueryString
+  };
 }
