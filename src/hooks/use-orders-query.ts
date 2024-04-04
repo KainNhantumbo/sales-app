@@ -55,34 +55,23 @@ export function useUserOrdersQuery() {
     }
   };
 
-  const deleteOrder = async (id: string) => {
-    try {
-      await httpClient({
-        method: 'delete',
-        url: `/api/v1/checkout/orders/${id}`
-      });
-      refetch({ queryKey: ['user-orders'] });
-    } catch (error) {
-      const { message } = errorTransformer(error as HttpError);
-      toast.error(message);
-      console.error(error);
-    }
-  };
-
-  const orders = React.useMemo(
-    () =>
-      data
-        ? data.pages
-            .map((page) => page.data)
-            .reduce((accumulator, currentObj) => [...accumulator, ...currentObj])
-        : [],
-    [data]
+  const isAnyFilterActive: boolean = React.useMemo(
+    () => Object.values(queryString).some((item) => item !== ''),
+    [queryString]
   );
+
+  const orders = React.useMemo(() => {
+    if (data)
+      return data.pages
+        .map(({ data }) => data)
+        .reduce((accumulator, currentObj) => [...accumulator, ...currentObj], []);
+    return [];
+  }, [data]);
 
   React.useEffect(() => {
     dispatch({ type: actions.ORDERS, payload: { ...state, orders } });
     return () => dispatch({ type: actions.ORDERS, payload: { ...state, orders: [] } });
-  }, [dispatch, orders, state]);
+  }, [ orders]);
 
   React.useEffect(() => {
     if (inView && hasNextPage) fetchNextPage();
@@ -110,7 +99,7 @@ export function useUserOrdersQuery() {
     refetch,
     hasNextPage,
     inViewRef: ref,
-    deleteOrder,
+    isAnyFilterActive,
     updateOrder,
     setQueryString,
     queryString

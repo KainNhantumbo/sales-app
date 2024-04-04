@@ -50,7 +50,7 @@ export default function Page() {
 
   useEffect(() => {
     return () => dispatch({ type: actions.CLEAN_UP_MODALS, payload: { ...state } });
-  }, [dispatch, state]);
+  }, []);
 
   return (
     <Layout metadata={{ title: `${constants.defaultTitle} | Lista de Produtos` }}>

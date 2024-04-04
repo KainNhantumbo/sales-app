@@ -1,6 +1,7 @@
 import Layout from '@/components/layout';
 import fetch from '@/config/client';
 import { constants } from '@/data/constants';
+import { errorTransformer } from '@/lib/error-transformer';
 import { _resetPassword as Container } from '@/styles/common/password-reset';
 import { HttpError, InputEvents, SubmitEvent } from '@/types';
 import Link from 'next/link';
@@ -13,12 +14,9 @@ export default function Page() {
   const theme = useTheme();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState({ status: false, message: '' });
-  const [passwords, setPasswords] = useState({
-    password: '',
-    confirm_password: ''
-  });
+  const [passwords, setPasswords] = useState({ password: '', confirm_password: '' });
 
-  const handleChange = (e: InputEvents) => {
+  const onChange = (e: InputEvents) => {
     setPasswords((state) => ({
       ...state,
       [e.target.name]: e.target.value
@@ -42,14 +40,9 @@ export default function Page() {
         withCredentials: true
       });
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-      setError({
-        status: true,
-        message:
-          (error as HttpError).response?.data?.message || (error as HttpError).message
-      });
+      const { message } = errorTransformer(error as HttpError);
+      setError({ status: true, message });
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -91,7 +84,7 @@ export default function Page() {
                     aria-hidden='true'
                     placeholder='Escreva a sua nova senha'
                     aria-label='Escreva a sua nova senha'
-                    onChange={(e) => handleChange(e)}
+                    onChange={(e) => onChange(e)}
                   />
                 </section>
                 <section className='input-field'>
@@ -107,7 +100,7 @@ export default function Page() {
                     minLength={8}
                     placeholder='Confirme a sua senha'
                     aria-label='Confirme a sua senha'
-                    onChange={(e) => handleChange(e)}
+                    onChange={(e) => onChange(e)}
                   />
                 </section>
 

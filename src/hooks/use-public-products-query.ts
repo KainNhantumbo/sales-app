@@ -53,13 +53,13 @@ export function usePublicProductsQuery() {
       type: actions.PUBLIC_PRODUCTS_LIST_DATA,
       payload: { ...state, publicProducts: products }
     });
-  }, [dispatch, products, state]);
+  }, [ products]);
 
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView, fetchNextPage, hasNextPage]);
+  }, [inView, hasNextPage]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -67,7 +67,7 @@ export function usePublicProductsQuery() {
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [refetch, state.queryPublicProducts]);
+  }, [ state.queryPublicProducts]);
 
   return {
     inViewRef,

@@ -52,7 +52,7 @@ export default function Page() {
         }
       });
     }
-  }, [data, dispatch, state]);
+  }, [data, ]);
 
   const handleChange = (e: InputEvents) =>
     dispatch({

@@ -66,7 +66,7 @@ export function Comments({ contentId }: Props) {
       type: actions.CREATE_COMMENT,
       payload: { ...state, comment: initialState.comment }
     });
-  }, [dispatch, state]);
+  }, []);
 
   const getComments = useCallback(async () => {
     try {
@@ -299,7 +299,7 @@ export function Comments({ contentId }: Props) {
       }
     }, 500);
     return () => clearTimeout(debounceTime);
-  }, [router, contentId, getComments]);
+  }, [contentId, getComments]);
 
   useEffect(() => {
     const desc = setTimeout(() => {

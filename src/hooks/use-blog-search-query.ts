@@ -33,7 +33,7 @@ export function useBlogSearchQuery() {
   const posts = useMemo(
     () =>
       data
-        ? data?.pages
+        ? data.pages
             .map((page) => page.data)
             .reduce((accumulator, currentObj) => [...accumulator, ...currentObj])
         : [],
@@ -52,7 +52,7 @@ export function useBlogSearchQuery() {
         payload: { ...state, blogPostsList: [] }
       });
     };
-  }, [dispatch, posts, state]);
+  }, [posts]);
 
   useEffect(() => {
     const fetchTimer = setTimeout(() => {
@@ -63,13 +63,13 @@ export function useBlogSearchQuery() {
     return () => {
       clearTimeout(fetchTimer);
     };
-  }, [refetch, router.query]);
+  }, [router.query]);
 
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView, fetchNextPage, hasNextPage]);
+  }, [inView, hasNextPage]);
 
   return {
     inViewRef: ref,

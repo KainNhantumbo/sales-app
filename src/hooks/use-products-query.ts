@@ -48,7 +48,7 @@ export function useProductsQuery() {
       type: actions.PRODUCTS_LIST_DATA,
       payload: { ...state, productList: products }
     });
-  }, [dispatch, products, state]);
+  }, [ products]);
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
@@ -61,7 +61,7 @@ export function useProductsQuery() {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView, fetchNextPage, hasNextPage]);
+  }, [inView, hasNextPage]);
 
   return {
     inViewRef: ref,

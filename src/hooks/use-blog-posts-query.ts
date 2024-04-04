@@ -52,11 +52,11 @@ export function useBlogPostsQuery() {
         type: actions.BLOG_POSTS_LIST_QUERY,
         payload: { ...state, blogPostsList: [] }
       });
-  }, [dispatch, posts, state]);
+  }, [posts]);
 
   useEffect(() => {
     if (inView && hasNextPage) fetchNextPage();
-  }, [inView, fetchNextPage, hasNextPage]);
+  }, [inView, hasNextPage]);
 
   return { fetchNextPage, hasNextPage, isError, inViewRef, isLoading };
 }

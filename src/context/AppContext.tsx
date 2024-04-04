@@ -110,7 +110,7 @@ export function AppContext(props: { children: React.ReactNode }) {
     });
   };
 
-  const validateAuth = React.useCallback(async () => {
+  const validateAuth = async () => {
     try {
       const { data } = await fetch<Auth>({
         method: 'get',
@@ -126,7 +126,7 @@ export function AppContext(props: { children: React.ReactNode }) {
       }
       console.error(error);
     }
-  }, [state]);
+  };
 
   async function httpClient<T>(config: AxiosRequestConfig) {
     fetch.interceptors.response.use(undefined, (error: AxiosError): Promise<never> => {
@@ -150,7 +150,7 @@ export function AppContext(props: { children: React.ReactNode }) {
     });
   }
 
-  const authenticateUser = React.useCallback(async () => {
+  const authenticateUser = async () => {
     try {
       const { data } = await fetch<Auth>({
         method: 'get',
@@ -166,16 +166,16 @@ export function AppContext(props: { children: React.ReactNode }) {
       }
       console.error(error);
     }
-  }, [state]);
+  };
 
   React.useEffect(() => {
     authenticateUser();
-  }, [authenticateUser]);
+  }, []);
 
   React.useEffect(() => {
     const timer = setTimeout(() => validateAuth(), 1000 * 60 * 4);
     return () => clearTimeout(timer);
-  }, [state.auth, validateAuth]);
+  }, [state.auth]);
 
   return (
     <ThemeContext>

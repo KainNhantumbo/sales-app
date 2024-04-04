@@ -25,8 +25,7 @@ export default function Page() {
       await fetch({
         method: 'post',
         url: '/api/v1/users/auth/request-new-password',
-        data: email,
-        withCredentials: true
+        data: email
       });
       router.push('/auth/reset-password-confirmation');
     } catch (error) {

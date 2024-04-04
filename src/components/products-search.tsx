@@ -64,7 +64,7 @@ export function ProductsSearch() {
           isPublicProductsFilters: false
         }
       });
-  }, [dispatch, state, windowInnerWidth]);
+  }, [windowInnerWidth]);
 
   const renderClearButton = () => (
     <button

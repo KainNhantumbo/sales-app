@@ -37,7 +37,7 @@ export function Header() {
 
   useEffect(() => {
     changeWidth();
-  }, [changeWidth, windowWidth]);
+  }, [windowWidth]);
 
   return (
     <Container>

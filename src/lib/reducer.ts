@@ -187,7 +187,6 @@ export const initialState: State = {
     content: '',
     cover_image: { id: '', url: '' }
   },
-  ordersQuery: { search: '', sort: '', status: '' },
   publicStories: [],
   publicStoresList: [],
   orders: [],
@@ -399,9 +398,6 @@ export function reducer(state: State, action: Action): State {
 
     case actions.ORDERS:
       return { ...state, orders: action.payload.orders };
-
-    case actions.QUERY_ORDERS:
-      return { ...state, ordersQuery: action.payload.ordersQuery };
 
     case actions.METRICS_DATA:
       return { ...state, metrics: action.payload.metrics };

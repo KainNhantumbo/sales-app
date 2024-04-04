@@ -142,20 +142,20 @@ export function StoriesRenderer(props: Props) {
         payload: { ...state, publicStories: [] }
       });
     };
-  }, [data, dispatch, state]);
+  }, [data]);
 
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView, fetchNextPage, hasNextPage]);
+  }, [inView, hasNextPage]);
 
   useEffect(() => {
     const debounceTime = setTimeout(() => {
       refetch({ queryKey: ['user-stories'] });
     }, 400);
     return () => clearTimeout(debounceTime);
-  }, [refetch, state.searchStories]);
+  }, [state.searchStories]);
 
   return (
     <Container>

@@ -26,7 +26,7 @@ export default function Layout({ children, metadata }: Props) {
       }
     }, 500);
     return () => clearTimeout(debounceTimer);
-  }, [router, state.auth]);
+  }, [state.auth]);
 
   return (
     <>

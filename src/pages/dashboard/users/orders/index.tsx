@@ -10,7 +10,6 @@ import {
 } from '@/data/constants';
 import { useUserOrdersQuery } from '@/hooks/use-orders-query';
 import { formatDate } from '@/lib/utils';
-import { actions } from '@/shared/actions';
 import { _myOrders as Container } from '@/styles/common/my-orders';
 import type { HttpError } from '@/types';
 import { BsBox2, BsBox2Fill } from 'react-icons/bs';
@@ -18,21 +17,28 @@ import * as Io from 'react-icons/io5';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
+const serialiseOrderStatus = (status: string): string => {
+  const option = order_status_labels.find(({ value }) => value === status);
+  return option?.label ?? '';
+};
+
 export default function Page() {
   const theme = useTheme();
-  const { state, dispatch } = useAppContext();
+  const { state } = useAppContext();
 
-  const { isLoading, isError, error, hasNextPage, fetchNextPage, inViewRef, deleteOrder, updateOrder } =
-    useUserOrdersQuery();
-
-  const isAnFilterActive = (): boolean => {
-    return Object.values(state.ordersQuery).some((item) => (item !== '' ? true : false));
-  };
-
-  const serialiseOrderStatus = (status: string): string => {
-    const option = order_status_labels.find(({ value }) => value === status);
-    return option?.label ?? '';
-  };
+  const {
+    isLoading,
+    isError,
+    error,
+    hasNextPage,
+    fetchNextPage,
+    inViewRef,
+    updateOrder,
+    queryString,
+    refetch,
+    setQueryString,
+    isAnyFilterActive
+  } = useUserOrdersQuery();
 
   return (
     <Layout metadata={{ title: `${constants.defaultTitle} | Minhas Encomendas` }}>
@@ -55,15 +61,9 @@ export default function Page() {
                 <input
                   type='search'
                   placeholder='Pesquisar por código...'
-                  value={state.ordersQuery.search}
+                  value={queryString.search}
                   onChange={(e) =>
-                    dispatch({
-                      type: actions.QUERY_ORDERS,
-                      payload: {
-                        ...state,
-                        ordersQuery: { ...state.ordersQuery, search: e.target.value }
-                      }
-                    })
+                    setQueryString((state) => ({ ...state, search: e.target.value }))
                   }
                 />
                 <Io.IoSearch />
@@ -72,14 +72,8 @@ export default function Page() {
                 <SelectContainer
                   placeholder='Ordenar por ...'
                   options={orderSortOptions}
-                  onChange={(option: any) =>
-                    dispatch({
-                      type: actions.QUERY_ORDERS,
-                      payload: {
-                        ...state,
-                        ordersQuery: { ...state.ordersQuery, sort: String(option?.value) }
-                      }
-                    })
+                  onChange={({ value }: any) =>
+                    setQueryString((state) => ({ ...state, sort: String(value || '') }))
                   }
                 />
               </div>
@@ -87,33 +81,16 @@ export default function Page() {
                 <SelectContainer
                   placeholder='Exibir por estado'
                   options={orderStatusOptions}
-                  onChange={(option: any) =>
-                    dispatch({
-                      type: actions.QUERY_ORDERS,
-                      payload: {
-                        ...state,
-                        ordersQuery: {
-                          ...state.ordersQuery,
-                          status: String(option?.value)
-                        }
-                      }
-                    })
+                  onChange={({ value }: any) =>
+                    setQueryString((state) => ({ ...state, status: String(value || '') }))
                   }
                 />
               </div>
 
-              {isAnFilterActive() && (
+              {isAnyFilterActive && (
                 <button
                   className='clear-filters'
-                  onClick={() =>
-                    dispatch({
-                      type: actions.QUERY_ORDERS,
-                      payload: {
-                        ...state,
-                        ordersQuery: { search: '', status: '', sort: '' }
-                      }
-                    })
-                  }>
+                  onClick={() => setQueryString({ sort: '', status: '', search: '' })}>
                   <Io.IoClose />
                   <span>Limpar filtros</span>
                 </button>
@@ -191,9 +168,7 @@ export default function Page() {
                       </div>
                     </section>
                     <section className='base-container'>
-                      <button onClick={() => deleteOrder(order._id)}>
-                        Eliminar encomenda
-                      </button>
+
                     </section>
                   </div>
                 ))}

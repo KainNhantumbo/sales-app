@@ -12,6 +12,7 @@ import { _userProfile as Container } from '@/styles/common/profile-editor';
 import type { HttpError, InputEvents, User } from '@/types';
 import Compressor from 'compressorjs';
 import moment from 'moment';
+import error from 'next/error';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
@@ -19,15 +20,20 @@ import { BiUser, BiUserCheck, BiUserX } from 'react-icons/bi';
 import { FaBlog, FaLinkedinIn } from 'react-icons/fa';
 import * as Io from 'react-icons/io5';
 import { DotLoader, PulseLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 
-type TError = {
-  status: boolean;
-  msg: string;
-  key: 'user-data' | 'user-update';
-};
-
 type TLoading = { status: boolean; key: 'user-data' | 'user-update' };
+
+const initialExperienceState = {
+  id: '',
+  career: '',
+  end_date: '',
+  start_date: '',
+  description: '',
+  portfolio_url: '',
+  company_name: ''
+};
 
 export default function Page() {
   const theme = useTheme();
@@ -45,30 +51,12 @@ export default function Page() {
     key: 'user-data'
   });
 
-  const [error, setError] = useState<TError>({
-    status: false,
-    msg: '',
-    key: 'user-data'
-  });
-
-  const [countryStates, setCountryStates] = useState<string[]>([
-    state.user.location?.state
-  ]);
+  const [countryStates, setCountryStates] = useState<string[]>([state.user.location.state]);
   const [coverImageFile, setCoverImageFile] = useState<FileList | null>(null);
   const [profileImageFile, setProfileImageFile] = useState<FileList | null>(null);
-  const [coverImageData, setCoverImageData] = useState({
-    id: '',
-    data: ''
-  });
-  const [profileImageData, setProfileImageData] = useState({
-    id: '',
-    data: ''
-  });
-
-  const [passwords, setPasswords] = useState({
-    password: '',
-    confirm_password: ''
-  });
+  const [coverImageData, setCoverImageData] = useState({ id: '', data: '' });
+  const [profileImageData, setProfileImageData] = useState({ id: '', data: '' });
+  const [passwords, setPasswords] = useState({ password: '', confirm_password: '' });
 
   const handleChange = (e: InputEvents) => {
     dispatch({
@@ -90,7 +78,7 @@ export default function Page() {
     }));
   };
 
-  const handleCoverImageFile = useCallback(() => {
+  const handleCoverImageFile = () => {
     const imageData: File | null | undefined = coverImageFile?.item(0);
     if (imageData) {
       new Compressor(imageData, {
@@ -111,9 +99,9 @@ export default function Page() {
         }
       });
     }
-  }, [coverImageFile, state.user.cover_image]);
+  };
 
-  const handleProfileImageFile = useCallback(() => {
+  const handleProfileImageFile = () => {
     const imageData = profileImageFile?.item(0);
     if (imageData) {
       new Compressor(imageData, {
@@ -134,7 +122,7 @@ export default function Page() {
         }
       });
     }
-  }, [profileImageFile, state.user.profile_image]);
+  };
 
   const deleteAsset = (assetType: 'cover_image' | 'profile_image') => {
     httpClient({
@@ -149,10 +137,7 @@ export default function Page() {
           type: actions.USER_DATA,
           payload: {
             ...state,
-            user: {
-              ...state.user,
-              [assetType]: { id: '', url: '' }
-            }
+            user: { ...state.user, [assetType]: { id: '', url: '' } }
           }
         });
       })
@@ -179,33 +164,31 @@ export default function Page() {
       .catch((error) => {
         const { message } = errorTransformer(error as HttpError);
         console.error(error);
-        setError({ status: true, msg: message, key: 'user-data' });
+        toast.error(message);
       })
       .finally(() => {
         setLoading({ status: false, key: 'user-data' });
       });
-  }, [dispatch, httpClient, router.query, state]);
+  }, [router.query]);
 
   const handleSubmitUpdate = async () => {
-    if (passwords.confirm_password !== '') {
-      if (passwords.password !== passwords.confirm_password)
-        return setError({
-          status: true,
-          msg: 'A as senhas devem ser iguais e maiores que 8 carácteres.',
-          key: 'user-update'
-        });
+    if (
+      passwords.confirm_password !== '' &&
+      passwords.confirm_password !== passwords.password
+    ) {
+      return toast.error('A as senhas devem ser iguais e maiores que 8 carácteres.');
     }
 
     try {
       setLoading({ status: true, key: 'user-update' });
       const {
-        updatedAt,
         _id,
+        updatedAt,
         createdAt,
         cover_image,
         profile_image,
         social_network,
-        ...user
+        ...rest
       } = state.user;
 
       const serializedObj = Object.entries(social_network ?? {})
@@ -215,12 +198,7 @@ export default function Page() {
       const { data } = await httpClient<User>({
         method: 'patch',
         url: `/api/v1/users/account`,
-        data: {
-          ...user,
-          coverImageData,
-          profileImageData,
-          social_network: serializedObj
-        }
+        data: { ...rest, coverImageData, profileImageData, social_network: serializedObj }
       });
 
       dispatch({
@@ -230,7 +208,7 @@ export default function Page() {
     } catch (error) {
       console.error(error);
       const { message } = errorTransformer(error as HttpError);
-      setError({ status: true, msg: message, key: 'user-update' });
+      toast.error(message);
     } finally {
       setLoading({ status: false, key: 'user-update' });
     }
@@ -242,7 +220,7 @@ export default function Page() {
       setCoverImageData({ id: '', data: '' });
       setCoverImageFile(null);
     };
-  }, [coverImageFile, handleCoverImageFile]);
+  }, [coverImageFile]);
 
   useEffect(() => {
     handleProfileImageFile();
@@ -250,34 +228,18 @@ export default function Page() {
       setProfileImageData({ id: '', data: '' });
       setProfileImageFile(null);
     };
-  }, [handleProfileImageFile, profileImageFile]);
+  }, [profileImageFile]);
 
   useEffect(() => {
     const fetch_data = setTimeout(() => {
       getUserData();
     }, 10);
     return () => clearTimeout(fetch_data);
-  }, [getUserData]);
-
-  useEffect(() => {
-    const debounceTimer = setTimeout(() => {
-      if (error.status && error.key === 'user-update') {
-        setError({ status: false, msg: '', key: 'user-data' });
-      }
-    }, 5000);
-    return () => clearTimeout(debounceTimer);
-  }, [error]);
+  }, []);
 
   // -------working capturer functions--------
-  const [workingExperienceData, setWorkingExperienceData] = useState({
-    id: '',
-    career: '',
-    end_date: '',
-    start_date: '',
-    description: '',
-    portfolio_url: '',
-    company_name: ''
-  });
+  const [workingExperienceData, setWorkingExperienceData] =
+    useState(initialExperienceState);
 
   const createWorkingData = () => {
     const generatedId = crypto.randomUUID();
@@ -294,15 +256,7 @@ export default function Page() {
         }
       }
     });
-    setWorkingExperienceData({
-      id: '',
-      career: '',
-      end_date: '',
-      start_date: '',
-      description: '',
-      portfolio_url: '',
-      company_name: ''
-    });
+    setWorkingExperienceData(initialExperienceState);
     userWorkingDataController();
   };
 
@@ -320,15 +274,7 @@ export default function Page() {
       }
     });
     userWorkingDataController();
-    setWorkingExperienceData({
-      id: '',
-      career: '',
-      end_date: '',
-      start_date: '',
-      description: '',
-      portfolio_url: '',
-      company_name: ''
-    });
+    setWorkingExperienceData(initialExperienceState);
   };
 
   const editWorkingData = (id: string) => {
@@ -373,27 +319,6 @@ export default function Page() {
             <span>Carregando...</span>
           </section>
         )}
-
-        {!loading.status &&
-          loading.key === 'user-data' &&
-          error.status &&
-          error.key === 'user-data' && (
-            <section className='fetching-state'>
-              <section className='wrapper'>
-                <h3>{error.msg}</h3>
-                <div>
-                  <button onClick={() => router.reload()}>
-                    <Io.IoReload />
-                    <span>Recarregar a página</span>
-                  </button>
-                  <button onClick={() => router.back()}>
-                    <Io.IoChevronBack />
-                    <span>Voltar a página anterior</span>
-                  </button>
-                </div>
-              </section>
-            </section>
-          )}
 
         <WorkDataPrompt
           setStateFn={setWorkingExperienceData}
@@ -1282,7 +1207,7 @@ export default function Page() {
                 <p>Salve as alterações feitas.</p>
               </div>
               <div>
-                {!loading.status && !error.status && (
+                {!loading.status && (
                   <>
                     <h3>
                       Confirme se as informações introduzidas estão corretas antes de salvar
@@ -1298,11 +1223,7 @@ export default function Page() {
                   </>
                 )}
 
-                {error.status && error.key === 'user-update' && !loading.status && (
-                  <h3 className='error-message'>{error.msg}</h3>
-                )}
-
-                {loading.status && loading.key === 'user-update' && !error.status && (
+                {loading.status && loading.key === 'user-update' && (
                   <div className='loading'>
                     <PulseLoader
                       color={`rgb(${theme.primary})`}
@@ -1317,7 +1238,7 @@ export default function Page() {
               </div>
 
               <div className='btns-container'>
-                {!loading.status && !error.status && (
+                {!loading.status && (
                   <>
                     <button className='back' onClick={(e) => router.back()}>
                       <Io.IoArrowUndoOutline />

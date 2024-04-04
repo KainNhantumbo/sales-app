@@ -10,17 +10,15 @@ import { Metrics as MetricsType } from '../types';
 export function Metrics() {
   const { state, dispatch, httpClient } = useAppContext();
 
-  const geMetrics = async (): Promise<MetricsType> => {
-    const { data } = await httpClient<MetricsType>({
-      method: 'get',
-      url: `/api/v1/metrics/public`
-    });
-    return data;
-  };
-
   const { isLoading, isError, data, refetch } = useQuery({
     queryKey: ['metrics'],
-    queryFn: geMetrics
+    queryFn: async (): Promise<MetricsType> => {
+      const { data } = await httpClient<MetricsType>({
+        method: 'get',
+        url: `/api/v1/metrics/public`
+      });
+      return data;
+    }
   });
 
   useEffect(() => {
@@ -30,11 +28,11 @@ export function Metrics() {
         payload: { ...state, metrics: data }
       });
     }
-  }, [data, dispatch, state]);
+  }, [data]);
 
   useEffect(() => {
     refetch({ queryKey: ['metrics'] });
-  }, [state.auth, state.store, state.productList, refetch]);
+  }, [state.auth, state.store, state.productList]);
 
   return (
     <Container id='metrics'>

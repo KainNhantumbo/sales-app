@@ -24,40 +24,6 @@ export const _userProfile = styled.div`
     }
   }
 
-  .fetching-state {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 12000;
-    background: rgba(${({ theme }) => theme.foreground}, 0.8);
-    backdrop-filter: blur(20px);
-    width: 100%;
-    height: 100%;
-    .wrapper {
-      position: relative;
-      top: 300px;
-    }
-
-    div {
-      padding-top: 20px;
-      width: 100%;
-      display: flex;
-      flex-flow: row-reverse wrap;
-      gap: 12px;
-      justify-content: center;
-    }
-    p,
-    h3 {
-      font-size: 1.4rem;
-      line-height: 2rem;
-      font-weight: 500;
-      text-align: center;
-    }
-    button {
-      ${BaseButtonOutline}
-    }
-  }
-
   .description {
     h2 {
       display: flex;
@@ -460,14 +426,6 @@ export const _userProfile = styled.div`
         gap: 20px;
         border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
         line-height: 1.4rem;
-
-        .error-message {
-          color: rgb(${({ theme }) => theme.error});
-          font-weight: 500;
-          font-size: 1.1rem;
-          line-height: 1.4rem;
-          align-self: flex-end;
-        }
 
         p {
           margin-top: 10px;

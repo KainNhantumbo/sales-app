@@ -15,10 +15,7 @@ export default function Page() {
   const theme = useTheme();
 
   return (
-    <Layout
-      metadata={{
-        title: `${constants.defaultTitle} | Descubra-nos`
-      }}>
+    <Layout metadata={{ title: `${constants.defaultTitle} | Descubra-nos` }}>
       <Container>
         <article>
           <section className='introduction'>

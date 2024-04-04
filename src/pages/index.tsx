@@ -43,7 +43,7 @@ export default function Page({ ads_data }: Props) {
         payload: { ...state, banner_ads: [...ads_data] }
       });
     }
-  }, [ads_data, dispatch, state]);
+  }, [ads_data]);
 
   return (
     <Layout metadata={{ title: `${constants.defaultTitle} | Produtos e Serviços` }}>

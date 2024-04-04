@@ -56,7 +56,7 @@ export default function Page() {
         payload: { ...state, denounce: initialState.denounce }
       });
     };
-  }, [dispatch, state]);
+  }, []);
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {

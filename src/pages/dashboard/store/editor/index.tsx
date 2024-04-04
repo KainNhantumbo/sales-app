@@ -11,7 +11,7 @@ import type { HttpError, InputEvents, Store } from '@/types';
 import Compressor from 'compressorjs';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as Io from 'react-icons/io5';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
@@ -50,7 +50,7 @@ export default function Page() {
     });
   };
 
-  const handleCoverImageFile = useCallback(() => {
+  const handleCoverImageFile = () => {
     const imageData = coverImageFile?.item(0);
     if (!imageData) return toast.error('Falha ao processar imagem');
     new Compressor(imageData, {
@@ -70,7 +70,7 @@ export default function Page() {
         };
       }
     });
-  }, [coverImageFile, state.user.cover_image]);
+  };
 
   const deleteCoverImage = () => {
     httpClient({
@@ -95,7 +95,7 @@ export default function Page() {
       });
   };
 
-  const getStoreData = useCallback(async () => {
+  const getStoreData = async () => {
     try {
       setLoading({ status: true, key: 'store-data' });
       const { data } = await httpClient<Store>({
@@ -113,7 +113,7 @@ export default function Page() {
     } finally {
       setLoading({ status: false, key: 'store-data' });
     }
-  }, [dispatch, httpClient, state]);
+  }
 
   const handleSubmitUpdate = async () => {
     try {
@@ -138,14 +138,14 @@ export default function Page() {
       setCoverImageData({ id: '', data: '' });
       setCoverImageFile(null);
     };
-  }, [coverImageFile, handleCoverImageFile]);
+  }, [coverImageFile]);
 
   useEffect(() => {
     const fetch_data = setTimeout(() => {
       if (state.auth.storeId) getStoreData();
     }, 100);
     return () => clearTimeout(fetch_data);
-  }, [getStoreData, state.auth.storeId]);
+  }, [state.auth]);
 
   return (
     <Layout
