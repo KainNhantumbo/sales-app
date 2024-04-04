@@ -167,9 +167,7 @@ export default function Page() {
                         </div>
                       </div>
                     </section>
-                    <section className='base-container'>
-
-                    </section>
+                    <section className='base-container'></section>
                   </div>
                 ))}
               </section>

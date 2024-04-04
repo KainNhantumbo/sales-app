@@ -71,7 +71,7 @@ export function useUserOrdersQuery() {
   React.useEffect(() => {
     dispatch({ type: actions.ORDERS, payload: { ...state, orders } });
     return () => dispatch({ type: actions.ORDERS, payload: { ...state, orders: [] } });
-  }, [ orders]);
+  }, [orders]);
 
   React.useEffect(() => {
     if (inView && hasNextPage) fetchNextPage();

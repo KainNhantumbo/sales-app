@@ -73,14 +73,6 @@ export const _resetPassword = styled.div`
           ${StyledInputs}
         }
 
-        .error-message {
-          color: rgb(${({ theme }) => theme.error});
-          font-weight: 500;
-          font-size: 0.96rem;
-          max-width: 320px;
-          line-height: 1.4rem;
-        }
-
         button {
           ${BaseButton}
           width: 100%;

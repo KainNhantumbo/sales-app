@@ -48,7 +48,7 @@ export function useProductsQuery() {
       type: actions.PRODUCTS_LIST_DATA,
       payload: { ...state, productList: products }
     });
-  }, [ products]);
+  }, [products]);
 
   useEffect(() => {
     const debounceTimer = setTimeout(() => {

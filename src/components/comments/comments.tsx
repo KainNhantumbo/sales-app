@@ -1,4 +1,5 @@
 import { useAppContext } from '@/context/AppContext';
+import { errorTransformer } from '@/lib/error-transformer';
 import { initialState } from '@/lib/reducer';
 import { actions } from '@/shared/actions';
 import { _comments as Container } from '@/styles/modules/comments';
@@ -14,6 +15,7 @@ import { Comment } from './comment';
 import { CommentForm } from './comment-form';
 import { ReplyComment } from './reply-comment';
 import { ReplyCommentForm } from './reply-comment-form';
+import { toast } from 'react-toastify';
 
 type Props = { contentId: string };
 
@@ -142,17 +144,9 @@ export function Comments({ contentId }: Props) {
       });
       clearCommentData();
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-      setError({
-        status: true,
-        key: 'create-comment',
-        msg:
-          (error as HttpError).response?.data?.message ||
-          (error as HttpError).message ||
-          'Erro: por favor, tente novamente.'
-      });
+      const { message } = errorTransformer(error as HttpError);
+      setError({ status: true, key: 'create-comment', msg: message });
+      console.error(error);
     } finally {
       setLoading({ status: false, key: 'create-comment' });
     }
@@ -161,16 +155,13 @@ export function Comments({ contentId }: Props) {
   const handleDeleteComment = async (id: string) => {
     clearCommentData();
     try {
-      await httpClient({
-        method: 'delete',
-        url: `/api/v1/users/comments/${id}`
-      });
+      await httpClient({ method: 'delete', url: `/api/v1/users/comments/${id}` });
       deleteCommentPromptController(false, '');
       getComments();
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
+      const { message } = errorTransformer(error as HttpError);
+      console.error(error);
+      toast.error(message);
     }
   };
 
@@ -181,11 +172,7 @@ export function Comments({ contentId }: Props) {
       type: actions.CREATE_COMMENT,
       payload: {
         ...state,
-        comment: {
-          ...state.comment,
-          _id: data._id,
-          parent_id: data._id
-        }
+        comment: { ...state.comment, _id: data._id, parent_id: data._id }
       }
     });
   };
@@ -197,10 +184,7 @@ export function Comments({ contentId }: Props) {
       type: actions.CREATE_COMMENT,
       payload: {
         ...state,
-        comment: {
-          ...state.comment,
-          ...data
-        }
+        comment: { ...state.comment, ...data }
       }
     });
   };
@@ -215,17 +199,15 @@ export function Comments({ contentId }: Props) {
         type: actions.UPDATE_COMMENTS_LIST,
         payload: {
           ...state,
-          commentsList: [
-            ...state.commentsList.map((comment) =>
-              comment._id === id ? { ...comment, favorites: data } : comment
-            )
-          ]
+          commentsList: state.commentsList.map((comment) =>
+            comment._id === id ? { ...comment, favorites: data } : comment
+          )
         }
       });
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
+      console.error(error);
     }
   };
 
@@ -239,17 +221,15 @@ export function Comments({ contentId }: Props) {
         type: actions.UPDATE_COMMENTS_LIST,
         payload: {
           ...state,
-          commentsList: [
-            ...state.commentsList.map((comment) =>
-              comment._id === id ? { ...comment, favorites: data } : comment
-            )
-          ]
+          commentsList: state.commentsList.map((comment) =>
+            comment._id === id ? { ...comment, favorites: data } : comment
+          )
         }
       });
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
+      console.error(error);
     }
   };
 
@@ -268,17 +248,9 @@ export function Comments({ contentId }: Props) {
       clearCommentData();
       getComments();
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-      setError({
-        status: true,
-        key: 'create-comment',
-        msg:
-          (error as HttpError).response?.data?.message ||
-          (error as HttpError).message ||
-          'Erro: por favor, tente novamente.'
-      });
+      const { message } = errorTransformer(error as HttpError);
+      setError({ status: true, key: 'create-comment', msg: message });
+      console.error(error);
     } finally {
       setLoading({ status: false, key: 'create-comment' });
     }
@@ -381,36 +353,22 @@ export function Comments({ contentId }: Props) {
 
                     {/* ------replies comments-----*/}
                     {getCommentReplies(comment._id) !== null &&
-                      getCommentReplies(comment._id)?.length > 0 &&
-                      getCommentReplies(comment._id)
-                        .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
-                        .map((comment) => (
-                          <div
-                            id={comment._id}
-                            key={comment._id}
-                            className='comment reply-comment'>
-                            <ReplyComment
-                              comment={comment}
-                              clearCommentData={clearCommentData}
-                              handleEditComment={handleEditComment}
-                              handleFavoriteComment={handleFavoriteComment}
-                              handleUnFavoriteComment={handleUnFavoriteComment}
-                              handleReplyComment={handleReplyComment}
-                              updateComment={handleUpdateComment}
-                              status={{
-                                reply: activeModes.reply,
-                                edit: activeModes.edit,
-                                error,
-                                loading
-                              }}
-                            />
-
-                            {comment._id === state.comment._id && (
-                              <ReplyCommentForm
-                                createComment={handleCreateComment}
+                    getCommentReplies(comment._id).length > 0
+                      ? getCommentReplies(comment._id)
+                          .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
+                          .map((comment) => (
+                            <div
+                              id={comment._id}
+                              key={comment._id}
+                              className='comment reply-comment'>
+                              <ReplyComment
+                                comment={comment}
+                                clearCommentData={clearCommentData}
+                                handleEditComment={handleEditComment}
+                                handleFavoriteComment={handleFavoriteComment}
+                                handleUnFavoriteComment={handleUnFavoriteComment}
+                                handleReplyComment={handleReplyComment}
                                 updateComment={handleUpdateComment}
-                                replyComment={handleSendReplyComment}
-                                currentCommentId={comment._id}
                                 status={{
                                   reply: activeModes.reply,
                                   edit: activeModes.edit,
@@ -418,9 +376,24 @@ export function Comments({ contentId }: Props) {
                                   loading
                                 }}
                               />
-                            )}
-                          </div>
-                        ))}
+
+                              {comment._id === state.comment._id ? (
+                                <ReplyCommentForm
+                                  createComment={handleCreateComment}
+                                  updateComment={handleUpdateComment}
+                                  replyComment={handleSendReplyComment}
+                                  currentCommentId={comment._id}
+                                  status={{
+                                    reply: activeModes.reply,
+                                    edit: activeModes.edit,
+                                    error,
+                                    loading
+                                  }}
+                                />
+                              ) : null}
+                            </div>
+                          ))
+                      : null}
                   </div>
                 ))}
           </section>

@@ -12,7 +12,6 @@ import { _userProfile as Container } from '@/styles/common/profile-editor';
 import type { HttpError, InputEvents, User } from '@/types';
 import Compressor from 'compressorjs';
 import moment from 'moment';
-import error from 'next/error';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';

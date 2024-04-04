@@ -72,7 +72,7 @@ export default function Page() {
         payload: { ...state, publicStoresList: [] }
       });
     };
-  }, [data, ]);
+  }, [data]);
 
   useEffect(() => {
     if (inView && hasNextPage) {

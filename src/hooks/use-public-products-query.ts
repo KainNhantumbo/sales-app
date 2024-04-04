@@ -53,7 +53,7 @@ export function usePublicProductsQuery() {
       type: actions.PUBLIC_PRODUCTS_LIST_DATA,
       payload: { ...state, publicProducts: products }
     });
-  }, [ products]);
+  }, [products]);
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -67,7 +67,7 @@ export function usePublicProductsQuery() {
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [ state.queryPublicProducts]);
+  }, [state.queryPublicProducts]);
 
   return {
     inViewRef,

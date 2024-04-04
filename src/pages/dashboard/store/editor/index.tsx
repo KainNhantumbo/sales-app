@@ -113,7 +113,7 @@ export default function Page() {
     } finally {
       setLoading({ status: false, key: 'store-data' });
     }
-  }
+  };
 
   const handleSubmitUpdate = async () => {
     try {

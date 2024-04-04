@@ -1,4 +1,4 @@
-import backgroundImage from '@/../public/assets/africa-unveiled.png';
+import coverImage from '@/../public/assets/africa-unveiled.png';
 import Layout from '@/components/layout';
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
@@ -37,14 +37,14 @@ export default function Page() {
     if (state.signupData.password !== state.signupData.confirm_password)
       return toast.error('As senhas devem ser iguais.');
     if (state.signupData.password.length < 8)
-      return toast.error('As senhas devem ter pelo menos 8 carácteres.');
+      return toast.error('A senha deve conter pelo menos 8 caracteres.');
 
     try {
       setLoading(true);
       await fetch({
         method: 'post',
         url: '/api/v1/users/account',
-        data: { ...state.signupData, user_type: 'user' }
+        data: { ...state.signupData, role: 'user' }
       });
       router.push('/auth/sign-up-confirm');
     } catch (error) {
@@ -65,7 +65,7 @@ export default function Page() {
       }}>
       <Container>
         <Image
-          src={backgroundImage}
+          src={coverImage}
           width={1368}
           height={769}
           alt='background image'

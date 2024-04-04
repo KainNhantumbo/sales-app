@@ -5,15 +5,15 @@ import { errorTransformer } from '@/lib/error-transformer';
 import { _resetPassword as Container } from '@/styles/common/password-reset';
 import { HttpError, InputEvents, SubmitEvent } from '@/types';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IoLockClosedOutline, IoLockOpenOutline } from 'react-icons/io5';
 import { PulseLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 
 export default function Page() {
   const theme = useTheme();
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState({ status: false, message: '' });
   const [passwords, setPasswords] = useState({ password: '', confirm_password: '' });
 
   const onChange = (e: InputEvents) => {
@@ -26,10 +26,7 @@ export default function Page() {
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
     if (passwords.password !== passwords.confirm_password)
-      return setError({
-        status: true,
-        message: 'A as senhas devem ser iguais e maiores que 8 carácteres.'
-      });
+      return toast.error('A as senhas devem ser iguais e maiores que 8 carácteres.');
 
     try {
       setLoading(true);
@@ -41,19 +38,12 @@ export default function Page() {
       });
     } catch (error) {
       const { message } = errorTransformer(error as HttpError);
-      setError({ status: true, message });
+      toast.error(message);
       console.error(error);
     } finally {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    const debounceTimer = setTimeout(() => {
-      setError({ status: false, message: '' });
-    }, 5000);
-    return () => clearTimeout(debounceTimer);
-  }, [error.status]);
 
   return (
     <Layout
@@ -104,10 +94,7 @@ export default function Page() {
                   />
                 </section>
 
-                {error.status && !loading && (
-                  <span className='error-message'>{error.message}</span>
-                )}
-                {loading && !error.status && (
+                {loading && (
                   <>
                     <PulseLoader
                       color={`rgb(${theme.primary})`}
@@ -121,10 +108,7 @@ export default function Page() {
                   </>
                 )}
 
-                <button
-                  className='login'
-                  type='submit'
-                  disabled={loading || error.status ? true : false}>
+                <button type='submit' disabled={loading}>
                   <span>Recuperar conta</span>
                 </button>
               </form>

@@ -1,11 +1,13 @@
 import { useAppContext } from '@/context/AppContext';
 import { blurDataUrlImage } from '@/data/constants';
+import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
 import { HttpError } from '@/types';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BsMailbox2 } from 'react-icons/bs';
 import { PulseLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 import newsletter_image from '../../public/assets/newsletter.png';
 import fetch from '../config/client';
@@ -15,10 +17,6 @@ export function NewsLetter() {
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<{ status: boolean; message: string }>({
-    status: false,
-    message: ''
-  });
 
   const handleEmailSubmission = async () => {
     try {
@@ -35,30 +33,15 @@ export function NewsLetter() {
           newSubscriptionValue: { subscription: '' }
         }
       });
-      setError({
-        status: true,
-        message: 'Inscreveu-se a newsletter com sucesso.'
-      });
+      toast.success('Inscreveu-se a newsletter com sucesso.');
     } catch (error) {
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
       console.error(error);
-      setError({
-        status: true,
-        message:
-          (error as HttpError).response?.data?.message || (error as HttpError).message
-      });
     } finally {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    const debounceTime = setTimeout(() => {
-      setError({ status: false, message: '' });
-    }, 5000);
-    return () => {
-      clearTimeout(debounceTime);
-    };
-  }, [error.status]);
 
   return (
     <Container>
@@ -83,7 +66,7 @@ export function NewsLetter() {
           </p>
 
           <form onSubmit={(e) => e.preventDefault()}>
-            {!loading && !error.status && (
+            {!loading && (
               <>
                 <input
                   type='email'
@@ -107,8 +90,7 @@ export function NewsLetter() {
               </>
             )}
 
-            {error.status && <span className='error-message'>{error.message}</span>}
-            {loading && !error.status && (
+            {loading && (
               <>
                 <PulseLoader
                   color={`rgb(${theme.primary})`}

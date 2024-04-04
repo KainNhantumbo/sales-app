@@ -20,14 +20,6 @@ export const _newsletter = styled.section`
     max-width: 95%;
   }
 
-  .error-message {
-    color: rgb(${({ theme }) => theme.error});
-    font-weight: 500;
-    font-size: 0.96rem;
-    max-width: 320px;
-    line-height: 1.4rem;
-  }
-
   h3 {
     text-align: center;
     margin-top: 30px;

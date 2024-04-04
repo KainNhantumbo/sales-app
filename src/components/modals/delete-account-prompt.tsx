@@ -1,5 +1,7 @@
 import fetch from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
+import { errorTransformer } from '@/lib/error-transformer';
+import { initialState } from '@/lib/reducer';
 import { actions } from '@/shared/actions';
 import { _deleteAccount as Container } from '@/styles/modules/delete-account-prompt';
 import { HttpError, InputEvents } from '@/types';
@@ -15,62 +17,41 @@ export function DeleteAccountPrompt() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ status: false, message: '' });
 
-  const handleChange = ({ e }: { e: InputEvents }) => {
+  const onChange = (e: InputEvents) => {
     dispatch({
       type: actions.SIGNIN_DATA,
       payload: {
         ...state,
-        signInData: {
-          ...state.signInData,
-          [e.target.name]: e.target.value
-        }
+        signInData: { ...state.signInData, [e.target.name]: e.target.value }
       }
     });
   };
 
   const deleteUserAccount = async () => {
     try {
-      await httpClient({
-        method: 'delete',
-        url: '/api/v1/users/account'
-      });
+      await httpClient({ method: 'delete', url: '/api/v1/users/account' });
       dispatch({
         type: actions.USER_AUTH,
-        payload: {
-          ...state,
-          auth: {
-            id: '',
-            name: '',
-            token: '',
-            email: '',
-            profile_image: '',
-            storeId: ''
-          }
-        }
+        payload: { ...state, auth: initialState.auth }
       });
       deleteAccountPromptController();
       router.push('/');
     } catch (error) {
       console.error(error);
-      setError({
-        status: true,
-        message:
-          (error as HttpError).response?.data?.message ||
-          'Erro ao eliminar os dados da conta.'
-      });
+      const { message } = errorTransformer(error as HttpError);
+      setError({ status: true, message });
     }
   };
 
   const handleSubmit = async () => {
-    if (state.signInData.password.length < 8) {
-      setError({
+    if (state.signInData.password.length < 8)
+      return setError({
         status: true,
         message: 'A senha deve conter pelo menos 8 caracteres'
       });
-      return;
-    }
+
+    setLoading(true);
     try {
-      setLoading(true);
       // user login
       await fetch({
         method: 'post',
@@ -79,7 +60,7 @@ export function DeleteAccountPrompt() {
         withCredentials: true
       });
 
-      // logs the user out
+      //then logout the current user
       await httpClient({
         method: 'post',
         url: '/api/v1/auth/default/logout',
@@ -88,24 +69,18 @@ export function DeleteAccountPrompt() {
       deleteUserAccount();
     } catch (error) {
       console.error(error);
-      setError({
-        status: true,
-        message:
-          (error as HttpError).response?.data?.message ||
-          'Erro ao eliminar os dados da conta.'
-      });
+      const { message } = errorTransformer(error as HttpError);
+      setError({ status: true, message });
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    const desc = setTimeout(() => {
+    const instance = setTimeout(() => {
       setError({ status: false, message: '' });
     }, 5000);
-    return () => {
-      clearTimeout(desc);
-    };
+    return () => clearTimeout(instance);
   }, [error.status]);
 
   return (
@@ -114,10 +89,8 @@ export function DeleteAccountPrompt() {
         <Container
           className='main'
           onClick={(e: any) => {
-            const target = (e as any).target.classList;
-            if (target.contains('main')) {
-              deleteAccountPromptController();
-            }
+            const isTarget = e.target.classList.contains('main');
+            if (isTarget) deleteAccountPromptController();
           }}>
           <motion.section
             className='dialog-modal'
@@ -125,9 +98,7 @@ export function DeleteAccountPrompt() {
             animate={{
               opacity: 1,
               scale: 1,
-              transition: {
-                duration: 0.3
-              }
+              transition: { duration: 0.3 }
             }}
             exit={{ opacity: 0, scale: 0 }}>
             <div className='dialog-prompt'>
@@ -155,7 +126,7 @@ export function DeleteAccountPrompt() {
                       placeholder='Escreva o seu e-mail'
                       aria-label='Escreva o seu e-mail'
                       required
-                      onChange={(e) => handleChange({ e })}
+                      onChange={onChange}
                     />
                   </section>
 
@@ -171,7 +142,7 @@ export function DeleteAccountPrompt() {
                       aria-hidden='true'
                       placeholder='Escreva a sua senha'
                       aria-label='Escreva a sua senha'
-                      onChange={(e) => handleChange({ e })}
+                      onChange={onChange}
                     />
                   </section>
 
@@ -187,7 +158,7 @@ export function DeleteAccountPrompt() {
                 </button>
                 <button
                   className='prompt-accept'
-                  disabled={loading || error.status ? true : false}
+                  disabled={loading || error.status}
                   onClick={() => handleSubmit()}>
                   <BsTrash />
                   <span>Sim, eliminar conta.</span>
