@@ -17,10 +17,7 @@ export default function Page() {
   const [passwords, setPasswords] = useState({ password: '', confirm_password: '' });
 
   const onChange = (e: InputEvents) => {
-    setPasswords((state) => ({
-      ...state,
-      [e.target.name]: e.target.value
-    }));
+    setPasswords((state) => ({ ...state, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e: SubmitEvent) => {

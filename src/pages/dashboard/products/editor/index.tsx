@@ -494,10 +494,11 @@ export default function Page() {
                 <p>Salve as alterações feitas.</p>
               </div>
               <div>
-                {!updateMutationProps.isLoading ||
-                  (!createMutationProps.isLoading && !updateMutationProps.isError) ||
-                  (!createMutationProps.isError && (
-                    <>
+                {!updateMutationProps.isLoading &&
+                  !createMutationProps.isLoading &&
+                  !updateMutationProps.isError &&
+                  !createMutationProps.isError && (
+                    <div className='caution-message'>
                       <h3>
                         Confirme se as informações introduzidas estão corretas antes de
                         salvar alterações. Caso não tenha alterado nada, não será
@@ -507,8 +508,8 @@ export default function Page() {
                         Todas as informações que introduzir nesta página são, por padrão,
                         públicas.
                       </p>
-                    </>
-                  ))}
+                    </div>
+                  )}
 
                 {createMutationProps.isError && (
                   <div className='error-message'>

@@ -103,119 +103,120 @@ export default function Page() {
     <Layout metadata={{ title: `${constants.defaultTitle} | Editor de  Anúncios` }}>
       <Container>
         <article>
+          <div className='title-bar-container'>
+            <h1>{adId ? 'Editar Anúncio' : 'Criar Novo Anúncio'}</h1>
+          </div>
+
           <section className='data-container'>
-            <section className='wrapper'>
-              <section className='form-section'>
-                <div className='images-container'>
-                  <div className='images-container_header'>
-                    <h2>
-                      <span>Carregue a imagen do anúncio</span>
-                    </h2>
+            <section className='form-section'>
+              <div className='image-container'>
+                <div className='image'>
+                  {adData.image.url && !coverImage ? (
+                    <Image
+                      width={500}
+                      height={500}
+                      src={adData.image.url}
+                      alt={adData.name}
+                      title={`Imagem do Anúncio de ${adData.name}`}
+                    />
+                  ) : null}
+                  {coverImage ? (
+                    <Image
+                      width={500}
+                      height={500}
+                      src={coverImage}
+                      alt={adData.name}
+                      title={`Imagem do Anúncio de ${adData.name}`}
+                    />
+                  ) : null}
+                  {coverImage || adData.image.url ? (
+                    <button
+                      title='Remover imagem'
+                      className='image-remover-button'
+                      onClick={() => {
+                        setCoverImage('');
+                        setAdData((state) => ({
+                          ...state,
+                          image: { ...state.image, url: '' }
+                        }));
+                      }}>
+                      <Io.IoTrashOutline />
+                    </button>
+                  ) : null}
+                </div>
+                {!coverImage && !adData.image.url ? (
+                  <div className='image-dropzone'>
+                    <DropzoneArea
+                      width={320}
+                      height={320}
+                      handler={(encodedImage) => {
+                        setCoverImage(encodedImage);
+                      }}
+                    />
                   </div>
+                ) : null}
+              </div>
+            </section>
 
-                  <div className='image-container'>
-                    {adData.image.url && !coverImage ? (
-                      <Image
-                        width={500}
-                        height={500}
-                        src={adData.image.url}
-                        alt={adData.name}
-                        title={`Imagem do Anúncio de ${adData.name}`}
-                      />
-                    ) : null}
+            <section className='form-section'>
+              <div className='form-element'>
+                <label htmlFor='name'>
+                  <Io.IoEllipsisHorizontal />
+                  <span>Nome do Anúncio *</span>
+                </label>
+                <input
+                  type='text'
+                  id='name'
+                  name='name'
+                  autoComplete='off'
+                  maxLength={128}
+                  placeholder='Escreva o nome do anúncio'
+                  aria-label='Escreva o nome do anúncio'
+                  onChange={onChange}
+                  value={adData.name}
+                />
+                <span className='counter'>{`${adData.name.length} / 128`}</span>
+              </div>
+              <div className='form-element'>
+                <label htmlFor='owner'>
+                  <Io.IoEllipsisHorizontal />
+                  <span>Proprietário do Anúncio *</span>
+                </label>
+                <input
+                  type='text'
+                  id='owner'
+                  name='owner'
+                  autoComplete='off'
+                  maxLength={128}
+                  placeholder='Escreva o proprietário do anúncio'
+                  aria-label='Escreva o proprietário do anúncio'
+                  onChange={onChange}
+                  value={adData.owner}
+                />
+                <span className='counter'>{`${adData.owner.length} / 128`}</span>
+              </div>
+            </section>
 
-                    {coverImage ? (
-                      <Image
-                        width={500}
-                        height={500}
-                        src={adData.image.url}
-                        alt={adData.name}
-                        title={`Imagem do Anúncio de ${adData.name}`}
-                      />
-                    ) : null}
+            <section className='form-section'>
+              <div className='form-element'>
+                <label htmlFor='notes'>
+                  <Io.IoEllipsisHorizontal />
+                  <span>Notas Adicionais</span>
+                </label>
 
-                    {!coverImage && !adData.image.url ? (
-                      <div className='image-dropzone'>
-                        <DropzoneArea
-                          width={320}
-                          height={320}
-                          handler={(encodedImage) => {
-                            setCoverImage(encodedImage);
-                          }}
-                        />
-
-                        <button
-                          title='Remover imagem'
-                          className='image-remover-button'
-                          onClick={() => setCoverImage('')}>
-                          <Io.IoTrashOutline />
-                        </button>
-                      </div>
-                    ) : null}
-                  </div>
-                </div>
-              </section>
-
-              <section className='form-section'>
-                <div className='form-element'>
-                  <label htmlFor='name'>
-                    <Io.IoEllipsisHorizontal />
-                    <span>Nome do Anúncio *</span>
-                  </label>
-                  <input
-                    type='text'
-                    id='name'
-                    name='name'
-                    autoComplete='off'
-                    maxLength={128}
-                    placeholder='Escreva o nome do anúncio'
-                    aria-label='Escreva o nome do anúncio'
-                    onChange={onChange}
-                    value={adData.name}
-                  />
-                  <span className='counter'>{`${adData.name.length} / 128`}</span>
-                </div>
-                <div className='form-element'>
-                  <label htmlFor='owner'>
-                    <Io.IoEllipsisHorizontal />
-                    <span>Proprietário do Anúncio *</span>
-                  </label>
-                  <input
-                    type='text'
-                    id='owner'
-                    name='owner'
-                    autoComplete='off'
-                    maxLength={128}
-                    placeholder='Escreva o proprietário do anúncio'
-                    aria-label='Escreva o proprietário do anúncio'
-                    onChange={onChange}
-                    value={adData.owner}
-                  />
-                  <span className='counter'>{`${adData.owner.length} / 128`}</span>
-                </div>
-              </section>
-
-              <section className='form-section'>
-                <div className='form-element'>
-                  <label htmlFor='notes'>
-                    <Io.IoEllipsisHorizontal />
-                    <span>Notas Adicionais</span>
-                  </label>
-
-                  <textarea
-                    id='notes'
-                    name='notes'
-                    autoComplete='off'
-                    placeholder='Notas adicionais'
-                    aria-label='Notas adicionais'
-                    onChange={onChange}
-                    value={adData.notes}
-                    maxLength={512}
-                    rows={8}
-                  />
-                  <span className='counter'>{`${adData.notes.length} / 512`}</span>
-                </div>
-              </section>
+                <textarea
+                  id='notes'
+                  name='notes'
+                  autoComplete='off'
+                  placeholder='Notas adicionais'
+                  aria-label='Notas adicionais'
+                  onChange={onChange}
+                  value={adData.notes}
+                  maxLength={512}
+                  rows={8}
+                />
+                <span className='counter'>{`${adData.notes.length} / 512`}</span>
+              </div>
             </section>
           </section>
 
@@ -228,26 +229,26 @@ export default function Page() {
               <p>Salve as alterações feitas.</p>
             </div>
             <div>
-              {!updateMutationProps.isLoading ||
-                (!createMutationProps.isLoading && !updateMutationProps.isError) ||
-                (!createMutationProps.isError && (
-                  <>
+              {!updateMutationProps.isLoading &&
+                !createMutationProps.isLoading &&
+                !updateMutationProps.isError &&
+                !createMutationProps.isError && (
+                  <div className='caution-message'>
                     <h3>
                       Confirme se as informações introduzidas estão corretas antes de salvar
                       alterações. Caso não tenha alterado nada, não será atualizado, clique
-                      em "Descartar e voltar".
+                      em "Voltar".
                     </h3>
                     <p>
                       Todas as informações que introduzir nesta página são, por padrão,
                       públicas.
                     </p>
-                  </>
-                ))}
+                  </div>
+                )}
 
               {createMutationProps.isError && (
                 <div className='error-message'>
-                  {(createMutationProps.error as HttpError)?.response?.data?.message ||
-                    DEFAULT_ERROR_MESSAGE}
+                  {errorTransformer(createMutationProps.error as HttpError).message}
                 </div>
               )}
 
@@ -269,22 +270,26 @@ export default function Page() {
             </div>
 
             <div className='btns-container'>
-              <button className='back' onClick={(e) => router.back()}>
+              <button className='cancel-button' onClick={(e) => router.back()}>
                 <Io.IoArrowUndoOutline />
                 <span>Voltar</span>
               </button>
 
               {!updateMutationProps.isLoading && !updateMutationProps.isError && adId ? (
-                <button className='save' onClick={async () => await updateMutation()}>
+                <button
+                  className='save-button'
+                  onClick={async () => await updateMutation()}>
                   <Io.IoSyncOutline />
-                  <span>Salvar alterações</span>
+                  <span>Atualizar</span>
                 </button>
               ) : null}
 
               {!createMutationProps.isLoading && !createMutationProps.isError && !adId && (
-                <button className='save' onClick={async () => await createMutation()}>
+                <button
+                  className='save-button'
+                  onClick={async () => await createMutation()}>
                   <Io.IoPush />
-                  <span>Publicar Produto</span>
+                  <span>Publicar</span>
                 </button>
               )}
             </div>

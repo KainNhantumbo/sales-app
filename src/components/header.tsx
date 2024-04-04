@@ -121,7 +121,7 @@ export function Header() {
                 ) : (
                   <button title='Sair' className='user-logout' onClick={logoutUser}>
                     <IoLogOutOutline />
-                    <span>Terminar sessão</span>
+                    <span>Sair</span>
                   </button>
                 )}
               </div>

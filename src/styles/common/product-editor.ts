@@ -359,8 +359,12 @@ export const _productEditor = styled.div`
           align-self: flex-end;
         }
 
-        p {
-          margin-top: 10px;
+        .caution-message {
+          line-height: 1.4rem;
+
+          p {
+            margin-top: 8px;
+          }
         }
 
         .loading {

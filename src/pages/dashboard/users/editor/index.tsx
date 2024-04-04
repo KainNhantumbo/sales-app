@@ -35,8 +35,6 @@ const initialExperienceState = {
 };
 
 export default function Page() {
-  const theme = useTheme();
-  const router = useRouter();
   const {
     state,
     httpClient,
@@ -44,12 +42,9 @@ export default function Page() {
     userWorkingDataController,
     deleteAccountPromptController
   } = useAppContext();
-
-  const [loading, setLoading] = useState<TLoading>({
-    status: false,
-    key: 'user-data'
-  });
-
+  const theme = useTheme();
+  const router = useRouter();
+  const [loading, setLoading] = useState<TLoading>({ status: false, key: 'user-data' });
   const [countryStates, setCountryStates] = useState<string[]>([state.user.location.state]);
   const [coverImageFile, setCoverImageFile] = useState<FileList | null>(null);
   const [profileImageFile, setProfileImageFile] = useState<FileList | null>(null);
@@ -62,10 +57,7 @@ export default function Page() {
       type: actions.USER_DATA,
       payload: {
         ...state,
-        user: {
-          ...state.user,
-          [e.target.name]: e.target.value
-        }
+        user: { ...state.user, [e.target.name]: e.target.value }
       }
     });
   };

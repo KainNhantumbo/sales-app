@@ -24,11 +24,12 @@ export function useAdsQuery() {
         const { data } = await httpClient<AdsList[]>({
           url: `/api/v1/users/ads?${query.toString()}`
         });
-        return { ...data };
+        return data;
       } catch (error) {
         const { message } = errorTransformer(error as HttpError);
         toast.error(message);
         console.error(error);
+        return []
       }
     }
   });
@@ -42,14 +43,14 @@ export function useAdsQuery() {
     if (data) {
       dispatch({ type: actions.ADS, payload: { ...state, ads: data } });
     }
-  }, [data, dispatch, state]);
+  }, [data]);
 
   React.useEffect(() => {
     const instance = setTimeout(() => {
       refetch({ queryKey: ['private-ads'] });
     }, 400);
     return () => clearTimeout(instance);
-  }, [params, refetch]);
+  }, [params]);
 
   React.useEffect(() => {
     const instance = setTimeout(() => {
