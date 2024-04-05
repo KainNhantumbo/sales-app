@@ -3,7 +3,6 @@ import { SideBarAds } from '@/components/sidebar-ads';
 import { useAppContext } from '@/context/AppContext';
 import { constants, pricing_data } from '@/data/constants';
 import { errorTransformer } from '@/lib/error-transformer';
-import { formatDate } from '@/lib/utils';
 import { _subsTransactions as Container } from '@/styles/common/transactions-subscriptions';
 import type { HttpError, Subscription } from '@/types';
 import { useQuery } from '@tanstack/react-query';

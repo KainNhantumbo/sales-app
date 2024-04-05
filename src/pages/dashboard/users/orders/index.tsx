@@ -210,7 +210,7 @@ export default function Page() {
               </div>
             ) : null}
 
-            {state.orders.length < 1 && !isLoading ? (
+            {state.orders.length < 1 && !isError && !isLoading ? (
               <div className='empty-data_container'>
                 <section className='content'>
                   <BsBox2Fill />

@@ -38,10 +38,10 @@ export function Prompt() {
                       }
                     })
                   }>
-                  <span>Cancel</span>
+                  Cancel
                 </button>
                 <button className='prompt-accept' onClick={state.prompt.handleFunction}>
-                  <span>{state.prompt.actionButtonMessage}</span>
+                  {state.prompt.actionButtonMessage}
                 </button>
               </div>
             </div>

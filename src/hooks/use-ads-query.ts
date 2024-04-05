@@ -12,7 +12,7 @@ export function useAdsQuery() {
   const params = useSearchParams();
   const router = useRouter();
   const [urlQueryString, setUrlQueryString] = React.useState({
-    sort: params.get('sort') || 'updatedAt',
+    sort: params.get('sort') || '',
     search: params.get('search') || ''
   });
 
@@ -22,14 +22,14 @@ export function useAdsQuery() {
       try {
         const query = new URLSearchParams(urlQueryString);
         const { data } = await httpClient<AdsList[]>({
-          url: `/api/v1/users/ads?${query.toString()}`
+          url: `/api/v1/ads?${query.toString()}`
         });
         return data;
       } catch (error) {
         const { message } = errorTransformer(error as HttpError);
         toast.error(message);
         console.error(error);
-        return []
+        return [];
       }
     }
   });

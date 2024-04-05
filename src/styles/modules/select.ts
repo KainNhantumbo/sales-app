@@ -7,7 +7,7 @@ export function selectStyles(theme: DefaultTheme): StylesConfig {
     control: (baseStyles) => ({
       ...baseStyles,
       borderRadius: '5px',
-      border: ` 1px solid rgba(${theme.font}, 0.15);`,
+      border: ` 1px solid rgba(${theme.font}, 0.1);`,
       background: `rgba(${theme.background}, 0.07);`,
       color: `rgb(${theme.font})`,
       ':focus': {

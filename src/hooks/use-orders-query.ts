@@ -86,7 +86,7 @@ export function useUserOrdersQuery() {
 
   React.useEffect(() => {
     const instance = setTimeout(() => {
-      router.replace(`/api/v1/dashboard/users/orders?${new URLSearchParams(queryString)}`);
+      router.replace(`/dashboard/users/orders?${new URLSearchParams(queryString)}`);
     }, 200);
     return () => clearTimeout(instance);
   }, [queryString]);
