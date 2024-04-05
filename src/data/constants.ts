@@ -103,9 +103,10 @@ export const store_features = [
   }
 ];
 
+// DO NOT MODIFY TITLE
 export const pricing_data: Pricing = [
   {
-    title: 'Gratuito (beta)',
+    title: 'Gratuito',
     type: 'Trial',
     url: '/auth/sign-in',
     label: 'Vamos começar!',

@@ -2,7 +2,7 @@ import Layout from '@/components/layout';
 import { Metrics } from '@/components/metrics';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
-import { createDashboardActions } from '@/lib/dashboard-actions';
+import { buildActions } from '@/lib/dashboard-actions';
 import { _dashboard as Container } from '@/styles/common/dashbord';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -14,7 +14,7 @@ import { useTheme } from 'styled-components';
 export default function Page() {
   const { state } = useAppContext();
   const theme = useTheme();
-  const actionRoutes = createDashboardActions({
+  const actionRoutes = buildActions({
     storeId: state.auth.storeId,
     userId: state.auth.id
   });

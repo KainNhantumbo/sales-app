@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { statsContainerStyles } from '../defaults';
+import { BaseButton, statsContainerStyles } from '../defaults';
 
 export const _subsTransactions = styled.div`
   position: relative;
@@ -90,20 +90,83 @@ export const _subsTransactions = styled.div`
     }
 
     .content-container {
+      width: 100%;
       display: flex;
       flex-direction: column;
-      padding: 25px 10px;
+      padding: 25px 18px;
       gap: 10px;
 
       .content-header-container {
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        gap: 5px;
+        align-items: center;
+
+        h3 {
+          font-size: 1.6rem;
+          line-height: 1.4rem;
+          font-weight: 600;
+          color: rgb(${({ theme }) => theme.primary_shade});
+        }
+
+        .timestamps {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          font-size: 0.96rem;
+          font-weight: 500;
+        }
       }
+
       .content-details-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        h3 {
+          font-weight: 500;
+          font-size: 1.1rem;
+          line-height: 1.6rem;
+        }
+
+        div {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          p {
+            line-height: 1.6rem;
+          }
+        }
       }
 
       .content-actions-container {
+        button {
+          ${BaseButton}
+        }
       }
 
       .trial-card-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 8px;
+        margin-top: 12px;
+        border: 2px solid rgba(${({ theme }) => theme.primary}, 0.8);
+        border-radius: 12px;
+        border-style: dashed;
+
+        h3 {
+          font-weight: 600;
+          font-size: 1.1rem;
+          line-height: 1.6rem;
+          color: rgb(${({ theme }) => theme.primary_shade});
+        }
+
+        button {
+          ${BaseButton}
+        }
       }
     }
   }

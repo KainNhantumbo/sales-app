@@ -38,10 +38,12 @@ export default function Page() {
     }
   });
 
-  const pricing = useMemo(
-    () => data && pricing_data.find(({ type }) => type === data?.model),
-    [data]
-  );
+  const pricing = useMemo(() => {
+    if (data) {
+      const [item] = pricing_data.filter(({ title }) => title === data?.model);
+      return item;
+    }
+  }, [data]);
 
   return (
     <Layout metadata={{ title: `${constants.defaultTitle} | Pagamento de Subscrições` }}>
@@ -60,33 +62,62 @@ export default function Page() {
             <section className='content-container'>
               <div className='content-header-container'>
                 <h3>{data?.model}</h3>
-                <div>
-                  <div>Desde: {formatDate(data?.updatedAt)}</div>
+                <div className='timestamps'>
                   <div>
-                    Expira:{' '}
-                    {formatDate(moment(data?.expiresIn || Date.now()).toISOString())}
+                    Ativo desde:{' '}
+                    {moment(data?.updatedAt || '')
+                      .format('DD-MMM-YY')
+                      .toUpperCase()}
                   </div>
+                  {data?.createdAt !== data?.updatedAt ? (
+                    <div>
+                      Expira:{' '}
+                      {moment(data?.expiresIn || '')
+                        .format('DD-MMM-YY')
+                        .toUpperCase()}
+                    </div>
+                  ) : null}
+
+                  {data?.createdAt !== data?.updatedAt ? (
+                    <div style={{ color: `rgb(${theme.error})` }}>
+                      Faltam:{' '}
+                      {moment(data?.expiresIn || '')
+                        .subtract(moment(data?.updatedAt || '').get('days'), 'days')
+                        .get('days')
+                        .toString()
+                        .toUpperCase()}{' '}
+                      dias
+                    </div>
+                  ) : null}
                 </div>
               </div>
 
               <div className='content-details-container'>
                 <h3>Funcionalidades</h3>
-                {pricing?.description.map((phrase, i) => <p key={i}>{phrase}</p>)}
+
+                <div>
+                  {pricing?.description.map((phrase, i) => <p key={i}>- {phrase}.</p>)}
+                </div>
               </div>
 
               <div className='content-actions-container'>
                 <button>
+                  <Io.IoArrowUp />
                   <span>Fazer Upgrade</span>
                 </button>
               </div>
 
               {!data?.trial.isConsumed ? (
                 <div className='trial-card-container'>
+                  <h3>Teste Gratuito!</h3>
                   <p>
                     Comece o seu período de teste e aproveite todas a funcionalidades por 15
                     dias!
                   </p>
-                  <button>Começar</button>
+                  <button>
+                    <Io.IoPaperPlaneOutline />
+                    <span>Começar Período de Teste!</span>
+                  </button>
                 </div>
               ) : null}
             </section>
