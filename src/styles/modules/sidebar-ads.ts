@@ -3,6 +3,7 @@ import { BaseButtonOutline } from '../defaults';
 
 export const _sidebarAds = styled.aside`
   width: 100%;
+  max-width: 220px;
   height: fit-content;
   position: sticky;
   top: 90px;
@@ -11,9 +12,7 @@ export const _sidebarAds = styled.aside`
   flex-direction: column;
   align-items: center;
   gap: 30px;
-  width: 320px;
   border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
-  padding: 20px;
   border-radius: 20px;
   background: rgb(${({ theme }) => theme.foreground});
 
@@ -26,6 +25,21 @@ export const _sidebarAds = styled.aside`
     border-radius: 0;
     padding-top: 40px;
     border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+  }
+
+  .advertisements-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 5px;
+
+    img {
+      width: 220px;
+      height: 220px;
+      border-radius: 14px;
+      /* object-fit: cover; */
+    }
   }
 
   .no-ads {

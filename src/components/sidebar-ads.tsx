@@ -22,11 +22,13 @@ export function SideBarAds() {
     queryKey: ['public-random-ads'],
     queryFn: async () => {
       try {
-        await client.get('/api/v1/ads/public');
+        const { data } = await client.get('/api/v1/ads/public');
+        return data;
       } catch (error) {
         const { message } = errorTransformer(error as HttpError);
         toast.error(message);
         console.error(error);
+        return [];
       }
     }
   });
@@ -39,12 +41,17 @@ export function SideBarAds() {
 
   return (
     <Container>
-      <section className='list-container'>
+      <section className='advertisements-container'>
         {list.length > 0
           ? list.map(({ _id, name, image }) => (
-              <div key={_id} className='image-container'>
-                <Image width={320} height={320} src={image.url} alt={`Imagem ${name}`} />
-              </div>
+              <Image
+                key={_id}
+                width={320}
+                height={320}
+                src={image.url}
+                title={`Imagem ${name}`}
+                alt={`Imagem ${name}`}
+              />
             ))
           : null}
       </section>

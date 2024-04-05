@@ -1,25 +1,20 @@
+import { DropzoneArea } from '@/components/dropzone';
 import Layout from '@/components/layout';
 import { useAppContext } from '@/context/AppContext';
-import { DEFAULT_ERROR_MESSAGE, constants } from '@/data/constants';
+import { constants } from '@/data/constants';
 import { errorTransformer } from '@/lib/error-transformer';
 import { _adEditor as Container } from '@/styles/common/advertisements-editor';
-import * as Io from 'react-icons/io5';
 import { Ad, HttpError, InputEvents } from '@/types';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import * as React from 'react';
+import * as Io from 'react-icons/io5';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
-import Image from 'next/image';
-import { DropzoneArea } from '@/components/dropzone';
 
-const initialAdState: Ad = {
-  name: '',
-  owner: '',
-  notes: '',
-  image: { id: '', url: '' }
-};
+const initialAdState: Ad = { name: '', owner: '', notes: '', image: { id: '', url: '' } };
 
 export default function Page() {
   const theme = useTheme();
@@ -67,6 +62,7 @@ export default function Page() {
           url: `/api/v1/ads/${adId}`,
           data: { ...adData }
         });
+        toast.success('Anúncio atualizado com sucesso.');
       } catch (error) {
         const { message } = errorTransformer(error as HttpError);
         toast.error(message);
@@ -83,8 +79,11 @@ export default function Page() {
         await httpClient({
           method: 'post',
           url: '/api/v1/ads',
-          data: { ...adData, image: adData.image.url }
+          data: { ...adData, image: coverImage }
         });
+        setAdData(initialAdState);
+        setCoverImage('');
+        toast.success('Anúncio criado com sucesso.');
       } catch (error) {
         const { message } = errorTransformer(error as HttpError);
         toast.error(message);
