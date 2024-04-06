@@ -10,14 +10,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { IoIosAlbums, IoMdCalendar } from 'react-icons/io';
-import {
-  IoArrowForwardOutline,
-  IoEllipsisHorizontal,
-  IoGridOutline,
-  IoHeart,
-  IoLibraryOutline,
-  IoReload
-} from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
@@ -48,18 +41,14 @@ export default function Page() {
 
           <article>
             <section
-              style={{
-                fontWeight: '400',
-                fontSize: '1.4rem',
-                lineHeight: '1.8rem'
-              }}>
+              style={{ fontWeight: '400', fontSize: '1.4rem', lineHeight: '1.8rem' }}>
               Pesquisou por: {router.query['q']}
             </section>
 
             {!isLoading ||
               (isLoading && isError && (
                 <section className='error-message'>
-                  <IoLibraryOutline />
+                  <Io.IoLibraryOutline />
                   <p>
                     {(error as any).response?.data?.message ||
                       'Erro ao processar a sua requisição.'}
@@ -71,7 +60,7 @@ export default function Page() {
               <div className='empty-data_container'>
                 <section className='content'>
                   <div className='icon'>
-                    <IoGridOutline />
+                    <Io.IoGridOutline />
                   </div>
                   <div className='message'>
                     <h3>Nenhuma postagem para mostrar.</h3>
@@ -106,7 +95,7 @@ export default function Page() {
                             <span>{formatDate(post.updatedAt)}</span>
                           </div>
                           <div>
-                            <IoHeart />
+                            <Io.IoHeart />
                             <span>{post.favorites.length} favoritos</span>
                           </div>
                         </div>
@@ -114,7 +103,7 @@ export default function Page() {
                         <p>{post.excerpt}</p>
                         <button onClick={() => router.push(`/blog/post/${post.slug}`)}>
                           <div>
-                            <IoArrowForwardOutline />
+                            <Io.IoArrowForwardOutline />
                             <span>Continuar leitura</span>
                           </div>
                         </button>
@@ -128,7 +117,7 @@ export default function Page() {
                     <div className='fetch-error-message '>
                       <h3>Erro ao carregar postagens</h3>
                       <button onClick={() => fetchNextPage()}>
-                        <IoReload />
+                        <Io.IoReload />
                         <span>Tentar novamente</span>
                       </button>
                     </div>
@@ -155,7 +144,7 @@ export default function Page() {
 
                 {state.blogPostsList.length > 0 && (
                   <div className='posts-container__end-mark'>
-                    <IoEllipsisHorizontal />
+                    <Io.IoEllipsisHorizontal />
                   </div>
                 )}
               </section>

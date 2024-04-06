@@ -34,10 +34,7 @@ export default function Page() {
   const handleChange = (e: InputEvents) => {
     dispatch({
       type: actions.STORE_DATA,
-      payload: {
-        ...state,
-        store: { ...state.store, [e.target.name]: e.target.value }
-      }
+      payload: { ...state, store: { ...state.store, [e.target.name]: e.target.value } }
     });
   };
 
@@ -56,11 +53,7 @@ export default function Page() {
           const encodedImage = e.target?.result?.toString();
           if (typeof encodedImage !== 'string')
             return toast.error('Erro ao processar imagem.');
-
-          setCoverImageData({
-            id: state.user.cover_image?.id || '',
-            data: encodedImage
-          });
+          setCoverImageData({ id: state.user.cover_image?.id || '', data: encodedImage });
         };
       }
     });
@@ -76,10 +69,7 @@ export default function Page() {
         setCoverImageData({ id: '', data: '' });
         dispatch({
           type: actions.USER_DATA,
-          payload: {
-            ...state,
-            store: { ...state.store, cover_image: { id: '', url: '' } }
-          }
+          payload: { ...state, store: { ...state.store, cover_image: { id: '', url: '' } } }
         });
       })
       .catch((error) => {
@@ -573,10 +563,7 @@ export default function Page() {
                       type: actions.STORE_DATA,
                       payload: {
                         ...state,
-                        store: {
-                          ...state.store,
-                          active: !state.store.active
-                        }
+                        store: { ...state.store, active: !state.store.active }
                       }
                     })
                   }>

@@ -17,9 +17,7 @@ const queryClient = new QueryClient({
 type Context = {
   state: State;
   dispatch: React.Dispatch<Action>;
-  deleteCommentPromptController: (status: boolean, id: string) => void;
   deleteStoryPromptController: (status: boolean, id: string) => void;
-  deleteProductPromptController: (status: boolean, id: string) => void;
   shareProductController: () => void;
   sortBoxController: () => void;
   searchBoxController: () => void;
@@ -37,8 +35,6 @@ const context = React.createContext<Context>({
   sortBoxController: () => {},
   deleteAccountPromptController: () => {},
   deactivateStorePromptController: () => {},
-  deleteProductPromptController: () => {},
-  deleteCommentPromptController: () => {},
   deleteStoryPromptController: () => {},
   shareProductController: () => {},
   userWorkingDataController: () => {}
@@ -82,24 +78,10 @@ export function AppContext(props: { children: React.ReactNode }) {
     });
   };
 
-  const deleteCommentPromptController = (status: boolean, id?: string) => {
-    dispatch({
-      type: actions.DELETE_COMMENT_PROMPT,
-      payload: { ...state, isDeleteCommentPrompt: { status, commentId: id ?? '' } }
-    });
-  };
-
   const deleteStoryPromptController = (status: boolean, id?: string) => {
     dispatch({
       type: actions.DELETE_STORY_PROMPT,
       payload: { ...state, isDeleteStoryPrompt: { status, storyId: id ?? '' } }
-    });
-  };
-
-  const deleteProductPromptController = (status: boolean, id?: string) => {
-    dispatch({
-      type: actions.DELETE_PRODUCT_PROMPT,
-      payload: { ...state, isDeleteProductPrompt: { status, productId: id ?? '' } }
     });
   };
 
@@ -188,8 +170,6 @@ export function AppContext(props: { children: React.ReactNode }) {
             sortBoxController,
             searchBoxController,
             userWorkingDataController,
-            deleteCommentPromptController,
-            deleteProductPromptController,
             deleteAccountPromptController,
             deactivateStorePromptController,
             deleteStoryPromptController,

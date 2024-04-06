@@ -21,7 +21,7 @@ export default function Page({ user }: { user?: PublicUser }) {
 
   if (!user)
     return (
-      <ErrorPage message='Conta de usuário indisponível.' onRetry={() => router.reload()} />
+      <ErrorPage message='Conta de usuário indisponível.' onRetry={router.reload} />
     );
 
   return (

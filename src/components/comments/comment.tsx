@@ -16,9 +16,9 @@ import { useRouter } from 'next/router';
 import { BiUser } from 'react-icons/bi';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
-export function Comment(props: TComment) {
+export function Comment(props: TComment & { onDelete: (id: string) => void }) {
   const router = useRouter();
-  const { state, deleteCommentPromptController } = useAppContext();
+  const { state } = useAppContext();
 
   return (
     <>
@@ -80,9 +80,7 @@ export function Comment(props: TComment) {
                   <span>Cancelar</span>
                 </button>
               )}
-              <button
-                className='delete'
-                onClick={() => deleteCommentPromptController(true, props.comment._id)}>
+              <button className='delete' onClick={() => props.onDelete(props.comment._id)}>
                 <FaTrash />
                 <span>Apagar</span>
               </button>

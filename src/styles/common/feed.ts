@@ -7,7 +7,7 @@ export const _feed = styled.div`
   display: flex;
   flex-direction: column;
   background: rgb(${({ theme }) => theme.foreground});
-  padding-top: 90px;
+  padding-top: 70px;
 
   * {
     ::selection {
@@ -18,7 +18,7 @@ export const _feed = styled.div`
 
   .searchbar-wrapper {
     position: fixed;
-    top: 70px;
+    top: 50px;
     left: 0;
     z-index: 20000;
     width: 100%;
@@ -51,7 +51,7 @@ export const _feed = styled.div`
   }
 
   aside {
-    top: 150px;
+    top: 130px;
   }
 
   article {

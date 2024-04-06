@@ -28,9 +28,7 @@ export default function Page(props: Props) {
   const theme = useTheme();
   const router = useRouter();
   const { state, dispatch, httpClient } = useAppContext();
-  const { isLoading, setLoading } = useFetchState({
-    delay: 500
-  });
+  const { isLoading, setLoading } = useFetchState({ delay: 500 });
 
   const [coverImageData, setCoverImageData] = useState({
     id: state.story.cover_image?.id || '',

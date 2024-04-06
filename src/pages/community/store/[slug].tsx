@@ -59,7 +59,7 @@ export default function Page({ store, products }: Props) {
         title='Loja Inativa'
         message='A loja que procura pode estar atualmente indisponível. Peça ao proprietário para ativá-la.'
         button_message='Voltar para página anterior'
-        onRetry={() => router.back()}
+        onRetry={router.back}
       />
     );
 

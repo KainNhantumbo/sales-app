@@ -6,17 +6,10 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { BiUser } from 'react-icons/bi';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import {
-  IoArrowUndo,
-  IoClose,
-  IoEllipse,
-  IoFlag,
-  IoHeart,
-  IoHeartOutline
-} from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
 
-export function ReplyComment(props: TComment) {
-  const { state, deleteCommentPromptController } = useAppContext();
+export function ReplyComment(props: TComment & { onDelete: (id: string) => void }) {
+  const { state } = useAppContext();
   const router = useRouter();
 
   return (
@@ -44,7 +37,7 @@ export function ReplyComment(props: TComment) {
 
           <span>
             {' '}
-            <IoEllipse className='dot' /> {moment(props.comment.createdAt).fromNow()}
+            <Io.IoEllipse className='dot' /> {moment(props.comment.createdAt).fromNow()}
           </span>
         </div>
         <div className='actions'>
@@ -59,9 +52,9 @@ export function ReplyComment(props: TComment) {
             }}>
             <span>{props.comment.favorites.length}</span>
             {props.comment.favorites.includes(state.auth.id) ? (
-              <IoHeart />
+              <Io.IoHeart />
             ) : (
-              <IoHeartOutline />
+              <Io.IoHeartOutline />
             )}
           </button>
           {props.comment.created_by._id === state.auth?.id ? (
@@ -79,9 +72,7 @@ export function ReplyComment(props: TComment) {
                   <span>Cancelar</span>
                 </button>
               )}
-              <button
-                className='delete'
-                onClick={() => deleteCommentPromptController(true, props.comment._id)}>
+              <button className='delete' onClick={() => props.onDelete(props.comment._id)}>
                 <FaTrash />
                 <span>Deletar</span>
               </button>
@@ -97,19 +88,19 @@ export function ReplyComment(props: TComment) {
                     )}&type=comment&id=${props.comment._id}`
                   )
                 }>
-                <IoFlag />
+                <Io.IoFlag />
                 <span>Denunciar</span>
               </button>
               {!props.status.reply || props.comment._id !== state.comment._id ? (
                 <button
                   className='reply'
                   onClick={() => props.handleReplyComment(props.comment)}>
-                  <IoArrowUndo />
+                  <Io.IoArrowUndo />
                   <span>Responder</span>
                 </button>
               ) : (
                 <button className='reply' onClick={() => props.clearCommentData()}>
-                  <IoClose />
+                  <Io.IoClose />
                   <span>Cancelar</span>
                 </button>
               )}

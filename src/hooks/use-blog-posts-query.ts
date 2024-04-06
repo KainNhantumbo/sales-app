@@ -21,7 +21,7 @@ export function useBlogPostsQuery() {
           offset: pageParam * LIMIT,
           limit: LIMIT
         });
-        return { data, currentOffset: pageParam + 1 };
+        return { data, currentOffset: +pageParam + 1 };
       } catch (error) {
         const { message } = errorTransformer(error as HttpError);
         toast.error(message);

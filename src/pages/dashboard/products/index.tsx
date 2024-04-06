@@ -1,5 +1,4 @@
 import Layout from '@/components/layout';
-import { DeleteProductPrompt } from '@/components/modals/delete-product-prompt';
 import { SearchBox } from '@/components/modals/search-box';
 import { ShareProducts } from '@/components/modals/share-product-prompt';
 import { SortBox } from '@/components/modals/sort-box';
@@ -12,40 +11,54 @@ import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _productList as Container } from '@/styles/common/products';
 import { HttpError } from '@/types';
-import { AxiosError } from 'axios';
 import moment from 'moment';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import * as Io from 'react-icons/io5';
 import { VscEmptyWindow } from 'react-icons/vsc';
 import { PulseLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 
 export default function Page() {
-  const {
-    state,
-    dispatch,
-    httpClient,
-    shareProductController,
-    deleteProductPromptController
-  } = useAppContext();
   const theme = useTheme();
+  const { state, dispatch, httpClient, shareProductController } = useAppContext();
   const { error, inViewRef, refetch, isError, isLoading, fetchNextPage, hasNextPage } =
     useProductsQuery();
 
   const handleDeleteProduct = async (productId: string) => {
-    try {
-      await httpClient({ method: 'delete', url: `/api/v1/users/products/${productId}` });
-      deleteProductPromptController(false, '');
-      refetch({ queryKey: ['private-store-products'] });
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { message, statusCode } = errorTransformer(error as HttpError);
-        console.error('Error message:', message);
-        console.error('Error code:', statusCode);
+    dispatch({
+      type: actions.PROMPT,
+      payload: {
+        ...state,
+        prompt: {
+          ...state.prompt,
+          status: true,
+          title: 'Eliminar Produto da Loja',
+          message:
+            'Você realmente gostaria de eliminar permanentemente este produto da sua loja? Esta ação não pode ser desfeita.',
+          actionButtonMessage: 'Eliminar',
+          handleFunction: async () => {
+            try {
+              await httpClient({
+                method: 'delete',
+                url: `/api/v1/users/products/${productId}`
+              });
+              refetch({ queryKey: ['private-store-products'] });
+            } catch (error) {
+              const { message } = errorTransformer(error as HttpError);
+              toast.error(message);
+              console.error(error);
+            } finally {
+              dispatch({
+                type: actions.PROMPT,
+                payload: { ...state, prompt: { ...state.prompt, status: false } }
+              });
+            }
+          }
+        }
       }
-      console.error(error);
-    }
+    });
   };
 
   useEffect(() => {
@@ -54,8 +67,6 @@ export default function Page() {
 
   return (
     <Layout metadata={{ title: `${constants.defaultTitle} | Lista de Produtos` }}>
-      <DeleteProductPrompt deleteFn={handleDeleteProduct} />
-
       <Container>
         <SearchBox />
         <SortBox />
@@ -165,7 +176,7 @@ export default function Page() {
                     </Link>
                     <button
                       title='Eliminar produto da sua loja'
-                      onClick={() => deleteProductPromptController(true, product._id)}>
+                      onClick={() => handleDeleteProduct(product._id)}>
                       <span>Eliminar produto</span>
                     </button>
                     <button

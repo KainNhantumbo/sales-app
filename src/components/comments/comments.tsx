@@ -5,19 +5,15 @@ import { actions } from '@/shared/actions';
 import { _comments as Container } from '@/styles/modules/comments';
 import { HttpError } from '@/types';
 import type { IComment } from '@/types/comments';
-import { AxiosResponse } from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
-import { DeleteCommentPrompt } from '../modals/delete-comment-prompt';
+import { toast } from 'react-toastify';
 import { Comment } from './comment';
 import { CommentForm } from './comment-form';
 import { ReplyComment } from './reply-comment';
 import { ReplyCommentForm } from './reply-comment-form';
-import { toast } from 'react-toastify';
-
-type Props = { contentId: string };
 
 type TError = {
   status: boolean;
@@ -30,10 +26,10 @@ type TLoading = {
   key: 'create-comment' | 'update-comment' | 'delete-comment';
 };
 
-export function Comments({ contentId }: Props) {
+export function Comments({ contentId }: { contentId: string }) {
   const router = useRouter();
-  const { state, dispatch, httpClient, deleteCommentPromptController } = useAppContext();
-
+  const { state, dispatch, httpClient } = useAppContext();
+  const [activeModes, setActiveModes] = useState({ edit: false, reply: false });
   const [loading, setLoading] = useState<TLoading>({
     status: false,
     key: 'create-comment'
@@ -45,12 +41,6 @@ export function Comments({ contentId }: Props) {
     key: 'create-comment'
   });
 
-  const [activeModes, setActiveModes] = useState({
-    edit: false,
-    reply: false
-  });
-
-  // ---------------functions----------------
   const formattedComments = useMemo(() => {
     const group: { [index: string]: IComment[] } = {};
     state.commentsList.forEach((comment) => {
@@ -62,13 +52,13 @@ export function Comments({ contentId }: Props) {
 
   const getCommentReplies = (parentId: string) => formattedComments[parentId];
 
-  const clearCommentData = useCallback(() => {
+  const clearCommentData = () => {
     setActiveModes({ edit: false, reply: false });
     dispatch({
       type: actions.CREATE_COMMENT,
       payload: { ...state, comment: initialState.comment }
     });
-  }, []);
+  };
 
   const getComments = useCallback(async () => {
     try {
@@ -78,68 +68,52 @@ export function Comments({ contentId }: Props) {
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
-        payload: { ...state, commentsList: [...data] }
+        payload: { ...state, commentsList: data }
       });
+      console.log(data);
     } catch (error) {
+      const { message } = errorTransformer(error as HttpError);
+      console.error(message);
       console.error(error);
     }
-  }, [contentId, dispatch, httpClient, state]);
+  }, [contentId]);
 
-  const handleCreateComment = async () => {
+  const onCreate = async () => {
     setLoading({ status: true, key: 'create-comment' });
     try {
       const { data } = await httpClient<IComment>({
         method: 'post',
         url: '/api/v1/users/comments',
-        data: {
-          source_id: contentId,
-          content: state.comment.content,
-          parent_id: null
-        }
+        data: { source_id: contentId, content: state.comment.content, parent_id: null }
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
-        payload: {
-          ...state,
-          commentsList: [...state.commentsList, data]
-        }
+        payload: { ...state, commentsList: state.commentsList.concat(data) }
       });
       clearCommentData();
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-      setError({
-        status: true,
-        key: 'create-comment',
-        msg:
-          (error as HttpError).response?.data?.message ||
-          (error as HttpError).message ||
-          'Erro: por favor, tente novamente.'
-      });
+      const { message } = errorTransformer(error as HttpError);
+      setError({ status: true, key: 'create-comment', msg: message });
+      console.error(error);
     } finally {
       setLoading({ status: false, key: 'create-comment' });
     }
   };
 
-  const handleUpdateComment = async (id: string) => {
+  const onUpdate = async (id: string) => {
     try {
-      const { data }: AxiosResponse<IComment> = await httpClient({
+      const { data } = await httpClient<IComment>({
         method: 'patch',
         url: `/api/v1/users/comments/${id}`,
-        data: {
-          ...state.comment
-        }
+        data: state.comment
       });
       dispatch({
         type: actions.UPDATE_COMMENTS_LIST,
         payload: {
           ...state,
-          commentsList: [
-            ...state.commentsList.map((comment) =>
-              comment._id === data._id ? { ...comment, ...data } : comment
-            )
-          ]
+          commentsList: state.commentsList.map((comment) =>
+            comment._id === data._id ? { ...comment, ...data } : comment
+          )
         }
       });
       clearCommentData();
@@ -152,17 +126,36 @@ export function Comments({ contentId }: Props) {
     }
   };
 
-  const handleDeleteComment = async (id: string) => {
-    clearCommentData();
-    try {
-      await httpClient({ method: 'delete', url: `/api/v1/users/comments/${id}` });
-      deleteCommentPromptController(false, '');
-      getComments();
-    } catch (error) {
-      const { message } = errorTransformer(error as HttpError);
-      console.error(error);
-      toast.error(message);
-    }
+  const onDelete = (id: string) => {
+    dispatch({
+      type: actions.PROMPT,
+      payload: {
+        ...state,
+        prompt: {
+          ...state.prompt,
+          status: true,
+          title: 'Eliminar comentário',
+          actionButtonMessage: 'Confirmar',
+          message: 'Você realmente gostaria de eliminar este comentário?',
+          handleFunction: async () => {
+            clearCommentData();
+            try {
+              await httpClient({ method: 'delete', url: `/api/v1/users/comments/${id}` });
+              getComments();
+            } catch (error) {
+              const { message } = errorTransformer(error as HttpError);
+              console.error(error);
+              toast.error(message);
+            } finally {
+              dispatch({
+                type: actions.PROMPT,
+                payload: { ...state, prompt: { ...state.prompt, status: false } }
+              });
+            }
+          }
+        }
+      }
+    });
   };
 
   const handleReplyComment = (data: IComment) => {
@@ -182,10 +175,7 @@ export function Comments({ contentId }: Props) {
     setActiveModes({ edit: true, reply: false });
     dispatch({
       type: actions.CREATE_COMMENT,
-      payload: {
-        ...state,
-        comment: { ...state.comment, ...data }
-      }
+      payload: { ...state, comment: { ...state.comment, ...data } }
     });
   };
 
@@ -261,7 +251,7 @@ export function Comments({ contentId }: Props) {
       setActiveModes({ reply: false, edit: false });
       clearCommentData();
     };
-  }, [clearCommentData]);
+  }, []);
 
   useEffect(() => {
     const debounceTime = setTimeout(() => {
@@ -271,7 +261,7 @@ export function Comments({ contentId }: Props) {
       }
     }, 500);
     return () => clearTimeout(debounceTime);
-  }, [contentId, getComments]);
+  }, [contentId]);
 
   useEffect(() => {
     const desc = setTimeout(() => {
@@ -282,8 +272,6 @@ export function Comments({ contentId }: Props) {
 
   return (
     <Container>
-      <DeleteCommentPrompt deleteFn={handleDeleteComment} />
-
       <section className='comments-section'>
         <section className='title'>
           <h2>
@@ -306,7 +294,7 @@ export function Comments({ contentId }: Props) {
 
         <section className='comments-wrapper'>
           <CommentForm
-            createComment={handleCreateComment}
+            createComment={onCreate}
             status={{
               reply: activeModes.reply,
               edit: activeModes.edit,
@@ -315,7 +303,7 @@ export function Comments({ contentId }: Props) {
             }}
           />
           <section className='comments-container'>
-            {getCommentReplies('null') !== null &&
+            {Array.isArray(getCommentReplies('null')) &&
               getCommentReplies('null')?.length > 0 &&
               getCommentReplies('null')
                 .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
@@ -323,12 +311,13 @@ export function Comments({ contentId }: Props) {
                   <div id={comment._id} key={comment._id} className='comment'>
                     <Comment
                       comment={comment}
+                      onDelete={onDelete}
                       clearCommentData={clearCommentData}
                       handleEditComment={handleEditComment}
                       handleFavoriteComment={handleFavoriteComment}
                       handleUnFavoriteComment={handleUnFavoriteComment}
                       handleReplyComment={handleReplyComment}
-                      updateComment={handleUpdateComment}
+                      updateComment={onUpdate}
                       status={{
                         reply: activeModes.reply,
                         edit: activeModes.edit,
@@ -338,8 +327,8 @@ export function Comments({ contentId }: Props) {
                     />
                     {comment._id === state.comment._id && (
                       <ReplyCommentForm
-                        createComment={handleCreateComment}
-                        updateComment={handleUpdateComment}
+                        createComment={onCreate}
+                        updateComment={onUpdate}
                         replyComment={handleSendReplyComment}
                         currentCommentId={comment._id}
                         status={{
@@ -352,7 +341,7 @@ export function Comments({ contentId }: Props) {
                     )}
 
                     {/* ------replies comments-----*/}
-                    {getCommentReplies(comment._id) !== null &&
+                    {Array.isArray(getCommentReplies(comment._id)) &&
                     getCommentReplies(comment._id).length > 0
                       ? getCommentReplies(comment._id)
                           .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
@@ -363,12 +352,13 @@ export function Comments({ contentId }: Props) {
                               className='comment reply-comment'>
                               <ReplyComment
                                 comment={comment}
+                                onDelete={onDelete}
                                 clearCommentData={clearCommentData}
                                 handleEditComment={handleEditComment}
                                 handleFavoriteComment={handleFavoriteComment}
                                 handleUnFavoriteComment={handleUnFavoriteComment}
                                 handleReplyComment={handleReplyComment}
-                                updateComment={handleUpdateComment}
+                                updateComment={onUpdate}
                                 status={{
                                   reply: activeModes.reply,
                                   edit: activeModes.edit,
@@ -379,8 +369,8 @@ export function Comments({ contentId }: Props) {
 
                               {comment._id === state.comment._id ? (
                                 <ReplyCommentForm
-                                  createComment={handleCreateComment}
-                                  updateComment={handleUpdateComment}
+                                  createComment={onCreate}
+                                  updateComment={onUpdate}
                                   replyComment={handleSendReplyComment}
                                   currentCommentId={comment._id}
                                   status={{
