@@ -97,7 +97,11 @@ export function ProductsSearch() {
           }}>
           <motion.div
             className='wrapper-container'
-            drag={windowInnerWidth > 830 ? false : 'y'}
+            style={{ display: state.isPublicProductsFilters ? 'flex' : 'none' }}
+            initial={windowInnerWidth > 830 ? { translateX: -720 } : { translateY: 720 }}
+            animate={windowInnerWidth > 830 ? { translateX: 0 } : { translateY: 0 }}
+            transition={{ duration: 0.38 }}
+            drag={windowInnerWidth > 830 ? undefined : 'y'}
             dragElastic={{ top: 0.12, bottom: 0.1 }}
             dragConstraints={{ top: 0, bottom: 0 }}
             onDragEnd={(event, info) => {
@@ -113,10 +117,6 @@ export function ProductsSearch() {
                 });
               }
             }}
-            style={{ display: state.isPublicProductsFilters ? 'flex' : 'none' }}
-            initial={windowInnerWidth > 830 ? { translateX: -720 } : { translateY: 720 }}
-            animate={windowInnerWidth > 830 ? { translateX: 0 } : { translateY: 0 }}
-            transition={{ duration: 0.38 }}
             exit={
               windowInnerWidth > 830
                 ? {

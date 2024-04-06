@@ -59,7 +59,7 @@ export default function Page({ product: publicProduct, error_message }: Props) {
         payload: { ...state, publicProduct: initialState.publicProduct }
       });
     };
-  }, [publicProduct, state, dispatch]);
+  }, [publicProduct]);
 
   if (!publicProduct) return <ErrorPage message={error_message} onRetry={router.reload} />;
 
@@ -581,11 +581,11 @@ export async function getStaticPaths() {
 
 export async function getStaticProps<
   T extends GetStaticPropsContext<{ productId?: string }>
->(props: T) {
+>({ params }: T) {
   try {
     const { data } = await fetch<PublicProduct>({
       method: 'get',
-      url: `/api/v1/users/products/public/${props.params?.productId}`
+      url: `/api/v1/users/products/public/${params?.productId}`
     });
     return { props: { product: { ...data } }, revalidate: 10 };
   } catch (error) {

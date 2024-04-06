@@ -1,7 +1,7 @@
 import client from '@/config/client';
 import { errorTransformer } from '@/lib/error-transformer';
 import { _sidebarAds as Container } from '@/styles/modules/sidebar-ads';
-import { HttpError } from '@/types';
+import { HttpError, PublicAds } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -12,17 +12,15 @@ import { PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 
-type PublicAds = Array<{ _id: string; name: string; image: { id: string; url: string } }>;
-
 export function SideBarAds() {
   const theme = useTheme();
   const [list, setList] = React.useState<PublicAds>([]);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['public-random-ads'],
-    queryFn: async () => {
+    queryFn: async (): Promise<PublicAds> => {
       try {
-        const { data } = await client.get('/api/v1/ads/public');
+        const { data } = await client.get<PublicAds>('/api/v1/ads/public');
         return data;
       } catch (error) {
         const { message } = errorTransformer(error as HttpError);

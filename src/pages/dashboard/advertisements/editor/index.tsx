@@ -9,6 +9,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import * as React from 'react';
+import { FaAd } from 'react-icons/fa';
 import * as Io from 'react-icons/io5';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
@@ -51,26 +52,8 @@ export default function Page() {
         toast.error(message);
         console.error(error);
       }
-    }
-  });
 
-  const { mutateAsync: updateMutation, ...updateMutationProps } = useMutation({
-    mutationFn: async () => {
-      try {
-        await httpClient({
-          method: 'patch',
-          url: `/api/v1/ads/${adId}`,
-          data: { ...adData }
-        });
-        toast.success('Anúncio atualizado com sucesso.');
-      } catch (error) {
-        const { message } = errorTransformer(error as HttpError);
-        toast.error(message);
-        console.error(error);
-      }
-    },
-    useErrorBoundary: true,
-    networkMode: 'always'
+    }
   });
 
   const { mutateAsync: createMutation, ...createMutationProps } = useMutation({
@@ -94,6 +77,26 @@ export default function Page() {
     networkMode: 'always'
   });
 
+  const { mutateAsync: updateMutation, ...updateMutationProps } = useMutation({
+    mutationFn: async () => {
+      try {
+        await httpClient({
+          method: 'patch',
+          url: `/api/v1/ads/${adId}`,
+          data: { ...adData, rawImage: coverImage }
+        });
+        toast.success('Anúncio atualizado com sucesso.');
+      } catch (error) {
+        const { message } = errorTransformer(error as HttpError);
+        toast.error(message);
+        console.error(error);
+      }
+    },
+    useErrorBoundary: true,
+    networkMode: 'always'
+  });
+
+
   React.useEffect(() => {
     if (typeof data !== 'undefined') setAdData(data);
   }, [data]);
@@ -102,9 +105,13 @@ export default function Page() {
     <Layout metadata={{ title: `${constants.defaultTitle} | Editor de  Anúncios` }}>
       <Container>
         <article>
-          <div className='title-bar-container'>
-            <h1>{adId ? 'Editar Anúncio' : 'Criar Novo Anúncio'}</h1>
-          </div>
+          <section className='header-container'>
+            <h2>
+              <FaAd />
+              <span>{adId ? 'Editar Anúncio' : 'Criar Novo Anúncio'}</span>
+            </h2>
+            <p>Nota: os anúncios expiram irrevogavelmente após 30 dias.</p>
+          </section>
 
           <section className='data-container'>
             <section className='form-section'>

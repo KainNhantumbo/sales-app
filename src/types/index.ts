@@ -463,7 +463,6 @@ export type State = {
   publicStories: PublicStory[];
   publicStoresList: PublicStoreList;
   metrics: Metrics;
-  banner_ads: BannerAds[];
   prompt: Modal;
 };
 
@@ -489,3 +488,5 @@ export type Subscription = {
   updatedAt: string;
   createdAt: string;
 };
+
+export type PublicAds = Array<{ _id: string; name: string; image: { id: string; url: string } }>;

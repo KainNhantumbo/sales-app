@@ -1,294 +1,143 @@
+import africa_culture from '@/../public/assets/africa-culture.png';
+import flying_paper from '@/../public/assets/flying paper.png';
 import Layout from '@/components/layout';
-import { ProductsSearch } from '@/components/products-search';
-import { useAppContext } from '@/context/AppContext';
-import { useModulesContext } from '@/context/Modules';
-import { blurDataUrlImage, constants } from '@/data/constants';
-import { useCartStore } from '@/hooks/use-cart-store';
-import { useFavoriteProduct } from '@/hooks/use-favorite-product';
-import { usePublicProductsQuery } from '@/hooks/use-public-products-query';
-import { errorTransformer } from '@/lib/error-transformer';
+import { NewsLetter } from '@/components/newsletter';
+import { constants, pricing_data, store_features } from '@/data/constants';
 import { formatCurrency } from '@/lib/utils';
-import { actions } from '@/shared/actions';
-import { _home as Container } from '@/styles/common/home';
+import { _discover as Container } from '@/styles/common/discover';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect } from 'react';
-import * as Io from 'react-icons/io5';
-import ReactImageGallery from 'react-image-gallery';
-import 'react-image-gallery/styles/css/image-gallery.css';
-import { PulseLoader } from 'react-spinners';
+import { IoBalloonOutline, IoHeartOutline, IoStorefrontOutline } from 'react-icons/io5';
 import { useTheme } from 'styled-components';
-import fetch from '../config/client';
-import type { BannerAds, HttpError } from '../types';
 
-type Props = { ads_data: BannerAds[] };
-
-export default function Page({ ads_data }: Props) {
+export default function Page() {
   const theme = useTheme();
-  const { state, dispatch } = useAppContext();
-  const { requestLogin } = useModulesContext();
-  const { addProductToCart, removeProductFromCart } = useCartStore();
-  const { fetchNextPage, hasNextPage, inViewRef, isLoading, isError } =
-    usePublicProductsQuery();
-
-  const { onFavoriteProduct, onUnFavoriteProduct } = useFavoriteProduct({
-    key: 'public-products-list'
-  });
-
-  useEffect(() => {
-    if (Array.isArray(ads_data)) {
-      dispatch({
-        type: actions.BANNER_ADS,
-        payload: { ...state, banner_ads: [...ads_data] }
-      });
-    }
-  }, [ads_data]);
 
   return (
-    <Layout metadata={{ title: `${constants.defaultTitle} | Produtos e Serviços` }}>
+    <Layout metadata={{ title: `${constants.defaultTitle} | Descubra-nos` }}>
       <Container>
-        <div className='content-wrapper'>
-          <motion.button
-            whileTap={{ scale: 0.8 }}
-            whileHover={{ scale: 1.05 }}
-            className='openFluentFilters'
-            onClick={() =>
-              dispatch({
-                type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
-                payload: { ...state, isPublicProductsFilters: true }
-              })
-            }>
-            <Io.IoSearch />
-            <span>Pesquisar e Filtros</span>
-          </motion.button>
+        <article>
+          <section className='introduction'>
+            <div>
+              <h2>Monte a sua loja virtual sem pagar nada</h2>
+              <p>
+                Seu e-commerce virtual do seu jeito e com todas as funcionalidades que
+                precisa de graça.
+              </p>
+              <Link href={'/auth/sign-in'}>
+                <IoStorefrontOutline />
+                <span>Criar loja grátis</span>
+              </Link>
+              <span>* Não é necessário adicionar cartão de crédito</span>
+            </div>
+            <Image
+              src={flying_paper}
+              width={800}
+              height={800}
+              priority={true}
+              alt='flying paper image by freepick'
+            />
+          </section>
 
-          <ProductsSearch />
-
-          <article>
-            {state.banner_ads.length > 0 ? (
-              <section className='banner-container'>
-                <ReactImageGallery
-                  lazyLoad={true}
-                  useBrowserFullscreen={true}
-                  additionalClass='navigator'
-                  autoPlay={true}
-                  showPlayButton={false}
-                  showThumbnails={false}
-                  showFullscreenButton={false}
-                  items={state.banner_ads.map((asset) => ({
-                    original: asset.image.url,
-                    originalWidth: 1080,
-                    originalHeight: 300,
-                    originalAlt: `Imagem de ${asset.name}`
-                  }))}
-                  renderRightNav={(onClick, disabled) => (
-                    <button className='nav-right' onClick={onClick} disabled={disabled}>
-                      <Io.IoChevronForward />
-                    </button>
-                  )}
-                  renderLeftNav={(onClick, disabled) => (
-                    <button className='nav-left' onClick={onClick} disabled={disabled}>
-                      <Io.IoChevronBack />
-                    </button>
-                  )}
-                />
-              </section>
-            ) : null}
-
-            {state.banner_ads.length > 0 ? <>Banner</> : null}
-
-            {state.publicProducts.length < 1 && !isLoading && !isError ? (
-              <div className='empty-data_container'>
-                <section className='content'>
-                  <div className='icon'>
-                    <Io.IoBarcodeOutline />
-                  </div>
-                  <div className='message'>
-                    {Object.values(state.queryPublicProducts)
-                      .map((value) => (value ? true : false))
-                      .some((value) => value === true) && (
-                      <p>Sua pesquisa não teve resultados</p>
-                    )}
-                    <h3>Nenhum produto para mostrar.</h3>
-                  </div>
-                </section>
+          <section className='features'>
+            <div className='wrapper'>
+              <h2>
+                <span>
+                  Tudo o que a <i>sua loja precisa</i>
+                </span>
+              </h2>
+              <div className='cards-container'>
+                {store_features.map((card, index) => (
+                  <motion.div
+                    key={index.toString()}
+                    drag={true}
+                    dragConstraints={{ top: 0, left: 0, bottom: 0, right: 0 }}
+                    dragElastic={0.2}
+                    whileHover={{
+                      translateY: -8,
+                      boxShadow: `0px 20px 25px rgba(${theme.black}, 0.09)`
+                    }}>
+                    <card.icon />
+                    <h3>{card.title}</h3>
+                    <p>{card.description}</p>
+                  </motion.div>
+                ))}
               </div>
-            ) : null}
+            </div>
+          </section>
 
-            <section className='products-container'>
-              {state.publicProducts.length > 0
-                ? state.publicProducts.map((item, index) => (
+          <section className='presentation'>
+            <div>
+              <h2>Relaxe e sinta-se em casa</h2>
+              <p>
+                Plataforma feita de jovens moçambicanos para todos moçambicanos com o
+                objectivo de desenvolver e nutrir o espírito de empreendedorismo a nível
+                nacional.
+              </p>
+              <span>
+                Precisa de ajuda nos primeiros passos? Pode contar conosco, veja a secção de
+                contacto no rodapé ou acesse o nosso blog para aprender mais sobre o
+                e-commerce e vendas em lojas virtuais.
+              </span>
+              <Link href={'/legal/about'}>
+                <IoHeartOutline />
+                <span>Saiba mais</span>
+              </Link>
+            </div>
+            <Image
+              src={africa_culture}
+              width={600}
+              height={600}
+              alt='africa culture image'
+            />
+          </section>
+
+          <section className='pricing'>
+            <div className='wrapper'>
+              <div className='pricing-container'>
+                <h2>
+                  <span>Encontre ferramentas ideais para a jornada do seu negócio</span>
+                </h2>
+
+                <h3>
+                  Adira ao programa beta e crie a sua loja, não se preocupando com limites
+                  de vendas, produtos ou visitas:{' '}
+                </h3>
+
+                <div className='plans-container'>
+                  {pricing_data.map((plan, index) => (
                     <motion.div
-                      key={item._id}
-                      whileTap={{ scale: 0.98 }}
-                      className='product-container'
+                      key={index.toString()}
                       whileHover={{
-                        translateY: -8,
-                        boxShadow: `0px 12px 25px 10px rgba(${theme.black}, 0.09)`
-                      }}
-                      ref={
-                        state.publicProducts.length === index + 1 ? inViewRef : undefined
-                      }>
-                      <div className='product-image'>
-                        {item.promotion.status && (
-                          <span className='promotion'>
-                            Promoção {item.promotion.percentage}%{' '}
-                          </span>
-                        )}
-                        <button
-                          title='Adicionar a lista de favoritos'
-                          aria-label='Adicionar a lista de favoritos'
-                          className='favorite-button'
-                          onClick={() => {
-                            if (!state.auth.token) return requestLogin();
-                            else if (item.favorites.includes(state.auth?.id))
-                              return onUnFavoriteProduct(item._id);
-                            return onFavoriteProduct(item._id);
-                          }}>
-                          {item.favorites.includes(state.auth.id) ? (
-                            <Io.IoHeart />
-                          ) : (
-                            <Io.IoHeartOutline />
-                          )}
-                        </button>
-                        <button
-                          title='Adicionar ao carrinho'
-                          aria-label='Adicionar ao carrinho'
-                          className='cart-button'
-                          onClick={() => {
-                            state.cart.some((product) => product.productId === item._id)
-                              ? removeProductFromCart(item._id)
-                              : addProductToCart({
-                                  productId: item._id,
-                                  productName: item.name,
-                                  price: item.promotion.status
-                                    ? item.price -
-                                      (item.price * item.promotion.percentage) / 100
-                                    : item.price,
-                                  quantity: 1,
-                                  previewImage: item.image
-                                });
-                          }}>
-                          {state.cart.some((product) => product.productId === item._id) ? (
-                            <Io.IoCart />
-                          ) : (
-                            <Io.IoCartOutline />
-                          )}
-                        </button>
-                        {item.image && (
-                          <Link href={`/ecommerce/products/${item._id}`}>
-                            <Image
-                              src={item.image.url}
-                              width={250}
-                              height={250}
-                              blurDataURL={blurDataUrlImage}
-                              placeholder='blur'
-                              alt={`Imagem de ${item.name}`}
-                            />
-                          </Link>
-                        )}
-                        {!item.image && (
-                          <Link href={`/ecommerce/products/${item._id}`}>
-                            <Io.IoBagHandle className='no-image-icon' />
-                          </Link>
-                        )}
-                      </div>
-                      <Link
-                        href={`/ecommerce/products/${item._id}`}
-                        className='product-details'>
-                        <button className='buy-mobile-button'>
-                          <Io.IoBagCheck />
-                          <span>Comprar agora</span>
-                        </button>
-                        {item.promotion.status ? (
-                          <div className='item promo-price'>
-                            <h4>
-                              <span className='old-price'>
-                                {formatCurrency(item.price)}
-                              </span>{' '}
-                              <span className='actual-price'>
-                                {formatCurrency(
-                                  item.price -
-                                    (item.price * item.promotion.percentage) / 100
-                                )}
-                              </span>
-                            </h4>
-                          </div>
-                        ) : (
-                          <div className='item promo-price'>
-                            <span className='actual-price'>
-                              {formatCurrency(item.price)}
-                            </span>
-                          </div>
-                        )}
+                        boxShadow: `0 0 25px rgba(${theme.black}, 0.09)`,
+                        border: '1px solid transparent'
+                      }}>
+                      <h4>{plan.type}</h4>
+                      <h3>{plan.title}</h3>
 
-                        <h3>
-                          <span>
-                            {item.name.length > 40
-                              ? item.name.slice(0, 40) + '...'
-                              : item.name}{' '}
-                          </span>
-                        </h3>
+                      <h5>
+                        <strong>{formatCurrency(plan.amount)}</strong>
+                      </h5>
+
+                      <ul>
+                        {plan.description.map((phrase, index) => (
+                          <li key={index.toString()}>• {phrase};</li>
+                        ))}
+                      </ul>
+                      <Link href={plan.url}>
+                        <IoBalloonOutline />
+                        <span>{plan.label}</span>
                       </Link>
                     </motion.div>
-                  ))
-                : null}
-            </section>
-
-            <div className='stats-container'>
-              {isError && !isLoading ? (
-                <div className='fetch-error-message '>
-                  <h3>Erro ao carregar produtos</h3>
-                  <button onClick={() => fetchNextPage()}>
-                    <Io.IoReload />
-                    <span>Tentar novamente</span>
-                  </button>
+                  ))}
                 </div>
-              ) : null}
-
-              {isLoading && !isError ? (
-                <div className='loading'>
-                  <PulseLoader
-                    size={20}
-                    color={`rgb(${theme.primary_shade})`}
-                    aria-placeholder='Processando...'
-                    cssOverride={{
-                      display: 'block'
-                    }}
-                  />
-                  <h3>Carregando...</h3>
-                </div>
-              ) : null}
-
-              {!hasNextPage &&
-                !isLoading &&
-                !isError &&
-                state.publicProducts.length > 0 && <p>Sem mais produtos para mostrar.</p>}
-            </div>
-
-            {state.publicProducts.length > 0 && (
-              <div className='posts-container__end-mark'>
-                <Io.IoEllipsisHorizontal />
               </div>
-            )}
-          </article>
-        </div>
+            </div>
+          </section>
+        </article>
+        <NewsLetter />
       </Container>
     </Layout>
   );
-}
-
-export async function getServerSideProps() {
-  try {
-    const { data } = await fetch<BannerAds[]>({
-      method: 'get',
-      url: '/api/v1/default/ads/public'
-    });
-    return { props: { ads_data: data } };
-  } catch (error) {
-    console.error(error);
-    console.error(errorTransformer(error as HttpError));
-    return { props: { ads_data: [] } };
-  }
 }

@@ -1,7 +1,7 @@
 import rubymart_logo from '@/../public/rubymart_logo.png';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
-import { urls } from '@/data/constants';
+import { HEADER_URLS } from '@/data/constants';
 import { useCartStore } from '@/hooks/use-cart-store';
 import { useInnerWindowSize } from '@/hooks/use-window-size';
 import { _header as Container } from '@/styles/modules/header';
@@ -11,14 +11,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { BiUser } from 'react-icons/bi';
-import {
-  IoCartOutline,
-  IoClose,
-  IoLogInOutline,
-  IoLogOutOutline,
-  IoMenu,
-  IoStorefrontOutline
-} from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
 
 export function Header() {
   const { state } = useAppContext();
@@ -60,7 +53,7 @@ export function Header() {
               }}
               style={{ display: isMenu ? 'flex' : 'none' }}>
               <section>
-                {urls.map((item, index) => (
+                {HEADER_URLS.map((item, index) => (
                   <Link
                     key={index.toString()}
                     href={item.url}
@@ -82,7 +75,7 @@ export function Header() {
                     }
                     cartModalController();
                   }}>
-                  <IoCartOutline />
+                  <Io.IoCartOutline />
                   <span>
                     <i>{state.cart.length}</i>
                   </span>
@@ -91,11 +84,11 @@ export function Header() {
                 {!state.auth.id || !state.auth.token ? (
                   <>
                     <Link href={'/auth/sign-in'} className='login-btn'>
-                      <IoLogInOutline />
+                      <Io.IoLogInOutline />
                       <span>Acessar</span>
                     </Link>
                     <Link href={'/auth/sign-up'} className='sign-in-btn'>
-                      <IoStorefrontOutline />
+                      <Io.IoStorefrontOutline />
                       <span>Cadastrar-se</span>
                     </Link>
                   </>
@@ -120,7 +113,7 @@ export function Header() {
                   </button>
                 ) : (
                   <button title='Sair' className='user-logout' onClick={logoutUser}>
-                    <IoLogOutOutline />
+                    <Io.IoLogOutOutline />
                     <span>Sair</span>
                   </button>
                 )}
@@ -135,7 +128,7 @@ export function Header() {
           aria-label='Abrir ou fechar o menu'
           className='toggle-btn'
           onClick={toggleMenu}>
-          {!isMenu ? <IoMenu /> : <IoClose />}
+          {!isMenu ? <Io.IoMenu /> : <Io.IoClose />}
         </motion.button>
       </div>
     </Container>

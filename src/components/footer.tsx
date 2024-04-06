@@ -1,7 +1,7 @@
 import * as Io from 'react-icons/io5';
 import { useAppContext } from '@/context/AppContext';
 import { useThemeContext } from '@/context/ThemeContext';
-import { constants, urls } from '@/data/constants';
+import { constants, HEADER_URLS } from '@/data/constants';
 import { m as motion } from 'framer-motion';
 import Link from 'next/link';
 import { _footer as Container } from '../styles/modules/footer';
@@ -34,7 +34,7 @@ export function Footer() {
               <span>Navegação</span>
             </h3>
             <div className='elements'>
-              {urls.map((item, index) => (
+              {HEADER_URLS.map((item, index) => (
                 <Link key={index.toString()} href={item.url}>
                   <span>{item.name}</span>
                 </Link>

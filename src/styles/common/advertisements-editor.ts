@@ -93,14 +93,42 @@ export const _adEditor = styled.div`
 
   article {
     width: 100%;
-    max-width: 680px;
+    max-width: 980px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+    border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+    border-radius: 20px;
+    background: rgb(${({ theme }) => theme.foreground});
 
-    .title-bar-container {
-      border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
-      margin-bottom: 12px;
+    .header-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 20px;
+      border-bottom: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
+
+      h2 {
+        display: flex;
+        font-size: 1.2rem;
+        font-weight: 500;
+        align-items: center;
+        width: 100%;
+        gap: 8px;
+        padding: 10px 0;
+        text-transform: capitalize;
+        line-height: 1.6rem;
+
+        svg {
+          width: 25px;
+          height: 25px;
+          color: rgb(${({ theme }) => theme.primary});
+        }
+      }
+
+      p {
+        line-height: 1.6rem;
+      }
     }
 
     .data-container {
@@ -112,16 +140,7 @@ export const _adEditor = styled.div`
       margin: 0 auto;
       gap: 20px;
       position: relative;
-
-      /* @media screen and (max-width: 755px) {
-        flex-direction: column-reverse;
-        align-items: center;
-      }
-
-      @media screen and (max-width: 445px) {
-        padding: 80px 0;
-        gap: 0;
-      } */
+      padding: 0 20px;
 
       .form-section {
         width: 100%;
@@ -192,8 +211,8 @@ export const _adEditor = styled.div`
       flex-direction: column;
       gap: 12px;
       margin-top: 18px;
+      padding: 20px;
       border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
-      padding-top: 12px;
 
       .description {
         display: flex;

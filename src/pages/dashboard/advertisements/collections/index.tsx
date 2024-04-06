@@ -77,9 +77,10 @@ export default function Page() {
           <section className='header-container'>
             <h2>
               <FaAd />
-              <span>Suas Coleções de Anúncios</span>
+              <span>Anúncios Publicados</span>
             </h2>
-            <p>Aparecerão aqui os anúncios que for publicar na plataforma.</p>
+            <p>Aparecerão aqui os anúncios que for publicar na plataforma</p>
+            <p>Nota: os anúncios expiram irrevogavelmente após 30 dias.</p>
           </section>
 
           <section className='query-container'>

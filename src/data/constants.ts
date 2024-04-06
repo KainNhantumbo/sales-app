@@ -55,9 +55,9 @@ export const constants = {
 
 export const DEFAULT_ERROR_MESSAGE = 'Oops! Algo deu errado. Tente novamente.';
 
-export const urls: Array<{ name: string; url: string; alias: string }> = [
+export const HEADER_URLS: Array<{ name: string; url: string; alias: string }> = [
   { name: 'Início', url: '/', alias: '+' },
-  { name: 'Descobrir', url: '/ecommerce/discover', alias: 'discover' },
+  { name: 'Produtos', url: '/ecommerce/products', alias: 'products' },
   { name: 'Preçário', url: '/docs/pricing', alias: 'pricing' },
   { name: 'Lojas', url: '/ecommerce/stores', alias: 'stores' },
   { name: 'Feed', url: '/feed', alias: 'feed' },
