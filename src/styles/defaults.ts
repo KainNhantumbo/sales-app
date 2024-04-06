@@ -39,7 +39,7 @@ export const BaseButtonOutline = css`
 export const BaseButton = css`
   all: unset;
   width: 100%;
-  border-radius: 5px;
+  border-radius: 10px;
   position: relative;
   padding: 10px;
   width: fit-content;
@@ -135,10 +135,10 @@ export const ButtonMonoOutline = css`
 `;
 
 export const StyledCornerButton = css`
-  border-radius: 5px;
+  border-radius: 10px;
   background: none;
   color: rgb(${({ theme }) => theme.font});
-  border: 1px solid rgba(${({ theme }) => theme.black}, 0.07);
+  border: none;
   width: fit-content;
   cursor: pointer;
   display: grid;
@@ -146,7 +146,7 @@ export const StyledCornerButton = css`
   padding: 5px;
 
   :hover {
-    color: rgb(${({ theme }) => theme.primary_shade});
+    color: rgba(${({ theme }) => theme.primary_shade}, 0.8);
   }
 
   svg {
@@ -184,7 +184,7 @@ export const StyledInputs = css`
     padding: 10px 18px;
     line-height: 1.2rem;
     font-weight: 400;
-    border-radius: 5px;
+    border-radius: 10px;
     background: rgba(${({ theme }) => theme.background}, 0.7);
     border: 1px solid rgba(${({ theme }) => theme.font}, 0.08);
     color: rgb(${({ theme }) => theme.font});

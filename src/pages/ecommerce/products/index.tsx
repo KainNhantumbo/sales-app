@@ -1,46 +1,40 @@
 import Layout from '@/components/layout';
 import { ProductsSearch } from '@/components/products-search';
-import client from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { blurDataUrlImage, constants } from '@/data/constants';
 import { useCartStore } from '@/hooks/use-cart-store';
 import { useFavoriteProduct } from '@/hooks/use-favorite-product';
 import { usePublicProductsQuery } from '@/hooks/use-public-products-query';
-import { errorTransformer } from '@/lib/error-transformer';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
-import { _home as Container } from '@/styles/common/home';
-import type { HttpError, PublicAds } from '@/types';
+import { _ecommerceProducts as Container } from '@/styles/common/ecommerce-products';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import * as React from 'react';
 import * as Io from 'react-icons/io5';
-import ReactImageGallery from 'react-image-gallery';
-import 'react-image-gallery/styles/css/image-gallery.css';
 import { PulseLoader } from 'react-spinners';
 import { useTheme } from 'styled-components';
 
-type Props = { advertisements: PublicAds };
-
-export default function Page({ advertisements }: Props) {
+export default function Page() {
+  const {
+    fetchNextPage,
+    hasNextPage,
+    inViewRef,
+    queryString,
+    setQueryString,
+    isLoading,
+    isError,
+    isAnyFilterActive
+  } = usePublicProductsQuery();
   const theme = useTheme();
   const { state, dispatch } = useAppContext();
   const { requestLogin } = useModulesContext();
   const { addProductToCart, removeProductFromCart } = useCartStore();
-  const { fetchNextPage, hasNextPage, inViewRef, isLoading, isError } =
-    usePublicProductsQuery();
 
   const { onFavoriteProduct, onUnFavoriteProduct } = useFavoriteProduct({
     key: 'public-products-list'
   });
-
-  const bannerAds: PublicAds = React.useMemo(() => {
-    if (typeof advertisements !== 'undefined' && Array.isArray(advertisements))
-      return advertisements;
-    return [];
-  }, [advertisements]);
 
   return (
     <Layout metadata={{ title: `${constants.defaultTitle} | Produtos e Serviços` }}>
@@ -60,41 +54,13 @@ export default function Page({ advertisements }: Props) {
             <span>Pesquisar e Filtros</span>
           </motion.button>
 
-          <ProductsSearch />
+          <ProductsSearch
+            query={queryString}
+            setQuery={setQueryString}
+            isAnyFilterActive={isAnyFilterActive}
+          />
 
           <article>
-            {bannerAds.length > 0 ? (
-              <section className='banner-container'>
-                <ReactImageGallery
-                  lazyLoad={true}
-                  useBrowserFullscreen={true}
-                  additionalClass='navigator'
-                  autoPlay={true}
-                  showPlayButton={false}
-                  showThumbnails={false}
-                  showFullscreenButton={false}
-                  items={bannerAds.map((asset) => ({
-                    original: asset.image.url,
-                    originalWidth: 1080,
-                    originalHeight: 300,
-                    originalAlt: `Imagem de ${asset.name}`
-                  }))}
-                  renderRightNav={(onClick, disabled) => (
-                    <button className='nav-right' onClick={onClick} disabled={disabled}>
-                      <Io.IoChevronForward />
-                    </button>
-                  )}
-                  renderLeftNav={(onClick, disabled) => (
-                    <button className='nav-left' onClick={onClick} disabled={disabled}>
-                      <Io.IoChevronBack />
-                    </button>
-                  )}
-                />
-              </section>
-            ) : null}
-
-            {bannerAds.length > 0 ? <>Banner</> : null}
-
             {state.publicProducts.length < 1 && !isLoading && !isError ? (
               <div className='empty-data_container'>
                 <section className='content'>
@@ -102,11 +68,7 @@ export default function Page({ advertisements }: Props) {
                     <Io.IoBarcodeOutline />
                   </div>
                   <div className='message'>
-                    {Object.values(state.queryPublicProducts)
-                      .map((value) => (value ? true : false))
-                      .some((value) => value === true) && (
-                      <p>Sua pesquisa não teve resultados</p>
-                    )}
+                    {isAnyFilterActive ? <p>Sua pesquisa não teve resultados</p> : null}
                     <h3>Nenhum produto para mostrar.</h3>
                   </div>
                 </section>
@@ -274,15 +236,4 @@ export default function Page({ advertisements }: Props) {
       </Container>
     </Layout>
   );
-}
-
-export async function getServerSideProps() {
-  try {
-    const { data } = await client.get<PublicAds>('/api/v1/default/ads/public');
-    return { props: { advertisements: data } };
-  } catch (error) {
-    console.error(error);
-    console.error(errorTransformer(error as HttpError));
-    return { props: { advertisements: [] } };
-  }
 }

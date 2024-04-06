@@ -4,14 +4,12 @@ import type { Action, State } from '../types';
 
 export const initialState: State = {
   ads: [],
-  banner_ads: [],
   isFilterActive: false,
   isSearchActive: false,
   isSortActive: false,
   isCartModal: false,
   searchStores: '',
   searchStories: '',
-  queryPublicProducts: { category: undefined, promotion: undefined, query: '', sort: '' },
   isPublicProductsFilters: false,
   productsListQuery: { query: '', sort: '' },
   isDeleteAccountPrompt: false,
@@ -26,15 +24,6 @@ export const initialState: State = {
   denounce: { reason: '', content: '' },
   auth: { id: '', name: '', token: '', email: '', storeId: '', profile_image: '' },
   search: '',
-  newSubscriptionValue: { subscription: '' },
-  signupData: {
-    first_name: '',
-    last_name: '',
-    email: '',
-    password: '',
-    confirm_password: ''
-  },
-  signInData: { email: '', password: '' },
   user: {
     _id: '',
     first_name: '',
@@ -276,27 +265,6 @@ export function reducer(state: State, action: Action): State {
     case actions.USER_AUTH:
       return { ...state, auth: action.payload.auth };
 
-    case actions.IS_CONNECTED:
-      return {
-        ...state,
-        isConnected: action.payload.isConnected
-      };
-
-    case actions.NEW_subscription_VALUE:
-      return {
-        ...state,
-        newSubscriptionValue: action.payload.newSubscriptionValue
-      };
-
-    case actions.SIGNUP_DATA:
-      return {
-        ...state,
-        signupData: action.payload.signupData
-      };
-
-    case actions.SIGNIN_DATA:
-      return { ...state, signInData: action.payload.signInData };
-
     case actions.USER_DATA:
       return {
         ...state,
@@ -363,12 +331,6 @@ export function reducer(state: State, action: Action): State {
     case actions.BLOG_POSTS_LIST_QUERY:
       return { ...state, blogPostsList: action.payload.blogPostsList };
 
-    case actions.QUERY_PUBLIC_PRODUCTS_LIST:
-      return {
-        ...state,
-        queryPublicProducts: action.payload.queryPublicProducts
-      };
-
     case actions.PUBLIC_PRODUCTS_FILTERS_MENU:
       return {
         ...state,
@@ -401,9 +363,6 @@ export function reducer(state: State, action: Action): State {
 
     case actions.METRICS_DATA:
       return { ...state, metrics: action.payload.metrics };
-
-    case actions.BANNER_ADS:
-      return { ...state, banner_ads: action.payload.banner_ads };
 
     case actions.PROMPT:
       return { ...state, prompt: action.payload.prompt };

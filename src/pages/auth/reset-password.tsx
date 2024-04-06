@@ -85,7 +85,7 @@ export default function Page() {
                 )}
 
                 <button type='submit' disabled={loading}>
-                  <span>Enviar e-mail</span>
+                  Enviar e-mail
                 </button>
               </form>
 

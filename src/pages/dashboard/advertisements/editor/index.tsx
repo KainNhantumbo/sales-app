@@ -31,10 +31,7 @@ export default function Page() {
   }, [router.query]);
 
   const onChange = (e: InputEvents) => {
-    setAdData((state) => ({
-      ...state,
-      [e.target.name]: e.target.value
-    }));
+    setAdData((state) => ({ ...state, [e.target.name]: e.target.value }));
   };
 
   const { data, isError, isLoading, error } = useQuery({
@@ -52,7 +49,6 @@ export default function Page() {
         toast.error(message);
         console.error(error);
       }
-
     }
   });
 
@@ -95,7 +91,6 @@ export default function Page() {
     useErrorBoundary: true,
     networkMode: 'always'
   });
-
 
   React.useEffect(() => {
     if (typeof data !== 'undefined') setAdData(data);

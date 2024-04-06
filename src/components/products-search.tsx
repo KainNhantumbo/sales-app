@@ -1,13 +1,13 @@
 import { useAppContext } from '@/context/AppContext';
+import { PublicProductsQueryParams } from '@/hooks/use-public-products-query';
 import { useInnerWindowSize } from '@/hooks/use-window-size';
-import { initialState } from '@/lib/reducer';
 import { slidePageUp } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { Option } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect } from 'react';
+import * as React from 'react';
 import { BiSortAlt2 } from 'react-icons/bi';
-import { IoCartOutline, IoClose, IoFilter, IoGift, IoLayersOutline } from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
 import Categories from '../data/product-categories.json';
 import { _searchEngine as Container } from '../styles/modules/search-engine';
 import { SelectContainer } from './select';
@@ -15,18 +15,18 @@ import { SelectContainer } from './select';
 const sortOptions: Option[] = [
   { value: 'createdAt', label: 'Adicionado Recentemente' },
   { value: '-createdAt', label: 'Adicionado Antigamente' },
-  { value: '-name', label: 'Nome' },
-  { value: 'name', label: 'Nome (Invertido)' },
-  { value: '-category', label: 'Categoria' },
-  { value: 'category', label: 'Categoria (Invertido)' },
-  { value: 'price', label: 'Preço (Alto para Baixo)' },
-  { value: '-price', label: 'Preço (Baixo para Alto)' }
+  { value: 'name', label: 'Nome' },
+  { value: '-name', label: 'Nome (Invertido)' },
+  { value: 'category', label: 'Categoria' },
+  { value: '-category', label: 'Categoria (Invertido)' },
+  { value: '-price', label: 'Preço (Alto para Baixo)' },
+  { value: 'price', label: 'Preço (Baixo para Alto)' }
 ];
 
 const promotionOptions: Option[] = [
-  { value: undefined, label: 'Todos os produtos' },
-  { value: 'true', label: 'Somente produtos com promoção' },
-  { value: 'false', label: 'Somente produtos sem promoção' }
+  { value: '', label: 'Todos os produtos' },
+  { value: '1', label: 'Somente produtos com promoção' },
+  { value: '0', label: 'Somente produtos sem promoção' }
 ];
 
 const categoryOptions = Categories.map((category) => ({
@@ -34,7 +34,13 @@ const categoryOptions = Categories.map((category) => ({
   label: category
 }));
 
-export function ProductsSearch() {
+type Props = {
+  query: PublicProductsQueryParams;
+  setQuery: React.Dispatch<React.SetStateAction<PublicProductsQueryParams>>;
+  isAnyFilterActive: boolean;
+};
+
+export function ProductsSearch({ query, setQuery, isAnyFilterActive }: Props) {
   const { state, dispatch } = useAppContext();
   const { width: windowInnerWidth } = useInnerWindowSize();
   const toggleMenu = () => {
@@ -47,59 +53,29 @@ export function ProductsSearch() {
     });
   };
 
-  useEffect(() => {
-    if (windowInnerWidth > 830)
-      dispatch({
-        type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
-        payload: {
-          ...state,
-          isPublicProductsFilters: true
-        }
-      });
-    else
-      dispatch({
-        type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
-        payload: {
-          ...state,
-          isPublicProductsFilters: false
-        }
-      });
+  React.useEffect(() => {
+    dispatch({
+      type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
+      payload: { ...state, isPublicProductsFilters: windowInnerWidth > 830 }
+    });
   }, [windowInnerWidth]);
-
-  const renderClearButton = () => (
-    <button
-      onClick={() => {
-        dispatch({
-          type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
-          payload: { ...state, queryPublicProducts: initialState.queryPublicProducts }
-        });
-      }}>
-      <IoClose />
-      <span>Limpar filtros</span>
-    </button>
-  );
 
   return (
     <AnimatePresence>
       {state.isPublicProductsFilters && (
         <Container
           onClick={(e: any) => {
-            const target = (e as any).target.classList;
-            if (target[0]?.includes('search-engine')) {
+            const [target] = (e as any).target.classList;
+            if (target?.includes('search-engine')) {
               dispatch({
                 type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
-                payload: {
-                  ...state,
-                  isPublicProductsFilters: false
-                }
+                payload: { ...state, isPublicProductsFilters: false }
               });
             }
           }}>
           <motion.div
             className='wrapper-container'
             style={{ display: state.isPublicProductsFilters ? 'flex' : 'none' }}
-            initial={windowInnerWidth > 830 ? { translateX: -720 } : { translateY: 720 }}
-            animate={windowInnerWidth > 830 ? { translateX: 0 } : { translateY: 0 }}
             transition={{ duration: 0.38 }}
             drag={windowInnerWidth > 830 ? undefined : 'y'}
             dragElastic={{ top: 0.12, bottom: 0.1 }}
@@ -110,25 +86,14 @@ export function ProductsSearch() {
               if (info.offset.y > 350) {
                 dispatch({
                   type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
-                  payload: {
-                    ...state,
-                    isPublicProductsFilters: false
-                  }
+                  payload: { ...state, isPublicProductsFilters: false }
                 });
               }
             }}
             exit={
               windowInnerWidth > 830
-                ? {
-                    opacity: 0,
-                    translateX: -720,
-                    transition: { duration: 0.4 }
-                  }
-                : {
-                    opacity: 0,
-                    translateY: 720,
-                    transition: { duration: 0.38 }
-                  }
+                ? { opacity: 0, transition: { duration: 0.4 } }
+                : { opacity: 0, translateY: 720, transition: { duration: 0.38 } }
             }>
             <button
               onTouchEnd={toggleMenu}
@@ -139,37 +104,30 @@ export function ProductsSearch() {
 
             <section className='header-container'>
               <h3>
-                <IoFilter />
+                <Io.IoFilter />
                 <span>Filtros</span>
               </h3>
 
-              {Object.values(state.queryPublicProducts)
-                .map((value) => (value ? true : false))
-                .some((value) => value === true) && renderClearButton()}
+              {isAnyFilterActive ? (
+                <button
+                  onClick={() =>
+                    setQuery({ search: '', category: '', promotion: '', sort: '' })
+                  }>
+                  <Io.IoClose />
+                  <span>Limpar filtros</span>
+                </button>
+              ) : null}
             </section>
             <div className='form-container'>
-              <form
-                className='form-search'
-                onSubmit={(e) => {
-                  e.preventDefault();
-                }}>
+              <form className='form-search' onSubmit={(e) => e.preventDefault()}>
                 <div className='form-element' title='Search'>
                   <input
                     type='text'
-                    placeholder='Pesquisar produtos...'
-                    value={state.queryPublicProducts.query}
-                    onChange={(e) => {
-                      dispatch({
-                        type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
-                        payload: {
-                          ...state,
-                          queryPublicProducts: {
-                            ...state.queryPublicProducts,
-                            query: e.target.value
-                          }
-                        }
-                      });
-                    }}
+                    placeholder='Pesquisar...'
+                    value={query.search}
+                    onChange={(e) =>
+                      setQuery((state) => ({ ...state, search: e.target.value }))
+                    }
                   />
                 </div>
               </form>
@@ -177,24 +135,16 @@ export function ProductsSearch() {
 
             <div className='caret-container'>
               <h3>
-                <IoLayersOutline />
+                <Io.IoLayersOutline />
                 <span>Filtrar por</span>
               </h3>
               <SelectContainer
                 options={categoryOptions}
                 placeholder={'Selecione uma categoria'}
-                onChange={(option: any) => {
-                  dispatch({
-                    type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
-                    payload: {
-                      ...state,
-                      queryPublicProducts: {
-                        ...state.queryPublicProducts,
-                        category: String(option?.value)
-                      }
-                    }
-                  });
-                }}
+                value={categoryOptions.find((item) => item.value == query.category)}
+                onChange={({ value }: any) =>
+                  setQuery((state) => ({ ...state, category: String(value) }))
+                }
               />
             </div>
 
@@ -206,69 +156,29 @@ export function ProductsSearch() {
               <SelectContainer
                 options={sortOptions}
                 placeholder={'Selecione a opção'}
-                value={
-                  state.queryPublicProducts.sort
-                    ? {
-                        label: sortOptions.filter(
-                          (element) => element.value === state.queryPublicProducts.sort
-                        )[0].label,
-                        value: state.queryPublicProducts.sort
-                      }
-                    : undefined
+                value={sortOptions.find((item) => item.value == query.sort)}
+                onChange={({ value }: any) =>
+                  setQuery((state) => ({ ...state, sort: String(value) }))
                 }
-                onChange={(option: any) => {
-                  dispatch({
-                    type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
-                    payload: {
-                      ...state,
-                      queryPublicProducts: {
-                        ...state.queryPublicProducts,
-                        sort: String(option?.value)
-                      }
-                    }
-                  });
-                }}
               />
             </div>
             <div className='caret-container'>
               <h3>
-                <IoGift />
+                <Io.IoGift />
                 <span>Promoções</span>
               </h3>
               <SelectContainer
                 options={promotionOptions}
                 placeholder={'Selecione a opção'}
-                value={
-                  state.queryPublicProducts.promotion
-                    ? promotionOptions[1]
-                    : state.queryPublicProducts.promotion === false
-                      ? promotionOptions[2]
-                      : promotionOptions[0]
-                }
-                onChange={(option: any) => {
-                  dispatch({
-                    type: actions.QUERY_PUBLIC_PRODUCTS_LIST,
-                    payload: {
-                      ...state,
-                      queryPublicProducts: {
-                        ...state.queryPublicProducts,
-                        promotion:
-                          option?.value === 'true'
-                            ? true
-                            : option?.value === 'false'
-                              ? false
-                              : undefined
-                      }
-                    }
-                  });
+                value={promotionOptions.find((item) => item.value == query.promotion)}
+                onChange={({ value }: any) => {
+                  setQuery((state) => ({ ...state, promotion: value }));
                 }}
               />
             </div>
 
             <div className='caret-container'>
-              {Object.values(state.queryPublicProducts)
-                .map((value) => (value ? true : false))
-                .some((value) => value === true) && (
+              {isAnyFilterActive ? (
                 <motion.button
                   whileTap={{ scale: 0.8 }}
                   whileHover={{ scale: 1.05 }}
@@ -278,13 +188,12 @@ export function ProductsSearch() {
                       type: actions.PUBLIC_PRODUCTS_FILTERS_MENU,
                       payload: { ...state, isPublicProductsFilters: false }
                     });
-
-                    if (windowInnerWidth < 830) slidePageUp();
+                    windowInnerWidth < 830 && slidePageUp();
                   }}>
-                  <IoCartOutline />
+                  <Io.IoCartOutline />
                   <span>Mostrar {state.publicProducts.length} resultados</span>
                 </motion.button>
-              )}
+              ) : null}
             </div>
           </motion.div>
         </Container>

@@ -11,30 +11,22 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { IoEnterOutline, IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
+import { IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 
 export default function Page() {
-  const { state, dispatch } = useAppContext();
   const router = useRouter();
+  const { state, dispatch } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
+  const [formData, setFormData] = useState({ email: '', password: '' });
 
   const handleChange = (e: InputEvents) => {
-    dispatch({
-      type: actions.SIGNIN_DATA,
-      payload: {
-        ...state,
-        signInData: {
-          ...state.signInData,
-          [e.target.name]: e.target.value
-        }
-      }
-    });
+    setFormData((state) => ({ ...state, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
-    if (state.signInData.password.length < 8) {
+    if (formData.password.length < 8) {
       return toast.error('A senha deve conter pelo menos 8 caracteres');
     }
     try {
@@ -42,13 +34,10 @@ export default function Page() {
       const { data } = await fetch<Auth>({
         method: 'post',
         url: '/api/v1/auth/default/login',
-        data: { ...state.signInData },
+        data: { ...formData },
         withCredentials: true
       });
-      dispatch({
-        type: actions.USER_AUTH,
-        payload: { ...state, auth: { ...data } }
-      });
+      dispatch({ type: actions.USER_AUTH, payload: { ...state, auth: { ...data } } });
       router.push(`/dashboard`);
     } catch (error) {
       const { message } = errorTransformer(error as HttpError);
@@ -118,8 +107,7 @@ export default function Page() {
                 </div>
 
                 <button type='submit' disabled={loading}>
-                  <IoEnterOutline />
-                  <span>Acessar conta</span>
+                  Acessar conta
                 </button>
               </form>
 

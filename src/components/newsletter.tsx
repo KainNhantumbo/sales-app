@@ -1,7 +1,5 @@
-import { useAppContext } from '@/context/AppContext';
 import { blurDataUrlImage } from '@/data/constants';
 import { errorTransformer } from '@/lib/error-transformer';
-import { actions } from '@/shared/actions';
 import { HttpError } from '@/types';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -10,29 +8,19 @@ import { PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 import newsletter_image from '../../public/assets/newsletter.png';
-import fetch from '../config/client';
+import client from '../config/client';
 import { _newsletter as Container } from '../styles/modules/newsletter';
 
 export function NewsLetter() {
   const theme = useTheme();
-  const { state, dispatch } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<string>('');
 
-  const handleEmailSubmission = async () => {
+  const onSubmit = async () => {
     try {
       setLoading(true);
-      await fetch({
-        method: 'post',
-        url: '/api/v1/users/newsletter',
-        data: state.newSubscriptionValue
-      });
-      dispatch({
-        type: actions.NEW_subscription_VALUE,
-        payload: {
-          ...state,
-          newSubscriptionValue: { subscription: '' }
-        }
-      });
+      await client({ method: 'post', url: '/api/v1/users/newsletter', data: inputValue });
+      setInputValue('');
       toast.success('Inscreveu-se a newsletter com sucesso.');
     } catch (error) {
       const { message } = errorTransformer(error as HttpError);
@@ -73,18 +61,10 @@ export function NewsLetter() {
                   aria-label='Escreva o seu e-mail'
                   placeholder='Escreva o seu e-mail'
                   autoComplete='true'
-                  value={state.newSubscriptionValue.subscription}
-                  onChange={(e) =>
-                    dispatch({
-                      type: actions.NEW_subscription_VALUE,
-                      payload: {
-                        ...state,
-                        newSubscriptionValue: { subscription: e.target.value }
-                      }
-                    })
-                  }
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
                 />
-                <button type='submit' onClick={handleEmailSubmission}>
+                <button type='submit' onClick={onSubmit}>
                   <span>Inscrever</span>
                 </button>
               </>

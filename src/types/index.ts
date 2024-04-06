@@ -441,9 +441,6 @@ export type State = {
   search: string;
   searchStores: string;
   searchStories: string;
-  newSubscriptionValue: { subscription: string };
-  signupData: SignUp;
-  signInData: SignIn;
   user: User;
   store: Store;
   product: Product;
@@ -454,7 +451,6 @@ export type State = {
   publicProducts: PublicProducts[];
   productsListQuery: { query: string; sort: string };
   blogPostsList: Posts[];
-  queryPublicProducts: SearchProducts;
   isPublicProductsFilters: boolean;
   cart: Cart[];
   orders: Order[];

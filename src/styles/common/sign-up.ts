@@ -48,6 +48,7 @@ export const _signUp = styled.div`
       margin: 25px;
       background: rgb(${({ theme }) => theme.foreground});
       box-shadow: 0 0 25px rgba(${({ theme }) => theme.black}, 0.09);
+      border: 1px solid rgba(${({ theme }) => theme.font}, 0.15);
 
       @media screen and (min-width: 440px) {
         min-width: 400px;
@@ -103,8 +104,8 @@ export const _signUp = styled.div`
 
         button {
           ${BaseButton}
-          align-self: center;
-          width: fit-content;
+          width: 100%;
+          padding: 10px 0;
         }
       }
 

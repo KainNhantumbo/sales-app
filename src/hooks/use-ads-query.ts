@@ -48,18 +48,17 @@ export function useAdsQuery() {
   React.useEffect(() => {
     const instance = setTimeout(() => {
       refetch({ queryKey: ['private-ads'] });
-    }, 400);
+    }, 200);
     return () => clearTimeout(instance);
   }, [params]);
 
   React.useEffect(() => {
     const instance = setTimeout(() => {
-      router.replace(
-        `/dashboard/advertisements/collections?${new URLSearchParams(urlQueryString)}`
-      );
+      const query = new URLSearchParams(urlQueryString).toString();
+      router.replace(`/dashboard/advertisements/collections?${query}`);
     }, 400);
     return () => clearTimeout(instance);
-  }, [router, urlQueryString]);
+  }, [urlQueryString]);
 
   return {
     error,

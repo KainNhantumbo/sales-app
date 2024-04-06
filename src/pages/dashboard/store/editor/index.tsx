@@ -17,25 +17,16 @@ import { DotLoader, PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 
-type TLoading = {
-  status: boolean;
-  key: 'store-data' | 'store-update';
-};
+type TLoading = { status: boolean; key: 'store-data' | 'store-update' };
 
 export default function Page() {
   const theme = useTheme();
   const router = useRouter();
   const { state, httpClient, dispatch, deactivateStorePromptController } = useAppContext();
-
-  const [loading, setLoading] = useState<TLoading>({
-    status: false,
-    key: 'store-data'
-  });
-
-  // --------------------state---------------------
   const [countryStates, setCountryStates] = useState<string[]>([
     state.store.location?.state
   ]);
+  const [loading, setLoading] = useState<TLoading>({ status: false, key: 'store-data' });
   const [coverImageFile, setCoverImageFile] = useState<FileList | null>(null);
   const [coverImageData, setCoverImageData] = useState({ id: '', data: '' });
 
@@ -62,7 +53,10 @@ export default function Page() {
         const reader = new FileReader();
         reader.readAsDataURL(compressedImage);
         reader.onloadend = function (e: ProgressEvent<FileReader>) {
-          const encodedImage: string = e.target?.result as string;
+          const encodedImage = e.target?.result?.toString();
+          if (typeof encodedImage !== 'string')
+            return toast.error('Erro ao processar imagem.');
+
           setCoverImageData({
             id: state.user.cover_image?.id || '',
             data: encodedImage

@@ -6,7 +6,7 @@ import {
   statsContainerStyles
 } from '../defaults';
 
-export const _home = styled.div`
+export const _ecommerceProducts = styled.div`
   position: relative;
   width: 100%;
   position: relative;
@@ -31,7 +31,7 @@ export const _home = styled.div`
     gap: 30px;
     padding: 0 10px;
     padding-bottom: 50px;
-    padding-top: 100px;
+    padding-top: 60px;
     margin: 0 auto;
 
     .openFluentFilters {
@@ -96,67 +96,6 @@ export const _home = styled.div`
         p {
           text-align: center;
           line-height: 1.2rem;
-        }
-      }
-    }
-
-    .banner-container {
-      width: 100%;
-      max-width: 100%;
-
-      @media screen and (max-width: 990px) {
-        max-width: 480px;
-      }
-
-      @media screen and (max-width: 990px) {
-        width: fit-content;
-      }
-
-      @media screen and (max-width: 445px) {
-        padding: 0;
-      }
-
-      .navigator {
-        position: relative;
-
-        @media screen and (max-width: 445px) {
-          width: 100%;
-          margin: 0;
-          padding: 0;
-        }
-
-        .image-gallery-image {
-          border-radius: 12px;
-          border: 3px solid transparent;
-          object-fit: cover;
-          :hover {
-            border: 3px solid rgba(${({ theme }) => theme.primary}, 0.9);
-            transition: all 500ms ease;
-          }
-        }
-
-        .nav-left,
-        .nav-right {
-          ${StyledCornerButton}
-          position: absolute;
-          right: 10px;
-          top: calc(50% - 25px);
-          z-index: 300;
-          backdrop-filter: blur(10px);
-          padding: 5px;
-
-          :hover {
-            background: rgba(${({ theme }) => theme.black}, 0.6);
-          }
-          svg {
-            width: 25px;
-            height: 25px;
-            color: rgb(${({ theme }) => theme.white});
-          }
-        }
-
-        .nav-left {
-          left: 10px;
         }
       }
     }

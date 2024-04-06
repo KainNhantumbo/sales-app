@@ -1,10 +1,8 @@
 import coverImage from '@/../public/assets/africa-unveiled.png';
 import Layout from '@/components/layout';
-import fetch from '@/config/client';
-import { useAppContext } from '@/context/AppContext';
+import client from '@/config/client';
 import { constants } from '@/data/constants';
 import { errorTransformer } from '@/lib/error-transformer';
-import { actions } from '@/shared/actions';
 import { _signUp as Container } from '@/styles/common/sign-up';
 import { HttpError, InputEvents, SubmitEvent } from '@/types';
 import Image from 'next/image';
@@ -16,35 +14,37 @@ import { PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 
+const initialFormState = {
+  first_name: '',
+  last_name: '',
+  email: '',
+  password: '',
+  confirm_password: ''
+};
+
 export default function Page() {
   const router = useRouter();
   const theme = useTheme();
-  const { state, dispatch } = useAppContext();
   const [loading, setLoading] = useState<boolean>(false);
+  const [formData, setFormData] = useState<typeof initialFormState>(initialFormState);
 
   const handleChange = (e: InputEvents) => {
-    dispatch({
-      type: actions.SIGNUP_DATA,
-      payload: {
-        ...state,
-        signupData: { ...state.signupData, [e.target.name]: e.target.value }
-      }
-    });
+    setFormData((state) => ({ ...state, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
-    if (state.signupData.password !== state.signupData.confirm_password)
+    if (formData.password !== formData.confirm_password)
       return toast.error('As senhas devem ser iguais.');
-    if (state.signupData.password.length < 8)
+    if (formData.password.length < 8)
       return toast.error('A senha deve conter pelo menos 8 caracteres.');
 
     try {
       setLoading(true);
-      await fetch({
+      await client({
         method: 'post',
         url: '/api/v1/users/account',
-        data: { ...state.signupData, role: 'user' }
+        data: { ...formData, role: 'user' }
       });
       router.push('/auth/sign-up-confirm');
     } catch (error) {
@@ -176,8 +176,7 @@ export default function Page() {
                 }
 
                 <button className='next' type='submit' disabled={loading}>
-                  <Io.IoEnterOutline />
-                  <span>Cadastre-se</span>
+                  Cadastre-se
                 </button>
               </form>
               <div className='sign-in-options'>

@@ -106,7 +106,7 @@ export default function Page() {
                 )}
 
                 <button type='submit' disabled={loading}>
-                  <span>Recuperar conta</span>
+                  Recuperar conta
                 </button>
               </form>
             </div>
