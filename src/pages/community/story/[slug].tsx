@@ -1,16 +1,13 @@
 import { DropzoneArea } from '@/components/dropzone';
 import Layout from '@/components/layout';
 import { SideBarAds } from '@/components/sidebar-ads';
-import fetch from '@/config/client';
+import client from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
 import { useFetchState } from '@/hooks/use-fetch-state';
 import { errorTransformer } from '@/lib/error-transformer';
-import { initialState } from '@/lib/reducer';
-import { actions } from '@/shared/actions';
 import { _story as Container } from '@/styles/common/story';
-import { HttpError, PublicStory, Story } from '@/types';
-import type { AxiosResponse } from 'axios';
+import type { HttpError, Story } from '@/types';
 import type { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -22,54 +19,23 @@ import { PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 
-type Props = { story?: PublicStory };
+const initialStoryState = { title: '', content: '', cover_image: { id: '', url: '' } };
 
-export default function Page(props: Props) {
+export default function Page({ story }: { story?: Story & { _id: string } }) {
   const theme = useTheme();
   const router = useRouter();
-  const { state, dispatch, httpClient } = useAppContext();
+  const { httpClient } = useAppContext();
   const { isLoading, setLoading } = useFetchState({ delay: 500 });
+  const [coverImage, setCoverImage] = useState<string>('');
+  const [formData, setFormData] = useState<typeof initialStoryState>(initialStoryState);
 
-  const [coverImageData, setCoverImageData] = useState({
-    id: state.story.cover_image?.id || '',
-    data: state.story.cover_image?.url || ''
-  });
-
-  async function onDeleteCoverImage() {
-    if (!state.story.cover_image?.url) return setCoverImageData({ id: '', data: '' });
-
+  async function onCreate() {
     try {
       setLoading(true);
       await httpClient({
-        method: 'delete',
-        url: `/api/v1/users/stories/assets/${props.story?._id}`,
-        data: { assetId: props.story?.cover_image?.id }
-      });
-
-      setCoverImageData({ id: '', data: '' });
-      dispatch({
-        type: actions.USER_STORY,
-        payload: {
-          ...state,
-          story: { ...state.story, cover_image: { id: '', url: '' } }
-        }
-      });
-    } catch (error) {
-      const { message } = errorTransformer(error as HttpError);
-      toast.error(message);
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function onCreate() {
-    setLoading(true);
-    try {
-      await httpClient({
         method: 'post',
         url: `/api/v1/users/stories`,
-        data: { ...state.story, coverImageData }
+        data: { ...formData, coverImage }
       });
       router.back();
     } catch (error) {
@@ -86,8 +52,8 @@ export default function Page(props: Props) {
     try {
       await httpClient({
         method: 'patch',
-        url: `/api/v1/users/stories/${props.story?._id}`,
-        data: { ...state.story, coverImageData }
+        url: `/api/v1/users/stories/${story?._id}`,
+        data: { ...formData, coverImage }
       });
       router.back();
     } catch (error) {
@@ -100,34 +66,23 @@ export default function Page(props: Props) {
   }
 
   useEffect(() => {
-    if (props.story && Object.values(props.story).length > 0) {
-      dispatch({
-        type: actions.USER_STORY,
-        payload: { ...state, story: { ...props.story } }
-      });
+    if (story) {
+      const { _id, ...rest } = story;
+      setFormData({ ...(rest as any) });
+      setCoverImage(rest.cover_image?.url || '');
     }
-    return () => {
-      dispatch({
-        type: actions.USER_STORY,
-        payload: { ...state, story: initialState.story }
-      });
-      setCoverImageData({ id: '', data: '' });
-    };
-  }, [props.story]);
+  }, [story]);
 
   return (
     <Layout metadata={{ title: `${constants.defaultTitle} | Histórias` }}>
       <Container>
         <div className='wrapper-container'>
           <SideBarAds key={'story'} />
-
           <article>
             <section className='header-container'>
               <h2>
                 <IoHeart />
-                <span>
-                  {props.story?._id ? 'Atualização de História' : 'Nova História'}
-                </span>
+                <span>{story?._id ? 'Atualização de História' : 'Nova História'}</span>
               </h2>
               <p>
                 Escreva uma pequena história relacionada aos produtos que vende ou para
@@ -161,19 +116,11 @@ export default function Page(props: Props) {
                       required={true}
                       maxLength={64}
                       onChange={(e) =>
-                        dispatch({
-                          type: actions.USER_STORY,
-                          payload: {
-                            ...state,
-                            story: { ...state.story, title: String(e.target.value) }
-                          }
-                        })
+                        setFormData((state) => ({ ...state, title: e.target.value }))
                       }
-                      value={state.story.title}
+                      value={formData.title}
                     />
-                    <span className='counter'>{`${
-                      state.story.title.length || 0
-                    } / 64`}</span>
+                    <span className='counter'>{`${formData.title.length || 0} / 64`}</span>
                   </div>
                 </section>
 
@@ -190,59 +137,30 @@ export default function Page(props: Props) {
                       rows={6}
                       maxLength={512}
                       onChange={(e) =>
-                        dispatch({
-                          type: actions.USER_STORY,
-                          payload: {
-                            ...state,
-                            story: { ...state.story, content: String(e.target.value) }
-                          }
-                        })
+                        setFormData((state) => ({ ...state, content: e.target.value }))
                       }
-                      value={state.story.content}
+                      value={formData.content}
                     />
                     <span className='counter'>{`${
-                      state.story.content.length || 0
+                      formData.content.length || 0
                     } / 512`}</span>
                   </div>
                 </section>
 
                 <div className='cover-image-container'>
-                  {coverImageData.data ? (
+                  {coverImage ? (
                     <>
                       <Image
                         width={420}
                         height={220}
                         priority
                         className='cover-image'
-                        src={coverImageData.data}
+                        src={coverImage}
                         title={`Imagem de capa da história`}
                         aria-label={`Imagem de capa da história`}
                         alt={`Imagem de capa da história`}
                       />
-                      <button
-                        title='Apagar imagem de capa'
-                        className='clear-image'
-                        onClick={onDeleteCoverImage}>
-                        <BsTrash />
-                        <span>Remover imagem</span>
-                      </button>
-                    </>
-                  ) : state.story.cover_image && state.story.cover_image.url ? (
-                    <>
-                      <Image
-                        width={420}
-                        height={220}
-                        priority
-                        className='cover-image'
-                        src={state.story.cover_image.url}
-                        title={`Imagem de capa da história`}
-                        aria-label={`Imagem de capa da história`}
-                        alt={`Imagem de capa da história`}
-                      />
-                      <button
-                        title='Apagar imagem de capa'
-                        className='clear-image'
-                        onClick={onDeleteCoverImage}>
+                      <button className='clear-image' onClick={() => setCoverImage('')}>
                         <BsTrash />
                         <span>Remover imagem</span>
                       </button>
@@ -252,12 +170,7 @@ export default function Page(props: Props) {
                       <DropzoneArea
                         width={220}
                         height={420}
-                        handler={(encodedImage) => {
-                          setCoverImageData({
-                            id: state.story.cover_image?.id || '',
-                            data: encodedImage
-                          });
-                        }}
+                        handler={(encodedImage) => setCoverImage(encodedImage)}
                       />
                     </div>
                   )}
@@ -277,25 +190,23 @@ export default function Page(props: Props) {
                     </div>
                   )}
 
-                  {!isLoading && (
-                    <div className='prompt-actions'>
-                      {props.story?._id !== undefined ? (
-                        <button
-                          onClick={onUpdate}
-                          disabled={isLoading}
-                          className='prompt-accept'>
-                          <span>Atualizar</span>
-                        </button>
-                      ) : (
-                        <button
-                          className='prompt-accept-btn'
-                          disabled={isLoading}
-                          onClick={onCreate}>
-                          <span>Publicar</span>
-                        </button>
-                      )}
-                    </div>
-                  )}
+                  <div className='prompt-actions'>
+                    {story?._id !== undefined ? (
+                      <button
+                        onClick={onUpdate}
+                        disabled={isLoading}
+                        className='prompt-accept'>
+                        <span>Atualizar</span>
+                      </button>
+                    ) : (
+                      <button
+                        className='prompt-accept-btn'
+                        disabled={isLoading}
+                        onClick={onCreate}>
+                        <span>Publicar</span>
+                      </button>
+                    )}
+                  </div>
                 </section>
               </section>
             </section>
@@ -306,15 +217,12 @@ export default function Page(props: Props) {
   );
 }
 
-type Context = GetServerSidePropsContext;
-
-export async function getServerSideProps(context: Context) {
+export async function getServerSideProps<
+  T extends GetServerSidePropsContext<{ slug: string }>
+>({ params }: T) {
   try {
-    if (context.params?.slug === 'create-story') return { props: {} };
-    const { data } = await fetch<AxiosResponse<Story>>({
-      method: 'get',
-      url: `/api/v1/users/stories/${context.params?.slug}`
-    });
+    if (params?.slug === 'create-story') return { props: {} };
+    const { data } = await client.get<Story>(`/api/v1/users/stories/${params?.slug}`);
     return { props: { story: { ...data } } };
   } catch (error) {
     console.error(error);

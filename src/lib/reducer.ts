@@ -14,7 +14,6 @@ export const initialState: State = {
   productsListQuery: { query: '', sort: '' },
   isDeleteAccountPrompt: false,
   isDeactivateStorePrompt: false,
-  isDeleteStoryPrompt: { status: false, storyId: '' },
   isShareProductModal: false,
   isUserWorkingDataModal: false,
   isConnected: false,
@@ -234,12 +233,6 @@ export function reducer(state: State, action: Action): State {
       return {
         ...state,
         isShareProductModal: action.payload.isShareProductModal
-      };
-
-    case actions.DELETE_STORY_PROMPT:
-      return {
-        ...state,
-        isDeleteStoryPrompt: action.payload.isDeleteStoryPrompt
       };
 
     case actions.USER_WORKING_DATA_MODAL:

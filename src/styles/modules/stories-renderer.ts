@@ -172,7 +172,7 @@ export const _storiesRender = styled.div`
       .cover-image {
         width: 100%;
         height: 100%;
-        max-height: 420px;
+        max-height: 220px;
         border-radius: 12px;
         object-fit: cover;
       }

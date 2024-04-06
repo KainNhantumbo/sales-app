@@ -1,7 +1,8 @@
-import fetch from '@/config/client';
+import client from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { useModulesContext } from '@/context/Modules';
 import { constants } from '@/data/constants';
+import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
 import { _storiesRender as Container } from '@/styles/modules/stories-renderer';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -9,68 +10,83 @@ import { motion } from 'framer-motion';
 import moment from 'moment';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import * as React from 'react';
 import { BiUser } from 'react-icons/bi';
-import { BsTrash } from 'react-icons/bs';
-import { FaEdit } from 'react-icons/fa';
-import {
-  IoBanOutline,
-  IoHeart,
-  IoHeartOutline,
-  IoLeafOutline,
-  IoReload
-} from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
 import { useInView } from 'react-intersection-observer';
 import { PulseLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 import { HttpError, PublicStory } from '../types';
-import { DeleteStoryPrompt } from './modals/delete-story-prompt';
 
 type Props = { userId?: string; favoritesId?: string };
 
 export function StoriesRenderer(props: Props) {
-  const { state, dispatch, httpClient, deleteStoryPromptController } = useAppContext();
+  const { state, dispatch, httpClient } = useAppContext();
   const { requestLogin } = useModulesContext();
   const LIMIT: number = 8;
   const router = useRouter();
   const theme = useTheme();
   const { ref, inView } = useInView();
 
-  const getStories = async ({ pageParam = 0 }) => {
-    const { data } = await fetch<PublicStory[]>({
-      method: 'get',
-      url: `/api/v1/users/stories${props.userId ? `?userId=${props.userId}` : ''}${
-        props.favoritesId
-          ? props.userId
-            ? `&favoritesId=${props.favoritesId}`
-            : `?favoritesId=${props.favoritesId}`
-          : ''
-      }${state.searchStories ? `?search=${state.searchStories}` : ''}`
-    });
-    return { data, currentOffset: pageParam + 1 };
-  };
-
   const { data, fetchNextPage, hasNextPage, refetch, isLoading, isError } =
     useInfiniteQuery({
       queryKey: ['user-stories'],
-      queryFn: getStories,
-      getNextPageParam: (lastPage) =>
-        lastPage?.data?.length >= LIMIT ? lastPage.currentOffset : undefined
+      queryFn: async ({ pageParam = 0 }) => {
+        const query = new URLSearchParams({
+          userId: String(props.userId || ''),
+          favoritesId: props.favoritesId || '',
+          search: state.searchStories
+        });
+        try {
+          const { data } = await client.get<PublicStory[]>(
+            `/api/v1/users/stories?${query.toString()}`
+          );
+          return { data, currentOffset: pageParam + 1 };
+        } catch (error) {
+          const { message } = errorTransformer(error as HttpError);
+          toast.error(message);
+          console.error(error);
+          return { data: [], currentOffset: 0 };
+        }
+      },
+      getNextPageParam: ({ data, currentOffset }) =>
+        data?.length >= LIMIT ? currentOffset : undefined
     });
 
-  const handleDeleteStory = async (storeId: string) => {
-    try {
-      await httpClient({
-        method: 'delete',
-        url: `/api/v1/users/stories/${storeId}`
-      });
-      deleteStoryPromptController(false, '');
-      refetch({ queryKey: ['user-stories'] });
-    } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
-    }
+  const onDelete = (storeId: string) => {
+    dispatch({
+      type: actions.PROMPT,
+      payload: {
+        ...state,
+        prompt: {
+          ...state.prompt,
+          status: true,
+          title: 'Eliminação de História',
+          message:
+            'Você realmente gostaria de eliminar esta história? Esta ação não pode ser desfeita.',
+          actionButtonMessage: 'Confirmar',
+          handleFunction: async () => {
+            try {
+              await httpClient({
+                method: 'delete',
+                url: `/api/v1/users/stories/${storeId}`
+              });
+              refetch({ queryKey: ['user-stories'] });
+            } catch (error) {
+              const { message } = errorTransformer(error as HttpError);
+              toast.error(message);
+              console.error(error);
+            } finally {
+              dispatch({
+                type: actions.PROMPT,
+                payload: { ...state, prompt: { ...state.prompt, status: false } }
+              });
+            }
+          }
+        }
+      }
+    });
   };
 
   const handleFavoriteStory = async (storyId: string) => {
@@ -83,17 +99,15 @@ export function StoriesRenderer(props: Props) {
         type: actions.PUBLIC_USER_STORIES,
         payload: {
           ...state,
-          publicStories: [
-            ...state.publicStories.map((story) =>
-              story._id === storyId ? { ...story, favorites: data } : story
-            )
-          ]
+          publicStories: state.publicStories.map((story) =>
+            story._id === storyId ? { ...story, favorites: data } : story
+          )
         }
       });
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
+      console.error(error);
     }
   };
 
@@ -107,64 +121,51 @@ export function StoriesRenderer(props: Props) {
         type: actions.PUBLIC_USER_STORIES,
         payload: {
           ...state,
-          publicStories: [
-            ...state.publicStories.map((story) =>
-              story._id === storyId ? { ...story, favorites: data } : story
-            )
-          ]
+          publicStories: state.publicStories.map((story) =>
+            story._id === storyId ? { ...story, favorites: data } : story
+          )
         }
       });
     } catch (error) {
-      console.error(
-        (error as HttpError).response?.data?.message || (error as HttpError).message
-      );
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
+      console.error(error);
     }
   };
 
-  useEffect(() => {
+  const stories = React.useMemo(() => {
     if (data) {
-      const reducedStories = data?.pages
-        .map(({ data }) => data)
-        .reduce((accumulator, currentObj) => [...accumulator, ...currentObj]);
-
-      dispatch({
-        type: actions.PUBLIC_USER_STORIES,
-        payload: {
-          ...state,
-          publicStories: [...reducedStories]
-        }
-      });
+      return data?.pages.map(({ data }) => data).reduce((acc, curr) => [...acc, ...curr]);
     }
-
-    return () => {
-      dispatch({
-        type: actions.PUBLIC_USER_STORIES,
-        payload: { ...state, publicStories: [] }
-      });
-    };
+    return [];
   }, [data]);
 
-  useEffect(() => {
+  React.useEffect(() => {
+    dispatch({
+      type: actions.PUBLIC_USER_STORIES,
+      payload: { ...state, publicStories: [...stories] }
+    });
+  }, [stories]);
+
+  React.useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
   }, [inView, hasNextPage]);
 
-  useEffect(() => {
-    const debounceTime = setTimeout(() => {
+  React.useEffect(() => {
+    const instance = setTimeout(() => {
       refetch({ queryKey: ['user-stories'] });
     }, 400);
-    return () => clearTimeout(debounceTime);
+    return () => clearTimeout(instance);
   }, [state.searchStories]);
 
   return (
     <Container>
-      <DeleteStoryPrompt deleteFn={handleDeleteStory} />
-
       {state.publicStories.length < 1 && !isLoading && !isError ? (
         <div className='empty-data_container'>
           <section className='content'>
-            <IoLeafOutline />
+            <Io.IoLeafOutline />
             <h3>
               <span>Nenhuma história para mostrar</span>
             </h3>
@@ -180,11 +181,11 @@ export function StoriesRenderer(props: Props) {
       {state.publicStories.length > 0 ? (
         <section className='stories-container'>
           {state.publicStories.length > 0 &&
-            state.publicStories.map((story, index) => (
+            state.publicStories.map((story, i) => (
               <div
-                key={String(story._id)}
+                key={story._id}
                 className='story-container'
-                ref={state.publicStories.length === index + 1 ? ref : undefined}>
+                ref={state.publicStories.length === i + 1 ? ref : undefined}>
                 <div className='header-container'>
                   <div
                     className='profile-image-container'
@@ -223,7 +224,7 @@ export function StoriesRenderer(props: Props) {
                   {story.content.includes('\n') ? (
                     story.content
                       .split('\n')
-                      .map((phrase, index) => <p key={String(index)}>{phrase}</p>)
+                      .map((phrase, i) => <p key={String(i)}>{phrase}</p>)
                   ) : (
                     <p>{story.content}</p>
                   )}
@@ -251,15 +252,15 @@ export function StoriesRenderer(props: Props) {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.8 }}
                         onClick={() => router.push(`/community/story/${story._id}`)}>
-                        <FaEdit />
+                        <Io.IoPencilOutline />
                         <span>Editar</span>
                       </motion.button>
 
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.8 }}
-                        onClick={() => deleteStoryPromptController(true, story._id)}>
-                        <BsTrash />
+                        onClick={() => onDelete(story._id)}>
+                        <Io.IoTrashOutline />
                         <span>Apagar</span>
                       </motion.button>
                     </>
@@ -278,12 +279,12 @@ export function StoriesRenderer(props: Props) {
                         }}>
                         {story.favorites.includes(state.auth.id) ? (
                           <>
-                            <IoHeart />
+                            <Io.IoHeart />
                             <span>Apoiado</span>
                           </>
                         ) : (
                           <>
-                            <IoHeartOutline />
+                            <Io.IoHeartOutline />
                             <span>Apoiar</span>
                           </>
                         )}
@@ -299,7 +300,7 @@ export function StoriesRenderer(props: Props) {
                             )}&type=story&id=${story._id}`
                           )
                         }>
-                        <IoBanOutline />
+                        <Io.IoBanOutline />
                         <span>Denunciar</span>
                       </motion.button>
                     </>
@@ -315,7 +316,7 @@ export function StoriesRenderer(props: Props) {
           <div className=' fetch-error-message '>
             <h3>Erro ao carregar dados.</h3>
             <button onClick={() => fetchNextPage()}>
-              <IoReload />
+              <Io.IoReload />
               <span>Tentar novamente</span>
             </button>
           </div>

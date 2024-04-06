@@ -426,7 +426,6 @@ export type State = {
   ads: AdsList[];
   isDeleteAccountPrompt: boolean;
   isDeactivateStorePrompt: boolean;
-  isDeleteStoryPrompt: { status: boolean; storyId: string };
   isShareProductModal: boolean;
   isUserWorkingDataModal: boolean;
   isCartModal: boolean;

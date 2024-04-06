@@ -17,7 +17,6 @@ const queryClient = new QueryClient({
 type Context = {
   state: State;
   dispatch: React.Dispatch<Action>;
-  deleteStoryPromptController: (status: boolean, id: string) => void;
   shareProductController: () => void;
   sortBoxController: () => void;
   searchBoxController: () => void;
@@ -35,7 +34,6 @@ const context = React.createContext<Context>({
   sortBoxController: () => {},
   deleteAccountPromptController: () => {},
   deactivateStorePromptController: () => {},
-  deleteStoryPromptController: () => {},
   shareProductController: () => {},
   userWorkingDataController: () => {}
 });
@@ -75,13 +73,6 @@ export function AppContext(props: { children: React.ReactNode }) {
     dispatch({
       type: actions.SORT_BOX_CONTROL,
       payload: { ...state, isSortActive: !state.isSortActive }
-    });
-  };
-
-  const deleteStoryPromptController = (status: boolean, id?: string) => {
-    dispatch({
-      type: actions.DELETE_STORY_PROMPT,
-      payload: { ...state, isDeleteStoryPrompt: { status, storyId: id ?? '' } }
     });
   };
 
@@ -172,7 +163,6 @@ export function AppContext(props: { children: React.ReactNode }) {
             userWorkingDataController,
             deleteAccountPromptController,
             deactivateStorePromptController,
-            deleteStoryPromptController,
             shareProductController
           }}>
           <ModulesContext>{props.children}</ModulesContext>
