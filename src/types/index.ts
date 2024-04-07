@@ -266,12 +266,12 @@ export type Store = {
   name: string;
   active: boolean;
   description: string;
-  slogan?: string;
+  slogan: string;
   category: string;
-  cover_image?: { id: string; url: string };
-  privacy_policy?: string;
-  terms_policy?: string;
-  delivery_policy?: string;
+  cover_image: { id: string; url: string };
+  privacy_policy: string;
+  terms_policy: string;
+  delivery_policy: string;
   created_by: {
     profile_image: string;
     first_name: string;
@@ -369,10 +369,7 @@ export type Order = {
   order_code: string;
   order_transaction?: string;
   order_status: 'delivered' | 'returned' | 'cancelled' | 'progress' | 'pending';
-  order_payment_type: {
-    type: string;
-    account: string;
-  };
+  order_payment_type: { type: string; account: string };
   order_costumer: {
     user_id: string;
     user_name: string;
@@ -425,7 +422,6 @@ export type ColorScheme = {
 export type State = {
   ads: AdsList[];
   isDeleteAccountPrompt: boolean;
-  isDeactivateStorePrompt: boolean;
   isShareProductModal: boolean;
   isUserWorkingDataModal: boolean;
   isCartModal: boolean;
@@ -439,7 +435,6 @@ export type State = {
   searchStores: string;
   searchStories: string;
   user: User;
-  store: Store;
   product: Product;
   publicProduct: PublicProduct;
   productList: ProductsList[];
@@ -482,4 +477,8 @@ export type Subscription = {
   createdAt: string;
 };
 
-export type PublicAds = Array<{ _id: string; name: string; image: { id: string; url: string } }>;
+export type PublicAds = Array<{
+  _id: string;
+  name: string;
+  image: { id: string; url: string };
+}>;

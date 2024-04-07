@@ -1,5 +1,5 @@
+import { DropzoneArea } from '@/components/dropzone';
 import Layout from '@/components/layout';
-import DeactivateStorePrompt from '@/components/modals/deactivate-store-prompt';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
 import countries from '@/data/countries.json';
@@ -8,75 +8,64 @@ import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
 import { _storeEditor as Container } from '@/styles/common/store-editor';
 import type { HttpError, InputEvents, Store } from '@/types';
-import Compressor from 'compressorjs';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import * as React from 'react';
 import * as Io from 'react-icons/io5';
 import { DotLoader, PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 
-type TLoading = { status: boolean; key: 'store-data' | 'store-update' };
+type Loading = { status: boolean; key: 'store-data' | 'store-update' };
+
+const initialStoreState = {
+  _id: '',
+  name: '',
+  active: false,
+  description: '',
+  slogan: '',
+  category: Categories[0],
+  cover_image: { id: '', url: '' },
+  privacy_policy: '',
+  terms_policy: '',
+  delivery_policy: '',
+  createdAt: '',
+  updatedAt: '',
+  location: { country: 'Moçambique', state: 'Maputo', address: '' },
+  created_by: {
+    profile_image: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    main_phone_number: 0,
+    alternative_phone_number: 0,
+    social_network: { website: '', whatsapp: '', instagram: '', facebook: '', linkedin: '' }
+  }
+};
 
 export default function Page() {
   const theme = useTheme();
   const router = useRouter();
-  const { state, httpClient, dispatch, deactivateStorePromptController } = useAppContext();
-  const [countryStates, setCountryStates] = useState<string[]>([
-    state.store.location?.state
-  ]);
-  const [loading, setLoading] = useState<TLoading>({ status: false, key: 'store-data' });
-  const [coverImageFile, setCoverImageFile] = useState<FileList | null>(null);
-  const [coverImageData, setCoverImageData] = useState({ id: '', data: '' });
+  const { state, httpClient, dispatch } = useAppContext();
+  const [formData, setFormData] = React.useState<Store>(initialStoreState);
+  const [coverImage, setCoverImage] = React.useState<string>('');
+  const [loading, setLoading] = React.useState<Loading>({
+    status: false,
+    key: 'store-data'
+  });
 
   // --------------------functions------------------
-  const handleChange = (e: InputEvents) => {
-    dispatch({
-      type: actions.STORE_DATA,
-      payload: { ...state, store: { ...state.store, [e.target.name]: e.target.value } }
-    });
-  };
-
-  const handleCoverImageFile = () => {
-    const imageData = coverImageFile?.item(0);
-    if (!imageData) return toast.error('Falha ao processar imagem');
-    new Compressor(imageData, {
-      quality: 0.8,
-      width: 620,
-      height: 220,
-      resize: 'cover',
-      success: (compressedImage) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(compressedImage);
-        reader.onloadend = function (e: ProgressEvent<FileReader>) {
-          const encodedImage = e.target?.result?.toString();
-          if (typeof encodedImage !== 'string')
-            return toast.error('Erro ao processar imagem.');
-          setCoverImageData({ id: state.user.cover_image?.id || '', data: encodedImage });
-        };
+  const currentCountryStates = React.useMemo(() => {
+    for (const { country, states } of countries) {
+      if (country === formData.location.country) {
+        return states.sort((a, b) => (a > b ? 1 : -1));
       }
-    });
-  };
+    }
+    return [];
+  }, [formData.location.country]);
 
-  const deleteCoverImage = () => {
-    httpClient({
-      method: 'delete',
-      url: `/api/v1/users/store/assets`,
-      data: { assetId: state.store.cover_image?.id }
-    })
-      .then(() => {
-        setCoverImageData({ id: '', data: '' });
-        dispatch({
-          type: actions.USER_DATA,
-          payload: { ...state, store: { ...state.store, cover_image: { id: '', url: '' } } }
-        });
-      })
-      .catch((error) => {
-        const { message } = errorTransformer(error as HttpError);
-        toast.error(message);
-        console.error(error);
-      });
+  const handleChange = (e: InputEvents) => {
+    setFormData((state) => ({ ...state, [e.target.name]: e.target.value }));
   };
 
   const getStoreData = async () => {
@@ -86,10 +75,8 @@ export default function Page() {
         method: 'get',
         url: `/api/v1/users/store`
       });
-      dispatch({
-        type: actions.STORE_DATA,
-        payload: { ...state, store: { ...state.store, ...data } }
-      });
+      setFormData(data);
+      setCoverImage(data.cover_image?.url || '');
     } catch (error) {
       const { message } = errorTransformer(error as HttpError);
       toast.error(message);
@@ -104,8 +91,8 @@ export default function Page() {
       setLoading({ status: true, key: 'store-update' });
       await httpClient({
         method: 'patch',
-        url: `/api/v1/users/store/${state.store._id}`,
-        data: { ...state.store, coverImageData }
+        url: `/api/v1/users/store/${formData._id}`,
+        data: { ...formData, coverImage }
       });
     } catch (error) {
       const { message } = errorTransformer(error as HttpError);
@@ -116,30 +103,45 @@ export default function Page() {
     }
   };
 
-  useEffect(() => {
-    handleCoverImageFile();
-    return () => {
-      setCoverImageData({ id: '', data: '' });
-      setCoverImageFile(null);
-    };
-  }, [coverImageFile]);
+  const handleDeactivateStore = () => {
+    dispatch({
+      type: actions.PROMPT,
+      payload: {
+        ...state,
+        prompt: {
+          ...state.prompt,
+          status: true,
+          title: 'Desativação de Loja',
+          actionButtonMessage: 'Confirmar',
+          message:
+            'Deseja desativar a sua loja? Os seus produtos e loja serão restritos ao público.',
+          handleFunction: () => {
+            setFormData((state) => ({ ...state, active: !state.active }));
+            dispatch({
+              type: actions.PROMPT,
+              payload: { ...state, prompt: { ...state.prompt, status: false } }
+            });
+          }
+        }
+      }
+    });
+  };
 
-  useEffect(() => {
-    const fetch_data = setTimeout(() => {
+  React.useEffect(() => {
+    const instance = setTimeout(() => {
       if (state.auth.storeId) getStoreData();
-    }, 100);
-    return () => clearTimeout(fetch_data);
+    }, 120);
+    return () => clearTimeout(instance);
   }, [state.auth]);
 
   return (
     <Layout
       metadata={{
         title: `${constants.defaultTitle} | Editor de Loja`,
-        updatedAt: state.store.updatedAt,
-        createdAt: state.store.createdAt
+        updatedAt: formData.updatedAt,
+        createdAt: formData.createdAt
       }}>
       <Container>
-        <DeactivateStorePrompt />
         {loading.status && loading.key === 'store-data' && (
           <section className='fetching-state'>
             <div>
@@ -162,47 +164,31 @@ export default function Page() {
             <section className='wrapper'>
               <section className='form'>
                 <section className='form-section'>
-                  <div className='image-container cover-image'>
-                    {coverImageData.data ? (
-                      <Image
-                        width={620}
-                        height={220}
-                        className='cover-image'
-                        src={coverImageData.data}
-                        alt='cover image'
-                      />
-                    ) : state.store.cover_image?.url ? (
-                      <Image
-                        width={620}
-                        height={220}
-                        className='cover-image'
-                        src={state.store.cover_image?.url}
-                        alt='cover image'
-                      />
+                  <div className='cover-image-container'>
+                    {coverImage ? (
+                      <>
+                        <Image
+                          width={620}
+                          height={220}
+                          className='cover-image'
+                          src={coverImage}
+                          alt='Imagem de Capa do Perfil da Loja'
+                        />
+                        <button
+                          title='Apagar Imagem de Capa'
+                          onClick={() => setCoverImage('')}>
+                          <Io.IoCloseOutline />
+                        </button>
+                      </>
                     ) : (
-                      <Io.IoImageOutline className='camera-icon' />
+                      <div className='image-drop-container'>
+                        <DropzoneArea
+                          width={620}
+                          height={220}
+                          handler={(encodedImage) => setCoverImage(encodedImage)}
+                        />
+                      </div>
                     )}
-                    <label htmlFor='cover' title='Selecionar imagem de capa'>
-                      <span>Imagem de capa</span>
-                      <Io.IoAdd />
-                    </label>
-                    <button
-                      title='Apagar imagem de capa'
-                      className='clear-image'
-                      onClick={deleteCoverImage}>
-                      <Io.IoTrashOutline />
-                    </button>
-                    <input
-                      type='file'
-                      id='cover'
-                      name='cover'
-                      accept='.jpg, .jpeg, .png'
-                      multiple={false}
-                      onChange={(e) => setCoverImageFile(e.target.files)}
-                    />
-                    <span className='description'>
-                      Dimensões: 620 x 220 pixels. Máx. 800Kb.
-                    </span>
                   </div>
                 </section>
 
@@ -229,16 +215,15 @@ export default function Page() {
                           type='text'
                           id='name'
                           name='name'
-                          autoComplete='off'
                           placeholder='Escreva o nome da loja'
                           aria-label='Escreva o nome da loja'
                           onChange={(e) =>
                             e.target.value.length > 64 ? undefined : handleChange(e)
                           }
-                          value={state.store.name}
+                          value={formData.name}
                         />
                         <span className='counter'>{`${
-                          state.store.name?.length || 0
+                          formData.name?.length || 0
                         } / 64`}</span>
                       </div>
                       <div className='form-element'>
@@ -247,28 +232,15 @@ export default function Page() {
                           <span>Categoria Principal dos Produtos *</span>
                         </label>
                         <select
-                          name='category'
                           id='category'
-                          value={state.store.category}
-                          onChange={(e) => {
-                            dispatch({
-                              type: actions.STORE_DATA,
-                              payload: {
-                                ...state,
-                                store: {
-                                  ...state.store,
-                                  category: e.target.value
-                                }
-                              }
-                            });
-                          }}>
-                          {Categories.sort((a, b) => (a > b ? 1 : -1)).map(
-                            (item, index) => (
-                              <option key={index.toString()} value={item}>
-                                {item}
-                              </option>
-                            )
-                          )}
+                          name='category'
+                          value={formData.category}
+                          onChange={(e) => handleChange(e)}>
+                          {Categories.sort((a, b) => (a > b ? 1 : -1)).map((item, i) => (
+                            <option key={i} value={item}>
+                              {item}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </section>
@@ -282,17 +254,14 @@ export default function Page() {
                           type='text'
                           id='slogan'
                           name='slogan'
-                          autoComplete='off'
                           placeholder='Escreva o slogan de sua loja'
                           aria-label='Escreva o slogan de sua loja'
-                          onChange={(e) =>
-                            e.target.value.length > 64 ? undefined : handleChange(e)
-                          }
-                          value={state.store.slogan}
                           maxLength={64}
+                          value={formData.slogan}
+                          onChange={(e) => handleChange(e)}
                         />
                         <span className='counter'>{`${
-                          state.store.slogan?.length || 0
+                          formData.slogan?.length || 0
                         } / 64`}</span>
                       </div>
                     </section>
@@ -303,23 +272,17 @@ export default function Page() {
                           <Io.IoEllipsisHorizontal />
                           <span>Descrição da Loja *</span>
                         </label>
-
                         <textarea
                           id='description'
                           name='description'
-                          autoComplete='off'
                           placeholder='Escreva a descrição de sua loja'
                           aria-label='Escreva a descrição de sua loja'
-                          onChange={(e) =>
-                            e.target.value.length > 256 ? undefined : handleChange(e)
-                          }
-                          value={state.store.description}
                           maxLength={256}
                           rows={5}
+                          onChange={(e) => handleChange(e)}
+                          value={formData.description}
                         />
-                        <span className='counter'>{`${
-                          state.store.description?.length || 0
-                        } / 256`}</span>
+                        <span className='counter'>{`${formData.description.length} / 256`}</span>
                       </div>
                     </section>
                   </div>
@@ -347,27 +310,13 @@ export default function Page() {
                         <select
                           name='country'
                           id='country'
-                          value={state.store.location?.country}
-                          onChange={(e) => {
-                            countries.forEach((obj) => {
-                              if (obj.country === e.target.value) {
-                                setCountryStates([...obj.states]);
-                              }
-                            });
-                            dispatch({
-                              type: actions.STORE_DATA,
-                              payload: {
-                                ...state,
-                                store: {
-                                  ...state.store,
-                                  location: {
-                                    ...state.store.location,
-                                    country: e.target.value
-                                  }
-                                }
-                              }
-                            });
-                          }}>
+                          value={formData.location?.country}
+                          onChange={(e) =>
+                            setFormData((state) => ({
+                              ...state,
+                              location: { ...state.location, country: e.target.value }
+                            }))
+                          }>
                           {countries
                             .sort((a, b) => (a.country > b.country ? 1 : -1))
                             .map((item, index) => (
@@ -386,29 +335,18 @@ export default function Page() {
                         <select
                           name='state'
                           id='state'
-                          value={state.store.location?.state}
-                          onChange={(e) => {
-                            dispatch({
-                              type: actions.STORE_DATA,
-                              payload: {
-                                ...state,
-                                store: {
-                                  ...state.store,
-                                  location: {
-                                    ...state.store.location,
-                                    state: e.target.value
-                                  }
-                                }
-                              }
-                            });
-                          }}>
-                          {countryStates
-                            .sort((a, b) => (a > b ? 1 : -1))
-                            .map((item, index) => (
-                              <option value={item} key={index}>
-                                {item}
-                              </option>
-                            ))}
+                          value={formData.location?.state}
+                          onChange={(e) =>
+                            setFormData((state) => ({
+                              ...state,
+                              location: { ...state.location, state: e.target.value }
+                            }))
+                          }>
+                          {currentCountryStates.map((item, i) => (
+                            <option key={i} value={item}>
+                              {item}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </section>
@@ -424,28 +362,15 @@ export default function Page() {
                           placeholder='Localidade, bairro, rua, quarteirão, número da casa, etc.'
                           aria-label='Localidade, bairro, rua, quarteirão, número da casa, etc.'
                           maxLength={256}
-                          value={state.store.location?.address}
+                          value={formData.location?.address}
                           onChange={(e) =>
-                            e.target.value.length > 256
-                              ? undefined
-                              : dispatch({
-                                  type: actions.STORE_DATA,
-                                  payload: {
-                                    ...state,
-                                    store: {
-                                      ...state.store,
-                                      location: {
-                                        ...state.store.location,
-                                        address: e.target.value
-                                      }
-                                    }
-                                  }
-                                })
+                            setFormData((state) => ({
+                              ...state,
+                              location: { ...state.location, address: e.target.value }
+                            }))
                           }
                         />
-                        <span className='counter'>{`${
-                          state.store.location?.address?.length || 0
-                        } / 256`}</span>
+                        <span className='counter'>{`${formData.location?.address?.length} / 256`}</span>
                       </div>
                     </section>
                   </div>
@@ -457,7 +382,6 @@ export default function Page() {
                       <Io.IoDocuments />
                       <span>Políticas da Loja</span>
                     </h2>
-
                     <p>
                       Documentação e regras de conduta endereçada aos clientes que visitam a
                       sua loja.
@@ -474,18 +398,13 @@ export default function Page() {
                         <textarea
                           id='terms_policy'
                           name='terms_policy'
-                          autoComplete='off'
                           placeholder='Escreva os termos e condições da sua loja'
                           aria-label='Escreva os termos e condições da sua loja'
                           rows={12}
-                          onChange={(e) =>
-                            e.target.value.length > 2048 ? undefined : handleChange(e)
-                          }
-                          value={state.store.terms_policy}
+                          onChange={(e) => handleChange(e)}
+                          value={formData.terms_policy}
                         />
-                        <span className='counter'>{`${
-                          state.store.terms_policy?.length || 0
-                        } / 2048`}</span>
+                        <span className='counter'>{`${formData.terms_policy.length} / 2048`}</span>
                       </div>
                     </section>
                     <section className='form-section'>
@@ -497,18 +416,13 @@ export default function Page() {
                         <textarea
                           id='privacy_policy'
                           name='privacy_policy'
-                          autoComplete='off'
                           placeholder='Escreva a política de privacidade da sua loja'
                           aria-label='Escreva a política de privacidade da sua loja'
                           rows={12}
-                          onChange={(e) =>
-                            e.target.value.length > 2048 ? undefined : handleChange(e)
-                          }
-                          value={state.store.privacy_policy}
+                          onChange={(e) => handleChange(e)}
+                          value={formData.privacy_policy}
                         />
-                        <span className='counter'>{`${
-                          state.store.privacy_policy?.length || 0
-                        } / 2048`}</span>
+                        <span className='counter'>{`${formData.privacy_policy.length} / 2048`}</span>
                       </div>
                     </section>
                     <section className='form-section'>
@@ -520,18 +434,13 @@ export default function Page() {
                         <textarea
                           id='delivery_policy'
                           name='delivery_policy'
-                          autoComplete='off'
                           placeholder='Escreva a política de entrega de encomendas ao cliente da sua loja'
                           aria-label='Escreva a política de entrega de encomendas ao cliente da sua loja'
                           rows={12}
-                          onChange={(e) =>
-                            e.target.value.length > 1024 ? undefined : handleChange(e)
-                          }
-                          value={state.store.delivery_policy}
+                          onChange={(e) => handleChange(e)}
+                          value={formData.delivery_policy}
                         />
-                        <span className='counter'>{`${
-                          state.store.delivery_policy?.length || 0
-                        } / 1024`}</span>
+                        <span className='counter'>{`${formData.delivery_policy?.length} / 1024`}</span>
                       </div>
                     </section>
                   </div>
@@ -555,23 +464,17 @@ export default function Page() {
                 </p>
               </div>
 
-              {!state.store.active ? (
+              {!formData.active ? (
                 <button
                   className='save'
                   onClick={() =>
-                    dispatch({
-                      type: actions.STORE_DATA,
-                      payload: {
-                        ...state,
-                        store: { ...state.store, active: !state.store.active }
-                      }
-                    })
+                    setFormData((state) => ({ ...state, active: !state.active }))
                   }>
                   <Io.IoRadioButtonOff color={`rgb(${theme.error})`} />
                   <span>Loja Desativada</span>
                 </button>
               ) : (
-                <button className='save' onClick={() => deactivateStorePromptController()}>
+                <button className='save' onClick={handleDeactivateStore}>
                   <Io.IoRadioButtonOn color={`rgb(${theme.secondary})`} />
                   <span>Loja Ativada</span>
                 </button>
@@ -615,20 +518,18 @@ export default function Page() {
                 )}
               </div>
 
-              <div className='btns-container'>
-                {!loading.status && (
-                  <>
-                    <button className='back' onClick={(e) => router.back()}>
-                      <Io.IoArrowUndoOutline />
-                      <span>Descartar e voltar</span>
-                    </button>
-                    <button className='save' onClick={() => handleSubmitUpdate()}>
-                      <Io.IoSyncOutline />
-                      <span>Salvar alterações</span>
-                    </button>
-                  </>
-                )}
-              </div>
+              {!loading.status ? (
+                <div className='btns-container'>
+                  <button className='back' onClick={router.back}>
+                    <Io.IoArrowUndoOutline />
+                    <span>Descartar e voltar</span>
+                  </button>
+                  <button className='save' onClick={handleSubmitUpdate}>
+                    <Io.IoSyncOutline />
+                    <span>Salvar alterações</span>
+                  </button>
+                </div>
+              ) : null}
             </section>
           </section>
         </article>

@@ -58,7 +58,8 @@ export const _prompt = styled.section`
       }
       .prompt-accept {
         ${BaseButton}
-        background: rgb(${({ theme }) => theme.error});
+        font-weight: 500;
+        background: rgb(${({ theme }) => theme.primary_shade});
         color: rgb(${({ theme }) => theme.white});
       }
     }

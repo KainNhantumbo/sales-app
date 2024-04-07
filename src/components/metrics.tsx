@@ -32,7 +32,7 @@ export function Metrics() {
 
   useEffect(() => {
     refetch({ queryKey: ['metrics'] });
-  }, [state.auth, state.store, state.productList]);
+  }, [state.auth, state.productList]);
 
   return (
     <Container id='metrics'>

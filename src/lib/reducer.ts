@@ -13,7 +13,6 @@ export const initialState: State = {
   isPublicProductsFilters: false,
   productsListQuery: { query: '', sort: '' },
   isDeleteAccountPrompt: false,
-  isDeactivateStorePrompt: false,
   isShareProductModal: false,
   isUserWorkingDataModal: false,
   isConnected: false,
@@ -65,36 +64,6 @@ export const initialState: State = {
       }
     },
     store: { active_status: false, blocked: false, verified_status: false }
-  },
-  store: {
-    _id: '',
-    name: '',
-    active: false,
-    created_by: {
-      profile_image: '',
-      first_name: '',
-      last_name: '',
-      email: '',
-      main_phone_number: Number(),
-      alternative_phone_number: Number(),
-      social_network: {
-        website: '',
-        whatsapp: '',
-        instagram: '',
-        facebook: '',
-        linkedin: ''
-      }
-    },
-    description: '',
-    slogan: '',
-    category: Categories[0],
-    cover_image: { id: '', url: '' },
-    privacy_policy: '',
-    terms_policy: '',
-    delivery_policy: '',
-    location: { country: 'Moçambique', state: 'Maputo', address: '' },
-    createdAt: '',
-    updatedAt: ''
   },
   product: {
     _id: '',
@@ -223,12 +192,6 @@ export function reducer(state: State, action: Action): State {
         isDeleteAccountPrompt: action.payload.isDeleteAccountPrompt
       };
 
-    case actions.DEACTIVATE_STORE_PROMPT:
-      return {
-        ...state,
-        isDeactivateStorePrompt: action.payload.isDeactivateStorePrompt
-      };
-
     case actions.SHARE_PRODUCT_MODAL:
       return {
         ...state,
@@ -248,12 +211,6 @@ export function reducer(state: State, action: Action): State {
       return {
         ...state,
         user: action.payload.user
-      };
-
-    case actions.STORE_DATA:
-      return {
-        ...state,
-        store: action.payload.store
       };
 
     case actions.PUBLIC_PRODUCTS_LIST_DATA:

@@ -21,7 +21,6 @@ type Context = {
   sortBoxController: () => void;
   searchBoxController: () => void;
   deleteAccountPromptController: () => void;
-  deactivateStorePromptController: () => void;
   userWorkingDataController: () => void;
   httpClient: <T>(config: AxiosRequestConfig) => Promise<AxiosResponse<T, any>>;
 };
@@ -33,7 +32,6 @@ const context = React.createContext<Context>({
   searchBoxController: () => {},
   sortBoxController: () => {},
   deleteAccountPromptController: () => {},
-  deactivateStorePromptController: () => {},
   shareProductController: () => {},
   userWorkingDataController: () => {}
 });
@@ -53,12 +51,6 @@ export function AppContext(props: { children: React.ReactNode }) {
     dispatch({
       type: actions.DELETE_ACCOUNT_PROMPT,
       payload: { ...state, isDeleteAccountPrompt: !state.isDeleteAccountPrompt }
-    });
-  };
-  const deactivateStorePromptController = () => {
-    dispatch({
-      type: actions.DEACTIVATE_STORE_PROMPT,
-      payload: { ...state, isDeactivateStorePrompt: !state.isDeactivateStorePrompt }
     });
   };
 
@@ -162,7 +154,6 @@ export function AppContext(props: { children: React.ReactNode }) {
             searchBoxController,
             userWorkingDataController,
             deleteAccountPromptController,
-            deactivateStorePromptController,
             shareProductController
           }}>
           <ModulesContext>{props.children}</ModulesContext>

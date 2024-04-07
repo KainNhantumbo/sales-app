@@ -1,26 +1,31 @@
 import { useAppContext } from '@/context/AppContext';
 import { actions } from '@/shared/actions';
 import { _prompt as Container } from '@/styles/modules/logout-prompt';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export function Prompt() {
   const { state, dispatch } = useAppContext();
 
+  const handleQuit = (e: any) => {
+    const isTarget = e.target?.classList?.contains('main');
+
+    if (isTarget) {
+      dispatch({
+        type: actions.PROMPT,
+        payload: { ...state, prompt: { ...state.prompt, status: false } }
+      });
+    }
+  };
+
   return (
     <AnimatePresence>
       {state.prompt.status && (
-        <Container
-          className='main'
-          onClick={(e: any) => {
-            const isTarget: boolean = e.target.classList.contains('main');
-            if (isTarget) {
-              dispatch({
-                type: actions.PROMPT,
-                payload: { ...state, prompt: { ...state.prompt, status: false } }
-              });
-            }
-          }}>
-          <section className='dialog-modal'>
+        <Container className='main' onClick={handleQuit}>
+          <motion.section
+            initial={{ y: 700 }}
+            animate={{ y: 0, transition: { duration: 0.45 } }}
+            exit={{ y: 700, transition: { duration: 0.45 } }}
+            className='dialog-modal'>
             <div className='dialog-prompt'>
               <div className='prompt-info'>
                 <span className='prompt-title'>{state.prompt.title}</span>
@@ -32,20 +37,17 @@ export function Prompt() {
                   onClick={() =>
                     dispatch({
                       type: actions.PROMPT,
-                      payload: {
-                        ...state,
-                        prompt: { ...state.prompt, status: false }
-                      }
+                      payload: { ...state, prompt: { ...state.prompt, status: false } }
                     })
                   }>
-                  Cancel
+                  Cancelar
                 </button>
                 <button className='prompt-accept' onClick={state.prompt.handleFunction}>
                   {state.prompt.actionButtonMessage}
                 </button>
               </div>
             </div>
-          </section>
+          </motion.section>
         </Container>
       )}
     </AnimatePresence>

@@ -1,4 +1,4 @@
-import fetch from '@/config/client';
+import client from '@/config/client';
 import { useAppContext } from '@/context/AppContext';
 import { errorTransformer } from '@/lib/error-transformer';
 import { initialState } from '@/lib/reducer';
@@ -17,17 +17,13 @@ export function DeleteAccountPrompt() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ status: false, message: '' });
 
+  const [formData, setFormData] = useState({ email: '', password: '' });
+
   const onChange = (e: InputEvents) => {
-    dispatch({
-      type: actions.SIGNIN_DATA,
-      payload: {
-        ...state,
-        signInData: { ...state.signInData, [e.target.name]: e.target.value }
-      }
-    });
+    setFormData((state) => ({ ...state, [e.target.name]: e.target.value }));
   };
 
-  const deleteUserAccount = async () => {
+  const onDeleteUser = async () => {
     try {
       await httpClient({ method: 'delete', url: '/api/v1/users/account' });
       dispatch({
@@ -43,8 +39,8 @@ export function DeleteAccountPrompt() {
     }
   };
 
-  const handleSubmit = async () => {
-    if (state.signInData.password.length < 8)
+  const onSubmit = async () => {
+    if (formData.password.length < 8)
       return setError({
         status: true,
         message: 'A senha deve conter pelo menos 8 caracteres'
@@ -53,10 +49,10 @@ export function DeleteAccountPrompt() {
     setLoading(true);
     try {
       // user login
-      await fetch({
+      await client({
         method: 'post',
         url: '/api/v1/auth/default/login',
-        data: state.signInData,
+        data: formData,
         withCredentials: true
       });
 
@@ -66,10 +62,10 @@ export function DeleteAccountPrompt() {
         url: '/api/v1/auth/default/logout',
         withCredentials: true
       });
-      deleteUserAccount();
+      onDeleteUser();
     } catch (error) {
-      console.error(error);
       const { message } = errorTransformer(error as HttpError);
+      console.error(error);
       setError({ status: true, message });
     } finally {
       setLoading(false);
@@ -159,7 +155,7 @@ export function DeleteAccountPrompt() {
                 <button
                   className='prompt-accept'
                   disabled={loading || error.status}
-                  onClick={() => handleSubmit()}>
+                  onClick={() => onSubmit()}>
                   <BsTrash />
                   <span>Sim, eliminar conta.</span>
                 </button>

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {
   BaseButton,
   BaseButtonOutline,
-  ButtonMono,
+  StyledCornerButton,
   StyledInputs,
   StyledLabels
 } from '../defaults';
@@ -186,66 +186,33 @@ export const _storeEditor = styled.div`
               }
             }
 
-            .image-container {
+            .cover-image-container {
               width: 100%;
-              display: flex;
-              align-items: start;
-              flex-direction: column;
-              gap: 10px;
-              justify-content: center;
+              height: 220px;
               position: relative;
               margin-bottom: 20px;
 
-              input {
-                display: none;
-              }
-
-              .description {
-                line-height: 1.2rem;
-              }
-            }
-
-            .cover-image {
               img {
                 width: 100%;
-                border-radius: 10px;
-                max-width: 1280px;
-                max-height: 150px;
+                height: 220px;
+                border-radius: 12px;
                 object-fit: cover;
               }
 
-              .camera-icon {
-                width: 680px;
-                height: 150px;
-                border-radius: 12px;
-                margin: 0 auto;
-                padding: 5px;
-                background: rgba(${({ theme }) => theme.font}, 0.1);
+              button {
+                ${StyledCornerButton}
+                width: 25px;
+                height: 25px;
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                background: rgb(${({ theme }) => theme.foreground});
+                z-index: 50px;
               }
 
-              label {
-                ${BaseButton}
-                width: fit-content;
-                height: fit-content;
-                position: absolute;
-                top: 3px;
-                left: calc(0% + 35px);
-                background: rgba(${({ theme }) => theme.primary}, 0.8);
-                padding: 8px;
-              }
-
-              .clear-image {
-                ${ButtonMono}
-                position: absolute;
-                top: 3px;
-                right: 32px;
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                background: rgba(${({ theme }) => theme.primary}, 0.8);
-                :hover {
-                  background: rgba(${({ theme }) => theme.error}, 0.6);
-                }
+              .image-drop-container {
+                width: 100%;
+                height: 220px;
               }
             }
           }
@@ -268,14 +235,6 @@ export const _storeEditor = styled.div`
         gap: 20px;
         border-top: 1px solid rgba(${({ theme }) => theme.font}, 0.1);
         line-height: 1.4rem;
-
-        .error-message {
-          color: rgb(${({ theme }) => theme.error});
-          font-weight: 500;
-          font-size: 1.1rem;
-          line-height: 1.4rem;
-          align-self: flex-end;
-        }
 
         p {
           margin-top: 10px;
