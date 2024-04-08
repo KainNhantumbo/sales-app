@@ -271,7 +271,7 @@ export const _storeEditor = styled.div`
         }
       }
 
-      .delete-account {
+      .store-activation-container {
         width: 100%;
         max-width: 1280px;
         padding: 20px;

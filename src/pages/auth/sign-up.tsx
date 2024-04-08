@@ -41,11 +41,7 @@ export default function Page() {
 
     try {
       setLoading(true);
-      await client({
-        method: 'post',
-        url: '/api/v1/users/account',
-        data: { ...formData, role: 'user' }
-      });
+      await client({ method: 'post', url: '/api/v1/users/account', data: { ...formData } });
       router.push('/auth/sign-up-confirm');
     } catch (error) {
       const { message } = errorTransformer(error as HttpError);

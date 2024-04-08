@@ -17,7 +17,7 @@ import { useInView } from 'react-intersection-observer';
 import { PulseLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
-import { HttpError, PublicStory } from '../types';
+import type { HttpError, PublicStory } from '../types';
 
 type Props = { userId?: string; favoritesId?: string };
 
@@ -34,7 +34,7 @@ export function StoriesRenderer(props: Props) {
       queryKey: ['user-stories'],
       queryFn: async ({ pageParam = 0 }) => {
         const query = new URLSearchParams({
-          userId: String(props.userId || ''),
+          userId: props.userId || '',
           favoritesId: props.favoritesId || '',
           search: state.searchStories
         });
@@ -135,7 +135,7 @@ export function StoriesRenderer(props: Props) {
 
   const stories = React.useMemo(() => {
     if (data) {
-      return data?.pages.map(({ data }) => data).reduce((acc, curr) => [...acc, ...curr]);
+      return data.pages.map(({ data }) => data).reduce((acc, curr) => [...acc, ...curr]);
     }
     return [];
   }, [data]);

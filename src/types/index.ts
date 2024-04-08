@@ -310,7 +310,7 @@ export type User = {
   alternative_phone_number: string;
   gender: string;
   birth_date: string;
-  bio?: string;
+  bio: string;
   cover_image: { id: string; url: string };
   profile_image: { id: string; url: string };
   professional_skills: string[];

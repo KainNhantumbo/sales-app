@@ -2,36 +2,21 @@ import { useAppContext } from '@/context/AppContext';
 import { _capturer as Container } from '@/styles/modules/working-capturer';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { Dispatch, SetStateAction } from 'react';
-import {
-  IoCalendarNumberOutline,
-  IoCheckmark,
-  IoClose,
-  IoEllipsisHorizontal,
-  IoLinkOutline,
-  IoPushOutline
-} from 'react-icons/io5';
+import * as Io from 'react-icons/io5';
+
+export const initialExperienceState = {
+  id: '',
+  career: '',
+  end_date: '',
+  start_date: '',
+  description: '',
+  portfolio_url: '',
+  company_name: ''
+};
 
 type Props = {
-  setStateFn: Dispatch<
-    SetStateAction<{
-      id: string;
-      career: string;
-      end_date: string;
-      start_date: string;
-      description: string;
-      portfolio_url: string;
-      company_name: string;
-    }>
-  >;
-  initialData: {
-    id: string;
-    career: string;
-    end_date: string;
-    start_date: string;
-    description: string;
-    portfolio_url: string;
-    company_name: string;
-  };
+  setStateFn: Dispatch<SetStateAction<typeof initialExperienceState>>;
+  initialData: typeof initialExperienceState;
   saveFn: () => void;
   updateFn: (id: string) => void;
 };
@@ -56,9 +41,7 @@ export function WorkDataPrompt(props: Props) {
             animate={{
               opacity: 1,
               scale: 1,
-              transition: {
-                duration: 0.3
-              }
+              transition: { duration: 0.3 }
             }}
             exit={{ opacity: 0, scale: 0 }}>
             <div className='dialog-prompt'>
@@ -76,34 +59,32 @@ export function WorkDataPrompt(props: Props) {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='career'>
-                          <IoEllipsisHorizontal />
+                          <Io.IoEllipsisHorizontal />
                           <span>Carreira Profissional</span>
                         </label>
                         <input
                           type='text'
                           id='career'
                           placeholder='Carreira Profissional'
-                          aria-label='Carreira Profissional'
                           required={true}
+                          value={props.initialData.career}
                           onChange={(e) =>
                             props.setStateFn(({ career, ...data }) => ({
                               ...data,
                               career: e.target.value
                             }))
                           }
-                          value={props.initialData.career}
                         />
                       </div>
                       <div className='form-element'>
                         <label htmlFor='company_name'>
-                          <IoEllipsisHorizontal />
+                          <Io.IoEllipsisHorizontal />
                           <span>Empresa (ou empregador)</span>
                         </label>
                         <input
                           type='text'
                           id='company_name'
-                          placeholder='Entidade empregadora'
-                          aria-label='Empresa (ou entidade empregadora)'
+                          placeholder='Empresa'
                           value={props.initialData.company_name}
                           required={true}
                           onChange={(e) =>
@@ -119,7 +100,7 @@ export function WorkDataPrompt(props: Props) {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='start_date'>
-                          <IoCalendarNumberOutline />
+                          <Io.IoCalendarNumberOutline />
                           <span>Data de Início</span>
                         </label>
                         <input
@@ -135,7 +116,7 @@ export function WorkDataPrompt(props: Props) {
                       </div>
                       <div className='form-element'>
                         <label htmlFor='end_date'>
-                          <IoCalendarNumberOutline />
+                          <Io.IoCalendarNumberOutline />
                           <span>Data de Encerramento</span>
                         </label>
                         <input
@@ -154,79 +135,67 @@ export function WorkDataPrompt(props: Props) {
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='portfolio_url'>
-                          <IoLinkOutline />
-                          <span>Endereço do Portifólio Profissional</span>
+                          <Io.IoLinkOutline />
+                          <span>Endereço do Portfólio</span>
                         </label>
                         <input
                           type='url'
                           id='portfolio_url'
-                          placeholder='Coloque o link (URL) do seu portifólio profissional'
-                          aria-label='Coloque o link (URL) do seu portifólio profissional'
+                          placeholder='Coloque o link (URL) do seu portfólio profissional'
                           maxLength={100}
+                          value={props.initialData.portfolio_url}
                           onChange={(e) =>
                             props.setStateFn(({ portfolio_url, ...data }) => ({
                               ...data,
                               portfolio_url: e.target.value
                             }))
                           }
-                          value={props.initialData.portfolio_url}
                         />
                       </div>
                     </section>
                     <section className='form-section'>
                       <div className='form-element'>
                         <label htmlFor='description'>
-                          <IoLinkOutline />
+                          <Io.IoLinkOutline />
                           <span>Notas</span>
                         </label>
                         <textarea
                           id='description'
                           placeholder='Anotações relevantes a carreira'
-                          aria-label='Anotações relevantes a carreira'
                           rows={3}
                           maxLength={256}
+                          value={props.initialData.description}
                           onChange={(e) =>
                             props.setStateFn(({ description, ...data }) => ({
                               ...data,
                               description: e.target.value
                             }))
                           }
-                          value={props.initialData.description}
                         />
                       </div>
                     </section>
 
                     <div className='prompt-actions'>
                       <button
-                        className='prompt-cancel'
                         type='reset'
+                        className='prompt-cancel'
                         onClick={() => {
                           userWorkingDataController();
-                          props.setStateFn(() => {
-                            return {
-                              id: '',
-                              career: '',
-                              end_date: '',
-                              start_date: '',
-                              description: '',
-                              portfolio_url: '',
-                              company_name: ''
-                            };
-                          });
+                          props.setStateFn(() => ({ ...initialExperienceState }));
                         }}>
-                        <IoClose />
+                        <Io.IoClose />
                         <span>Cancelar</span>
                       </button>
                       {props.initialData.id ? (
                         <button
                           onClick={() => props.updateFn(props.initialData.id)}
                           className='prompt-accept'>
-                          <IoPushOutline />
+                          <Io.IoPushOutline />
                           <span>Atualizar</span>
                         </button>
                       ) : (
-                        <button className='prompt-accept' onClick={() => props.saveFn()}>
-                          <IoCheckmark />
+                        <button className='prompt-accept' onClick={props.saveFn}>
+                          <Io.IoCheckmark />
                           <span>Adicionar experiência</span>
                         </button>
                       )}

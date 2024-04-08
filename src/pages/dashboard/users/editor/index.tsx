@@ -1,6 +1,10 @@
+import { DropzoneArea } from '@/components/dropzone';
 import Layout from '@/components/layout';
 import { DeleteAccountPrompt } from '@/components/modals/delete-account-prompt';
-import { WorkDataPrompt } from '@/components/modals/work-data-prompt';
+import {
+  WorkDataPrompt,
+  initialExperienceState
+} from '@/components/modals/work-data-prompt';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
 import Countries from '@/data/countries.json';
@@ -10,11 +14,10 @@ import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
 import { _userProfile as Container } from '@/styles/common/profile-editor';
 import type { HttpError, InputEvents, User } from '@/types';
-import Compressor from 'compressorjs';
 import moment from 'moment';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
+import * as React from 'react';
 import { BiUser, BiUserCheck, BiUserX } from 'react-icons/bi';
 import { FaBlog, FaLinkedinIn } from 'react-icons/fa';
 import * as Io from 'react-icons/io5';
@@ -24,14 +27,25 @@ import { useTheme } from 'styled-components';
 
 type TLoading = { status: boolean; key: 'user-data' | 'user-update' };
 
-const initialExperienceState = {
-  id: '',
-  career: '',
-  end_date: '',
-  start_date: '',
-  description: '',
-  portfolio_url: '',
-  company_name: ''
+const initialUserState: User = {
+  _id: '',
+  first_name: '',
+  last_name: '',
+  email: '',
+  main_phone_number: '',
+  alternative_phone_number: '',
+  gender: 'Masculino',
+  birth_date: '',
+  bio: '',
+  cover_image: { id: '', url: '' },
+  profile_image: { id: '', url: '' },
+  professional_skills: [],
+  spoken_languages: [],
+  working_experience: [],
+  location: { country: '', state: '', address: '', zip_code: '' },
+  social_network: { website: '', whatsapp: '', instagram: '', facebook: '', linkedin: '' },
+  createdAt: '',
+  updatedAt: ''
 };
 
 export default function Page() {
@@ -44,22 +58,26 @@ export default function Page() {
   } = useAppContext();
   const theme = useTheme();
   const router = useRouter();
-  const [loading, setLoading] = useState<TLoading>({ status: false, key: 'user-data' });
-  const [countryStates, setCountryStates] = useState<string[]>([state.user.location.state]);
-  const [coverImageFile, setCoverImageFile] = useState<FileList | null>(null);
-  const [profileImageFile, setProfileImageFile] = useState<FileList | null>(null);
-  const [coverImageData, setCoverImageData] = useState({ id: '', data: '' });
-  const [profileImageData, setProfileImageData] = useState({ id: '', data: '' });
-  const [passwords, setPasswords] = useState({ password: '', confirm_password: '' });
+  const [passwords, setPasswords] = React.useState({ password: '', confirm_password: '' });
+  const [formData, setFormData] = React.useState<User>(initialUserState);
+  const [coverImage, setCoverImage] = React.useState<string>('');
+  const [profileImage, setProfileImage] = React.useState<string>('');
+  const [loading, setLoading] = React.useState<TLoading>({
+    status: false,
+    key: 'user-data'
+  });
+
+  const currentCountryStates = React.useMemo(() => {
+    for (const { country, states } of Countries) {
+      if (country === formData.location.country) {
+        return states.sort((a, b) => (a > b ? 1 : -1));
+      }
+    }
+    return [];
+  }, [formData.location.country]);
 
   const handleChange = (e: InputEvents) => {
-    dispatch({
-      type: actions.USER_DATA,
-      payload: {
-        ...state,
-        user: { ...state.user, [e.target.name]: e.target.value }
-      }
-    });
+    setFormData((state) => ({ ...state, [e.target.name]: e.target.value }));
   };
 
   const handlePasswordsChange = (e: InputEvents) => {
@@ -68,169 +86,79 @@ export default function Page() {
       [e.target.name]: e.target.value
     }));
   };
-
-  const handleCoverImageFile = () => {
-    const imageData: File | null | undefined = coverImageFile?.item(0);
-    if (imageData) {
-      new Compressor(imageData, {
-        quality: 0.8,
-        width: 620,
-        height: 220,
-        resize: 'cover',
-        success: (compressedImage: File | Blob) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(compressedImage);
-          reader.onloadend = function (e: ProgressEvent<FileReader>) {
-            const encodedImage: string = e.target?.result as string;
-            setCoverImageData({
-              id: state.user.cover_image?.id || '',
-              data: encodedImage
-            });
-          };
-        }
-      });
-    }
-  };
-
-  const handleProfileImageFile = () => {
-    const imageData = profileImageFile?.item(0);
-    if (imageData) {
-      new Compressor(imageData, {
-        quality: 0.8,
-        width: 150,
-        height: 150,
-        resize: 'cover',
-        success: (compressedImage: File | Blob) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(compressedImage);
-          reader.onloadend = function (e: ProgressEvent<FileReader>) {
-            const encodedImage: string = e.target?.result as string;
-            setProfileImageData({
-              id: state.user.profile_image?.id || '',
-              data: encodedImage
-            });
-          };
-        }
-      });
-    }
-  };
-
-  const deleteAsset = (assetType: 'cover_image' | 'profile_image') => {
-    httpClient({
-      method: 'delete',
-      url: `/api/v1/users/account/assets`,
-      data: { type: assetType, assetId: state.user[assetType]?.id }
-    })
-      .then(() => {
-        assetType === 'cover_image' && setCoverImageData({ id: '', data: '' });
-        assetType === 'profile_image' && setProfileImageData({ id: '', data: '' });
-        dispatch({
-          type: actions.USER_DATA,
-          payload: {
-            ...state,
-            user: { ...state.user, [assetType]: { id: '', url: '' } }
-          }
-        });
-      })
-      .catch((error) => {
-        console.error(
-          (error as HttpError).response?.data?.message || (error as HttpError).message
-        );
-      });
-  };
-
-  const getUserData = useCallback(() => {
+[({})]
+  const getUserData = React.useCallback(async () => {
     setLoading({ status: true, key: 'user-data' });
-    httpClient({
-      method: 'get',
-      url: `/api/v1/users/account/${router.query?.id || state.auth.id}`
-    })
-      .then(({ data }) => {
-        const formattedData = Array.isArray(data) ? data[0] : data;
-        dispatch({
-          type: actions.USER_DATA,
-          payload: { ...state, user: formattedData }
-        });
-      })
-      .catch((error) => {
-        const { message } = errorTransformer(error as HttpError);
-        console.error(error);
-        toast.error(message);
-      })
-      .finally(() => {
-        setLoading({ status: false, key: 'user-data' });
+    try {
+      const { data } = await httpClient<User>({
+        method: 'get',
+        url: `/api/v1/users/account/${router.query['id'] || state.auth.id}`
       });
+      setFormData((state) => ({ ...state, ...data }));
+      setProfileImage(data.profile_image.url);
+      setCoverImage(data.cover_image.url);
+    } catch (error) {
+      const { message } = errorTransformer(error as HttpError);
+      toast.error(message);
+      console.error(error);
+    } finally {
+      setLoading({ status: false, key: 'user-data' });
+    }
   }, [router.query]);
 
-  const handleSubmitUpdate = async () => {
-    if (
-      passwords.confirm_password !== '' &&
-      passwords.confirm_password !== passwords.password
-    ) {
-      return toast.error('A as senhas devem ser iguais e maiores que 8 carácteres.');
-    }
-
+  const onUpdate = async () => {
     try {
       setLoading({ status: true, key: 'user-update' });
-      const {
-        _id,
-        updatedAt,
-        createdAt,
-        cover_image,
-        profile_image,
-        social_network,
-        ...rest
-      } = state.user;
+      if (passwords.confirm_password !== '') {
+        if (passwords.confirm_password !== passwords.password) {
+          return toast.error('A as senhas devem ser iguais e maiores que 8 carácteres.');
+        }
+      }
 
-      const serializedObj = Object.entries(social_network ?? {})
-        .map(([key, value]) => (value ? { [key]: value } : undefined))
-        .reduce((acc, value) => ({ ...acc, ...value }), {});
+      // delete undesired data and make some transformations
+      const { social_network, ...rest }: Partial<User> = formData;
+      delete rest._id;
+      delete rest.createdAt;
+      delete rest.updatedAt;
+      delete rest.cover_image;
+      delete rest.profile_image;
 
       const { data } = await httpClient<User>({
         method: 'patch',
         url: `/api/v1/users/account`,
-        data: { ...rest, coverImageData, profileImageData, social_network: serializedObj }
+        data: {
+          ...rest,
+          coverImage,
+          profileImage,
+          password: passwords.password || undefined,
+          social_network: Object.entries(social_network ?? {})
+            .map(([key, value]) => (value ? { [key]: value } : undefined))
+            .reduce((acc, value) => ({ ...acc, ...value }), {})
+        }
       });
 
-      dispatch({
-        type: actions.USER_DATA,
-        payload: { ...state, user: { ...data } }
-      });
+      setFormData((state) => ({ ...state, ...data }));
+      setProfileImage(data.profile_image.url);
+      setCoverImage(data.cover_image.url);
     } catch (error) {
-      console.error(error);
       const { message } = errorTransformer(error as HttpError);
       toast.error(message);
+      console.error(error);
     } finally {
       setLoading({ status: false, key: 'user-update' });
     }
   };
 
-  useEffect(() => {
-    handleCoverImageFile();
-    return () => {
-      setCoverImageData({ id: '', data: '' });
-      setCoverImageFile(null);
-    };
-  }, [coverImageFile]);
-
-  useEffect(() => {
-    handleProfileImageFile();
-    return () => {
-      setProfileImageData({ id: '', data: '' });
-      setProfileImageFile(null);
-    };
-  }, [profileImageFile]);
-
-  useEffect(() => {
-    const fetch_data = setTimeout(() => {
+  React.useEffect(() => {
+    const instance = setTimeout(() => {
       getUserData();
-    }, 10);
-    return () => clearTimeout(fetch_data);
+    }, 100);
+    return () => clearTimeout(instance);
   }, []);
 
   // -------working capturer functions--------
   const [workingExperienceData, setWorkingExperienceData] =
-    useState(initialExperienceState);
+    React.useState(initialExperienceState);
 
   const createWorkingData = () => {
     const generatedId = crypto.randomUUID();
@@ -258,7 +186,7 @@ export default function Page() {
         ...state,
         user: {
           ...state.user,
-          working_experience: state.user?.working_experience.map((item) =>
+          working_experience: state.user.working_experience.map((item) =>
             item.id === id ? { ...item, ...workingExperienceData } : item
           )
         }
@@ -269,11 +197,9 @@ export default function Page() {
   };
 
   const editWorkingData = (id: string) => {
-    setWorkingExperienceData(() => {
-      return state.user.working_experience.filter((item) => {
-        if (item.id === id) return item;
-      })[0];
-    });
+    setWorkingExperienceData(
+      () => state.user.working_experience.filter((item) => item.id === id)[0]
+    );
     userWorkingDataController();
   };
 
@@ -284,9 +210,7 @@ export default function Page() {
         ...state,
         user: {
           ...state.user,
-          working_experience: state.user?.working_experience.filter(
-            (item) => item.id !== id
-          )
+          working_experience: state.user.working_experience.filter((item) => item.id !== id)
         }
       }
     });
@@ -295,9 +219,9 @@ export default function Page() {
   return (
     <Layout
       metadata={{
-        title: `${constants.defaultTitle} | Editor de Perfil de Usuário`,
-        updatedAt: state.user.updatedAt,
-        createdAt: state.user.createdAt
+        title: `${constants.defaultTitle} | Perfil de Usuário`,
+        updatedAt: formData.updatedAt,
+        createdAt: formData.createdAt
       }}>
       <Container>
         <DeleteAccountPrompt />
@@ -331,86 +255,59 @@ export default function Page() {
             <section className='wrapper'>
               <section className='form'>
                 <section className='form-section'>
-                  <div className='image-container cover-image'>
-                    {coverImageData.data ? (
-                      <Image
-                        width={620}
-                        height={220}
-                        className='cover-image'
-                        src={coverImageData.data}
-                        alt='cover image'
-                      />
-                    ) : state.user.cover_image?.url ? (
-                      <Image
-                        width={620}
-                        height={220}
-                        className='cover-image'
-                        src={state.user.cover_image?.url}
-                        alt='cover image'
-                      />
+                  <div className='cover-image-container'>
+                    {coverImage ? (
+                      <>
+                        <Image
+                          width={620}
+                          height={220}
+                          className='cover-image'
+                          src={coverImage}
+                          alt='cover image'
+                        />
+                        <button
+                          title='Apagar Imagem de Capa'
+                          onClick={() => setCoverImage('')}>
+                          <Io.IoCloseOutline />
+                        </button>
+                      </>
                     ) : (
-                      <Io.IoImageOutline className='camera-icon' />
+                      <div className='cover-image-drop-container'>
+                        <DropzoneArea
+                          width={620}
+                          height={220}
+                          handler={(encodedImage) => setCoverImage(encodedImage)}
+                        />
+                      </div>
                     )}
-                    <label htmlFor='cover' title='Selecionar imagem de capa'>
-                      <span>Imagem de capa</span>
-                      <Io.IoAdd />
-                    </label>
-                    <button
-                      title='Apagar imagem de capa'
-                      className='clear-image'
-                      onClick={() => deleteAsset('cover_image')}>
-                      <Io.IoTrashOutline />
-                    </button>
-                    <input
-                      type='file'
-                      id='cover'
-                      name='cover'
-                      accept='.jpg, .jpeg, .png'
-                      multiple={false}
-                      onChange={(e) => setCoverImageFile(e.target.files)}
-                    />
-                    <span className='description'>Dimensões: 620 x 220 pixels.</span>
                   </div>
                 </section>
 
                 <section className='form-section'>
-                  <div className='image-container profile-image'>
-                    {profileImageData.data ? (
-                      <Image
-                        width={150}
-                        height={150}
-                        src={profileImageData.data}
-                        alt='profile image'
-                      />
-                    ) : state.user.profile_image?.url ? (
-                      <Image
-                        width={150}
-                        height={150}
-                        src={state.user.profile_image?.url}
-                        alt='profile image'
-                      />
+                  <div className='profile-image-container'>
+                    {profileImage ? (
+                      <>
+                        <Image
+                          width={150}
+                          height={150}
+                          src={profileImage}
+                          alt='Imagem de perfil do usuário'
+                        />
+                        <button
+                          title='Apagar Imagem de Perfil'
+                          onClick={() => setProfileImage('')}>
+                          <Io.IoCloseOutline />
+                        </button>
+                      </>
                     ) : (
-                      <Io.IoImageOutline className='camera-icon' />
+                      <div className='profile-image-drop-container'>
+                        <DropzoneArea
+                          width={150}
+                          height={150}
+                          handler={(encodedImage) => setProfileImage(encodedImage)}
+                        />
+                      </div>
                     )}
-                    <label htmlFor='avatar' title='Change profile picture'>
-                      <span>Imagem de perfil</span>
-                      <Io.IoAdd />
-                    </label>
-                    <button
-                      title='Apagar imagem de perfil'
-                      className='clear-image'
-                      onClick={() => deleteAsset('profile_image')}>
-                      <Io.IoTrashOutline />
-                    </button>
-                    <input
-                      type='file'
-                      id='avatar'
-                      name='avatar'
-                      accept='.jpg, .jpeg, .png'
-                      multiple={false}
-                      onChange={(e) => setProfileImageFile(e.target.files)}
-                    />
-                    <span className='description'>Dimensões: 150 x 150 pixels.</span>
                   </div>
                 </section>
 
@@ -437,18 +334,12 @@ export default function Page() {
                           type='text'
                           id='first_name'
                           name='first_name'
-                          autoComplete='off'
                           placeholder='Escreva o seu nome'
-                          aria-label='Escreva o seu nome'
                           required={true}
-                          onChange={(e) =>
-                            e.target.value.length > 32 ? undefined : handleChange(e)
-                          }
-                          value={state.user.first_name}
+                          onChange={handleChange}
+                          value={formData.first_name}
                         />
-                        <span className='counter'>{`${
-                          state.user.first_name?.length || 0
-                        } / 32`}</span>
+                        <span className='counter'>{`${formData.first_name.length} / 32`}</span>
                       </div>
                       <div className='form-element'>
                         <label htmlFor='last_name'>
@@ -459,17 +350,13 @@ export default function Page() {
                           type='text'
                           id='last_name'
                           name='last_name'
-                          autoComplete='off'
                           placeholder='Escreva o seu apelido'
-                          aria-label='Escreva o seu apelido'
-                          value={state.user.last_name}
                           required={true}
-                          onChange={(e) =>
-                            e.target.value.length > 32 ? undefined : handleChange(e)
-                          }
+                          value={formData.last_name}
+                          onChange={handleChange}
                         />
                         <span className='counter'>{`${
-                          state.user.last_name?.length || 0
+                          formData.last_name?.length || 0
                         } / 32`}</span>
                       </div>
                     </section>
@@ -480,21 +367,17 @@ export default function Page() {
                           <span>Número de telemóvel (Principal)</span>
                         </label>
                         <input
-                          type='number'
-                          min={0}
-                          inputMode='numeric'
+                          minLength={0}
+                          maxLength={9}
+                          inputMode='tel'
+                          type='tel'
                           id='main_phone_number'
                           name='main_phone_number'
                           placeholder='Escreva o seu número de telemóvel'
-                          aria-label='Escreva o seu número de telemóvel'
-                          value={state.user.main_phone_number}
-                          onChange={(e) =>
-                            e.target.value.length > 9 ? undefined : handleChange(e)
-                          }
+                          value={formData.main_phone_number}
+                          onChange={handleChange}
                         />
-                        <span className='counter'>{`${
-                          state.user.main_phone_number?.length || 0
-                        } / 9`}</span>
+                        <span className='counter'>{`${formData.main_phone_number.length} / 9`}</span>
                       </div>
                       <div className='form-element'>
                         <label htmlFor='alternative_phone_number'>
@@ -502,21 +385,17 @@ export default function Page() {
                           <span>Número de telemóvel (Alternativo)</span>
                         </label>
                         <input
-                          type='number'
-                          min={0}
-                          inputMode='numeric'
+                          minLength={0}
+                          maxLength={9}
+                          type='tel'
+                          inputMode='tel'
                           id='alternative_phone_number'
                           name='alternative_phone_number'
                           placeholder='Escreva o seu número de telemóvel'
-                          aria-label='Escreva o seu número de telemóvel'
-                          value={state.user.alternative_phone_number}
-                          onChange={(e) =>
-                            e.target.value.length > 9 ? undefined : handleChange(e)
-                          }
+                          value={formData.alternative_phone_number}
+                          onChange={handleChange}
                         />
-                        <span className='counter'>{`${
-                          state.user.alternative_phone_number?.length || 0
-                        } / 9`}</span>
+                        <span className='counter'>{`${formData.alternative_phone_number.length} / 9`}</span>
                       </div>
                     </section>
                     <section className='form-section'>
@@ -526,10 +405,10 @@ export default function Page() {
                           <span>Gênero</span>
                         </label>
                         <select
-                          name='gender'
                           id='gender'
-                          value={state.user.gender}
-                          onChange={(e) => handleChange(e)}>
+                          name='gender'
+                          value={formData.gender}
+                          onChange={handleChange}>
                           <option value='Masculino'>Masculino</option>
                           <option value='Feminino'>Feminino</option>
                           <option value='Outro'>Outro</option>
@@ -542,11 +421,11 @@ export default function Page() {
                         </label>
                         <input
                           type='date'
-                          min={'1950-01-01'}
-                          max={'2013-01-01'}
                           id='birth_date'
                           name='birth_date'
-                          onChange={(e) => handleChange(e)}
+                          min={'1950-01-01'}
+                          max={'2013-01-01'}
+                          onChange={handleChange}
                         />
                       </div>
                     </section>
@@ -561,41 +440,31 @@ export default function Page() {
                           type='text'
                           id='bio'
                           name='bio'
+                          minLength={0}
                           maxLength={128}
                           placeholder='Escreva uma breve biografia para o seu perfil'
-                          aria-label='Escreva uma breve biografia para o seu perfil'
-                          value={state.user.bio}
-                          onChange={(e) =>
-                            e.target.value.length > 128 ? undefined : handleChange(e)
-                          }
+                          value={formData.bio}
+                          onChange={handleChange}
                         />
-                        <span className='counter'>{`${
-                          state.user.bio?.length || 0
-                        } / 128`}</span>
+                        <span className='counter'>{`${formData.bio.length} / 128`}</span>
                       </div>
                     </section>
                   </div>
                   <section className='form-section' id='genres-section'>
-                    {state.user.spoken_languages.length > 0 && (
+                    {formData.spoken_languages.length > 0 && (
                       <div className='genres-container'>
-                        {state.user.spoken_languages.map((language, index) => (
-                          <div className='genre' key={index.toString()}>
+                        {formData.spoken_languages.map((language, i) => (
+                          <div className='genre' key={i}>
                             <span>{language}</span>
                             <button
-                              onClick={() => {
-                                dispatch({
-                                  type: actions.USER_DATA,
-                                  payload: {
-                                    ...state,
-                                    user: {
-                                      ...state.user,
-                                      spoken_languages: state.user.spoken_languages.filter(
-                                        (item) => item !== language
-                                      )
-                                    }
-                                  }
-                                });
-                              }}>
+                              onClick={() =>
+                                setFormData((state) => ({
+                                  ...state,
+                                  spoken_languages: state.spoken_languages.filter(
+                                    (item) => item !== language
+                                  )
+                                }))
+                              }>
                               <Io.IoCloseCircle />
                             </button>
                           </div>
@@ -610,28 +479,19 @@ export default function Page() {
                       <select
                         title='Selecione a língua'
                         onChange={(e) => {
-                          dispatch({
-                            type: actions.USER_DATA,
-                            payload: {
-                              ...state,
-                              user: {
-                                ...state.user,
-                                spoken_languages: ((): string[] => {
-                                  const value = e.target.value;
-                                  const languages = state.user.spoken_languages;
-                                  if (
-                                    languages.some((item) => item === value) ||
-                                    languages.length >= 5
-                                  )
-                                    return languages;
-                                  return [...languages, value];
-                                })()
-                              }
-                            }
-                          });
+                          setFormData((state) => ({
+                            ...state,
+                            spoken_languages: ((): string[] => {
+                              const value = e.target.value;
+                              const languages = state.spoken_languages;
+                              const isPicked = languages.some((item) => item === value);
+                              if (isPicked || languages.length >= 5) return languages;
+                              return [...languages, value];
+                            })()
+                          }));
                         }}>
-                        {Languages.sort((a, b) => (a > b ? 1 : -1)).map((item, index) => (
-                          <option value={item} key={index}>
+                        {Languages.sort((a, b) => (a > b ? 1 : -1)).map((item, i) => (
+                          <option value={item} key={i}>
                             {item}
                           </option>
                         ))}
@@ -640,27 +500,20 @@ export default function Page() {
                   </section>
 
                   <section className='form-section' id='genres-section'>
-                    {state.user.professional_skills.length > 0 && (
+                    {formData.professional_skills.length > 0 && (
                       <div className='genres-container'>
-                        {state.user.professional_skills.map((skill, index) => (
-                          <div className='genre' key={index.toString()}>
+                        {formData.professional_skills.map((skill, i) => (
+                          <div className='genre' key={i}>
                             <span>{skill}</span>
                             <button
-                              onClick={() => {
-                                dispatch({
-                                  type: actions.USER_DATA,
-                                  payload: {
-                                    ...state,
-                                    user: {
-                                      ...state.user,
-                                      professional_skills:
-                                        state.user.professional_skills.filter(
-                                          (item) => item !== skill
-                                        )
-                                    }
-                                  }
-                                });
-                              }}>
+                              onClick={() =>
+                                setFormData((state) => ({
+                                  ...state,
+                                  professional_skills: state.professional_skills.filter(
+                                    (item) => item !== skill
+                                  )
+                                }))
+                              }>
                               <Io.IoCloseCircle />
                             </button>
                           </div>
@@ -675,28 +528,19 @@ export default function Page() {
                       <select
                         title='Selecione a habilidade'
                         onChange={(e) => {
-                          dispatch({
-                            type: actions.USER_DATA,
-                            payload: {
-                              ...state,
-                              user: {
-                                ...state.user,
-                                professional_skills: ((): string[] => {
-                                  const value = e.target.value;
-                                  const skills = state.user.professional_skills;
-                                  if (
-                                    skills.some((item) => item === value) ||
-                                    skills.length >= 10
-                                  )
-                                    return skills;
-                                  return [...skills, value];
-                                })()
-                              }
-                            }
-                          });
+                          setFormData((state) => ({
+                            ...state,
+                            professional_skills: ((): string[] => {
+                              const value = e.target.value;
+                              const skills = state.professional_skills;
+                              const isPicked = skills.some((item) => item === value);
+                              if (isPicked || skills.length >= 10) return skills;
+                              return [...skills, value];
+                            })()
+                          }));
                         }}>
-                        {Skills.sort((a, b) => (a > b ? 1 : -1)).map((item, index) => (
-                          <option value={item} key={index}>
+                        {Skills.sort((a, b) => (a > b ? 1 : -1)).map((item, i) => (
+                          <option value={item} key={i}>
                             {item}
                           </option>
                         ))}
@@ -724,31 +568,17 @@ export default function Page() {
                         <select
                           name='country'
                           id='country'
-                          value={state.user.location?.country}
-                          onChange={(e) => {
-                            Countries.forEach((obj) => {
-                              if (obj.country === e.target.value) {
-                                setCountryStates([...obj.states]);
-                              }
-                            });
-                            dispatch({
-                              type: actions.USER_DATA,
-                              payload: {
-                                ...state,
-                                user: {
-                                  ...state.user,
-                                  location: {
-                                    ...state.user.location,
-                                    country: e.target.value
-                                  }
-                                }
-                              }
-                            });
-                          }}>
+                          value={formData.location.country}
+                          onChange={(e) =>
+                            setFormData((state) => ({
+                              ...state,
+                              location: { ...state.location, country: e.target.value }
+                            }))
+                          }>
                           {Countries.sort((a, b) => (a.country > b.country ? 1 : -1)).map(
-                            (item, index) => (
-                              <option value={item.country} key={index}>
-                                {item.country}
+                            ({ country }, i) => (
+                              <option value={country} key={i}>
+                                {country}
                               </option>
                             )
                           )}
@@ -763,30 +593,19 @@ export default function Page() {
                         <select
                           name='state'
                           id='state'
-                          value={state.user.location?.state}
-                          defaultValue={state.user.location?.state}
-                          onChange={(e) => {
-                            dispatch({
-                              type: actions.USER_DATA,
-                              payload: {
-                                ...state,
-                                user: {
-                                  ...state.user,
-                                  location: {
-                                    ...state.user.location,
-                                    state: e.target.value
-                                  }
-                                }
-                              }
-                            });
-                          }}>
-                          {countryStates
-                            .sort((a, b) => (a > b ? 1 : -1))
-                            .map((item, index) => (
-                              <option value={item} key={index}>
-                                {item}
-                              </option>
-                            ))}
+                          value={formData.location.state}
+                          defaultValue={formData.location.state}
+                          onChange={(e) =>
+                            setFormData((state) => ({
+                              ...state,
+                              location: { ...state.location, state: e.target.value }
+                            }))
+                          }>
+                          {currentCountryStates.map((item, i) => (
+                            <option value={item} key={i}>
+                              {item}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </section>
@@ -800,30 +619,16 @@ export default function Page() {
                           type='text'
                           id='address'
                           placeholder='Endereço'
-                          aria-label='Endereço'
                           maxLength={128}
-                          value={state.user.location?.address}
+                          value={formData.location?.address}
                           onChange={(e) =>
-                            e.target.value.length > 128
-                              ? undefined
-                              : dispatch({
-                                  type: actions.USER_DATA,
-                                  payload: {
-                                    ...state,
-                                    user: {
-                                      ...state.user,
-                                      location: {
-                                        ...state.user.location,
-                                        address: e.target.value
-                                      }
-                                    }
-                                  }
-                                })
+                            setFormData((state) => ({
+                              ...state,
+                              location: { ...state.location, address: e.target.value }
+                            }))
                           }
                         />
-                        <span className='counter'>{`${
-                          state.user.location?.address?.length || 0
-                        } / 128`}</span>
+                        <span className='counter'>{`${formData.location?.address?.length} / 128`}</span>
                       </div>
                       <div className='form-element'>
                         <label htmlFor='zip_code'>
@@ -835,29 +640,17 @@ export default function Page() {
                           id='zip_code'
                           name='zip_code'
                           placeholder='Escreva o seu código postal'
-                          aria-label='Escreva o seu código postal'
-                          value={state.user.location?.zip_code}
+                          value={formData.location?.zip_code}
+                          minLength={0}
+                          maxLength={3}
                           onChange={(e) =>
-                            e.target.value.length > 3
-                              ? undefined
-                              : dispatch({
-                                  type: actions.USER_DATA,
-                                  payload: {
-                                    ...state,
-                                    user: {
-                                      ...state.user,
-                                      location: {
-                                        ...state.user.location,
-                                        zip_code: e.target.value
-                                      }
-                                    }
-                                  }
-                                })
+                            setFormData((state) => ({
+                              ...state,
+                              location: { ...state.location, zip_code: e.target.value }
+                            }))
                           }
                         />
-                        <span className='counter'>{`${
-                          state.user.location?.zip_code?.length || 0
-                        } / 3`}</span>
+                        <span className='counter'>{`${formData.location?.zip_code?.length} / 3`}</span>
                       </div>
                     </section>
                   </div>
@@ -886,23 +679,15 @@ export default function Page() {
                           type='url'
                           id='whatsapp'
                           placeholder='Contacto do Whatsapp'
-                          aria-label='Whatsapp'
-                          value={state.user.social_network?.whatsapp}
-                          autoComplete='off'
+                          value={formData.social_network?.whatsapp}
                           onChange={(e) => {
-                            dispatch({
-                              type: actions.USER_DATA,
-                              payload: {
-                                ...state,
-                                user: {
-                                  ...state.user,
-                                  social_network: {
-                                    ...state.user.social_network,
-                                    whatsapp: e.target.value
-                                  }
-                                }
+                            setFormData((state) => ({
+                              ...state,
+                              social_network: {
+                                ...state.social_network,
+                                whatsapp: e.target.value
                               }
-                            });
+                            }));
                           }}
                         />
                       </div>
@@ -915,23 +700,15 @@ export default function Page() {
                           type='url'
                           id='facebook'
                           placeholder='Link do perfil de facebook'
-                          autoComplete='off'
-                          aria-label='facebook'
-                          value={state.user.social_network?.facebook}
+                          value={formData.social_network?.facebook}
                           onChange={(e) => {
-                            dispatch({
-                              type: actions.USER_DATA,
-                              payload: {
-                                ...state,
-                                user: {
-                                  ...state.user,
-                                  social_network: {
-                                    ...state.user.social_network,
-                                    facebook: e.target.value
-                                  }
-                                }
+                            setFormData((state) => ({
+                              ...state,
+                              social_network: {
+                                ...state.social_network,
+                                facebook: e.target.value
                               }
-                            });
+                            }));
                           }}
                         />
                       </div>
@@ -945,25 +722,17 @@ export default function Page() {
                         </label>
                         <input
                           type='url'
-                          autoComplete='off'
                           id='website'
                           placeholder='Link do website ou blog'
-                          aria-label='website'
-                          value={state.user.social_network?.website}
+                          value={formData.social_network?.website}
                           onChange={(e) => {
-                            dispatch({
-                              type: actions.USER_DATA,
-                              payload: {
-                                ...state,
-                                user: {
-                                  ...state.user,
-                                  social_network: {
-                                    ...state.user.social_network,
-                                    website: e.target.value
-                                  }
-                                }
+                            setFormData((state) => ({
+                              ...state,
+                              social_network: {
+                                ...state.social_network,
+                                website: e.target.value
                               }
-                            });
+                            }));
                           }}
                         />
                       </div>
@@ -975,24 +744,16 @@ export default function Page() {
                         <input
                           type='url'
                           id='instagram'
-                          autoComplete='off'
                           placeholder='Link do perfil do instagram'
-                          aria-label='instagram'
-                          value={state.user.social_network?.instagram}
+                          value={formData.social_network?.instagram}
                           onChange={(e) => {
-                            dispatch({
-                              type: actions.USER_DATA,
-                              payload: {
-                                ...state,
-                                user: {
-                                  ...state.user,
-                                  social_network: {
-                                    ...state.user.social_network,
-                                    instagram: e.target.value
-                                  }
-                                }
+                            setFormData((state) => ({
+                              ...state,
+                              social_network: {
+                                ...state.social_network,
+                                instagram: e.target.value
                               }
-                            });
+                            }));
                           }}
                         />
                       </div>
@@ -1008,23 +769,15 @@ export default function Page() {
                           type='text'
                           id='linkedin'
                           placeholder='Link do perfil do linkedin'
-                          autoComplete='off'
-                          aria-label='linkedin'
-                          value={state.user.social_network?.linkedin}
+                          value={formData.social_network?.linkedin}
                           onChange={(e) => {
-                            dispatch({
-                              type: actions.USER_DATA,
-                              payload: {
-                                ...state,
-                                user: {
-                                  ...state.user,
-                                  social_network: {
-                                    ...state.user.social_network,
-                                    linkedin: e.target.value
-                                  }
-                                }
+                            setFormData((state) => ({
+                              ...state,
+                              social_network: {
+                                ...state.social_network,
+                                linkedin: e.target.value
                               }
-                            });
+                            }));
                           }}
                         />
                       </div>
@@ -1056,11 +809,8 @@ export default function Page() {
                           id='password'
                           name='password'
                           minLength={8}
-                          aria-hidden='true'
-                          autoComplete='off'
                           placeholder='Escreva a sua nova senha'
-                          aria-label='Escreva a sua nova senha'
-                          onChange={(e) => handlePasswordsChange(e)}
+                          onChange={handlePasswordsChange}
                         />
                       </div>
                       <div className='form-element'>
@@ -1072,12 +822,9 @@ export default function Page() {
                           type='password'
                           id='confirm_password'
                           name='confirm_password'
-                          aria-hidden='true'
-                          autoComplete='off'
                           minLength={8}
                           placeholder='Confirme a sua senha'
-                          aria-label='Confirme a sua senha'
-                          onChange={(e) => handlePasswordsChange(e)}
+                          onChange={handlePasswordsChange}
                         />
                       </div>
                     </section>
@@ -1096,9 +843,9 @@ export default function Page() {
                     </p>
                   </div>
                   <section className='cards-container'>
-                    {state.user.working_experience.length > 0 ? (
-                      state.user.working_experience.map((item) => (
-                        <div className='card' key={item?.id}>
+                    {formData.working_experience.length > 0 ? (
+                      formData.working_experience.map((item) => (
+                        <div className='card' key={item.id}>
                           <div className='info'>
                             {item.career && (
                               <div className='item'>
@@ -1219,9 +966,7 @@ export default function Page() {
                     <PulseLoader
                       color={`rgb(${theme.primary})`}
                       aria-placeholder='Processando...'
-                      cssOverride={{
-                        display: 'block'
-                      }}
+                      cssOverride={{ display: 'block' }}
                     />
                     <span>Processando...</span>
                   </div>
@@ -1229,18 +974,14 @@ export default function Page() {
               </div>
 
               <div className='btns-container'>
-                {!loading.status && (
-                  <>
-                    <button className='back' onClick={(e) => router.back()}>
-                      <Io.IoArrowUndoOutline />
-                      <span>Descartar e voltar</span>
-                    </button>
-                    <button className='save' onClick={() => handleSubmitUpdate()}>
-                      <Io.IoSyncOutline />
-                      <span>Salvar alterações</span>
-                    </button>
-                  </>
-                )}
+                <button disabled={loading.status} className='back' onClick={router.back}>
+                  <Io.IoArrowUndoOutline />
+                  <span>Descartar e voltar</span>
+                </button>
+                <button disabled={loading.status} className='save' onClick={onUpdate}>
+                  <Io.IoSyncOutline />
+                  <span>Salvar alterações</span>
+                </button>
               </div>
             </section>
             <section className='delete-account'>

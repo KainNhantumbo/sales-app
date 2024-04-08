@@ -2,7 +2,7 @@ import { DropzoneArea } from '@/components/dropzone';
 import Layout from '@/components/layout';
 import { useAppContext } from '@/context/AppContext';
 import { constants } from '@/data/constants';
-import countries from '@/data/countries.json';
+import Countries from '@/data/countries.json';
 import Categories from '@/data/product-categories.json';
 import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
@@ -18,7 +18,7 @@ import { useTheme } from 'styled-components';
 
 type Loading = { status: boolean; key: 'store-data' | 'store-update' };
 
-const initialStoreState = {
+const initialStoreState: Store = {
   _id: '',
   name: '',
   active: false,
@@ -56,7 +56,7 @@ export default function Page() {
 
   // --------------------functions------------------
   const currentCountryStates = React.useMemo(() => {
-    for (const { country, states } of countries) {
+    for (const { country, states } of Countries) {
       if (country === formData.location.country) {
         return states.sort((a, b) => (a > b ? 1 : -1));
       }
@@ -216,10 +216,7 @@ export default function Page() {
                           id='name'
                           name='name'
                           placeholder='Escreva o nome da loja'
-                          aria-label='Escreva o nome da loja'
-                          onChange={(e) =>
-                            e.target.value.length > 64 ? undefined : handleChange(e)
-                          }
+                          onChange={handleChange}
                           value={formData.name}
                         />
                         <span className='counter'>{`${
@@ -235,7 +232,7 @@ export default function Page() {
                           id='category'
                           name='category'
                           value={formData.category}
-                          onChange={(e) => handleChange(e)}>
+                          onChange={handleChange}>
                           {Categories.sort((a, b) => (a > b ? 1 : -1)).map((item, i) => (
                             <option key={i} value={item}>
                               {item}
@@ -255,10 +252,9 @@ export default function Page() {
                           id='slogan'
                           name='slogan'
                           placeholder='Escreva o slogan de sua loja'
-                          aria-label='Escreva o slogan de sua loja'
                           maxLength={64}
                           value={formData.slogan}
-                          onChange={(e) => handleChange(e)}
+                          onChange={handleChange}
                         />
                         <span className='counter'>{`${
                           formData.slogan?.length || 0
@@ -276,10 +272,9 @@ export default function Page() {
                           id='description'
                           name='description'
                           placeholder='Escreva a descrição de sua loja'
-                          aria-label='Escreva a descrição de sua loja'
                           maxLength={256}
                           rows={5}
-                          onChange={(e) => handleChange(e)}
+                          onChange={handleChange}
                           value={formData.description}
                         />
                         <span className='counter'>{`${formData.description.length} / 256`}</span>
@@ -317,13 +312,13 @@ export default function Page() {
                               location: { ...state.location, country: e.target.value }
                             }))
                           }>
-                          {countries
-                            .sort((a, b) => (a.country > b.country ? 1 : -1))
-                            .map((item, index) => (
+                          {Countries.sort((a, b) => (a.country > b.country ? 1 : -1)).map(
+                            (item, index) => (
                               <option value={item.country} key={index}>
                                 {item.country}
                               </option>
-                            ))}
+                            )
+                          )}
                         </select>
                       </div>
 
@@ -360,7 +355,6 @@ export default function Page() {
                           type='text'
                           id='address'
                           placeholder='Localidade, bairro, rua, quarteirão, número da casa, etc.'
-                          aria-label='Localidade, bairro, rua, quarteirão, número da casa, etc.'
                           maxLength={256}
                           value={formData.location?.address}
                           onChange={(e) =>
@@ -399,9 +393,8 @@ export default function Page() {
                           id='terms_policy'
                           name='terms_policy'
                           placeholder='Escreva os termos e condições da sua loja'
-                          aria-label='Escreva os termos e condições da sua loja'
                           rows={12}
-                          onChange={(e) => handleChange(e)}
+                          onChange={handleChange}
                           value={formData.terms_policy}
                         />
                         <span className='counter'>{`${formData.terms_policy.length} / 2048`}</span>
@@ -417,9 +410,8 @@ export default function Page() {
                           id='privacy_policy'
                           name='privacy_policy'
                           placeholder='Escreva a política de privacidade da sua loja'
-                          aria-label='Escreva a política de privacidade da sua loja'
                           rows={12}
-                          onChange={(e) => handleChange(e)}
+                          onChange={handleChange}
                           value={formData.privacy_policy}
                         />
                         <span className='counter'>{`${formData.privacy_policy.length} / 2048`}</span>
@@ -435,9 +427,8 @@ export default function Page() {
                           id='delivery_policy'
                           name='delivery_policy'
                           placeholder='Escreva a política de entrega de encomendas ao cliente da sua loja'
-                          aria-label='Escreva a política de entrega de encomendas ao cliente da sua loja'
                           rows={12}
-                          onChange={(e) => handleChange(e)}
+                          onChange={handleChange}
                           value={formData.delivery_policy}
                         />
                         <span className='counter'>{`${formData.delivery_policy?.length} / 1024`}</span>
@@ -448,7 +439,7 @@ export default function Page() {
               </section>
             </section>
 
-            <section className='delete-account'>
+            <section className='store-activation-container'>
               <div className='description'>
                 <h2>
                   <Io.IoCart />
@@ -509,27 +500,26 @@ export default function Page() {
                     <PulseLoader
                       color={`rgb(${theme.primary})`}
                       aria-placeholder='Processando...'
-                      cssOverride={{
-                        display: 'block'
-                      }}
+                      cssOverride={{ display: 'block' }}
                     />
                     <span>Processando...</span>
                   </div>
                 )}
               </div>
 
-              {!loading.status ? (
-                <div className='btns-container'>
-                  <button className='back' onClick={router.back}>
-                    <Io.IoArrowUndoOutline />
-                    <span>Descartar e voltar</span>
-                  </button>
-                  <button className='save' onClick={handleSubmitUpdate}>
-                    <Io.IoSyncOutline />
-                    <span>Salvar alterações</span>
-                  </button>
-                </div>
-              ) : null}
+              <div className='btns-container'>
+                <button disabled={loading.status} className='back' onClick={router.back}>
+                  <Io.IoArrowUndoOutline />
+                  <span>Descartar e voltar</span>
+                </button>
+                <button
+                  disabled={loading.status}
+                  className='save'
+                  onClick={handleSubmitUpdate}>
+                  <Io.IoSyncOutline />
+                  <span>Salvar alterações</span>
+                </button>
+              </div>
             </section>
           </section>
         </article>
