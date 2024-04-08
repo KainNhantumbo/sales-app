@@ -20,32 +20,6 @@ export const initialState: State = {
   denounce: { reason: '', content: '' },
   auth: { id: '', name: '', token: '', email: '', storeId: '', profile_image: '' },
   search: '',
-  user: {
-    _id: '',
-    first_name: '',
-    last_name: '',
-    email: '',
-    main_phone_number: '',
-    alternative_phone_number: '',
-    gender: 'Masculino',
-    birth_date: '',
-    bio: '',
-    cover_image: { id: '', url: '' },
-    profile_image: { id: '', url: '' },
-    professional_skills: [],
-    spoken_languages: [],
-    working_experience: [],
-    location: { country: '', state: '', address: '', zip_code: '' },
-    social_network: {
-      website: '',
-      whatsapp: '',
-      instagram: '',
-      facebook: '',
-      linkedin: ''
-    },
-    createdAt: '',
-    updatedAt: ''
-  },
   metrics: {
     products: {
       blocked: 0,
@@ -206,12 +180,6 @@ export function reducer(state: State, action: Action): State {
 
     case actions.USER_AUTH:
       return { ...state, auth: action.payload.auth };
-
-    case actions.USER_DATA:
-      return {
-        ...state,
-        user: action.payload.user
-      };
 
     case actions.PUBLIC_PRODUCTS_LIST_DATA:
       return {

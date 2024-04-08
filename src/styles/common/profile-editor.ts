@@ -1,8 +1,8 @@
 import {
   BaseButton,
   BaseButtonOutline,
-  ButtonMono,
   ButtonMonoOutline,
+  StyledCornerButton,
   StyledInputs,
   StyledLabels
 } from '../defaults';
@@ -274,105 +274,74 @@ export const _userProfile = styled.div`
               }
             }
 
-            .image-container {
+            .cover-image-container {
               width: 100%;
-              display: flex;
-              align-items: center;
-              flex-direction: column;
-              gap: 10px;
-              justify-content: center;
+              height: 220px;
               position: relative;
               margin-bottom: 20px;
 
-              input {
-                display: none;
-              }
-            }
-
-            .cover-image {
               img {
                 width: 100%;
-                border-radius: 10px;
-                max-width: 1280px;
-                max-height: 150px;
+                height: 220px;
+                border-radius: 12px;
                 object-fit: cover;
               }
 
-              .camera-icon {
-                width: 680px;
-                height: 150px;
-                border-radius: 12px;
-                margin: 0 auto;
-                padding: 5px;
-                background: rgba(${({ theme }) => theme.font}, 0.1);
+              button {
+                ${StyledCornerButton}
+                width: 25px;
+                height: 25px;
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                background: rgb(${({ theme }) => theme.foreground});
+                z-index: 50px;
               }
 
-              label {
-                ${BaseButton}
-                width: fit-content;
-                height: fit-content;
-                position: absolute;
-                top: 3px;
-                left: calc(0% + 35px);
-                background: rgba(${({ theme }) => theme.primary}, 0.8);
-                padding: 8px;
-              }
-
-              .clear-image {
-                ${ButtonMono}
-                position: absolute;
-                top: 3px;
-                right: 32px;
-                width: 30px;
-                height: 30px;
-                border-radius: 12px;
-                background: rgba(${({ theme }) => theme.primary}, 0.8);
-                :hover {
-                  background: rgba(${({ theme }) => theme.error}, 0.6);
-                  svg {
-                    color: rgb(${({ theme }) => theme.white});
-                  }
-                }
+              .image-drop-container {
+                width: 100%;
+                height: 220px;
               }
             }
 
-            .profile-image {
+            .profile-image-container {
+              width: 100%;
+              max-width: 220px;
+              height: 220px;
+              position: relative;
+              margin: 0 auto;
+              margin-bottom: 20px;
+
               img {
-                border-radius: 12px;
+                width: 100%;
                 max-width: 220px;
-                max-height: 220px;
-                object-fit: none;
-              }
-
-              .camera-icon {
-                width: 150px;
-                height: 150px;
+                height: 220px;
                 border-radius: 12px;
-                margin: 0 auto;
-                padding: 20px;
-                background: rgba(${({ theme }) => theme.font}, 0.1);
-              }
-              label {
-                ${BaseButton}
-                width: fit-content;
-                height: fit-content;
+                object-fit: cover;
               }
 
-              .clear-image {
-                ${ButtonMono}
+              button {
+                ${StyledCornerButton}
+                width: 16px;
+                height: 16px;
                 position: absolute;
-                top: 10px;
-                right: calc(50% - 120px);
-                width: 30px;
-                height: 30px;
-                border-radius: 12px;
-                background: rgba(${({ theme }) => theme.primary}, 0.8);
-                :hover {
-                  background: rgba(${({ theme }) => theme.error}, 0.6);
-                  svg {
-                    color: rgb(${({ theme }) => theme.white});
-                  }
+                top: 4px;
+                right: 4px;
+                background: rgb(${({ theme }) => theme.foreground});
+                z-index: 50px;
+                display: grid;
+                place-content: center center;
+                place-items: center center;
+                svg {
+                  position: static;
+                  width: 16px;
+                  height: auto;
                 }
+              }
+
+              .image-drop-container {
+                width: 100%;
+                height: 220px;
               }
             }
           }

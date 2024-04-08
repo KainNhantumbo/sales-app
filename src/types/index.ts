@@ -434,7 +434,6 @@ export type State = {
   search: string;
   searchStores: string;
   searchStories: string;
-  user: User;
   product: Product;
   publicProduct: PublicProduct;
   productList: ProductsList[];

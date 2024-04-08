@@ -11,7 +11,6 @@ import Countries from '@/data/countries.json';
 import Languages from '@/data/languages.json';
 import Skills from '@/data/professional-skills.json';
 import { errorTransformer } from '@/lib/error-transformer';
-import { actions } from '@/shared/actions';
 import { _userProfile as Container } from '@/styles/common/profile-editor';
 import type { HttpError, InputEvents, User } from '@/types';
 import moment from 'moment';
@@ -49,15 +48,10 @@ const initialUserState: User = {
 };
 
 export default function Page() {
-  const {
-    state,
-    httpClient,
-    dispatch,
-    userWorkingDataController,
-    deleteAccountPromptController
-  } = useAppContext();
   const theme = useTheme();
   const router = useRouter();
+  const { state, httpClient, userWorkingDataController, deleteAccountPromptController } =
+    useAppContext();
   const [passwords, setPasswords] = React.useState({ password: '', confirm_password: '' });
   const [formData, setFormData] = React.useState<User>(initialUserState);
   const [coverImage, setCoverImage] = React.useState<string>('');
@@ -86,7 +80,7 @@ export default function Page() {
       [e.target.name]: e.target.value
     }));
   };
-[({})]
+
   const getUserData = React.useCallback(async () => {
     setLoading({ status: true, key: 'user-data' });
     try {
@@ -95,8 +89,8 @@ export default function Page() {
         url: `/api/v1/users/account/${router.query['id'] || state.auth.id}`
       });
       setFormData((state) => ({ ...state, ...data }));
-      setProfileImage(data.profile_image.url);
-      setCoverImage(data.cover_image.url);
+      setProfileImage(data.profile_image?.url || '');
+      setCoverImage(data.cover_image?.url || '');
     } catch (error) {
       const { message } = errorTransformer(error as HttpError);
       toast.error(message);
@@ -136,10 +130,9 @@ export default function Page() {
             .reduce((acc, value) => ({ ...acc, ...value }), {})
         }
       });
-
       setFormData((state) => ({ ...state, ...data }));
-      setProfileImage(data.profile_image.url);
-      setCoverImage(data.cover_image.url);
+      setProfileImage(data.profile_image?.url || '');
+      setCoverImage(data.cover_image?.url || '');
     } catch (error) {
       const { message } = errorTransformer(error as HttpError);
       toast.error(message);
@@ -162,58 +155,40 @@ export default function Page() {
 
   const createWorkingData = () => {
     const generatedId = crypto.randomUUID();
-    dispatch({
-      type: actions.USER_DATA,
-      payload: {
-        ...state,
-        user: {
-          ...state.user,
-          working_experience: [
-            ...state.user.working_experience,
-            { ...workingExperienceData, id: generatedId }
-          ]
-        }
-      }
-    });
+    setFormData((state) => ({
+      ...state,
+      working_experience: state.working_experience.concat({
+        ...workingExperienceData,
+        id: generatedId
+      })
+    }));
     setWorkingExperienceData(initialExperienceState);
     userWorkingDataController();
   };
 
   const updateWorkingData = (id: string) => {
-    dispatch({
-      type: actions.USER_DATA,
-      payload: {
-        ...state,
-        user: {
-          ...state.user,
-          working_experience: state.user.working_experience.map((item) =>
-            item.id === id ? { ...item, ...workingExperienceData } : item
-          )
-        }
-      }
-    });
+    setFormData((state) => ({
+      ...state,
+      working_experience: state.working_experience.map((item) =>
+        item.id === id ? { ...item, ...workingExperienceData } : item
+      )
+    }));
     userWorkingDataController();
     setWorkingExperienceData(initialExperienceState);
   };
 
   const editWorkingData = (id: string) => {
     setWorkingExperienceData(
-      () => state.user.working_experience.filter((item) => item.id === id)[0]
+      () => formData.working_experience.filter((item) => item.id === id)[0]
     );
     userWorkingDataController();
   };
 
   const removeWorkingData = (id: string) => {
-    dispatch({
-      type: actions.USER_DATA,
-      payload: {
-        ...state,
-        user: {
-          ...state.user,
-          working_experience: state.user.working_experience.filter((item) => item.id !== id)
-        }
-      }
-    });
+    setFormData((state) => ({
+      ...state,
+      working_experience: state.working_experience.filter((item) => item.id !== id)
+    }));
   };
 
   return (
@@ -272,7 +247,7 @@ export default function Page() {
                         </button>
                       </>
                     ) : (
-                      <div className='cover-image-drop-container'>
+                      <div className='image-drop-container'>
                         <DropzoneArea
                           width={620}
                           height={220}
@@ -288,8 +263,8 @@ export default function Page() {
                     {profileImage ? (
                       <>
                         <Image
-                          width={150}
-                          height={150}
+                          width={220}
+                          height={220}
                           src={profileImage}
                           alt='Imagem de perfil do usuário'
                         />
@@ -300,7 +275,7 @@ export default function Page() {
                         </button>
                       </>
                     ) : (
-                      <div className='profile-image-drop-container'>
+                      <div className='image-drop-container'>
                         <DropzoneArea
                           width={150}
                           height={150}
@@ -679,6 +654,7 @@ export default function Page() {
                           type='url'
                           id='whatsapp'
                           placeholder='Contacto do Whatsapp'
+                          autoComplete='off'
                           value={formData.social_network?.whatsapp}
                           onChange={(e) => {
                             setFormData((state) => ({
@@ -700,6 +676,7 @@ export default function Page() {
                           type='url'
                           id='facebook'
                           placeholder='Link do perfil de facebook'
+                          autoComplete='off'
                           value={formData.social_network?.facebook}
                           onChange={(e) => {
                             setFormData((state) => ({
@@ -724,6 +701,7 @@ export default function Page() {
                           type='url'
                           id='website'
                           placeholder='Link do website ou blog'
+                          autoComplete='off'
                           value={formData.social_network?.website}
                           onChange={(e) => {
                             setFormData((state) => ({
@@ -745,6 +723,7 @@ export default function Page() {
                           type='url'
                           id='instagram'
                           placeholder='Link do perfil do instagram'
+                          autoComplete='off'
                           value={formData.social_network?.instagram}
                           onChange={(e) => {
                             setFormData((state) => ({
@@ -768,6 +747,7 @@ export default function Page() {
                         <input
                           type='text'
                           id='linkedin'
+                          autoComplete='off'
                           placeholder='Link do perfil do linkedin'
                           value={formData.social_network?.linkedin}
                           onChange={(e) => {
@@ -808,6 +788,7 @@ export default function Page() {
                           type='password'
                           id='password'
                           name='password'
+                          autoComplete='off'
                           minLength={8}
                           placeholder='Escreva a sua nova senha'
                           onChange={handlePasswordsChange}
@@ -822,6 +803,7 @@ export default function Page() {
                           type='password'
                           id='confirm_password'
                           name='confirm_password'
+                          autoComplete='off'
                           minLength={8}
                           placeholder='Confirme a sua senha'
                           onChange={handlePasswordsChange}
