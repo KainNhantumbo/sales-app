@@ -1,4 +1,4 @@
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { actions } from '@/shared/actions';
 import { ProductsList } from '@/types';
 import { useInfiniteQuery } from '@tanstack/react-query';

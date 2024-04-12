@@ -1,4 +1,4 @@
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { errorTransformer } from '@/lib/error-transformer';
 import { getPosts } from '@/lib/queries';
 import { actions } from '@/shared/actions';

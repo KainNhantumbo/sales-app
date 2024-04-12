@@ -1,6 +1,6 @@
 import Layout from '@/components/layout';
 import { SideBarAds } from '@/components/sidebar-ads';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { constants, pricing_data } from '@/data/constants';
 import { errorTransformer } from '@/lib/error-transformer';
 import { _subsTransactions as Container } from '@/styles/common/transactions-subscriptions';

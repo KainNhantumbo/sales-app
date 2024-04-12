@@ -1,4 +1,4 @@
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { CART_STORE_KEY } from '@/data/constants';
 import { actions } from '@/shared/actions';
 import type { Cart } from '@/types';

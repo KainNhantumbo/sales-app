@@ -3,7 +3,7 @@ import { SearchBox } from '@/components/modals/search-box';
 import { ShareProducts } from '@/components/modals/share-product-prompt';
 import { SortBox } from '@/components/modals/sort-box';
 import { ToolBox } from '@/components/modals/tool-box';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { constants } from '@/data/constants';
 import { useProductsQuery } from '@/hooks/use-products-query';
 import { errorTransformer } from '@/lib/error-transformer';
@@ -22,9 +22,16 @@ import { useTheme } from 'styled-components';
 
 export default function Page() {
   const theme = useTheme();
-  const { state, dispatch, httpClient, shareProductController } = useAppContext();
+  const { state, dispatch, httpClient } = useAppContext();
   const { error, inViewRef, refetch, isError, isLoading, fetchNextPage, hasNextPage } =
     useProductsQuery();
+
+  const shareProductController = () => {
+    dispatch({
+      type: actions.SHARE_PRODUCT_MODAL,
+      payload: { ...state, isShareProductModal: !state.isShareProductModal }
+    });
+  };
 
   const handleDeleteProduct = async (productId: string) => {
     dispatch({

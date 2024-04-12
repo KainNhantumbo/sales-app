@@ -2,8 +2,7 @@ import type { TParsedContent } from '@/components/editor-js-renderer';
 import EditorJsRenderer from '@/components/editor-js-renderer';
 import Layout from '@/components/layout';
 import { NewsLetter } from '@/components/newsletter';
-import { useAppContext } from '@/context/AppContext';
-import { useModulesContext } from '@/context/Modules';
+import { useAppContext } from '@/context/app-context';
 import { author, constants } from '@/data/constants';
 import { errorTransformer } from '@/lib/error-transformer';
 import { getPaths, getPost, getPosts } from '@/lib/queries';
@@ -34,8 +33,7 @@ import { useTheme } from 'styled-components';
 type Props = { post: IBlogPost; latestPosts: Posts[] };
 
 export default function Page({ post: initialPost, latestPosts }: Props) {
-  const { state, httpClient } = useAppContext();
-  const { requestLogin } = useModulesContext();
+  const { state, httpClient, requestLogin } = useAppContext();
   const [post, setPost] = useState(initialPost);
   const router = useRouter();
   const theme = useTheme();

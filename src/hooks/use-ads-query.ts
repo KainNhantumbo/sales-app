@@ -1,4 +1,4 @@
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
 import { AdsList, HttpError } from '@/types';

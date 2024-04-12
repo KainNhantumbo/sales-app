@@ -2,7 +2,7 @@ import Layout from '@/components/layout';
 import { NewsLetter } from '@/components/newsletter';
 import { PaymentGatewayRenderer } from '@/components/payment-gateway-renderer';
 import { SelectContainer } from '@/components/select';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { blurDataUrlImage, constants, payment_options, states } from '@/data/constants';
 import { useCartStore } from '@/hooks/use-cart-store';
 import { errorTransformer } from '@/lib/error-transformer';

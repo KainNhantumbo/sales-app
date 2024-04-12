@@ -5,12 +5,13 @@ import {
   WorkDataPrompt,
   initialExperienceState
 } from '@/components/modals/work-data-prompt';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { constants } from '@/data/constants';
 import Countries from '@/data/countries.json';
 import Languages from '@/data/languages.json';
 import Skills from '@/data/professional-skills.json';
 import { errorTransformer } from '@/lib/error-transformer';
+import { actions } from '@/shared/actions';
 import { _userProfile as Container } from '@/styles/common/profile-editor';
 import type { HttpError, InputEvents, User } from '@/types';
 import moment from 'moment';
@@ -50,8 +51,7 @@ const initialUserState: User = {
 export default function Page() {
   const theme = useTheme();
   const router = useRouter();
-  const { state, httpClient, userWorkingDataController, deleteAccountPromptController } =
-    useAppContext();
+  const { state, dispatch, httpClient } = useAppContext();
   const [passwords, setPasswords] = React.useState({ password: '', confirm_password: '' });
   const [formData, setFormData] = React.useState<User>(initialUserState);
   const [coverImage, setCoverImage] = React.useState<string>('');
@@ -98,7 +98,7 @@ export default function Page() {
     } finally {
       setLoading({ status: false, key: 'user-data' });
     }
-  }, [router.query]);
+  }, [router.query, state.auth]);
 
   const onUpdate = async () => {
     try {
@@ -152,6 +152,13 @@ export default function Page() {
   // -------working capturer functions--------
   const [workingExperienceData, setWorkingExperienceData] =
     React.useState(initialExperienceState);
+
+  const userWorkingDataController = () => {
+    dispatch({
+      type: actions.USER_WORKING_DATA_MODAL,
+      payload: { ...state, isUserWorkingDataModal: !state.isUserWorkingDataModal }
+    });
+  };
 
   const createWorkingData = () => {
     const generatedId = crypto.randomUUID();
@@ -977,7 +984,17 @@ export default function Page() {
               <section>
                 <span> Cuidado, essa ação é irreversível.</span>
               </section>
-              <button className='save' onClick={deleteAccountPromptController}>
+              <button
+                className='save'
+                onClick={() =>
+                  dispatch({
+                    type: actions.DELETE_ACCOUNT_PROMPT,
+                    payload: {
+                      ...state,
+                      isDeleteAccountPrompt: !state.isDeleteAccountPrompt
+                    }
+                  })
+                }>
                 <Io.IoTrash />
                 <span>Apagar dados</span>
               </button>

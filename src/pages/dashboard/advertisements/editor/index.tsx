@@ -1,6 +1,6 @@
 import { DropzoneArea } from '@/components/dropzone';
 import Layout from '@/components/layout';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { constants } from '@/data/constants';
 import { errorTransformer } from '@/lib/error-transformer';
 import { _adEditor as Container } from '@/styles/common/advertisements-editor';

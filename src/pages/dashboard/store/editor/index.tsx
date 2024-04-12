@@ -1,6 +1,6 @@
 import { DropzoneArea } from '@/components/dropzone';
 import Layout from '@/components/layout';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { constants } from '@/data/constants';
 import Countries from '@/data/countries.json';
 import Categories from '@/data/product-categories.json';

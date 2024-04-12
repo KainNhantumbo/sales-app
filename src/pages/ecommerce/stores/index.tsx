@@ -2,7 +2,7 @@ import buyingWomenImg from '@/../public/assets/buying_women.png';
 import Layout from '@/components/layout';
 import { NewsLetter } from '@/components/newsletter';
 import { StoreSearch } from '@/components/store-search';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { blurDataUrlImage, constants } from '@/data/constants';
 import { getStoresData } from '@/lib/queries';
 import { formatDate } from '@/lib/utils';

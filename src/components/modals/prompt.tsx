@@ -1,4 +1,4 @@
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { actions } from '@/shared/actions';
 import { _prompt as Container } from '@/styles/modules/logout-prompt';
 import { AnimatePresence, motion } from 'framer-motion';

@@ -1,7 +1,7 @@
 import Layout from '@/components/layout';
 import { SelectContainer } from '@/components/select';
 import { SideBarAds } from '@/components/sidebar-ads';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import {
   constants,
   orderSortOptions,
@@ -25,7 +25,6 @@ const serialiseOrderStatus = (status: string): string => {
 export default function Page() {
   const theme = useTheme();
   const { state } = useAppContext();
-
   const {
     isLoading,
     isError,
@@ -193,9 +192,7 @@ export default function Page() {
                     size={20}
                     color={`rgb(${theme.primary})`}
                     aria-placeholder='Processando...'
-                    cssOverride={{
-                      display: 'block'
-                    }}
+                    cssOverride={{ display: 'block' }}
                   />
                 </div>
               ) : null}

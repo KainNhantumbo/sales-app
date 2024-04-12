@@ -1,5 +1,4 @@
-import { useAppContext } from '@/context/AppContext';
-import { useModulesContext } from '@/context/Modules';
+import { useAppContext } from '@/context/app-context';
 import { blurDataUrlImage } from '@/data/constants';
 import { useCartStore } from '@/hooks/use-cart-store';
 import { formatCurrency } from '@/lib/utils';
@@ -20,8 +19,7 @@ import {
 
 export function Cart() {
   const router = useRouter();
-  const { state } = useAppContext();
-  const { requestLogin } = useModulesContext();
+  const { state, requestLogin } = useAppContext();
   const { cartModalController, removeProductFromCart, getCartProduct, updateCartProduct } =
     useCartStore();
 

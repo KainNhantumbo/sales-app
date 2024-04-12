@@ -2,7 +2,7 @@ import { DropzoneArea } from '@/components/dropzone';
 import Layout from '@/components/layout';
 import { SideBarAds } from '@/components/sidebar-ads';
 import client from '@/config/client';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { constants } from '@/data/constants';
 import { useFetchState } from '@/hooks/use-fetch-state';
 import { errorTransformer } from '@/lib/error-transformer';

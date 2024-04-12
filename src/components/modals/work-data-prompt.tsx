@@ -1,4 +1,5 @@
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
+import { actions } from '@/shared/actions';
 import { _capturer as Container } from '@/styles/modules/working-capturer';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { Dispatch, SetStateAction } from 'react';
@@ -22,7 +23,7 @@ type Props = {
 };
 
 export function WorkDataPrompt(props: Props) {
-  const { state, userWorkingDataController } = useAppContext();
+  const { state, dispatch } = useAppContext();
 
   return (
     <AnimatePresence>
@@ -32,7 +33,13 @@ export function WorkDataPrompt(props: Props) {
           onClick={(e) => {
             const target = (e as any).target.classList;
             if (target.contains('main')) {
-              userWorkingDataController();
+              dispatch({
+                type: actions.USER_WORKING_DATA_MODAL,
+                payload: {
+                  ...state,
+                  isUserWorkingDataModal: !state.isUserWorkingDataModal
+                }
+              });
             }
           }}>
           <motion.section
@@ -180,7 +187,13 @@ export function WorkDataPrompt(props: Props) {
                         type='reset'
                         className='prompt-cancel'
                         onClick={() => {
-                          userWorkingDataController();
+                          dispatch({
+                            type: actions.USER_WORKING_DATA_MODAL,
+                            payload: {
+                              ...state,
+                              isUserWorkingDataModal: !state.isUserWorkingDataModal
+                            }
+                          });
                           props.setStateFn(() => ({ ...initialExperienceState }));
                         }}>
                         <Io.IoClose />

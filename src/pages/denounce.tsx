@@ -1,7 +1,6 @@
 import Layout from '@/components/layout';
 import { SelectContainer } from '@/components/select';
-import { useAppContext } from '@/context/AppContext';
-import { useModulesContext } from '@/context/Modules';
+import { useAppContext } from '@/context/app-context';
 import { constants, denounceReasons } from '@/data/constants';
 import { initialState } from '@/lib/reducer';
 import { actions } from '@/shared/actions';
@@ -15,9 +14,8 @@ import { IoBan, IoCheckmark, IoClose, IoEllipsisHorizontal } from 'react-icons/i
 
 export default function Page() {
   const router = useRouter();
-  const { requestLogin } = useModulesContext();
   const [msg, setMsg] = useState<string>('');
-  const { state, dispatch, httpClient } = useAppContext();
+  const { state, dispatch, requestLogin, httpClient } = useAppContext();
 
   const handleCreateDenounce = async () => {
     try {

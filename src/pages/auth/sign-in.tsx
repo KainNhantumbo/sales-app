@@ -1,7 +1,7 @@
 import backgroundImage from '@/../public/assets/africa-unveiled.png';
 import Layout from '@/components/layout';
 import fetch from '@/config/client';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { constants } from '@/data/constants';
 import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';

@@ -1,4 +1,4 @@
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { actions } from '@/shared/actions';
 import { _search as Container } from '@/styles/modules/search-form';
 import { IoClose } from 'react-icons/io5';

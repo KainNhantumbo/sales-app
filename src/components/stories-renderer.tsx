@@ -1,6 +1,5 @@
 import client from '@/config/client';
-import { useAppContext } from '@/context/AppContext';
-import { useModulesContext } from '@/context/Modules';
+import { useAppContext } from '@/context/app-context';
 import { constants } from '@/data/constants';
 import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
@@ -22,8 +21,7 @@ import type { HttpError, PublicStory } from '../types';
 type Props = { userId?: string; favoritesId?: string };
 
 export function StoriesRenderer(props: Props) {
-  const { state, dispatch, httpClient } = useAppContext();
-  const { requestLogin } = useModulesContext();
+  const { state, dispatch, requestLogin, httpClient } = useAppContext();
   const LIMIT: number = 8;
   const router = useRouter();
   const theme = useTheme();

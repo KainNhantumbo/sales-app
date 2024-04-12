@@ -1,5 +1,4 @@
-import { useAppContext } from '@/context/AppContext';
-import { useModulesContext } from '@/context/Modules';
+import { useAppContext } from '@/context/app-context';
 import { actions } from '@/shared/actions';
 import { TCommentForm } from '@/types/comments';
 import Image from 'next/image';
@@ -11,8 +10,7 @@ type Props = Omit<TCommentForm, 'updateComment' | 'currentCommentId' | 'replyCom
 
 export function CommentForm(props: Props) {
   const theme = useTheme();
-  const { state, dispatch } = useAppContext();
-  const { requestLogin } = useModulesContext();
+  const { state, dispatch, requestLogin } = useAppContext();
 
   return (
     <>

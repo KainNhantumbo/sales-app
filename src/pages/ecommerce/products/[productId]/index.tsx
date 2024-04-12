@@ -3,8 +3,7 @@ import Layout from '@/components/layout';
 import { ShareProducts } from '@/components/modals/share-product-prompt';
 import { NewsLetter } from '@/components/newsletter';
 import fetch from '@/config/client';
-import { useAppContext } from '@/context/AppContext';
-import { useModulesContext } from '@/context/Modules';
+import { useAppContext } from '@/context/app-context';
 import { constants } from '@/data/constants';
 import { useCartStore } from '@/hooks/use-cart-store';
 import { useFavoriteProduct } from '@/hooks/use-favorite-product';
@@ -34,9 +33,8 @@ type Props = { product?: PublicProduct; error_message?: string };
 export default function Page({ product: publicProduct, error_message }: Props) {
   const theme = useTheme();
   const router = useRouter();
-  const { requestLogin } = useModulesContext();
   const { width: innerWindowWidth } = useInnerWindowSize();
-  const { state, dispatch, shareProductController } = useAppContext();
+  const { state, dispatch, requestLogin } = useAppContext();
   const { removeProductFromCart, addProductToCart, getCartProduct, updateCartProduct } =
     useCartStore();
 
@@ -45,6 +43,13 @@ export default function Page({ product: publicProduct, error_message }: Props) {
   });
 
   const product = React.useMemo(() => state.publicProduct, [state.publicProduct]);
+
+  const shareProductController = () => {
+    dispatch({
+      type: actions.SHARE_PRODUCT_MODAL,
+      payload: { ...state, isShareProductModal: !state.isShareProductModal }
+    });
+  };
 
   React.useEffect(() => {
     if (publicProduct) {

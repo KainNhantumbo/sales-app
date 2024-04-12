@@ -1,7 +1,6 @@
 import Layout from '@/components/layout';
 import { ProductsSearch } from '@/components/products-search';
-import { useAppContext } from '@/context/AppContext';
-import { useModulesContext } from '@/context/Modules';
+import { useAppContext } from '@/context/app-context';
 import { blurDataUrlImage, constants } from '@/data/constants';
 import { useCartStore } from '@/hooks/use-cart-store';
 import { useFavoriteProduct } from '@/hooks/use-favorite-product';
@@ -28,8 +27,7 @@ export default function Page() {
     isAnyFilterActive
   } = usePublicProductsQuery();
   const theme = useTheme();
-  const { state, dispatch } = useAppContext();
-  const { requestLogin } = useModulesContext();
+  const { state, dispatch, requestLogin } = useAppContext();
   const { addProductToCart, removeProductFromCart } = useCartStore();
 
   const { onFavoriteProduct, onUnFavoriteProduct } = useFavoriteProduct({

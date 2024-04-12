@@ -1,7 +1,6 @@
 import Layout from '@/components/layout';
-import { motion } from 'framer-motion';
 import { SelectContainer } from '@/components/select';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { constants, orderSortOptions } from '@/data/constants';
 import { useAdsQuery } from '@/hooks/use-ads-query';
 import { errorTransformer } from '@/lib/error-transformer';
@@ -9,6 +8,7 @@ import { formatDate } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _adCollections as Container } from '@/styles/common/advertisements-collections';
 import { HttpError } from '@/types';
+import { motion } from 'framer-motion';
 import moment from 'moment';
 import Link from 'next/link';
 import { FaAd } from 'react-icons/fa';

@@ -1,4 +1,4 @@
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { actions } from '@/shared/actions';
 import { _searchBox as Container } from '@/styles/modules/search-box';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -8,7 +8,7 @@ import { FiX } from 'react-icons/fi';
 
 export function SearchBox() {
   const [inputValue, setInputValue] = useState<string>('');
-  const { state, dispatch, searchBoxController } = useAppContext();
+  const { state, dispatch } = useAppContext();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -45,7 +45,10 @@ export function SearchBox() {
           onClick={(e: any) => {
             const target = (e as any).target.classList;
             if (target.contains('main')) {
-              searchBoxController();
+              dispatch({
+                type: actions.SEARCH_BOX_CONTROL,
+                payload: { ...state, isSearchActive: !state.isSearchActive }
+              });
             }
           }}>
           <motion.section
@@ -59,7 +62,15 @@ export function SearchBox() {
                   <BiSearch />
                   <span>Pesquisar</span>
                 </h2>
-                <button className='quit' title='Close' onClick={searchBoxController}>
+                <button
+                  className='quit'
+                  title='Close'
+                  onClick={() =>
+                    dispatch({
+                      type: actions.SEARCH_BOX_CONTROL,
+                      payload: { ...state, isSearchActive: !state.isSearchActive }
+                    })
+                  }>
                   <FiX />
                 </button>
               </div>

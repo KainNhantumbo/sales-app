@@ -1,13 +1,14 @@
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
+import { actions } from '@/shared/actions';
 import { _toolbar as Container } from '@/styles/modules/tool-bar';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { BiSearch, BiSortAlt2 } from 'react-icons/bi';
 import { HiPlus } from 'react-icons/hi';
 
-export function ToolBox() {
+export const ToolBox = () => {
   const router = useRouter();
-  const { state, sortBoxController, searchBoxController } = useAppContext();
+  const { state, dispatch } = useAppContext();
 
   return (
     <Container>
@@ -27,7 +28,12 @@ export function ToolBox() {
           whileTap={{ scale: 0.95 }}
           title='Sort'
           className='described'
-          onClick={sortBoxController}>
+          onClick={() =>
+            dispatch({
+              type: actions.SORT_BOX_CONTROL,
+              payload: { ...state, isSortActive: !state.isSortActive }
+            })
+          }>
           <BiSortAlt2 />
           <span>Ordenar</span>
         </motion.button>
@@ -37,7 +43,12 @@ export function ToolBox() {
           whileTap={{ scale: 0.95 }}
           title='Search for anything'
           className='described'
-          onClick={searchBoxController}>
+          onClick={() =>
+            dispatch({
+              type: actions.SEARCH_BOX_CONTROL,
+              payload: { ...state, isSearchActive: !state.isSearchActive }
+            })
+          }>
           <BiSearch />
           <span>Pesquisar</span>
         </motion.button>
@@ -50,4 +61,4 @@ export function ToolBox() {
       </section>
     </Container>
   );
-}
+};

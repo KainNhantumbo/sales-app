@@ -7,7 +7,7 @@ import {
   IoHeartOutline
 } from 'react-icons/io5';
 
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { constants } from '@/data/constants';
 import { TComment } from '@/types/comments';
 import moment from 'moment';

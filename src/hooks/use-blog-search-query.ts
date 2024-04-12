@@ -1,4 +1,4 @@
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { getPosts } from '@/lib/queries';
 import { actions } from '@/shared/actions';
 import type { Posts } from '@/types';

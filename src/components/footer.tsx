@@ -1,9 +1,9 @@
-import * as Io from 'react-icons/io5';
-import { useAppContext } from '@/context/AppContext';
-import { useThemeContext } from '@/context/ThemeContext';
+import { useAppContext } from '@/context/app-context';
+import { useThemeContext } from '@/context/theme-context';
 import { constants, HEADER_URLS } from '@/data/constants';
 import { m as motion } from 'framer-motion';
 import Link from 'next/link';
+import * as Io from 'react-icons/io5';
 import { _footer as Container } from '../styles/modules/footer';
 
 export function Footer() {

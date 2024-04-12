@@ -1,6 +1,5 @@
 import rubymart_logo from '@/../public/rubymart_logo.png';
-import { useAppContext } from '@/context/AppContext';
-import { useModulesContext } from '@/context/Modules';
+import { useAppContext } from '@/context/app-context';
 import { HEADER_URLS } from '@/data/constants';
 import { useCartStore } from '@/hooks/use-cart-store';
 import { useInnerWindowSize } from '@/hooks/use-window-size';
@@ -14,9 +13,8 @@ import { BiUser } from 'react-icons/bi';
 import * as Io from 'react-icons/io5';
 
 export function Header() {
-  const { state } = useAppContext();
+  const { state, logoutUser } = useAppContext();
   const { asPath, push } = useRouter();
-  const { logoutUser } = useModulesContext();
   const { cartModalController } = useCartStore();
   const [isMenu, setIsMenu] = useState<boolean>(false);
   const { width: windowWidth } = useInnerWindowSize();

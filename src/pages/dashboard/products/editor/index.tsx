@@ -1,6 +1,6 @@
 import { DropzoneArea } from '@/components/dropzone';
 import Layout from '@/components/layout';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { DEFAULT_ERROR_MESSAGE, constants } from '@/data/constants';
 import Categories from '@/data/product-categories.json';
 import { errorTransformer } from '@/lib/error-transformer';

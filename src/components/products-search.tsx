@@ -1,4 +1,4 @@
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { PublicProductsQueryParams } from '@/hooks/use-public-products-query';
 import { useInnerWindowSize } from '@/hooks/use-window-size';
 import { slidePageUp } from '@/lib/utils';

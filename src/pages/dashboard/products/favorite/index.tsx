@@ -1,8 +1,7 @@
 import Layout from '@/components/layout';
 import { SideBarAds } from '@/components/sidebar-ads';
 import fetch from '@/config/client';
-import { useAppContext } from '@/context/AppContext';
-import { useModulesContext } from '@/context/Modules';
+import { useAppContext } from '@/context/app-context';
 import { blurDataUrlImage, constants } from '@/data/constants';
 import { useCartStore } from '@/hooks/use-cart-store';
 import { useFavoriteProduct } from '@/hooks/use-favorite-product';
@@ -23,10 +22,9 @@ type Props = { products: PublicProducts[] };
 
 export default function Page({ products }: Props) {
   const theme = useTheme();
-  const { requestLogin } = useModulesContext();
   const { width: windowInnerWidth } = useInnerWindowSize();
   const { onUnFavoriteProduct } = useFavoriteProduct({ key: 'public-products-list' });
-  const { state, dispatch } = useAppContext();
+  const { state, dispatch, requestLogin } = useAppContext();
   const { addProductToCart, removeProductFromCart } = useCartStore();
 
   const refetchFavoriteProducts = async () => {

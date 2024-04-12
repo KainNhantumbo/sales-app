@@ -1,5 +1,5 @@
 import client from '@/config/client';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { errorTransformer } from '@/lib/error-transformer';
 import { initialState } from '@/lib/reducer';
 import { actions } from '@/shared/actions';
@@ -12,7 +12,7 @@ import { BsTrash } from 'react-icons/bs';
 import { IoArrowBackOutline, IoLockClosedOutline, IoMailOutline } from 'react-icons/io5';
 
 export function DeleteAccountPrompt() {
-  const { state, httpClient, dispatch, deleteAccountPromptController } = useAppContext();
+  const { state, httpClient, dispatch } = useAppContext();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ status: false, message: '' });
@@ -30,7 +30,10 @@ export function DeleteAccountPrompt() {
         type: actions.USER_AUTH,
         payload: { ...state, auth: initialState.auth }
       });
-      deleteAccountPromptController();
+      dispatch({
+        type: actions.DELETE_ACCOUNT_PROMPT,
+        payload: { ...state, isDeleteAccountPrompt: !state.isDeleteAccountPrompt }
+      });
       router.push('/');
     } catch (error) {
       console.error(error);
@@ -86,7 +89,12 @@ export function DeleteAccountPrompt() {
           className='main'
           onClick={(e: any) => {
             const isTarget = e.target.classList.contains('main');
-            if (isTarget) deleteAccountPromptController();
+            if (isTarget) {
+              dispatch({
+                type: actions.DELETE_ACCOUNT_PROMPT,
+                payload: { ...state, isDeleteAccountPrompt: !state.isDeleteAccountPrompt }
+              });
+            }
           }}>
           <motion.section
             className='dialog-modal'
@@ -148,7 +156,15 @@ export function DeleteAccountPrompt() {
               <div className='prompt-actions'>
                 <button
                   className='prompt-cancel'
-                  onClick={() => deleteAccountPromptController()}>
+                  onClick={() =>
+                    dispatch({
+                      type: actions.DELETE_ACCOUNT_PROMPT,
+                      payload: {
+                        ...state,
+                        isDeleteAccountPrompt: !state.isDeleteAccountPrompt
+                      }
+                    })
+                  }>
                   <IoArrowBackOutline />
                   <span>Cancelar</span>
                 </button>

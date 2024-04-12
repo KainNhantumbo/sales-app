@@ -1,7 +1,9 @@
 import CookiesPopup from '@/components/cookies-popup';
-import { useAppContext } from '@/context/AppContext';
+import { useThemeContext } from '@/context/theme-context';
+import { useAppContext } from '@/context/app-context';
 import { useRouter } from 'next/router';
-import { type ReactNode, useEffect } from 'react';
+import { useEffect, type ReactNode } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { HeadProps } from '../types/index';
 import { Footer } from './footer';
 import Metadata from './head';
@@ -9,8 +11,6 @@ import { Header } from './header';
 import { LoadingIndicator } from './loading-indicator';
 import { Cart } from './modals/cart';
 import { Prompt } from './modals/prompt';
-import { ToastContainer } from 'react-toastify';
-import { useThemeContext } from '@/context/ThemeContext';
 
 type Props = { children: ReactNode; metadata: HeadProps };
 

@@ -1,7 +1,7 @@
 import Layout from '@/components/layout';
 import { NewsLetter } from '@/components/newsletter';
 import { PostsSearch } from '@/components/posts-search';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { constants } from '@/data/constants';
 import { useBlogSearchQuery } from '@/hooks/use-blog-search-query';
 import { formatDate } from '@/lib/utils';

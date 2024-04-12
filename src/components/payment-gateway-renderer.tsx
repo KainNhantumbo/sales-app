@@ -1,4 +1,4 @@
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { actions } from '@/shared/actions';
 import { IoPhonePortraitOutline } from 'react-icons/io5';
 import type { PaymentGateway } from '../types';

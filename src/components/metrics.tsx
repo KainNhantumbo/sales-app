@@ -1,4 +1,4 @@
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { formatCurrency } from '@/lib/utils';
 import { actions } from '@/shared/actions';
 import { _metrics as Container } from '@/styles/modules/metrics';

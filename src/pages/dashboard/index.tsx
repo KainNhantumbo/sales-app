@@ -1,6 +1,6 @@
 import Layout from '@/components/layout';
 import { Metrics } from '@/components/metrics';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { constants } from '@/data/constants';
 import { buildActions } from '@/lib/dashboard-actions';
 import { _dashboard as Container } from '@/styles/common/dashbord';

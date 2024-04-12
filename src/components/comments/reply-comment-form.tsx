@@ -1,5 +1,4 @@
-import { useAppContext } from '@/context/AppContext';
-import { useModulesContext } from '@/context/Modules';
+import { useAppContext } from '@/context/app-context';
 import { actions } from '@/shared/actions';
 import type { TCommentForm } from '@/types/comments';
 import { MoonLoader } from 'react-spinners';
@@ -7,8 +6,7 @@ import { useTheme } from 'styled-components';
 
 export function ReplyCommentForm(props: TCommentForm) {
   const theme = useTheme();
-  const { state, dispatch } = useAppContext();
-  const { logoutUser } = useModulesContext();
+  const { state, dispatch, logoutUser } = useAppContext();
 
   return (
     <>

@@ -1,7 +1,7 @@
 import { FaFacebook, FaLinkedinIn, FaPinterest, FaTwitter } from 'react-icons/fa';
-
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { constants } from '@/data/constants';
+import { actions } from '@/shared/actions';
 import { _shareProduct as Container } from '@/styles/modules/share-product-modal';
 import { AnimatePresence, motion } from 'framer-motion';
 import { IoClose, IoShareSocial } from 'react-icons/io5';
@@ -13,7 +13,14 @@ type Props = {
 };
 
 export function ShareProducts({ name, category, productId }: Props) {
-  const { state, shareProductController } = useAppContext();
+  const { state, dispatch } = useAppContext();
+
+  const shareProductController = () => {
+    dispatch({
+      type: actions.SHARE_PRODUCT_MODAL,
+      payload: { ...state, isShareProductModal: !state.isShareProductModal }
+    });
+  };
 
   const options = [
     {

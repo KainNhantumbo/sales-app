@@ -1,4 +1,4 @@
-import { AppContext } from '@/context/AppContext';
+import { AppContext } from '@/context/app-context';
 import '@/styles/global.css';
 import 'moment/locale/pt-br';
 import type { AppProps } from 'next/app';

@@ -1,5 +1,5 @@
 import client from '@/config/client';
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { errorTransformer } from '@/lib/error-transformer';
 import { actions } from '@/shared/actions';
 import type { HttpError, PublicProducts } from '@/types';

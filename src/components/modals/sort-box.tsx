@@ -1,4 +1,4 @@
-import { useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/app-context';
 import { actions } from '@/shared/actions';
 import { _sortBox as Container } from '@/styles/modules/sort-box';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -18,7 +18,15 @@ const SortOptions = [
 ];
 
 export function SortBox() {
-  const { state, dispatch, sortBoxController } = useAppContext();
+  const { state, dispatch } = useAppContext();
+
+  const sortBoxController = () => {
+    dispatch({
+      type: actions.SORT_BOX_CONTROL,
+      payload: { ...state, isSortActive: !state.isSortActive }
+    });
+  };
+
   return (
     <AnimatePresence>
       {state.isSortActive && (
