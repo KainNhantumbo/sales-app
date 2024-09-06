@@ -64,6 +64,7 @@ export function ProductsSearch({ query, setQuery, isAnyFilterActive }: Props) {
     <AnimatePresence>
       {state.isPublicProductsFilters && (
         <Container
+          forwardedAs={'aside'}
           onClick={(e: any) => {
             const [target] = (e as any).target.classList;
             if (target?.includes('search-engine')) {

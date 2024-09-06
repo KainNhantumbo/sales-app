@@ -15,7 +15,7 @@ export function useAdsQuery() {
     sort: params.get('sort') || '',
     search: params.get('search') || ''
   });
-  
+
   const { data, refetch, isLoading, isError, error } = useQuery({
     queryKey: ['private-ads'],
     queryFn: async () => {

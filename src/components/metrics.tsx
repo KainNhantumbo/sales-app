@@ -35,7 +35,7 @@ export function Metrics() {
   }, [state.auth, state.productList]);
 
   return (
-    <Container id='metrics'>
+    <Container forwardedAs={'div'} id='metrics'>
       <h2>
         <BiStats />
         <span>Estatísticas</span>

@@ -1,4 +1,3 @@
-import buyingWomenImg from '@/../public/assets/buying_women.png';
 import Layout from '@/components/layout';
 import { NewsLetter } from '@/components/newsletter';
 import { StoreSearch } from '@/components/store-search';
@@ -101,7 +100,9 @@ export default function Page() {
             </div>
 
             <Image
-              src={buyingWomenImg}
+              width={1000}
+              height={1000}
+              src={`/assets/buying_women.png`}
               blurDataURL={blurDataUrlImage}
               alt='buying women art from freepick.com'
               priority

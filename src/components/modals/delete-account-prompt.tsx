@@ -86,6 +86,7 @@ export function DeleteAccountPrompt() {
     <AnimatePresence>
       {state.isDeleteAccountPrompt && (
         <Container
+          forwardedAs={'section'}
           className='main'
           onClick={(e: any) => {
             const isTarget = e.target.classList.contains('main');

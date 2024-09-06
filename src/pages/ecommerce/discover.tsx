@@ -1,5 +1,3 @@
-import africa_culture from '@/../public/assets/africa-culture.png';
-import flying_paper from '@/../public/assets/flying paper.png';
 import Layout from '@/components/layout';
 import { NewsLetter } from '@/components/newsletter';
 import { constants, pricing_data, store_features } from '@/data/constants';
@@ -32,7 +30,7 @@ export default function Page() {
               <span>* Não é necessário adicionar cartão de crédito</span>
             </div>
             <Image
-              src={flying_paper}
+              src={`/assets/flying-paper.png`}
               width={800}
               height={800}
               priority={true}
@@ -86,7 +84,7 @@ export default function Page() {
               </Link>
             </div>
             <Image
-              src={africa_culture}
+              src={`/assets/africa-culture.png`}
               width={600}
               height={600}
               alt='africa culture image'

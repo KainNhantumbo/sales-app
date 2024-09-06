@@ -41,6 +41,7 @@ export function SearchBox() {
     <AnimatePresence>
       {state.isSearchActive && (
         <Container
+          forwardedAs={'section'}
           className='main'
           onClick={(e: any) => {
             const target = (e as any).target.classList;

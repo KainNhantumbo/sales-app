@@ -29,6 +29,7 @@ export function WorkDataPrompt(props: Props) {
     <AnimatePresence>
       {state.isUserWorkingDataModal && (
         <Container
+          forwardedAs={'section'}
           className='main'
           onClick={(e) => {
             const target = (e as any).target.classList;

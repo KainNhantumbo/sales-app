@@ -49,6 +49,7 @@ export function ShareProducts({ name, category, productId }: Props) {
     <AnimatePresence>
       {state.isShareProductModal && (
         <Container
+          forwardedAs={'section'}
           className='main'
           onClick={(e: any) => {
             const target = (e as any).target.classList;

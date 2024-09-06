@@ -32,9 +32,9 @@ export default function Page() {
     hasNextPage,
     fetchNextPage,
     inViewRef,
-    updateOrder,
+    // updateOrder,
     queryString,
-    refetch,
+    // refetch,
     setQueryString,
     isAnyFilterActive
   } = useUserOrdersQuery();

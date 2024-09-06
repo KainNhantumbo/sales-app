@@ -20,7 +20,7 @@ export function Prompt() {
   return (
     <AnimatePresence>
       {state.prompt.status && (
-        <Container className='main' onClick={handleQuit}>
+        <Container forwardedAs={'section'} className='main' onClick={handleQuit}>
           <motion.section
             initial={{ y: 700 }}
             animate={{ y: 0, transition: { duration: 0.45 } }}

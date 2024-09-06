@@ -9,7 +9,7 @@ import { getPaths, getPost, getPosts } from '@/lib/queries';
 import { transformSocialUrls } from '@/lib/url-transformers';
 import { formatDate } from '@/lib/utils';
 import ErrorPage from '@/pages/error-page';
-import { _post as Container } from '@/styles/common/post';
+import { _post as PostContainer } from '@/styles/common/post';
 import type { HttpError, IBlogPost, Posts } from '@/types';
 import { AxiosError } from 'axios';
 import { CommentCount, DiscussionEmbed } from 'disqus-react';
@@ -97,7 +97,7 @@ export default function Page({ post: initialPost, latestPosts }: Props) {
         updatedAt: post.updatedAt,
         createdAt: post.createdAt
       }}>
-      <Container className='wrapper'>
+      <PostContainer forwardedAs={'div'} className='wrapper'>
         <div className='main-container'>
           <article>
             <section className={'article-header-container'}>
@@ -294,7 +294,7 @@ export default function Page({ post: initialPost, latestPosts }: Props) {
 
           <NewsLetter />
         </div>
-      </Container>
+      </PostContainer>
     </Layout>
   );
 }
